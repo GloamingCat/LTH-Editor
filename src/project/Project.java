@@ -1,5 +1,6 @@
 package project;
 
+import gui.helper.FieldHelper;
 import data.*;
 import lwt.dataserialization.LSerializer;
 
@@ -82,6 +83,7 @@ public class Project implements LSerializer {
 				return false;
 		}
 		current = this;
+		FieldHelper.reloadMath();
 		return true;
 	}
 

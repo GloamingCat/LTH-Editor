@@ -4,6 +4,7 @@ import gui.Vocab;
 import gui.views.database.content.BattlerTab;
 import gui.views.database.content.ItemTab;
 import gui.views.database.content.ObstacleTab;
+import gui.views.database.content.RampTab;
 import lwt.editor.LViewFolder;
 
 import org.eclipse.swt.SWT;
@@ -27,6 +28,9 @@ public class DatabaseEditor extends LViewFolder {
 		
 		ObstacleTab obstacleTab = new ObstacleTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.OBSTACLES, obstacleTab);
+		
+		RampTab rampTab = new RampTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.RAMPS, rampTab);
 		
 		actionStack = itemTab.getActionStack();
 	}
