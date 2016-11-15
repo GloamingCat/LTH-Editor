@@ -1,5 +1,7 @@
 package gui.views.database.subcontent;
 
+import gui.Vocab;
+
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -8,6 +10,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import data.Attribute;
@@ -35,7 +38,11 @@ public class AttributeEditor extends LObjectEditor {
 		setLayout(new FillLayout());
 		spinners = new ArrayList<>();
 		
-		scrollComp = new ScrolledComposite(this, SWT.V_SCROLL);
+		Group grpAttributes = new Group(this, SWT.NONE);
+		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
+		grpAttributes.setLayout(new FillLayout());
+		
+		scrollComp = new ScrolledComposite(grpAttributes, SWT.V_SCROLL);
 		content = new Composite(scrollComp, SWT.NONE);
 
 		scrollComp.setExpandVertical(true);

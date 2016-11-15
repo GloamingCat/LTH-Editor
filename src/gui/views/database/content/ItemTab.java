@@ -38,9 +38,6 @@ public class ItemTab extends DatabaseTab {
 	public ItemTab(Composite parent, int style) {
 		super(parent, style);
 		
-		contentEditor.setLayout(new GridLayout(2, false));
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
 		Label lblDescription = new Label(grpGeneral, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		lblDescription.setText(Vocab.instance.DESCRIPTION);
@@ -130,27 +127,30 @@ public class ItemTab extends DatabaseTab {
 		Label lblPrice = new Label(grpGeneral, SWT.NONE);
 		lblPrice.setText(Vocab.instance.PRICE);
 		
-		LSpinner spnPrice = new LSpinner(grpGeneral, SWT.BORDER);
+		LSpinner spnPrice = new LSpinner(grpGeneral, SWT.NONE);
 		spnPrice.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		contentEditor.addControl(spnPrice, "price");
 		
 		Label lblWeight = new Label(grpGeneral, SWT.NONE);
 		lblWeight.setText(Vocab.instance.WEIGHT);
 		
-		LSpinner spnWeight = new LSpinner(grpGeneral, SWT.BORDER);
+		LSpinner spnWeight = new LSpinner(grpGeneral, SWT.NONE);
 		spnWeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		contentEditor.addControl(spnWeight, "weight");
 		
-		Group grpAttributes = new Group(contentEditor, SWT.NONE);
-		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
-		grpAttributes.setLayout(new FillLayout());
-		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Composite lists = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_lists = new GridLayout(2, false);
+		gl_lists.marginWidth = 0;
+		gl_lists.marginHeight = 0;
+		lists.setLayout(gl_lists);
+		lists.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		AttributeEditor attEditor = new AttributeEditor(grpAttributes, SWT.NONE);
+		AttributeEditor attEditor = new AttributeEditor(lists, SWT.NONE);
 		attEditor.setColumns(4);
+		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		contentEditor.addChild(attEditor);
 		
-		Group grpTags = new Group(contentEditor, SWT.NONE);
+		Group grpTags = new Group(lists, SWT.NONE);
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);

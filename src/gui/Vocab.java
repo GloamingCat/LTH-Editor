@@ -96,7 +96,7 @@ public class Vocab {
 	public String FULLIMAGE = "Full Image";
 	
 	// Ramp field names
-	public String HEIGHT = "Heght";
+	public String HEIGHT = "Height";
 	public String BOTTOM = "Bottom";
 	public String TOP = "Top";
 	public String LINES = "Lines";
@@ -104,5 +104,6 @@ public class Vocab {
 	// Obstacle field names
 	public String RAMP = "Ramp";
 	public String COLLIDERSIZE = "Collider Size";
+	public String NEIGHBORS = "Neighbors";
 	
 }

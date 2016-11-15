@@ -30,7 +30,7 @@ import lwt.event.listener.LControlListener;
 import lwt.widget.LSpinner;
 import lwt.widget.LStringButton;
 
-public abstract class QuadEditor extends LObjectEditor {
+public class QuadEditor extends LObjectEditor {
 
 	private Label imgGraphic;
 	private LSpinner spnX;
@@ -44,13 +44,13 @@ public abstract class QuadEditor extends LObjectEditor {
 		super(parent, style);
 		
 		spinners = new ArrayList<>();
-		
 		setLayout(new GridLayout(3, false));
 		
 		Label lblQuadX = new Label(this, SWT.NONE);
+		lblQuadX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblQuadX.setText(Vocab.instance.QUADX);
 		
-		spnX = new LSpinner(this, SWT.BORDER);
+		spnX = new LSpinner(this, SWT.NONE);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addSpinner(spnX, "x");
 		
@@ -62,43 +62,49 @@ public abstract class QuadEditor extends LObjectEditor {
 		imgGraphic.setImage(SWTResourceManager.getImage("/javax/swing/plaf/basic/icons/image-delayed.png"));
 		
 		Label lblQuadY = new Label(this, SWT.NONE);
+		lblQuadY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblQuadY.setText(Vocab.instance.QUADY);
 		
-		spnY = new LSpinner(this, SWT.BORDER);
+		spnY = new LSpinner(this, SWT.NONE);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addSpinner(spnY, "y");
 		
 		Label lblQuadWidth = new Label(this, SWT.NONE);
+		lblQuadWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblQuadWidth.setText(Vocab.instance.QUADW);
 		
-		spnWidth = new LSpinner(this, SWT.BORDER);
+		spnWidth = new LSpinner(this, SWT.NONE);
 		spnWidth.setMaximum(1024);
 		spnWidth.setMinimum(1);
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addSpinner(spnWidth, "width");
 		
 		Label lblQuadHeight = new Label(this, SWT.NONE);
-		lblQuadHeight.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		lblQuadHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblQuadHeight.setText(Vocab.instance.QUADH);
 		
-		spnHeight = new LSpinner(this, SWT.BORDER);
+		spnHeight = new LSpinner(this, SWT.NONE);
 		spnHeight.setMaximum(1024);
 		spnHeight.setMinimum(1);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addSpinner(spnHeight, "height");
 		
-		Button btnFullImage = new Button(this, SWT.NONE);
+		Composite buttons = new Composite(this, SWT.NONE);
+		buttons.setLayout(new GridLayout(2, true));
+		buttons.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 2, 2));
+		
+		Button btnFullImage = new Button(buttons, SWT.NONE);
 		btnFullImage.addSelectionListener(fullImageAdapter());
-		btnFullImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		btnFullImage.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		btnFullImage.setText(Vocab.instance.FULLIMAGE);
 		
-		LStringButton btnSelect = new LStringButton(this, SWT.NONE) {
+		LStringButton btnSelect = new LStringButton(buttons, SWT.NONE) {
 			@Override
 			protected String getImagePath() {
 				return Project.current.imagePath();
 			}
 		};
-		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		btnSelect.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		btnSelect.setLabel(imgGraphic);
 		btnSelect.setShellFactory(new LShellFactory<String>() {
 			@Override
@@ -108,7 +114,7 @@ public abstract class QuadEditor extends LObjectEditor {
 		});
 	}
 	
-	protected abstract String getFolder();
+	protected String getFolder() { return ""; }
 	
 	private int[] currentValues() {
 		int[] values = new int[4];
@@ -126,22 +132,25 @@ public abstract class QuadEditor extends LObjectEditor {
 		String path = Project.current.imagePath() + quad.imagePath;
 		Image image = SWTResourceManager.getImage(path);
 		Rectangle r = image.getBounds();
-		return new int[] { r.x, r.y, r.width, r.height };
+		int[] values = new int[] { 0, 0, r.width, r.height };
+		return values;
 	}
 	
 	private boolean areEqual(int[] a, int[] b) {
 		for(int i = 0; i < a.length; i++) {
 			if (a[i] != b[i]) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	private SelectionAdapter fullImageAdapter() {
 		return new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				if (currentObject == null)
+					return;
 				final int[] oldValues = currentValues();
 				final int[] newValues = fullImageValues();
 				if (areEqual(oldValues, newValues))
@@ -149,19 +158,11 @@ public abstract class QuadEditor extends LObjectEditor {
 				LAction action = new LAction() {
 					@Override
 					public void undo() {
-						for(int i = 0; i < oldValues.length; i++) {
-							LSpinner spinner = spinners.get(i);
-							LControlEvent event = new LControlEvent(newValues[i], oldValues[i]);
-							spinner.notifyListeners(event);
-						}
+						setSpinnerValues(oldValues);
 					}
 					@Override
 					public void redo() {
-						for(int i = 0; i < newValues.length; i++) {
-							LSpinner spinner = spinners.get(i);
-							LControlEvent event = new LControlEvent(oldValues[i], newValues[i]);
-							spinner.notifyListeners(event);
-						}
+						setSpinnerValues(newValues);
 					}
 				};
 				getActionStack().newAction(action);
@@ -170,12 +171,26 @@ public abstract class QuadEditor extends LObjectEditor {
 		};
 	}
 	
+	private void setSpinnerValues(int[] values) {
+		for(int i = 0; i < 4; i++) {
+			LSpinner spinner = spinners.get(i);
+			spinner.setValue(values[i]);
+		}
+		Quad quad = (Quad) currentObject;
+		quad.x = values[0];
+		quad.y = values[1];
+		quad.width = values[2];
+		quad.height = values[3];
+		resetImage();
+	}
+	
 	private void addSpinner(LSpinner spinner, String key) {
 		addControl(spinner, key);
 		spinner.addModifyListener(new LControlListener() {
 			@Override
 			public void onModify(LControlEvent event) {
-				resetImage();
+				if (!event.newValue.equals(event.oldValue))
+					resetImage();
 			}
 		});
 		spinners.add(spinner);
@@ -191,12 +206,19 @@ public abstract class QuadEditor extends LObjectEditor {
 		if (imgGraphic.getImage() != null && imgGraphic.getImage() != original) {
 			imgGraphic.getImage().dispose();
 		}
-		imgGraphic.setImage(image);
+		try {
+			imgGraphic.setImage(image);
+		} catch(IllegalArgumentException e) {}
 	}
 	
 	public void setObject(Object obj) {
-		super.setObject(obj);
-		resetImage();
+		if (obj == null) {
+			super.setObject(null);
+		} else {
+			Object value = getFieldValue(obj, "quad");
+			super.setObject(value);
+			resetImage();
+		}
 	}
 	
 

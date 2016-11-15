@@ -15,8 +15,8 @@ public class Obstacle {
 	// Space Transformation
 	public Transform transform = new Transform();
 	
-	// Passability
-	public LDataList<Boolean> neighbors = new LDataList<>(8);
+	// Neighbors
+	public boolean[] neighbors = new boolean[8];
 	
 	public LDataList<Tag> tags = new LDataList<>();
 	

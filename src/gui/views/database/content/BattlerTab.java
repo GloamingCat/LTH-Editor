@@ -39,7 +39,7 @@ public class BattlerTab extends DatabaseTab {
 		lblCharacter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblCharacter.setText(Vocab.instance.CHARACTER);
 		
-		LComboView cmbCharacter = new LComboView(grpGeneral, SWT.READ_ONLY) {
+		LComboView cmbCharacter = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<Object> getArray() {
 				return Project.current.characters.getList();
 			}
@@ -107,27 +107,22 @@ public class BattlerTab extends DatabaseTab {
 		Label lblMoney = new Label(composite, SWT.NONE);
 		lblMoney.setText(Vocab.instance.MONEY);
 		
-		LSpinner spnMoney = new LSpinner(composite, SWT.BORDER);
+		LSpinner spnMoney = new LSpinner(composite, SWT.NONE);
 		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		contentEditor.addControl(spnMoney, "money");
 		
 		Label lblExp = new Label(composite, SWT.NONE);
 		lblExp.setText(Vocab.instance.EXP);
 		
-		LSpinner spnEXP = new LSpinner(composite, SWT.BORDER);
+		LSpinner spnEXP = new LSpinner(composite, SWT.NONE);
 		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		contentEditor.addControl(spnEXP, "exp");
 		
 		grpGeneral.pack();
 		
-		Group grpAttributes = new Group(contentEditor, SWT.NONE);
-		grpAttributes.setLayout(new FillLayout());
-		GridData gd_grpAttributes = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		grpAttributes.setLayoutData(gd_grpAttributes);
-		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
-		
-		AttributeEditor attEditor = new AttributeEditor(grpAttributes, SWT.NONE);
+		AttributeEditor attEditor = new AttributeEditor(contentEditor, SWT.NONE);
 		attEditor.setColumns(2);
+		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		contentEditor.addChild(attEditor);
 		
 		Composite other = new Composite(contentEditor, SWT.NONE);
