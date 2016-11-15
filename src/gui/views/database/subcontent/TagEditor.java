@@ -1,9 +1,14 @@
-package gui.views.database;
+package gui.views.database.subcontent;
+
+import gui.shell.TagShell;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 import data.Tag;
 import lwt.dataestructure.LDataList;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
 public class TagEditor extends LDefaultListEditor<Tag> {
@@ -17,6 +22,13 @@ public class TagEditor extends LDefaultListEditor<Tag> {
 		setDuplicateEnabled(true);
 		setDeleteEnabled(true);
 		setDragEnabled(true);
+		setIncludeID(false);
+		setShellFactory(new LShellFactory<Tag>() {
+			@Override
+			public LObjectShell<Tag> createShell(Shell parent) {
+				return new TagShell(parent);
+			}
+		});
 	}
 	
 	public void setObject(Object object) {

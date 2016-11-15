@@ -8,52 +8,28 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.Project;
 import lwt.dialog.LObjectShell;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 
-public class ImageShell extends LObjectShell<String> {
+public class ScriptShell extends LObjectShell<String> {
 
 	private String folder;
 	private List list;
-	private Label label;
 	
-	public ImageShell(Shell parent, String folder) {
+	public ScriptShell(Shell parent, String folder) {
 		super(parent);
 		this.folder = folder;
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		content.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		SashForm sashForm = new SashForm(content, SWT.NONE);
-		
-		list = new List(sashForm, SWT.BORDER | SWT.V_SCROLL);
-		list.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int i = list.getSelectionIndex();
-				if (i >= 0) {
-					label.setText(folder + "/" + list.getItem(i));
-					label.setImage(SWTResourceManager.getImage(Project.current.imagePath() + label.getText()));
-				}
-			}
-		});
+		content.setLayout(new FillLayout());
+		list = new List(content, SWT.BORDER | SWT.V_SCROLL);
 		list.setItems(getItems(folder + "/"));
-		
-		label = new Label(sashForm, SWT.NONE);
-		label.setImage(SWTResourceManager.getImage(Project.current.imagePath() + result));
-		
-		sashForm.setWeights(new int[] {1, 1});
 	}
 
 	@Override

@@ -1,7 +1,8 @@
 package gui.views;
 
 import gui.Vocab;
-import gui.views.database.tabs.ItemTab;
+import gui.views.database.content.BattlerTab;
+import gui.views.database.content.ItemTab;
 import lwt.editor.LViewFolder;
 
 import org.eclipse.swt.SWT;
@@ -19,6 +20,9 @@ public class DatabaseEditor extends LViewFolder {
 
 		ItemTab itemTab = new ItemTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.ITEMS, itemTab);
+		
+		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.BATTLERS, battlerTab);
 		
 		actionStack = itemTab.getActionStack();
 	}

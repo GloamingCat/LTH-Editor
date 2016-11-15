@@ -48,6 +48,13 @@ public class Vocab {
 	public String ITEMSKILL = "Skill ID";
 	public String ITEMSTATUS = "Status ID";
 	
+	// Battler field names
+	public String SKILLTREE = "Skill Tree";
+	public String ATTACKSKILL = "Attack Skill";
+	public String AI = "AI";
+	public String MONEY = "Money";
+	public String EXP = "EXP";
+	
 	// Skill field names
 	public String RADIUS = "Radius";
 	public String RANGE = "Range";
@@ -81,6 +88,13 @@ public class Vocab {
 	public String GREEN = "Green %";
 	public String ALPHA = "Alpha %";
 	
+	// Quad field names
+	public String QUADX = "Quad X";
+	public String QUADY = "Quad Y";
+	public String QUADW = "Quad Width";
+	public String QUADH = "Quad Height";
+	public String FULLIMAGE = "Full Image";
+	
 	// Ramp field names
 	public String HEIGHT = "Heght";
 	public String BOTTOM = "Bottom";
@@ -89,6 +103,6 @@ public class Vocab {
 	
 	// Obstacle field names
 	public String RAMP = "Ramp";
-	public String COLLIDERSIZE = "Collider Size";	
+	public String COLLIDERSIZE = "Collider Size";
 	
 }

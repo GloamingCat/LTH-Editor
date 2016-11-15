@@ -1,4 +1,4 @@
-package gui.views.database.tabs;
+package gui.views.database.content;
 
 import gui.Vocab;
 
@@ -27,6 +27,7 @@ public abstract class DatabaseTab extends LView {
 
 	protected static Gson gson = new Gson();
 	
+	protected LDefaultListEditor<Object> listEditor;
 	protected LObjectEditor contentEditor;
 	protected Group grpGeneral;
 	protected Label lblName;
@@ -41,7 +42,7 @@ public abstract class DatabaseTab extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		LDefaultListEditor<Object> listEditor = new LDefaultListEditor<Object>(sashForm, SWT.NONE) {
+		listEditor = new LDefaultListEditor<Object>(sashForm, SWT.NONE) {
 			@Override
 			public LDataList<Object> getList() {
 				return getSerializer().getList();
@@ -54,6 +55,11 @@ public abstract class DatabaseTab extends LView {
 			public Object duplicateData(Object original) {
 				String json = gson.toJson(original, getSerializer().getType());
 				return gson.fromJson(json, getSerializer().getType());
+			}
+			@Override
+			public void onVisible() {
+				super.onVisible();
+				collection.refreshSelection();
 			}
 		};
 		listEditor.setInsertNewEnabled(true);
@@ -69,7 +75,7 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.setLayout(new GridLayout(1, false));
 		
 		grpGeneral = new Group(contentEditor, SWT.NONE);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpGeneral.setLayout(new GridLayout(2, false));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		

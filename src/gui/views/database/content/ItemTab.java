@@ -1,13 +1,14 @@
-package gui.views.database.tabs;
+package gui.views.database.content;
 
 import gui.Vocab;
-import gui.shell.IconShell;
-import gui.shell.TagShell;
-import gui.views.database.AttributeEditor;
-import gui.views.database.TagEditor;
+import gui.shell.ImageShell;
+import gui.views.database.subcontent.AttributeEditor;
+import gui.views.database.subcontent.TagEditor;
 
 import java.util.ArrayList;
 
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LComboView;
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
@@ -21,6 +22,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.ListSerializer;
@@ -72,7 +74,12 @@ public class ItemTab extends DatabaseTab {
 		imgIcon.setLayoutData(gd_imgIcon);
 		
 		btnSelect.setLabel(imgIcon);
-		btnSelect.setShell(IconShell.class);
+		btnSelect.setShellFactory(new LShellFactory<String>() {
+			@Override
+			public LObjectShell<String> createShell(Shell parent) {
+				return new ImageShell(parent, "Icon");
+			}
+		});
 		
 		contentEditor.addControl(btnSelect, "icon");
 		
@@ -149,11 +156,7 @@ public class ItemTab extends DatabaseTab {
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
-		tagEditor.setIncludeID(false);
-		tagEditor.setObjectShell(TagShell.class);
 		contentEditor.addChild(tagEditor);
-		new Label(contentEditor, SWT.NONE);
-		new Label(contentEditor, SWT.NONE);
 	}
 
 	@Override
