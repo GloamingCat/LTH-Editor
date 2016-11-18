@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
+import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NeighborEditor;
 import gui.views.database.subcontent.QuadEditor;
 import gui.views.database.subcontent.TagEditor;

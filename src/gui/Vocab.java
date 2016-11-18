@@ -60,6 +60,10 @@ public class Vocab {
 	public String RANGE = "Range";
 	public String EPCOST = "EP Cost";
 	public String TIMECOST = "Time Cost";
+	public String RESTRICTIONS = "Restrictions";
+	public String ALWAYS = "Always";
+	public String BATTLEONLY = "Battle Only";
+	public String FIELDONLY = "Field Only";
 	public String USER = "User";
 	public String CAST = "Cast";
 	public String CENTER = "Center";

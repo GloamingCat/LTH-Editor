@@ -1,4 +1,4 @@
-package gui.views.database.content;
+package gui.views.database;
 
 import gui.Vocab;
 

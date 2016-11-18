@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.shell.ScriptShell;
+import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.BonusEditor;
 import gui.views.database.subcontent.TagEditor;

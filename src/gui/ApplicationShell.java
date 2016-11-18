@@ -1,7 +1,7 @@
 package gui;
 
 import gui.views.ConfigEditor;
-import gui.views.DatabaseEditor;
+import gui.views.database.DatabaseEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import project.Project;
 import lwt.LDefaultApplicationShell;
 import lwt.dataserialization.LSerializer;
+
 import org.eclipse.swt.graphics.Point;
 
 public class ApplicationShell extends LDefaultApplicationShell {

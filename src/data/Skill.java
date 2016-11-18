@@ -14,6 +14,7 @@ public class Skill {
 	public String param = "(a.ATKP * 2 - b.DEFP) * math.random(0.8, 1.2)";
 	public int energyCost = 10;
 	public int timeCost = 100; // percentage
+	public int restriction = 0;
 	
 	public String userAnim = "";
 	public int castAnimID;

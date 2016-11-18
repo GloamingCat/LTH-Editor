@@ -1,4 +1,4 @@
-package gui.views;
+package gui.views.database;
 
 import gui.Vocab;
 import gui.views.database.content.BattlerTab;
@@ -26,13 +26,15 @@ public class DatabaseEditor extends LViewFolder {
 		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.BATTLERS, battlerTab);
 		
-		ObstacleTab obstacleTab = new ObstacleTab(tabFolder, SWT.NONE);
-		addTab(Vocab.instance.OBSTACLES, obstacleTab);
+		LViewFolder objectFolder = new LViewFolder(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.OBJECTS, objectFolder);
 		
-		RampTab rampTab = new RampTab(tabFolder, SWT.NONE);
-		addTab(Vocab.instance.RAMPS, rampTab);
+		ObstacleTab obstacleTab = new ObstacleTab(objectFolder.getTabFolder(), SWT.NONE);
+		objectFolder.addTab(Vocab.instance.OBSTACLES, obstacleTab);
 		
-		actionStack = itemTab.getActionStack();
+		RampTab rampTab = new RampTab(objectFolder.getTabFolder(), SWT.NONE);
+		objectFolder.addTab(Vocab.instance.RAMPS, rampTab);
+
 	}
 
 }

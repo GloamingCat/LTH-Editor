@@ -66,6 +66,10 @@ public class Project implements LSerializer {
 	public String scriptPath() {
 		return path + "scripts/custom/";
 	}
+	
+	public String audioPath() {
+		return path + "audio/";
+	}
 
 	@Override
 	public boolean save() {

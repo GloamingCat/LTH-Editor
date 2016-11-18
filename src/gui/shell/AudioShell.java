@@ -16,12 +16,12 @@ import project.Project;
 import lwt.dialog.LObjectShell;
 import org.eclipse.swt.layout.GridData;
 
-public class ScriptShell extends LObjectShell<String> {
+public class AudioShell extends LObjectShell<String> {
 
 	private String folder;
 	private List list;
 	
-	public ScriptShell(Shell parent, String folder) {
+	public AudioShell(Shell parent, String folder) {
 		super(parent);
 		this.folder = folder;
 		GridData gridData = (GridData) content.getLayoutData();
@@ -58,7 +58,7 @@ public class ScriptShell extends LObjectShell<String> {
 	}
 	
 	private void readFiles(String folder, ArrayList<String> items, String path) {
-		File f = new File(Project.current.scriptPath() + folder + "/" + path);
+		File f = new File(Project.current.audioPath() + folder + "/" + path);
 		if (!f.exists())
 			return;
 		for (File entry : f.listFiles()) {

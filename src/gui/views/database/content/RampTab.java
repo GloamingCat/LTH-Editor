@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import lwt.widget.LSpinner;
 import gui.Vocab;
+import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.RampEditor;
 
 import org.eclipse.swt.SWT;
