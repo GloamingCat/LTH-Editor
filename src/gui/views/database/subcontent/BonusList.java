@@ -14,26 +14,13 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class BonusEditor extends LDefaultListEditor<Bonus> {
+public class BonusList extends LDefaultListEditor<Bonus> {
 
 	private static Gson gson = new Gson();
 	
-	protected class Shell extends BonusShell {
-		
-		public Shell(org.eclipse.swt.widgets.Shell parent) {
-			super(parent);
-		}
-		
-		@Override
-		protected ArrayList<?> getIDArray() {
-			return getArray();
-		}
-		
-	}
-	
 	protected LDataList<Bonus> currentList;
 	
-	public BonusEditor(Composite parent, int style) {
+	public BonusList(Composite parent, int style) {
 		super(parent, style);
 		setEditEnabled(true);
 		setInsertNewEnabled(true);
@@ -41,16 +28,21 @@ public class BonusEditor extends LDefaultListEditor<Bonus> {
 		setDeleteEnabled(true);
 		setDragEnabled(true);
 		setIncludeID(true);
+		
 		setShellFactory(new LShellFactory<Bonus>() {
 			@Override
 			public LObjectShell<Bonus> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
-				return new Shell(parent);
+				return new BonusShell(parent) {
+					public ArrayList<?> getArray() {
+						return comboArray();
+					};
+				};
 			}
 		});
 	}
 	
-	protected ArrayList<?> getArray() { return null; }
+	protected ArrayList<?> comboArray() { return null; }
 	protected String attributeName() { return ""; }
 	
 	public void setObject(Object object) {

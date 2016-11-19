@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.NodeEditor;
-import gui.views.database.subcontent.TagEditor;
+import gui.views.database.subcontent.NodeList;
+import gui.views.database.subcontent.TagList;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LSpinner;
@@ -43,21 +43,21 @@ public class CharacterTab extends DatabaseTab {
 		stuff.setLayout(gl_stuff);
 		
 		Label lblColliderSize = new Label(stuff, SWT.NONE);
-		lblColliderSize.setText("Collider Size");
+		lblColliderSize.setText(Vocab.instance.COLLIDERSIZE);
 		
 		LSpinner spnSize = new LSpinner(stuff, SWT.NONE);
 		spnSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnSize, "colliderSize");
 		
 		Label lblColliderHeight = new Label(stuff, SWT.NONE);
-		lblColliderHeight.setText("Collider Height");
+		lblColliderHeight.setText(Vocab.instance.COLLIDERHEIGHT);
 		
 		LSpinner spnHeight = new LSpinner(stuff, SWT.NONE);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnHeight, "colliderHeight");
 
 		Label lblEventsheet = new Label(stuff, SWT.NONE);
-		lblEventsheet.setText("Eventsheet");
+		lblEventsheet.setText(Vocab.instance.EVENTSHEET);
 		
 		Text txtEventsheet = new Text(stuff, SWT.BORDER | SWT.READ_ONLY);
 		txtEventsheet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -89,9 +89,9 @@ public class CharacterTab extends DatabaseTab {
 		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		
-		NodeEditor lstAnim = new NodeEditor(grpAnimations, SWT.NONE) {
+		NodeList lstAnim = new NodeList(grpAnimations, SWT.NONE) {
 			@Override
-			protected ArrayList<?> getArray() {
+			protected ArrayList<?> comboArray() {
 				return Project.current.animCharacter.getList();
 			}
 			@Override
@@ -119,7 +119,7 @@ public class CharacterTab extends DatabaseTab {
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
 		
 		bottom.setWeights(new int[] {2, 1});

@@ -4,7 +4,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.ImageButton;
 import gui.views.database.subcontent.AttributeEditor;
-import gui.views.database.subcontent.TagEditor;
+import gui.views.database.subcontent.TagList;
 
 import java.util.ArrayList;
 
@@ -139,7 +139,7 @@ public class ItemTab extends DatabaseTab {
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
 	}
 

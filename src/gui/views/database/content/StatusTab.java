@@ -3,8 +3,8 @@ package gui.views.database.content;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.ImageButton;
-import gui.views.database.subcontent.BonusEditor;
-import gui.views.database.subcontent.TagEditor;
+import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.TagList;
 
 import java.util.ArrayList;
 
@@ -139,9 +139,9 @@ public class StatusTab extends DatabaseTab {
 		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 		
-		BonusEditor lstAttributes = new BonusEditor(grpAttributes, SWT.NONE) {
+		BonusList lstAttributes = new BonusList(grpAttributes, SWT.NONE) {
 			@Override
-			protected ArrayList<?> getArray() {
+			protected ArrayList<?> comboArray() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.attributes;
 			}
@@ -157,9 +157,9 @@ public class StatusTab extends DatabaseTab {
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		BonusEditor lstElements = new BonusEditor(grpElements, SWT.NONE) {
+		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected ArrayList<?> getArray() {
+			protected ArrayList<?> comboArray() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements;
 			}
@@ -175,7 +175,7 @@ public class StatusTab extends DatabaseTab {
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);	
 	}
 

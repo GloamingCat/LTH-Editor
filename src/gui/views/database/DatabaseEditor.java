@@ -26,6 +26,9 @@ public class DatabaseEditor extends LViewFolder {
 		SkillTab skillTab = new SkillTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.SKILLS, skillTab);
 		
+		SkillDagTab skillDagTab = new SkillDagTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.SKILLDAGS, skillDagTab);
+		
 		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.BATTLERS, battlerTab);
 		

@@ -11,11 +11,11 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class TagEditor extends LDefaultListEditor<Tag> {
+public class TagList extends LDefaultListEditor<Tag> {
 
 	protected LDataList<Tag> currentList;
 	
-	public TagEditor(Composite parent, int style) {
+	public TagList(Composite parent, int style) {
 		super(parent, style);
 		setEditEnabled(true);
 		setInsertNewEnabled(true);

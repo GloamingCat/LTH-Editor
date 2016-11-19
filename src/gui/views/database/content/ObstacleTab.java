@@ -4,7 +4,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NeighborEditor;
 import gui.views.database.subcontent.QuadEditor;
-import gui.views.database.subcontent.TagEditor;
+import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class ObstacleTab extends DatabaseTab {
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
 		
 		TransformEditor transformEditor = new TransformEditor(other, SWT.NONE);

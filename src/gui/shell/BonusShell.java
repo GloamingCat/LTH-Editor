@@ -28,10 +28,11 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 		Label lblID = new Label(content, SWT.NONE);
 		lblID.setText(Vocab.instance.ID);
 		
+		BonusShell self = this;
 		cmbID = new LComboView(content, SWT.NONE) {
 			@Override
 			protected ArrayList<?> getArray() {
-				return getIDArray();
+				return self.getArray();
 			}
 		};
 		cmbID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -70,6 +71,6 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 	
 	protected void checkSubclass() { }
 	
-	protected ArrayList<?> getIDArray() { return null; }
+	protected ArrayList<?> getArray() { return null; }
 	
 }

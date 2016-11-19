@@ -13,7 +13,7 @@ public class Vocab {
 	public String CHARACTERS = "Characters";
 	public String ITEMS = "Items";
 	public String SKILLS = "Skills";
-	public String SKILLTREES = "Skill Trees";
+	public String SKILLDAGS = "Skill Dags";
 	public String STATUS = "Status";
 	public String OBJECTS = "Objects";
 	public String OBSTACLES = "Obstacles";
@@ -50,7 +50,7 @@ public class Vocab {
 	public String ITEMSTATUS = "Status ID";
 	
 	// Battler
-	public String SKILLTREE = "Skill Tree";
+	public String SKILLDAG = "Skill Dag";
 	public String ATTACKSKILL = "Attack Skill";
 	public String AI = "AI";
 	public String MONEY = "Money";
@@ -109,6 +109,8 @@ public class Vocab {
 	// Obstacle
 	public String RAMP = "Ramp";
 	public String COLLIDERSIZE = "Collider Size";
+	public String COLLIDERHEIGHT = "Collider Height";	
+	public String EVENTSHEET = "Eventsheet";
 	public String NEIGHBORS = "Neighbors";
 
 	// Status
@@ -124,6 +126,12 @@ public class Vocab {
 	public String FRAMECOUNT = "N\u00BA of frames";
 	public String PASSABLE = "Passable";
 	public String LIFETIME = "Life time";
-	public String REMOVEONEXIT = "Remove on Exit";	
+	public String REMOVEONEXIT = "Remove on Exit";
+
+	// Skill Dag
+	public String SKILLNODES = "Skill Nodes";
+	public String REQUIREDSKILLS = "Required Skills";
+	public String EXPCOST = "EXP Cost";
+	public String SKILL = "Skill";
 	
 }

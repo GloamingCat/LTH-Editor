@@ -4,8 +4,8 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.ImageButton;
 import gui.views.database.subcontent.AttributeEditor;
-import gui.views.database.subcontent.BonusEditor;
-import gui.views.database.subcontent.TagEditor;
+import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.TagList;
 
 import java.util.ArrayList;
 
@@ -56,7 +56,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		Label lblSkillTree = new Label(grpGeneral, SWT.NONE);
 		lblSkillTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblSkillTree.setText(Vocab.instance.SKILLTREE);
+		lblSkillTree.setText(Vocab.instance.SKILLDAG);
 		
 		LComboView cmbSkillTree = new LComboView(grpGeneral, SWT.READ_ONLY) {
 			public ArrayList<Object> getArray() {
@@ -148,9 +148,9 @@ public class BattlerTab extends DatabaseTab {
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		BonusEditor lstElements = new BonusEditor(grpElements, SWT.NONE) {
+		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected ArrayList<?> getArray() {
+			protected ArrayList<?> comboArray() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements;
 			}
@@ -166,9 +166,9 @@ public class BattlerTab extends DatabaseTab {
 		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpItems.setText(Vocab.instance.ITEMS);
 		
-		BonusEditor lstItems = new BonusEditor(grpItems, SWT.NONE) {
+		BonusList lstItems = new BonusList(grpItems, SWT.NONE) {
 			@Override
-			protected ArrayList<?> getArray() {
+			protected ArrayList<?> comboArray() {
 				return Project.current.items.getList();
 			}
 			@Override
@@ -183,7 +183,7 @@ public class BattlerTab extends DatabaseTab {
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
 		
 		contentEditor.addSelectionListener(new LSelectionListener() {

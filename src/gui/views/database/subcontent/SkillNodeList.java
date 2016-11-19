@@ -1,60 +1,34 @@
 package gui.views.database.subcontent;
 
-import java.util.ArrayList;
-
-import gui.shell.NodeShell;
-
 import org.eclipse.swt.widgets.Composite;
 
 import com.google.gson.Gson;
 
-import data.Node;
+import data.SkillDag.Node;
 import lwt.dataestructure.LDataList;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class NodeEditor extends LDefaultListEditor<Node> {
+public class SkillNodeList extends LDefaultListEditor<Node> {
 
 	private static Gson gson = new Gson();
 	
-	protected class Shell extends NodeShell {
-		
-		public Shell(org.eclipse.swt.widgets.Shell parent) {
-			super(parent);
-		}
-		
-		@Override
-		protected ArrayList<?> getIDArray() {
-			return getArray();
-		}
-		
-	}
-	
 	protected LDataList<Node> currentList;
 	
-	public NodeEditor(Composite parent, int style) {
+	public SkillNodeList(Composite parent, int style) {
 		super(parent, style);
-		setEditEnabled(true);
+		setEditEnabled(false);
 		setInsertNewEnabled(true);
 		setDuplicateEnabled(true);
 		setDeleteEnabled(true);
 		setDragEnabled(true);
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<Node>() {
-			@Override
-			public LObjectShell<Node> createShell(
-					org.eclipse.swt.widgets.Shell parent) {
-				return new Shell(parent);
-			}
-		});
 	}
-	
+
 	public void setObject(Object object) {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, attributeName());
+			Object value = getFieldValue(object, "nodes");
 			super.setObject(value);
 		}
 	}
@@ -78,8 +52,5 @@ public class NodeEditor extends LDefaultListEditor<Node> {
 	public Node duplicateData(Node original) {
 		return gson.fromJson(gson.toJson(original), Node.class);
 	}
-	
-	protected ArrayList<?> getArray() { return null; }
-	protected String attributeName() { return ""; }
 
 }

@@ -38,10 +38,11 @@ public abstract class NodeShell extends LObjectShell<Node> {
 		Label lblID = new Label(content, SWT.NONE);
 		lblID.setText(Vocab.instance.ID);
 		
+		NodeShell self = this;
 		cmbID = new LComboView(content, SWT.NONE) {
 			@Override
 			protected ArrayList<?> getArray() {
-				return getIDArray();
+				return self.getArray();
 			}
 		};
 		cmbID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -70,6 +71,6 @@ public abstract class NodeShell extends LObjectShell<Node> {
 	
 	protected void checkSubclass() { }
 	
-	protected ArrayList<?> getIDArray() { return null; }
+	protected ArrayList<?> getArray() { return null; }
 	
 }
