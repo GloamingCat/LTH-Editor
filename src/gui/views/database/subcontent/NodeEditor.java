@@ -2,23 +2,23 @@ package gui.views.database.subcontent;
 
 import java.util.ArrayList;
 
-import gui.shell.BonusShell;
+import gui.shell.NodeShell;
 
 import org.eclipse.swt.widgets.Composite;
 
 import com.google.gson.Gson;
 
-import data.Bonus;
+import data.Node;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class BonusEditor extends LDefaultListEditor<Bonus> {
+public class NodeEditor extends LDefaultListEditor<Node> {
 
 	private static Gson gson = new Gson();
 	
-	protected class Shell extends BonusShell {
+	protected class Shell extends NodeShell {
 		
 		public Shell(org.eclipse.swt.widgets.Shell parent) {
 			super(parent);
@@ -31,9 +31,9 @@ public class BonusEditor extends LDefaultListEditor<Bonus> {
 		
 	}
 	
-	protected LDataList<Bonus> currentList;
+	protected LDataList<Node> currentList;
 	
-	public BonusEditor(Composite parent, int style) {
+	public NodeEditor(Composite parent, int style) {
 		super(parent, style);
 		setEditEnabled(true);
 		setInsertNewEnabled(true);
@@ -41,17 +41,14 @@ public class BonusEditor extends LDefaultListEditor<Bonus> {
 		setDeleteEnabled(true);
 		setDragEnabled(true);
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<Bonus>() {
+		setShellFactory(new LShellFactory<Node>() {
 			@Override
-			public LObjectShell<Bonus> createShell(
+			public LObjectShell<Node> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
 				return new Shell(parent);
 			}
 		});
 	}
-	
-	protected ArrayList<?> getArray() { return null; }
-	protected String attributeName() { return ""; }
 	
 	public void setObject(Object object) {
 		if (object == null) {
@@ -63,23 +60,26 @@ public class BonusEditor extends LDefaultListEditor<Bonus> {
 	}
 
 	@Override
-	protected void setList(LDataList<Bonus> list) {
+	protected void setList(LDataList<Node> list) {
 		currentList = list;
 	}
 	
 	@Override
-	public LDataList<Bonus> getList() {
+	public LDataList<Node> getList() {
 		return currentList;
 	}
 
 	@Override
-	public Bonus createNewData() {
-		return gson.fromJson("{}", Bonus.class);
+	public Node createNewData() {
+		return gson.fromJson("{}", Node.class);
 	}
 
 	@Override
-	public Bonus duplicateData(Bonus original) {
-		return gson.fromJson(gson.toJson(original), Bonus.class);
+	public Node duplicateData(Node original) {
+		return gson.fromJson(gson.toJson(original), Node.class);
 	}
+	
+	protected ArrayList<?> getArray() { return null; }
+	protected String attributeName() { return ""; }
 
 }

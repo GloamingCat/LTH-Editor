@@ -1,6 +1,8 @@
 package gui.views.database;
 
 import gui.Vocab;
+import gui.shell.ImageShell;
+import gui.shell.ScriptShell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -9,6 +11,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import project.ListSerializer;
 
@@ -16,9 +20,15 @@ import com.google.gson.Gson;
 
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataList;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
+import lwt.editor.LControlView;
 import lwt.editor.LDefaultListEditor;
+import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
+import lwt.widget.LControl;
+import lwt.widget.LStringButton;
 import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Label;
@@ -68,7 +78,7 @@ public abstract class DatabaseTab extends LView {
 		listEditor.setDragEnabled(true);
 		listEditor.setDeleteEnabled(true);
 		listEditor.setIncludeID(true);
-		addChild(listEditor);
+		super.addChild(listEditor);
 		
 		contentEditor = new LObjectEditor(sashForm, SWT.NONE);
 		contentEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -93,5 +103,39 @@ public abstract class DatabaseTab extends LView {
 	}
 	
 	protected abstract ListSerializer getSerializer();
+	
+	public void addChild(LEditor editor) {
+		contentEditor.addChild(editor);
+	}
+	
+	protected void addControl(LControl control, String attName) {
+		contentEditor.addControl(control, attName);
+	}
+	
+	protected void addControl(LControlView view, String attName) {
+		contentEditor.addControl(view, attName);
+	}
+	
+	protected void addImageButton(ImageButton button, Label label, String folderName, String attName) {
+		button.setLabel(label);
+		button.setShellFactory(new LShellFactory<String>() {
+			@Override
+			public LObjectShell<String> createShell(Shell parent) {
+				return new ImageShell(parent, folderName);
+			}
+		});
+		addControl(button, attName);
+	}
+	
+	protected void addScriptButton(LStringButton button, Text text, String folderName, String attName) {
+		button.setText(text);
+		button.setShellFactory(new LShellFactory<String>() {
+			@Override
+			public LObjectShell<String> createShell(Shell parent) {
+				return new ScriptShell(parent, folderName);
+			}
+		});
+		addControl(button, attName);
+	}
 
 }

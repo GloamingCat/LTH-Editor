@@ -16,7 +16,7 @@ public class SkillDag {
 	
 		public int skillID;
 		public int cost;
-		public LDataList<ObjectID.Skill> requirements = new LDataList<>();
+		public LDataList<Integer> requirements = new LDataList<>();
 	
 		public String toString() {
 			Object obj = Project.current.skills.getList().get(skillID);
@@ -27,8 +27,8 @@ public class SkillDag {
 			if (requirements.isEmpty()) {
 				req += "]";
 			} else {
-				for(ObjectID.Skill r : requirements) {
-					req += r.id + ",";
+				for(Integer r : requirements) {
+					req += r + ",";
 				}
 				req = req.substring(0, req.length() - 1) + "]";
 			}

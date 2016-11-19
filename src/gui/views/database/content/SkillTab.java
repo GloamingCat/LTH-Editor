@@ -1,19 +1,16 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.shell.ImageShell;
-import gui.shell.ScriptShell;
 import gui.views.database.DatabaseTab;
+import gui.views.database.ImageButton;
 import gui.views.database.subcontent.TagEditor;
 
 import java.util.ArrayList;
 
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 import lwt.editor.LComboView;
 import lwt.widget.LSpinner;
 import lwt.widget.LStringButton;
-import lwt.widget.LStyledText;
+import lwt.widget.LTextBox;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
@@ -23,7 +20,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -48,9 +44,9 @@ public class SkillTab extends DatabaseTab {
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		lblDescription.setText(Vocab.instance.DESCRIPTION);
 		
-		LStyledText txtDescription = new LStyledText(grpGeneral, SWT.NONE);
+		LTextBox txtDescription = new LTextBox(grpGeneral, SWT.NONE);
 		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		contentEditor.addControl(txtDescription, "description");
+		addControl(txtDescription, "description");
 		
 		Label lblIcon = new Label(grpGeneral, SWT.NONE);
 		lblIcon.setText(Vocab.instance.ICON);
@@ -62,12 +58,7 @@ public class SkillTab extends DatabaseTab {
 		compositeIcon.setLayout(gl_compositeIcon);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		LStringButton btnSelect = new LStringButton(compositeIcon, SWT.NONE) {
-			@Override
-			protected String getImagePath() {
-				return Project.current.imagePath();
-			}
-		};
+		ImageButton btnSelect = new ImageButton(compositeIcon, SWT.NONE);
 		
 		Label imgIcon = new Label(compositeIcon, SWT.NONE);
 		imgIcon.setImage(SWTResourceManager.getImage(SkillTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
@@ -76,15 +67,7 @@ public class SkillTab extends DatabaseTab {
 		gd_imgIcon.heightHint = 48;
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		btnSelect.setLabel(imgIcon);
-		btnSelect.setShellFactory(new LShellFactory<String>() {
-			@Override
-			public LObjectShell<String> createShell(Shell parent) {
-				return new ImageShell(parent, "Icon");
-			}
-		});
-		
-		contentEditor.addControl(btnSelect, "icon");
+		addImageButton(btnSelect, imgIcon, "Icon", "icon");
 		
 		Label lblRadius = new Label(grpGeneral, SWT.NONE);
 		lblRadius.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
@@ -92,7 +75,7 @@ public class SkillTab extends DatabaseTab {
 		
 		LSpinner spnRadius = new LSpinner(grpGeneral, SWT.NONE);
 		spnRadius.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		contentEditor.addControl(spnRadius, "radius");
+		addControl(spnRadius, "radius");
 		
 		Label lblRange = new Label(grpGeneral, SWT.NONE);
 		lblRange.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
@@ -100,7 +83,7 @@ public class SkillTab extends DatabaseTab {
 		
 		LSpinner spnRange = new LSpinner(grpGeneral, SWT.NONE);
 		spnRange.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		contentEditor.addControl(spnRange, "range");
+		addControl(spnRange, "range");
 		
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_right = new GridLayout(1, false);
@@ -121,7 +104,7 @@ public class SkillTab extends DatabaseTab {
 		
 		LText txtUserAnimation = new LText(grpAnimations, SWT.NONE);
 		txtUserAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(txtUserAnimation, "userAnim");
+		addControl(txtUserAnimation, "userAnim");
 		
 		Label lblCastAnimation = new Label(grpAnimations, SWT.NONE);
 		lblCastAnimation.setText(Vocab.instance.CAST);
@@ -132,7 +115,7 @@ public class SkillTab extends DatabaseTab {
 			}
 		};
 		cmbCastAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(cmbCastAnimation, "castAnimID");
+		addControl(cmbCastAnimation, "castAnimID");
 		
 		Label lblCenterAnimation = new Label(grpAnimations, SWT.NONE);
 		lblCenterAnimation.setText(Vocab.instance.CENTER);
@@ -143,7 +126,7 @@ public class SkillTab extends DatabaseTab {
 			}
 		};
 		cmbCenterAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(cmbCenterAnimation, "centerAnimID");
+		addControl(cmbCenterAnimation, "centerAnimID");
 		
 		Label lblIndividualAnimation = new Label(grpAnimations, SWT.NONE);
 		lblIndividualAnimation.setText(Vocab.instance.INDIVIDUAL);
@@ -154,7 +137,7 @@ public class SkillTab extends DatabaseTab {
 			}
 		};
 		cmbIndividualAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(cmbIndividualAnimation, "individualAnimID");
+		addControl(cmbIndividualAnimation, "individualAnimID");
 		
 		Group grpOther = new Group(right, SWT.NONE);
 		grpOther.setLayout(new GridLayout(2, false));
@@ -166,14 +149,14 @@ public class SkillTab extends DatabaseTab {
 		
 		LSpinner spnEnergyCost = new LSpinner(grpOther, SWT.NONE);
 		spnEnergyCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(spnEnergyCost, "energyCost");
+		addControl(spnEnergyCost, "energyCost");
 		
 		Label lblTimeCost = new Label(grpOther, SWT.NONE);
 		lblTimeCost.setText(Vocab.instance.TIMECOST);
 		
 		LSpinner spnTimeCost = new LSpinner(grpOther, SWT.NONE);
 		spnTimeCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(spnTimeCost, "timeCost");
+		addControl(spnTimeCost, "timeCost");
 		
 		ArrayList<String> restrictions = new ArrayList<String>();
 		restrictions.add(Vocab.instance.ALWAYS);
@@ -183,13 +166,15 @@ public class SkillTab extends DatabaseTab {
 		Label lblRestrictions = new Label(grpOther, SWT.NONE);
 		lblRestrictions.setText(Vocab.instance.RESTRICTIONS);
 		
-		LComboView btnRestrictions = new LComboView(grpOther, SWT.NONE) {
+		LComboView cmbRestrictions = new LComboView(grpOther, SWT.NONE) {
 			public ArrayList<?> getArray() {
 				return restrictions;
 			}
 		};
-		btnRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		contentEditor.addControl(btnRestrictions, "restriction");
+		cmbRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbRestrictions.setIncludeID(false);
+		cmbRestrictions.setOptional(false);
+		addControl(cmbRestrictions, "restriction");
 		
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_bottom = new GridLayout(2, false);
@@ -212,22 +197,15 @@ public class SkillTab extends DatabaseTab {
 		txtEffect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LStringButton btnSelectEffect = new LStringButton(grpEffect, SWT.NONE);
-		btnSelectEffect.setShellFactory(new LShellFactory<String>() {
-			@Override
-			public LObjectShell<String> createShell(Shell parent) {
-				return new ScriptShell(parent, "skilleffect");
-			}
-		});
-		btnSelectEffect.setText(txtEffect);
-		contentEditor.addControl(btnSelectEffect, "effect");
+		addScriptButton(btnSelectEffect, txtEffect, "skill", "effect");
 		
 		Label lblParam = new Label(grpEffect, SWT.NONE);
 		lblParam.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblParam.setText(Vocab.instance.PARAM);
 		
-		LStyledText txtParam = new LStyledText(grpEffect, SWT.NONE);
+		LTextBox txtParam = new LTextBox(grpEffect, SWT.NONE);
 		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		contentEditor.addControl(txtParam, "param");
+		addControl(txtParam, "param");
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -235,12 +213,12 @@ public class SkillTab extends DatabaseTab {
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
-		contentEditor.addChild(tagEditor);
+		addChild(tagEditor);
 	}
 
 	@Override
 	protected ListSerializer getSerializer() {
-		return Project.current.items;
+		return Project.current.skills;
 	}
 
 }

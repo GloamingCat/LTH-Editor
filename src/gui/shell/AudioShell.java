@@ -1,11 +1,8 @@
 package gui.shell;
 
-import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -14,6 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import lwt.dialog.LObjectShell;
+
 import org.eclipse.swt.layout.GridData;
 
 public class AudioShell extends LObjectShell<String> {
@@ -57,6 +55,10 @@ public class AudioShell extends LObjectShell<String> {
 		return array;
 	}
 	
+	private boolean isAudioFile(String name) {
+		return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".mid");
+	}
+	
 	private void readFiles(String folder, ArrayList<String> items, String path) {
 		File f = new File(Project.current.audioPath() + folder + "/" + path);
 		if (!f.exists())
@@ -65,16 +67,9 @@ public class AudioShell extends LObjectShell<String> {
 			if (entry.isDirectory()) {
 				readFiles(folder, items, path + entry.getName() + "/");
 			} else {
-				try {
-				    Image image = ImageIO.read(entry);
-				    if (image == null) {
-				    	continue;
-				    }
-				    image.flush();
-				} catch(IOException ex) {
-				    continue;
+				if (isAudioFile(entry.getName())) {	
+					items.add(path + entry.getName());
 				}
-				items.add(path + entry.getName());
 			}
 		}
 	}

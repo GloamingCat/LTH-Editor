@@ -10,10 +10,11 @@ public class GameCharacter {
 	public String eventsheet = "";
 	public String param = "";
 	public int direction = 315;
-	public LDataList<FieldNode> animations = new LDataList<FieldNode>();
+	public LDataList<Node> animations = new LDataList<Node>();
+	public LDataList<Tag> tags = new LDataList<Tag>();
 	
 	public GameCharacter() {
-		FieldNode anim = new FieldNode();
+		Node anim = new Node();
 		animations.add(anim);
 	}
 	

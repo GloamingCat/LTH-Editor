@@ -2,18 +2,18 @@ package data;
 
 public class Animation {
 	
+	// General
 	public String name = "";
 	public String imagePath = "";
 	public int rows = 8;
 	public int cols = 6;
-	public int frameDuration = 7;
+	public int duration = 30;
 	
+	// Transform
 	public Transform transform = new Transform();
 	
-	// Sound
-	public String soundPath = "";
-	public int volume = 100;
-	public int pitch = 100;
+	//Audio
+	public Audio audio = new Audio();
 
 	public String toString() {
 		return name;

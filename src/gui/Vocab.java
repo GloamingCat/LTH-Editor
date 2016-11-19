@@ -30,15 +30,16 @@ public class Vocab {
 	public String CHARACTER = "Character";
 	public String OTHER = "Other";
 	
-	// Common field names
+	// Common
 	public String ID = "ID";
 	public String NAME = "Name";
 	public String ICON = "Icon";
 	public String DESCRIPTION = "Description";
 	public String VALUE = "Value";
 	public String PATH = "Path";
+	public String SECONDS = "sec";
 	
-	// Item field names
+	// Item
 	public String PRICE = "Price";
 	public String WEIGHT = "Weight";
 	public String CANSELL = "Can sell";
@@ -48,14 +49,14 @@ public class Vocab {
 	public String ITEMSKILL = "Skill ID";
 	public String ITEMSTATUS = "Status ID";
 	
-	// Battler field names
+	// Battler
 	public String SKILLTREE = "Skill Tree";
 	public String ATTACKSKILL = "Attack Skill";
 	public String AI = "AI";
 	public String MONEY = "Money";
 	public String EXP = "EXP";
 	
-	// Skill field names
+	// Skill
 	public String RADIUS = "Radius";
 	public String RANGE = "Range";
 	public String EPCOST = "EP Cost";
@@ -71,7 +72,7 @@ public class Vocab {
 	public String EFFECT = "Effect";
 	public String PARAM = "Param";
 	
-	// Animation field names
+	// Animation
 	public String COLUMNS = "Columns";
 	public String ROWS = "Rows";
 	public String FRAMEDURATION = "Frame Duration";
@@ -79,7 +80,7 @@ public class Vocab {
 	public String VOLUME = "Volume";
 	public String PITCH = "Pitch";
 	
-	// Transform field names
+	// Transform
 	public String TRANSFORM = "Transform";
 	public String OFFSETX = "Offset X";
 	public String OFFSETY = "Offset Y";
@@ -92,22 +93,37 @@ public class Vocab {
 	public String GREEN = "Green %";
 	public String ALPHA = "Alpha %";
 	
-	// Quad field names
+	// Quad
 	public String QUADX = "Quad X";
 	public String QUADY = "Quad Y";
 	public String QUADW = "Quad Width";
 	public String QUADH = "Quad Height";
 	public String FULLIMAGE = "Full Image";
 	
-	// Ramp field names
+	// Ramp
 	public String HEIGHT = "Height";
 	public String BOTTOM = "Bottom";
 	public String TOP = "Top";
 	public String LINES = "Lines";
 	
-	// Obstacle field names
+	// Obstacle
 	public String RAMP = "Ramp";
 	public String COLLIDERSIZE = "Collider Size";
 	public String NEIGHBORS = "Neighbors";
+
+	// Status
+	public String REMOVEONDAMAGE = "Remove on Damage";
+	public String DURATION = "Duration";
+	public String DRAIN = "Drain";
+	public String HPDRAIN = "HP Drain";
+	public String MPDRAIN = "MP Drain";
+	public String PERCENTAGE = "Percentage";
+	public String FREQUENCE = "Frequence";
+
+	// Terrain
+	public String FRAMECOUNT = "N\u00BA of frames";
+	public String PASSABLE = "Passable";
+	public String LIFETIME = "Life time";
+	public String REMOVEONEXIT = "Remove on Exit";	
 	
 }

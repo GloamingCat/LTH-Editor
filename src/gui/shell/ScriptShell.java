@@ -1,11 +1,7 @@
 package gui.shell;
 
-import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -65,16 +61,9 @@ public class ScriptShell extends LObjectShell<String> {
 			if (entry.isDirectory()) {
 				readFiles(folder, items, path + entry.getName() + "/");
 			} else {
-				try {
-				    Image image = ImageIO.read(entry);
-				    if (image == null) {
-				    	continue;
-				    }
-				    image.flush();
-				} catch(IOException ex) {
-				    continue;
+				if (entry.getName().endsWith(".lua")) {
+					items.add(path + entry.getName());
 				}
-				items.add(path + entry.getName());
 			}
 		}
 	}

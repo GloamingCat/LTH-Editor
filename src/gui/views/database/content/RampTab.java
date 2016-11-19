@@ -29,11 +29,11 @@ public class RampTab extends DatabaseTab {
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.NONE);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		contentEditor.addControl(spnHeight, "height");
+		addControl(spnHeight, "height");
 		
 		RampEditor editor = new RampEditor(contentEditor, SWT.NONE);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		contentEditor.addChild(editor);
+		addChild(editor);
 		
 	}
 

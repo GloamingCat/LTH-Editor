@@ -6,24 +6,34 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.Bonus;
+import data.Node;
 import lwt.dialog.LObjectShell;
 import lwt.editor.LComboView;
-import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
-public abstract class BonusShell extends LObjectShell<Bonus> {
+public abstract class NodeShell extends LObjectShell<Node> {
 	
 	private LComboView cmbID;
-	private LSpinner spnValue;
+	private LText txtName;
 
-	public BonusShell(Shell parent) {
+	public NodeShell(Shell parent) {
 		super(parent);
 		content.setLayout(new GridLayout(2, false));
+		
+		Label lblName = new Label(content, SWT.NONE);
+		lblName.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		lblName.setText(Vocab.instance.NAME);
+		
+		txtName = new LText(content, SWT.NONE);
+		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtValue.widthHint = 170;
+		gd_txtValue.heightHint = 75;
+		txtName.setLayoutData(gd_txtValue);
 		
 		Label lblID = new Label(content, SWT.NONE);
 		lblID.setText(Vocab.instance.ID);
@@ -37,33 +47,23 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 		cmbID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbID.setOptional(false);
 		
-		Label lblValue = new Label(content, SWT.NONE);
-		lblValue.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		lblValue.setText(Vocab.instance.VALUE);
-		
-		spnValue = new LSpinner(content, SWT.NONE);
-		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtValue.widthHint = 170;
-		gd_txtValue.heightHint = 75;
-		spnValue.setLayoutData(gd_txtValue);
-		
 		pack();
 	}
 	
-	public void open(Bonus initial) {
+	public void open(Node initial) {
 		super.open(initial);
 		cmbID.getControl().setValue(initial.id);
-		spnValue.setValue(initial.value);
+		txtName.setValue(initial.name);
 	}
 
 	@Override
-	protected Bonus createResult(Bonus initial) {
-		if (cmbID.getControl().getValue().equals(initial.id) && spnValue.getValue().equals(initial.value)) {
+	protected Node createResult(Node initial) {
+		if (cmbID.getControl().getValue().equals(initial.id) && txtName.getValue().equals(initial.name)) {
 			return null;
 		} else {
-			Bonus bonus = new Bonus();
+			Node bonus = new Node();
 			bonus.id = (Integer) cmbID.getControl().getValue();
-			bonus.value = (Integer) spnValue.getValue();
+			bonus.name = (String) txtName.getValue();
 			return bonus;
 		}
 	}

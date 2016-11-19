@@ -8,7 +8,7 @@ public class Status {
 	public String name = "";
 	public String icon = "";
 	public String scriptAI = "";
-	public int duration;
+	public int duration = -1; // <= 0 for infinite
 	public boolean removeOnDamage;
 	
 	// Drain

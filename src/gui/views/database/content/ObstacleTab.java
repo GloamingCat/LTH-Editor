@@ -38,7 +38,7 @@ public class ObstacleTab extends DatabaseTab {
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.NONE);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		contentEditor.addControl(spnHeight, "colliderHeight");
+		addControl(spnHeight, "colliderHeight");
 		
 		Label lblRamp = new Label(grpGeneral, SWT.NONE);
 		lblRamp.setText(Vocab.instance.RAMP);
@@ -51,7 +51,7 @@ public class ObstacleTab extends DatabaseTab {
 		cmbRamp.setIncludeID(true);
 		cmbRamp.setOptional(true);
 		cmbRamp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		contentEditor.addControl(cmbRamp, "rampID");
+		addControl(cmbRamp, "rampID");
 
 		Composite other = new Composite(contentEditor, SWT.NONE);
 		other.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -71,7 +71,7 @@ public class ObstacleTab extends DatabaseTab {
 				return "Obstacle";
 			}
 		};
-		contentEditor.addChild(quadComp);
+		addChild(quadComp);
 		
 		Group grpTags = new Group(other, SWT.NONE);
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -79,15 +79,15 @@ public class ObstacleTab extends DatabaseTab {
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagEditor tagEditor = new TagEditor(grpTags, SWT.NONE);
-		contentEditor.addChild(tagEditor);
+		addChild(tagEditor);
 		
 		TransformEditor transformEditor = new TransformEditor(other, SWT.NONE);
 		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		contentEditor.addChild(transformEditor);
+		addChild(transformEditor);
 	
 		NeighborEditor neighborEditor = new NeighborEditor(other, SWT.NONE);
 		neighborEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		contentEditor.addChild(neighborEditor);
+		addChild(neighborEditor);
 		
 	}
 
