@@ -1,6 +1,6 @@
 package gui;
 
-import gui.views.ConfigEditor;
+import gui.views.config.ConfigEditor;
 import gui.views.database.DatabaseEditor;
 
 import org.eclipse.swt.SWT;

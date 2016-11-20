@@ -40,7 +40,9 @@ public class ItemTab extends DatabaseTab {
 		lblDescription.setText(Vocab.instance.DESCRIPTION);
 		
 		LTextBox txtDescription = new LTextBox(grpGeneral, SWT.NONE);
-		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtDescription.minimumHeight = 48;
+		txtDescription.setLayoutData(gd_txtDescription);
 		addControl(txtDescription, "description");
 		
 		Label lblIcon = new Label(grpGeneral, SWT.NONE);

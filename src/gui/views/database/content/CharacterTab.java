@@ -109,9 +109,13 @@ public class CharacterTab extends DatabaseTab {
 		lstAnim.collection.addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				Node node = (Node) event.data;
-				Animation anim = (Animation) Project.current.animCharacter.getList().get(node.id);
-				image.setImage(SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath));
+				if (event.data != null) {
+					Node node = (Node) event.data;
+					Animation anim = (Animation) Project.current.animCharacter.getList().get(node.id);
+					image.setImage(SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath));
+				} else {
+					image.setImage(null);
+				}
 			}
 		});
 		

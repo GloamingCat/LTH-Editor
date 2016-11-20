@@ -133,5 +133,20 @@ public class Vocab {
 	public String REQUIREDSKILLS = "Required Skills";
 	public String EXPCOST = "EXP Cost";
 	public String SKILL = "Skill";
-	
+
+	// Config
+	public String PROJECTNAME = "Project Name";
+	public String GRID = "Grid";
+	public String TILEWIDTH = "Tile Width";
+	public String TILEHEIGHT = "Tile Height";
+	public String TILEBASE = "Tile Base";
+	public String TILESIDE = "Tile Side";
+	public String PIXELHEIGHT = "Pixels/Height";
+	public String PIXELMOV = "Pixel Movement";
+	public String ALLNEIGHBORS = "8 neighbors";
+	public String FIELDTYPES = "Field Types";
+	public String SHORTNAME = "Short Name";
+	public String MUTABLE = "Mutable";
+	public String SCRIPT = "Script";
+
 }
