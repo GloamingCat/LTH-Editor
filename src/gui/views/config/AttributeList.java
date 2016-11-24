@@ -16,11 +16,11 @@ public class AttributeList extends LDefaultListEditor<Attribute> {
 	
 	public AttributeList(Composite parent, int style) {
 		super(parent, style);
-		setEditEnabled(true);
-		setInsertNewEnabled(true);
-		setDuplicateEnabled(true);
-		setDeleteEnabled(true);
-		setDragEnabled(true);
+		getCollection().setEditEnabled(true);
+		getCollection().setInsertNewEnabled(true);
+		getCollection().setDuplicateEnabled(true);
+		getCollection().setDeleteEnabled(true);
+		getCollection().setDragEnabled(true);
 		setIncludeID(true);
 
 		setShellFactory(new LShellFactory<Attribute>() {
@@ -42,7 +42,7 @@ public class AttributeList extends LDefaultListEditor<Attribute> {
 	}
 	
 	@Override
-	protected void setList(LDataList<Attribute> list) {
+	public void setList(LDataList<Attribute> list) {
 		currentList = list;
 	}
 	

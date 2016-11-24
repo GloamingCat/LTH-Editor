@@ -15,11 +15,12 @@ import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.editor.LCollectionEditor;
+import lwt.editor.LAbstractTreeEditor;
 import lwt.event.LEditEvent;
 import lwt.widget.LList;
+import lwt.widget.LTree;
 
-public class IDList extends LCollectionEditor<Integer, Integer> {
+public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 
 	protected LList<Integer, Integer> list;
 	protected LDataList<Integer> currentList;
@@ -33,7 +34,7 @@ public class IDList extends LCollectionEditor<Integer, Integer> {
 				return onEditItem(path);
 			}
 			@Override
-			public Object toObject(LPath path) {
+			public Integer toObject(LPath path) {
 				if (path == null)
 					return null;
 				return getList().get(path.index);
@@ -58,7 +59,7 @@ public class IDList extends LCollectionEditor<Integer, Integer> {
 				}
 			}
 			@Override
-			public void refreshItems() {
+			public void refreshAll() {
 				for(TreeItem item : tree.getItems()) {
 					String name = itemName(item.getData());
 					item.setText(name);
@@ -70,14 +71,13 @@ public class IDList extends LCollectionEditor<Integer, Integer> {
 				return stringID(id) + obj.toString();
 			}
 		};
-		setCollection(list);
 		setListeners();
 		
-		setEditEnabled(true);
-		setInsertNewEnabled(true);
-		setDuplicateEnabled(true);
-		setDeleteEnabled(true);
-		setDragEnabled(true);
+		getCollection().setEditEnabled(true);
+		getCollection().setInsertNewEnabled(true);
+		getCollection().setDuplicateEnabled(true);
+		getCollection().setDeleteEnabled(true);
+		getCollection().setDragEnabled(true);
 		
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
@@ -96,13 +96,13 @@ public class IDList extends LCollectionEditor<Integer, Integer> {
 	
 	public void setObject(Object obj) {
 		if (obj == null) {
-			collection.setItems(new LDataTree<Integer>());
+			getCollection().setItems(new LDataTree<Integer>());
 			setList(null);
 		} else {
 			obj = getFieldValue(obj, attributeName());
 			@SuppressWarnings("unchecked")
 			LDataList<Integer> db = (LDataList<Integer>) obj;
-			collection.setItems(db.toTree());
+			getCollection().setItems(db.toTree());
 			setList(db);
 		}
 	}
@@ -128,6 +128,36 @@ public class IDList extends LCollectionEditor<Integer, Integer> {
 	@Override
 	protected LDataCollection<Integer> getDataCollection() {
 		return getList();
+	}
+
+	@Override
+	public void forceFirstSelection() {
+		if (getList() != null) {
+			getCollection().setItems(getList().toTree());
+			if (getList().size() > 0) {
+				getCollection().forceSelection(new LPath(0));
+			} else {
+				getCollection().forceSelection(null);
+			}
+		} else {
+			getCollection().setItems(null);
+			getCollection().forceSelection(null);
+		}
+	}
+
+	@Override
+	public LTree<Integer, Integer> getCollection() {
+		return list;
+	}
+
+	@Override
+	public Integer createNewData() {
+		return 0;
+	}
+
+	@Override
+	public Integer duplicateData(Integer original) {
+		return original;
 	}
 
 }

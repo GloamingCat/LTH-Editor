@@ -20,6 +20,6 @@ public class Config {
 	// Types
 	public LDataList<Attribute> attributes = new LDataList<>();
 	public LDataList<String> elements = new LDataList<>();
-	public LDataList<String> fieldTypes = new LDataList<>();
+	public LDataList<String> regions = new LDataList<>();
 	
 }

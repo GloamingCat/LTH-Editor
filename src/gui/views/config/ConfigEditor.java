@@ -91,6 +91,9 @@ public class ConfigEditor extends LObjectEditor {
 		LSpinner spnPPH = new LSpinner(grpGrid, SWT.NONE);
 		spnPPH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnPPH, "pixelsPerHeight");
+		new Label(grpGrid, SWT.NONE);
+		new Label(grpGrid, SWT.NONE);
+		new Label(grpGrid, SWT.NONE);
 		
 		Group grpElements = new Group(this, SWT.NONE);
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -105,18 +108,18 @@ public class ConfigEditor extends LObjectEditor {
 		lstElements.setIncludeID(true);		
 		addChild(lstElements);
 		
-		Group grpFieldTypes = new Group(this, SWT.NONE);
-		grpFieldTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpFieldTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		grpFieldTypes.setText(Vocab.instance.FIELDTYPES);
+		Group grpRegions = new Group(this, SWT.NONE);
+		grpRegions.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpRegions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		grpRegions.setText(Vocab.instance.REGIONS);
 		
-		NameList lstFieldTypes = new NameList(grpFieldTypes, SWT.NONE) {
+		NameList lstRegions = new NameList(grpRegions, SWT.NONE) {
 			public String attributeName() {
-				return "fieldTypes";
+				return "regions";
 			}
 		};
-		lstFieldTypes.setIncludeID(true);
-		addChild(lstFieldTypes);
+		lstRegions.setIncludeID(true);
+		addChild(lstRegions);
 		
 		Group grpAttributes = new Group(this, SWT.NONE);
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));

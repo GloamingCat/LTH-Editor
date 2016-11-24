@@ -24,11 +24,11 @@ public class NodeList extends LDefaultListEditor<Node> {
 	
 	public NodeList(Composite parent, int style) {
 		super(parent, style);
-		setEditEnabled(true);
-		setInsertNewEnabled(true);
-		setDuplicateEnabled(true);
-		setDeleteEnabled(true);
-		setDragEnabled(true);
+		getCollection().setEditEnabled(true);
+		getCollection().setInsertNewEnabled(true);
+		getCollection().setDuplicateEnabled(true);
+		getCollection().setDeleteEnabled(true);
+		getCollection().setDragEnabled(true);
 		setIncludeID(true);
 
 		setShellFactory(new LShellFactory<Node>() {
@@ -57,7 +57,7 @@ public class NodeList extends LDefaultListEditor<Node> {
 	}
 
 	@Override
-	protected void setList(LDataList<Node> list) {
+	public void setList(LDataList<Node> list) {
 		currentList = list;
 	}
 	

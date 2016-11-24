@@ -16,11 +16,11 @@ public class SkillNodeList extends LDefaultListEditor<Node> {
 	
 	public SkillNodeList(Composite parent, int style) {
 		super(parent, style);
-		setEditEnabled(false);
-		setInsertNewEnabled(true);
-		setDuplicateEnabled(true);
-		setDeleteEnabled(true);
-		setDragEnabled(true);
+		getCollection().setEditEnabled(false);
+		getCollection().setInsertNewEnabled(true);
+		getCollection().setDuplicateEnabled(true);
+		getCollection().setDeleteEnabled(true);
+		getCollection().setDragEnabled(true);
 		setIncludeID(true);
 	}
 
@@ -34,7 +34,7 @@ public class SkillNodeList extends LDefaultListEditor<Node> {
 	}
 
 	@Override
-	protected void setList(LDataList<Node> list) {
+	public void setList(LDataList<Node> list) {
 		currentList = list;
 	}
 	

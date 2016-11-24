@@ -66,18 +66,13 @@ public abstract class DatabaseTab extends LView {
 				String json = gson.toJson(original, getSerializer().getType());
 				return gson.fromJson(json, getSerializer().getType());
 			}
-			@Override
-			public void onVisible() {
-				super.onVisible();
-				collection.refreshSelection();
-			}
 		};
-		listEditor.setInsertNewEnabled(true);
-		listEditor.setEditEnabled(false);
-		listEditor.setDuplicateEnabled(true);
-		listEditor.setDragEnabled(true);
-		listEditor.setDeleteEnabled(true);
-		listEditor.setIncludeID(true);
+		listEditor.getCollection().setInsertNewEnabled(true);
+		listEditor.getCollection().setEditEnabled(false);
+		listEditor.getCollection().setDuplicateEnabled(true);
+		listEditor.getCollection().setDragEnabled(true);
+		listEditor.getCollection().setDeleteEnabled(true);
+		listEditor.getCollection().setIncludeID(true);
 		super.addChild(listEditor);
 		
 		contentEditor = new LObjectEditor(sashForm, SWT.NONE);

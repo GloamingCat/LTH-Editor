@@ -17,11 +17,11 @@ public class TagList extends LDefaultListEditor<Tag> {
 	
 	public TagList(Composite parent, int style) {
 		super(parent, style);
-		setEditEnabled(true);
-		setInsertNewEnabled(true);
-		setDuplicateEnabled(true);
-		setDeleteEnabled(true);
-		setDragEnabled(true);
+		getCollection().setEditEnabled(true);
+		getCollection().setInsertNewEnabled(true);
+		getCollection().setDuplicateEnabled(true);
+		getCollection().setDeleteEnabled(true);
+		getCollection().setDragEnabled(true);
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Tag>() {
 			@Override
@@ -41,7 +41,7 @@ public class TagList extends LDefaultListEditor<Tag> {
 	}
 
 	@Override
-	protected void setList(LDataList<Tag> list) {
+	public void setList(LDataList<Tag> list) {
 		currentList = list;
 	}
 	

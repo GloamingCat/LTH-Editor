@@ -22,11 +22,11 @@ public class BonusList extends LDefaultListEditor<Bonus> {
 	
 	public BonusList(Composite parent, int style) {
 		super(parent, style);
-		setEditEnabled(true);
-		setInsertNewEnabled(true);
-		setDuplicateEnabled(true);
-		setDeleteEnabled(true);
-		setDragEnabled(true);
+		getCollection().setEditEnabled(true);
+		getCollection().setInsertNewEnabled(true);
+		getCollection().setDuplicateEnabled(true);
+		getCollection().setDeleteEnabled(true);
+		getCollection().setDragEnabled(true);
 		setIncludeID(true);
 		
 		setShellFactory(new LShellFactory<Bonus>() {
@@ -55,7 +55,7 @@ public class BonusList extends LDefaultListEditor<Bonus> {
 	}
 
 	@Override
-	protected void setList(LDataList<Bonus> list) {
+	public void setList(LDataList<Bonus> list) {
 		currentList = list;
 	}
 	

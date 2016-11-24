@@ -106,7 +106,7 @@ public class CharacterTab extends DatabaseTab {
 		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_image.widthHint = 128;
 		image.setLayoutData(gd_image);
-		lstAnim.collection.addSelectionListener(new LSelectionListener() {
+		lstAnim.getCollection().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				if (event.data != null) {

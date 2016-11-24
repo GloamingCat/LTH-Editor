@@ -144,7 +144,7 @@ public class Vocab {
 	public String PIXELHEIGHT = "Pixels/Height";
 	public String PIXELMOV = "Pixel Movement";
 	public String ALLNEIGHBORS = "8 neighbors";
-	public String FIELDTYPES = "Field Types";
+	public String REGIONS = "Regions";
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
