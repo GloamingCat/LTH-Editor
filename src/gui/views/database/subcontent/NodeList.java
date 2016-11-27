@@ -11,6 +11,7 @@ import project.Project;
 import com.google.gson.Gson;
 
 import data.Node;
+import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -24,11 +25,11 @@ public class NodeList extends LDefaultListEditor<Node> {
 	
 	public NodeList(Composite parent, int style) {
 		super(parent, style);
-		getCollection().setEditEnabled(true);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 
 		setShellFactory(new LShellFactory<Node>() {
@@ -57,12 +58,12 @@ public class NodeList extends LDefaultListEditor<Node> {
 	}
 
 	@Override
-	public void setList(LDataList<Node> list) {
-		currentList = list;
+	public void setDataCollection(LDataCollection<Node> list) {
+		currentList = (LDataList<Node>) list;
 	}
 	
 	@Override
-	public LDataList<Node> getList() {
+	public LDataList<Node> getDataCollection() {
 		return currentList;
 	}
 

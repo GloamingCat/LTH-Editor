@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import com.google.gson.Gson;
 
 import data.Bonus;
+import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -22,11 +23,11 @@ public class BonusList extends LDefaultListEditor<Bonus> {
 	
 	public BonusList(Composite parent, int style) {
 		super(parent, style);
-		getCollection().setEditEnabled(true);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 		
 		setShellFactory(new LShellFactory<Bonus>() {
@@ -55,12 +56,12 @@ public class BonusList extends LDefaultListEditor<Bonus> {
 	}
 
 	@Override
-	public void setList(LDataList<Bonus> list) {
-		currentList = list;
+	public void setDataCollection(LDataCollection<Bonus> list) {
+		currentList = (LDataList<Bonus>) list;
 	}
 	
 	@Override
-	public LDataList<Bonus> getList() {
+	public LDataList<Bonus> getDataCollection() {
 		return currentList;
 	}
 

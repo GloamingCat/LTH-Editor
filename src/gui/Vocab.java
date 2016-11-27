@@ -19,6 +19,7 @@ public class Vocab {
 	public String OBSTACLES = "Obstacles";
 	public String RAMPS = "Ramps";
 	public String TERRAINS = "Terrains";
+	public String TILESETS = "Tilesets";
 	
 	// Groups
 	public String GENERAL = "General";

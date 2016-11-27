@@ -76,7 +76,6 @@ public class AttributeEditor extends LObjectEditor {
 	}
 	
 	public void onVisible() {
-		System.out.println("oi");
 		spinners.clear();
 		content.dispose();
 		content = new Composite(scrollComp, SWT.NONE);

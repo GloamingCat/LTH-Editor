@@ -54,7 +54,7 @@ public abstract class DatabaseTab extends LView {
 		
 		listEditor = new LDefaultListEditor<Object>(sashForm, SWT.NONE) {
 			@Override
-			public LDataList<Object> getList() {
+			public LDataList<Object> getDataCollection() {
 				return getSerializer().getList();
 			}
 			@Override
@@ -67,12 +67,12 @@ public abstract class DatabaseTab extends LView {
 				return gson.fromJson(json, getSerializer().getType());
 			}
 		};
-		listEditor.getCollection().setInsertNewEnabled(true);
-		listEditor.getCollection().setEditEnabled(false);
-		listEditor.getCollection().setDuplicateEnabled(true);
-		listEditor.getCollection().setDragEnabled(true);
-		listEditor.getCollection().setDeleteEnabled(true);
-		listEditor.getCollection().setIncludeID(true);
+		listEditor.getCollectionWidget().setInsertNewEnabled(true);
+		listEditor.getCollectionWidget().setEditEnabled(false);
+		listEditor.getCollectionWidget().setDuplicateEnabled(true);
+		listEditor.getCollectionWidget().setDragEnabled(true);
+		listEditor.getCollectionWidget().setDeleteEnabled(true);
+		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
 		contentEditor = new LObjectEditor(sashForm, SWT.NONE);

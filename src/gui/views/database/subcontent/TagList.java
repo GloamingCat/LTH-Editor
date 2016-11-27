@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Tag;
+import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -17,11 +18,11 @@ public class TagList extends LDefaultListEditor<Tag> {
 	
 	public TagList(Composite parent, int style) {
 		super(parent, style);
-		getCollection().setEditEnabled(true);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Tag>() {
 			@Override
@@ -41,12 +42,13 @@ public class TagList extends LDefaultListEditor<Tag> {
 	}
 
 	@Override
-	public void setList(LDataList<Tag> list) {
-		currentList = list;
+	public void setDataCollection(LDataCollection<Tag> list) {
+		currentList = (LDataList<Tag>) list;
+		super.setDataCollection(list);
 	}
 	
 	@Override
-	public LDataList<Tag> getList() {
+	public LDataList<Tag> getDataCollection() {
 		return currentList;
 	}
 

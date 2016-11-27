@@ -15,6 +15,7 @@ public class Animation {
 	//Audio
 	public Audio audio = new Audio();
 
+	@Override
 	public String toString() {
 		return name;
 	}

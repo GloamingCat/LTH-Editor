@@ -67,7 +67,6 @@ public class AttributeShell extends LObjectShell<Attribute> {
 
 	@Override
 	protected Attribute createResult(Attribute initial) {
-		System.out.println("lllllllllllllllllllllllllllllllllllllllllllllll");
 		if (txtName.getText().equals(initial.name) && txtShortName.getText().equals(initial.shortName)
 				&& txtScript.getText().equals(initial.script) && btnMutable.getSelection() == initial.mutable) {
 			return null;

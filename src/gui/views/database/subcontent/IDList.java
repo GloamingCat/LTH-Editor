@@ -52,7 +52,7 @@ public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 				return new LDataTree<Integer> (getList().get(path.index));
 			}
 			@Override
-			public void renameItem(LPath path) {
+			public void refreshObject(LPath path) {
 				TreeItem item = toTreeItem(path);
 				if (item != null) {
 					item.setText(itemName(item.getData()));
@@ -73,11 +73,11 @@ public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 		};
 		setListeners();
 		
-		getCollection().setEditEnabled(true);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
@@ -96,13 +96,13 @@ public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 	
 	public void setObject(Object obj) {
 		if (obj == null) {
-			getCollection().setItems(new LDataTree<Integer>());
+			getCollectionWidget().setItems(new LDataTree<Integer>());
 			setList(null);
 		} else {
 			obj = getFieldValue(obj, attributeName());
 			@SuppressWarnings("unchecked")
 			LDataList<Integer> db = (LDataList<Integer>) obj;
-			getCollection().setItems(db.toTree());
+			getCollectionWidget().setItems(db.toTree());
 			setList(db);
 		}
 	}
@@ -133,20 +133,20 @@ public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 	@Override
 	public void forceFirstSelection() {
 		if (getList() != null) {
-			getCollection().setItems(getList().toTree());
+			getCollectionWidget().setItems(getList().toTree());
 			if (getList().size() > 0) {
-				getCollection().forceSelection(new LPath(0));
+				getCollectionWidget().forceSelection(new LPath(0));
 			} else {
-				getCollection().forceSelection(null);
+				getCollectionWidget().forceSelection(null);
 			}
 		} else {
-			getCollection().setItems(null);
-			getCollection().forceSelection(null);
+			getCollectionWidget().setItems(null);
+			getCollectionWidget().forceSelection(null);
 		}
 	}
 
 	@Override
-	public LTree<Integer, Integer> getCollection() {
+	public LTree<Integer, Integer> getCollectionWidget() {
 		return list;
 	}
 

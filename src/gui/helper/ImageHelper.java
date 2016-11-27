@@ -2,6 +2,7 @@ package gui.helper;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -131,8 +132,8 @@ public class ImageHelper {
 	
 	public static Image getImageQuad(Image image, int x, int y, int w, int h) {
 		try {
-			System.out.println(image.getBounds().width + " " + image.getBounds().height);
-			System.out.println(w + " " + h);
+			//System.out.println(image.getBounds().width + " " + image.getBounds().height);
+			//System.out.println(w + " " + h);
 			Image subImage = new Image(Display.getCurrent(), w, h);
 			GC gc = new GC(subImage);
 			gc.drawImage(image, x, y, w, h, 0, 0, w, h);
@@ -142,6 +143,14 @@ public class ImageHelper {
 			System.out.println(e.getMessage());
 			return SWTResourceManager.getImage("");
 		}
+	}
+
+	public static Image getRegionTile(int id) {
+		Image image = new Image(Display.getCurrent(), conf.tileW, conf.tileH);
+		GC gc = new GC(image);
+		Point size = gc.stringExtent("" + id);
+		gc.drawText("" + id, conf.tileW / 2 - size.x / 2, conf.tileH / 2 - size.y / 2);
+		return null;
 	}
 	
 }

@@ -4,6 +4,7 @@ import gui.shell.NameShell;
 
 import org.eclipse.swt.widgets.Composite;
 
+import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -15,11 +16,11 @@ public class NameList extends LDefaultListEditor<String> {
 	
 	public NameList(Composite parent, int style) {
 		super(parent, style);
-		getCollection().setEditEnabled(true);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 
 		setShellFactory(new LShellFactory<String>() {
@@ -43,12 +44,12 @@ public class NameList extends LDefaultListEditor<String> {
 	}
 	
 	@Override
-	public void setList(LDataList<String> list) {
-		currentList = list;
+	public void setDataCollection(LDataCollection<String> list) {
+		currentList = (LDataList<String>) list;
 	}
 	
 	@Override
-	public LDataList<String> getList() {
+	public LDataList<String> getDataCollection() {
 		return currentList;
 	}
 

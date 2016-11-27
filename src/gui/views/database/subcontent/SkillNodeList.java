@@ -5,6 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import com.google.gson.Gson;
 
 import data.SkillDag.Node;
+import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.editor.LDefaultListEditor;
 
@@ -16,11 +17,11 @@ public class SkillNodeList extends LDefaultListEditor<Node> {
 	
 	public SkillNodeList(Composite parent, int style) {
 		super(parent, style);
-		getCollection().setEditEnabled(false);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(false);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 	}
 
@@ -34,12 +35,12 @@ public class SkillNodeList extends LDefaultListEditor<Node> {
 	}
 
 	@Override
-	public void setList(LDataList<Node> list) {
-		currentList = list;
+	public void setDataCollection(LDataCollection<Node> list) {
+		currentList = (LDataList<Node>) list;
 	}
 	
 	@Override
-	public LDataList<Node> getList() {
+	public LDataList<Node> getDataCollection() {
 		return currentList;
 	}
 

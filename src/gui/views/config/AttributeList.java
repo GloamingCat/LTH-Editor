@@ -5,6 +5,7 @@ import gui.shell.AttributeShell;
 import org.eclipse.swt.widgets.Composite;
 
 import data.Attribute;
+import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -16,11 +17,11 @@ public class AttributeList extends LDefaultListEditor<Attribute> {
 	
 	public AttributeList(Composite parent, int style) {
 		super(parent, style);
-		getCollection().setEditEnabled(true);
-		getCollection().setInsertNewEnabled(true);
-		getCollection().setDuplicateEnabled(true);
-		getCollection().setDeleteEnabled(true);
-		getCollection().setDragEnabled(true);
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 
 		setShellFactory(new LShellFactory<Attribute>() {
@@ -42,12 +43,12 @@ public class AttributeList extends LDefaultListEditor<Attribute> {
 	}
 	
 	@Override
-	public void setList(LDataList<Attribute> list) {
-		currentList = list;
+	public void setDataCollection(LDataCollection<Attribute> list) {
+		currentList = (LDataList<Attribute>) list;
 	}
 	
 	@Override
-	public LDataList<Attribute> getList() {
+	public LDataList<Attribute> getDataCollection() {
 		return currentList;
 	}
 
