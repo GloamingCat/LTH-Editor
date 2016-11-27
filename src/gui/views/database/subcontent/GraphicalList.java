@@ -12,15 +12,15 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultGridEditor;
 
-public class TileList<T extends LGraphical> extends LDefaultGridEditor<T> {
+public class GraphicalList<T extends LGraphical> extends LDefaultGridEditor<T> {
 
 	private static Gson gson = new Gson();
 	
 	protected LDataList<T> currentList;
 	
-	public TileList(Composite parent, int style) {
+	public GraphicalList(Composite parent, int style) {
 		super(parent, style);
-		TileList<T> self = this;
+		GraphicalList<T> self = this;
 		setShellFactory(new LShellFactory<T>() {
 			@Override
 			public LObjectShell<T> createShell(Shell parent) {

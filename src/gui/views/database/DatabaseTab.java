@@ -2,10 +2,10 @@ package gui.views.database;
 
 import gui.Vocab;
 import gui.shell.ImageShell;
-import gui.shell.ScriptShell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,7 +28,6 @@ import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
 import lwt.widget.LControl;
-import lwt.widget.LStringButton;
 import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Label;
@@ -122,14 +121,10 @@ public abstract class DatabaseTab extends LView {
 		addControl(button, attName);
 	}
 	
-	protected void addScriptButton(LStringButton button, Text text, String folderName, String attName) {
-		button.setText(text);
-		button.setShellFactory(new LShellFactory<String>() {
-			@Override
-			public LObjectShell<String> createShell(Shell parent) {
-				return new ScriptShell(parent, folderName);
-			}
-		});
+	protected void addScriptButton(ScriptButton button, Text pathText, StyledText paramText, String folderName, String attName) {
+		button.setPathText(pathText);
+		button.setParamText(paramText);
+		button.setFolder(folderName);
 		addControl(button, attName);
 	}
 

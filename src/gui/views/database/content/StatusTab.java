@@ -3,6 +3,7 @@ package gui.views.database.content;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.ImageButton;
+import gui.views.database.ScriptButton;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
-import lwt.widget.LStringButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -93,8 +93,8 @@ public class StatusTab extends DatabaseTab {
 		Text txtAI = new Text(compositeAI, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LStringButton btnSelectAI = new LStringButton(compositeAI, SWT.NONE);
-		addScriptButton(btnSelectAI, txtAI, "ai", "scriptAI");
+		ScriptButton btnSelectAI = new ScriptButton(compositeAI, SWT.NONE);
+		addScriptButton(btnSelectAI, txtAI, null, "ai", "scriptAI");
 		
 		Group grpDrain = new Group(contentEditor, SWT.NONE);
 		grpDrain.setText(Vocab.instance.DRAIN);

@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
+import gui.views.database.subcontent.ScriptList;
 import gui.views.database.subcontent.TagList;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LSpinner;
-import lwt.widget.LStringButton;
-import lwt.widget.LTextBox;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -20,7 +19,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -55,32 +53,11 @@ public class CharacterTab extends DatabaseTab {
 		LSpinner spnHeight = new LSpinner(stuff, SWT.NONE);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnHeight, "colliderHeight");
-
-		Label lblEventsheet = new Label(stuff, SWT.NONE);
-		lblEventsheet.setText(Vocab.instance.EVENTSHEET);
 		
-		Text txtEventsheet = new Text(stuff, SWT.BORDER | SWT.READ_ONLY);
-		txtEventsheet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		SashForm center = new SashForm(contentEditor, SWT.NONE);
+		center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		LStringButton btnSelect = new LStringButton(stuff, SWT.NONE);
-		btnSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		addScriptButton(btnSelect, txtEventsheet, "eventsheet", "eventsheet");
-		
-		Label lblParams = new Label(stuff, SWT.NONE);
-		lblParams.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblParams.setText(Vocab.instance.PARAM);
-		
-		LTextBox txtParam = new LTextBox(stuff, SWT.NONE);
-		GridData gd_txtParam = new GridData(SWT.FILL, SWT.TOP, true, true, 3, 1);
-		gd_txtParam.heightHint = 128;
-		txtParam.setLayoutData(gd_txtParam);
-		addControl(txtParam, "param");
-		
-		SashForm bottom = new SashForm(contentEditor, SWT.NONE);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Group grpAnimations = new Group(bottom, SWT.NONE);
+		Group grpAnimations = new Group(center, SWT.NONE);
 		GridLayout gl_grpAnimations = new GridLayout(2, false);
 		gl_grpAnimations.verticalSpacing = 0;
 		gl_grpAnimations.marginHeight = 0;
@@ -119,14 +96,66 @@ public class CharacterTab extends DatabaseTab {
 			}
 		});
 		
-		Group grpTags = new Group(bottom, SWT.NONE);
+		Group grpTags = new Group(center, SWT.NONE);
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
 		
-		bottom.setWeights(new int[] {2, 1});
+		center.setWeights(new int[] {2, 1});
+		
+		Composite bottom = new Composite(contentEditor, SWT.NONE);
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout gl_bottom = new GridLayout(3, true);
+		gl_bottom.marginWidth = 0;
+		gl_bottom.marginHeight = 0;
+		bottom.setLayout(gl_bottom);
+		
+		Group grpStart = new Group(bottom, SWT.NONE);
+		grpStart.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStart.setLayout(new FillLayout());
+		grpStart.setText(Vocab.instance.STARTLISTENERS);
+		
+		ScriptList lstStart = new ScriptList(grpStart, SWT.NONE) {
+			protected String attributeName() {
+				return "startListeners";
+			}
+			protected String folderName() {
+				return "character";
+			}
+		};
+		addChild(lstStart);
+		
+		Group grpCollision = new Group(bottom, SWT.NONE);
+		grpCollision.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpCollision.setLayout(new FillLayout());
+		grpCollision.setText(Vocab.instance.COLLISIONLISTENERS);
+		
+		ScriptList lstCollision = new ScriptList(grpCollision, SWT.NONE) {
+			protected String attributeName() {
+				return "collisionListeners";
+			}
+			protected String folderName() {
+				return "character";
+			}
+		};
+		addChild(lstCollision);
+		
+		Group grpInteract = new Group(bottom, SWT.NONE);
+		grpInteract.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpInteract.setLayout(new FillLayout());
+		grpInteract.setText(Vocab.instance.INTERACTLISTENERS);
+		
+		ScriptList lstInteract = new ScriptList(grpInteract, SWT.NONE) {
+			protected String attributeName() {
+				return "interactListeners";
+			}
+			protected String folderName() {
+				return "character";
+			}
+		};
+		addChild(lstInteract);
 	}
 
 	@Override

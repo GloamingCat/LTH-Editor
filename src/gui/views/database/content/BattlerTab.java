@@ -2,7 +2,7 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
-import gui.views.database.ImageButton;
+import gui.views.database.ScriptButton;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
@@ -93,8 +93,8 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAI = new Text(compositeAI, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ImageButton btnSelect = new ImageButton(compositeAI, SWT.NONE);
-		addScriptButton(btnSelect, txtAI, "ai", "scriptAI");
+		ScriptButton btnSelect = new ScriptButton(compositeAI, SWT.NONE);
+		addScriptButton(btnSelect, txtAI, null, "ai", "scriptAI");
 		
 		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeReward = new GridLayout(4, false);

@@ -2,7 +2,7 @@ package data;
 
 import org.eclipse.swt.graphics.Image;
 
-import gui.helper.ImageHelper;
+import gui.helper.TileHelper;
 import lwt.dataestructure.LDataList;
 import lwt.datainterface.LGraphical;
 
@@ -18,38 +18,50 @@ public class Tileset {
 		return name;
 	}
 	
-	public static class TerrainTile implements LGraphical {
+	public static class BasicTile {
 		public int id;
-		public TerrainTile(int i) {
-			// TODO Auto-generated constructor stub
-		}
+		public LDataList<Tag> tags = new LDataList<>();
+	}
+	
+	public static class TerrainTile extends BasicTile implements LGraphical {
 		@Override
 		public Image toImage() {
-			return ImageHelper.getTerrainTile(id);
+			return TileHelper.getTerrainTile(id);
 		}
 	}
 	
-	public static class ObstacleTile implements LGraphical {
-		public int id;
+	public static class ObstacleTile extends BasicTile implements LGraphical {
 		@Override
 		public Image toImage() {
-			return ImageHelper.getObstacleTile(id);
+			return TileHelper.getObstacleTile(id);
 		}
 	}
 	
-	public static class CharTile implements LGraphical {
-		public int id;
+	public static class CharTile extends BasicTile implements LGraphical {
+		public int animID = 0;
+		public int direction = 315;
+		public int startID = -1;
+		public int collisionID = -1;
+		public int interactID = -1;
+		public CharTile() {}
+		public CharTile(int id, int animID, int direction) {
+			this.id = id;
+			this.animID = animID;
+			this.direction = direction;
+		}
 		@Override
 		public Image toImage() {
-			return ImageHelper.getCharacterTile(id);
+			return TileHelper.getCharacterTile(id, animID, direction);
+		}
+		public String getKey() {
+			return id + "," + animID + "," + direction;
 		}
 	}
 	
-	public static class RegionTile implements LGraphical {
-		public int id;
+	public static class RegionTile extends BasicTile implements LGraphical {
 		@Override
 		public Image toImage() {
-			return ImageHelper.getRegionTile(id);
+			return TileHelper.getRegionTile(id);
 		}
 	}
 	

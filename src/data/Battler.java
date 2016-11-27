@@ -6,7 +6,7 @@ public class Battler {
 
 	public String name = "New Battler";
 	public int animationID;
-	public String scriptAI = "";
+	public Script scriptAI = new Script();
 	public int attackID;
 	public int skillDagID;
 	public int money;

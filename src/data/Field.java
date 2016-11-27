@@ -8,6 +8,7 @@ public class Field {
 	public String name = "New Field";
 	public int sizeX = 15;
 	public int sizeY = 15;
+	public int tilesetID = 0;
 	public LDataList<Layer> layers = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	

@@ -7,11 +7,13 @@ public class GameCharacter {
 	public String name = "New Character";
 	public int colliderSize = 1;
 	public int colliderHeight = 1;
-	public String eventsheet = "";
-	public String param = "";
-	public int direction = 315;
-	public LDataList<Node> animations = new LDataList<Node>();
-	public LDataList<Tag> tags = new LDataList<Tag>();
+	
+	public LDataList<Script> startListeners = new LDataList<>();
+	public LDataList<Script> collisionListeners = new LDataList<>();
+	public LDataList<Script> interactListeners = new LDataList<>();
+	
+	public LDataList<Node> animations = new LDataList<>();
+	public LDataList<Tag> tags = new LDataList<>();
 	
 	public GameCharacter() {
 		Node anim = new Node();

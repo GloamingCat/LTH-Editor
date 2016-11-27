@@ -101,6 +101,13 @@ public class Vocab {
 	public String QUADH = "Quad Height";
 	public String FULLIMAGE = "Full Image";
 	
+	// Character
+	public String COLLIDERSIZE = "Collider Radius";
+	public String COLLIDERHEIGHT = "Collider Height";
+	public String STARTLISTENERS = "Start Scripts";
+	public String COLLISIONLISTENERS = "Collision Scripts";
+	public String INTERACTLISTENERS = "Interact Scripts";
+	
 	// Ramp
 	public String HEIGHT = "Height";
 	public String BOTTOM = "Bottom";
@@ -109,9 +116,6 @@ public class Vocab {
 	
 	// Obstacle
 	public String RAMP = "Ramp";
-	public String COLLIDERSIZE = "Collider Size";
-	public String COLLIDERHEIGHT = "Collider Height";	
-	public String EVENTSHEET = "Eventsheet";
 	public String NEIGHBORS = "Neighbors";
 
 	// Status
@@ -149,5 +153,12 @@ public class Vocab {
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
+	
+	// Tileset
+	public String ANIMATION = "Animation";
+	public String DIRECTION = "Direction";
+	public String STARTLISTENER = "Start";
+	public String COLLISIONLISTENER = "Collision";
+	public String INTERACTLISTENER = "Interact";
 
 }

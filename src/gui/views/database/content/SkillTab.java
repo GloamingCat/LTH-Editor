@@ -3,17 +3,18 @@ package gui.views.database.content;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.ImageButton;
+import gui.views.database.ScriptButton;
 import gui.views.database.subcontent.TagList;
 
 import java.util.ArrayList;
 
 import lwt.editor.LComboView;
 import lwt.widget.LSpinner;
-import lwt.widget.LStringButton;
 import lwt.widget.LTextBox;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -196,16 +197,16 @@ public class SkillTab extends DatabaseTab {
 		Text txtEffect = new Text(grpEffect, SWT.BORDER | SWT.READ_ONLY);
 		txtEffect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LStringButton btnSelectEffect = new LStringButton(grpEffect, SWT.NONE);
-		addScriptButton(btnSelectEffect, txtEffect, "skill", "effect");
+		ScriptButton btnSelectEffect = new ScriptButton(grpEffect, SWT.NONE);
 		
 		Label lblParam = new Label(grpEffect, SWT.NONE);
 		lblParam.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblParam.setText(Vocab.instance.PARAM);
 		
-		LTextBox txtParam = new LTextBox(grpEffect, SWT.NONE);
+		StyledText txtParam = new StyledText(grpEffect, SWT.BORDER | SWT.READ_ONLY);
 		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		addControl(txtParam, "param");
+		
+		addScriptButton(btnSelectEffect, txtEffect, txtParam, "skill", "effect");
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
