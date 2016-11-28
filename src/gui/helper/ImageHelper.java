@@ -10,6 +10,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import project.Project;
 import data.Animation;
 import data.Obstacle;
+import data.Ramp.PointSet;
 
 public class ImageHelper {
 
@@ -63,6 +64,17 @@ public class ImageHelper {
 			System.out.println(e.getMessage());
 			return SWTResourceManager.getImage("");
 		}
+	}
+	
+	public static Image rampImage(PointSet points) {
+		Image img = new Image(Display.getCurrent(), (FieldHelper.config.tileW + 4) * 2, 
+				(FieldHelper.config.tileH + FieldHelper.config.pixelsPerHeight + 4) * 2);
+		GC gc = new GC(img);
+		TilePainter.setScale(2);
+		TilePainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
+				FieldHelper.config.tileH / 2 + 2, points, 1);
+		gc.dispose();
+		return img;
 	}
 
 }

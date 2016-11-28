@@ -1,24 +1,21 @@
 package gui.views.database.subcontent;
 
 import gui.Vocab;
-import gui.helper.FieldHelper;
-import gui.helper.TilePainter;
+import gui.helper.ImageHelper;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import data.Ramp;
+import data.Ramp.PointSet;
 
 public class RampEditor extends LObjectEditor {
 
@@ -27,61 +24,60 @@ public class RampEditor extends LObjectEditor {
 	public RampEditor(Composite parent, int style) {
 		super(parent, style);
 		
-		setLayout(new FillLayout());
+		GridLayout gridLayout = new GridLayout(4, false);
+		gridLayout.marginWidth = 0;
+		gridLayout.marginHeight = 0;
+		setLayout(gridLayout);
 		
-		Group grpLines = new Group(this, SWT.NONE);
-		grpLines.setLayout(new GridLayout(4, false));
-		grpLines.setText(Vocab.instance.LINES);
-		
-		Label lblBottomX = new Label(grpLines, SWT.NONE);
+		Label lblBottomX = new Label(this, SWT.NONE);
 		lblBottomX.setText(Vocab.instance.BOTTOM + "1 X");
 		
-		LSpinner spnBX1 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnBX1 = new LSpinner(this, SWT.NONE);
 		spnBX1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblBottomX_1 = new Label(grpLines, SWT.NONE);
+		Label lblBottomX_1 = new Label(this, SWT.NONE);
 		lblBottomX_1.setText(Vocab.instance.BOTTOM + "2 X");
 		
-		LSpinner spnBX2 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnBX2 = new LSpinner(this, SWT.NONE);
 		spnBX2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblBottomY = new Label(grpLines, SWT.NONE);
+		Label lblBottomY = new Label(this, SWT.NONE);
 		lblBottomY.setText(Vocab.instance.BOTTOM + "1 Y");
 		
-		LSpinner spnBY1 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnBY1 = new LSpinner(this, SWT.NONE);
 		spnBY1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label lblBottomY_1 = new Label(grpLines, SWT.NONE);
+		Label lblBottomY_1 = new Label(this, SWT.NONE);
 		lblBottomY_1.setText(Vocab.instance.BOTTOM + "2 Y");
 		
-		LSpinner spnBY2 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnBY2 = new LSpinner(this, SWT.NONE);
 		spnBY2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblTopX = new Label(grpLines, SWT.NONE);
+		Label lblTopX = new Label(this, SWT.NONE);
 		lblTopX.setText(Vocab.instance.TOP + "1 X");
 		
-		LSpinner spnTX1 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnTX1 = new LSpinner(this, SWT.NONE);
 		spnTX1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label lblTopX_1 = new Label(grpLines, SWT.NONE);
+		Label lblTopX_1 = new Label(this, SWT.NONE);
 		lblTopX_1.setText(Vocab.instance.TOP + "2 X");
 		
-		LSpinner spnTX2 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnTX2 = new LSpinner(this, SWT.NONE);
 		spnTX2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label lblTopY = new Label(grpLines, SWT.NONE);
+		Label lblTopY = new Label(this, SWT.NONE);
 		lblTopY.setText(Vocab.instance.TOP + "1 Y");
 		
-		LSpinner spnTY1 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnTY1 = new LSpinner(this, SWT.NONE);
 		spnTY1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label lblTopY_1 = new Label(grpLines, SWT.NONE);
+		Label lblTopY_1 = new Label(this, SWT.NONE);
 		lblTopY_1.setText(Vocab.instance.TOP + "2 Y");
 		
-		LSpinner spnTY2 = new LSpinner(grpLines, SWT.NONE);
+		LSpinner spnTY2 = new LSpinner(this, SWT.NONE);
 		spnTY2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		label = new Label(grpLines, SWT.NONE);
+		label = new Label(this, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
 		label.setAlignment(SWT.CENTER);
 		
@@ -101,36 +97,28 @@ public class RampEditor extends LObjectEditor {
 					resetImage();
 				}
 			});
+			spinners[i].setMinimum(-100);
+			spinners[i].setMaximum(100);
 		}
 	}
 	
 	public void setObject(Object obj) {
-		super.setObject(obj);
+		Ramp ramp = (Ramp) obj;
+		super.setObject(ramp.points);
 		resetImage();
 	}
 	
-	private void resetImage() {
+	public void resetImage() {
 		if (currentObject == null)
 			label.setImage(null);
 		else {
-			Image image = rampImage();
+			PointSet points = (PointSet) currentObject;
+			Image image = ImageHelper.rampImage(points);
 			if (label.getImage() != null) {
 				label.getImage().dispose();
 			}
 			label.setImage(image);
 		}
 	}
-	
-	public Image rampImage() {
-		Ramp ramp = (Ramp) currentObject;
-		Image img = new Image(getDisplay(), (FieldHelper.config.tileW + 4) * 2, 
-				(FieldHelper.config.tileH + FieldHelper.config.pixelsPerHeight + 4) * 2);
-		GC gc = new GC(img);
-		TilePainter.setScale(2);
-		TilePainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
-				FieldHelper.config.tileH / 2 + 2, ramp);
-		gc.dispose();
-		return img;
-	}
-	
+
 }

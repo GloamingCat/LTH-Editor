@@ -30,6 +30,9 @@ public abstract class FieldMath {
 		}
 	}
 	
+	public abstract ArrayList<Point> fullNeighborShift();
+	public abstract ArrayList<Point> fullVertexShift();
+	
 	protected abstract ArrayList<Point> createNeighborShift();
 	protected abstract ArrayList<Point> createVertexShift();
 	

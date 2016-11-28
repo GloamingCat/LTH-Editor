@@ -113,6 +113,7 @@ public class Vocab {
 	public String BOTTOM = "Bottom";
 	public String TOP = "Top";
 	public String LINES = "Lines";
+	public String CHOOSEDEFAULT = "Choose Default";
 	
 	// Obstacle
 	public String RAMP = "Ramp";

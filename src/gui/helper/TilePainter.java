@@ -18,6 +18,7 @@ import data.Field.Layer;
 import data.GameCharacter;
 import data.Obstacle;
 import data.Ramp;
+import data.Ramp.PointSet;
 import data.Terrain;
 import data.Tileset;
 import data.Tileset.CharTile;
@@ -85,6 +86,25 @@ public class TilePainter {
 		gc.drawPolygon(p);
 	}
 	
+	public static void paintRamp(GC gc, int x0, int y0, PointSet points, int height) {
+		Config conf = FieldHelper.config;
+		paintEdges(gc, x0, y0 + conf.pixelsPerHeight);
+		Point b1 = new Point((points.b1x + x0) * scale, (points.b1y + y0 + conf.pixelsPerHeight * height) * scale);
+		Point t1 = new Point((points.t1x + x0) * scale, (points.t1y + y0) * scale);
+		Point b2 = new Point((points.b2x + x0) * scale, (points.b2y + y0 + conf.pixelsPerHeight * height) * scale);
+		Point t2 = new Point((points.t2x + x0) * scale, (points.t2y + y0) * scale);
+		Point t1_ = new Point(t1.x, t1.y + conf.pixelsPerHeight * height * scale);
+		Point t2_ = new Point(t2.x, t2.y + conf.pixelsPerHeight * height * scale);
+		int[] p = new int[] {b1.x, b1.y, t1.x, t1.y, t2.x, t2.y, b2.x, b2.y};
+		gc.drawPolygon(p);
+		
+		p = new int[] {t1.x, t1.y, t1_.x, t1_.y, b1.x, b1.y};
+		gc.drawPolyline(p);
+		p = new int[] {t2.x, t2.y, t2_.x, t2_.y, b2.x, b2.y};
+		gc.drawPolyline(p);
+		gc.drawLine(t1_.x, t1_.y, t2_.x, t2_.y);
+	}
+	
 	public static void paintRamp(Image image, int x0, int y0, int id) {
 		Ramp ramp = (Ramp) Project.current.ramps.getList().get(id);
 		Config conf = FieldHelper.config;
@@ -94,18 +114,8 @@ public class TilePainter {
 	}
 	
 	public static void paintRamp(GC gc, int x0, int y0, Ramp ramp) {
-		Config conf = FieldHelper.config;
 		gc.setBackground(new Color(Display.getCurrent(), new RGB(127, 127, 127)));
-		paintEdges(gc, x0, y0 + conf.pixelsPerHeight);
-		Point b1 = new Point((ramp.b1x + x0) * scale, (ramp.b1y + y0) * scale);
-		Point t1 = new Point((ramp.t1x + x0) * scale, (ramp.t1y + y0) * scale);
-		Point b2 = new Point((ramp.b2x + x0) * scale, (ramp.b2y + y0) * scale);
-		Point t2 = new Point((ramp.t2x + x0) * scale, (ramp.t2y + y0) * scale);
-		int[] p = new int[] {b1.x, b1.y + conf.pixelsPerHeight * scale, t1.x, t1.y, 
-				t2.x, t2.y, b2.x, b2.y + conf.pixelsPerHeight * scale};
-		gc.drawPolygon(p);
-		gc.drawLine(t1.x, t1.y, t1.x, t1.y + conf.pixelsPerHeight * scale);
-		gc.drawLine(t2.x, t2.y, t2.x, t2.y + conf.pixelsPerHeight * scale);
+		paintRamp(gc, x0, y0, ramp.points, ramp.height);
 	}
 	
 	public static void paintTerrain(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
@@ -220,6 +230,6 @@ public class TilePainter {
 		gc.dispose();
 		return img;
 	}
-	
+
 }
 

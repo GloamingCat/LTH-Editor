@@ -11,6 +11,12 @@ public class IsoField extends FieldMath {
 	}
 	
 	protected ArrayList<Point> createNeighborShift() {
+		ArrayList<Point> p = fullNeighborShift();
+		removePoints(p);
+		return p;
+	}
+	
+	public ArrayList<Point> fullNeighborShift() {
 		ArrayList<Point> p = new ArrayList<>();
 		p.add(new Point(1, 0));
 		p.add(new Point(1, 1));
@@ -20,12 +26,17 @@ public class IsoField extends FieldMath {
 		p.add(new Point(-1, -1));
 		p.add(new Point(0, -1));
 		p.add(new Point(1, -1));
-		removePoints(p);
 		return p;
 	}
 
 	@Override
 	protected ArrayList<Point> createVertexShift() {
+		ArrayList<Point> p = fullVertexShift();
+		removePoints(p);
+		return p;
+	}
+	
+	public ArrayList<Point> fullVertexShift() {
 		ArrayList<Point> p = new ArrayList<>();
 		p.add(new Point(conf.tileB / 2, -conf.tileH / 2));
 		p.add(new Point(conf.tileW / 2, -conf.tileS / 2));
@@ -35,7 +46,6 @@ public class IsoField extends FieldMath {
 		p.add(new Point(-conf.tileW / 2, conf.tileS / 2));
 		p.add(new Point(-conf.tileW / 2, -conf.tileS / 2));
 		p.add(new Point(-conf.tileB / 2, -conf.tileH / 2));
-		removePoints(p);
 		return p;
 	}
 	

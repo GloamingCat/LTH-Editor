@@ -9,6 +9,7 @@ public class Field {
 	public int sizeX = 15;
 	public int sizeY = 15;
 	public int tilesetID = 0;
+	public Script onStart = new Script();
 	public LDataList<Layer> layers = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	
@@ -24,8 +25,6 @@ public class Field {
 	public static class Layer {
 		
 		public String name = "New Layer";
-		public int sizeX = 15;
-		public int sizeY = 15;
 		public int type = 0;
 		public int height = 0;
 		public boolean visible = true;
@@ -35,8 +34,7 @@ public class Field {
 		public Layer() {}
 		
 		public Layer(int sizeX, int sizeY) {
-			this.sizeX = sizeX;
-			this.sizeY = sizeY;
+			this.grid = new int[sizeX][sizeY];
 		}
 		
 		public String toString() {
