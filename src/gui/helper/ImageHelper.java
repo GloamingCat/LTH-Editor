@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -14,6 +15,8 @@ import data.Ramp.PointSet;
 
 public class ImageHelper {
 
+	private static TilePainter tilePainter = new TilePainter(2, false);
+	
 	public static Image getObstacleImage(int id) {
 		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
 		String path = obj.quad.imagePath;
@@ -70,9 +73,35 @@ public class ImageHelper {
 		Image img = new Image(Display.getCurrent(), (FieldHelper.config.tileW + 4) * 2, 
 				(FieldHelper.config.tileH + FieldHelper.config.pixelsPerHeight + 4) * 2);
 		GC gc = new GC(img);
-		TilePainter.setScale(2);
-		TilePainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
+		tilePainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
 				FieldHelper.config.tileH / 2 + 2, points, 1);
+		gc.dispose();
+		return img;
+	}
+	
+	public static Image transform(data.Transform t, Image original) {
+		return transform(t.offsetX, t.offsetY, t.rotation, t.scaleX, t.scaleY, 
+				t.red, t.green, t.blue, t.alpha, original);
+	}
+	
+	public static Image transform(int ox, int oy, int rot, int sx, int sy, 
+			int r, int g, int b, int a, Image original) {
+		int w = original.getBounds().x;
+		int W = w * sx / 100;
+		int h = original.getBounds().y;
+		int H = h * sx / 100;
+		int d = (int) Math.sqrt(W * W + H * H) + 1;
+		Image img = new Image(original.getDevice(), d, d);
+		
+		Transform transform = new Transform(original.getDevice());
+        transform.translate(w/2 - ox, h - oy);
+        transform.scale(sx / 100, sy / 100);
+        transform.rotate(rot);
+        transform.translate(ox - w/2, oy - h);
+		
+		GC gc = new GC(img);
+		gc.setTransform(transform);
+		gc.drawImage(original, 0, 0);
 		gc.dispose();
 		return img;
 	}

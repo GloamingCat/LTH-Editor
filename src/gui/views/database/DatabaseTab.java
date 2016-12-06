@@ -2,6 +2,8 @@ package gui.views.database;
 
 import gui.Vocab;
 import gui.shell.ImageShell;
+import gui.views.common.ImageButton;
+import gui.views.common.ScriptButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;

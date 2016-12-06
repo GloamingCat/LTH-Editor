@@ -1,4 +1,4 @@
-package gui.views.database;
+package gui.views.common;
 
 import gui.shell.ScriptShell;
 import lwt.LVocab;

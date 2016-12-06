@@ -133,6 +133,7 @@ public class ConfigEditor extends LObjectEditor {
 	
 	public void onVisible() {
 		setObject(Project.current.config.getData());
+		onChildVisible();
 	}
 	
 }

@@ -1,4 +1,4 @@
-package gui.views.database;
+package gui.views.common;
 
 import lwt.widget.LStringButton;
 

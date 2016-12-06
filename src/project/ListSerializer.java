@@ -14,7 +14,6 @@ public class ListSerializer extends LDefaultSerializer {
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private static JsonParser parser = new JsonParser();
 	private LDataList<Object> list;
-
 	
 	public ListSerializer(String path, Class<?> type) {
 		super(path + ".json", type);

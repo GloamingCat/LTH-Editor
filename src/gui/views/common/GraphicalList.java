@@ -1,4 +1,4 @@
-package gui.views.database.subcontent;
+package gui.views.common;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;

@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import lwt.dataserialization.LObjectSerializer;
 
-public class ObjectSerializer extends LObjectSerializer {
+public class ObjectSerializer extends LObjectSerializer<Object> {
 	
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	
@@ -23,4 +23,8 @@ public class ObjectSerializer extends LObjectSerializer {
 		return gson.fromJson(new String(bytes), type);
 	}
 
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
 }

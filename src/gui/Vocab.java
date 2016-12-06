@@ -6,6 +6,7 @@ public class Vocab {
 	
 	public String DATABASEEDITOR = "Database Editor";
 	public String CONFIGEDITOR = "Config Editor";
+	public String FIELDEDITOR = "Field Editor";
 	
 	// Tab names
 	public String ANIMATIONS = "Animations";

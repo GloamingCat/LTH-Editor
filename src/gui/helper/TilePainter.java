@@ -14,7 +14,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import data.Animation;
 import data.Config;
 import data.Field;
-import data.Field.Layer;
+import data.Layer;
 import data.GameCharacter;
 import data.Obstacle;
 import data.Ramp;
@@ -26,19 +26,21 @@ import project.Project;
 
 public class TilePainter {
 
-	private static int scale = 1;
 	private static Image gridTile = null;
-	private static boolean showGrid = true;
 	private static HashMap<Integer, Image> terrainCache = new HashMap<>();
 	private static HashMap<Integer, Image> obstacleCache = new HashMap<>();
 	private static HashMap<String, Image> characterCache = new HashMap<>();
 	private static HashMap<Integer, Image> regionCache = new HashMap<>();
 	
-	public static void setScale(int i) {
-		scale = i;
+	public float scale = 1;
+	public boolean showGrid = true;
+	
+	public TilePainter(float scale, boolean showGrid) {
+		this.scale = scale;
+		this.showGrid = showGrid;
 	}
 	
-	public static void reload() {
+	public void reload() {
 		scale = 1;
 		gridTile = createGridTile();
 		for(Image img : terrainCache.values()) {
@@ -59,7 +61,7 @@ public class TilePainter {
 		regionCache.clear();
 	}
 	
-	public static Image createGridTile() {
+	public Image createGridTile() {
 		Config conf = FieldHelper.config;
 		int w = conf.tileW;
 		int h = conf.tileH;
@@ -76,25 +78,25 @@ public class TilePainter {
 		return new Image(img.getDevice(), data, data.getTransparencyMask());
 	}
 	
-	public static void paintEdges(GC gc, int x0, int y0) {
+	public void paintEdges(GC gc, int x0, int y0) {
 		Point[] shift = FieldHelper.math.vertexShift;
 		int[] p = new int[shift.length * 2];
 		for(int i = 0; i < shift.length; i++) {
-			p[i * 2] = (shift[i].x + x0) * scale;
-			p[i * 2 + 1] = (shift[i].y + y0) * scale;
+			p[i * 2] = Math.round((shift[i].x + x0) * scale);
+			p[i * 2 + 1] = Math.round((shift[i].y + y0) * scale);
 		}
 		gc.drawPolygon(p);
 	}
 	
-	public static void paintRamp(GC gc, int x0, int y0, PointSet points, int height) {
+	public void paintRamp(GC gc, int x0, int y0, PointSet points, int height) {
 		Config conf = FieldHelper.config;
 		paintEdges(gc, x0, y0 + conf.pixelsPerHeight);
-		Point b1 = new Point((points.b1x + x0) * scale, (points.b1y + y0 + conf.pixelsPerHeight * height) * scale);
-		Point t1 = new Point((points.t1x + x0) * scale, (points.t1y + y0) * scale);
-		Point b2 = new Point((points.b2x + x0) * scale, (points.b2y + y0 + conf.pixelsPerHeight * height) * scale);
-		Point t2 = new Point((points.t2x + x0) * scale, (points.t2y + y0) * scale);
-		Point t1_ = new Point(t1.x, t1.y + conf.pixelsPerHeight * height * scale);
-		Point t2_ = new Point(t2.x, t2.y + conf.pixelsPerHeight * height * scale);
+		Point b1 = new Point(Math.round((points.b1x + x0) * scale), Math.round((points.b1y + y0 + conf.pixelsPerHeight * height) * scale));
+		Point t1 = new Point(Math.round((points.t1x + x0) * scale), Math.round((points.t1y + y0) * scale));
+		Point b2 = new Point(Math.round((points.b2x + x0) * scale), Math.round((points.b2y + y0 + conf.pixelsPerHeight * height) * scale));
+		Point t2 = new Point(Math.round((points.t2x + x0) * scale), Math.round((points.t2y + y0) * scale));
+		Point t1_ = new Point(t1.x, Math.round(t1.y + conf.pixelsPerHeight * height * scale));
+		Point t2_ = new Point(t2.x, Math.round(t2.y + conf.pixelsPerHeight * height * scale));
 		int[] p = new int[] {b1.x, b1.y, t1.x, t1.y, t2.x, t2.y, b2.x, b2.y};
 		gc.drawPolygon(p);
 		
@@ -105,7 +107,7 @@ public class TilePainter {
 		gc.drawLine(t1_.x, t1_.y, t2_.x, t2_.y);
 	}
 	
-	public static void paintRamp(Image image, int x0, int y0, int id) {
+	public void paintRamp(Image image, int x0, int y0, int id) {
 		Ramp ramp = (Ramp) Project.current.ramps.getList().get(id);
 		Config conf = FieldHelper.config;
 		GC gc = new GC(image);
@@ -113,12 +115,12 @@ public class TilePainter {
 		gc.dispose();
 	}
 	
-	public static void paintRamp(GC gc, int x0, int y0, Ramp ramp) {
+	public void paintRamp(GC gc, int x0, int y0, Ramp ramp) {
 		gc.setBackground(new Color(Display.getCurrent(), new RGB(127, 127, 127)));
 		paintRamp(gc, x0, y0, ramp.points, ramp.height);
 	}
 	
-	public static void paintTerrain(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintTerrain(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
 		int id = tileset.terrains.get(layer.grid[x][y]).id;
 		Terrain terrain = (Terrain) Project.current.terrains.getList().get(id);
@@ -144,7 +146,7 @@ public class TilePainter {
 				x0, y0, tw / 2, th / 2);
 	}
 	
-	public static void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
 		int id = tileset.obstacles.get(layer.grid[x][y]).id;
 		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
@@ -162,7 +164,7 @@ public class TilePainter {
 		}
 	}
 	
-	public static void paintCharacter(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintCharacter(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
 		CharTile tile = tileset.characters.get(layer.grid[x][y]);
 		String key = tile.getKey();
@@ -183,7 +185,7 @@ public class TilePainter {
 				x0 - w / 2 + anim.transform.offsetX, y0 - h + anim.transform.offsetY, w, h);
 	}
 	
-	public static void paintRegion(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintRegion(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
 		int id = tileset.regions.get(layer.grid[x][y]).id;
 		int w = FieldHelper.config.tileW;
@@ -196,7 +198,7 @@ public class TilePainter {
 		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
 	}
 	
-	public static Image createTileImage(int x, int y, int imgW, int imgH, int h, Field field) {
+	public Image createTileImage(int x, int y, int imgW, int imgH, int h, Field field) {
 		Image src = new Image(Display.getCurrent(), imgW, imgH);        
 	    ImageData imageData = src.getImageData();
 	    imageData.transparentPixel = imageData.getPixel(0, 0);
@@ -212,18 +214,18 @@ public class TilePainter {
 		for(int i = 0; i < field.layers.size(); i++) {
 			Layer layer = field.layers.get(i);
 			if (layer.visible && layer.grid[x][y] >= 0) {
-				if (layer.type == 0) {
-					paintTerrain(field.tilesetID, layer, x, y, gc, x0, y0 - layer.height * pph);
-					if (showGrid && layer.height == h) {
+				if (layer.info.type == 0) {
+					paintTerrain(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+					if (showGrid && layer.info.height == h) {
 						h = -1;
-						paintEdges(gc, x0, y0 - layer.height * pph);
+						paintEdges(gc, x0, y0 - layer.info.height * pph);
 					}
-				} else if (layer.type == 1)
-					paintObstacle(field.tilesetID, layer, x, y, gc, x0, y0 - layer.height * pph);
-				else if (layer.type == 2)
-					paintCharacter(field.tilesetID, layer, x, y, gc, x0, y0 - layer.height * pph);
-				else if (layer.type == 3 && layer.height == h) {
-					paintRegion(field.tilesetID, layer, x, y, gc, x0, y0 - layer.height * pph);
+				} else if (layer.info.type == 1)
+					paintObstacle(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+				else if (layer.info.type == 2)
+					paintCharacter(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+				else if (layer.info.type == 3 && layer.info.height == h) {
+					paintRegion(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
 				}
 			}
 		}
