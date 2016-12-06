@@ -22,9 +22,5 @@ public class ObjectSerializer extends LObjectSerializer<Object> {
 	protected Object fromByteArray(byte[] bytes) {
 		return gson.fromJson(new String(bytes), type);
 	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
 	
 }

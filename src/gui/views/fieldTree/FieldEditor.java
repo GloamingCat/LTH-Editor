@@ -6,6 +6,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -111,6 +112,12 @@ public class FieldEditor extends LObjectEditor {
 		}
 	}
 	
-	public void onSelectField(Field field) {}
+	public void updateCanvas() {
+		canvas.updateAllTileImages();
+	}
+
+	public void onSelectTile(int index) {
+		canvas.setSelection(new int[][] {{index}}, new Point(0, 0));
+	}
 	
 }

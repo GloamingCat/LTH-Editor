@@ -1,5 +1,6 @@
 package gui.views.fieldTree;
 
+import gui.shell.LayerShell;
 import gui.views.common.GraphicalList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
@@ -7,7 +8,9 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LEditor;
 import lwt.editor.LListEditor;
+import lwt.event.LEditEvent;
 import lwt.event.LSelectionEvent;
+import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 
 import org.eclipse.swt.SWT;
@@ -15,6 +18,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Field;
@@ -25,6 +29,7 @@ import data.Tileset.*;
 
 public class FieldLayerEditor extends LEditor {
 
+	protected FieldEditor fieldEditor;
 	protected Field field;
 	protected StackLayout stack = new StackLayout();
 	protected Composite tileset;
@@ -70,13 +75,16 @@ public class FieldLayerEditor extends LEditor {
 				field.layers.get(path.index).info = newData;
 			}
 		};
-		addChild(layerList);
-		
-		layerList.setShellFactory(new LShellFactory<Layer.Info>() {
+		layerList.setShellFactory(new LShellFactory<Info>() {
 			@Override
-			public LObjectShell<Layer.Info> createShell(
-					org.eclipse.swt.widgets.Shell parent) {
-				return null;
+			public LObjectShell<Info> createShell(Shell parent) {
+				return new LayerShell(parent);
+			}
+		});
+		addChild(layerList);
+		layerList.getCollectionWidget().addEditListener(new LCollectionListener<Info>() {
+			public void onEdit(LEditEvent<Info> e) {
+				onLayerEdit(e.newData);
 			}
 		});
 		
@@ -100,12 +108,27 @@ public class FieldLayerEditor extends LEditor {
 		tileset = new Composite(form, SWT.NONE);
 		tileset.setLayout(stack);
 		
+		LSelectionListener sl = new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				fieldEditor.onSelectTile(event.path.index);
+			}
+		};
+		
 		lstTerrains = new GraphicalList<>(tileset, SWT.NONE);
+		lstTerrains.getCollectionWidget().addSelectionListener(sl);
 		lstObstacles = new GraphicalList<>(tileset, SWT.NONE);
+		lstObstacles.getCollectionWidget().addSelectionListener(sl);
 		lstCharacters = new GraphicalList<>(tileset, SWT.NONE);
+		lstCharacters.getCollectionWidget().addSelectionListener(sl);
 		lstRegions = new GraphicalList<>(tileset, SWT.NONE);
+		lstRegions.getCollectionWidget().addSelectionListener(sl);
 		
 		form.setWeights(new int[] {1, 1});
+	}
+
+	public void setFieldEditor(FieldEditor fieldEditor) {
+		this.fieldEditor = fieldEditor;
 	}
 
 	@Override
@@ -128,27 +151,37 @@ public class FieldLayerEditor extends LEditor {
 		}
 	}
 	
-	public void selectLayer(Layer layer) {
-		if (layer == null) {
+	protected void setType(int type) {
+		switch(type) {
+		case 0:
 			stack.topControl = lstTerrains;
-		} else {
-			System.out.println("lalalalal");
-			switch(layer.info.type) {
-			case 0:
-				stack.topControl = lstTerrains;
-				break;
-			case 1:
-				stack.topControl = lstObstacles;
-				break;
-			case 2:
-				stack.topControl = lstCharacters;
-				break;
-			case 3:
-				stack.topControl = lstRegions;
-				break;
-			}
+			break;
+		case 1:
+			stack.topControl = lstObstacles;
+			break;
+		case 2:
+			stack.topControl = lstCharacters;
+			break;
+		case 3:
+			stack.topControl = lstRegions;
+			break;
 		}
 		tileset.layout();
+	}
+	
+	public void selectLayer(Layer layer) {
+		fieldEditor.selectLayer(layer);
+		if (layer == null) {
+			stack.topControl = lstTerrains;
+			tileset.layout();
+		} else {
+			setType(layer.info.type);
+		}
+	}
+	
+	public void onLayerEdit(Info newInfo) {
+		fieldEditor.updateCanvas();
+		setType(newInfo.type);
 	}
 
 }

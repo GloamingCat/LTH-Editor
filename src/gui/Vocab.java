@@ -163,4 +163,11 @@ public class Vocab {
 	public String COLLISIONLISTENER = "Collision";
 	public String INTERACTLISTENER = "Interact";
 
+	// Field
+	public String TILESET = "Tileset";
+	public String TYPE = "Type";
+	public String TERRAIN = "Terrain";
+	public String OBSTACLE = "Obstacle";
+	public String REGION = "Region";
+
 }

@@ -1,10 +1,13 @@
 package gui.views.fieldTree;
 
+import gui.shell.FieldShell;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 
@@ -12,13 +15,16 @@ import com.google.gson.Gson;
 
 import data.Field;
 import data.Field.Prefs;
-import data.Layer;
 import data.Node;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LTreeEditor;
 import lwt.editor.LView;
+import lwt.event.LEditEvent;
+import lwt.event.listener.LCollectionListener;
 
 public class FieldTreeEditor extends LView {
 
@@ -60,21 +66,30 @@ public class FieldTreeEditor extends LView {
 			}
 		};
 		treeEditor.getCollectionWidget().setInsertNewEnabled(true);
-		treeEditor.getCollectionWidget().setEditEnabled(false);
+		treeEditor.getCollectionWidget().setEditEnabled(true);
 		treeEditor.getCollectionWidget().setDuplicateEnabled(true);
 		treeEditor.getCollectionWidget().setDragEnabled(true);
 		treeEditor.getCollectionWidget().setDeleteEnabled(true);
+		treeEditor.setShellFactory(new LShellFactory<Prefs>() {
+			@Override
+			public LObjectShell<Prefs> createShell(Shell parent) {
+				return new FieldShell(parent);
+			}
+		});
+		treeEditor.getCollectionWidget().addEditListener(new LCollectionListener<Prefs>() {
+			public void onEdit(LEditEvent<Prefs> e) {
+				LDataTree<Node> node = Project.current.fieldTree.getData().root.getNode(e.path);
+				node.data.name = e.newData.name;
+				treeEditor.getCollectionWidget().refreshObject(e.path);
+			}
+		});
 		addChild(treeEditor);
 		
 		fieldEditor = new FieldEditor(sashForm, SWT.NONE);
 		fieldEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		sideEditor = new FieldLayerEditor(sashForm, SWT.NONE) {
-			public void selectLayer(Layer layer) {
-				fieldEditor.selectLayer(layer);
-				super.selectLayer(layer);
-			}
-		};
+		sideEditor = new FieldLayerEditor(sashForm, SWT.NONE);
+		sideEditor.setFieldEditor(fieldEditor);
 
 		treeEditor.addChild(fieldEditor);
 		fieldEditor.addChild(sideEditor);

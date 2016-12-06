@@ -114,6 +114,11 @@ public class EditableFieldCanvas extends FieldCanvas {
 		tool = t;
 	}
 	
+	public void setSelection(int[][] s, Point p) {
+		selection = s;
+		selectionPoint = p;
+	}
+	
 	private void useTool(int x, int y) {
 		int[][] grid = currentLayer.grid;
 		switch(tool) {
@@ -125,6 +130,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 			break;
 		case 2: // eraser
 			useEraser(grid, x, y);
+			break;
 		}
 	}
 	

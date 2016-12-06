@@ -4,7 +4,7 @@ import lwt.dataestructure.LDataList;
 
 public class Layer {
 	
-	public class Info {
+	public static class Info {
 		public String name = "New Layer";
 		public int type = 0;
 		public int height = 0;

@@ -20,16 +20,12 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 	
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private HashMap<Integer, Field> loadedFields = new HashMap<>();
-	private ObjectSerializer nodeSerializer = new ObjectSerializer("", Field.class);
+	private FieldNodeSerializer nodeSerializer = new FieldNodeSerializer();
 	
 	public FieldTreeSerializer(String path) {
 		super(path + ".json", FieldTree.class);
 	}
-	
-	public FieldTree getTree() {
-		return data;
-	}
-	
+
 	@Override
 	public boolean save() {
 		if (!super.save())
@@ -41,9 +37,7 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 		for(LDataTree<Node> child : treeNode.children) {
 			Field field = loadedFields.get(child.data.id);
 			if (field != null) {
-				nodeSerializer.setPath(Project.current.dataPath() + "/fields/" + field.id + ".json");
-				nodeSerializer.setData(field);
-				if (!nodeSerializer.save())
+				if (!nodeSerializer.saveField(field))
 					return false;
 			}
 			if (!save(child)) {
@@ -61,9 +55,7 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 	public Field loadField(Node node) {
 		Field field = loadedFields.get(node.id);
 		if (field == null) {
-			nodeSerializer.setPath(Project.current.dataPath() + "/fields/" + node.id + ".json");
-			nodeSerializer.load();
-			field = (Field) nodeSerializer.getData();
+			field = nodeSerializer.loadField(node.id);
 			loadedFields.put(node.id, field);
 		}
 		return field;
