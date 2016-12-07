@@ -6,7 +6,6 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -15,7 +14,6 @@ import data.Script;
 
 public class ScriptButton extends LObjectButton<Script> {
 	
-	private Button button;
 	private String folder;
 	
 	private Text pathText;

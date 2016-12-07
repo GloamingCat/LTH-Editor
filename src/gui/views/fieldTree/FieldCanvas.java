@@ -63,7 +63,7 @@ public class FieldCanvas extends LView {
 		Image img = tileImages[x][y];
 		int w = img.getBounds().width;
 		int h = img.getBounds().height;
-		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h + FieldHelper.config.tileH / 2, w, h);
+		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h + FieldHelper.config.tileH, w, h);
 	}
 	
 	// -------------------------------------------------------------------------------------

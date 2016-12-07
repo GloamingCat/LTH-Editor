@@ -3,6 +3,7 @@ package data;
 import java.util.HashMap;
 
 import lwt.dataestructure.LDataTree;
+import lwt.dataestructure.LPath;
 
 // ==================================================================================================
 //	The data stored in HD
@@ -10,8 +11,8 @@ import lwt.dataestructure.LDataTree;
 
 public class FieldTree {
 	
-	public int lastField = 0;
-	private HashMap<Integer, Integer> lastLayers;
+	public LPath lastField = null;
+	public HashMap<Integer, Integer> lastLayers;
 	public LDataTree<Node> root = new LDataTree<>();
 	
 	public FieldTree() {

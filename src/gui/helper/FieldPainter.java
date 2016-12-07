@@ -159,8 +159,8 @@ public class FieldPainter {
 				x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 				y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
 		if (paintRamp && obj.rampID >= 0) {
-			Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
-			paintRamp(gc, x0, y0, ramp);
+			//Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
+			//paintRamp(gc, x0, y0 - FieldHelper.config.tileH / 2, ramp);
 		}
 	}
 	
@@ -206,7 +206,7 @@ public class FieldPainter {
 	    Image img = new Image(Display.getCurrent(), imageData);
 	    
 	    int x0 = FieldHelper.config.tileW + FieldHelper.config.tileW / 2;
-	    int y0 = imgH - FieldHelper.config.tileH / 2;
+	    int y0 = imgH - FieldHelper.config.tileH;
 
 	    int pph = FieldHelper.config.pixelsPerHeight;
 	    

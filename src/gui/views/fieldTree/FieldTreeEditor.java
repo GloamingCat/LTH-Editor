@@ -24,7 +24,9 @@ import lwt.dialog.LShellFactory;
 import lwt.editor.LTreeEditor;
 import lwt.editor.LView;
 import lwt.event.LEditEvent;
+import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LSelectionListener;
 
 public class FieldTreeEditor extends LView {
 
@@ -64,6 +66,18 @@ public class FieldTreeEditor extends LView {
 			protected void setEditableData(LPath path, Prefs newData) {
 				Project.current.fieldTree.loadField(path).prefs = newData;
 			}
+			@Override
+			public void forceFirstSelection() {
+				if (getDataCollection() != null) {
+					LDataTree<Node> tree = getDataCollection().toTree();
+					getCollectionWidget().setItems(tree);
+					LPath lastPath = Project.current.fieldTree.getData().lastField;
+					getCollectionWidget().forceSelection(lastPath);
+				} else {
+					getCollectionWidget().setItems(null);
+					getCollectionWidget().forceSelection(null);
+				}
+			}
 		};
 		treeEditor.getCollectionWidget().setInsertNewEnabled(true);
 		treeEditor.getCollectionWidget().setEditEnabled(true);
@@ -74,6 +88,12 @@ public class FieldTreeEditor extends LView {
 			@Override
 			public LObjectShell<Prefs> createShell(Shell parent) {
 				return new FieldShell(parent);
+			}
+		});
+		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				Project.current.fieldTree.getData().lastField = event.path;
 			}
 		});
 		treeEditor.getCollectionWidget().addEditListener(new LCollectionListener<Prefs>() {

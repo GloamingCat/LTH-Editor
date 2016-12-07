@@ -12,7 +12,6 @@ import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dataserialization.LObjectSerializer;
 import data.Field;
-import data.Layer;
 import data.FieldTree;
 import data.Node;
 
@@ -68,8 +67,6 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 		Node node = new Node();
 		node.id = chosenID;
 		node.name = field.prefs.name;
-		Layer l = new Layer(15, 15);
-		field.layers.add(l);
 		return node;
 	}
 	
@@ -118,7 +115,9 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 
 	@Override
 	protected FieldTree fromByteArray(byte[] bytes) {
-		return gson.fromJson(new String(bytes), FieldTree.class);
+		FieldTree tree = gson.fromJson(new String(bytes), FieldTree.class);
+		tree.root.restoreParents();
+		return tree;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import gui.Vocab;
 import gui.helper.ImageHelper;
-import gui.shell.ImageShell;
+import gui.views.common.ImageButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,19 +16,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Quad;
 import project.Project;
 import lwt.action.LAction;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LSpinner;
-import lwt.widget.LStringButton;
 
 public class QuadEditor extends LObjectEditor {
 
@@ -98,18 +94,15 @@ public class QuadEditor extends LObjectEditor {
 		btnFullImage.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		btnFullImage.setText(Vocab.instance.FULLIMAGE);
 		
-		LStringButton btnSelect = new LStringButton(buttons, SWT.NONE) {
-			@Override
-			protected String getImagePath() {
-				return Project.current.imagePath();
-			}
-		};
+		ImageButton btnSelect = new ImageButton(buttons, SWT.NONE);
 		btnSelect.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		btnSelect.setLabel(imgGraphic);
-		btnSelect.setShellFactory(new LShellFactory<String>() {
+		btnSelect.setFolder(getFolder());
+		addControl(btnSelect, "imagePath");
+		btnSelect.addModifyListener(new LControlListener() {
 			@Override
-			public LObjectShell<String> createShell(Shell parent) {
-				return new ImageShell(parent, getFolder());
+			public void onModify(LControlEvent event) {
+				resetImage();
 			}
 		});
 	}
@@ -198,11 +191,14 @@ public class QuadEditor extends LObjectEditor {
 	
 	protected void resetImage() {
 		Quad quad = (Quad) currentObject;
-		if (quad.imagePath.isEmpty())
-			return;
 		String path = Project.current.imagePath() + quad.imagePath;
 		Image original = SWTResourceManager.getImage(path);
-		Image image = ImageHelper.getImageQuad(original, quad.x, quad.y, quad.width, quad.height);
+		Image image;
+		if (quad.imagePath.isEmpty()) {
+			image = original;
+		} else {
+			image = ImageHelper.getImageQuad(original, quad.x, quad.y, quad.width, quad.height);
+		}
 		if (imgGraphic.getImage() != null && imgGraphic.getImage() != original) {
 			imgGraphic.getImage().dispose();
 		}
@@ -214,6 +210,7 @@ public class QuadEditor extends LObjectEditor {
 	public void setObject(Object obj) {
 		if (obj == null) {
 			super.setObject(null);
+			resetImage();
 		} else {
 			Object value = getFieldValue(obj, "quad");
 			super.setObject(value);

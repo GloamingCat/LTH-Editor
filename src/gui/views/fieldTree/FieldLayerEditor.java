@@ -136,7 +136,7 @@ public class FieldLayerEditor extends LEditor {
 		System.out.println("LayerEditor setObject");
 		if (object != null) {
 			field = (Field) object;
-			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(field.id);
+			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(field.prefs.tilesetID);
 			lstTerrains.setDataCollection(tileset.terrains);
 			lstObstacles.setDataCollection(tileset.obstacles);
 			lstCharacters.setDataCollection(tileset.characters);

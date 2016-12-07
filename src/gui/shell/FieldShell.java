@@ -137,6 +137,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 		cmbTileset.setItems(Project.current.tilesets.getList());
 		cmbTileset.setValue(initial.tilesetID);
 		txtName.setText(initial.name);
+		txtBG.setText(initial.background);
 		txtScript.setText(initial.onStart.path);
 		txtParam.setText(initial.onStart.param);
 		
