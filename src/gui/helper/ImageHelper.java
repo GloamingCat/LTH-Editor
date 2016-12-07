@@ -15,7 +15,7 @@ import data.Ramp.PointSet;
 
 public class ImageHelper {
 
-	private static TilePainter tilePainter = new TilePainter(2, false);
+	private static FieldPainter tilePainter = new FieldPainter(2, false);
 	
 	public static Image getObstacleImage(int id) {
 		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);

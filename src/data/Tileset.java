@@ -2,7 +2,7 @@ package data;
 
 import org.eclipse.swt.graphics.Image;
 
-import gui.helper.TileHelper;
+import gui.helper.TilePainter;
 import lwt.dataestructure.LDataList;
 import lwt.datainterface.LGraphical;
 
@@ -26,14 +26,14 @@ public class Tileset {
 	public static class TerrainTile extends BasicTile implements LGraphical {
 		@Override
 		public Image toImage() {
-			return TileHelper.getTerrainTile(id);
+			return TilePainter.getTerrainTile(id);
 		}
 	}
 	
 	public static class ObstacleTile extends BasicTile implements LGraphical {
 		@Override
 		public Image toImage() {
-			return TileHelper.getObstacleTile(id);
+			return TilePainter.getObstacleTile(id);
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class Tileset {
 		}
 		@Override
 		public Image toImage() {
-			return TileHelper.getCharacterTile(id, animID, direction);
+			return TilePainter.getCharacterTile(id, animID, direction);
 		}
 		public String getKey() {
 			return id + "," + animID + "," + direction;
@@ -61,7 +61,7 @@ public class Tileset {
 	public static class RegionTile extends BasicTile implements LGraphical {
 		@Override
 		public Image toImage() {
-			return TileHelper.getRegionTile(id);
+			return TilePainter.getRegionTile(id);
 		}
 	}
 	

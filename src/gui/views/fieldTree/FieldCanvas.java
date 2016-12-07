@@ -2,7 +2,7 @@ package gui.views.fieldTree;
 
 import lwt.editor.LView;
 import gui.helper.FieldHelper;
-import gui.helper.TilePainter;
+import gui.helper.FieldPainter;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -25,7 +25,7 @@ public class FieldCanvas extends LView {
 
 	// Image cache
 	private Image[][] tileImages;
-	private TilePainter painter = new TilePainter(1, true);
+	private FieldPainter painter = new FieldPainter(1, true);
 	
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);
