@@ -1,7 +1,11 @@
 package gui.views.fieldTree;
 
 import gui.helper.FieldHelper;
+import gui.views.fieldTree.action.BucketAction;
+import gui.views.fieldTree.action.EraseAction;
+import gui.views.fieldTree.action.PencilAction;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import org.eclipse.swt.events.MouseAdapter;
@@ -65,14 +69,17 @@ public class EditableFieldCanvas extends FieldCanvas {
 			public void mouseMove(MouseEvent e) {
 				int h = currentLayer == null ? 0 : currentLayer.info.height;
 				Point tilePos = FieldHelper.math.pixel2Tile(
-						Math.round(e.x / scale - x0),
-						Math.round(e.y / scale - y0), 
+						e.x * 1.0f / scale - x0,
+						e.y * 1.0f / scale - y0, 
 						h * FieldHelper.config.pixelsPerHeight);
 				if (tileX != tilePos.x || tileY != tilePos.y) {
 					if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
 						tileX = tilePos.x;
 						tileY = tilePos.y;
 						onTileEnter(tilePos.x, tilePos.y);
+						if (draggingLeft) {
+							onTileLeftClick(tileX, tileY);
+						}
 					}
 				}
 			}
@@ -137,34 +144,33 @@ public class EditableFieldCanvas extends FieldCanvas {
 	private void usePencil(int[][] grid, int tileX, int tileY) {
 		if (selectionPoint == null)
 			return;
-		boolean needsRedraw = false;
 		tileX -= selectionPoint.x;
 		tileY -= selectionPoint.y;
-		for(int i = 0; i < selection.length && tileX + i < grid.length; i++) {
-			for(int j = 0; j < selection[i].length && tileY + j < grid[0].length; j++) {
-				if (selection[i][j] != grid[tileX + i][tileY + j]) {
-					grid[tileX + i][tileY + j] = selection[i][j];
-					updateTileImage(tileX + i,  tileY + j);
-					needsRedraw = true;
-				}
+		int[][] values = new int[selection.length][selection[0].length];
+		for(int i = 0; i < values.length; i++) {
+			for(int j = 0; j < values[0].length; j++) {
+				values[i][j] = grid[tileX + i][tileY + j];
 			}
 		}
-		if (needsRedraw) {
-			redraw();
-			//Project.current.fieldTree.changed = true;
+		PencilAction action = new PencilAction(grid, tileX, tileY, values, selection, this);
+		if (action.apply(selection)) {
+			getActionStack().newAction(action);
 		}
 	}
 	
 	private void useBucket(int[][] grid, int tileX, int tileY) {
 		int id = grid[tileX][tileY];
-		if (selection[selectionPoint.x][selectionPoint.y] != id) {
+		int newID = selection[selectionPoint.x][selectionPoint.y];
+		if (newID != id) {
+			ArrayList<Point> modified = new ArrayList<>();
 			Stack<Point> stack = new Stack<Point>();
 			stack.push(new Point(tileX, tileY));
 			while(!stack.isEmpty()) {
 				Point p = stack.pop();
 				if (p.x >= 0 && p.x < grid.length && p.y >= 0 && p.y < grid[0].length) {
 					if (grid[p.x][p.y] == id) {
-						grid[p.x][p.y] = selection[selectionPoint.x][selectionPoint.y];
+						modified.add(p);
+						grid[p.x][p.y] = newID;
 						updateTileImage(p.x,  p.y);
 						Point[] shift = FieldHelper.math.neighborShift;
 						for(int k = 0; k < shift.length; k++) {
@@ -174,16 +180,16 @@ public class EditableFieldCanvas extends FieldCanvas {
 				}
 			}
 			redraw();
-			//Project.current.fieldTree.changed = true;
+			BucketAction action = new BucketAction(grid, newID, id, modified, this);
+			getActionStack().newAction(action);
 		}
 	}
 	
 	private void useEraser(int[][] grid, int tileX, int tileY) {
 		if (grid[tileX][tileY] != -1) {
-			grid[tileX][tileY] = -1;
-			updateTileImage(tileX,  tileY);
-			redraw();
-			//Project.current.fieldTree.changed = true;
+			EraseAction action = new EraseAction(grid, tileX, tileY, grid[tileX][tileY], this);
+			action.redo();
+			getActionStack().newAction(action);
 		}
 	}
 	

@@ -164,10 +164,12 @@ public class Vocab {
 	public String INTERACTLISTENER = "Interact";
 
 	// Field
+	public String BACKGROUND = "Background";
 	public String TILESET = "Tileset";
 	public String TYPE = "Type";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
+	public String WIDTH = "Width";
 
 }

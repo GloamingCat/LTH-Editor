@@ -4,6 +4,7 @@ import lwt.editor.LView;
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
@@ -24,10 +25,10 @@ public class FieldCanvas extends LView {
 
 	// Image cache
 	private Image[][] tileImages;
-	private TilePainter painter = new TilePainter(1, false);
+	private TilePainter painter = new TilePainter(1, true);
 	
 	public FieldCanvas(Composite parent, int style) {
-		super(parent, style);
+		super(parent, style | SWT.DOUBLE_BUFFERED);
 				
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
@@ -41,6 +42,7 @@ public class FieldCanvas extends LView {
 	private void drawAllTiles(GC egc) {
 		Image img = new Image(egc.getDevice(), getSize().x, getSize().y); 
 		GC gc = new GC(img);
+		gc.setBackground(egc.getBackground());
 
 		for(int k = field.sizeX - 1; k >= 0; k--) {
 			for(int i = k, j = 0; i < field.sizeX && j < field.sizeY; i++, j++) {
@@ -61,7 +63,7 @@ public class FieldCanvas extends LView {
 		Image img = tileImages[x][y];
 		int w = img.getBounds().width;
 		int h = img.getBounds().height;
-		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h +  FieldHelper.config.tileH / 2, w, h);
+		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h + FieldHelper.config.tileH / 2, w, h);
 	}
 	
 	// -------------------------------------------------------------------------------------
@@ -77,14 +79,14 @@ public class FieldCanvas extends LView {
 		
 		Point[] shift = FieldHelper.math.neighborShift;
 		
-		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, currentLayer.info.height, field);
+		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, currentLayer, field);
 		for(int k = 0; k < shift.length; k++) {
 			int _x = x + shift[k].x;
 			int _y = y + shift[k].y;
 			if (_x >= 0 && _x < field.sizeX && _y >= 0 && _y < field.sizeY) {
 				if (tileImages[_x][_y] != null)
 					tileImages[_x][_y].dispose();
-				tileImages[_x][_y] = painter.createTileImage(_x, _y, imgW, imgH, currentLayer.info.height, field);
+				tileImages[_x][_y] = painter.createTileImage(_x, _y, imgW, imgH, currentLayer, field);
 			}
 		}
 		redraw();
@@ -104,7 +106,7 @@ public class FieldCanvas extends LView {
 				for(int j = 0; j < field.sizeY; j++) {
 					if (tileImages[i][j] != null)
 						tileImages[i][j].dispose();
-					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer.info.height, field);
+					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
 				}
 			}
 		}
@@ -143,14 +145,20 @@ public class FieldCanvas extends LView {
 	}
 	
 	public void setCurrentLayer(Layer layer) {
-		currentLayer = layer;
+		if (currentLayer != layer) {
+			currentLayer = layer;
+			updateAllTileImages();
+		}
 	}
 	
 	public void setShowGrid(boolean value) {
-		painter.showGrid = value;
+		if (value != painter.showGrid) {
+			painter.showGrid = value;
+			updateAllTileImages();
+		}
 	}
 	
-	public void setField(Field field, int layerID) {
+	public void setField(Field field) {
 		if (field == null) {
 			this.field = null;
 			this.currentLayer = null;
@@ -158,13 +166,7 @@ public class FieldCanvas extends LView {
 			rescale(1);
 		} else {
 			this.field = field;
-			if (layerID >= 0) {
-				setCurrentLayer(field.layers.get(layerID));
-			} else {
-				setCurrentLayer(null);
-			}
 			clearTileImages(field.sizeX, field.sizeY);
-			updateAllTileImages();
 			rescale(scale);
 			System.out.println("Editing field: " + field.id);
 		}

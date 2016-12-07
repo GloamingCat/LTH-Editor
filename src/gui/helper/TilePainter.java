@@ -146,7 +146,7 @@ public class TilePainter {
 				x0, y0, tw / 2, th / 2);
 	}
 	
-	public void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0, boolean paintRamp) {
 		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
 		int id = tileset.obstacles.get(layer.grid[x][y]).id;
 		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
@@ -158,7 +158,7 @@ public class TilePainter {
 		gc.drawImage(img, obj.quad.x, obj.quad.y, obj.quad.width, obj.quad.height,
 				x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 				y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
-		if (showGrid && obj.rampID >= 0) {
+		if (paintRamp && obj.rampID >= 0) {
 			Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
 			paintRamp(gc, x0, y0, ramp);
 		}
@@ -198,7 +198,7 @@ public class TilePainter {
 		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
 	}
 	
-	public Image createTileImage(int x, int y, int imgW, int imgH, int h, Field field) {
+	public Image createTileImage(int x, int y, int imgW, int imgH, Layer currentLayer, Field field) {
 		Image src = new Image(Display.getCurrent(), imgW, imgH);        
 	    ImageData imageData = src.getImageData();
 	    imageData.transparentPixel = imageData.getPixel(0, 0);
@@ -211,21 +211,51 @@ public class TilePainter {
 	    int pph = FieldHelper.config.pixelsPerHeight;
 	    
 		GC gc = new GC(img);
-		for(int i = 0; i < field.layers.size(); i++) {
-			Layer layer = field.layers.get(i);
-			if (layer.visible && layer.grid[x][y] >= 0) {
-				if (layer.info.type == 0) {
-					paintTerrain(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
-					if (showGrid && layer.info.height == h) {
-						h = -1;
+		for(Layer layer : field.layers) {
+			if (layer.visible) {
+				switch(layer.info.type) {
+				case 0:
+					// Terrain Layer
+					if (layer.grid[x][y] >= 0) {
+						paintTerrain(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+					}
+					if (showGrid && layer == currentLayer) {
 						paintEdges(gc, x0, y0 - layer.info.height * pph);
 					}
-				} else if (layer.info.type == 1)
-					paintObstacle(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
-				else if (layer.info.type == 2)
-					paintCharacter(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
-				else if (layer.info.type == 3 && layer.info.height == h) {
-					paintRegion(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+					break;
+				case 1:
+					// Obstacle Layer
+					if (showGrid && layer == currentLayer) {
+						paintEdges(gc, x0, y0 - layer.info.height * pph);
+						if (layer.grid[x][y] >= 0) {
+							paintObstacle(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph, true);
+						}
+					} else {
+						if (layer.grid[x][y] >= 0) {
+							paintObstacle(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph, false);
+						}
+					}
+					break;
+				case 2:
+					// Character Layer
+					if (showGrid && layer == currentLayer) {
+						paintEdges(gc, x0, y0 - layer.info.height * pph);
+					}
+					if (layer.grid[x][y] >= 0) {
+						paintCharacter(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+					}
+					break;
+				case 3:
+					// Region Layer
+					if (layer == currentLayer) {
+						if (layer.grid[x][y] >= 0) {
+							paintRegion(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+						}
+						if (showGrid) {
+							paintEdges(gc, x0, y0 - layer.info.height * pph);
+						}
+					}
+					break;
 				}
 			}
 		}

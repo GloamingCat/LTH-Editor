@@ -22,6 +22,7 @@ public class Field {
 	public static class Prefs {
 		
 		public String name = "New Field";
+		public String background = "";
 		public int tilesetID = 0;
 		public Script onStart = new Script();
 		public LDataList<Tag> tags = new LDataList<>();

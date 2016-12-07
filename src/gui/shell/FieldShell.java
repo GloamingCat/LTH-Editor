@@ -1,6 +1,7 @@
 package gui.shell;
 
 import gui.Vocab;
+import gui.views.common.ImageButton;
 import gui.views.common.ScriptButton;
 import gui.views.database.subcontent.TagList;
 
@@ -22,12 +23,14 @@ import org.eclipse.swt.layout.GridLayout;
 import project.Project;
 import data.Field.Prefs;
 import data.Tag;
+
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 
 public class FieldShell extends LObjectShell<Prefs> {
 	
 	private Text txtName;
+	private Text txtBG;
 	private LCombo cmbTileset;
 	
 	private Text txtScript;
@@ -63,6 +66,24 @@ public class FieldShell extends LObjectShell<Prefs> {
 		
 		txtName = new Text(grpGeneral, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblBG = new Label(grpGeneral, SWT.NONE);
+		lblBG.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblBG.setText(Vocab.instance.BACKGROUND);
+		
+		Composite compBG = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compBG = new GridLayout(2, false);
+		gl_compBG.marginWidth = 0;
+		gl_compBG.marginHeight = 0;
+		compBG.setLayout(gl_compBG);
+		compBG.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		txtBG = new Text(compBG, SWT.BORDER | SWT.READ_ONLY);
+		txtBG.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ImageButton btnBG = new ImageButton(compBG, SWT.NONE);
+		btnBG.setFolder("Background");
+		btnBG.setText(txtBG);
 		
 		Label lblTileset = new Label(grpGeneral, SWT.NONE);
 		lblTileset.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -128,13 +149,14 @@ public class FieldShell extends LObjectShell<Prefs> {
 
 	@Override
 	protected Prefs createResult(Prefs initial) {
-		if (txtName.getText().equals(initial.name) && cmbTileset.getSelectionIndex() == initial.tilesetID &&
-				tags.equals(initial.tags) && txtScript.getText().equals(initial.onStart.path) &&
-				txtParam.getText().equals(initial.onStart.param)) {
+		if (txtName.getText().equals(initial.name) && txtBG.getText().equals(initial.background) &&
+				cmbTileset.getSelectionIndex() == initial.tilesetID && tags.equals(initial.tags) && 
+				txtScript.getText().equals(initial.onStart.path) && txtParam.getText().equals(initial.onStart.param)) {
 			return null;
 		}
 		Prefs p = new Prefs();
 		p.name = txtName.getText();
+		p.background = txtBG.getText();
 		p.tilesetID = cmbTileset.getSelectionIndex();
 		p.tags = tags;
 		p.onStart.path = txtScript.getText();

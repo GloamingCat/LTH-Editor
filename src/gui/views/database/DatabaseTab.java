@@ -1,7 +1,6 @@
 package gui.views.database;
 
 import gui.Vocab;
-import gui.shell.ImageShell;
 import gui.views.common.ImageButton;
 import gui.views.common.ScriptButton;
 
@@ -13,7 +12,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import project.ListSerializer;
@@ -22,8 +20,6 @@ import com.google.gson.Gson;
 
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataList;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 import lwt.editor.LControlView;
 import lwt.editor.LDefaultListEditor;
 import lwt.editor.LEditor;
@@ -114,12 +110,7 @@ public abstract class DatabaseTab extends LView {
 	
 	protected void addImageButton(ImageButton button, Label label, String folderName, String attName) {
 		button.setLabel(label);
-		button.setShellFactory(new LShellFactory<String>() {
-			@Override
-			public LObjectShell<String> createShell(Shell parent) {
-				return new ImageShell(parent, folderName);
-			}
-		});
+		button.setFolder(folderName);
 		addControl(button, attName);
 	}
 	

@@ -38,8 +38,8 @@ public abstract class FieldMath {
 	
 	public abstract Point pixelSize(int sizeX, int sizeY);
 	public abstract int pixelDisplacement(int height);
-	public abstract Point pixel2Tile(int x, int y, int d);
-	public abstract Point tile2Pixel(int x, int y, int h);
+	public abstract Point pixel2Tile(float x, float y, float d);
+	public abstract Point tile2Pixel(float x, float y, float h);
 	public abstract int[] autotile(int[][] grid, int x, int y);
 	
 	protected static boolean sameType(int[][] grid, int x1, int y1, int x2, int y2) {

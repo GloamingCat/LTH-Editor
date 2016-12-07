@@ -69,7 +69,7 @@ public class IsoField extends FieldMath {
 	@Override
 	public Point pixelSize(int sizeX, int sizeY) {
 		return new Point((sizeX + sizeY - 1) * (conf.tileW + conf.tileB) / 2 + (conf.tileW - conf.tileB) / 2,
-						 (sizeX + sizeY) * (conf.tileH + conf.tileS) / 2 + (conf.tileH - conf.tileS) / 2);
+						 (sizeX + sizeY - 1) * (conf.tileH + conf.tileS) / 2 + (conf.tileH - conf.tileS) / 2);
 	}
 	
 	@Override
@@ -78,8 +78,8 @@ public class IsoField extends FieldMath {
 	}
 
 	@Override
-	public Point pixel2Tile(int x, int y, int d) {
-		int newH = d * conf.pixelsPerHeight;
+	public Point pixel2Tile(float x, float y, float d) {
+		float newH = d / conf.pixelsPerHeight;
 		float sxy = x * 2 / (conf.tileW + conf.tileB);			// sum
 		float dyx = (y + newH) * 2 / (conf.tileH + conf.tileS); // dif
 		int newX = Math.round((sxy - dyx) / 2);
@@ -88,10 +88,10 @@ public class IsoField extends FieldMath {
 	}
 
 	@Override
-	public Point tile2Pixel(int x, int y, int h) {
-		int newHeight = h * conf.pixelsPerHeight;
-		int newX = (x + y) * (conf.tileW + conf.tileB) / 2;
-		int newY = (y - x) * (conf.tileH + conf.tileS) / 2 - newHeight;
+	public Point tile2Pixel(float x, float y, float h) {
+		float newHeight = h * conf.pixelsPerHeight;
+		int newX = Math.round((x + y) * (conf.tileW + conf.tileB) / 2);
+		int newY = Math.round((y - x) * (conf.tileH + conf.tileS) / 2 - newHeight);
 		return new Point(newX, newY);
 	}
 

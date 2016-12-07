@@ -19,6 +19,11 @@ public class Layer {
 	
 	public Layer(int sizeX, int sizeY) {
 		this.grid = new int[sizeX][sizeY];
+		for(int i = 0; i < sizeX; i++) {
+			for(int j = 0; j < sizeY; j ++) {
+				grid[i][j] = -1;
+			}
+		}
 	}
 	
 	public Layer(Layer original) {

@@ -142,6 +142,8 @@ public class FieldLayerEditor extends LEditor {
 			lstCharacters.setDataCollection(tileset.characters);
 			lstRegions.setDataCollection(tileset.regions);
 			layerList.setDataCollection(field.layers);
+			int layer = Project.current.fieldTree.getData().getLastLayer(field.id);
+			layerList.getCollectionWidget().forceSelection(new LPath(layer));
 		} else {
 			lstTerrains.setDataCollection(null);
 			lstObstacles.setDataCollection(null);

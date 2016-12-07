@@ -1,5 +1,9 @@
 package gui.views.fieldTree;
 
+import gui.shell.ResizeShell;
+import lwt.dialog.LObjectDialog;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LObjectEditor;
 
 import org.eclipse.swt.SWT;
@@ -13,6 +17,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Field;
@@ -36,7 +41,28 @@ public class FieldEditor extends LObjectEditor {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 
-		toolBar = new FieldToolBar(this, SWT.NONE);
+		toolBar = new FieldToolBar(this, SWT.NONE) {
+			public void onSelectTool(int i) {
+				canvas.setTool(i);
+			}
+			public void onShowGrid(boolean i) {
+				canvas.setShowGrid(i);
+			}
+			public void onResize() {
+				Point size = new Point(canvas.field.sizeX, canvas.field.sizeY);
+				LObjectDialog<Point> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
+				dialog.setFactory(new LShellFactory<Point>() {
+					@Override
+					public LObjectShell<Point> createShell(Shell parent) {
+						return new ResizeShell(parent);
+					}
+				});
+				size = dialog.open(size);
+				if (size != null) {
+					resizeField(size.x, size.y);
+				}
+			}
+		};
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		ScrolledComposite scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -48,6 +74,7 @@ public class FieldEditor extends LObjectEditor {
 			}
 		};
 		canvas.setLayout(new FillLayout(SWT.HORIZONTAL));
+		addChild(canvas);
 		scrolledComposite.setContent(canvas);
 
 		Composite scaleComposite = new Composite(this, SWT.NONE);
@@ -82,7 +109,7 @@ public class FieldEditor extends LObjectEditor {
 		scale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				canvas.rescale(scale.getSelection() / 100);
+				canvas.rescale(1.0f * scale.getSelection() / 100);
 				lblScale.setText(scale.getSelection() + "%");
 				scrolledComposite.setMinWidth(canvas.getSize().x);
 				scrolledComposite.setMinHeight(canvas.getSize().y);
@@ -94,7 +121,10 @@ public class FieldEditor extends LObjectEditor {
 	
 	public void selectLayer(Layer layer) {
 		canvas.setCurrentLayer(layer);
-		canvas.updateAllTileImages();
+	}
+	
+	public void selectField(Field field) {
+		canvas.setField(field);
 	}
 	
 	@Override
@@ -103,11 +133,10 @@ public class FieldEditor extends LObjectEditor {
 		if (obj != null) {
 			Node node = (Node) obj;
 			Field field = Project.current.fieldTree.loadField(node);
-			int layer = Project.current.fieldTree.getData().getLastLayer(field.id);
-			canvas.setField(field, layer);
+			selectField(field);
 			super.setObject(field);
 		} else {
-			canvas.setField(null, -1);
+			selectField(null);
 			super.setObject(null);
 		}
 	}
@@ -118,6 +147,10 @@ public class FieldEditor extends LObjectEditor {
 
 	public void onSelectTile(int index) {
 		canvas.setSelection(new int[][] {{index}}, new Point(0, 0));
+	}
+	
+	private void resizeField(int w, int h) {
+		// TODO
 	}
 	
 }

@@ -94,6 +94,8 @@ public class FieldTreeEditor extends LView {
 		treeEditor.addChild(fieldEditor);
 		fieldEditor.addChild(sideEditor);
 		
+		treeEditor.setActionStack(getActionStack());
+		
 		sashForm.setWeights(new int[] {1, 3, 1});
 	}
 
