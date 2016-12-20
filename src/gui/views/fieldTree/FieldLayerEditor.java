@@ -93,7 +93,7 @@ public class FieldLayerEditor extends LEditor {
 			public void onSelect(LSelectionEvent event) {
 				Layer l = (Layer) event.data;
 				selectLayer(l);
-				if (field != null) {
+				if (field != null && event.path != null) {
 					Project.current.fieldTree.getData().setLastLayer(field.id, event.path.index);
 				}
 			}

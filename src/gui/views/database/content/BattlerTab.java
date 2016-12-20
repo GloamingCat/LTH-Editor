@@ -131,9 +131,31 @@ public class BattlerTab extends DatabaseTab {
 			}
 		});
 		
-		AttributeEditor attEditor = new AttributeEditor(contentEditor, SWT.NONE);
+		Group grpAtt = new Group(contentEditor, SWT.NONE);
+		grpAtt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAtt.setLayout(new GridLayout(1, true));
+		grpAtt.setText(Vocab.instance.ATTRIBUTES);
+		
+		Composite build = new Composite(grpAtt, SWT.NONE);
+		build.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout gl_build = new GridLayout(3, false);
+		gl_build.marginWidth = 0;
+		gl_build.marginHeight = 0;
+		build.setLayout(gl_build);
+		
+		Label lblBuild = new Label(build, SWT.NONE);
+		lblBuild.setText(Vocab.instance.BUILD);
+		
+		Text txtBuild = new Text(build, SWT.BORDER | SWT.READ_ONLY);
+		txtBuild.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ScriptButton btnBuild = new ScriptButton(build, SWT.NONE);
+		btnBuild.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addScriptButton(btnBuild, txtBuild, null, "build", "build");
+		
+		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
 		attEditor.setColumns(2);
-		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));		
 		addChild(attEditor);
 		
 		Composite other = new Composite(contentEditor, SWT.NONE);

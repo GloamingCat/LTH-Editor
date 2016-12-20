@@ -11,6 +11,7 @@ public class Battler {
 	public int skillDagID;
 	public int money;
 	public int exp;
+	public Script build = new Script();
 	public LDataList<Integer> attributes = new LDataList<>();
 	public LDataList<Bonus> items = new LDataList<>();
 	public LDataList<Bonus> elements = new LDataList<>();

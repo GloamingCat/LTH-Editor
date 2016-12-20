@@ -57,6 +57,7 @@ public class Vocab {
 	public String AI = "AI";
 	public String MONEY = "Money";
 	public String EXP = "EXP";
+	public String BUILD = "Build";
 	
 	// Skill
 	public String RADIUS = "Radius";

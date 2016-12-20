@@ -131,9 +131,13 @@ public class ItemTab extends DatabaseTab {
 		lists.setLayout(gl_lists);
 		lists.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		AttributeEditor attEditor = new AttributeEditor(lists, SWT.NONE);
+		Group grpAtt = new Group(lists, SWT.NONE);
+		grpAtt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAtt.setLayout(new FillLayout());
+		grpAtt.setText(Vocab.instance.ATTRIBUTES);
+		
+		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
 		attEditor.setColumns(4);
-		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(attEditor);
 		
 		Group grpTags = new Group(lists, SWT.NONE);
