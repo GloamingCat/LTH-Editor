@@ -43,6 +43,7 @@ public class FieldCanvas extends LView {
 		Image img = new Image(egc.getDevice(), getSize().x, getSize().y); 
 		GC gc = new GC(img);
 		gc.setBackground(egc.getBackground());
+		painter.paintBackground(field, x0, y0, maxHeight(), gc);
 
 		for(int k = field.sizeX - 1; k >= 0; k--) {
 			for(int i = k, j = 0; i < field.sizeX && j < field.sizeY; i++, j++) {
@@ -178,8 +179,8 @@ public class FieldCanvas extends LView {
 	
 	public int maxHeight() {
 		int maxHeight = 0;
-		for(int i = 0; i < field.layers.size(); i++) {
-			maxHeight = Math.max(maxHeight, field.layers.get(i).info.height);
+		for(Layer l : field.layers) {
+			maxHeight = Math.max(maxHeight, l.info.height);
 		}
 		return maxHeight;
 	}

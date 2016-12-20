@@ -73,6 +73,12 @@ public class IsoField extends FieldMath {
 	}
 	
 	@Override
+	public Point pixelCenter(int sizeX, int sizeY, int height) {
+		Point s = pixelSize(sizeX, sizeY);
+		return new Point((s.x - conf.tileW) / 2 , - height * conf.pixelsPerHeight / 2);
+	}
+	
+	@Override
 	public int pixelDisplacement(int height) {
 		return height * (conf.tileH + conf.tileS) / 2 + (conf.tileH - conf.tileS) / 2;
 	}

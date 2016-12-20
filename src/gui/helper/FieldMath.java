@@ -37,6 +37,7 @@ public abstract class FieldMath {
 	protected abstract ArrayList<Point> createVertexShift();
 	
 	public abstract Point pixelSize(int sizeX, int sizeY);
+	public abstract Point pixelCenter(int sizeX, int sizeY, int height);
 	public abstract int pixelDisplacement(int height);
 	public abstract Point pixel2Tile(float x, float y, float d);
 	public abstract Point tile2Pixel(float x, float y, float h);

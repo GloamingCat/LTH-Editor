@@ -262,6 +262,14 @@ public class FieldPainter {
 		gc.dispose();
 		return img;
 	}
+	
+	public void paintBackground(Field field, int x0, int y0, int maxHeight, GC gc) {
+		if (field.prefs.background.isEmpty() == false) {
+			Image bg = SWTResourceManager.getImage(Project.current.imagePath() + field.prefs.background);
+			Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, maxHeight);
+			gc.drawImage(bg, x0 + center.x - bg.getBounds().width / 2, y0 + center.y - bg.getBounds().height / 2);
+		}
+	}
 
 }
 
