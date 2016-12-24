@@ -87,7 +87,10 @@ public class FieldTreeEditor extends LView {
 		treeEditor.setShellFactory(new LShellFactory<Prefs>() {
 			@Override
 			public LObjectShell<Prefs> createShell(Shell parent) {
-				return new FieldShell(parent);
+				Node n = treeEditor.getCollectionWidget().getSelectedObject();
+				LObjectShell<Prefs> shell = new FieldShell(parent);
+				shell.setText(String.format("[%03d]", n.id) + n.name);
+				return shell;
 			}
 		});
 		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {

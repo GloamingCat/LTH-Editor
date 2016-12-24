@@ -20,8 +20,11 @@ public class Project implements LSerializer {
 	public ListSerializer ramps;
 	public ListSerializer characters;
 	public ListSerializer tilesets;
+	
 	public FieldTreeSerializer fieldTree;
 	public ObjectSerializer config;
+	public GameGUISerializer gameGUIs;
+	public DialogTreeSerializer dialogs;
 	
 	private LSerializer[] allData;
 	
@@ -46,10 +49,12 @@ public class Project implements LSerializer {
 		tilesets = new ListSerializer(dataPath() + "tilesets", Tileset.class);
 		fieldTree = new FieldTreeSerializer(dataPath() + "fieldTree");
 		config = new ObjectSerializer(dataPath() + "config", Config.class);
+		gameGUIs = new GameGUISerializer(dataPath() + "gui");
+		dialogs = new DialogTreeSerializer(dataPath() + "dialogs");
 		
 		allData = new LSerializer[] {items, skills, skillDags, battlers, status, 
 				animCharacter, animBattle, animOther, terrains, obstacles, ramps, 
-				characters, tilesets, config, fieldTree};
+				characters, tilesets, config, fieldTree, gameGUIs, dialogs };
 	}
 	
 	public String dataPath() {

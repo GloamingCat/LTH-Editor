@@ -2,7 +2,9 @@ package gui;
 
 import gui.views.config.ConfigEditor;
 import gui.views.database.DatabaseEditor;
+import gui.views.dialog.DialogTreeEditor;
 import gui.views.fieldTree.FieldTreeEditor;
+import gui.views.gamegui.GUITreeEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -51,6 +53,8 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		final DatabaseEditor databaseEditor = new DatabaseEditor(this, SWT.NONE);
 		final ConfigEditor configEditor = new ConfigEditor(this, SWT.NONE);
 		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
+		final GUITreeEditor guiEditor = new GUITreeEditor(this, SWT.NONE);
+		final DialogTreeEditor dialogEditor = new DialogTreeEditor(this, SWT.NONE);
 		
 		MenuItem mntmDatabaseEditor = new MenuItem(menuView, SWT.NONE);
 		mntmDatabaseEditor.addSelectionListener(new SelectionAdapter() {
@@ -82,6 +86,26 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF4");
 		mntmConfigEditor.setAccelerator(SWT.F4);
 		
+		MenuItem mntmGUIEditor = new MenuItem(menuView, SWT.NONE);
+		mntmGUIEditor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setCurrentView(guiEditor);
+			}
+		});
+		mntmGUIEditor.setText(Vocab.instance.GUIEDITOR + "\tF5");
+		mntmGUIEditor.setAccelerator(SWT.F5);
+		
+		MenuItem mntmDialogEditor = new MenuItem(menuView, SWT.NONE);
+		mntmDialogEditor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setCurrentView(dialogEditor);
+			}
+		});
+		mntmDialogEditor.setText(Vocab.instance.DIALOGEDITOR + "\tF6");
+		mntmDialogEditor.setAccelerator(SWT.F6);
+		
 		if (loadDefault()) {
 			setCurrentView(fieldTreeEditor);
 		}
@@ -91,8 +115,5 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	protected LSerializer createProject(String path) {
 		return new Project(path);
 	}
-	
-	@Override
-	protected void checkSubclass() { }
 
 }
