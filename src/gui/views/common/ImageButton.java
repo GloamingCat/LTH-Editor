@@ -3,16 +3,21 @@ package gui.views.common;
 import gui.shell.ImageShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LStringButton;
+import lwt.widget.LObjectButton;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.Project;
 
-public class ImageButton extends LStringButton {
+public class ImageButton extends LObjectButton<String> {
 	
 	private String folder;
+	private Label label;
+	private Text text;
 	
 	public ImageButton(Composite parent, int style) {
 		super(parent, style);
@@ -27,10 +32,35 @@ public class ImageButton extends LStringButton {
 	public void setFolder(String f) {
 		this.folder = f;
 	}
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+	
+	public void setText(Text text) {
+		this.text = text;
+	}
 	
 	@Override
-	protected String getImagePath() {
-		return Project.current.imagePath();
+	public void setValue(Object value) {
+		if (value != null) {
+			button.setEnabled(true);
+			String s = (String) value;
+			if (label != null) {
+				label.setImage(SWTResourceManager.getImage(
+						Project.current.imagePath() + s));
+			}
+			currentValue = s;
+		} else {
+			button.setEnabled(false);
+			if (label != null) {
+				label.setImage(null);
+			}
+			if (text != null) {
+				text.setText("");
+			}
+			currentValue = null;
+		}
 	}
 	
 }

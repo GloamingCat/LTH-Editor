@@ -77,6 +77,10 @@ public class Project implements LSerializer {
 		return path + "audio/";
 	}
 
+	public String fontPath() {
+		return path + "fonts/";
+	}
+
 	@Override
 	public boolean save() {
 		for (LSerializer data : allData) {

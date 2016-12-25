@@ -15,7 +15,6 @@ import data.Script;
 public class ScriptButton extends LObjectButton<Script> {
 	
 	private String folder;
-	
 	private Text pathText;
 	private StyledText paramText;
 	
@@ -26,7 +25,7 @@ public class ScriptButton extends LObjectButton<Script> {
 	 */
 	public ScriptButton(Composite parent, int style) {
 		super(parent, style);
-		dialog.setFactory(new LShellFactory<Script>() {
+		setShellFactory(new LShellFactory<Script>() {
 			@Override
 			public LObjectShell<Script> createShell(Shell parent) {
 				return new ScriptShell(parent, folder);
@@ -57,6 +56,7 @@ public class ScriptButton extends LObjectButton<Script> {
 			if (paramText != null) {
 				paramText.setText(s.param);
 			}
+			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (pathText != null) {
@@ -65,8 +65,8 @@ public class ScriptButton extends LObjectButton<Script> {
 			if (paramText != null) {
 				paramText.setText("");
 			}
+			currentValue = null;
 		}
-		currentValue = value;
 	}
 
 }

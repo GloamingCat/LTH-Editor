@@ -1,79 +1,100 @@
 package gui.shell;
 
+import gui.Vocab;
+
 import java.io.File;
 
-import java.util.ArrayList;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
-import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 
-public class AudioShell extends LObjectShell<String> {
+import data.Audio;
 
-	private String folder;
-	private List list;
+public class AudioShell extends FileShell<Audio> {
+
+	private Spinner spnVolume;
+	private Spinner spnPitch;
+	private Spinner spnSpeed;
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public AudioShell(Shell parent) {
+		this(parent, "");
+	}
 	
 	public AudioShell(Shell parent, String folder) {
-		super(parent);
-		this.folder = folder;
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
-		content.setLayout(new FillLayout());
-		list = new List(content, SWT.BORDER | SWT.V_SCROLL);
-		list.setItems(getItems(folder + "/"));
+		super(parent, folder);
+
+		Composite composite = new Composite(sashForm, SWT.NONE);
+		composite.setLayout(new GridLayout(2, false));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		Label lblVolume = new Label(composite, SWT.NONE);
+		lblVolume.setText(Vocab.instance.VOLUME);
+		
+		spnVolume = new Spinner(composite, SWT.BORDER);
+		spnVolume.setMaximum(1000);
+		spnVolume.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblPitch = new Label(composite, SWT.NONE);
+		lblPitch.setText(Vocab.instance.PITCH);
+		
+		spnPitch = new Spinner(composite, SWT.BORDER);
+		spnPitch.setMaximum(1000);
+		spnPitch.setMinimum(1);
+		spnPitch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblSpeed = new Label(composite, SWT.NONE);
+		lblSpeed.setText(Vocab.instance.SPEED);
+		
+		spnSpeed = new Spinner(composite, SWT.BORDER);
+		spnSpeed.setMaximum(1000);
+		spnSpeed.setMinimum(1);
+		spnSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+	}
+	
+	public void open(Audio initial) {
+		super.open(initial);
+		int i = indexOf(initial.path);
+		list.select(i);
+		spnVolume.setSelection(initial.volume);
+		spnPitch.setSelection(initial.pitch);
+		spnSpeed.setSelection(initial.speed);
 	}
 
 	@Override
-	protected String createResult(String initial) {
+	protected Audio createResult(Audio initial) {
 		int i = list.getSelectionIndex();
-		if (i >= 0) {
-			String newValue = folder + "/" + list.getItem(i);
-			if (newValue.equals(initial)) {
-				return null;
-			} else {
-				return newValue;
-			}
-		} else {
+		if (i < 0)
 			return null;
+		String newPath = folder + "/" + list.getItem(i);
+		if (newPath.equals(initial) && initial.pitch == spnPitch.getSelection() 
+				&& initial.volume == spnVolume.getSelection()
+				&& initial.speed == spnSpeed.getSelection()) {
+			return null;
+		} else {
+			return new Audio(newPath, 
+					spnVolume.getSelection(), 
+					spnPitch.getSelection(),
+					spnSpeed.getSelection());
 		}
 	}
-	
-	private String[] getItems(String folder) {
-		ArrayList<String> list = new ArrayList<String>();
-		readFiles(folder, list, "");
-		String[] array = new String[list.size()];
-		for(int i = 0; i < array.length; i++) {
-			array[i] = list.get(i);
-		}
-		return array;
-	}
-	
-	private boolean isAudioFile(String name) {
+
+	protected boolean isValidFile(File file) {
+		String name = file.getName();
 		return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".mid");
 	}
 	
-	private void readFiles(String folder, ArrayList<String> items, String path) {
-		File f = new File(Project.current.audioPath() + folder + "/" + path);
-		if (!f.exists())
-			return;
-		for (File entry : f.listFiles()) {
-			if (entry.isDirectory()) {
-				readFiles(folder, items, path + entry.getName() + "/");
-			} else {
-				if (isAudioFile(entry.getName())) {	
-					items.add(path + entry.getName());
-				}
-			}
-		}
+	protected String rootPath() {
+		return Project.current.audioPath();
 	}
 	
-	protected void checkSubclass() { }
-
 }

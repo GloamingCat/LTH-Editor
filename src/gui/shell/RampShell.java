@@ -34,9 +34,9 @@ public class RampShell extends LObjectShell<PointSet> {
 		
 		combo = new LCombo(content, SWT.NONE);
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		combo.addModifyListener(new LControlListener() {
+		combo.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<Integer> event) {
 				int i = combo.getSelectionIndex();
 				if (i < 8) {
 					points = RampHelper.getDefault2(i);

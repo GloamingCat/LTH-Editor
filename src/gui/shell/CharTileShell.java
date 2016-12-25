@@ -46,9 +46,9 @@ public class CharTileShell extends LObjectShell<CharTile> {
 		lblID.setText(Vocab.instance.ID);
 		
 		cmbID = new LCombo(grpGeneral, SWT.READ_ONLY);
-		cmbID.addModifyListener(new LControlListener() {
+		cmbID.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<Integer> event) {
 				int id = cmbID.getSelectionIndex();
 				setCharID(id);
 			}

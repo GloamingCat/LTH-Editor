@@ -99,9 +99,9 @@ public class QuadEditor extends LObjectEditor {
 		btnSelect.setLabel(imgGraphic);
 		btnSelect.setFolder(getFolder());
 		addControl(btnSelect, "imagePath");
-		btnSelect.addModifyListener(new LControlListener() {
+		btnSelect.addModifyListener(new LControlListener<String>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<String> event) {
 				resetImage();
 			}
 		});
@@ -179,9 +179,9 @@ public class QuadEditor extends LObjectEditor {
 	
 	private void addSpinner(LSpinner spinner, String key) {
 		addControl(spinner, key);
-		spinner.addModifyListener(new LControlListener() {
+		spinner.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<Integer> event) {
 				if (!event.newValue.equals(event.oldValue))
 					resetImage();
 			}

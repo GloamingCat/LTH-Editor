@@ -3,7 +3,6 @@ package gui.views.database.subcontent;
 import java.util.ArrayList;
 
 import gui.Vocab;
-import gui.shell.AudioShell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -12,16 +11,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 import lwt.editor.LComboView;
 import lwt.editor.LObjectEditor;
 import lwt.widget.LSpinner;
-import lwt.widget.LStringButton;
 
 public class SkillNodeEditor extends LObjectEditor {
 
@@ -70,16 +64,6 @@ public class SkillNodeEditor extends LObjectEditor {
 		addChild(lstRequirements);
 		
 	}
-	
-	protected void addAudioButton(LStringButton button, Text text, String folderName, String attName) {
-		button.setText(text);
-		button.setShellFactory(new LShellFactory<String>() {
-			@Override
-			public LObjectShell<String> createShell(Shell parent) {
-				return new AudioShell(parent, folderName);
-			}
-		});
-		addControl(button, attName);
-	}
+
 	
 }

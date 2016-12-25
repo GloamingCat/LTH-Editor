@@ -81,9 +81,12 @@ public class Vocab {
 	public String COLUMNS = "Columns";
 	public String ROWS = "Rows";
 	public String FRAMEDURATION = "Frame Duration";
+	
+	// Audio
 	public String SOUND = "Sound";
 	public String VOLUME = "Volume";
 	public String PITCH = "Pitch";
+	public String SPEED = "Speed";
 	
 	// Transform
 	public String TRANSFORM = "Transform";
@@ -146,6 +149,8 @@ public class Vocab {
 
 	// Config
 	public String PROJECTNAME = "Project Name";
+	public String VARIABLES = "Variables";
+	public String STARTPOS = "Start Position";
 	public String GRID = "Grid";
 	public String TILEWIDTH = "Tile Width";
 	public String TILEHEIGHT = "Tile Height";
@@ -154,6 +159,8 @@ public class Vocab {
 	public String PIXELHEIGHT = "Pixels/Height";
 	public String PIXELMOV = "Pixel Movement";
 	public String ALLNEIGHBORS = "8 neighbors";
+	public String SOUNDS = "Sounds";
+	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";

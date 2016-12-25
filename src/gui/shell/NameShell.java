@@ -42,7 +42,5 @@ public class NameShell extends LObjectShell<String> {
 			return txtName.getText();
 		}
 	}
-	
-	protected void checkSubclass() { }
-	
+
 }

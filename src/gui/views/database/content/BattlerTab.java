@@ -124,9 +124,9 @@ public class BattlerTab extends DatabaseTab {
 		gd_image.heightHint = 48;
 		image.setLayoutData(gd_image);
 		
-		cmbCharacter.getControl().addModifyListener(new LControlListener() {
+		cmbCharacter.getControl().addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<Integer> event) {
 				updateImage((Integer) event.newValue);
 			}
 		});

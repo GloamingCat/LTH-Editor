@@ -91,9 +91,9 @@ public class RampEditor extends LObjectEditor {
 	private void addAllSpinners(LSpinner[] spinners, String[] names) {
 		for(int i = 0; i < 8; i++) {
 			addControl(spinners[i], names[i]);
-			spinners[i].addModifyListener(new LControlListener() {
+			spinners[i].addModifyListener(new LControlListener<Integer>() {
 				@Override
-				public void onModify(LControlEvent event) {
+				public void onModify(LControlEvent<Integer> event) {
 					resetImage();
 				}
 			});

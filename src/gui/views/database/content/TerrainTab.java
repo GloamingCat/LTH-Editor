@@ -34,7 +34,10 @@ public class TerrainTab extends DatabaseTab {
 	public TerrainTab(Composite parent, int style) {
 		super(parent, style);
 		
+		contentEditor.setLayout(new GridLayout(2, false));
+		
 		grpGeneral.setLayout(new GridLayout(3, false));
+		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		
 		LCheckButton btnPassable = new LCheckButton(grpGeneral, SWT.CHECK);
 		btnPassable.setText(Vocab.instance.PASSABLE);
@@ -66,49 +69,50 @@ public class TerrainTab extends DatabaseTab {
 		Label lblSeconds = new Label(grpGeneral, SWT.NONE);
 		lblSeconds.setText(Vocab.instance.SECONDS);
 		
+		Label lblAudio = new Label(grpGeneral, SWT.NONE);
+		lblAudio.setText(Vocab.instance.SOUND);
+		
+		AudioEditor audioEditor = new AudioEditor(grpGeneral, SWT.NONE);
+		audioEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
+		addChild(audioEditor);
+		
+		Group grpTags = new Group(contentEditor, SWT.NONE);
+		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
+		addChild(tagEditor);
+		
 		Group grpGraphics = new Group(contentEditor, SWT.NONE);
 		grpGraphics.setText("Graphics");
-		grpGraphics.setLayout(new GridLayout(2, false));
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGraphics.setLayout(new GridLayout(3, false));
+		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		Label lblFrames = new Label(grpGraphics, SWT.NONE);
 		lblFrames.setText(Vocab.instance.FRAMECOUNT);
 		
 		LSpinner spnFrameCount = new LSpinner(grpGraphics, SWT.NONE);
-		spnFrameCount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridData gd_spnFrameCount = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_spnFrameCount.widthHint = 68;
+		spnFrameCount.setLayoutData(gd_spnFrameCount);
 		addControl(spnFrameCount, "frameCount");
+		
+		Label imgIcon = new Label(grpGraphics, SWT.NONE);
+		imgIcon.setImage(SWTResourceManager.getImage(ItemTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
+		imgIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 		
 		Label lblFrameDuration = new Label(grpGraphics, SWT.NONE);
 		lblFrameDuration.setText(Vocab.instance.DURATION);
 		
 		LSpinner spnDuration = new LSpinner(grpGraphics, SWT.NONE);
-		spnDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnDuration, "duration");
 		
 		ImageButton btnSelect = new ImageButton(grpGraphics, SWT.NONE);
-		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		
-		Label imgIcon = new Label(grpGraphics, SWT.NONE);
-		imgIcon.setImage(SWTResourceManager.getImage(ItemTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
-		imgIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 2, 1));
 		
 		addImageButton(btnSelect, imgIcon, "Terrain", "imagePath");
-
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		bottom.setLayout(new GridLayout(2, false));
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		AudioEditor audioEditor = new AudioEditor(bottom, SWT.NONE);
-		audioEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		addChild(audioEditor);
-		
-		Group grpTags = new Group(bottom, SWT.NONE);
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
 	}
 
 	@Override

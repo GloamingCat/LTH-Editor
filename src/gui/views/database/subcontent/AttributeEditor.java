@@ -96,9 +96,9 @@ public class AttributeEditor extends LObjectEditor {
 	private LSpinner createSpinner(final int i) {
 		LSpinner spinner = new LSpinner(content, SWT.NONE);
 		spinner.setActionStack(getActionStack());
-		spinner.addModifyListener(new LControlListener() {
+		spinner.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<Integer> event) {
 				if (list != null) {
 					list.set(i, (Integer) event.newValue);
 				}

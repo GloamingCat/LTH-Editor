@@ -58,9 +58,9 @@ public class RampTab extends DatabaseTab {
 		btnDefault.setText(Vocab.instance.CHOOSEDEFAULT);
 		addControl(btnDefault, "points");
 		
-		btnDefault.addModifyListener(new LControlListener() {
+		btnDefault.addModifyListener(new LControlListener<PointSet>() {
 			@Override
-			public void onModify(LControlEvent event) {
+			public void onModify(LControlEvent<PointSet> event) {
 				editor.setObject(contentEditor.getObject());
 				editor.resetImage();
 			}
