@@ -1,5 +1,6 @@
 package gui.views.common;
 
+import gui.shell.PositionShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
@@ -24,8 +25,7 @@ public class PositionButton extends LObjectButton<Position> {
 		setShellFactory(new LShellFactory<Position>() {
 			@Override
 			public LObjectShell<Position> createShell(Shell parent) {
-				//return new PositionShell(parent);
-				return null;
+				return new PositionShell(parent);
 			}
 		});
 	}

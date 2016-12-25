@@ -38,12 +38,15 @@ public class StatusTab extends DatabaseTab {
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
+		Label lblIcon = new Label(grpGeneral, SWT.NONE);
+		lblIcon.setText(Vocab.instance.ICON);
+		
 		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeIcon = new GridLayout(2, false);
 		gl_compositeIcon.marginWidth = 0;
 		gl_compositeIcon.marginHeight = 0;
 		compositeIcon.setLayout(gl_compositeIcon);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		ImageButton btnSelectIcon = new ImageButton(compositeIcon, SWT.NONE);
 		btnSelectIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));

@@ -9,9 +9,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.Config;
+import data.FontData;
 
-public class FontButton extends LObjectButton<Config.Font> {
+public class FontButton extends LObjectButton<FontData> {
 	
 	private Text text;
 	
@@ -22,9 +22,9 @@ public class FontButton extends LObjectButton<Config.Font> {
 	 */
 	public FontButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<Config.Font>() {
+		setShellFactory(new LShellFactory<FontData>() {
 			@Override
-			public LObjectShell<Config.Font> createShell(Shell parent) {
+			public LObjectShell<FontData> createShell(Shell parent) {
 				return new FontShell(parent);
 			}
 		});
@@ -38,7 +38,7 @@ public class FontButton extends LObjectButton<Config.Font> {
 	public void setValue(Object value) {
 		if (value != null) {
 			button.setEnabled(true);
-			Config.Font s = (Config.Font) value;
+			FontData s = (FontData) value;
 			if (text != null) {
 				text.setText(s.toString());
 			}

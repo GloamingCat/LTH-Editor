@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import data.Audio;
-import data.Config;
+import data.FontData;
 
 public class ConfigEditor extends LObjectEditor {
 
@@ -116,17 +116,17 @@ public class ConfigEditor extends LObjectEditor {
 		grpFonts.setText(Vocab.instance.FONTS);
 		grpFonts.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		LHashTableEditor<Config.Font> lstFonts = new LHashTableEditor<Config.Font>(grpFonts, SWT.NONE) {
-			public Config.Font createNewValue() {
-				return new Config.Font();
+		LHashTableEditor<FontData> lstFonts = new LHashTableEditor<FontData>(grpFonts, SWT.NONE) {
+			public FontData createNewValue() {
+				return new FontData();
 			}
 			public String getFieldName() {
 				return "fonts";
 			}
 		};
-		lstFonts.getTable().setShellFactory(new LShellFactory<Config.Font>() {
+		lstFonts.getTable().setShellFactory(new LShellFactory<FontData>() {
 			@Override
-			public LObjectShell<Config.Font> createShell(Shell parent) {
+			public LObjectShell<FontData> createShell(Shell parent) {
 				return new FontShell(parent);
 			}
 		});

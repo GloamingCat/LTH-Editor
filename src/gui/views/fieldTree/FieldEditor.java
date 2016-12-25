@@ -11,7 +11,6 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -31,6 +30,7 @@ public class FieldEditor extends LObjectEditor {
 	private FieldToolBar toolBar;
 	private Label tileCoord;
 	private EditableFieldCanvas canvas;
+	private ScrolledComposite scrolledComposite;
 	
 	/**
 	 * Create the composite.
@@ -65,7 +65,7 @@ public class FieldEditor extends LObjectEditor {
 		};
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
@@ -73,7 +73,6 @@ public class FieldEditor extends LObjectEditor {
 				tileCoord.setText("(" + x + ", " + y + ")");
 			}
 		};
-		canvas.setLayout(new FillLayout(SWT.HORIZONTAL));
 		addChild(canvas);
 		scrolledComposite.setContent(canvas);
 
@@ -111,9 +110,7 @@ public class FieldEditor extends LObjectEditor {
 			public void widgetSelected(SelectionEvent arg0) {
 				canvas.rescale(1.0f * scale.getSelection() / 100);
 				lblScale.setText(scale.getSelection() + "%");
-				scrolledComposite.setMinWidth(canvas.getSize().x);
-				scrolledComposite.setMinHeight(canvas.getSize().y);
-				System.out.println(canvas.getSize());
+				scrolledComposite.setMinSize(canvas.getSize());
 			}
 		});
 		
@@ -125,6 +122,7 @@ public class FieldEditor extends LObjectEditor {
 	
 	public void selectField(Field field) {
 		canvas.setField(field);
+		scrolledComposite.setMinSize(canvas.getSize());
 	}
 	
 	@Override

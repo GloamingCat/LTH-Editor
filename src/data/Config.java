@@ -21,7 +21,7 @@ public class Config {
 	
 	public Script textVariables = new Script("/gui/Variables.lua", "");
 	public Position startPos = new Position();
-	public HashMap<String, Font> fonts = new HashMap<>();
+	public HashMap<String, FontData> fonts = new HashMap<>();
 	public HashMap<String, Audio> sounds = new HashMap<>();
 
 	// Types
@@ -29,28 +29,10 @@ public class Config {
 	public LDataList<String> elements = new LDataList<>();
 	public LDataList<String> regions = new LDataList<>();
 	
-	public static class Font {
-		
-		public String path = "";
-		public int size = 12;
-		public String format = "";
-		
-		public Font() {}
-		public Font(String path, int size, String format) {
-			this.path = path;
-			this.size = size;
-			this.format = format;
-		}
-		
-		public String toString() {
-			return path.replace("fonts/", "") + " " + size;
-		}
-	}
-	
 	public Config() {
-		fonts.put("dialog", new Font("Arial", 12, "\\c{#000000}"));
-		fonts.put("button", new Font("Arial", 12, "\\c{#000000}"));
-		fonts.put("popup", new Font("Arial", 14, "\\c{#0000FF}"));
+		fonts.put("dialog", new FontData("Arial", 12, "\\c{#000000}"));
+		fonts.put("button", new FontData("Arial", 12, "\\c{#000000}"));
+		fonts.put("popup", new FontData("Arial", 14, "\\c{#0000FF}"));
 		sounds.put("cursor", new Audio("cursor.wav", 100, 100, 100));
 		sounds.put("confirm", new Audio("confirm.wav", 100, 100, 100));
 		sounds.put("cancel", new Audio("cancel.wav", 100, 100, 100));

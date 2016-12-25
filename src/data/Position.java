@@ -9,7 +9,8 @@ public class Position {
 	public int direction = 270;
 	
 	public String toString() {
-		return "Field " + fieldID + " (" + x + "," + y + "," + z + ")" + ", " + direction;
+		String dir = direction == -1 ? "" : ", " + direction + "°";
+		return "Field " + fieldID + " (" + x + "," + y + "), Layer " + z + dir;
 	}
 	
 }

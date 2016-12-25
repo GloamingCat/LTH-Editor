@@ -15,11 +15,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
-import data.Config;
+import data.FontData;
 
 import org.eclipse.swt.widgets.Text;
 
-public class FontShell extends FileShell<Config.Font> {
+public class FontShell extends FileShell<FontData> {
 
 	private Spinner spnSize;
 	private Text txtFormat;
@@ -45,7 +45,7 @@ public class FontShell extends FileShell<Config.Font> {
 		txtFormat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 	}
 	
-	public void open(Config.Font initial) {
+	public void open(FontData initial) {
 		super.open(initial);
 		int i = indexOf(initial.path);
 		list.select(i);
@@ -54,7 +54,7 @@ public class FontShell extends FileShell<Config.Font> {
 	}
 
 	@Override
-	protected Config.Font createResult(Config.Font initial) {
+	protected FontData createResult(FontData initial) {
 		int i = list.getSelectionIndex();
 		if (i < 0)
 			return null;
@@ -63,7 +63,7 @@ public class FontShell extends FileShell<Config.Font> {
 				&& txtFormat.getText().equals(initial.format)) {
 			return null;
 		} else {
-			return new Config.Font(newPath, 
+			return new FontData(newPath, 
 					spnSize.getSelection(), 
 					txtFormat.getText());
 		}
