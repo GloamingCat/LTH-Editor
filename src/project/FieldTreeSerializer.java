@@ -94,7 +94,7 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 	}
 	
 	public Node duplicateNode(Node original) {
-		Field field = Project.current.fieldTree.loadField(original);
+		Field field = loadField(original);
 		int chosenID = findID();
 
 		Node node = new Node();
@@ -118,6 +118,10 @@ public class FieldTreeSerializer extends LObjectSerializer<FieldTree> {
 		FieldTree tree = gson.fromJson(new String(bytes), FieldTree.class);
 		tree.root.restoreParents();
 		return tree;
+	}
+
+	public void setField(LPath path, Field newField) {
+		loadedFields.put(newField.id, newField);
 	}
 
 }

@@ -4,7 +4,6 @@ import gui.views.config.ConfigEditor;
 import gui.views.database.DatabaseEditor;
 import gui.views.dialog.DialogTreeEditor;
 import gui.views.fieldTree.FieldTreeEditor;
-import gui.views.gamegui.GUITreeEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -53,7 +52,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		final DatabaseEditor databaseEditor = new DatabaseEditor(this, SWT.NONE);
 		final ConfigEditor configEditor = new ConfigEditor(this, SWT.NONE);
 		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
-		final GUITreeEditor guiEditor = new GUITreeEditor(this, SWT.NONE);
+		//final GUITreeEditor guiEditor = new GUITreeEditor(this, SWT.NONE);
 		final DialogTreeEditor dialogEditor = new DialogTreeEditor(this, SWT.NONE);
 		
 		MenuItem mntmFieldEditor = new MenuItem(menuView, SWT.NONE);
@@ -76,7 +75,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		mntmDatabaseEditor.setText(Vocab.instance.DATABASEEDITOR + "\tF3");
 		mntmDatabaseEditor.setAccelerator(SWT.F3);
 
-		MenuItem mntmGUIEditor = new MenuItem(menuView, SWT.NONE);
+		/*MenuItem mntmGUIEditor = new MenuItem(menuView, SWT.NONE);
 		mntmGUIEditor.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -84,7 +83,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 			}
 		});
 		mntmGUIEditor.setText(Vocab.instance.GUIEDITOR + "\tF4");
-		mntmGUIEditor.setAccelerator(SWT.F4);
+		mntmGUIEditor.setAccelerator(SWT.F4);*/
 		
 		MenuItem mntmDialogEditor = new MenuItem(menuView, SWT.NONE);
 		mntmDialogEditor.addSelectionListener(new SelectionAdapter() {
@@ -93,8 +92,8 @@ public class ApplicationShell extends LDefaultApplicationShell {
 				setCurrentView(dialogEditor);
 			}
 		});
-		mntmDialogEditor.setText(Vocab.instance.DIALOGEDITOR + "\tF5");
-		mntmDialogEditor.setAccelerator(SWT.F5);
+		mntmDialogEditor.setText(Vocab.instance.DIALOGEDITOR + "\tF4");
+		mntmDialogEditor.setAccelerator(SWT.F4);
 
 		MenuItem mntmConfigEditor = new MenuItem(menuView, SWT.NONE);
 		mntmConfigEditor.addSelectionListener(new SelectionAdapter() {
@@ -103,8 +102,8 @@ public class ApplicationShell extends LDefaultApplicationShell {
 				setCurrentView(configEditor);
 			}
 		});
-		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF6");
-		mntmConfigEditor.setAccelerator(SWT.F6);
+		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF5");
+		mntmConfigEditor.setAccelerator(SWT.F5);
 		
 		if (loadDefault()) {
 			setCurrentView(configEditor);

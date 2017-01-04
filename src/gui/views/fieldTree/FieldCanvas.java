@@ -101,12 +101,12 @@ public class FieldCanvas extends LView {
 				clearTileImages(field.sizeX, field.sizeY);
 			}
 		} else {
+			clearTileImages(field.sizeX, field.sizeY);
+			System.out.println("field size: " + field.sizeX + "," + field.sizeY);
 			int imgW = FieldHelper.config.tileW * 3;
 			int imgH = FieldHelper.config.tileH * (maxHeight() + 6);
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
-					if (tileImages[i][j] != null)
-						tileImages[i][j].dispose();
 					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
 				}
 			}
@@ -167,7 +167,7 @@ public class FieldCanvas extends LView {
 			rescale(1);
 		} else {
 			this.field = field;
-			clearTileImages(field.sizeX, field.sizeY);
+			updateAllTileImages();
 			rescale(scale);
 			System.out.println("Editing field: " + field.id);
 		}

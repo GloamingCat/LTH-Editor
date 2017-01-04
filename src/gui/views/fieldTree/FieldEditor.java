@@ -1,10 +1,12 @@
 package gui.views.fieldTree;
 
 import gui.shell.ResizeShell;
+import gui.views.fieldTree.action.ResizeAction;
 import lwt.dialog.LObjectDialog;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LObjectEditor;
+import lwt.editor.LTreeEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -29,8 +31,9 @@ public class FieldEditor extends LObjectEditor {
 
 	private FieldToolBar toolBar;
 	private Label tileCoord;
-	private EditableFieldCanvas canvas;
 	private ScrolledComposite scrolledComposite;
+	public EditableFieldCanvas canvas;
+	public LTreeEditor<Node, Field.Prefs> treeEditor;
 	
 	/**
 	 * Create the composite.
@@ -40,7 +43,7 @@ public class FieldEditor extends LObjectEditor {
 	public FieldEditor(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
-
+		
 		toolBar = new FieldToolBar(this, SWT.NONE) {
 			public void onSelectTool(int i) {
 				canvas.setTool(i);
@@ -150,7 +153,10 @@ public class FieldEditor extends LObjectEditor {
 	}
 	
 	private void resizeField(int w, int h) {
-		// TODO
+		ResizeAction action = new ResizeAction(this, w, h);
+		getActionStack().newAction(action);
+		action.redo();
+		scrolledComposite.setMinSize(canvas.getSize());
 	}
 	
 }

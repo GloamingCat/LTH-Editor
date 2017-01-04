@@ -116,6 +116,7 @@ public class FieldTreeEditor extends LView {
 
 		treeEditor.addChild(fieldEditor);
 		fieldEditor.addChild(sideEditor);
+		fieldEditor.treeEditor = treeEditor;
 		
 		treeEditor.setActionStack(getActionStack());
 		
