@@ -8,6 +8,7 @@ public class Config {
 	
 	// General
 	public String name = "New Project";
+	public Player player = new Player();
 	
 	// Grid
 	public int tileW = 36;
@@ -15,19 +16,17 @@ public class Config {
 	public int tileB = 16;
 	public int tileS = 0;
 	public int pixelsPerHeight = 16;
-	
 	public boolean allNeighbors = false;
-	public boolean pixelMovement = false;
 	
-	public Script textVariables = new Script("/gui/Variables.lua", "");
-	public Position startPos = new Position();
 	public HashMap<String, FontData> fonts = new HashMap<>();
 	public HashMap<String, Audio> sounds = new HashMap<>();
-
+	
 	// Types
 	public LDataList<Attribute> attributes = new LDataList<>();
 	public LDataList<String> elements = new LDataList<>();
 	public LDataList<String> regions = new LDataList<>();
+	public LDataList<ImageAtlas> atlases = new LDataList<>();
+	public LDataList<Tag> tags = new LDataList<>();
 	
 	public Config() {
 		fonts.put("dialog", new FontData("Arial", 12, "\\c{#000000}"));

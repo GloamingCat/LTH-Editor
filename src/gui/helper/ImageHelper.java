@@ -11,6 +11,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import project.Project;
 import data.Animation;
 import data.Obstacle;
+import data.Quad;
 import data.Ramp.PointSet;
 
 public class ImageHelper {
@@ -104,6 +105,11 @@ public class ImageHelper {
 		gc.drawImage(original, 0, 0);
 		gc.dispose();
 		return img;
+	}
+
+	public static Image getImageQuad(Quad s) {
+		Image img = SWTResourceManager.getImage(Project.current.imagePath() + s.imagePath);
+		return getImageQuad(img, s.x, s.y, s.width, s.height);
 	}
 
 }

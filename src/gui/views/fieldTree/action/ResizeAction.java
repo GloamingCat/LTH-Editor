@@ -1,12 +1,9 @@
 package gui.views.fieldTree.action;
 
-import gui.views.fieldTree.FieldCanvas;
 import gui.views.fieldTree.FieldEditor;
 import project.Project;
 import lwt.action.LAction;
 import lwt.dataestructure.LPath;
-import lwt.editor.LState;
-import lwt.editor.LTreeEditor;
 import data.Field;
 import data.Layer;
 

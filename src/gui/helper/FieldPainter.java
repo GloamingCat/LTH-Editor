@@ -158,10 +158,11 @@ public class FieldPainter {
 		gc.drawImage(img, obj.quad.x, obj.quad.y, obj.quad.width, obj.quad.height,
 				x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 				y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
-		if (paintRamp && obj.rampID >= 0) {
-			//Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
-			//paintRamp(gc, x0, y0 - FieldHelper.config.tileH / 2, ramp);
-		}
+		
+		/*if (paintRamp && obj.rampID >= 0) {
+			Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
+			paintRamp(gc, x0, y0 - FieldHelper.config.tileH / 2, ramp);
+		}*/
 	}
 	
 	public void paintCharacter(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {

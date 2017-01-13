@@ -42,6 +42,31 @@ public class Vocab {
 	public String VALUE = "Value";
 	public String PATH = "Path";
 	public String SECONDS = "sec";
+	public String PROPERTIES = "Properties";
+	
+	// Config
+	public String PROJECTNAME = "Project Name";
+	public String SOUNDS = "Sounds";
+	public String FONTS = "Fonts";
+	public String REGIONS = "Regions";
+	public String SHORTNAME = "Short Name";
+	public String MUTABLE = "Mutable";
+	public String SCRIPT = "Script";
+	
+	// Grid
+	public String GRID = "Grid";
+	public String TILEWIDTH = "Tile Width";
+	public String TILEHEIGHT = "Tile Height";
+	public String TILEBASE = "Tile Base";
+	public String TILESIDE = "Tile Side";
+	public String PIXELHEIGHT = "Pixels/Height";
+	public String ALLNEIGHBORS = "8 neighbors";
+	
+	// Player
+	public String PLAYER = "Player";
+	public String STARTPOS = "Start Position";
+	public String PIXELMOV = "Pixel Movement";
+	public String STOPCOLL = "Stop On Collision";
 	
 	// Item
 	public String PRICE = "Price";
@@ -125,6 +150,7 @@ public class Vocab {
 	// Obstacle
 	public String RAMP = "Ramp";
 	public String NEIGHBORS = "Neighbors";
+	public String TILES = "Tiles";
 
 	// Status
 	public String REMOVEONDAMAGE = "Remove on Damage";
@@ -146,25 +172,6 @@ public class Vocab {
 	public String REQUIREDSKILLS = "Required Skills";
 	public String EXPCOST = "EXP Cost";
 	public String SKILL = "Skill";
-
-	// Config
-	public String PROJECTNAME = "Project Name";
-	public String VARIABLES = "Variables";
-	public String STARTPOS = "Start Position";
-	public String GRID = "Grid";
-	public String TILEWIDTH = "Tile Width";
-	public String TILEHEIGHT = "Tile Height";
-	public String TILEBASE = "Tile Base";
-	public String TILESIDE = "Tile Side";
-	public String PIXELHEIGHT = "Pixels/Height";
-	public String PIXELMOV = "Pixel Movement";
-	public String ALLNEIGHBORS = "8 neighbors";
-	public String SOUNDS = "Sounds";
-	public String FONTS = "Fonts";
-	public String REGIONS = "Regions";
-	public String SHORTNAME = "Short Name";
-	public String MUTABLE = "Mutable";
-	public String SCRIPT = "Script";
 	
 	// Tileset
 	public String ANIMATION = "Animation";
@@ -181,5 +188,5 @@ public class Vocab {
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
 	public String WIDTH = "Width";
-
+	
 }

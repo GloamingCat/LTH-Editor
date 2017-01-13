@@ -17,11 +17,11 @@ import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 
-public class QuadEditor extends LObjectEditor {
+public class BlockEditor extends LObjectEditor {
 
 	private Label imgGraphic;
 
-	public QuadEditor(Composite parent, int style) {
+	public BlockEditor(Composite parent, int style) {
 		super(parent, style);
 
 		setLayout(new GridLayout(1, false));

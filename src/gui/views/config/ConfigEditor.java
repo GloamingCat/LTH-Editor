@@ -3,8 +3,7 @@ package gui.views.config;
 import gui.Vocab;
 import gui.shell.AudioShell;
 import gui.shell.FontShell;
-import gui.views.common.PositionButton;
-import gui.views.common.ScriptButton;
+import gui.views.common.PlayerButton;
 import lwt.action.LActionStack;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -23,7 +22,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import data.Audio;
@@ -55,39 +53,12 @@ public class ConfigEditor extends LObjectEditor {
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		
-		Label lblVar = new Label(grpGeneral, SWT.NONE);
-		lblVar.setText(Vocab.instance.VARIABLES);
+		Label lblPlayer = new Label(grpGeneral, SWT.NONE);
+		lblPlayer.setText(Vocab.instance.PLAYER);
 		
-		Composite varScript = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_varScript = new GridLayout(2, false);
-		gl_varScript.marginWidth = 0;
-		gl_varScript.marginHeight = 0;
-		varScript.setLayout(gl_varScript);
-		varScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Text txtVariables = new Text(varScript, SWT.BORDER | SWT.READ_ONLY);
-		txtVariables.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnVariables = new ScriptButton(varScript, SWT.NONE);
-		btnVariables.setFolder("other");
-		addControl(btnVariables, "textVariables");
-		
-		Label lblStartPos = new Label(grpGeneral, SWT.NONE);
-		lblStartPos.setText(Vocab.instance.STARTPOS);
-		
-		Composite startPos = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_startPos = new GridLayout(2, false);
-		gl_startPos.marginHeight = 0;
-		gl_startPos.marginWidth = 0;
-		startPos.setLayout(gl_startPos);
-		startPos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Text txtStartpos = new Text(startPos, SWT.BORDER | SWT.READ_ONLY);
-		txtStartpos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		PositionButton btnStartPos = new PositionButton(startPos, SWT.NONE);
-		btnStartPos.setText(txtStartpos);
-		addControl(btnStartPos, "startPos");
+		PlayerButton btnPlayer = new PlayerButton(grpGeneral, SWT.NONE);
+		addControl(btnPlayer, "player");
+		btnPlayer.setText(Vocab.instance.PROPERTIES);
 		
 		SashForm right = new SashForm(this, SWT.VERTICAL);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
@@ -178,11 +149,7 @@ public class ConfigEditor extends LObjectEditor {
 		gl_checkButtons.marginWidth = 0;
 		checkButtons.setLayout(gl_checkButtons);
 		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		
-		LCheckButton btnPixelMovement = new LCheckButton(checkButtons, SWT.CHECK);
-		btnPixelMovement.setText(Vocab.instance.PIXELMOV);
-		addControl(btnPixelMovement, "pixelMovement");
-		
+
 		LCheckButton btnNeighbors = new LCheckButton(checkButtons, SWT.CHECK);
 		btnNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
 		addControl(btnNeighbors, "allNeighbors");

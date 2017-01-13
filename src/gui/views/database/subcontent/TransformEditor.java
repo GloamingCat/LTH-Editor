@@ -3,6 +3,8 @@ package gui.views.database.subcontent;
 import gui.Vocab;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -14,6 +16,8 @@ import lwt.editor.LObjectEditor;
 import lwt.widget.LSpinner;
 
 public class TransformEditor extends LObjectEditor {
+	private LSpinner spnOffsetX;
+	private LSpinner spnOffsetY;
 
 	public TransformEditor(Composite parent, int style) {
 		super(parent, style);
@@ -26,7 +30,7 @@ public class TransformEditor extends LObjectEditor {
 		Label lblOffsetX = new Label(grpTransform, SWT.NONE);
 		lblOffsetX.setText(Vocab.instance.OFFSETX);
 		
-		LSpinner spnOffsetX = new LSpinner(grpTransform, SWT.NONE);
+		spnOffsetX = new LSpinner(grpTransform, SWT.NONE);
 		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
 		
@@ -40,7 +44,7 @@ public class TransformEditor extends LObjectEditor {
 		Label lblOffsetY = new Label(grpTransform, SWT.NONE);
 		lblOffsetY.setText(Vocab.instance.OFFSETY);
 		
-		LSpinner spnOffsetY = new LSpinner(grpTransform, SWT.NONE);
+		spnOffsetY = new LSpinner(grpTransform, SWT.NONE);
 		spnOffsetY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetY, "offsetY");
 		
@@ -92,6 +96,18 @@ public class TransformEditor extends LObjectEditor {
 		LSpinner spnAlpha = new LSpinner(grpTransform, SWT.NONE);
 		spnAlpha.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnAlpha, "alpha");
+	}
+	
+	public void setLabel(Label label) {
+		label.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				int x = (Integer) spnOffsetX.getValue();
+				int y = (Integer) spnOffsetY.getValue();
+				e.gc.drawLine(x - 2, y, x + 3, y);
+				e.gc.drawLine(x, y - 2, x, y + 2);
+			}
+		});
 	}
 	
 	public void setObject(Object obj) {

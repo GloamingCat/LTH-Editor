@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import lwt.action.LAction;
 import lwt.editor.LObjectEditor;
 
 import org.eclipse.swt.events.MouseAdapter;
@@ -23,7 +22,7 @@ import org.eclipse.swt.events.SelectionEvent;
 
 public class NeighborEditor extends LObjectEditor {
 
-	private boolean[] neighbors;
+	private boolean[] neighbors = new boolean[8];
 	private Label[] labels;
 	
 	public NeighborEditor(Composite parent, int style) {
@@ -103,21 +102,9 @@ public class NeighborEditor extends LObjectEditor {
 		labels[i].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
-				boolean oldValue = neighbors[i];
-				LAction action = new LAction() {
-					@Override
-					public void undo() {
-						setLabelValue(i, oldValue);
-						neighbors[i] = oldValue;
-					}
-					@Override
-					public void redo() {
-						setLabelValue(i, !oldValue);
-						neighbors[i] = !oldValue;
-					}
-				};
-				getActionStack().newAction(action);
-				action.redo();
+				boolean value = !neighbors[i];
+				setLabelValue(i, value);
+				neighbors[i] = value;
 			}
 		});
 	}
@@ -125,28 +112,9 @@ public class NeighborEditor extends LObjectEditor {
 	private SelectionAdapter allAction(final boolean newValue) {
 		return new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				boolean[] oldValues = new boolean[8];
-				boolean[] newValues = new boolean[8];
 				for(int i = 0; i < 8; i++) {
-					newValues[i] = newValue;
-					oldValues[i] = neighbors[i];
+					neighbors[i] = newValue;
 				}
-				if (areEqual(newValues, oldValues))
-					return;
-				LAction action = new LAction() {
-					@Override
-					public void undo() {
-						setLabelsValues(oldValues);
-						setArrayValues(oldValues);
-					}
-					@Override
-					public void redo() {
-						setLabelsValues(newValues);
-						setArrayValues(newValues);
-					}
-				};
-				getActionStack().newAction(action);
-				action.redo();
 			}
 		};
 	}
@@ -154,8 +122,10 @@ public class NeighborEditor extends LObjectEditor {
 	public void setObject(Object obj) {
 		super.setObject(obj);
 		if (obj != null) {
-			Object value = getFieldValue(currentObject, "neighbors");
-			neighbors = (boolean[]) value;
+			boolean[] values = (boolean[]) obj;
+			for(int i = 0; i < 8; i++) {
+				neighbors[i] = values[i];
+			}
 			setLabelsValues(neighbors);
 		} else {
 			neighbors = null;
@@ -163,22 +133,8 @@ public class NeighborEditor extends LObjectEditor {
 		}
 	}
 	
-	// ==========================================================
-	// Array values
-	// ==========================================================
-	
-	private boolean areEqual(boolean[] a, boolean[] b) {
-		for(int i = 0; i < 8; i++) {
-			if (a[i] != b[i])
-				return false;
-		}
-		return true;
-	}
-	
-	private void setArrayValues(boolean[] values) {
-		for(int i = 0; i < 8; i++) {
-			neighbors[i] = values[i];
-		}
+	public boolean[] getValues() {
+		return neighbors;
 	}
 
 	// ==========================================================

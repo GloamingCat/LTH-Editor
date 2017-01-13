@@ -2,14 +2,11 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.NeighborEditor;
 import gui.views.database.subcontent.QuadEditor;
 import gui.views.database.subcontent.TagList;
+import gui.views.database.subcontent.TileList;
 import gui.views.database.subcontent.TransformEditor;
 
-import java.util.ArrayList;
-
-import lwt.editor.LComboView;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -33,29 +30,22 @@ public class ObstacleTab extends DatabaseTab {
 	public ObstacleTab(Composite parent, int style) {
 		super(parent, style);
 		
+		contentEditor.setLayout(new GridLayout(2, false));
+		
+		Composite lateral = new Composite(contentEditor, SWT.NONE);
+		lateral.setLayout(new FillLayout(SWT.VERTICAL));
+		lateral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+		
 		Label lblHeight = new Label(grpGeneral, SWT.NONE);
 		lblHeight.setText(Vocab.instance.HEIGHT);
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.NONE);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnHeight, "colliderHeight");
-		
-		Label lblRamp = new Label(grpGeneral, SWT.NONE);
-		lblRamp.setText(Vocab.instance.RAMP);
-
-		LComboView cmbRamp = new LComboView(grpGeneral, SWT.NONE) {
-			public ArrayList<Object> getArray() {
-				return Project.current.ramps.getList();
-			}
-		};
-		cmbRamp.setIncludeID(true);
-		cmbRamp.setOptional(true);
-		cmbRamp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(cmbRamp, "rampID");
 
 		Composite other = new Composite(contentEditor, SWT.NONE);
 		other.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_other = new GridLayout(2, false);
+		GridLayout gl_other = new GridLayout(1, false);
 		gl_other.marginWidth = 0;
 		gl_other.marginHeight = 0;
 		other.setLayout(gl_other);
@@ -73,8 +63,7 @@ public class ObstacleTab extends DatabaseTab {
 		};
 		addChild(quadComp);
 		
-		Group grpTags = new Group(other, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		Group grpTags = new Group(lateral, SWT.NONE);
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
@@ -84,10 +73,14 @@ public class ObstacleTab extends DatabaseTab {
 		TransformEditor transformEditor = new TransformEditor(other, SWT.NONE);
 		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		addChild(transformEditor);
+		transformEditor.setLabel(quadComp.getLabel());
 	
-		NeighborEditor neighborEditor = new NeighborEditor(other, SWT.NONE);
-		neighborEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		addChild(neighborEditor);
+		Group grpTiles = new Group(lateral, SWT.NONE);
+		grpTiles.setLayout(new FillLayout());
+		grpTiles.setText(Vocab.instance.TILES);
+		
+		TileList tileList = new TileList(grpTiles, SWT.NONE);
+		addChild(tileList);
 		
 	}
 
