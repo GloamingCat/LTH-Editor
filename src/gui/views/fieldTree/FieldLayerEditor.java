@@ -21,6 +21,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
+import data.BattlerType;
+import data.Config;
 import data.Field;
 import data.Layer;
 import data.Layer.Info;
@@ -38,6 +40,8 @@ public class FieldLayerEditor extends LEditor {
 	private GraphicalList<ObstacleTile> lstObstacles;
 	private GraphicalList<CharTile> lstCharacters;
 	private GraphicalList<RegionTile> lstRegions;
+	private GraphicalList<BattlerType> lstBattlerTypes;
+	private GraphicalList<PartyTile> lstParties;
 	
 	private LListEditor<Layer, Layer.Info> layerList;
 	
@@ -123,6 +127,10 @@ public class FieldLayerEditor extends LEditor {
 		lstCharacters.getCollectionWidget().addSelectionListener(sl);
 		lstRegions = new GraphicalList<>(tileset, SWT.NONE);
 		lstRegions.getCollectionWidget().addSelectionListener(sl);
+		lstBattlerTypes = new GraphicalList<>(tileset, SWT.NONE);
+		lstBattlerTypes.getCollectionWidget().addSelectionListener(sl);
+		lstParties = new GraphicalList<>(tileset, SWT.NONE);
+		lstParties.getCollectionWidget().addSelectionListener(sl);
 		
 		form.setWeights(new int[] {1, 1});
 	}
@@ -137,10 +145,14 @@ public class FieldLayerEditor extends LEditor {
 		if (object != null) {
 			field = (Field) object;
 			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(field.prefs.tilesetID);
+			Config conf = (Config) Project.current.config.getData();
+			LDataList<PartyTile> parties = Tileset.createPartyArray(field.prefs.partyCount);
 			lstTerrains.setDataCollection(tileset.terrains);
 			lstObstacles.setDataCollection(tileset.obstacles);
 			lstCharacters.setDataCollection(tileset.characters);
 			lstRegions.setDataCollection(tileset.regions);
+			lstBattlerTypes.setDataCollection(conf.battlerTypes);
+			lstParties.setDataCollection(parties);
 			layerList.setDataCollection(field.layers);
 			int layer = Project.current.fieldTree.getData().getLastLayer(field.id);
 			layerList.getCollectionWidget().forceSelection(new LPath(layer));
@@ -149,6 +161,8 @@ public class FieldLayerEditor extends LEditor {
 			lstObstacles.setDataCollection(null);
 			lstCharacters.setDataCollection(null);
 			lstRegions.setDataCollection(null);
+			lstBattlerTypes.setDataCollection(null);
+			lstParties.setDataCollection(null);
 			layerList.setDataCollection(null);
 		}
 	}
@@ -166,6 +180,12 @@ public class FieldLayerEditor extends LEditor {
 			break;
 		case 3:
 			stack.topControl = lstRegions;
+			break;
+		case 4:
+			stack.topControl = lstBattlerTypes;
+			break;
+		case 5:
+			stack.topControl = lstParties;
 			break;
 		}
 		tileset.layout();

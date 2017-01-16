@@ -34,7 +34,7 @@ public class ImageShell extends FileShell<String> {
 			public void widgetSelected(SelectionEvent arg0) {
 				int i = list.getSelectionIndex();
 				if (i >= 0) {
-					label.setText(folder + "/" + list.getItem(i));
+					label.setText(folder + "\\" + list.getItem(i));
 					label.setImage(SWTResourceManager.getImage(rootPath() + label.getText()));
 				}
 			}
@@ -56,7 +56,7 @@ public class ImageShell extends FileShell<String> {
 	protected String createResult(String initial) {
 		int i = list.getSelectionIndex();
 		if (i >= 0) {
-			String newValue = folder + "/" + list.getItem(i);
+			String newValue = folder + "\\" + list.getItem(i);
 			if (newValue.equals(initial)) {
 				return null;
 			} else {

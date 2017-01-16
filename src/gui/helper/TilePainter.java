@@ -2,7 +2,6 @@ package gui.helper;
 
 import java.util.HashMap;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -10,6 +9,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
+import data.BattlerType;
 import data.Config;
 import data.GameCharacter;
 import data.Obstacle;
@@ -111,16 +111,26 @@ public class TilePainter {
 	
 	public static Image getRegionTile(int id) {
 		Region r =  conf.regions.get(id);
-		Image image = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH);
+		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, true);
+		Image image = new Image(Display.getCurrent(), conf.tileW, conf.tileH);
 		//
 		GC gc = new GC(image);
-		gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
-		gc.drawRectangle(2, 2, conf.tileW - 5, conf.tileH - 5);
 		gc.setForeground(new Color(Display.getCurrent(),  r.rgb));
 		gc.fillRectangle(3, 3, conf.tileW - 6, conf.tileH - 6);
+		gc.drawImage(str, 0, 0);
 		gc.dispose();
 		//
 		return image;
+	}
+
+	public static Image getBattlerTypeTile(BattlerType bt) {
+		Image str = ImageHelper.getStringImage(bt.code, conf.tileW, conf.tileH, true);
+		return str;
+	}
+	
+	public static Image getPartyTile(int id) {
+		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH);
+		return str;
 	}
 	
 }

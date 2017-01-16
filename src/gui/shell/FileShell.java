@@ -42,6 +42,10 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 
 	protected int indexOf(String path) {
 		int i = 0;
+		if (path == null) {
+			System.out.println("Null path");
+			return -1;
+		}
 		for(String s : list.getItems()) {
 			if (path.equals(folder + "/" + s)) {
 				return i;

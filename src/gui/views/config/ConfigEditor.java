@@ -185,7 +185,7 @@ public class ConfigEditor extends LObjectEditor {
 		Group grpBattlerTypes = new Group(bottom, SWT.NONE);
 		grpBattlerTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpBattlerTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpBattlerTypes.setText(Vocab.instance.ELEMENTS);
+		grpBattlerTypes.setText(Vocab.instance.BATTLERTYPES);
 		
 		BattlerTypeList lstBattlerTypes = new BattlerTypeList(grpBattlerTypes, SWT.NONE);
 		lstBattlerTypes.setIncludeID(true);		

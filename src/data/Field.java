@@ -20,12 +20,12 @@ public class Field {
 	}
 	
 	public static class Prefs {
-		
 		public String name = "New Field";
 		public String background = "";
 		public int tilesetID = 0;
-		public Script onStart = new Script();
+		public int defaultRegion = 0;
 		public int partyCount = 2;
+		public Script onStart = new Script();
 		public LDataList<Transition> transitions = new LDataList<>(); 
 		public LDataList<Tag> tags = new LDataList<>();
 		

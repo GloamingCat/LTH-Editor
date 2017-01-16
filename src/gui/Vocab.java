@@ -43,17 +43,19 @@ public class Vocab {
 	public String PATH = "Path";
 	public String SECONDS = "sec";
 	public String PROPERTIES = "Properties";
+	public String TYPE = "Type";
 	
 	// Config
 	public String PROJECTNAME = "Project Name";
 	public String SOUNDS = "Sounds";
 	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
-	public String BATTLETYPES = "BattleTypes";
+	public String BATTLERTYPES = "Battler Types";
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
 	public String CODE = "Code";
+	public String COLOR = "Color";
 	
 	// Grid
 	public String GRID = "Grid";
@@ -187,12 +189,19 @@ public class Vocab {
 	// Field
 	public String BACKGROUND = "Background";
 	public String TILESET = "Tileset";
-	public String TRANSITIONS = "Transitions";
-	public String TYPE = "Type";
+	public String DEFAULTREGION = "Default Region";
+	public String PARTYCOUNT = "Party Count";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
 	public String SIZEX = "Width";
 	public String SIZEY = "Height";
+	public String PARTY = "Party";
+	
+	// Transition
+	public String TRANSITIONS = "Transitions";
+	public String ORIGIN = "Origin";
+	public String DESTINATION = "Destination";
+	public String FADEOUT = "Fade out";
 	
 }

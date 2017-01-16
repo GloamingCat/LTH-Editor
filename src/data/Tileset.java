@@ -65,4 +65,21 @@ public class Tileset {
 		}
 	}
 	
+	public static class PartyTile extends BasicTile implements LGraphical {
+		@Override
+		public Image toImage() {
+			return TilePainter.getPartyTile(id);
+		}
+	}
+	
+	public static LDataList<PartyTile> createPartyArray(int size) {
+		LDataList<PartyTile> list = new LDataList<>();
+		for(int i = 0; i < size; i++) {
+			PartyTile pt = new PartyTile();
+			pt.id = i;
+			list.add(pt);
+		}
+		return list;
+	}
+	
 }

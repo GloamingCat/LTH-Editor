@@ -64,7 +64,8 @@ public class LayerShell extends LObjectShell<Info> {
 		cmbType = new Combo(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
 		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbType.setItems(new String[] { Vocab.instance.TERRAIN, Vocab.instance.OBSTACLE, 
-				Vocab.instance.CHARACTER, Vocab.instance.REGION});
+				Vocab.instance.CHARACTER, Vocab.instance.REGION,
+				Vocab.instance.BATTLERTYPE, Vocab.instance.PARTY});
 		
 		Label lblHeight = new Label(grpGeneral, SWT.NONE);
 		lblHeight.setText(Vocab.instance.HEIGHT);

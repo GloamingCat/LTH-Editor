@@ -8,6 +8,7 @@ public class Animation {
 	public int rows = 8;
 	public int cols = 6;
 	public int duration = 30;
+	public Script script = new Script();
 	
 	// Transform
 	public Transform transform = new Transform();

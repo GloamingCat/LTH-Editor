@@ -41,7 +41,7 @@ public class ImageHelper {
 		return getImageQuad(image, w * col, h * row, w, h);
 	}
 	
-	public static Image getStringImage(String s, int w, int h) {
+	public static Image getStringImage(String s, int w, int h, boolean borders) {
 		Image image = new Image(Display.getCurrent(), w, h);
 		//
 		GC gc = new GC(image);
@@ -50,9 +50,16 @@ public class ImageHelper {
 		int y = (h - size.y) / 2;
 		gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
 		gc.drawText(s, x, y);
+		if (borders) {
+			gc.drawRectangle(2, 2, w - 5, h - 5);
+		}
 		gc.dispose();
 		//
 		return image;
+	}
+	
+	public static Image getStringImage(String s, int w, int h) {
+		return getStringImage(s, w, h, false);
 	}
 	
 	public static Image getImageQuad(Image image, int x, int y, int w, int h) {

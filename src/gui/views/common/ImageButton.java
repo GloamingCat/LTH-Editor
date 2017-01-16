@@ -50,6 +50,9 @@ public class ImageButton extends LObjectButton<String> {
 				label.setImage(SWTResourceManager.getImage(
 						Project.current.imagePath() + s));
 			}
+			if (text != null) {
+				text.setText(s);
+			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);

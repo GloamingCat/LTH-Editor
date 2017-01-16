@@ -27,13 +27,13 @@ public class BattlerTypeShell extends LObjectShell<BattlerType> {
 		Label lblName = new Label(content, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
-		txtName = new Text(content, SWT.NONE);
+		txtName = new Text(content, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblCode = new Label(content, SWT.NONE);
 		lblCode.setText(Vocab.instance.CODE);
 		
-		txtCode = new Text(content, SWT.NONE);
+		txtCode = new Text(content, SWT.BORDER);
 		txtCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		pack();
