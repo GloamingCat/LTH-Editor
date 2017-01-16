@@ -2,6 +2,7 @@ package gui.views.database;
 
 import gui.Vocab;
 import gui.views.common.ImageButton;
+import gui.views.common.QuadButton;
 import gui.views.common.ScriptButton;
 
 import org.eclipse.swt.SWT;
@@ -109,6 +110,12 @@ public abstract class DatabaseTab extends LView {
 	}
 	
 	protected void addImageButton(ImageButton button, Label label, String folderName, String attName) {
+		button.setLabel(label);
+		button.setFolder(folderName);
+		addControl(button, attName);
+	}
+	
+	protected void addQuadButton(QuadButton button, Label label, String folderName, String attName) {
 		button.setLabel(label);
 		button.setFolder(folderName);
 		addControl(button, attName);

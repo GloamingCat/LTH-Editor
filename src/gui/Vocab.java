@@ -49,9 +49,11 @@ public class Vocab {
 	public String SOUNDS = "Sounds";
 	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
+	public String BATTLETYPES = "BattleTypes";
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
+	public String CODE = "Code";
 	
 	// Grid
 	public String GRID = "Grid";
@@ -79,8 +81,10 @@ public class Vocab {
 	public String ITEMSTATUS = "Status ID";
 	
 	// Battler
+	public String BATTLERTYPE = "Type";
 	public String SKILLDAG = "Skill Dag";
 	public String ATTACKSKILL = "Attack Skill";
+	public String PERSISTENT = "Persistent";
 	public String AI = "AI";
 	public String MONEY = "Money";
 	public String EXP = "EXP";
@@ -183,10 +187,12 @@ public class Vocab {
 	// Field
 	public String BACKGROUND = "Background";
 	public String TILESET = "Tileset";
+	public String TRANSITIONS = "Transitions";
 	public String TYPE = "Type";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
-	public String WIDTH = "Width";
+	public String SIZEX = "Width";
+	public String SIZEY = "Height";
 	
 }

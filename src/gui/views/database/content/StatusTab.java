@@ -148,11 +148,8 @@ public class StatusTab extends DatabaseTab {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.attributes;
 			}
-			@Override
-			protected String attributeName() {
-				return "attributes";
-			}
 		};
+		lstAttributes.attributeName = "attributes";
 		addChild(lstAttributes);
 
 		Group grpElements = new Group(compositeOther, SWT.NONE);
@@ -166,11 +163,8 @@ public class StatusTab extends DatabaseTab {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements;
 			}
-			@Override
-			protected String attributeName() {
-				return "elements";
-			}
 		};
+		lstElements.attributeName = "elements";
 		addChild(lstElements);
 		
 		Group grpTags = new Group(compositeOther, SWT.NONE);

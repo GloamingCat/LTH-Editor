@@ -14,6 +14,7 @@ import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -46,20 +47,34 @@ public class BattlerTab extends DatabaseTab {
 		lblCharacter.setText(Vocab.instance.CHARACTER);
 		
 		LComboView cmbCharacter = new LComboView(grpGeneral, SWT.NONE) {
-			public ArrayList<Object> getArray() {
+			public ArrayList<?> getArray() {
 				return Project.current.characters.getList();
 			}
 		};
 		cmbCharacter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbCharacter.setOptional(false);
-		addControl(cmbCharacter, "animationID");
+		addControl(cmbCharacter, "characterID");
+		
+		Label lblType = new Label(grpGeneral, SWT.NONE);
+		lblType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblType.setText(Vocab.instance.BATTLERTYPE);
+		
+		LComboView cmbType = new LComboView(grpGeneral, SWT.NONE) {
+			public ArrayList<?> getArray() {
+				Config conf = (Config) Project.current.config.getData();
+				return conf.battlerTypes;
+			}
+		};
+		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbType.setOptional(false);
+		addControl(cmbType, "typeID");
 		
 		Label lblSkillTree = new Label(grpGeneral, SWT.NONE);
 		lblSkillTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblSkillTree.setText(Vocab.instance.SKILLDAG);
 		
 		LComboView cmbSkillTree = new LComboView(grpGeneral, SWT.READ_ONLY) {
-			public ArrayList<Object> getArray() {
+			public ArrayList<?> getArray() {
 				return Project.current.skillDags.getList();
 			}
 		};
@@ -79,6 +94,13 @@ public class BattlerTab extends DatabaseTab {
 		cmbAttackSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbAttackSkill.setOptional(false);
 		addControl(cmbAttackSkill, "attackID");
+		
+		Label lblPersistent = new Label(grpGeneral,  SWT.NONE);
+		lblPersistent.setText(Vocab.instance.PERSISTENT);
+		
+		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
+		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(btnPersistent, "persistent");
 		
 		Composite compositeAI = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeAI = new GridLayout(3, false);
@@ -176,11 +198,8 @@ public class BattlerTab extends DatabaseTab {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements;
 			}
-			@Override
-			protected String attributeName() {
-				return "elements";
-			}
 		};
+		lstElements.attributeName = "elements";
 		addChild(lstElements);
 		
 		Group grpItems = new Group(other, SWT.NONE);
@@ -193,11 +212,8 @@ public class BattlerTab extends DatabaseTab {
 			protected ArrayList<?> comboArray() {
 				return Project.current.items.getList();
 			}
-			@Override
-			protected String attributeName() {
-				return "items";
-			}
 		};
+		lstItems.attributeName = "items";
 		addChild(lstItems);
 
 		Group grpTags = new Group(other, SWT.NONE);
@@ -215,7 +231,7 @@ public class BattlerTab extends DatabaseTab {
 					updateImage(-1);
 				} else {
 					Battler b = (Battler) event.data;
-					updateImage(b.animationID);
+					updateImage(b.characterID);
 				}
 			}
 		});

@@ -25,6 +25,8 @@ public class Field {
 		public String background = "";
 		public int tilesetID = 0;
 		public Script onStart = new Script();
+		public int partyCount = 2;
+		public LDataList<Transition> transitions = new LDataList<>(); 
 		public LDataList<Tag> tags = new LDataList<>();
 		
 		public String toString() {

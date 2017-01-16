@@ -18,6 +18,10 @@ public class Obstacle {
 		public int dy = 0;
 		public int rampID = -1;
 		public boolean[] neighbors = new boolean[8];
+		
+		public String toString() {
+			return "(" + dx + "," + dy + ")";
+		}
 	}
 	
 	public Obstacle() {

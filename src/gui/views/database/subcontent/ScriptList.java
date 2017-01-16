@@ -27,19 +27,19 @@ public class ScriptList extends LDefaultListEditor<Script> {
 		setShellFactory(new LShellFactory<Script>() {
 			@Override
 			public LObjectShell<Script> createShell(Shell parent) {
-				return new ScriptShell(parent, folderName());
+				return new ScriptShell(parent, folderName);
 			}
 		});
 	}
 	
-	protected String folderName() { return ""; }
-	protected String attributeName() { return "scripts"; }
+	public String folderName = "";
+	public String attributeName = "script";
 	
 	public void setObject(Object object) {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, attributeName());
+			Object value = getFieldValue(object, attributeName);
 			super.setObject(value);
 		}
 	}

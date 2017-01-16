@@ -1,7 +1,7 @@
 package gui.views.database.subcontent;
 
 import gui.helper.ImageHelper;
-import gui.views.common.ImageButton;
+import gui.views.common.QuadButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -31,14 +31,14 @@ public class QuadEditor extends LObjectEditor {
 		imgGraphic.setAlignment(SWT.CENTER);
 		imgGraphic.setImage(SWTResourceManager.getImage("/javax/swing/plaf/basic/icons/image-delayed.png"));
 		
-		ImageButton btnSelect = new ImageButton(this, SWT.NONE);
+		QuadButton btnSelect = new QuadButton(this, SWT.NONE);
 		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		btnSelect.setFolder(getFolder());
-		addControl(btnSelect, "imagePath");
+		addControl(btnSelect, "quad");
 		btnSelect.setLabel(imgGraphic);
-		btnSelect.addModifyListener(new LControlListener<String>() {
+		btnSelect.addModifyListener(new LControlListener<Quad>() {
 			@Override
-			public void onModify(LControlEvent<String> event) {
+			public void onModify(LControlEvent<Quad> event) {
 				resetImage();
 			}
 		});
@@ -47,7 +47,7 @@ public class QuadEditor extends LObjectEditor {
 	protected String getFolder() { return ""; }
 
 	protected void resetImage() {
-		Quad quad = (Quad) currentObject;
+		Quad quad = (Quad) this.getFieldValue(currentObject, "quad");
 		String path = Project.current.imagePath() + quad.imagePath;
 		Image original = SWTResourceManager.getImage(path);
 		Image image;
@@ -65,14 +65,8 @@ public class QuadEditor extends LObjectEditor {
 	}
 	
 	public void setObject(Object obj) {
-		if (obj == null) {
-			super.setObject(null);
-			resetImage();
-		} else {
-			Object value = getFieldValue(obj, "quad");
-			super.setObject(value);
-			resetImage();
-		}
+		super.setObject(obj);
+		resetImage();
 	}
 
 	public Label getLabel() {

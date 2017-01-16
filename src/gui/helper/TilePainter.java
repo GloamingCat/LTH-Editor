@@ -3,6 +3,7 @@ package gui.helper;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -12,6 +13,7 @@ import data.Animation;
 import data.Config;
 import data.GameCharacter;
 import data.Obstacle;
+import data.Region;
 import data.Terrain;
 import project.Project;
 
@@ -108,11 +110,14 @@ public class TilePainter {
 	}
 	
 	public static Image getRegionTile(int id) {
+		Region r =  conf.regions.get(id);
 		Image image = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH);
 		//
 		GC gc = new GC(image);
 		gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
 		gc.drawRectangle(2, 2, conf.tileW - 5, conf.tileH - 5);
+		gc.setForeground(new Color(Display.getCurrent(),  r.rgb));
+		gc.fillRectangle(3, 3, conf.tileW - 6, conf.tileH - 6);
 		gc.dispose();
 		//
 		return image;

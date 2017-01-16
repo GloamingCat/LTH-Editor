@@ -24,13 +24,13 @@ public class ResizeShell extends LObjectShell<Point> {
 		content.setLayout(new GridLayout(2, false));
 		
 		Label lblW = new Label(content, SWT.NONE);
-		lblW.setText(Vocab.instance.WIDTH);
+		lblW.setText(Vocab.instance.SIZEX);
 		
 		spnW = new Spinner(content, SWT.BORDER);
 		spnW.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblH = new Label(content, SWT.NONE);
-		lblH.setText(Vocab.instance.HEIGHT);
+		lblH.setText(Vocab.instance.SIZEY);
 		
 		spnH = new Spinner(content, SWT.BORDER);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

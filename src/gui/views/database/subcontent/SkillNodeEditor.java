@@ -56,10 +56,8 @@ public class SkillNodeEditor extends LObjectEditor {
 			public ArrayList<?> comboArray() {
 				return Project.current.skills.getList();
 			}
-			public String attributeName() {
-				return "requirements";
-			}
 		};
+		lstRequirements.attributeName = "requirements";
 		lstRequirements.setLayout(new FillLayout(SWT.HORIZONTAL));
 		addChild(lstRequirements);
 		

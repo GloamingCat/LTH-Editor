@@ -24,7 +24,8 @@ public class Config {
 	// Types
 	public LDataList<Attribute> attributes = new LDataList<>();
 	public LDataList<String> elements = new LDataList<>();
-	public LDataList<String> regions = new LDataList<>();
+	public LDataList<Region> regions = new LDataList<>();
+	public LDataList<BattlerType> battlerTypes = new LDataList<>();
 	public LDataList<ImageAtlas> atlases = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	

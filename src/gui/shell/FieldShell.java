@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import project.Project;
 import data.Field.Prefs;
 import data.Tag;
+import data.Transition;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
@@ -38,14 +39,14 @@ public class FieldShell extends LObjectShell<Prefs> {
 	
 	protected TagList lstTags;
 	protected LDataList<Tag> tags;
+	protected LDataList<Transition> transitions;
 
 	public FieldShell(Shell parent) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(320, 280));
-		setSize(360, 260);
+		setMinimumSize(new Point(400, 300));
 		
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.marginWidth = 0;
@@ -53,7 +54,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 		content.setLayout(gridLayout);
 		
 		Group grpGeneral = new Group(content, SWT.NONE);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		GridLayout gl_grpGeneral = new GridLayout(2, false);
 		gl_grpGeneral.marginWidth = 0;
@@ -94,33 +95,9 @@ public class FieldShell extends LObjectShell<Prefs> {
 		cmbTileset.setOptional(false);
 		cmbTileset.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblScript = new Label(grpGeneral, SWT.NONE);
-		lblScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		lblScript.setText(Vocab.instance.STARTLISTENER);
-		
-		Composite scriptComp = new Composite(grpGeneral, SWT.NONE);
-		scriptComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		GridLayout gl_scriptComp = new GridLayout(2, false);
-		gl_scriptComp.marginWidth = 0;
-		gl_scriptComp.marginHeight = 0;
-		scriptComp.setLayout(gl_scriptComp);
-		
-		txtScript = new Text(scriptComp, SWT.BORDER | SWT.READ_ONLY);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnScript = new ScriptButton(scriptComp, SWT.NONE);
-		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setFolder("eventsheet");
-		
-		txtParam = new StyledText(scriptComp, SWT.BORDER | SWT.READ_ONLY);
-		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		btnScript.setPathText(txtScript);
-		btnScript.setParamText(txtParam);
-		
 		Group grpTags = new Group(content, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		lstTags = new TagList(grpTags, SWT.NONE) {
@@ -130,6 +107,35 @@ public class FieldShell extends LObjectShell<Prefs> {
 		};
 		
 		pack();
+		
+		Composite bottom = new Composite(content, SWT.NONE);
+		bottom.setLayout(new FillLayout(SWT.HORIZONTAL));
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		
+		Group grpScript = new Group(bottom, SWT.NONE);
+		grpScript.setText(Vocab.instance.STARTLISTENER);
+		
+		GridLayout gl_scriptComp = new GridLayout(2, false);
+		gl_scriptComp.marginWidth = 0;
+		gl_scriptComp.marginHeight = 0;
+		grpScript.setLayout(gl_scriptComp);
+		
+		txtScript = new Text(grpScript, SWT.BORDER | SWT.READ_ONLY);
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ScriptButton btnScript = new ScriptButton(grpScript, SWT.NONE);
+		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		btnScript.setFolder("eventsheet");
+		
+		txtParam = new StyledText(grpScript, SWT.BORDER | SWT.READ_ONLY);
+		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		btnScript.setPathText(txtScript);
+		btnScript.setParamText(txtParam);
+		
+		Group grpTransitions = new Group(bottom, SWT.NONE);
+		grpTransitions.setText(Vocab.instance.TRANSITIONS);
+		
 	}
 	
 	public void open(Prefs initial) {

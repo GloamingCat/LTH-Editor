@@ -1,20 +1,21 @@
 package gui.views.config;
 
-import gui.shell.NameShell;
+import gui.shell.BattlerTypeShell;
 
 import org.eclipse.swt.widgets.Composite;
 
+import data.BattlerType;
 import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class NameList extends LDefaultListEditor<String> {
+public class BattlerTypeList extends LDefaultListEditor<BattlerType> {
 	
-	protected LDataList<String> currentList;
+	protected LDataList<BattlerType> currentList;
 	
-	public NameList(Composite parent, int style) {
+	public BattlerTypeList(Composite parent, int style) {
 		super(parent, style);
 		getCollectionWidget().setEditEnabled(true);
 		getCollectionWidget().setInsertNewEnabled(true);
@@ -23,48 +24,45 @@ public class NameList extends LDefaultListEditor<String> {
 		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 
-		setShellFactory(new LShellFactory<String>() {
+		setShellFactory(new LShellFactory<BattlerType>() {
 			@Override
-			public LObjectShell<String> createShell(
+			public LObjectShell<BattlerType> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
-				return new NameShell(parent);
+				return new BattlerTypeShell(parent);
 			}
 		});
-	}
-	
-	public String attributeName = "";
-	
-	public void attributeName(String s) { 
-		attributeName = s;
 	}
 
 	public void setObject(Object object) {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, attributeName);
+			Object value = getFieldValue(object, "battlerTypes");
 			super.setObject(value);
 		}
 	}
 	
 	@Override
-	public void setDataCollection(LDataCollection<String> list) {
-		currentList = (LDataList<String>) list;
+	public void setDataCollection(LDataCollection<BattlerType> list) {
+		currentList = (LDataList<BattlerType>) list;
 	}
 	
 	@Override
-	public LDataList<String> getDataCollection() {
+	public LDataList<BattlerType> getDataCollection() {
 		return currentList;
 	}
 
 	@Override
-	public String createNewData() {
-		return "New";
+	public BattlerType createNewData() {
+		return new BattlerType();
 	}
 
 	@Override
-	public String duplicateData(String original) {
-		return original;
+	public BattlerType duplicateData(BattlerType original) {
+		BattlerType t = new BattlerType();
+		t.name = original.name;
+		t.code = original.code;
+		return t;
 	}
 
 }

@@ -24,6 +24,7 @@ public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 
 	protected LList<Integer, Integer> list;
 	protected LDataList<Integer> currentList;
+	public String attributeName = "";
 	
 	public IDList(Composite parent, int style) {
 		super(parent, style);
@@ -92,14 +93,13 @@ public class IDList extends LAbstractTreeEditor<Integer, Integer> {
 	}
 	
 	public ArrayList<?> comboArray() { return null; }
-	public String attributeName() { return ""; }
-	
+
 	public void setObject(Object obj) {
 		if (obj == null) {
 			getCollectionWidget().setItems(new LDataTree<Integer>());
 			setList(null);
 		} else {
-			obj = getFieldValue(obj, attributeName());
+			obj = getFieldValue(obj, attributeName);
 			@SuppressWarnings("unchecked")
 			LDataList<Integer> db = (LDataList<Integer>) obj;
 			getCollectionWidget().setItems(db.toTree());

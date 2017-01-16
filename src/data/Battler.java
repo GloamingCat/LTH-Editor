@@ -5,7 +5,9 @@ import lwt.dataestructure.LDataList;
 public class Battler {
 
 	public String name = "New Battler";
-	public int animationID;
+	public boolean persistent = false;
+	public int typeID;
+	public int characterID;
 	public Script scriptAI = new Script();
 	public int attackID;
 	public int skillDagID;

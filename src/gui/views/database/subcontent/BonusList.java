@@ -20,6 +20,7 @@ public class BonusList extends LDefaultListEditor<Bonus> {
 	private static Gson gson = new Gson();
 	
 	protected LDataList<Bonus> currentList;
+	public String attributeName = "";
 	
 	public BonusList(Composite parent, int style) {
 		super(parent, style);
@@ -44,13 +45,12 @@ public class BonusList extends LDefaultListEditor<Bonus> {
 	}
 	
 	protected ArrayList<?> comboArray() { return null; }
-	protected String attributeName() { return ""; }
 	
 	public void setObject(Object object) {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, attributeName());
+			Object value = getFieldValue(object, attributeName);
 			super.setObject(value);
 		}
 	}

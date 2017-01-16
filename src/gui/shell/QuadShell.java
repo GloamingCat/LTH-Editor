@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -127,6 +128,12 @@ public class QuadShell extends FileShell<Quad> {
 		super.open(initial);
 		int i = indexOf(initial.imagePath);
 		list.select(i);
+		label.setText(initial.imagePath);
+		spnX.setSelection(initial.x);
+		spnY.setSelection(initial.y);
+		spnWidth.setSelection(initial.width);
+		spnHeight.setSelection(initial.height);
+		resetImage();
 	}
 
 	@Override
@@ -165,6 +172,12 @@ public class QuadShell extends FileShell<Quad> {
 		} catch(IOException ex) {
 		    return false;
 		}
+	}
+	
+	protected void resetImage() {
+		String path = Project.current.imagePath() + label.getText();
+		Image image = SWTResourceManager.getImage(path);
+		label.setImage(image);
 	}
 	
 	protected String rootPath() {

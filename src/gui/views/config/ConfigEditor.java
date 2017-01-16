@@ -4,6 +4,7 @@ import gui.Vocab;
 import gui.shell.AudioShell;
 import gui.shell.FontShell;
 import gui.views.common.PlayerButton;
+import gui.views.database.subcontent.TagList;
 import lwt.action.LActionStack;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
@@ -163,41 +164,50 @@ public class ConfigEditor extends LObjectEditor {
 		
 		Group grpElements = new Group(bottom, SWT.NONE);
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpElements.setSize(220, 58);
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		NameList lstElements = new NameList(grpElements, SWT.NONE) {
-			public String attributeName() {
-				return "elements";
-			}
-		};
+		NameList lstElements = new NameList(grpElements, SWT.NONE);
+		lstElements.attributeName = "elements";
 		lstElements.setIncludeID(true);		
 		addChild(lstElements);
 		
 		Group grpRegions = new Group(bottom, SWT.NONE);
 		grpRegions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpRegions.setSize(220, 15);
 		grpRegions.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpRegions.setText(Vocab.instance.REGIONS);
 		
-		NameList lstRegions = new NameList(grpRegions, SWT.NONE) {
-			public String attributeName() {
-				return "regions";
-			}
-		};
+		NameList lstRegions = new NameList(grpRegions, SWT.NONE);
+		lstRegions.attributeName = "regions";
 		lstRegions.setIncludeID(true);
 		addChild(lstRegions);
 		
+		Group grpBattlerTypes = new Group(bottom, SWT.NONE);
+		grpBattlerTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpBattlerTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpBattlerTypes.setText(Vocab.instance.ELEMENTS);
+		
+		BattlerTypeList lstBattlerTypes = new BattlerTypeList(grpBattlerTypes, SWT.NONE);
+		lstBattlerTypes.setIncludeID(true);		
+		addChild(lstBattlerTypes);
+		
 		Group grpAttributes = new Group(bottom, SWT.NONE);
 		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpAttributes.setSize(220, 15);
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		lstAttributes.setIncludeID(true);
 		addChild(lstAttributes);
+		
+		Group grpTags = new Group(bottom, SWT.NONE);
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpTags.setLayout(new FillLayout());
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
+		addChild(tagEditor);
+		
 	}
 	
 	public void onVisible() {

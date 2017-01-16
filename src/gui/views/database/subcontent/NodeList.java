@@ -46,13 +46,14 @@ public class NodeList extends LDefaultListEditor<Node> {
 	}
 	
 	protected ArrayList<?> comboArray() { return null; }
-	protected String attributeName() { return ""; }
 	
+	public String attributeName = "";
+
 	public void setObject(Object object) {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, attributeName());
+			Object value = getFieldValue(object, attributeName);
 			super.setObject(value);
 		}
 	}

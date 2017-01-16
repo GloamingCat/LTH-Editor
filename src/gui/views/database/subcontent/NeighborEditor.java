@@ -115,6 +115,7 @@ public class NeighborEditor extends LObjectEditor {
 				for(int i = 0; i < 8; i++) {
 					neighbors[i] = newValue;
 				}
+				updateLabels();
 			}
 		};
 	}
@@ -140,6 +141,10 @@ public class NeighborEditor extends LObjectEditor {
 	// ==========================================================
 	// Label values
 	// ==========================================================
+	
+	private void updateLabels() {
+		setLabelsValues(neighbors);
+	}
 	
 	private void disableLabels() {
 		for(int i = 0; i < 8; i++) {

@@ -71,11 +71,8 @@ public class CharacterTab extends DatabaseTab {
 			protected ArrayList<?> comboArray() {
 				return Project.current.animCharacter.getList();
 			}
-			@Override
-			protected String attributeName() {
-				return "animations";
-			}
 		};
+		lstAnim.attributeName = "animations";
 		lstAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstAnim);
 		
@@ -117,14 +114,9 @@ public class CharacterTab extends DatabaseTab {
 		grpStart.setLayout(new FillLayout());
 		grpStart.setText(Vocab.instance.STARTLISTENERS);
 		
-		ScriptList lstStart = new ScriptList(grpStart, SWT.NONE) {
-			protected String attributeName() {
-				return "startListeners";
-			}
-			protected String folderName() {
-				return "character";
-			}
-		};
+		ScriptList lstStart = new ScriptList(grpStart, SWT.NONE);
+		lstStart.attributeName = "startListeners";
+		lstStart.folderName = "character";
 		addChild(lstStart);
 		
 		Group grpCollision = new Group(bottom, SWT.NONE);
@@ -132,14 +124,9 @@ public class CharacterTab extends DatabaseTab {
 		grpCollision.setLayout(new FillLayout());
 		grpCollision.setText(Vocab.instance.COLLISIONLISTENERS);
 		
-		ScriptList lstCollision = new ScriptList(grpCollision, SWT.NONE) {
-			protected String attributeName() {
-				return "collisionListeners";
-			}
-			protected String folderName() {
-				return "character";
-			}
-		};
+		ScriptList lstCollision = new ScriptList(grpCollision, SWT.NONE);
+		lstCollision.attributeName = "collisionListeners";
+		lstCollision.folderName = "character";
 		addChild(lstCollision);
 		
 		Group grpInteract = new Group(bottom, SWT.NONE);
@@ -147,14 +134,9 @@ public class CharacterTab extends DatabaseTab {
 		grpInteract.setLayout(new FillLayout());
 		grpInteract.setText(Vocab.instance.INTERACTLISTENERS);
 		
-		ScriptList lstInteract = new ScriptList(grpInteract, SWT.NONE) {
-			protected String attributeName() {
-				return "interactListeners";
-			}
-			protected String folderName() {
-				return "character";
-			}
-		};
+		ScriptList lstInteract = new ScriptList(grpInteract, SWT.NONE);
+		lstInteract.attributeName = "interactListeners";
+		lstInteract.folderName = "character";
 		addChild(lstInteract);
 	}
 
