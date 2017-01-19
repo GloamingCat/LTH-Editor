@@ -8,6 +8,7 @@ import gui.views.database.subcontent.IDList;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -20,6 +21,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FillLayout;
 
@@ -30,12 +32,15 @@ import org.eclipse.swt.events.SelectionEvent;
 
 import data.Region;
 
+import org.eclipse.wb.swt.SWTResourceManager;
+
 public class RegionShell extends LObjectShell<Region> {
 	
 	private Text txtName;
 	private IDList lstBattlers;
 	private RGB rgb;
 	private LDataList<Integer> battlers = new LDataList<>();
+	private Label imgColor;
 
 	public RegionShell(Shell parent) {
 		super(parent);
@@ -58,9 +63,10 @@ public class RegionShell extends LObjectShell<Region> {
 		gl_color.marginWidth = 0;
 		color.setLayout(gl_color);
 		
-		Label imgColor = new Label(color, SWT.NONE);
+		imgColor = new Label(color, SWT.NONE);
+		imgColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		imgColor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+
 		Button btnSelect = new Button(color, SWT.NONE);
 		btnSelect.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -69,6 +75,8 @@ public class RegionShell extends LObjectShell<Region> {
 				RGB newRGB = d.open();
 				if (newRGB != null) {
 					rgb = newRGB;
+					imgColor.setBackground(new Color(arg0.display, rgb));
+					imgColor.redraw();
 				}
 			}
 		});
@@ -76,7 +84,7 @@ public class RegionShell extends LObjectShell<Region> {
 		
 		Group grpBattler = new Group(content, SWT.NONE);
 		grpBattler.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpBattler = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		GridData gd_grpBattler = new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1);
 		gd_grpBattler.widthHint = 155;
 		gd_grpBattler.heightHint = 98;
 		grpBattler.setLayoutData(gd_grpBattler);
@@ -98,6 +106,8 @@ public class RegionShell extends LObjectShell<Region> {
 		super.open(initial);
 		txtName.setText(initial.name);
 		rgb = initial.rgb;
+		imgColor.setBackground(new Color(Display.getCurrent(), rgb));
+		imgColor.redraw();
 		
 		battlers = new LDataList<Integer>();
 		for (Integer i : initial.battlers) {

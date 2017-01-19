@@ -111,25 +111,18 @@ public class TilePainter {
 	
 	public static Image getRegionTile(int id) {
 		Region r =  conf.regions.get(id);
-		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, true);
-		Image image = new Image(Display.getCurrent(), conf.tileW, conf.tileH);
-		//
-		GC gc = new GC(image);
-		gc.setForeground(new Color(Display.getCurrent(),  r.rgb));
-		gc.fillRectangle(3, 3, conf.tileW - 6, conf.tileH - 6);
-		gc.drawImage(str, 0, 0);
-		gc.dispose();
-		//
-		return image;
+		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, 
+				new Color(Display.getCurrent(),  r.rgb), true);
+		return str;
 	}
 
 	public static Image getBattlerTypeTile(BattlerType bt) {
-		Image str = ImageHelper.getStringImage(bt.code, conf.tileW, conf.tileH, true);
+		Image str = ImageHelper.getStringImage(bt.code, conf.tileW, conf.tileH, null, true);
 		return str;
 	}
 	
 	public static Image getPartyTile(int id) {
-		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH);
+		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, null);
 		return str;
 	}
 	

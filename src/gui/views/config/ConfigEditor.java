@@ -177,9 +177,7 @@ public class ConfigEditor extends LObjectEditor {
 		grpRegions.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpRegions.setText(Vocab.instance.REGIONS);
 		
-		NameList lstRegions = new NameList(grpRegions, SWT.NONE);
-		lstRegions.attributeName = "regions";
-		lstRegions.setIncludeID(true);
+		RegionList lstRegions = new RegionList(grpRegions, SWT.NONE);
 		addChild(lstRegions);
 		
 		Group grpBattlerTypes = new Group(bottom, SWT.NONE);
@@ -188,7 +186,6 @@ public class ConfigEditor extends LObjectEditor {
 		grpBattlerTypes.setText(Vocab.instance.BATTLERTYPES);
 		
 		BattlerTypeList lstBattlerTypes = new BattlerTypeList(grpBattlerTypes, SWT.NONE);
-		lstBattlerTypes.setIncludeID(true);		
 		addChild(lstBattlerTypes);
 		
 		Group grpAttributes = new Group(bottom, SWT.NONE);
@@ -197,7 +194,6 @@ public class ConfigEditor extends LObjectEditor {
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
-		lstAttributes.setIncludeID(true);
 		addChild(lstAttributes);
 		
 		Group grpTags = new Group(bottom, SWT.NONE);

@@ -72,24 +72,28 @@ public class QuadShell extends FileShell<Quad> {
 		lblX.setText("X");
 		
 		spnX = new Spinner(composite, SWT.BORDER);
+		spnX.setMaximum(1024);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblWidth = new Label(composite, SWT.NONE);
 		lblWidth.setText("Width");
 		
 		spnWidth = new Spinner(composite, SWT.BORDER);
+		spnWidth.setMaximum(1024);
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblY = new Label(composite, SWT.NONE);
 		lblY.setText("Y");
 		
 		spnY = new Spinner(composite, SWT.BORDER);
+		spnY.setMaximum(1024);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblHeight = new Label(composite, SWT.NONE);
 		lblHeight.setText("Height");
 		
 		spnHeight = new Spinner(composite, SWT.BORDER);
+		spnHeight.setMaximum(1024);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Composite composite_2 = new Composite(composite_1, SWT.NONE);

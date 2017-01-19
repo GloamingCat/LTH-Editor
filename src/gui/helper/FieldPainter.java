@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
+import data.BattlerType;
 import data.Config;
 import data.Field;
 import data.Layer;
@@ -19,6 +20,7 @@ import data.GameCharacter;
 import data.Obstacle;
 import data.Ramp;
 import data.Ramp.PointSet;
+import data.Region;
 import data.Terrain;
 import data.Tileset;
 import data.Tileset.CharTile;
@@ -31,6 +33,7 @@ public class FieldPainter {
 	private static HashMap<Integer, Image> obstacleCache = new HashMap<>();
 	private static HashMap<String, Image> characterCache = new HashMap<>();
 	private static HashMap<Integer, Image> regionCache = new HashMap<>();
+	private static HashMap<String, Image> stringCache = new HashMap<>();
 	
 	public float scale = 1;
 	public boolean showGrid = true;
@@ -59,6 +62,16 @@ public class FieldPainter {
 		obstacleCache.clear();
 		characterCache.clear();
 		regionCache.clear();
+	}
+	
+	public int[] getTilePolygon(int x0, int y0) {
+		Point[] shift = FieldHelper.math.vertexShift;
+		int[] p = new int[shift.length * 2];
+		for(int i = 0; i < shift.length; i++) {
+			p[i * 2] = Math.round((shift[i].x + x0) * scale);
+			p[i * 2 + 1] = Math.round((shift[i].y + y0) * scale);
+		}
+		return p;
 	}
 	
 	public Image createGridTile() {
@@ -193,8 +206,41 @@ public class FieldPainter {
 		int h = FieldHelper.config.tileH;
 		Image img = regionCache.get(id);
 		if (img == null) {
-			img = ImageHelper.getStringImage(id + "", w, h);
+			Region r = FieldHelper.config.regions.get(id);
+			img = new Image(Display.getCurrent(), w, h);
+			Image str = ImageHelper.getStringImage(id + "", w, h, null);
+			GC strGC = new GC(img);
+			strGC.setBackground(new Color(Display.getCurrent(), r.rgb));
+			strGC.fillPolygon(getTilePolygon(0, 0));
+			strGC.drawImage(str, 0, 0);
+			strGC.dispose();
 			regionCache.put(id, img);
+		}
+		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
+	}
+	
+	public void paintType(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+		int id = tileset.regions.get(layer.grid[x][y]).id;
+		int w = FieldHelper.config.tileW;
+		int h = FieldHelper.config.tileH;
+		BattlerType type = FieldHelper.config.battlerTypes.get(id);
+		Image img = stringCache.get(type.code);
+		if (img == null) {
+			img = ImageHelper.getStringImage(type.code, w, h, null);
+			stringCache.put(type.code, img);
+		}
+		gc.drawImage(img, 0, 0, w, h, x0 - w/ 2, y0 - h / 2, w, h);
+	}
+	
+	public void paintParty(Layer layer, int x, int y, GC gc, int x0, int y0) {
+		int id = layer.grid[x][y];
+		int w = FieldHelper.config.tileW;
+		int h = FieldHelper.config.tileH;
+		Image img = stringCache.get("" + id);
+		if (img == null) {
+			img = ImageHelper.getStringImage("" + id, w, h, null);
+			stringCache.put("" + id, img);
 		}
 		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
 	}
@@ -246,11 +292,22 @@ public class FieldPainter {
 						paintCharacter(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
 					}
 					break;
-				case 3:
+				default:
 					// Region Layer
 					if (layer == currentLayer) {
 						if (layer.grid[x][y] >= 0) {
-							paintRegion(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+							switch(layer.info.type) {
+							case 3:
+								paintRegion(field.prefs.tilesetID, layer, x, y, 
+										gc, x0, y0 - layer.info.height * pph);
+								break;
+							case 4:
+								paintType(field.prefs.tilesetID, layer, x, y, 
+										gc, x0, y0 - layer.info.height * pph);
+							case 5:
+								paintParty(layer, x, y, 
+										gc, x0, y0 - layer.info.height * pph);
+							}
 						}
 						if (showGrid) {
 							paintEdges(gc, x0, y0 - layer.info.height * pph);

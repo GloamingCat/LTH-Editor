@@ -1,24 +1,24 @@
 package gui.views.config;
 
-import gui.shell.BattlerTypeShell;
+import gui.shell.RegionShell;
 
 import org.eclipse.swt.widgets.Composite;
 
 import com.google.gson.Gson;
 
-import data.BattlerType;
+import data.Region;
 import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class BattlerTypeList extends LDefaultListEditor<BattlerType> {
+public class RegionList extends LDefaultListEditor<Region> {
 	
 	private static Gson gson = new Gson();
-	protected LDataList<BattlerType> currentList;
+	protected LDataList<Region> currentList;
 	
-	public BattlerTypeList(Composite parent, int style) {
+	public RegionList(Composite parent, int style) {
 		super(parent, style);
 		getCollectionWidget().setEditEnabled(true);
 		getCollectionWidget().setInsertNewEnabled(true);
@@ -27,11 +27,11 @@ public class BattlerTypeList extends LDefaultListEditor<BattlerType> {
 		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
 
-		setShellFactory(new LShellFactory<BattlerType>() {
+		setShellFactory(new LShellFactory<Region>() {
 			@Override
-			public LObjectShell<BattlerType> createShell(
+			public LObjectShell<Region> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
-				return new BattlerTypeShell(parent);
+				return new RegionShell(parent);
 			}
 		});
 	}
@@ -40,29 +40,31 @@ public class BattlerTypeList extends LDefaultListEditor<BattlerType> {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, "battlerTypes");
+			Object value = getFieldValue(object, "regions");
 			super.setObject(value);
 		}
 	}
 	
 	@Override
-	public void setDataCollection(LDataCollection<BattlerType> list) {
-		currentList = (LDataList<BattlerType>) list;
+	public void setDataCollection(LDataCollection<Region> list) {
+		currentList = (LDataList<Region>) list;
 	}
 	
 	@Override
-	public LDataList<BattlerType> getDataCollection() {
+	public LDataList<Region> getDataCollection() {
 		return currentList;
 	}
 
 	@Override
-	public BattlerType createNewData() {
-		return new BattlerType();
+	public Region createNewData() {
+		return new Region();
 	}
 
 	@Override
-	public BattlerType duplicateData(BattlerType original) {
-		return gson.fromJson(gson.toJson(original), BattlerType.class);
+	public Region duplicateData(Region original) {
+		System.out.println(original.toString());
+		new Exception().printStackTrace();
+		return gson.fromJson(gson.toJson(original), Region.class);
 	}
 
 }

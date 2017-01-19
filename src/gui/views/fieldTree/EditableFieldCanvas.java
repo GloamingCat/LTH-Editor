@@ -42,13 +42,13 @@ public class EditableFieldCanvas extends FieldCanvas {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				if (tileX >= 0 && tileX < field.sizeX && tileY >= 0 && tileY < field.sizeY) {
-					if (e.button == 1) {
-						onTileLeftClick(tileX, tileY);
-						draggingLeft = true;
-					} else {
-						dragOrigin = new Point(tileX, tileY);
-					}
+				if (tileX < 0 || tileX >= field.sizeX || tileY < 0 || tileY >= field.sizeY)
+					return;
+				if (e.button == 1) {	// Left button.
+					onTileLeftClick(tileX, tileY);
+					draggingLeft = true;
+				} else {				// Right button. 
+					dragOrigin = new Point(tileX, tileY);
 				}
 			}
 		});
@@ -56,9 +56,9 @@ public class EditableFieldCanvas extends FieldCanvas {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (e.button == 1) {
+				if (e.button == 1) { 	// Left button.
 					draggingLeft = false;
-				} else {
+				} else {				// Right button.
 					onTileRightClick(tileX, tileY, dragOrigin);
 					dragOrigin = null;
 				}
@@ -149,6 +149,14 @@ public class EditableFieldCanvas extends FieldCanvas {
 		int[][] values = new int[selection.length][selection[0].length];
 		for(int i = 0; i < values.length; i++) {
 			for(int j = 0; j < values[0].length; j++) {
+				if (tileX + i >= grid.length)
+					continue;
+				if (tileY + j >= grid[0].length)
+					continue;
+				if (tileX + i < 0)
+					continue;
+				if (tileY + j < 0)
+					continue;
 				values[i][j] = grid[tileX + i][tileY + j];
 			}
 		}
@@ -204,21 +212,20 @@ public class EditableFieldCanvas extends FieldCanvas {
 	public void onTileRightClick(int x, int y, Point origin) {
 		if (origin == null)
 			origin = new Point(tileX, tileY);
+		System.out.println(origin); // 10, 11
+		System.out.println(x + " " + y); // 3, 13
+		int[][] grid = currentLayer.grid;
 		
-		if (currentLayer.info.type <= 2) {
-			int[][] grid = currentLayer.grid;
-	
-			int x1 = Math.max(tileX, origin.x);
-			int y1 = Math.max(tileY, origin.y);
-			int x2 = Math.min(tileX, origin.x);
-			int y2 = Math.min(tileY, origin.y);
-			
-			selectionPoint = new Point(x1 - tileX, y1 - tileY);
-			selection = new int[x1 - x2 + 1][y1 - y2 + 1];
-			for(int i = 0; i < selection.length; i++) {
-				for(int j = 0; j < selection[i].length; j++) {
-					selection[i][j] = grid[x2 + i][y2 + j];
-				}
+		int x1 = Math.min(tileX, origin.x); // 3
+		int y1 = Math.min(tileY, origin.y); // 11
+		int x2 = Math.max(tileX, origin.x); // 10 
+		int y2 = Math.max(tileY, origin.y); // 13
+		
+		selectionPoint = new Point(tileX - x1, tileY - y1); // 0, 2
+		selection = new int[x2 - x1 + 1][y2 - y1 + 1];
+		for(int i = 0; i < selection.length; i++) {
+			for(int j = 0; j < selection[i].length; j++) {
+				selection[i][j] = grid[x1 + i][y1 + j];
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package gui.helper;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -16,7 +17,7 @@ import data.Ramp.PointSet;
 
 public class ImageHelper {
 
-	private static FieldPainter tilePainter = new FieldPainter(2, false);
+	private static FieldPainter fieldPainter = new FieldPainter(2, false);
 	
 	public static Image getObstacleImage(int id) {
 		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
@@ -41,10 +42,14 @@ public class ImageHelper {
 		return getImageQuad(image, w * col, h * row, w, h);
 	}
 	
-	public static Image getStringImage(String s, int w, int h, boolean borders) {
+	public static Image getStringImage(String s, int w, int h, Color background, boolean borders) {
 		Image image = new Image(Display.getCurrent(), w, h);
 		//
 		GC gc = new GC(image);
+		if (background != null) {
+			gc.setBackground(background);
+			gc.fillRectangle(0, 0, w, h);
+		}
 		Point size = gc.stringExtent(s);
 		int x = (w - size.x) / 2;
 		int y = (h - size.y) / 2;
@@ -58,8 +63,8 @@ public class ImageHelper {
 		return image;
 	}
 	
-	public static Image getStringImage(String s, int w, int h) {
-		return getStringImage(s, w, h, false);
+	public static Image getStringImage(String s, int w, int h, Color background) {
+		return getStringImage(s, w, h, background, false);
 	}
 	
 	public static Image getImageQuad(Image image, int x, int y, int w, int h) {
@@ -81,7 +86,7 @@ public class ImageHelper {
 		Image img = new Image(Display.getCurrent(), (FieldHelper.config.tileW + 4) * 2, 
 				(FieldHelper.config.tileH + FieldHelper.config.pixelsPerHeight + 4) * 2);
 		GC gc = new GC(img);
-		tilePainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
+		fieldPainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
 				FieldHelper.config.tileH / 2 + 2, points, 1);
 		gc.dispose();
 		return img;
