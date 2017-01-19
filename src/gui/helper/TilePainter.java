@@ -122,7 +122,7 @@ public class TilePainter {
 	}
 	
 	public static Image getPartyTile(int id) {
-		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, null);
+		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, null, true);
 		return str;
 	}
 	

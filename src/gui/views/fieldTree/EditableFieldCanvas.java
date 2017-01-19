@@ -212,16 +212,14 @@ public class EditableFieldCanvas extends FieldCanvas {
 	public void onTileRightClick(int x, int y, Point origin) {
 		if (origin == null)
 			origin = new Point(tileX, tileY);
-		System.out.println(origin); // 10, 11
-		System.out.println(x + " " + y); // 3, 13
 		int[][] grid = currentLayer.grid;
 		
-		int x1 = Math.min(tileX, origin.x); // 3
-		int y1 = Math.min(tileY, origin.y); // 11
-		int x2 = Math.max(tileX, origin.x); // 10 
-		int y2 = Math.max(tileY, origin.y); // 13
+		int x1 = Math.min(tileX, origin.x);
+		int y1 = Math.min(tileY, origin.y);
+		int x2 = Math.max(tileX, origin.x); 
+		int y2 = Math.max(tileY, origin.y);
 		
-		selectionPoint = new Point(tileX - x1, tileY - y1); // 0, 2
+		selectionPoint = new Point(tileX - x1, tileY - y1);
 		selection = new int[x2 - x1 + 1][y2 - y1 + 1];
 		for(int i = 0; i < selection.length; i++) {
 			for(int j = 0; j < selection[i].length; j++) {

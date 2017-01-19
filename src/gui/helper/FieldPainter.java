@@ -33,7 +33,8 @@ public class FieldPainter {
 	private static HashMap<Integer, Image> obstacleCache = new HashMap<>();
 	private static HashMap<String, Image> characterCache = new HashMap<>();
 	private static HashMap<Integer, Image> regionCache = new HashMap<>();
-	private static HashMap<String, Image> stringCache = new HashMap<>();
+	private static HashMap<Integer, Image> typeCache = new HashMap<>();
+	private static HashMap<Integer, Image> partyCache = new HashMap<>();
 	
 	public float scale = 1;
 	public boolean showGrid = true;
@@ -58,10 +59,14 @@ public class FieldPainter {
 		for(Image img : regionCache.values()) {
 			img.dispose();
 		}
+		for(Image img : typeCache.values()) {
+			img.dispose();
+		}
 		terrainCache.clear();
 		obstacleCache.clear();
 		characterCache.clear();
 		regionCache.clear();
+		typeCache.clear();
 	}
 	
 	public int[] getTilePolygon(int x0, int y0) {
@@ -219,16 +224,15 @@ public class FieldPainter {
 		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
 	}
 	
-	public void paintType(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
-		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
-		int id = tileset.regions.get(layer.grid[x][y]).id;
+	public void paintType(Layer layer, int x, int y, GC gc, int x0, int y0) {
+		int id = layer.grid[x][y];
 		int w = FieldHelper.config.tileW;
 		int h = FieldHelper.config.tileH;
-		BattlerType type = FieldHelper.config.battlerTypes.get(id);
-		Image img = stringCache.get(type.code);
+		Image img = typeCache.get(id);
 		if (img == null) {
+			BattlerType type = FieldHelper.config.battlerTypes.get(id);
 			img = ImageHelper.getStringImage(type.code, w, h, null);
-			stringCache.put(type.code, img);
+			typeCache.put(id, img);
 		}
 		gc.drawImage(img, 0, 0, w, h, x0 - w/ 2, y0 - h / 2, w, h);
 	}
@@ -237,10 +241,10 @@ public class FieldPainter {
 		int id = layer.grid[x][y];
 		int w = FieldHelper.config.tileW;
 		int h = FieldHelper.config.tileH;
-		Image img = stringCache.get("" + id);
+		Image img = partyCache.get(id);
 		if (img == null) {
 			img = ImageHelper.getStringImage("" + id, w, h, null);
-			stringCache.put("" + id, img);
+			partyCache.put(id, img);
 		}
 		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
 	}
@@ -293,20 +297,21 @@ public class FieldPainter {
 					}
 					break;
 				default:
-					// Region Layer
 					if (layer == currentLayer) {
 						if (layer.grid[x][y] >= 0) {
 							switch(layer.info.type) {
-							case 3:
+							case 3: // Region Layer
 								paintRegion(field.prefs.tilesetID, layer, x, y, 
 										gc, x0, y0 - layer.info.height * pph);
 								break;
-							case 4:
-								paintType(field.prefs.tilesetID, layer, x, y, 
+							case 4: // Type Layer
+								paintType(layer, x, y, 
 										gc, x0, y0 - layer.info.height * pph);
-							case 5:
+								break;
+							case 5: // Party Layer
 								paintParty(layer, x, y, 
 										gc, x0, y0 - layer.info.height * pph);
+								break;
 							}
 						}
 						if (showGrid) {
