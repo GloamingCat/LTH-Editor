@@ -20,6 +20,7 @@ public class IDList extends SimpleEditableList<Integer> {
 
 	public IDList(Composite parent, int style) {
 		super(parent, style);
+		type = Integer.class;
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {

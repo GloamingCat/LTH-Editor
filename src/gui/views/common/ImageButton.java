@@ -18,13 +18,14 @@ public class ImageButton extends LObjectButton<String> {
 	private String folder;
 	private Label label;
 	private Text text;
+	public boolean optional = false;
 	
 	public ImageButton(Composite parent, int style) {
 		super(parent, style);
 		setShellFactory(new LShellFactory<String>() {
 			@Override
 			public LObjectShell<String> createShell(Shell parent) {
-				return new ImageShell(parent, folder);
+				return new ImageShell(parent, folder, optional);
 			}
 		});
 	}

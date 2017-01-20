@@ -1,30 +1,19 @@
 package gui.views.config;
 
 import gui.shell.BattlerTypeShell;
+import gui.views.common.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 
-import com.google.gson.Gson;
-
 import data.BattlerType;
-import lwt.dataestructure.LDataCollection;
-import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.editor.LDefaultListEditor;
 
-public class BattlerTypeList extends LDefaultListEditor<BattlerType> {
-	
-	private static Gson gson = new Gson();
-	protected LDataList<BattlerType> currentList;
-	
+public class BattlerTypeList extends SimpleEditableList<BattlerType> {
+
 	public BattlerTypeList(Composite parent, int style) {
 		super(parent, style);
-		getCollectionWidget().setEditEnabled(true);
-		getCollectionWidget().setInsertNewEnabled(true);
-		getCollectionWidget().setDuplicateEnabled(true);
-		getCollectionWidget().setDeleteEnabled(true);
-		getCollectionWidget().setDragEnabled(true);
+		attributeName = "battlerTypes";
 		setIncludeID(true);
 
 		setShellFactory(new LShellFactory<BattlerType>() {
@@ -34,35 +23,6 @@ public class BattlerTypeList extends LDefaultListEditor<BattlerType> {
 				return new BattlerTypeShell(parent);
 			}
 		});
-	}
-
-	public void setObject(Object object) {
-		if (object == null) {
-			super.setObject(null);
-		} else {
-			Object value = getFieldValue(object, "battlerTypes");
-			super.setObject(value);
-		}
-	}
-	
-	@Override
-	public void setDataCollection(LDataCollection<BattlerType> list) {
-		currentList = (LDataList<BattlerType>) list;
-	}
-	
-	@Override
-	public LDataList<BattlerType> getDataCollection() {
-		return currentList;
-	}
-
-	@Override
-	public BattlerType createNewData() {
-		return new BattlerType();
-	}
-
-	@Override
-	public BattlerType duplicateData(BattlerType original) {
-		return gson.fromJson(gson.toJson(original), BattlerType.class);
 	}
 
 }

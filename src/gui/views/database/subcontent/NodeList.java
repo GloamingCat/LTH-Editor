@@ -15,6 +15,7 @@ public class NodeList extends SimpleEditableList<Node> {
 
 	public NodeList(Composite parent, int style) {
 		super(parent, style);
+		type = Node.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<Node>() {
 			@Override

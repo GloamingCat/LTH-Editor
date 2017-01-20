@@ -25,7 +25,7 @@ public class FontShell extends FileShell<FontData> {
 	private Text txtFormat;
 	
 	public FontShell(Shell parent) {
-		super(parent, "");
+		super(parent, "", false);
 		
 		Composite composite = new Composite(sashForm, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));

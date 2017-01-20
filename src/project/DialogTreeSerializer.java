@@ -2,6 +2,7 @@ package project;
 
 import lwt.dataestructure.LDataTree;
 import data.Dialog;
+import data.DialogTree;
 import data.Node;
 
 public class DialogTreeSerializer extends TreeMultiSerializer<Dialog, DialogTree> {

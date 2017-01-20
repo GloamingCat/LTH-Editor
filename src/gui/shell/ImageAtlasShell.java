@@ -40,7 +40,7 @@ public class ImageAtlasShell extends FileShell<ImageAtlas> {
 	}
 	
 	public ImageAtlasShell(Shell parent, String folder) {
-		super(parent, folder);
+		super(parent, folder, false);
 
 		list.addSelectionListener(new SelectionAdapter() {
 			@Override

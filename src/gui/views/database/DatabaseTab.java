@@ -1,5 +1,7 @@
 package gui.views.database;
 
+import java.lang.reflect.Type;
+
 import editor.GDefaultListEditor;
 import gui.Vocab;
 import gui.views.common.ImageButton;
@@ -16,12 +18,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
-import project.GListSerializer;
 import project.GObjectListSerializer;
 
 import com.google.gson.Gson;
 
 import lwt.action.LActionStack;
+import lwt.dataestructure.LDataList;
 import lwt.editor.LControlView;
 import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
@@ -50,11 +52,14 @@ public abstract class DatabaseTab extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		DatabaseTab self = this;
 		listEditor = new GDefaultListEditor<Object>(sashForm, SWT.NONE) {
 			@Override
-			public GListSerializer<Object> getSerializer() {
-				return self.getSerializer();
+			public LDataList<Object> getDataCollection() {
+				return getSerializer().getList();
+			}
+			@Override
+			public Type getType() {
+				return getSerializer().getDataType();
 			}
 		};
 		listEditor.getCollectionWidget().setInsertNewEnabled(true);

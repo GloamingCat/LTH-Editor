@@ -27,11 +27,11 @@ public class AudioShell extends FileShell<Audio> {
 	 * @wbp.parser.constructor
 	 */
 	public AudioShell(Shell parent) {
-		this(parent, "");
+		this(parent, "", true);
 	}
 	
-	public AudioShell(Shell parent, String folder) {
-		super(parent, folder);
+	public AudioShell(Shell parent, String folder, boolean optional) {
+		super(parent, folder, optional);
 
 		Composite composite = new Composite(sashForm, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));

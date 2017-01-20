@@ -44,11 +44,11 @@ public class QuadShell extends FileShell<Quad> {
 	 * @wbp.parser.constructor
 	 */
 	public QuadShell(Shell parent) {
-		this(parent, "");
+		this(parent, "", true);
 	}
 	
-	public QuadShell(Shell parent, String folder) {
-		super(parent, folder);
+	public QuadShell(Shell parent, String folder, boolean optional) {
+		super(parent, folder, optional);
 
 		atlasDialog = new LObjectDialog<>(this);
 		atlasDialog.setFactory(new LShellFactory<ImageAtlas.Entry>() {

@@ -28,6 +28,7 @@ public class SkillDagTab extends DatabaseTab {
 		SimpleEditableList<Node> lstNodes = new SimpleEditableList<>(grpSkillNodes, SWT.NONE);
 		lstNodes.getCollectionWidget().setEditEnabled(false);
 		lstNodes.setIncludeID(false);
+		lstNodes.type = Node.class;
 		lstNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstNodes, "nodes");
 		

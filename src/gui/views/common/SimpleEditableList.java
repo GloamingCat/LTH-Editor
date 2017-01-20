@@ -1,5 +1,7 @@
 package gui.views.common;
 
+import java.lang.reflect.Type;
+
 import org.eclipse.swt.widgets.Composite;
 
 import editor.GDefaultListEditor;
@@ -9,6 +11,7 @@ import lwt.dataestructure.LDataList;
 public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 
 	public String attributeName;
+	public Type type;
 	protected LDataList<T> currentList;
 	
 	public SimpleEditableList(Composite parent, int style) {
@@ -30,6 +33,10 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 	public LDataList<T> getDataCollection() {
 		return currentList;
 	}
+	
+	public Type getType() {
+		return type;
+	}
 
 	@Override
 	public void setObject(Object object) {
@@ -38,7 +45,6 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 			super.setObject(object);
 			return;
 		}
-		System.out.println(object + "" + attributeName);
 		Object value = getFieldValue(object, attributeName);
 		super.setObject(value);
 	}

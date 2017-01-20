@@ -79,7 +79,7 @@ public class ConfigEditor extends LObjectEditor {
 		lstSounds.getTable().setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, "sfx");
+				return new AudioShell(parent, "sfx", false);
 			}
 		});
 		addChild(lstSounds);

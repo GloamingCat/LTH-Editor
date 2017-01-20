@@ -6,6 +6,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
+import data.Dialog;
 import data.Node;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
@@ -18,6 +19,7 @@ import lwt.event.listener.LSelectionListener;
 public class DialogTreeEditor extends LView {
 
 	protected LDefaultTreeEditor<Node> treeEditor;
+	protected DialogEditor dialogEditor;
 	
 	public DialogTreeEditor(Composite parent, int style) {
 		super(parent, style);
@@ -62,13 +64,18 @@ public class DialogTreeEditor extends LView {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Project.current.dialogs.getData().last = event.path;
+				if (event.data != null) {
+					Node node = (Node) event.data;
+					Dialog d = Project.current.dialogs.loadData(node);
+					dialogEditor.setObject(d);
+				} else {
+					dialogEditor.setObject(null);
+				}
 			}
 		});
 		addChild(treeEditor);
 		
-		DialogEditor contentEditor = new DialogEditor(sashForm, SWT.NONE);
-		
-		treeEditor.addChild(contentEditor);
+		dialogEditor = new DialogEditor(sashForm, SWT.NONE);
 		treeEditor.setActionStack(getActionStack());
 		
 		sashForm.setWeights(new int[] {1, 2});

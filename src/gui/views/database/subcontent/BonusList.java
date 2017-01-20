@@ -15,6 +15,7 @@ public class BonusList extends SimpleEditableList<Bonus> {
 
 	public BonusList(Composite parent, int style) {
 		super(parent, style);
+		type = Bonus.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<Bonus>() {
 			@Override

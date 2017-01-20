@@ -20,13 +20,13 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 	protected List list;
 	
 	public FileShell(Shell parent, int style) {
-		this(parent, "");
+		this(parent, "", true);
 	}
 	
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public FileShell(Shell parent, String folder) {
+	public FileShell(Shell parent, String folder, boolean optional) {
 		super(parent);
 		this.folder = folder;
 		GridData gridData = (GridData) content.getLayoutData();
@@ -37,7 +37,7 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		sashForm = new SashForm(content, SWT.NONE);
 		
 		list = new List(sashForm, SWT.BORDER | SWT.V_SCROLL);
-		list.setItems(getItems(folder + "/"));
+		list.setItems(getItems(folder + "/", optional));
 	}
 
 	protected int indexOf(String path) {
@@ -55,8 +55,11 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		return -1;
 	}
 	
-	protected String[] getItems(String folder) {
+	protected String[] getItems(String folder, boolean optional) {
 		ArrayList<String> list = new ArrayList<String>();
+		if (optional) {
+			list.add("");
+		}
 		readFiles(folder, list, "");
 		String[] array = new String[list.size()];
 		for(int i = 0; i < array.length; i++) {

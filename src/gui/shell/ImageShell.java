@@ -23,11 +23,11 @@ public class ImageShell extends FileShell<String> {
 	 * @wbp.parser.constructor
 	 */
 	public ImageShell(Shell parent) {
-		this(parent, "");
+		this(parent, "", true);
 	}
 	
-	public ImageShell(Shell parent, String folder) {
-		super(parent, folder);
+	public ImageShell(Shell parent, String folder, boolean optional) {
+		super(parent, folder, optional);
 
 		list.addSelectionListener(new SelectionAdapter() {
 			@Override

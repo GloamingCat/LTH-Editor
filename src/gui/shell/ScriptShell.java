@@ -22,11 +22,11 @@ public class ScriptShell extends FileShell<Script> {
 	 * @wbp.parser.constructor
 	 */
 	public ScriptShell(Shell parent) {
-		this(parent, "");
+		this(parent, "", true);
 	}
 	
-	public ScriptShell(Shell parent, String folder) {
-		super(parent, folder);
+	public ScriptShell(Shell parent, String folder, boolean optional) {
+		super(parent, folder, optional);
 		
 		Group grpParam = new Group(sashForm, SWT.BORDER);
 		grpParam.setText(Vocab.instance.PARAM);

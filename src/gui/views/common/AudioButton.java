@@ -15,6 +15,7 @@ public class AudioButton extends LObjectButton<Audio> {
 	
 	private String folder;
 	private Text text;
+	public boolean optional = false;
 	
 	/**
 	 * Create the composite.
@@ -26,7 +27,7 @@ public class AudioButton extends LObjectButton<Audio> {
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, folder);
+				return new AudioShell(parent, folder, optional);
 			}
 		});
 	}

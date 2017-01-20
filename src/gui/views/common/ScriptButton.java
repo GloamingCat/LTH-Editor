@@ -17,6 +17,7 @@ public class ScriptButton extends LObjectButton<Script> {
 	private String folder;
 	private Text pathText;
 	private StyledText paramText;
+	public boolean optional = false;
 	
 	/**
 	 * Create the composite.
@@ -28,7 +29,7 @@ public class ScriptButton extends LObjectButton<Script> {
 		setShellFactory(new LShellFactory<Script>() {
 			@Override
 			public LObjectShell<Script> createShell(Shell parent) {
-				return new ScriptShell(parent, folder);
+				return new ScriptShell(parent, folder, optional);
 			}
 		});
 	}

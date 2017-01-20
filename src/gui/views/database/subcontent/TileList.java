@@ -14,6 +14,7 @@ public class TileList extends SimpleEditableList<Tile> {
 
 	public TileList(Composite parent, int style) {
 		super(parent, style);
+		type = Tile.class;
 		attributeName = "tiles";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Tile>() {

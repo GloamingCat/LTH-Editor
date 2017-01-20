@@ -13,14 +13,16 @@ import lwt.dialog.LShellFactory;
 public class ScriptList extends SimpleEditableList<Script> {
 
 	public String folderName = "";
+	public boolean optional = false;
 	
 	public ScriptList(Composite parent, int style) {
 		super(parent, style);
+		type = Script.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Script>() {
 			@Override
 			public LObjectShell<Script> createShell(Shell parent) {
-				return new ScriptShell(parent, folderName);
+				return new ScriptShell(parent, folderName, optional);
 			}
 		});
 	}

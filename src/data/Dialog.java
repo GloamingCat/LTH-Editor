@@ -5,13 +5,18 @@ import lwt.dataestructure.LDataList;
 public class Dialog {
 	
 	public static class Speech {
+		
 		public Quad portrait = new Quad();
 		public String name = "John Smith";
-		public String msg = "Hi, how are you?";
+		public String message = "Hi, how are you?";
+		
+		public String toString() {
+			return name + ": " + message;
+		}
 	}
 	
 	public int id;
-	public String name = "";
+	public String name = "New Dialog";
 	public LDataList<Speech> speeches = new LDataList<>();
 
 	public String toString() {

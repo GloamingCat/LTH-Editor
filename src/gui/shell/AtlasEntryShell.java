@@ -66,7 +66,6 @@ public class AtlasEntryShell extends LObjectShell<Entry> {
 				if (atlas != null) {
 					x = e.x / atlas.width;
 					y = e.y / atlas.height;
-					System.out.println(x + " " + y);
 					lblAtlas.redraw();
 				}
 			}
@@ -89,7 +88,6 @@ public class AtlasEntryShell extends LObjectShell<Entry> {
 				bounds.width = atlas.width - 4;
 				bounds.height = atlas.height - 4;
 				e.gc.drawRectangle(bounds);
-				System.out.println(bounds);
 			}
 		});
 		lblAtlas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));

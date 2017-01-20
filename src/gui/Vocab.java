@@ -207,4 +207,10 @@ public class Vocab {
 	public String DESTINATION = "Destination";
 	public String FADEOUT = "Fade out";
 
+	// Dialog
+	public String SPEECHES = "Speeches";
+	public String PORTRAIT = "Portrait";
+	public String MESSAGE = "Message";
+	public String CHARNAME = "Character Name";
+	
 }
