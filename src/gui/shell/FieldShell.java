@@ -193,7 +193,6 @@ public class FieldShell extends LObjectShell<Prefs> {
 			transitions.add(new Transition(t));
 		}
 		lstTransitions.onVisible();
-		
 	}
 
 	@Override

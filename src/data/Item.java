@@ -6,7 +6,7 @@ public class Item {
 
 	public String name = "";
 	public String description = "";
-	public String icon = "";
+	public Quad icon = new Quad();
 	
 	public int skillID = 0;
 	public int statusID = 0;

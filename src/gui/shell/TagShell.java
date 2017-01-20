@@ -42,8 +42,8 @@ public class TagShell extends LObjectShell<Tag> {
 	
 	public void open(Tag initial) {
 		super.open(initial);
-		txtName.setText(result.name);
-		txtValue.setText(result.value);
+		txtName.setText(initial.name);
+		txtValue.setText(initial.value);
 	}
 
 	@Override

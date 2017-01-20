@@ -6,7 +6,7 @@ public class Status {
 
 	// General
 	public String name = "";
-	public String icon = "";
+	public Quad icon = new Quad();
 	public Script scriptAI = new Script();
 	public int duration = -1; // <= 0 for infinite
 	public boolean removeOnDamage;

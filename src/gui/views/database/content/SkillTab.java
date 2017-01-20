@@ -1,7 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.common.ImageButton;
+import gui.views.common.QuadButton;
 import gui.views.common.ScriptButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TagList;
@@ -59,7 +59,7 @@ public class SkillTab extends DatabaseTab {
 		compositeIcon.setLayout(gl_compositeIcon);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		ImageButton btnSelect = new ImageButton(compositeIcon, SWT.NONE);
+		QuadButton btnSelect = new QuadButton(compositeIcon, SWT.NONE);
 		
 		Label imgIcon = new Label(compositeIcon, SWT.NONE);
 		imgIcon.setImage(SWTResourceManager.getImage(SkillTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
@@ -68,7 +68,7 @@ public class SkillTab extends DatabaseTab {
 		gd_imgIcon.heightHint = 48;
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		addImageButton(btnSelect, imgIcon, "Icon", "icon");
+		addQuadButton(btnSelect, imgIcon, "Icon", "icon");
 		
 		Label lblRadius = new Label(grpGeneral, SWT.NONE);
 		lblRadius.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));

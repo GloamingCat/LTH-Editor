@@ -6,6 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import lwt.dialog.LObjectDialog;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,7 +19,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import data.ImageAtlas;
 import data.Quad;
+import data.ImageAtlas.Entry;
 import project.Project;
 
 import org.eclipse.swt.widgets.Composite;
@@ -32,6 +38,8 @@ public class QuadShell extends FileShell<Quad> {
 	private Spinner spnWidth;
 	private Spinner spnHeight;
 	
+	private LObjectDialog<ImageAtlas.Entry> atlasDialog;
+	
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -42,13 +50,21 @@ public class QuadShell extends FileShell<Quad> {
 	public QuadShell(Shell parent, String folder) {
 		super(parent, folder);
 
+		atlasDialog = new LObjectDialog<>(this);
+		atlasDialog.setFactory(new LShellFactory<ImageAtlas.Entry>() {
+			@Override
+			public LObjectShell<Entry> createShell(Shell parent) {
+				return new AtlasEntryShell(parent);
+			}
+		});
+		
 		list.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				int i = list.getSelectionIndex();
 				if (i >= 0) {
 					label.setText(folder + "/" + list.getItem(i));
-					label.setImage(SWTResourceManager.getImage(rootPath() + label.getText()));
+					resetImage();
 				}
 			}
 		});
@@ -80,6 +96,7 @@ public class QuadShell extends FileShell<Quad> {
 		
 		spnWidth = new Spinner(composite, SWT.BORDER);
 		spnWidth.setMaximum(1024);
+		spnWidth.setMinimum(1);
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblY = new Label(composite, SWT.NONE);
@@ -94,6 +111,7 @@ public class QuadShell extends FileShell<Quad> {
 		
 		spnHeight = new Spinner(composite, SWT.BORDER);
 		spnHeight.setMaximum(1024);
+		spnHeight.setMinimum(1);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Composite composite_2 = new Composite(composite_1, SWT.NONE);
@@ -120,7 +138,16 @@ public class QuadShell extends FileShell<Quad> {
 		btnFromAtlas.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				// TODO
+				ImageAtlas.Entry e = atlasDialog.open(null);
+				if (e != null) {
+					list.deselectAll();
+					label.setText(e.atlas.imagePath);
+					spnWidth.setSelection(e.atlas.width);
+					spnHeight.setSelection(e.atlas.height);
+					spnX.setSelection(e.x * e.atlas.width);
+					spnY.setSelection(e.y * e.atlas.height);
+					resetImage();
+				}
 			}
 		});
 		btnFromAtlas.setText("From Atlas");
@@ -142,25 +169,20 @@ public class QuadShell extends FileShell<Quad> {
 
 	@Override
 	protected Quad createResult(Quad initial) {
-		int i = list.getSelectionIndex();
-		if (i >= 0) {
-			String newValue = folder + "/" + list.getItem(i);
-			if (newValue.equals(initial.imagePath) && spnX.getSelection() == initial.x && 
-					spnY.getSelection() == initial.y &&
-					spnWidth.getSelection() == initial.width && 
-					spnHeight.getSelection() == initial.height) {
-				return null;
-			} else {
-				Quad q = new Quad();
-				q.x = spnX.getSelection();
-				q.y = spnY.getSelection();
-				q.width = spnWidth.getSelection();
-				q.height = spnHeight.getSelection();
-				q.imagePath = newValue;
-				return q;
-			}
-		} else {
+		String newValue = label.getText();
+		if (newValue.equals(initial.imagePath) && spnX.getSelection() == initial.x && 
+				spnY.getSelection() == initial.y &&
+				spnWidth.getSelection() == initial.width && 
+				spnHeight.getSelection() == initial.height) {
 			return null;
+		} else {
+			Quad q = new Quad();
+			q.x = spnX.getSelection();
+			q.y = spnY.getSelection();
+			q.width = spnWidth.getSelection();
+			q.height = spnHeight.getSelection();
+			q.imagePath = newValue;
+			return q;
 		}
 	}
 
@@ -179,7 +201,7 @@ public class QuadShell extends FileShell<Quad> {
 	}
 	
 	protected void resetImage() {
-		String path = Project.current.imagePath() + label.getText();
+		String path = rootPath() + label.getText();
 		Image image = SWTResourceManager.getImage(path);
 		label.setImage(image);
 	}

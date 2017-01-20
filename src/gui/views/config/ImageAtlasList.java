@@ -1,24 +1,24 @@
 package gui.views.config;
 
-import gui.shell.RegionShell;
+import gui.shell.ImageAtlasShell;
 
 import org.eclipse.swt.widgets.Composite;
 
 import com.google.gson.Gson;
 
-import data.Region;
+import data.ImageAtlas;
 import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LDefaultListEditor;
 
-public class RegionList extends LDefaultListEditor<Region> {
+public class ImageAtlasList extends LDefaultListEditor<ImageAtlas> {
 	
 	private static Gson gson = new Gson();
-	protected LDataList<Region> currentList;
+	protected LDataList<ImageAtlas> currentList;
 	
-	public RegionList(Composite parent, int style) {
+	public ImageAtlasList(Composite parent, int style) {
 		super(parent, style);
 		getCollectionWidget().setEditEnabled(true);
 		getCollectionWidget().setInsertNewEnabled(true);
@@ -26,11 +26,12 @@ public class RegionList extends LDefaultListEditor<Region> {
 		getCollectionWidget().setDeleteEnabled(true);
 		getCollectionWidget().setDragEnabled(true);
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<Region>() {
+
+		setShellFactory(new LShellFactory<ImageAtlas>() {
 			@Override
-			public LObjectShell<Region> createShell(
+			public LObjectShell<ImageAtlas> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
-				return new RegionShell(parent);
+				return new ImageAtlasShell(parent);
 			}
 		});
 	}
@@ -39,30 +40,29 @@ public class RegionList extends LDefaultListEditor<Region> {
 		if (object == null) {
 			super.setObject(null);
 		} else {
-			Object value = getFieldValue(object, "regions");
+			Object value = getFieldValue(object, "atlases");
 			super.setObject(value);
 		}
 	}
 	
 	@Override
-	public void setDataCollection(LDataCollection<Region> list) {
-		currentList = (LDataList<Region>) list;
+	public void setDataCollection(LDataCollection<ImageAtlas> list) {
+		currentList = (LDataList<ImageAtlas>) list;
 	}
 	
 	@Override
-	public LDataList<Region> getDataCollection() {
+	public LDataList<ImageAtlas> getDataCollection() {
 		return currentList;
 	}
 
 	@Override
-	public Region createNewData() {
-		return new Region();
+	public ImageAtlas createNewData() {
+		return new ImageAtlas();
 	}
 
 	@Override
-	public Region duplicateData(Region original) {
-		new Exception().printStackTrace();
-		return gson.fromJson(gson.toJson(original), Region.class);
+	public ImageAtlas duplicateData(ImageAtlas original) {
+		return gson.fromJson(gson.toJson(original), ImageAtlas.class);
 	}
 
 }

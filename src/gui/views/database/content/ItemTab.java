@@ -1,7 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.common.ImageButton;
+import gui.views.common.QuadButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.TagList;
@@ -55,7 +55,7 @@ public class ItemTab extends DatabaseTab {
 		compositeIcon.setLayout(gl_compositeIcon);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		ImageButton btnSelect = new ImageButton(compositeIcon, SWT.NONE);
+		QuadButton btnSelect = new QuadButton(compositeIcon, SWT.NONE);
 		
 		Label imgIcon = new Label(compositeIcon, SWT.NONE);
 		imgIcon.setImage(SWTResourceManager.getImage(ItemTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
@@ -64,7 +64,7 @@ public class ItemTab extends DatabaseTab {
 		gd_imgIcon.heightHint = 48;
 		imgIcon.setLayoutData(gd_imgIcon);
 
-		addImageButton(btnSelect, imgIcon, "Icon", "icon");
+		addQuadButton(btnSelect, imgIcon, "Icon", "icon");
 		
 		LCheckButton btnCanSell = new LCheckButton(grpGeneral, SWT.NONE);
 		btnCanSell.setText(Vocab.instance.CANSELL);

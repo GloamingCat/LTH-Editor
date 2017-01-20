@@ -1,7 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.common.ImageButton;
+import gui.views.common.QuadButton;
 import gui.views.common.ScriptButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
@@ -48,7 +48,7 @@ public class StatusTab extends DatabaseTab {
 		compositeIcon.setLayout(gl_compositeIcon);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		ImageButton btnSelectIcon = new ImageButton(compositeIcon, SWT.NONE);
+		QuadButton btnSelectIcon = new QuadButton(compositeIcon, SWT.NONE);
 		btnSelectIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));
 		
 		Label imgIcon = new Label(compositeIcon, SWT.NONE);
@@ -58,7 +58,7 @@ public class StatusTab extends DatabaseTab {
 		gd_imgIcon.heightHint = 48;
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		addImageButton(btnSelectIcon, imgIcon, "Icon", "icon");
+		addQuadButton(btnSelectIcon, imgIcon, "Icon", "icon");
 		
 		Label lblDuration = new Label(grpGeneral, SWT.NONE);
 		lblDuration.setText(Vocab.instance.DURATION);

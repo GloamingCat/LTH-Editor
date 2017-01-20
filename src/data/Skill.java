@@ -6,7 +6,7 @@ public class Skill {
 
 	public String name = "New Skill";
 	public String description = "";
-	public String icon = "";
+	public Quad icon = new Quad();
 	public int radius = 1;
 	public int range = 1;
 	

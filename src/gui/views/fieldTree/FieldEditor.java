@@ -130,7 +130,6 @@ public class FieldEditor extends LObjectEditor {
 	
 	@Override
 	public void setObject(Object obj) {
-		System.out.println("FieldEditor setObject");
 		if (obj != null) {
 			Node node = (Node) obj;
 			if (canvas.field == null || canvas.field.id != node.id) {

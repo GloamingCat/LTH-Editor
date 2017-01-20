@@ -102,7 +102,6 @@ public class FieldCanvas extends LView {
 			}
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
-			System.out.println("field size: " + field.sizeX + "," + field.sizeY);
 			int imgW = FieldHelper.config.tileW * 3;
 			int imgH = FieldHelper.config.tileH * (maxHeight() + 6);
 			for(int i = 0; i < field.sizeX; i++) {
@@ -169,7 +168,6 @@ public class FieldCanvas extends LView {
 			this.field = field;
 			updateAllTileImages();
 			rescale(scale);
-			System.out.println("Editing field: " + field.id);
 		}
 	}
 	

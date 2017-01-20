@@ -51,6 +51,7 @@ public class Vocab {
 	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
 	public String BATTLERTYPES = "Battler Types";
+	public String IMAGEATLASES = "Image Atlas";
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
@@ -203,5 +204,5 @@ public class Vocab {
 	public String ORIGIN = "Origin";
 	public String DESTINATION = "Destination";
 	public String FADEOUT = "Fade out";
-	
+
 }

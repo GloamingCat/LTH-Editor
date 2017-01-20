@@ -196,6 +196,14 @@ public class ConfigEditor extends LObjectEditor {
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		addChild(lstAttributes);
 		
+		Group grpAtlas = new Group(bottom, SWT.NONE);
+		grpAtlas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAtlas.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAtlas.setText(Vocab.instance.IMAGEATLASES);
+
+		ImageAtlasList lstAtlas = new ImageAtlasList(grpAtlas, SWT.NONE);
+		addChild(lstAtlas);
+		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTags.setLayout(new FillLayout());
