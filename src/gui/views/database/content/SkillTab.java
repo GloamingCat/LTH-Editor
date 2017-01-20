@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class SkillTab extends DatabaseTab {
@@ -218,7 +218,7 @@ public class SkillTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.skills;
 	}
 

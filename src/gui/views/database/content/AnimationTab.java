@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import project.ListSerializer;
+import project.GObjectListSerializer;
 
 public class AnimationTab extends DatabaseTab {
 
@@ -82,7 +82,7 @@ public class AnimationTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return null;
 	}
 

@@ -188,7 +188,7 @@ public class PositionShell extends LObjectShell<Position> {
 	private void setField(Node node) {
 		if (canvas.field != null && canvas.field.id == node.id)
 			return;
-		Field field = Project.current.fieldTree.loadField(node);
+		Field field = Project.current.fieldTree.loadData(node);
 		canvas.setField(field);
 		refreshLayerCombo();
 		if (cmbLayer.getSelectionIndex() >= field.layers.size()

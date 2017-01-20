@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Ramp.PointSet;
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class RampTab extends DatabaseTab {
@@ -68,7 +68,7 @@ public class RampTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.ramps;
 	}
 

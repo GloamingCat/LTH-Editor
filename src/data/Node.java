@@ -16,4 +16,12 @@ public class Node {
 		return name;
 	}
 	
+	public boolean equals(Node node) {
+		if (node instanceof Node) {
+			Node n = (Node) node;
+			return n.id == id;
+		}
+		return false;
+	}
+	
 }

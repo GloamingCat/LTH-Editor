@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class ItemTab extends DatabaseTab {
@@ -150,7 +150,7 @@ public class ItemTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.items;
 	}
 

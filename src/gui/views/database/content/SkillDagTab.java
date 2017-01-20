@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import data.SkillDag.Node;
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class SkillDagTab extends DatabaseTab {
@@ -29,7 +29,7 @@ public class SkillDagTab extends DatabaseTab {
 		lstNodes.getCollectionWidget().setEditEnabled(false);
 		lstNodes.setIncludeID(false);
 		lstNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		addChild(lstNodes);
+		addChild(lstNodes, "nodes");
 		
 		SkillNodeEditor nodeEditor = new SkillNodeEditor(grpSkillNodes, SWT.NONE);
 		nodeEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -37,7 +37,7 @@ public class SkillDagTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.skillDags;
 	}
 

@@ -133,7 +133,7 @@ public class FieldEditor extends LObjectEditor {
 		if (obj != null) {
 			Node node = (Node) obj;
 			if (canvas.field == null || canvas.field.id != node.id) {
-				Field field = Project.current.fieldTree.loadField(node);
+				Field field = Project.current.fieldTree.loadData(node);
 				selectField(field);
 				super.setObject(field);
 			}

@@ -36,7 +36,9 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		if (object == null || attributeName == null || 
 				attributeName.isEmpty()) {
 			super.setObject(object);
+			return;
 		}
+		System.out.println(object + "" + attributeName);
 		Object value = getFieldValue(object, attributeName);
 		super.setObject(value);
 	}

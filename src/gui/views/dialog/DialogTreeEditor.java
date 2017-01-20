@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
-import data.DialogNode;
+import data.Node;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
@@ -17,7 +17,7 @@ import lwt.event.listener.LSelectionListener;
 
 public class DialogTreeEditor extends LView {
 
-	protected LDefaultTreeEditor<DialogNode> treeEditor;
+	protected LDefaultTreeEditor<Node> treeEditor;
 	
 	public DialogTreeEditor(Composite parent, int style) {
 		super(parent, style);
@@ -27,25 +27,25 @@ public class DialogTreeEditor extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		treeEditor = new LDefaultTreeEditor<DialogNode>(sashForm, SWT.NONE) {
+		treeEditor = new LDefaultTreeEditor<Node>(sashForm, SWT.NONE) {
 			@Override
-			public LDataTree<DialogNode> getDataCollection() {
-				return Project.current.dialogs.getTree();
+			public LDataTree<Node> getDataCollection() {
+				return Project.current.dialogs.getData().root;
 			}
 			@Override
-			public DialogNode createNewData() {
+			public Node createNewData() {
 				return Project.current.dialogs.newNode();
 			}
 			@Override
-			public DialogNode duplicateData(DialogNode original) {
+			public Node duplicateData(Node original) {
 				return Project.current.dialogs.duplicateNode(original);
 			}
 			@Override
 			public void forceFirstSelection() {
 				if (getDataCollection() != null) {
-					LDataTree<DialogNode> tree = getDataCollection();
+					LDataTree<Node> tree = getDataCollection();
 					getCollectionWidget().setItems(tree);
-					LPath lastPath = Project.current.dialogs.getLast();
+					LPath lastPath = Project.current.dialogs.getData().last;
 					getCollectionWidget().forceSelection(lastPath);
 				} else {
 					getCollectionWidget().setItems(null);
@@ -61,7 +61,7 @@ public class DialogTreeEditor extends LView {
 		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				Project.current.dialogs.setLast(event.path);
+				Project.current.dialogs.getData().last = event.path;
 			}
 		});
 		addChild(treeEditor);

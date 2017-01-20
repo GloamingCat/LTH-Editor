@@ -7,23 +7,22 @@ import lwt.dataserialization.LSerializer;
 
 public class Project implements LSerializer {
 	
-	public ListSerializer battlers;
-	public ListSerializer items;
-	public ListSerializer skills;
-	public ListSerializer skillDags;
-	public ListSerializer status;
-	public ListSerializer animBattle;
-	public ListSerializer animCharacter;
-	public ListSerializer animOther;
-	public ListSerializer terrains;
-	public ListSerializer obstacles;
-	public ListSerializer ramps;
-	public ListSerializer characters;
-	public ListSerializer tilesets;
+	public GObjectListSerializer battlers;
+	public GObjectListSerializer items;
+	public GObjectListSerializer skills;
+	public GObjectListSerializer skillDags;
+	public GObjectListSerializer status;
+	public GObjectListSerializer animBattle;
+	public GObjectListSerializer animCharacter;
+	public GObjectListSerializer animOther;
+	public GObjectListSerializer terrains;
+	public GObjectListSerializer obstacles;
+	public GObjectListSerializer ramps;
+	public GObjectListSerializer characters;
+	public GObjectListSerializer tilesets;
 	
 	public FieldTreeSerializer fieldTree;
-	public ObjectSerializer config;
-	public GameGUISerializer gameGUIs;
+	public GObjectSerializer<Config> config;
 	public DialogTreeSerializer dialogs;
 	
 	private LSerializer[] allData;
@@ -34,27 +33,28 @@ public class Project implements LSerializer {
 	public Project(String path) {
 		this.path = path;
 		
-		battlers = new ListSerializer(dataPath() + "battlers", Battler.class);
-		items = new ListSerializer(dataPath() + "items", Item.class);
-		skills = new ListSerializer(dataPath() + "skills", Skill.class);
-		skillDags = new ListSerializer(dataPath() + "skillDags", SkillDag.class);
-		status = new ListSerializer(dataPath() + "status", Status.class);
-		animCharacter = new ListSerializer(dataPath() + "animCharacter", Animation.class);
-		animBattle = new ListSerializer(dataPath() + "animBattle", Animation.class);
-		animOther = new ListSerializer(dataPath() + "animOther", Animation.class);
-		terrains = new ListSerializer(dataPath() + "terrains", Terrain.class);
-		obstacles = new ListSerializer(dataPath() + "obstacles", Obstacle.class);
-		ramps = new ListSerializer(dataPath() + "ramps", Ramp.class);
-		characters = new ListSerializer(dataPath() + "characters", GameCharacter.class);
-		tilesets = new ListSerializer(dataPath() + "tilesets", Tileset.class);
-		fieldTree = new FieldTreeSerializer(dataPath() + "fieldTree");
-		config = new ObjectSerializer(dataPath() + "config", Config.class);
-		gameGUIs = new GameGUISerializer(dataPath() + "gui");
-		dialogs = new DialogTreeSerializer(dataPath() + "dialogs");
+		battlers = new GObjectListSerializer(dataPath() + "battlers", Battler.class);
+		items = new GObjectListSerializer(dataPath() + "items", Item.class);
+		skills = new GObjectListSerializer(dataPath() + "skills", Skill.class);
+		skillDags = new GObjectListSerializer(dataPath() + "skillDags", SkillDag.class);
+		status = new GObjectListSerializer(dataPath() + "status", Status.class);
+		animCharacter = new GObjectListSerializer(dataPath() + "animCharacter", Animation.class);
+		animBattle = new GObjectListSerializer(dataPath() + "animBattle", Animation.class);
+		animOther = new GObjectListSerializer(dataPath() + "animOther", Animation.class);
+		terrains = new GObjectListSerializer(dataPath() + "terrains", Terrain.class);
+		obstacles = new GObjectListSerializer(dataPath() + "obstacles", Obstacle.class);
+		ramps = new GObjectListSerializer(dataPath() + "ramps", Ramp.class);
+		characters = new GObjectListSerializer(dataPath() + "characters", GameCharacter.class);
+		tilesets = new GObjectListSerializer(dataPath() + "tilesets", Tileset.class);
+		
+		fieldTree = new FieldTreeSerializer(dataPath());
+		dialogs = new DialogTreeSerializer(dataPath());
+		
+		config = new GObjectSerializer<Config>(dataPath() + "config", Config.class);
 		
 		allData = new LSerializer[] {items, skills, skillDags, battlers, status, 
 				animCharacter, animBattle, animOther, terrains, obstacles, ramps, 
-				characters, tilesets, config, fieldTree, gameGUIs, dialogs };
+				characters, tilesets, config, fieldTree, dialogs };
 	}
 	
 	public String dataPath() {

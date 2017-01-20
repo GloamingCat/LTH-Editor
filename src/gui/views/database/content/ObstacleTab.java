@@ -6,7 +6,6 @@ import gui.views.database.subcontent.QuadEditor;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TileList;
 import gui.views.database.subcontent.TransformEditor;
-
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -17,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class ObstacleTab extends DatabaseTab {
@@ -85,7 +84,7 @@ public class ObstacleTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.obstacles;
 	}
 

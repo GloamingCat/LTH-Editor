@@ -7,7 +7,7 @@ import lwt.editor.LViewFolder;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class DatabaseEditor extends LViewFolder {
@@ -48,21 +48,21 @@ public class DatabaseEditor extends LViewFolder {
 		addTab(Vocab.instance.ANIMATIONS, animationFolder);
 
 		AnimationTab animCharacter = new AnimationTab(animationFolder.getTabFolder(), SWT.NONE) {
-			public ListSerializer getSerializer() {
+			public GObjectListSerializer getSerializer() {
 				return Project.current.animCharacter;
 			}
 		};
 		animationFolder.addTab(Vocab.instance.CHARACTER, animCharacter);
 		
 		AnimationTab animBattle = new AnimationTab(animationFolder.getTabFolder(), SWT.NONE) {
-			public ListSerializer getSerializer() {
+			public GObjectListSerializer getSerializer() {
 				return Project.current.animBattle;
 			}
 		};
 		animationFolder.addTab(Vocab.instance.BATTLE, animBattle);
 		
 		AnimationTab animOther = new AnimationTab(animationFolder.getTabFolder(), SWT.NONE) {
-			public ListSerializer getSerializer() {
+			public GObjectListSerializer getSerializer() {
 				return Project.current.animOther;
 			}
 		};

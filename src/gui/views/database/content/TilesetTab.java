@@ -20,7 +20,7 @@ import data.Tileset.CharTile;
 import data.Tileset.ObstacleTile;
 import data.Tileset.RegionTile;
 import data.Tileset.TerrainTile;
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 import org.eclipse.swt.layout.GridLayout;
@@ -133,7 +133,7 @@ public class TilesetTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.tilesets;
 	}
 

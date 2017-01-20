@@ -30,7 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import data.Animation;
 import data.Battler;
 import data.Config;
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class BattlerTab extends DatabaseTab {
@@ -238,7 +238,7 @@ public class BattlerTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.battlers;
 	}
 

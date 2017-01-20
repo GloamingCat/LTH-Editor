@@ -23,7 +23,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.Node;
-import project.ListSerializer;
+import project.GObjectListSerializer;
 import project.Project;
 
 public class CharacterTab extends DatabaseTab {
@@ -141,7 +141,7 @@ public class CharacterTab extends DatabaseTab {
 	}
 
 	@Override
-	protected ListSerializer getSerializer() {
+	protected GObjectListSerializer getSerializer() {
 		return Project.current.characters;
 	}
 

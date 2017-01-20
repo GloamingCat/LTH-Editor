@@ -1,5 +1,6 @@
 package gui.views.database;
 
+import editor.GDefaultListEditor;
 import gui.Vocab;
 import gui.views.common.ImageButton;
 import gui.views.common.QuadButton;
@@ -15,14 +16,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
-import project.ListSerializer;
+import project.GListSerializer;
+import project.GObjectListSerializer;
 
 import com.google.gson.Gson;
 
 import lwt.action.LActionStack;
-import lwt.dataestructure.LDataList;
 import lwt.editor.LControlView;
-import lwt.editor.LDefaultListEditor;
 import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
@@ -35,7 +35,7 @@ public abstract class DatabaseTab extends LView {
 
 	protected static Gson gson = new Gson();
 	
-	protected LDefaultListEditor<Object> listEditor;
+	protected GDefaultListEditor<Object> listEditor;
 	protected LObjectEditor contentEditor;
 	protected Group grpGeneral;
 	protected Label lblName;
@@ -50,19 +50,11 @@ public abstract class DatabaseTab extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		listEditor = new LDefaultListEditor<Object>(sashForm, SWT.NONE) {
+		DatabaseTab self = this;
+		listEditor = new GDefaultListEditor<Object>(sashForm, SWT.NONE) {
 			@Override
-			public LDataList<Object> getDataCollection() {
-				return getSerializer().getList();
-			}
-			@Override
-			public Object createNewData() {
-				return gson.fromJson("{}", getSerializer().getType());
-			}
-			@Override
-			public Object duplicateData(Object original) {
-				String json = gson.toJson(original, getSerializer().getType());
-				return gson.fromJson(json, getSerializer().getType());
+			public GListSerializer<Object> getSerializer() {
+				return self.getSerializer();
 			}
 		};
 		listEditor.getCollectionWidget().setInsertNewEnabled(true);
@@ -95,7 +87,7 @@ public abstract class DatabaseTab extends LView {
 		sashForm.setWeights(new int[] {1, 2});
 	}
 	
-	protected abstract ListSerializer getSerializer();
+	protected abstract GObjectListSerializer getSerializer();
 	
 	public void addChild(LEditor editor) {
 		contentEditor.addChild(editor);
