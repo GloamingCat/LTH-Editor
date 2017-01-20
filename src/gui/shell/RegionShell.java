@@ -3,7 +3,7 @@ package gui.shell;
 import java.util.ArrayList;
 
 import gui.Vocab;
-import gui.views.database.subcontent.IDList;
+import gui.views.common.IDList;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;

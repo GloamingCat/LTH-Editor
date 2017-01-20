@@ -101,6 +101,10 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.addChild(editor);
 	}
 	
+	public void addChild(LEditor editor, String key) {
+		contentEditor.addChild(editor, key);
+	}
+	
 	protected void addControl(LControl<?> control, String attName) {
 		contentEditor.addControl(control, attName);
 	}

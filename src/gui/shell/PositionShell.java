@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.helper.FieldHelper;
 import gui.views.fieldTree.EditableFieldCanvas;
 
 import org.eclipse.swt.widgets.Combo;
@@ -30,6 +31,8 @@ import project.Project;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.PaintEvent;
 
 public class PositionShell extends LObjectShell<Position> {
 	
@@ -100,19 +103,39 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		scrolledComposite = new ScrolledComposite(field, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
-		//scrolledComposite.setExpandHorizontal(true);
-		//scrolledComposite.setExpandVertical(true);
-		
+
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
 			public void onTileLeftClick(int x, int y) {
 				spnX.setSelection(x);
 				spnY.setSelection(y);
+				canvas.redraw();
 			}
 			public void onTileRightClick(int x, int y, Point origin) {}
 			public void onTileEnter(int x, int y) {
 				label.setText("(" + x + "," + y + ")");
 			}
 		};
+		canvas.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+				int x = spnX.getSelection();
+				int y = spnY.getSelection();
+				int h = 0;
+				if (canvas.currentLayer != null) {
+					h = canvas.currentLayer.info.height;
+				}
+				Point p = FieldHelper.math.tile2Pixel(x, y, h);
+				int[] poly = canvas.painter.getTilePolygon(0, 0);
+				for(int i = 0; i < poly.length; i++) {
+					poly[i] *= 3;
+					poly[i] /= 4;
+				}
+				for(int i = 0; i < poly.length; i += 2) {
+					poly[i] += p.x + canvas.x0;
+					poly[i + 1] += p.y + canvas.y0;
+				}
+				e.gc.drawPolygon(poly);
+			}
+		});
 		
 		scrolledComposite.setContent(canvas);
 
@@ -168,10 +191,13 @@ public class PositionShell extends LObjectShell<Position> {
 		Field field = Project.current.fieldTree.loadField(node);
 		canvas.setField(field);
 		refreshLayerCombo();
-		cmbLayer.select(0);
+		if (cmbLayer.getSelectionIndex() >= field.layers.size()
+				|| cmbLayer.getSelectionIndex() < 0) {
+			cmbLayer.select(0);
+		}
 		scrolledComposite.layout();
 		scrolledComposite.setMinSize(canvas.getSize());
-		
+		setLayer(cmbLayer.getSelectionIndex());
 	}
 	
 	public void open(Position initial) {

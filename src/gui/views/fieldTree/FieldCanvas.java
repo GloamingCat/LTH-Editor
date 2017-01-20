@@ -18,14 +18,14 @@ import data.Layer;
 public class FieldCanvas extends LView {
 
 	public Field field;
+	public Layer currentLayer;
 	public float scale = 1;
-	protected int x0;
-	protected int y0;
-	protected Layer currentLayer;
+	public int x0;
+	public int y0;
 
 	// Image cache
 	private Image[][] tileImages;
-	private FieldPainter painter = new FieldPainter(1, true);
+	public FieldPainter painter = new FieldPainter(1, true);
 	
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);

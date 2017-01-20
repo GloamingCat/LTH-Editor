@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.graphics.Point;
 
 public abstract class IDShell extends LObjectShell<Integer> {
 	
@@ -20,6 +21,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 
 	public IDShell(Shell parent) {
 		super(parent);
+		setMinimumSize(new Point(224, 39));
 		
 		content.setLayout(new GridLayout(2, false));
 		

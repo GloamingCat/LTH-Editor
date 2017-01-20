@@ -97,13 +97,13 @@ public class FieldPainter {
 	}
 	
 	public void paintEdges(GC gc, int x0, int y0) {
-		Point[] shift = FieldHelper.math.vertexShift;
-		int[] p = new int[shift.length * 2];
-		for(int i = 0; i < shift.length; i++) {
-			p[i * 2] = Math.round((shift[i].x + x0) * scale);
-			p[i * 2 + 1] = Math.round((shift[i].y + y0) * scale);
-		}
+		int[] p = getTilePolygon(x0, y0);
 		gc.drawPolygon(p);
+	}
+	
+	public void paintHex(GC gc, int x0, int y0) {
+		int[] p = getTilePolygon(x0, y0);
+		gc.fillPolygon(p);
 	}
 	
 	public void paintRamp(GC gc, int x0, int y0, PointSet points, int height) {

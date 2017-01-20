@@ -47,13 +47,11 @@ public class EditableFieldCanvas extends FieldCanvas {
 				if (e.button == 1) {	// Left button.
 					onTileLeftClick(tileX, tileY);
 					draggingLeft = true;
-				} else {				// Right button. 
+				} else {				// Right button.
 					dragOrigin = new Point(tileX, tileY);
 				}
 			}
-		});
-		
-		addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (e.button == 1) { 	// Left button.
@@ -61,8 +59,10 @@ public class EditableFieldCanvas extends FieldCanvas {
 				} else {				// Right button.
 					onTileRightClick(tileX, tileY, dragOrigin);
 					dragOrigin = null;
+					redraw();
 				}
 			}
+			
 		});
 		
 		addMouseMoveListener(new MouseMoveListener() {
@@ -76,6 +76,9 @@ public class EditableFieldCanvas extends FieldCanvas {
 					if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
 						tileX = tilePos.x;
 						tileY = tilePos.y;
+						if (dragOrigin != null) {
+							redraw();
+						}
 						onTileEnter(tilePos.x, tilePos.y);
 						if (draggingLeft) {
 							onTileLeftClick(tileX, tileY);
@@ -90,6 +93,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 	        	if (currentLayer != null && dragOrigin != null) {
             		e.gc.setAlpha(150);
             		e.gc.setBackground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
+            		e.gc.setForeground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
             		drawSelection(e.gc);
 	        	}
 	        }
@@ -109,7 +113,8 @@ public class EditableFieldCanvas extends FieldCanvas {
 		int[] poly = new int[] {p1.x + x0, p1.y + y0,
 								p2.x + x0, p2.y + y0,
 								p3.x + x0, p3.y + y0,
-								p4.x + x0, p4.y + y0 };
+								p4.x + x0, p4.y + y0,
+								p1.x + x0, p1.y + y0 };
 		gc.fillPolygon(poly);
 	}
 	

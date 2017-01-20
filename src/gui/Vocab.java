@@ -72,6 +72,8 @@ public class Vocab {
 	public String STARTPOS = "Start Position";
 	public String PIXELMOV = "Pixel Movement";
 	public String STOPCOLL = "Stop On Collision";
+	public String WALKSPEED = "Walk Speed";
+	public String DASHSPEED = "Dash Speed";
 	
 	// Item
 	public String PRICE = "Price";

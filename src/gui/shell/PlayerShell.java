@@ -32,34 +32,18 @@ public class PlayerShell extends LObjectShell<Player> {
 
 	public PlayerShell(Shell parent) {
 		super(parent);
+		setText(Vocab.instance.PLAYER + " - " + Vocab.instance.PROPERTIES);
 		content.setLayout(new GridLayout(5, false));
 		
 		Label lblWalkSpeed = new Label(content, SWT.NONE);
-		lblWalkSpeed.setText("Walk Speed");
+		lblWalkSpeed.setText(Vocab.instance.WALKSPEED);
 		
 		spnWalk = new Spinner(content, SWT.BORDER);
 		spnWalk.setMaximum(999);
 		GridData gd_spnWalk = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_spnWalk.widthHint = 34;
+		gd_spnWalk.widthHint = 47;
 		spnWalk.setLayoutData(gd_spnWalk);
-		
-		Label lblScript = new Label(content, SWT.NONE);
-		lblScript.setText(Vocab.instance.SCRIPT);
-		
-		txtScript = new Text(content, SWT.BORDER | SWT.READ_ONLY);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		btnScript = new ScriptButton(content, SWT.NONE);
-		btnScript.setFolder("character");
-		btnScript.setPathText(txtScript);
-		
-		Label lblDashSpeed = new Label(content, SWT.NONE);
-		lblDashSpeed.setText("Dash Speed");
-		
-		spnDash = new Spinner(content, SWT.BORDER);
-		spnDash.setMaximum(999);
-		spnDash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+
 		Label lblStartPos = new Label(content, SWT.NONE);
 		lblStartPos.setText(Vocab.instance.STARTPOS);
 		
@@ -68,6 +52,25 @@ public class PlayerShell extends LObjectShell<Player> {
 
 		btnStartPos = new PositionButton(content, SWT.NONE);
 		btnStartPos.setText(txtStartpos);
+		
+		Label lblDashSpeed = new Label(content, SWT.NONE);
+		lblDashSpeed.setText(Vocab.instance.DASHSPEED);
+		
+		spnDash = new Spinner(content, SWT.BORDER);
+		spnDash.setMaximum(999);
+		spnDash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblScript = new Label(content, SWT.NONE);
+		lblScript.setText(Vocab.instance.SCRIPT);
+		
+		txtScript = new Text(content, SWT.BORDER | SWT.READ_ONLY);
+		GridData gd_txtScript = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_txtScript.widthHint = 159;
+		txtScript.setLayoutData(gd_txtScript);
+		
+		btnScript = new ScriptButton(content, SWT.NONE);
+		btnScript.setFolder("character");
+		btnScript.setPathText(txtScript);
 		
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
