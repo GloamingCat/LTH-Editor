@@ -3,7 +3,7 @@ package gui.views.database.subcontent;
 import java.util.ArrayList;
 
 import gui.Vocab;
-import gui.views.common.IDList;
+import gui.views.IDList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;

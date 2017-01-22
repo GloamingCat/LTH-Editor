@@ -23,7 +23,7 @@ public class NameShell extends LObjectShell<String> {
 		Label lblName = new Label(content, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
-		txtName = new Text(content, SWT.NONE);
+		txtName = new Text(content, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		pack();

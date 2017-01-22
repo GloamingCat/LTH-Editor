@@ -8,11 +8,11 @@ public class Battler {
 	public boolean persistent = false;
 	public int typeID;
 	public int characterID;
-	public Script scriptAI = new Script();
 	public int attackID;
 	public int skillDagID;
 	public int money;
 	public int exp;
+	public Script scriptAI = new Script();
 	public Script build = new Script();
 	public LDataList<Integer> attributes = new LDataList<>();
 	public LDataList<Bonus> items = new LDataList<>();
@@ -22,5 +22,5 @@ public class Battler {
 	public String toString() {
 		return name;
 	}
-	
+
 }

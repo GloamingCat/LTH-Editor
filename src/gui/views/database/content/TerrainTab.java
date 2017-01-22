@@ -1,7 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.common.ImageButton;
+import gui.views.ImageButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
 import gui.views.database.subcontent.TagList;

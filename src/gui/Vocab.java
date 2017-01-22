@@ -8,7 +8,7 @@ public class Vocab {
 	public String CONFIGEDITOR = "Config Editor";
 	public String FIELDEDITOR = "Field Editor";
 	public String GUIEDITOR = "GUI Editor";
-	public String DIALOGEDITOR = "Dialog Editor";
+	public String DIALOGUEEDITOR = "Dialogue Editor";
 	
 	// Tab names
 	public String ANIMATIONS = "Animations";
@@ -50,13 +50,15 @@ public class Vocab {
 	public String SOUNDS = "Sounds";
 	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
-	public String BATTLERTYPES = "Battler Types";
+	public String ITEMTYPES = "Item Types";
 	public String IMAGEATLASES = "Image Atlas";
+	public String CODE = "Code";
+	public String COLOR = "Color";
+	
+	// Attributes
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
-	public String CODE = "Code";
-	public String COLOR = "Color";
 	
 	// Grid
 	public String GRID = "Grid";
@@ -74,6 +76,12 @@ public class Vocab {
 	public String STOPCOLL = "Stop On Collision";
 	public String WALKSPEED = "Walk Speed";
 	public String DASHSPEED = "Dash Speed";
+	
+	// Battle
+	public String BATTLERTYPES = "Battler Types";
+	public String INDIVIDUALTURN = "Individual Turn";
+	public String GROUPESCAPE = "Group Escape";
+	public String PARTYTILEESCAPE = "Escape in Party Tile";
 	
 	// Item
 	public String PRICE = "Price";
@@ -207,7 +215,7 @@ public class Vocab {
 	public String DESTINATION = "Destination";
 	public String FADEOUT = "Fade out";
 
-	// Dialog
+	// Dialogue
 	public String SPEECHES = "Speeches";
 	public String PORTRAIT = "Portrait";
 	public String MESSAGE = "Message";

@@ -1,7 +1,7 @@
 package gui.views.database.subcontent;
 
 import gui.helper.ImageHelper;
-import gui.views.common.ImageButton;
+import gui.views.ImageButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;

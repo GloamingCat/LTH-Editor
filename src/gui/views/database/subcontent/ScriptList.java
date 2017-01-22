@@ -1,7 +1,7 @@
 package gui.views.database.subcontent;
 
 import gui.shell.ScriptShell;
-import gui.views.common.SimpleEditableList;
+import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;

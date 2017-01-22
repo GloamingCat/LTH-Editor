@@ -1,7 +1,7 @@
 package gui.views.config;
 
-import gui.shell.AttributeShell;
-import gui.views.common.SimpleEditableList;
+import gui.shell.config.AttributeShell;
+import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 

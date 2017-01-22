@@ -3,7 +3,7 @@ package gui.views.database.subcontent;
 import java.util.ArrayList;
 
 import gui.shell.NodeShell;
-import gui.views.common.SimpleEditableList;
+import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 

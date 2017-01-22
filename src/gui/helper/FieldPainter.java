@@ -230,7 +230,7 @@ public class FieldPainter {
 		int h = FieldHelper.config.tileH;
 		Image img = typeCache.get(id);
 		if (img == null) {
-			BattlerType type = FieldHelper.config.battlerTypes.get(id);
+			BattlerType type = FieldHelper.config.battle.battlerTypes.get(id);
 			img = ImageHelper.getStringImage(type.code, w, h, null);
 			typeCache.put(id, img);
 		}

@@ -1,7 +1,7 @@
 package gui.views.config;
 
-import gui.shell.RegionShell;
-import gui.views.common.SimpleEditableList;
+import gui.shell.config.RegionShell;
+import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 

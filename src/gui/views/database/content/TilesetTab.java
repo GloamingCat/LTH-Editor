@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import lwt.dialog.LObjectShell;
 import gui.Vocab;
-import gui.shell.BasicTileShell;
-import gui.shell.CharTileShell;
-import gui.views.common.GraphicalList;
+import gui.shell.database.BasicTileShell;
+import gui.shell.database.CharTileShell;
+import gui.views.GraphicalList;
 import gui.views.database.DatabaseTab;
 
 import org.eclipse.swt.SWT;

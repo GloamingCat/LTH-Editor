@@ -1,7 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.common.ScriptButton;
+import gui.views.ScriptButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.BonusList;
@@ -61,8 +61,8 @@ public class BattlerTab extends DatabaseTab {
 		
 		LComboView cmbType = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<?> getArray() {
-				Config conf = (Config) Project.current.config.getData();
-				return conf.battlerTypes;
+				Config conf = Project.current.config.getData();
+				return conf.battle.battlerTypes;
 			}
 		};
 		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

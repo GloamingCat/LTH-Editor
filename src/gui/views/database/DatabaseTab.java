@@ -4,9 +4,9 @@ import java.lang.reflect.Type;
 
 import editor.GDefaultListEditor;
 import gui.Vocab;
-import gui.views.common.ImageButton;
-import gui.views.common.QuadButton;
-import gui.views.common.ScriptButton;
+import gui.views.ImageButton;
+import gui.views.QuadButton;
+import gui.views.ScriptButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;

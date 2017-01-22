@@ -2,8 +2,7 @@ package gui.views.config;
 
 import gui.Vocab;
 import gui.shell.AudioShell;
-import gui.shell.FontShell;
-import gui.views.common.PlayerButton;
+import gui.shell.config.FontShell;
 import gui.views.database.subcontent.TagList;
 import lwt.action.LActionStack;
 import lwt.dialog.LObjectShell;
@@ -54,12 +53,30 @@ public class ConfigEditor extends LObjectEditor {
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		
-		Label lblPlayer = new Label(grpGeneral, SWT.NONE);
-		lblPlayer.setText(Vocab.instance.PLAYER);
+		Label lblPropertes = new Label(grpGeneral, SWT.NONE);
+		lblPropertes.setText(Vocab.instance.PROPERTIES);
 		
-		PlayerButton btnPlayer = new PlayerButton(grpGeneral, SWT.NONE);
+		Composite composite = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_composite = new GridLayout(3, true);
+		gl_composite.marginWidth = 0;
+		gl_composite.marginHeight = 0;
+		composite.setLayout(gl_composite);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		PlayerButton btnPlayer = new PlayerButton(composite, SWT.NONE);
+		btnPlayer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(btnPlayer, "player");
-		btnPlayer.setText(Vocab.instance.PROPERTIES);
+		btnPlayer.setText(Vocab.instance.PLAYER);
+		
+		PartyButton btnParty = new PartyButton(composite, SWT.NONE);
+		btnParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(btnParty, "party");
+		btnParty.setText(Vocab.instance.PARTY);
+		
+		BattleButton btnBattle = new BattleButton(composite, SWT.NONE);
+		btnBattle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(btnBattle, "battle");
+		btnBattle.setText(Vocab.instance.BATTLE);
 		
 		SashForm right = new SashForm(this, SWT.VERTICAL);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
@@ -154,6 +171,7 @@ public class ConfigEditor extends LObjectEditor {
 		LCheckButton btnNeighbors = new LCheckButton(checkButtons, SWT.CHECK);
 		btnNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
 		addControl(btnNeighbors, "allNeighbors");
+		new Label(checkButtons, SWT.NONE);
 		
 		Composite bottom = new Composite(this, SWT.NONE);
 		GridLayout gl_bottom = new GridLayout(3, false);
@@ -172,6 +190,16 @@ public class ConfigEditor extends LObjectEditor {
 		lstElements.setIncludeID(true);		
 		addChild(lstElements);
 		
+		Group grpItemTypes = new Group(bottom, SWT.NONE);
+		grpItemTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpItemTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpItemTypes.setText(Vocab.instance.ITEMTYPES);
+		
+		NameList lstItemTypes = new NameList(grpItemTypes, SWT.NONE);
+		lstItemTypes.attributeName = "itemTypes";
+		lstItemTypes.setIncludeID(true);		
+		addChild(lstItemTypes);
+		
 		Group grpRegions = new Group(bottom, SWT.NONE);
 		grpRegions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpRegions.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -179,15 +207,7 @@ public class ConfigEditor extends LObjectEditor {
 		
 		RegionList lstRegions = new RegionList(grpRegions, SWT.NONE);
 		addChild(lstRegions);
-		
-		Group grpBattlerTypes = new Group(bottom, SWT.NONE);
-		grpBattlerTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpBattlerTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpBattlerTypes.setText(Vocab.instance.BATTLERTYPES);
-		
-		BattlerTypeList lstBattlerTypes = new BattlerTypeList(grpBattlerTypes, SWT.NONE);
-		addChild(lstBattlerTypes);
-		
+
 		Group grpAttributes = new Group(bottom, SWT.NONE);
 		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));

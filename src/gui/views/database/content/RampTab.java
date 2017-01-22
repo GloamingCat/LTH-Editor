@@ -7,7 +7,7 @@ import lwt.event.listener.LControlListener;
 import lwt.widget.LObjectButton;
 import lwt.widget.LSpinner;
 import gui.Vocab;
-import gui.shell.RampShell;
+import gui.shell.database.RampShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.RampEditor;
 

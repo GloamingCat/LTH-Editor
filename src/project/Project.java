@@ -23,7 +23,7 @@ public class Project implements LSerializer {
 	
 	public FieldTreeSerializer fieldTree;
 	public GObjectSerializer<Config> config;
-	public DialogTreeSerializer dialogs;
+	public DialogueTreeSerializer dialogueTree;
 	
 	private LSerializer[] allData;
 	
@@ -48,13 +48,13 @@ public class Project implements LSerializer {
 		tilesets = new GObjectListSerializer(dataPath() + "tilesets", Tileset.class);
 		
 		fieldTree = new FieldTreeSerializer(dataPath());
-		dialogs = new DialogTreeSerializer(dataPath());
+		dialogueTree = new DialogueTreeSerializer(dataPath());
 		
 		config = new GObjectSerializer<Config>(dataPath() + "config", Config.class);
 		
 		allData = new LSerializer[] {items, skills, skillDags, battlers, status, 
 				animCharacter, animBattle, animOther, terrains, obstacles, ramps, 
-				characters, tilesets, config, fieldTree, dialogs };
+				characters, tilesets, config, fieldTree, dialogueTree };
 	}
 	
 	public String dataPath() {

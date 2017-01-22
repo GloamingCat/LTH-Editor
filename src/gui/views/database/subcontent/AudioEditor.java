@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import gui.views.common.AudioButton;
+import gui.views.AudioButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

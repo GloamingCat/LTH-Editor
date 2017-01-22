@@ -1,7 +1,7 @@
 package gui.views.config;
 
-import gui.shell.BattlerTypeShell;
-import gui.views.common.SimpleEditableList;
+import gui.shell.config.BattlerTypeShell;
+import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 

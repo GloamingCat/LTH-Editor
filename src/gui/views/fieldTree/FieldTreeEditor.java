@@ -1,6 +1,6 @@
 package gui.views.fieldTree;
 
-import gui.shell.FieldShell;
+import gui.shell.fields.FieldShell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;

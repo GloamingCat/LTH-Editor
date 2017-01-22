@@ -1,7 +1,7 @@
 package gui.views.fieldTree;
 
-import gui.shell.LayerShell;
-import gui.views.common.GraphicalList;
+import gui.shell.fields.LayerShell;
+import gui.views.GraphicalList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
@@ -144,13 +144,13 @@ public class FieldLayerEditor extends LEditor {
 		if (object != null) {
 			field = (Field) object;
 			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(field.prefs.tilesetID);
-			Config conf = (Config) Project.current.config.getData();
+			Config conf = Project.current.config.getData();
 			LDataList<PartyTile> parties = Tileset.createPartyArray(field.prefs.partyCount);
 			lstTerrains.setDataCollection(tileset.terrains);
 			lstObstacles.setDataCollection(tileset.obstacles);
 			lstCharacters.setDataCollection(tileset.characters);
 			lstRegions.setDataCollection(tileset.regions);
-			lstBattlerTypes.setDataCollection(conf.battlerTypes);
+			lstBattlerTypes.setDataCollection(conf.battle.battlerTypes);
 			lstParties.setDataCollection(parties);
 			layerList.setDataCollection(field.layers);
 			int layer = Project.current.fieldTree.getData().getLastLayer(field.id);

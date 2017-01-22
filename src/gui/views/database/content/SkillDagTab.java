@@ -1,7 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.common.SimpleEditableList;
+import gui.views.SimpleEditableList;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.SkillNodeEditor;
 
