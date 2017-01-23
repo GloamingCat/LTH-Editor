@@ -10,9 +10,9 @@ import data.Obstacle.Tile;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 
-public class TileList extends SimpleEditableList<Tile> {
+public class ObstacleTileList extends SimpleEditableList<Tile> {
 
-	public TileList(Composite parent, int style) {
+	public ObstacleTileList(Composite parent, int style) {
 		super(parent, style);
 		type = Tile.class;
 		attributeName = "tiles";

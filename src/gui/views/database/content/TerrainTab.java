@@ -52,12 +52,23 @@ public class TerrainTab extends DatabaseTab {
 			}
 		};
 		cmbStatus.setOptional(true);
-		cmbStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(cmbStatus, "statusID");
+
+		Composite buttons = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_buttons = new GridLayout(2, false);
+		gl_buttons.marginWidth = 0;
+		gl_buttons.marginHeight = 0;
+		buttons.setLayout(gl_buttons);
+		buttons.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		LCheckButton btnRemoveOnExit = new LCheckButton(grpGeneral, SWT.NONE);
+		LCheckButton btnRemoveOnExit = new LCheckButton(buttons, SWT.NONE);
 		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
+		
+		LCheckButton btnResetTime = new LCheckButton(buttons, SWT.NONE);
+		btnResetTime.setText(Vocab.instance.RESETTIME);
+		addControl(btnResetTime, "resetTime");
 		
 		Label lblLifeTime = new Label(grpGeneral, SWT.NONE);
 		lblLifeTime.setText(Vocab.instance.LIFETIME);

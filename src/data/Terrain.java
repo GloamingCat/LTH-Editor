@@ -17,6 +17,7 @@ public class Terrain {
 	// Only on battle
 	public int statusID;
 	public boolean removeOnExit;
+	public boolean resetTime = true;
 	public int lifeTime = -1; // lifeTime <= 0 for no lifeTime
 	
 	// Audio

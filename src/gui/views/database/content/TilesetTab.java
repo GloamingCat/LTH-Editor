@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import lwt.dialog.LObjectShell;
 import gui.Vocab;
 import gui.shell.database.BasicTileShell;
-import gui.shell.database.CharTileShell;
+import gui.shell.database.TilesetCharShell;
 import gui.views.GraphicalList;
 import gui.views.database.DatabaseTab;
 
@@ -101,7 +101,7 @@ public class TilesetTab extends DatabaseTab {
 			protected String attributeName() { return "characters"; }
 			protected Class<CharTile> getType() { return CharTile.class; } 
 			protected LObjectShell<CharTile> createShell(Shell parent) { 
-				return new CharTileShell(parent); 
+				return new TilesetCharShell(parent); 
 			}
 		};
 		addChild(lstCharacters);

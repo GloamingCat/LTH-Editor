@@ -4,7 +4,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.QuadEditor;
 import gui.views.database.subcontent.TagList;
-import gui.views.database.subcontent.TileList;
+import gui.views.database.subcontent.ObstacleTileList;
 import gui.views.database.subcontent.TransformEditor;
 import lwt.widget.LSpinner;
 
@@ -78,7 +78,7 @@ public class ObstacleTab extends DatabaseTab {
 		grpTiles.setLayout(new FillLayout());
 		grpTiles.setText(Vocab.instance.TILES);
 		
-		TileList tileList = new TileList(grpTiles, SWT.NONE);
+		ObstacleTileList tileList = new ObstacleTileList(grpTiles, SWT.NONE);
 		addChild(tileList);
 		
 	}

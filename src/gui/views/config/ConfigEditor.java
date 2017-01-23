@@ -57,7 +57,7 @@ public class ConfigEditor extends LObjectEditor {
 		lblPropertes.setText(Vocab.instance.PROPERTIES);
 		
 		Composite composite = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(3, true);
+		GridLayout gl_composite = new GridLayout(4, true);
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
 		composite.setLayout(gl_composite);
@@ -78,6 +78,11 @@ public class ConfigEditor extends LObjectEditor {
 		addControl(btnBattle, "battle");
 		btnBattle.setText(Vocab.instance.BATTLE);
 		
+		GUIButton btnGUI = new GUIButton(composite, SWT.NONE);
+		btnGUI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(btnGUI, "gui");
+		btnGUI.setText(Vocab.instance.GUI);
+
 		SashForm right = new SashForm(this, SWT.VERTICAL);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
 		

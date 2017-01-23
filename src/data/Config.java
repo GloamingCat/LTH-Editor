@@ -2,6 +2,8 @@ package data;
 
 import java.util.HashMap;
 
+import org.eclipse.swt.graphics.RGB;
+
 import lwt.dataestructure.LDataList;
 
 public class Config {
@@ -11,6 +13,7 @@ public class Config {
 	public Player player = new Player();
 	public Party party = new Party();
 	public Battle battle = new Battle();
+	public GUI gui = new GUI();
 	
 	// Grid
 	public int tileW = 36;
@@ -57,9 +60,16 @@ public class Config {
 	
 	public static class Battle {
 		public LDataList<BattlerType> battlerTypes = new LDataList<>();
+		public int turnLimit = 2000;
 		public boolean individualTurn = true;
 		public boolean groupEscape = true;
 		public boolean partyTileEscape = true;
+		public boolean instantTurnTransition = false;
+	}
+	
+	public static class GUI {
+		public int cursorAnimID = 0;
+		public RGB disabledColor = new RGB(128, 128, 128);
 	}
 	
 }

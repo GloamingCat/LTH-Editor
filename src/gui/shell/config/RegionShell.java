@@ -39,9 +39,9 @@ public class RegionShell extends LObjectShell<Region> {
 	private Text txtName;
 	private IDList lstBattlers;
 	private RGB rgb;
-	private LDataList<Integer> battlers = new LDataList<>();
 	private Label imgColor;
-
+	private LDataList<Integer> battlers = new LDataList<>();
+	
 	public RegionShell(Shell parent) {
 		super(parent);
 		

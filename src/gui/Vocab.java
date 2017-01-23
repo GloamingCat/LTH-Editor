@@ -83,6 +83,10 @@ public class Vocab {
 	public String GROUPESCAPE = "Group Escape";
 	public String PARTYTILEESCAPE = "Escape in Party Tile";
 	
+	// GUI
+	public String GUI = "GUI";
+	public String CURSORANIMID = "Cursor Animation";
+	
 	// Item
 	public String PRICE = "Price";
 	public String WEIGHT = "Weight";
@@ -151,7 +155,7 @@ public class Vocab {
 	public String FULLIMAGE = "Full Image";
 	
 	// Character
-	public String COLLIDERSIZE = "Collider Radius";
+	public String COLLISIONTILES = "Collision Tiles";
 	public String COLLIDERHEIGHT = "Collider Height";
 	public String STARTLISTENERS = "Start Scripts";
 	public String COLLISIONLISTENERS = "Collision Scripts";
@@ -183,6 +187,7 @@ public class Vocab {
 	public String PASSABLE = "Passable";
 	public String LIFETIME = "Life time";
 	public String REMOVEONEXIT = "Remove on Exit";
+	public String RESETTIME = "Reset time";
 
 	// Skill Dag
 	public String SKILLNODES = "Skill Nodes";

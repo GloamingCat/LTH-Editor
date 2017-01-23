@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
+import gui.views.database.subcontent.CharTileListButton;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.ScriptList;
 import gui.views.database.subcontent.TagList;
@@ -39,20 +40,20 @@ public class CharacterTab extends DatabaseTab {
 		gl_stuff.marginHeight = 0;
 		gl_stuff.marginWidth = 0;
 		stuff.setLayout(gl_stuff);
-		
-		Label lblColliderSize = new Label(stuff, SWT.NONE);
-		lblColliderSize.setText(Vocab.instance.COLLIDERSIZE);
-		
-		LSpinner spnSize = new LSpinner(stuff, SWT.NONE);
-		spnSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnSize, "colliderSize");
-		
+
 		Label lblColliderHeight = new Label(stuff, SWT.NONE);
 		lblColliderHeight.setText(Vocab.instance.COLLIDERHEIGHT);
 		
 		LSpinner spnHeight = new LSpinner(stuff, SWT.NONE);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnHeight, "colliderHeight");
+		
+		Label lblCollisionTiles = new Label(stuff, SWT.NONE);
+		lblCollisionTiles.setText(Vocab.instance.COLLISIONTILES);
+		
+		CharTileListButton btnTiles = new CharTileListButton(stuff, SWT.NONE);
+		btnTiles.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		addControl(btnTiles, "tiles");
 		
 		SashForm center = new SashForm(contentEditor, SWT.NONE);
 		center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

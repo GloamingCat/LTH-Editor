@@ -185,28 +185,28 @@ public class SkillTab extends DatabaseTab {
 		bottom.setLayout(gl_bottom);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
 		
-		Group grpEffect = new Group(bottom, SWT.NONE);
-		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpEffect.setText(Vocab.instance.EFFECT);
-		GridLayout gl_grpEffect = new GridLayout(3, false);
-		grpEffect.setLayout(gl_grpEffect);
+		Group grpScript = new Group(bottom, SWT.NONE);
+		grpScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpScript.setText(Vocab.instance.SCRIPT);
+		GridLayout gl_grpScript = new GridLayout(3, false);
+		grpScript.setLayout(gl_grpScript);
 		
-		Label lblEffect = new Label(grpEffect, SWT.NONE);
-		lblEffect.setText(Vocab.instance.PATH);
+		Label lblPath = new Label(grpScript, SWT.NONE);
+		lblPath.setText(Vocab.instance.PATH);
 		
-		Text txtEffect = new Text(grpEffect, SWT.BORDER | SWT.READ_ONLY);
-		txtEffect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Text txtPath = new Text(grpScript, SWT.BORDER | SWT.READ_ONLY);
+		txtPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnSelectEffect = new ScriptButton(grpEffect, SWT.NONE);
+		ScriptButton btnSelectScript = new ScriptButton(grpScript, SWT.NONE);
 		
-		Label lblParam = new Label(grpEffect, SWT.NONE);
+		Label lblParam = new Label(grpScript, SWT.NONE);
 		lblParam.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblParam.setText(Vocab.instance.PARAM);
 		
-		StyledText txtParam = new StyledText(grpEffect, SWT.BORDER | SWT.READ_ONLY);
+		StyledText txtParam = new StyledText(grpScript, SWT.BORDER | SWT.READ_ONLY);
 		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		addScriptButton(btnSelectEffect, txtEffect, txtParam, "skill", "effect");
+		addScriptButton(btnSelectScript, txtPath, txtParam, "skill", "script");
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
