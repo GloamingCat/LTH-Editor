@@ -65,6 +65,9 @@ public class Config {
 		public boolean groupEscape = true;
 		public boolean partyTileEscape = true;
 		public boolean instantTurnTransition = false;
+		public int attTurnID = 0;
+		public int attHPID = 0;
+		public int attSPID = 0;
 	}
 	
 	public static class GUI {

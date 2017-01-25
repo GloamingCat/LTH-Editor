@@ -6,6 +6,7 @@ public class Battler {
 
 	public String name = "New Battler";
 	public boolean persistent = false;
+	public int level;
 	public int typeID;
 	public int characterID;
 	public int attackID;

@@ -175,6 +175,13 @@ public class BattlerTab extends DatabaseTab {
 		btnBuild.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addScriptButton(btnBuild, txtBuild, null, "build", "build");
 		
+		Label lblLevel = new Label(build, SWT.NONE);
+		lblLevel.setText(Vocab.instance.LEVEL);
+		
+		LSpinner spnLevel = new LSpinner(build, SWT.NONE);
+		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		addControl(spnLevel, "level");
+		
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
 		attEditor.setColumns(2);
 		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));		

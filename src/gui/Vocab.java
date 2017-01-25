@@ -78,10 +78,14 @@ public class Vocab {
 	public String DASHSPEED = "Dash Speed";
 	
 	// Battle
+	public String TURNCOUNT = "Turn Limit";
 	public String BATTLERTYPES = "Battler Types";
 	public String INDIVIDUALTURN = "Individual Turn";
 	public String GROUPESCAPE = "Group Escape";
 	public String PARTYTILEESCAPE = "Escape in Party Tile";
+	public String ATTHP = "HP attribute";
+	public String ATTSP = "SP attribute";
+	public String ATTTURN = "Turn attribute";
 	
 	// GUI
 	public String GUI = "GUI";
@@ -106,6 +110,7 @@ public class Vocab {
 	public String MONEY = "Money";
 	public String EXP = "EXP";
 	public String BUILD = "Build";
+	public String LEVEL = "Level";
 	
 	// Skill
 	public String RADIUS = "Radius";

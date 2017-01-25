@@ -13,6 +13,7 @@ public class BattlerTypeList extends SimpleEditableList<BattlerType> {
 
 	public BattlerTypeList(Composite parent, int style) {
 		super(parent, style);
+		type = BattlerType.class;
 		attributeName = "battlerTypes";
 		setIncludeID(true);
 

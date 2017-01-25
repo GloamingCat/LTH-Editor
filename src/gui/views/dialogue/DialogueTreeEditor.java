@@ -76,6 +76,7 @@ public class DialogueTreeEditor extends LView {
 		addChild(treeEditor);
 		
 		dialogueEditor = new DialogueEditor(sashForm, SWT.NONE);
+		treeEditor.addChild(dialogueEditor);
 		treeEditor.setActionStack(getActionStack());
 		
 		sashForm.setWeights(new int[] {1, 2});
