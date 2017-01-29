@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import project.Project;
 import lwt.LDefaultApplicationShell;
+import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
 
 import org.eclipse.swt.graphics.Point;
@@ -35,6 +36,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 				}
 			}
 		} catch (Exception e) {
+			LFileManager.log(e);
 			e.printStackTrace();
 		}
 	}
@@ -94,6 +96,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF5");
 		mntmConfigEditor.setAccelerator(SWT.F5);
 		
+		applicationName = getText();
 		if (loadDefault()) {
 			setCurrentView(configEditor);
 		}

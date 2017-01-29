@@ -8,15 +8,13 @@ import data.Config;
 
 public abstract class FieldMath {
 
-	public final boolean isIso;
-	public final int rowCount;
 	public Point[] neighborShift;
 	public Point[] vertexShift;
+	public int autoTileRows;
 	protected final Config conf;
 	
-	public FieldMath(boolean iso) {
-		this.isIso = iso;
-		this.rowCount = iso ? 8 : 4;
+	public FieldMath(int autoTileRows) {
+		this.autoTileRows = autoTileRows;
 		this.conf = FieldHelper.config;
 		ArrayList<Point> neighbors = createNeighborShift();
 		neighborShift = new Point[neighbors.size()];
@@ -30,8 +28,31 @@ public abstract class FieldMath {
 		}
 	}
 	
-	public abstract ArrayList<Point> fullNeighborShift();
-	public abstract ArrayList<Point> fullVertexShift();
+	public ArrayList<Point> fullNeighborShift() {
+		ArrayList<Point> p = new ArrayList<>();
+		p.add(new Point(1, 0));
+		p.add(new Point(1, 1));
+		p.add(new Point(0, 1));
+		p.add(new Point(-1, 1));
+		p.add(new Point(-1, 0));
+		p.add(new Point(-1, -1));
+		p.add(new Point(0, -1));
+		p.add(new Point(1, -1));
+		return p;
+	}
+	
+	public ArrayList<Point> fullVertexShift() {
+		ArrayList<Point> p = new ArrayList<>();
+		p.add(new Point(conf.tileB / 2, -conf.tileH / 2));
+		p.add(new Point(conf.tileW / 2, -conf.tileS / 2));
+		p.add(new Point(conf.tileW / 2, conf.tileS / 2));
+		p.add(new Point(conf.tileB / 2, conf.tileH / 2));
+		p.add(new Point(-conf.tileB / 2, conf.tileH / 2));
+		p.add(new Point(-conf.tileW / 2, conf.tileS / 2));
+		p.add(new Point(-conf.tileW / 2, -conf.tileS / 2));
+		p.add(new Point(-conf.tileB / 2, -conf.tileH / 2));
+		return p;
+	}
 	
 	protected abstract ArrayList<Point> createNeighborShift();
 	protected abstract ArrayList<Point> createVertexShift();
@@ -51,6 +72,10 @@ public abstract class FieldMath {
 		int t1 = grid[x1][y1];
 		int t2 = grid[x2][y2];
 		return t1 == t2;
+	}
+	
+	protected static boolean sameType(int[][] grid, Point p, Point shift) {
+		return sameType(grid, p.x, p.y, p.x + shift.x, p.y + shift.y);
 	}
 	
 }

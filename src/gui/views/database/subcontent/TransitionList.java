@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import gui.shell.fields.TransitionShell;
+import gui.shell.field.TransitionShell;
 import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;

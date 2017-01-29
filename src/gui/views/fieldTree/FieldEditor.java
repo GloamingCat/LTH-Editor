@@ -1,6 +1,6 @@
 package gui.views.fieldTree;
 
-import gui.shell.fields.ResizeShell;
+import gui.shell.field.ResizeShell;
 import gui.views.fieldTree.action.ResizeAction;
 import lwt.dialog.LObjectDialog;
 import lwt.dialog.LObjectShell;

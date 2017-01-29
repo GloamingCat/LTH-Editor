@@ -44,9 +44,9 @@ public class FieldPainter {
 		this.showGrid = showGrid;
 	}
 	
-	public void reload() {
-		scale = 1;
-		gridTile = createGridTile();
+	public static void reload() {
+		FieldPainter painter = new FieldPainter (1, false);
+		gridTile = painter.createGridTile();
 		for(Image img : terrainCache.values()) {
 			img.dispose();
 		}
@@ -149,7 +149,7 @@ public class FieldPainter {
 		}
 		int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
 		int tw = img.getBounds().width / terrain.frameCount;
-		int th = img.getBounds().height / FieldHelper.math.rowCount;
+		int th = img.getBounds().height / FieldHelper.math.autoTileRows;
 		gc.drawImage(img, 
 				0, th * rows[0], tw / 2, th / 2, 
 				x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);

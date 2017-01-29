@@ -1,6 +1,7 @@
 package project;
 
 import lwt.dataestructure.LDataTree;
+import lwt.dataestructure.LPath;
 import data.Dialogue;
 import data.DialogueTree;
 import data.Node;
@@ -11,6 +12,18 @@ public class DialogueTreeSerializer extends TreeMultiSerializer<Dialogue, Dialog
 		super(path + "dialogues/", "dialogueTree", DialogueTree.class, Dialogue.class);
 	}
 
+	public Dialogue loadDialogue(LPath path) {
+		LDataTree<Node> node = data.root.getNode(path);
+		return loadData(node.data);
+	}
+	
+	public void setData(LPath path, Dialogue dialogue) {
+		LDataTree<Node> node = data.root.getNode(path);
+		dialogue.id = node.data.id;
+		node.data.name = dialogue.name;
+		loadedData.put(node.data, dialogue);
+	}
+	
 	@Override
 	public Dialogue newData(Node node) {
 		Dialogue dialogue = new Dialogue();

@@ -26,7 +26,7 @@ public class FieldCanvas extends LView {
 	// Image cache
 	private Image[][] tileImages;
 	public FieldPainter painter = new FieldPainter(1, true);
-	
+
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);
 				

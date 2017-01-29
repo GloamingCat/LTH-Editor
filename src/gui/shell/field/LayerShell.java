@@ -1,4 +1,4 @@
-package gui.shell.fields;
+package gui.shell.field;
 
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;

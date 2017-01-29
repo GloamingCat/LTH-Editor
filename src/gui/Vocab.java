@@ -228,7 +228,19 @@ public class Vocab {
 	// Dialogue
 	public String SPEECHES = "Speeches";
 	public String PORTRAIT = "Portrait";
+	public String RIGHT = "Right";
+	public String LEFT = "Left";
 	public String MESSAGE = "Message";
 	public String CHARNAME = "Character Name";
+	public String SIZE = "Size";
+	public String POSITION = "Position";
+	public String CUSTOMWIDTH = "Custom Width";
+	public String CUSTOMHEIGHT = "Custom Height";
+	public String LINECOUNT = "Max lines";
+	public String CUSTOM = "Custom";
+	public String MINWIDTH = "Minimum width";
+	public String SCREENWIDTH = "Screen width";
+	public String MINHEIGHT = "Minimum height";
+	public String MAXLINES = "Number of lines";
 	
 }

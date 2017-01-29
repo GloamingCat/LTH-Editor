@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import gui.Vocab;
+import gui.helper.FieldPainter;
 import gui.views.ImageButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
@@ -9,6 +10,8 @@ import gui.views.database.subcontent.TagList;
 import java.util.ArrayList;
 
 import lwt.editor.LComboView;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 
@@ -33,6 +36,19 @@ public class TerrainTab extends DatabaseTab {
 	 */
 	public TerrainTab(Composite parent, int style) {
 		super(parent, style);
+		
+		LControlListener<Integer> intListener = new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				FieldPainter.reload();
+			}
+		};
+		LControlListener<String> imgListener = new LControlListener<String>() {
+			@Override
+			public void onModify(LControlEvent<String> event) {
+				FieldPainter.reload();
+			}
+		};
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
@@ -108,6 +124,7 @@ public class TerrainTab extends DatabaseTab {
 		gd_spnFrameCount.widthHint = 68;
 		spnFrameCount.setLayoutData(gd_spnFrameCount);
 		addControl(spnFrameCount, "frameCount");
+		spnFrameCount.addModifyListener(intListener);
 		
 		Label imgIcon = new Label(grpGraphics, SWT.NONE);
 		imgIcon.setImage(SWTResourceManager.getImage(ItemTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
@@ -122,6 +139,7 @@ public class TerrainTab extends DatabaseTab {
 		
 		ImageButton btnSelect = new ImageButton(grpGraphics, SWT.NONE);
 		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 2, 1));
+		btnSelect.addModifyListener(imgListener);
 		
 		addImageButton(btnSelect, imgIcon, "Terrain", "imagePath");
 	}

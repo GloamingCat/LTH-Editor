@@ -1,4 +1,4 @@
-package gui.shell.fields;
+package gui.shell.field;
 
 import gui.Vocab;
 import gui.views.ImageButton;
@@ -93,6 +93,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 		
 		btnBG = new ImageButton(compBG, SWT.NONE);
 		btnBG.setFolder("Background");
+		btnBG.optional = true;
 		btnBG.setText(txtBG);
 		
 		Label lblTileset = new Label(grpGeneral, SWT.NONE);

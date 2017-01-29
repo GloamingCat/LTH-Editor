@@ -1,6 +1,8 @@
 package gui.views.config;
 
 import gui.Vocab;
+import gui.helper.FieldHelper;
+import gui.helper.FieldPainter;
 import gui.shell.AudioShell;
 import gui.shell.config.FontShell;
 import gui.views.database.subcontent.TagList;
@@ -9,6 +11,8 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LHashTableEditor;
 import lwt.editor.LObjectEditor;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -145,13 +149,6 @@ public class ConfigEditor extends LObjectEditor {
 		spnTileH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnTileH, "tileH");
 		
-		Label lblPixelsheight = new Label(grpGrid, SWT.NONE);
-		lblPixelsheight.setText(Vocab.instance.PIXELHEIGHT);
-		
-		LSpinner spnPPH = new LSpinner(grpGrid, SWT.NONE);
-		spnPPH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(spnPPH, "pixelsPerHeight");
-		
 		Label lblTileBase = new Label(grpGrid, SWT.NONE);
 		lblTileBase.setText(Vocab.instance.TILEBASE);
 		
@@ -165,6 +162,26 @@ public class ConfigEditor extends LObjectEditor {
 		LSpinner spnTileS = new LSpinner(grpGrid, SWT.NONE);
 		spnTileS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnTileS, "tileS");
+		
+		Label lblPixelsheight = new Label(grpGrid, SWT.NONE);
+		lblPixelsheight.setText(Vocab.instance.PIXELHEIGHT);
+		
+		LSpinner spnPPH = new LSpinner(grpGrid, SWT.NONE);
+		spnPPH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(spnPPH, "pixelsPerHeight");
+		
+		LControlListener<Integer> tileListener = new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				FieldHelper.reloadMath();
+				FieldPainter.reload();
+			}
+		};
+		
+		spnTileW.addModifyListener(tileListener);
+		spnTileH.addModifyListener(tileListener);
+		spnTileB.addModifyListener(tileListener);
+		spnTileS.addModifyListener(tileListener);
 		
 		Composite checkButtons = new Composite(grpGrid, SWT.NONE);
 		GridLayout gl_checkButtons = new GridLayout(2, false);

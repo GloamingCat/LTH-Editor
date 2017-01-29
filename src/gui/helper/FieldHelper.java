@@ -11,9 +11,11 @@ public class FieldHelper {
 	public static void reloadMath() {
 		config = (Config) Project.current.config.getData();
 		if (config.tileW == config.tileB || config.tileH == config.tileS) {
-			//math = new OrtField();
-		} else {
+			math = new OrtField();
+		} else if (config.tileB == 0 && config.tileS == 0) {
 			math = new IsoField();
+		} else {
+			math = new HexField();
 		}
 	}
 	

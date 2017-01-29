@@ -40,7 +40,7 @@ public class TilePainter {
 		Image subImage = new Image(Display.getCurrent(), w, h);
 		
 		int srcX = ((image.getBounds().width / terrain.frameCount) - w) / 2;
-		int srcY = ((image.getBounds().height / FieldHelper.math.rowCount) - h) / 2;
+		int srcY = ((image.getBounds().height / FieldHelper.math.autoTileRows) - h) / 2;
 		
 		if (srcX < 0) srcX = 0;
 		if (srcY < 0) srcY = 0;

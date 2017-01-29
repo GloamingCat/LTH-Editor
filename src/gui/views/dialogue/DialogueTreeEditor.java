@@ -6,7 +6,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
-import data.Dialogue;
 import data.Node;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
@@ -64,13 +63,6 @@ public class DialogueTreeEditor extends LView {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Project.current.dialogueTree.getData().last = event.path;
-				if (event.data != null) {
-					Node node = (Node) event.data;
-					Dialogue d = Project.current.dialogueTree.loadData(node);
-					dialogueEditor.setObject(d);
-				} else {
-					dialogueEditor.setObject(null);
-				}
 			}
 		});
 		addChild(treeEditor);
