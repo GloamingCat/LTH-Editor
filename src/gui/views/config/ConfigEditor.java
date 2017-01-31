@@ -193,16 +193,25 @@ public class ConfigEditor extends LObjectEditor {
 		LCheckButton btnNeighbors = new LCheckButton(checkButtons, SWT.CHECK);
 		btnNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
 		addControl(btnNeighbors, "allNeighbors");
-		new Label(checkButtons, SWT.NONE);
 		
-		Composite bottom = new Composite(this, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(3, false);
-		gl_bottom.marginWidth = 0;
-		gl_bottom.marginHeight = 0;
-		bottom.setLayout(gl_bottom);
+		SashForm bottom = new SashForm(this, SWT.VERTICAL);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+
+		Composite bottom1 = new Composite(bottom, SWT.NONE);
+		GridLayout gl_bottom1 = new GridLayout(3, false);
+		gl_bottom1.marginWidth = 0;
+		gl_bottom1.marginHeight = 0;
+		bottom1.setLayout(gl_bottom1);
+		bottom1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		Group grpElements = new Group(bottom, SWT.NONE);
+		Composite bottom2 = new Composite(bottom, SWT.NONE);
+		GridLayout gl_bottom2 = new GridLayout(3, false);
+		gl_bottom2.marginWidth = 0;
+		gl_bottom2.marginHeight = 0;
+		bottom2.setLayout(gl_bottom2);
+		bottom2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		Group grpElements = new Group(bottom1, SWT.NONE);
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElements.setText(Vocab.instance.ELEMENTS);
@@ -212,7 +221,7 @@ public class ConfigEditor extends LObjectEditor {
 		lstElements.setIncludeID(true);		
 		addChild(lstElements);
 		
-		Group grpItemTypes = new Group(bottom, SWT.NONE);
+		Group grpItemTypes = new Group(bottom1, SWT.NONE);
 		grpItemTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpItemTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpItemTypes.setText(Vocab.instance.ITEMTYPES);
@@ -222,7 +231,7 @@ public class ConfigEditor extends LObjectEditor {
 		lstItemTypes.setIncludeID(true);		
 		addChild(lstItemTypes);
 		
-		Group grpRegions = new Group(bottom, SWT.NONE);
+		Group grpRegions = new Group(bottom1, SWT.NONE);
 		grpRegions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpRegions.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpRegions.setText(Vocab.instance.REGIONS);
@@ -230,7 +239,7 @@ public class ConfigEditor extends LObjectEditor {
 		RegionList lstRegions = new RegionList(grpRegions, SWT.NONE);
 		addChild(lstRegions);
 
-		Group grpAttributes = new Group(bottom, SWT.NONE);
+		Group grpAttributes = new Group(bottom2, SWT.NONE);
 		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
@@ -238,7 +247,7 @@ public class ConfigEditor extends LObjectEditor {
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		addChild(lstAttributes);
 		
-		Group grpAtlas = new Group(bottom, SWT.NONE);
+		Group grpAtlas = new Group(bottom2, SWT.NONE);
 		grpAtlas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAtlas.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpAtlas.setText(Vocab.instance.IMAGEATLASES);
@@ -246,7 +255,7 @@ public class ConfigEditor extends LObjectEditor {
 		ImageAtlasList lstAtlas = new ImageAtlasList(grpAtlas, SWT.NONE);
 		addChild(lstAtlas);
 		
-		Group grpTags = new Group(bottom, SWT.NONE);
+		Group grpTags = new Group(bottom2, SWT.NONE);
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);

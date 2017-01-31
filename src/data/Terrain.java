@@ -15,6 +15,7 @@ public class Terrain {
 	public int duration = 60;
 	
 	// Only on battle
+	public int moveCost = 100;
 	public int statusID;
 	public boolean removeOnExit;
 	public boolean resetTime = true;

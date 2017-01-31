@@ -30,6 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import data.Animation;
 import data.Battler;
 import data.Config;
+import data.GameCharacter;
 import project.GObjectListSerializer;
 import project.Project;
 
@@ -142,7 +143,8 @@ public class BattlerTab extends DatabaseTab {
 		grpGeneral.pack();
 		
 		image = new Label(grpGeneral, SWT.NONE);
-		GridData gd_image = new GridData(SWT.CENTER, SWT.FILL, true, true, 2, 1);
+		image.setAlignment(SWT.CENTER);
+		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_image.heightHint = 48;
 		image.setLayoutData(gd_image);
 		
@@ -253,8 +255,16 @@ public class BattlerTab extends DatabaseTab {
 		if (id == -1) {
 			image.setImage(null);
 		} else {
-			Animation anim = (Animation) Project.current.animCharacter.getList().get(id);
-			image.setImage(SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath));
+			GameCharacter gc = (GameCharacter) Project.current.characters.getList().get(id);
+			if (gc.animations.size() > 0) {
+				int animID = gc.animations.get(0).id;
+				ArrayList<?> animations = Project.current.animCharacter.getList();
+				if (animations.size() > 0) {
+					Animation anim = (Animation) animations.get(animID);
+					image.setImage(SWTResourceManager.getImage(
+							Project.current.imagePath() + anim.imagePath));
+				}
+			}
 		}
 	}
 

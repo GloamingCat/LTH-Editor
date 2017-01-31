@@ -7,7 +7,6 @@ import gui.shell.IDShell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TreeItem;
 
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
@@ -61,23 +60,9 @@ public class IDList extends SimpleEditableList<Integer> {
 				return toNode (path);
 			}
 			@Override
-			public void refreshObject(LPath path) {
-				TreeItem item = toTreeItem(path);
-				if (item != null) {
-					item.setText(itemName(item.getData()));
-				}
-			}
-			@Override
-			public void refreshAll() {
-				for(TreeItem item : tree.getItems()) {
-					String name = itemName(item.getData());
-					item.setText(name);
-				}
-			}
-			protected String itemName(Object item) {
-				Integer id = (Integer) item;
-				Object obj = comboArray().get(id);
-				return stringID(id) + obj.toString();
+			protected String dataToString(Integer item) {
+				Object obj = comboArray().get(item);
+				return stringID(item) + obj.toString();
 			}
 		};
 	}

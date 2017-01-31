@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.graphics.Point;
 
 public abstract class BonusShell extends LObjectShell<Bonus> {
 	
@@ -23,6 +24,7 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 
 	public BonusShell(Shell parent) {
 		super(parent);
+		setMinimumSize(new Point(240, 39));
 		content.setLayout(new GridLayout(2, false));
 		
 		Label lblID = new Label(content, SWT.NONE);
@@ -32,14 +34,11 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 		cmbID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblValue = new Label(content, SWT.NONE);
-		lblValue.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		lblValue.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblValue.setText(Vocab.instance.VALUE);
 		
-		spnValue = new Spinner(content, SWT.NONE);
-		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtValue.widthHint = 170;
-		gd_txtValue.heightHint = 75;
-		spnValue.setLayoutData(gd_txtValue);
+		spnValue = new Spinner(content, SWT.BORDER);
+		spnValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		pack();
 	}

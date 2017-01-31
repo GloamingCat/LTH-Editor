@@ -20,6 +20,7 @@ public class Skill {
 	public int centerAnimID;
 	public int individualAnimID;
 	
+	public LDataList<Bonus> elements = new LDataList<>(); 
 	public LDataList<Tag> tags = new LDataList<>();
 
 	public String toString() {

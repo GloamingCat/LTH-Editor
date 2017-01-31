@@ -59,6 +59,13 @@ public class TerrainTab extends DatabaseTab {
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
+		Label lblMoveCost = new Label(grpGeneral, SWT.NONE);
+		lblMoveCost.setText(Vocab.instance.MOVECOST);
+		
+		LSpinner spnCost = new LSpinner(grpGeneral, SWT.NONE);
+		spnCost.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+		addControl(spnCost, "moveCost");
+		
 		Label lblStatus = new Label(grpGeneral, SWT.NONE);
 		lblStatus.setText(Vocab.instance.STATUS);
 		

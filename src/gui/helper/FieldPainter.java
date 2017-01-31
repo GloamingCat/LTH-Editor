@@ -28,7 +28,6 @@ import project.Project;
 
 public class FieldPainter {
 
-	private static Image gridTile = null;
 	private static HashMap<Integer, Image> terrainCache = new HashMap<>();
 	private static HashMap<Integer, Image> obstacleCache = new HashMap<>();
 	private static HashMap<String, Image> characterCache = new HashMap<>();
@@ -45,8 +44,6 @@ public class FieldPainter {
 	}
 	
 	public static void reload() {
-		FieldPainter painter = new FieldPainter (1, false);
-		gridTile = painter.createGridTile();
 		for(Image img : terrainCache.values()) {
 			img.dispose();
 		}
@@ -86,11 +83,11 @@ public class FieldPainter {
 		
 		Image img = new Image(Display.getCurrent(), w, h);
 
-		GC gc = new GC(gridTile);
+		GC gc = new GC(img);
 		paintEdges(gc, w / 2, h / 2);
 		gc.dispose();
 		
-		ImageData data = gridTile.getImageData();
+		ImageData data = img.getImageData();
 		data.transparentPixel = -256;
 		
 		return new Image(img.getDevice(), data, data.getTransparencyMask());
@@ -139,102 +136,122 @@ public class FieldPainter {
 	}
 	
 	public void paintTerrain(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
-		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
-		int id = tileset.terrains.get(layer.grid[x][y]).id;
-		Terrain terrain = (Terrain) Project.current.terrains.getList().get(id);
-		Image img = terrainCache.get(id);
-		if (img == null) {
-			img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.imagePath);
-			terrainCache.put(id, img);
+		try {
+			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			int id = tileset.terrains.get(layer.grid[x][y]).id;
+			Terrain terrain = (Terrain) Project.current.terrains.getList().get(id);
+			Image img = terrainCache.get(id);
+			if (img == null) {
+				img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.imagePath);
+				terrainCache.put(id, img);
+			}
+			int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
+			int tw = img.getBounds().width / terrain.frameCount;
+			int th = img.getBounds().height / FieldHelper.math.autoTileRows;
+			gc.drawImage(img, 
+					0, th * rows[0], tw / 2, th / 2, 
+					x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);
+			gc.drawImage(img, 
+					tw / 2, th * rows[1], tw / 2, th / 2, 
+					x0, y0 - th / 2, tw / 2, th / 2);
+			gc.drawImage(img, 
+					0, th / 2 + th * rows[2], tw / 2, th / 2, 
+					x0 - tw / 2, y0, tw / 2, th / 2);
+			gc.drawImage(img, 
+					tw / 2, th / 2 + th * rows[3], tw / 2, th / 2, 
+					x0, y0, tw / 2, th / 2);
+		} catch(IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
-		int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
-		int tw = img.getBounds().width / terrain.frameCount;
-		int th = img.getBounds().height / FieldHelper.math.autoTileRows;
-		gc.drawImage(img, 
-				0, th * rows[0], tw / 2, th / 2, 
-				x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);
-		gc.drawImage(img, 
-				tw / 2, th * rows[1], tw / 2, th / 2, 
-				x0, y0 - th / 2, tw / 2, th / 2);
-		gc.drawImage(img, 
-				0, th / 2 + th * rows[2], tw / 2, th / 2, 
-				x0 - tw / 2, y0, tw / 2, th / 2);
-		gc.drawImage(img, 
-				tw / 2, th / 2 + th * rows[3], tw / 2, th / 2, 
-				x0, y0, tw / 2, th / 2);
 	}
 	
 	public void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0, boolean paintRamp) {
-		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
-		int id = tileset.obstacles.get(layer.grid[x][y]).id;
-		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
-		Image img = obstacleCache.get(id);
-		if (img == null) {
-			img = SWTResourceManager.getImage(Project.current.imagePath() + obj.quad.imagePath);
-			obstacleCache.put(id, img);
+		try {
+			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			int id = tileset.obstacles.get(layer.grid[x][y]).id;
+			Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
+			Image img = obstacleCache.get(id);
+			if (img == null) {
+				img = SWTResourceManager.getImage(Project.current.imagePath() + obj.quad.imagePath);
+				obstacleCache.put(id, img);
+			}
+			gc.drawImage(img, obj.quad.x, obj.quad.y, obj.quad.width, obj.quad.height,
+					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
+					y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
+			
+			/*if (paintRamp && obj.rampID >= 0) {
+				Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
+				paintRamp(gc, x0, y0 - FieldHelper.config.tileH / 2, ramp);
+			}*/
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
-		gc.drawImage(img, obj.quad.x, obj.quad.y, obj.quad.width, obj.quad.height,
-				x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
-				y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
-		
-		/*if (paintRamp && obj.rampID >= 0) {
-			Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
-			paintRamp(gc, x0, y0 - FieldHelper.config.tileH / 2, ramp);
-		}*/
 	}
 	
 	public void paintCharacter(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
-		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
-		CharTile tile = tileset.characters.get(layer.grid[x][y]);
-		String key = tile.getKey();
-		
-		GameCharacter c = (GameCharacter) Project.current.characters.getList().get(tile.id);
-		Animation anim = (Animation) Project.current.animCharacter.getList().get(c.animations.get(tile.animID).id);
-		
-		Image img = characterCache.get(key);
-		if (img == null) {
-			img = SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath);
-			characterCache.put(key, img);
+		try {
+			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			CharTile tile = tileset.characters.get(layer.grid[x][y]);
+			String key = tile.getKey();
+			
+			GameCharacter c = (GameCharacter) Project.current.characters.getList().get(tile.id);
+			Animation anim = (Animation) Project.current.animCharacter.getList().get(c.animations.get(tile.animID).id);
+			
+			Image img = characterCache.get(key);
+			if (img == null) {
+				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath);
+				characterCache.put(key, img);
+			}
+			
+			int w = img.getBounds().width / anim.cols;
+			int h = img.getBounds().height / anim.rows;
+			
+			gc.drawImage(img, 0, h * tile.direction / 45, w, h, 
+					x0 - w / 2 + anim.transform.offsetX, y0 - h + anim.transform.offsetY, w, h);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
-		
-		int w = img.getBounds().width / anim.cols;
-		int h = img.getBounds().height / anim.rows;
-		
-		gc.drawImage(img, 0, h * tile.direction / 45, w, h, 
-				x0 - w / 2 + anim.transform.offsetX, y0 - h + anim.transform.offsetY, w, h);
 	}
 	
 	public void paintRegion(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
-		Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
-		int id = tileset.regions.get(layer.grid[x][y]).id;
-		int w = FieldHelper.config.tileW;
-		int h = FieldHelper.config.tileH;
-		Image img = regionCache.get(id);
-		if (img == null) {
-			Region r = FieldHelper.config.regions.get(id);
-			img = new Image(Display.getCurrent(), w, h);
-			Image str = ImageHelper.getStringImage(id + "", w, h, null);
-			GC strGC = new GC(img);
-			strGC.setBackground(new Color(Display.getCurrent(), r.rgb));
-			strGC.fillPolygon(getTilePolygon(0, 0));
-			strGC.drawImage(str, 0, 0);
-			strGC.dispose();
-			regionCache.put(id, img);
+		try {
+			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			int id = tileset.regions.get(layer.grid[x][y]).id;
+			int w = FieldHelper.config.tileW;
+			int h = FieldHelper.config.tileH;
+			Image img = regionCache.get(id);
+			if (img == null) {
+				Region r = FieldHelper.config.regions.get(id);
+				img = new Image(Display.getCurrent(), w, h);
+				Image str = ImageHelper.getStringImage(id + "", w, h, null);
+				GC strGC = new GC(img);
+				strGC.setBackground(new Color(Display.getCurrent(), r.rgb));
+				strGC.fillPolygon(getTilePolygon(0, 0));
+				strGC.drawImage(str, 0, 0);
+				strGC.dispose();
+				regionCache.put(id, img);
+			}
+			gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
-		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
 	}
 	
 	public void paintType(Layer layer, int x, int y, GC gc, int x0, int y0) {
-		int id = layer.grid[x][y];
-		int w = FieldHelper.config.tileW;
-		int h = FieldHelper.config.tileH;
-		Image img = typeCache.get(id);
-		if (img == null) {
-			BattlerType type = FieldHelper.config.battle.battlerTypes.get(id);
-			img = ImageHelper.getStringImage(type.code, w, h, null);
-			typeCache.put(id, img);
+		try {
+			int id = layer.grid[x][y];
+			int w = FieldHelper.config.tileW;
+			int h = FieldHelper.config.tileH;
+			Image img = typeCache.get(id);
+			if (img == null) {
+				BattlerType type = FieldHelper.config.battle.battlerTypes.get(id);
+				img = ImageHelper.getStringImage(type.code, w, h, null);
+				typeCache.put(id, img);
+			}
+			gc.drawImage(img, 0, 0, w, h, x0 - w/ 2, y0 - h / 2, w, h);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
-		gc.drawImage(img, 0, 0, w, h, x0 - w/ 2, y0 - h / 2, w, h);
 	}
 	
 	public void paintParty(Layer layer, int x, int y, GC gc, int x0, int y0) {

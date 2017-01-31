@@ -12,6 +12,7 @@ public class GameCharacter {
 	public LDataList<Script> collisionListeners = new LDataList<>();
 	public LDataList<Script> interactListeners = new LDataList<>();
 	
+	public Transform transform = Transform.neutral();
 	public LDataList<Node> animations = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	

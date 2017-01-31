@@ -3,6 +3,7 @@ package gui.views.database.content;
 import java.util.ArrayList;
 
 import gui.Vocab;
+import gui.views.TransformButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.CharTileListButton;
 import gui.views.database.subcontent.NodeList;
@@ -55,19 +56,22 @@ public class CharacterTab extends DatabaseTab {
 		btnTiles.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		addControl(btnTiles, "tiles");
 		
-		SashForm center = new SashForm(contentEditor, SWT.NONE);
+		SashForm sashForm = new SashForm(contentEditor, SWT.VERTICAL);
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		SashForm center = new SashForm(sashForm, SWT.NONE);
 		center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Group grpAnimations = new Group(center, SWT.NONE);
-		GridLayout gl_grpAnimations = new GridLayout(2, false);
-		gl_grpAnimations.verticalSpacing = 0;
-		gl_grpAnimations.marginHeight = 0;
-		gl_grpAnimations.marginWidth = 0;
-		grpAnimations.setLayout(gl_grpAnimations);
 		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
+		grpAnimations.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		NodeList lstAnim = new NodeList(grpAnimations, SWT.NONE) {
+		SashForm frmAnim = new SashForm(grpAnimations, SWT.HORIZONTAL);
+		Composite anim = new Composite(frmAnim, SWT.NONE);
+		anim.setLayout(new GridLayout(1, false));
+		
+		NodeList lstAnim = new NodeList(anim, SWT.NONE) {
 			@Override
 			protected ArrayList<?> comboArray() {
 				return Project.current.animCharacter.getList();
@@ -76,9 +80,13 @@ public class CharacterTab extends DatabaseTab {
 		lstAnim.attributeName = "animations";
 		lstAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstAnim);
+
+		TransformButton btnTransform = new TransformButton(anim, SWT.NONE);
+		btnTransform.setText(Vocab.instance.TRANSFORM);
+		addControl(btnTransform, "transform");
 		
-		Label image = new Label(grpAnimations, SWT.NONE);
-		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		Label image = new Label(frmAnim, SWT.NONE);
+		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_image.widthHint = 128;
 		image.setLayoutData(gd_image);
 		lstAnim.getCollectionWidget().addSelectionListener(new LSelectionListener() {
@@ -103,7 +111,7 @@ public class CharacterTab extends DatabaseTab {
 		
 		center.setWeights(new int[] {2, 1});
 		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
+		Composite bottom = new Composite(sashForm, SWT.NONE);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_bottom = new GridLayout(3, true);
 		gl_bottom.marginWidth = 0;

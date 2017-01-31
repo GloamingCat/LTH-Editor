@@ -188,6 +188,7 @@ public class Vocab {
 	public String FREQUENCE = "Frequence";
 
 	// Terrain
+	public String MOVECOST = "Move Cost";
 	public String FRAMECOUNT = "N\u00BA of frames";
 	public String PASSABLE = "Passable";
 	public String LIFETIME = "Life time";

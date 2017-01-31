@@ -2,6 +2,8 @@ package gui.helper;
 
 import java.util.HashMap;
 
+import lwt.dataestructure.LDataList;
+
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -31,13 +33,17 @@ public class TilePainter {
 	}
 	
 	public static Image getTerrainTile(int terrainID) {
-		Terrain terrain = (Terrain) Project.current.terrains.getList().get(terrainID);
-		String path = terrain.imagePath;
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
-		
 		int w = conf.tileW;
 		int h = conf.tileH;
 		Image subImage = new Image(Display.getCurrent(), w, h);
+		
+		LDataList<Object> terrains = Project.current.terrains.getList();
+		if (terrainID >= terrains.size()) {
+			return subImage;
+		}
+		Terrain terrain = (Terrain) terrains.get(terrainID);
+		String path = terrain.imagePath;
+		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
 		int srcX = ((image.getBounds().width / terrain.frameCount) - w) / 2;
 		int srcY = ((image.getBounds().height / FieldHelper.math.autoTileRows) - h) / 2;

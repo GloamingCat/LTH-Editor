@@ -4,6 +4,7 @@ import gui.Vocab;
 import gui.views.QuadButton;
 import gui.views.ScriptButton;
 import gui.views.database.DatabaseTab;
+import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import data.Config;
 import project.GObjectListSerializer;
 import project.Project;
 
@@ -208,9 +210,26 @@ public class SkillTab extends DatabaseTab {
 		
 		addScriptButton(btnSelectScript, txtPath, txtParam, "skill", "script");
 		
-		Group grpTags = new Group(bottom, SWT.NONE);
+		Composite bottomR = new Composite(bottom, SWT.NONE);
+		bottomR.setLayout(new FillLayout(SWT.VERTICAL));
+		bottomR.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		Group grpElements = new Group(bottomR, SWT.NONE);
+		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpElements.setText(Vocab.instance.ELEMENTS);
+		
+		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
+			@Override
+			protected ArrayList<?> comboArray() {
+				Config conf = (Config) Project.current.config.getData();
+				return conf.elements;
+			}
+		};
+		lstElements.attributeName = "elements";
+		addChild(lstElements);
+		
+		Group grpTags = new Group(bottomR, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);

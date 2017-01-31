@@ -48,8 +48,12 @@ public class ImageButton extends LObjectButton<String> {
 			button.setEnabled(true);
 			String s = (String) value;
 			if (label != null) {
+				try {
 				label.setImage(SWTResourceManager.getImage(
 						Project.current.imagePath() + s));
+				} catch (Exception e) {
+					System.out.println("Error with image: " + s);
+				}
 			}
 			if (text != null) {
 				text.setText(s);

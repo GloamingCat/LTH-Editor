@@ -16,4 +16,10 @@ public class Transform {
 	public int blue = 100;
 	public int alpha = 100;
 	
+	public static Transform neutral() {
+		Transform t = new Transform();
+		t.offsetY = 0;
+		return t;
+	}
+	
 }

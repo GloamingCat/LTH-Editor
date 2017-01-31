@@ -6,18 +6,19 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
+import data.Dialogue;
 import data.Node;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
-import lwt.editor.LDefaultTreeEditor;
+import lwt.editor.LTreeEditor;
 import lwt.editor.LView;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 
 public class DialogueTreeEditor extends LView {
 
-	protected LDefaultTreeEditor<Node> treeEditor;
+	protected LTreeEditor<Node, Dialogue> treeEditor;
 	protected DialogueEditor dialogueEditor;
 	
 	public DialogueTreeEditor(Composite parent, int style) {
@@ -28,7 +29,7 @@ public class DialogueTreeEditor extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		treeEditor = new LDefaultTreeEditor<Node>(sashForm, SWT.NONE) {
+		treeEditor = new LTreeEditor<Node, Dialogue>(sashForm, SWT.NONE) {
 			@Override
 			public LDataTree<Node> getDataCollection() {
 				return Project.current.dialogueTree.getData().root;
@@ -52,6 +53,14 @@ public class DialogueTreeEditor extends LView {
 					getCollectionWidget().setItems(null);
 					getCollectionWidget().forceSelection(null);
 				}
+			}
+			@Override
+			protected Dialogue getEditableData(LPath path) {
+				return Project.current.dialogueTree.loadDialogue(path);
+			}
+			@Override
+			protected void setEditableData(LPath path, Dialogue newData) {
+				Project.current.dialogueTree.setData(path, newData);
 			}
 		};
 		treeEditor.getCollectionWidget().setInsertNewEnabled(true);

@@ -15,8 +15,8 @@ public class Dialogue {
 		public String message = "Hi, how are you?";
 		
 		// Position
-		public int xType = 0;
-		public int yType = 0;
+		public int xType = 1;
+		public int yType = 2;
 		public int x = -1;
 		public int y = -1;
 		

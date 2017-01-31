@@ -7,6 +7,8 @@ import gui.views.database.subcontent.TagList;
 import org.eclipse.swt.widgets.Composite;
 
 import lwt.editor.LObjectEditor;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LText;
 
 import org.eclipse.swt.custom.SashForm;
@@ -27,6 +29,7 @@ import project.Project;
 public class DialogueEditor extends LObjectEditor {
 	
 	private LText txtName;
+	private Node node;
 
 	public DialogueEditor(Composite parent, int style) {
 		super(parent, style);
@@ -38,6 +41,12 @@ public class DialogueEditor extends LObjectEditor {
 		
 		txtName = new LText(this, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtName.addModifyListener(new LControlListener<String>() {
+			@Override
+			public void onModify(LControlEvent<String> event) {
+				node.name = event.newValue;
+			}
+		});
 		addControl(txtName, "name");
 		
 		Group grpSpeeches = new Group(this, SWT.NONE);
@@ -73,7 +82,7 @@ public class DialogueEditor extends LObjectEditor {
 	@Override
 	public void setObject(Object obj) {
 		if (obj != null) {
-			Node node = (Node) obj;
+			node = (Node) obj;
 			Dialogue d = Project.current.dialogueTree.loadData(node);
 			super.setObject(d);
 		} else {
