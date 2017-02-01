@@ -16,6 +16,7 @@ import lwt.editor.LObjectEditor;
 import lwt.widget.LSpinner;
 
 public class TransformEditor extends LObjectEditor {
+	
 	private LSpinner spnOffsetX;
 	private LSpinner spnOffsetY;
 
@@ -31,6 +32,8 @@ public class TransformEditor extends LObjectEditor {
 		lblOffsetX.setText(Vocab.instance.OFFSETX);
 		
 		spnOffsetX = new LSpinner(grpTransform, SWT.NONE);
+		spnOffsetX.setMaximum(1024);
+		spnOffsetX.setMinimum(-1024);
 		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
 		
@@ -38,6 +41,8 @@ public class TransformEditor extends LObjectEditor {
 		lblRotation.setText(Vocab.instance.ROTATION);
 		
 		LSpinner spnRotation = new LSpinner(grpTransform, SWT.NONE);
+		spnRotation.setMinimum(0);
+		spnRotation.setMaximum(360);
 		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRotation, "rotation");
 		
@@ -45,6 +50,8 @@ public class TransformEditor extends LObjectEditor {
 		lblOffsetY.setText(Vocab.instance.OFFSETY);
 		
 		spnOffsetY = new LSpinner(grpTransform, SWT.NONE);
+		spnOffsetY.setMaximum(1024);
+		spnOffsetY.setMinimum(-1024);
 		spnOffsetY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetY, "offsetY");
 		
@@ -52,6 +59,8 @@ public class TransformEditor extends LObjectEditor {
 		lblRed.setText(Vocab.instance.RED);
 		
 		LSpinner spnRed = new LSpinner(grpTransform, SWT.NONE);
+		spnRed.setMaximum(10000);
+		spnRed.setMinimum(0);
 		spnRed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRed, "red");
 		
@@ -59,6 +68,8 @@ public class TransformEditor extends LObjectEditor {
 		lblOffsetDepth.setText(Vocab.instance.OFFSETDEPTH);
 		
 		LSpinner spnOffsetDepth = new LSpinner(grpTransform, SWT.NONE);
+		spnOffsetDepth.setMinimum(-1024);
+		spnOffsetDepth.setMaximum(1024);
 		spnOffsetDepth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetDepth, "offsetDepth");
 		
@@ -66,6 +77,8 @@ public class TransformEditor extends LObjectEditor {
 		lblGreen.setText(Vocab.instance.GREEN);
 		
 		LSpinner spnGreen = new LSpinner(grpTransform, SWT.NONE);
+		spnGreen.setMaximum(10000);
+		spnGreen.setMinimum(0);
 		spnGreen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnGreen, "green");
 		
@@ -73,6 +86,8 @@ public class TransformEditor extends LObjectEditor {
 		lblScaleX.setText(Vocab.instance.SCALEX);
 		
 		LSpinner spnScaleX = new LSpinner(grpTransform, SWT.NONE);
+		spnScaleX.setMaximum(10000);
+		spnScaleX.setMinimum(-10000);
 		spnScaleX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleX, "scaleX");
 		
@@ -80,6 +95,8 @@ public class TransformEditor extends LObjectEditor {
 		lblBlue.setText(Vocab.instance.BLUE);
 		
 		LSpinner spnBlue = new LSpinner(grpTransform, SWT.NONE);
+		spnBlue.setMaximum(10000);
+		spnBlue.setMinimum(0);
 		spnBlue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnBlue, "blue");
 		
@@ -87,6 +104,8 @@ public class TransformEditor extends LObjectEditor {
 		lblScaleY.setText(Vocab.instance.SCALEY);
 		
 		LSpinner spnScaleY = new LSpinner(grpTransform, SWT.NONE);
+		spnScaleY.setMaximum(10000);
+		spnScaleY.setMinimum(-10000);
 		spnScaleY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleY, "scaleY");
 		
@@ -94,6 +113,8 @@ public class TransformEditor extends LObjectEditor {
 		lblAlpha.setText(Vocab.instance.ALPHA);
 		
 		LSpinner spnAlpha = new LSpinner(grpTransform, SWT.NONE);
+		spnAlpha.setMaximum(10000);
+		spnAlpha.setMinimum(0);
 		spnAlpha.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnAlpha, "alpha");
 	}

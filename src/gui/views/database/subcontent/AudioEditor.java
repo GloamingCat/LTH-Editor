@@ -12,6 +12,8 @@ import lwt.editor.LObjectEditor;
 
 public class AudioEditor extends LObjectEditor {
 
+	AudioButton btnSelectSound;
+	
 	public AudioEditor(Composite parent, int style) {
 		super(parent, style);
 		
@@ -23,10 +25,14 @@ public class AudioEditor extends LObjectEditor {
 		Text txtSource = new Text(this, SWT.BORDER | SWT.READ_ONLY);
 		txtSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		AudioButton btnSelectSound = new AudioButton(this, SWT.NONE);
+		btnSelectSound = new AudioButton(this, SWT.NONE);
 		btnSelectSound.setText(txtSource);
 		addControl(btnSelectSound, "audio");
 		
+	}
+	
+	public void setFolder(String folder) {
+		btnSelectSound.setFolder(folder);
 	}
 	
 }

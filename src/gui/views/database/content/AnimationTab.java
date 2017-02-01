@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.views.ImageButton;
+import gui.views.ScriptButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
 import gui.views.database.subcontent.TransformEditor;
@@ -13,6 +14,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.GObjectListSerializer;
@@ -31,6 +33,24 @@ public class AnimationTab extends DatabaseTab {
 		grpGeneral.setLayout(new GridLayout(2, false));
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		
+		Label lblScript = new Label(grpGeneral,  SWT.NONE);
+		lblScript.setText(Vocab.instance.SCRIPT);
+
+		Composite script = new Composite(grpGeneral,  SWT.NONE);
+		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridLayout gl_script = new GridLayout(2, false);
+		gl_script.marginWidth = 0;
+		gl_script.marginHeight = 0;
+		script.setLayout(gl_script);
+		
+		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ScriptButton btnScript = new ScriptButton(script, SWT.NONE);
+		btnScript.optional = true;
+		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addScriptButton(btnScript, txtScript, null, "animation", "script");
 		
 		Group grpImg = new Group(contentEditor, SWT.NONE);
 		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 5));
@@ -56,7 +76,7 @@ public class AnimationTab extends DatabaseTab {
 		image.setLayoutData(gd_image);
 		image.setImage(SWTResourceManager.getImage(AnimationTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
 		
-		addImageButton(btnSelectImage, image, "Animation", "imagePath");
+		addImageButton(btnSelectImage, image, "Animation/" + getFolder(), "imagePath");
 		
 		Label lblRows = new Label(grpGeneral, SWT.NONE);
 		lblRows.setText(Vocab.instance.ROWS);
@@ -76,6 +96,7 @@ public class AnimationTab extends DatabaseTab {
 		lblSound.setText(Vocab.instance.SOUND);
 		
 		AudioEditor audioEditor = new AudioEditor(grpGeneral, SWT.NONE);
+		audioEditor.setFolder("sfx");
 		audioEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addChild(audioEditor);
 		
@@ -85,6 +106,10 @@ public class AnimationTab extends DatabaseTab {
 		transformTab.setLayoutData(gd_transformTab);
 		addChild(transformTab);
 
+	}
+	
+	protected String getFolder() {
+		return "";
 	}
 
 	@Override

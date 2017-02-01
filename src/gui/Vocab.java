@@ -86,10 +86,14 @@ public class Vocab {
 	public String ATTHP = "HP attribute";
 	public String ATTSP = "SP attribute";
 	public String ATTTURN = "Turn attribute";
+	public String MAXBATTLEMEMBERS = "Max Battle Members";
 	
 	// GUI
 	public String GUI = "GUI";
 	public String CURSORANIMID = "Cursor Animation";
+	public String BATTLECURSORANIMID = "Battle Cursor Animation";
+	public String TILEANIMID = "Tile Animation";
+	public String TILEHLANIMID = "Tile Highlight Animation";
 	
 	// Item
 	public String PRICE = "Price";

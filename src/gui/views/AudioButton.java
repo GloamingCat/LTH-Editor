@@ -24,6 +24,7 @@ public class AudioButton extends LObjectButton<Audio> {
 	 */
 	public AudioButton(Composite parent, int style) {
 		super(parent, style);
+		optional = true;
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {

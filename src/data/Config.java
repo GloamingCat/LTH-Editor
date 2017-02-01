@@ -72,6 +72,9 @@ public class Config {
 	
 	public static class GUI {
 		public int cursorAnimID = 0;
+		public int battleCursorAnimID = 1;
+		public int tileAnimID = 2;
+		public int tileHLAnimID = 3;
 		public RGB disabledColor = new RGB(128, 128, 128);
 	}
 	

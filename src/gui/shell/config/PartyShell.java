@@ -6,6 +6,7 @@ import gui.Vocab;
 import gui.views.IDList;
 
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -19,6 +20,7 @@ import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
 import data.Config.Party;
+import org.eclipse.swt.graphics.Point;
 
 public class PartyShell extends LObjectShell<Party> {
 
@@ -28,16 +30,23 @@ public class PartyShell extends LObjectShell<Party> {
 	
 	public PartyShell(Shell parent) {
 		super(parent);
+		GridData gridData = (GridData) content.getLayoutData();
+		gridData.verticalAlignment = SWT.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		setMinimumSize(new Point(240, 39));
 		
-		content.setLayout(new GridLayout(1, false));
+		content.setLayout(new GridLayout(2, false));
 		
-		spnMax = new Spinner(content, SWT.NONE);
+		Label lblMax = new Label(content, SWT.NONE);
+		lblMax.setText(Vocab.instance.MAXBATTLEMEMBERS);
+		
+		spnMax = new Spinner(content, SWT.BORDER);
+		spnMax.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Group grpBattler = new Group(content, SWT.NONE);
 		grpBattler.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpBattler = new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1);
-		grpBattler.setLayoutData(gd_grpBattler);
-		grpBattler.setText(Vocab.instance.BATTLERTYPES);
+		grpBattler.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+		grpBattler.setText(Vocab.instance.BATTLERS);
 		
 		lstBattlers = new IDList(grpBattler, SWT.NONE) {
 			public ArrayList<?> comboArray() {

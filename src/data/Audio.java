@@ -16,6 +16,9 @@ public class Audio {
 	}
 	
 	public String toString() {
+		if (path.isEmpty()) {
+			return "";
+		}
 		return path.replace("sfx/", "") + 
 				" " + volume + " " + pitch + " " + speed;
 	}
