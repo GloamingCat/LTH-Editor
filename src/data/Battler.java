@@ -16,6 +16,7 @@ public class Battler {
 	public Script scriptAI = new Script();
 	public Script build = new Script();
 	public LDataList<Integer> attributes = new LDataList<>();
+	public LDataList<Integer> skills = new LDataList<>();
 	public LDataList<Bonus> items = new LDataList<>();
 	public LDataList<Bonus> elements = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();

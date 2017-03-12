@@ -15,6 +15,7 @@ import lwt.widget.LTextBox;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -38,11 +39,12 @@ public class SkillTab extends DatabaseTab {
 	 */
 	public SkillTab(Composite parent, int style) {
 		super(parent, style);
-		
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.verticalSpacing = 0;
-		contentEditor.setLayout(gridLayout);
-		
+		SashForm center = new SashForm(contentEditor, SWT.VERTICAL);
+		SashForm top = new SashForm(center, SWT.HORIZONTAL);
+
+		grpGeneral.setParent(top);
+		contentEditor.setLayout(new FillLayout());
+
 		Label lblDescription = new Label(grpGeneral, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		lblDescription.setText(Vocab.instance.DESCRIPTION);
@@ -62,10 +64,11 @@ public class SkillTab extends DatabaseTab {
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		QuadButton btnSelect = new QuadButton(compositeIcon, SWT.NONE);
+		btnSelect.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));
 		
 		Label imgIcon = new Label(compositeIcon, SWT.NONE);
 		imgIcon.setImage(SWTResourceManager.getImage(SkillTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
-		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_imgIcon.widthHint = 48;
 		gd_imgIcon.heightHint = 48;
 		imgIcon.setLayoutData(gd_imgIcon);
@@ -73,7 +76,6 @@ public class SkillTab extends DatabaseTab {
 		addQuadButton(btnSelect, imgIcon, "Icon", "icon");
 		
 		Label lblRadius = new Label(grpGeneral, SWT.NONE);
-		lblRadius.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblRadius.setText(Vocab.instance.RADIUS);
 		
 		LSpinner spnRadius = new LSpinner(grpGeneral, SWT.NONE);
@@ -81,83 +83,41 @@ public class SkillTab extends DatabaseTab {
 		addControl(spnRadius, "radius");
 		
 		Label lblRange = new Label(grpGeneral, SWT.NONE);
-		lblRange.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblRange.setText(Vocab.instance.RANGE);
 		
 		LSpinner spnRange = new LSpinner(grpGeneral, SWT.NONE);
 		spnRange.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnRange, "range");
-		
-		Composite right = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.verticalSpacing = 0;
-		gl_right.marginWidth = 0;
-		gl_right.marginHeight = 0;
-		right.setLayout(gl_right);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		Group grpAnimations = new Group(right, SWT.NONE);
-		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpAnimations.setText(Vocab.instance.ANIMATIONS);
-		grpAnimations.setLayout(new GridLayout(2, false));
-		
-		Label lblUserAnimation = new Label(grpAnimations, SWT.NONE);
-		lblUserAnimation.setBounds(0, 0, 55, 15);
-		lblUserAnimation.setText(Vocab.instance.USER);
-		
-		LText txtUserAnimation = new LText(grpAnimations, SWT.NONE);
-		txtUserAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(txtUserAnimation, "userAnim");
-		
-		Label lblCastAnimation = new Label(grpAnimations, SWT.NONE);
-		lblCastAnimation.setText(Vocab.instance.CAST);
-		
-		LComboView cmbCastAnimation = new LComboView(grpAnimations, SWT.NONE) {
-			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
-			}
-		};
-		cmbCastAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(cmbCastAnimation, "castAnimID");
-		
-		Label lblCenterAnimation = new Label(grpAnimations, SWT.NONE);
-		lblCenterAnimation.setText(Vocab.instance.CENTER);
-		
-		LComboView cmbCenterAnimation = new LComboView(grpAnimations, SWT.NONE) {
-			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
-			}
-		};
-		cmbCenterAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(cmbCenterAnimation, "centerAnimID");
-		
-		Label lblIndividualAnimation = new Label(grpAnimations, SWT.NONE);
-		lblIndividualAnimation.setText(Vocab.instance.INDIVIDUAL);
 
-		LComboView cmbIndividualAnimation = new LComboView(grpAnimations, SWT.NONE) {
-			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
+		Label lblType = new Label(grpGeneral, SWT.NONE);
+		lblType.setText(Vocab.instance.TYPE);
+		
+		ArrayList<String> types = new ArrayList<String>();
+		types.add(Vocab.instance.GENERAL);
+		types.add(Vocab.instance.ATTACK);
+		types.add(Vocab.instance.SUPPORT);
+		
+		LComboView cmbType = new LComboView(grpGeneral, SWT.NONE) {
+			public ArrayList<?> getArray() {
+				return types;
 			}
 		};
-		cmbIndividualAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(cmbIndividualAnimation, "individualAnimID");
+		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbType.setIncludeID(false);
+		cmbType.setOptional(false);
+		addControl(cmbType, "type");
 		
-		Group grpOther = new Group(right, SWT.NONE);
-		grpOther.setLayout(new GridLayout(2, false));
-		grpOther.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpOther.setText("Other");
-		
-		Label lblEnergyCost = new Label(grpOther, SWT.NONE);
+		Label lblEnergyCost = new Label(grpGeneral, SWT.NONE);
 		lblEnergyCost.setText(Vocab.instance.EPCOST);
 		
-		LSpinner spnEnergyCost = new LSpinner(grpOther, SWT.NONE);
+		LSpinner spnEnergyCost = new LSpinner(grpGeneral, SWT.NONE);
 		spnEnergyCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnEnergyCost, "energyCost");
 		
-		Label lblTimeCost = new Label(grpOther, SWT.NONE);
+		Label lblTimeCost = new Label(grpGeneral, SWT.NONE);
 		lblTimeCost.setText(Vocab.instance.TIMECOST);
 		
-		LSpinner spnTimeCost = new LSpinner(grpOther, SWT.NONE);
+		LSpinner spnTimeCost = new LSpinner(grpGeneral, SWT.NONE);
 		spnTimeCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnTimeCost, "timeCost");
 		
@@ -166,10 +126,10 @@ public class SkillTab extends DatabaseTab {
 		restrictions.add(Vocab.instance.BATTLEONLY);
 		restrictions.add(Vocab.instance.FIELDONLY);
 		
-		Label lblRestrictions = new Label(grpOther, SWT.NONE);
+		Label lblRestrictions = new Label(grpGeneral, SWT.NONE);
 		lblRestrictions.setText(Vocab.instance.RESTRICTIONS);
 		
-		LComboView cmbRestrictions = new LComboView(grpOther, SWT.NONE) {
+		LComboView cmbRestrictions = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<?> getArray() {
 				return restrictions;
 			}
@@ -179,13 +139,101 @@ public class SkillTab extends DatabaseTab {
 		cmbRestrictions.setOptional(false);
 		addControl(cmbRestrictions, "restriction");
 		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(2, false);
-		gl_bottom.verticalSpacing = 0;
-		gl_bottom.marginWidth = 0;
-		gl_bottom.marginHeight = 0;
-		bottom.setLayout(gl_bottom);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+		Composite right = new Composite(top, SWT.NONE);
+		GridLayout gl_right = new GridLayout(1, false);
+		gl_right.verticalSpacing = 0;
+		gl_right.marginWidth = 0;
+		gl_right.marginHeight = 0;
+		right.setLayout(gl_right);
+		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		
+		Group grpBattleAnim = new Group(right, SWT.NONE);
+		grpBattleAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		grpBattleAnim.setText(Vocab.instance.BATTLEANIMATIONS);
+		grpBattleAnim.setLayout(new GridLayout(2, false));
+		
+		Label lblLoadAnimation = new Label(grpBattleAnim, SWT.NONE);
+		lblLoadAnimation.setText(Vocab.instance.LOAD);
+		
+		LComboView cmbLoadAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
+			public ArrayList<Object> getArray() {
+				return Project.current.animBattle.getList();
+			}
+		};
+		cmbLoadAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(cmbLoadAnimation, "loadAnimID");
+		
+		Label lblCastAnimation = new Label(grpBattleAnim, SWT.NONE);
+		lblCastAnimation.setText(Vocab.instance.CAST);
+		
+		LComboView cmbCastAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
+			public ArrayList<Object> getArray() {
+				return Project.current.animBattle.getList();
+			}
+		};
+		cmbCastAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(cmbCastAnimation, "castAnimID");
+		
+		Label lblCenterAnimation = new Label(grpBattleAnim, SWT.NONE);
+		lblCenterAnimation.setText(Vocab.instance.CENTER);
+		
+		LComboView cmbCenterAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
+			public ArrayList<Object> getArray() {
+				return Project.current.animBattle.getList();
+			}
+		};
+		cmbCenterAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(cmbCenterAnimation, "centerAnimID");
+		
+		Label lblIndividualAnimation = new Label(grpBattleAnim, SWT.NONE);
+		lblIndividualAnimation.setText(Vocab.instance.INDIVIDUAL);
+
+		LComboView cmbIndividualAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
+			public ArrayList<Object> getArray() {
+				return Project.current.animBattle.getList();
+			}
+		};
+		cmbIndividualAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(cmbIndividualAnimation, "individualAnimID");
+		
+		Group grpUserAnim = new Group(right, SWT.NONE);
+		grpUserAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		grpUserAnim.setText(Vocab.instance.USERANIMATIONS);
+		grpUserAnim.setLayout(new GridLayout(2, false));
+		
+		Label lblLoadAnim = new Label(grpUserAnim, SWT.NONE);
+		lblLoadAnim.setBounds(0, 0, 55, 15);
+		lblLoadAnim.setText(Vocab.instance.LOAD);
+		
+		LText txtLoadAnim = new LText(grpUserAnim, SWT.NONE);
+		txtLoadAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtLoadAnim, "userLoadAnim");
+		
+		Label lblCastAnim = new Label(grpUserAnim, SWT.NONE);
+		lblCastAnim.setBounds(0, 0, 55, 15);
+		lblCastAnim.setText(Vocab.instance.CAST);
+		
+		LText txtCastAnim = new LText(grpUserAnim, SWT.NONE);
+		txtCastAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtCastAnim, "userCastAnim");
+		
+		Group grpElements = new Group(right, SWT.NONE);
+		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpElements.setText(Vocab.instance.ELEMENTS);
+		
+		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
+			@Override
+			protected ArrayList<?> comboArray() {
+				Config conf = (Config) Project.current.config.getData();
+				return conf.elements;
+			}
+		};
+		lstElements.attributeName = "elements";
+		addChild(lstElements);
+		
+		SashForm bottom = new SashForm(center, SWT.HORIZONTAL);
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Group grpScript = new Group(bottom, SWT.NONE);
 		grpScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -210,23 +258,23 @@ public class SkillTab extends DatabaseTab {
 		
 		addScriptButton(btnSelectScript, txtPath, txtParam, "skill", "script");
 		
+		Label lblBasicResult = new Label(grpScript, SWT.NONE);
+		lblBasicResult.setText(Vocab.instance.BASICRESULT);
+		
+		LText txtBasicResult = new LText(grpScript, SWT.NONE);
+		txtBasicResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(spnTimeCost, "basicResult");
+		
+		Label lblSuccessRate = new Label(grpScript, SWT.NONE);
+		lblSuccessRate.setText(Vocab.instance.SUCCESSRATE);
+		addControl(spnTimeCost, "successRate");
+		
+		LText txtSuccessRate = new LText(grpScript, SWT.NONE);
+		txtSuccessRate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
 		Composite bottomR = new Composite(bottom, SWT.NONE);
 		bottomR.setLayout(new FillLayout(SWT.VERTICAL));
 		bottomR.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Group grpElements = new Group(bottomR, SWT.NONE);
-		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpElements.setText(Vocab.instance.ELEMENTS);
-		
-		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
-			@Override
-			protected ArrayList<?> comboArray() {
-				Config conf = (Config) Project.current.config.getData();
-				return conf.elements;
-			}
-		};
-		lstElements.attributeName = "elements";
-		addChild(lstElements);
 		
 		Group grpTags = new Group(bottomR, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -234,6 +282,8 @@ public class SkillTab extends DatabaseTab {
 		
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
+		bottom.setWeights(new int[] {2, 1});
+		center.setWeights(new int[] {294, 173});
 	}
 
 	@Override

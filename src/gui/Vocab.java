@@ -79,6 +79,7 @@ public class Vocab {
 	
 	// Battle
 	public String TURNCOUNT = "Turn Limit";
+	public String TRADESKILL = "Trade Skill";
 	public String BATTLERTYPES = "Battler Types";
 	public String INDIVIDUALTURN = "Individual Turn";
 	public String GROUPESCAPE = "Group Escape";
@@ -121,16 +122,23 @@ public class Vocab {
 	public String RANGE = "Range";
 	public String EPCOST = "EP Cost";
 	public String TIMECOST = "Time Cost";
+	public String ATTACK = "Attack";
+	public String SUPPORT = "Support";
 	public String RESTRICTIONS = "Restrictions";
 	public String ALWAYS = "Always";
 	public String BATTLEONLY = "Battle Only";
 	public String FIELDONLY = "Field Only";
+	public String USERANIMATIONS = "User Animations";
+	public String BATTLEANIMATIONS = "Battle Animations";
+	public String LOAD = "Load";
 	public String USER = "User";
 	public String CAST = "Cast";
 	public String CENTER = "Center";
 	public String INDIVIDUAL = "Individual";
 	public String EFFECT = "Effect";
 	public String PARAM = "Param";
+	public String BASICRESULT = "Basic Result";
+	public String SUCCESSRATE = "Success Rate";
 	
 	// Animation
 	public String COLUMNS = "Columns";
@@ -247,5 +255,5 @@ public class Vocab {
 	public String SCREENWIDTH = "Screen width";
 	public String MINHEIGHT = "Minimum height";
 	public String MAXLINES = "Number of lines";
-	
+
 }

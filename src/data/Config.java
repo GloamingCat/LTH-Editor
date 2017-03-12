@@ -65,6 +65,7 @@ public class Config {
 		public boolean groupEscape = true;
 		public boolean partyTileEscape = true;
 		public boolean instantTurnTransition = false;
+		public int tradeSkillID = 0;
 		public int attTurnID = 0;
 		public int attHPID = 0;
 		public int attSPID = 0;

@@ -15,6 +15,7 @@ import lwt.dialog.LObjectShell;
 import lwt.widget.LCombo;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.FillLayout;
@@ -31,17 +32,25 @@ public class BattleShell extends LObjectShell<Battle> {
 	private Button btnGroupEscape;
 	private Button btnIndTurn;
 	private Spinner spnCount;
+	private LCombo cmbTrade;
 	private LCombo cmbHPAtt;
 	private LCombo cmbSPAtt;
 	private LCombo cmbTurnAtt;
 
 	public BattleShell(Shell parent) {
 		super(parent);
+		content.setLayout(new FillLayout());
 		setText(Vocab.instance.PROPERTIES + " - " + Vocab.instance.BATTLE);
 		
-		content.setLayout(new GridLayout(2, false));
+		SashForm form = new SashForm(content, SWT.HORIZONTAL);
 		
-		Group grpGeneral = new Group(content, SWT.NONE);
+		Composite left = new Composite(form, SWT.NONE);
+		GridLayout gl_left = new GridLayout(1, false);
+		gl_left.marginWidth = 0;
+		gl_left.marginHeight = 0;
+		left.setLayout(gl_left);
+		
+		Group grpGeneral = new Group(left, SWT.NONE);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		grpGeneral.setLayout(new GridLayout(2, false));
@@ -52,6 +61,12 @@ public class BattleShell extends LObjectShell<Battle> {
 		spnCount = new Spinner(grpGeneral, SWT.BORDER);
 		spnCount.setMaximum(99999);
 		spnCount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblTrade = new Label(grpGeneral, SWT.NONE);
+		lblTrade.setText(Vocab.instance.TRADESKILL);
+		
+		cmbTrade = new LCombo(grpGeneral, SWT.NONE);
+		cmbTrade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Composite buttons = new Composite(grpGeneral, SWT.CHECK);
 		GridLayout gl_buttons = new GridLayout(1, false);
@@ -69,7 +84,8 @@ public class BattleShell extends LObjectShell<Battle> {
 		btnPartyTile = new Button(buttons, SWT.CHECK);
 		btnPartyTile.setText(Vocab.instance.PARTYTILEESCAPE);
 		
-		Group grpBattlerType = new Group(content, SWT.NONE);
+		Group grpBattlerType = new Group(form, SWT.NONE);
+		grpBattlerType.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		grpBattlerType.setLayout(new FillLayout(SWT.HORIZONTAL));
 		GridData gd_grpBattler = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2);
 		gd_grpBattler.widthHint = 155;
@@ -83,8 +99,7 @@ public class BattleShell extends LObjectShell<Battle> {
 			}
 		};
 		
-		Group grpAttributes = new Group(content, SWT.NONE);
-		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Group grpAttributes = new Group(left, SWT.NONE);
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 		grpAttributes.setLayout(new GridLayout(2, false));
 		
@@ -115,10 +130,12 @@ public class BattleShell extends LObjectShell<Battle> {
 		cmbHPAtt.setItems(Project.current.config.getData().attributes);
 		cmbSPAtt.setItems(Project.current.config.getData().attributes);
 		cmbTurnAtt.setItems(Project.current.config.getData().attributes);
+		cmbTrade.setItems(Project.current.skills.getList());
 		
 		cmbHPAtt.setValue(initial.attHPID);
 		cmbSPAtt.setValue(initial.attSPID);
 		cmbTurnAtt.setValue(initial.attTurnID);
+		cmbTrade.setValue(initial.tradeSkillID);
 		
 		battlerTypes = new LDataList<BattlerType>();
 		for (BattlerType i : initial.battlerTypes) {
@@ -133,6 +150,7 @@ public class BattleShell extends LObjectShell<Battle> {
 				cmbHPAtt.getValue() == initial.attHPID &&
 				cmbSPAtt.getValue() == initial.attSPID &&
 				cmbTurnAtt.getValue() == initial.attTurnID &&
+				cmbTrade.getValue() == initial.tradeSkillID &&
 				spnCount.getSelection() == initial.turnLimit &&
 				btnIndTurn.getSelection() == initial.individualTurn &&
 				btnGroupEscape.getSelection() == initial.groupEscape &&
@@ -148,6 +166,7 @@ public class BattleShell extends LObjectShell<Battle> {
 			b.attHPID = cmbHPAtt.getValue();
 			b.attSPID = cmbSPAtt.getValue();
 			b.attTurnID = cmbTurnAtt.getValue();
+			b.tradeSkillID = cmbTrade.getValue();
 			return b;
 		}
 	}

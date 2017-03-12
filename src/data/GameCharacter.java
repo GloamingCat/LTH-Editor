@@ -14,6 +14,7 @@ public class GameCharacter {
 	
 	public Transform transform = Transform.neutral();
 	public LDataList<Node> animations = new LDataList<>();
+	public LDataList<Portrait> portraits = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	
 	public GameCharacter() {
@@ -24,6 +25,11 @@ public class GameCharacter {
 	
 	public String toString() {
 		return name;
+	}
+	
+	public static class Portrait {
+		public String name = "New portrait";
+		public Quad quad = new Quad();
 	}
 	
 	public static class Tile {
