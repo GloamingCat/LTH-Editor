@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.graphics.Point;
 
-import data.Config;
+import data.Config.Grid;
 
 public abstract class FieldMath {
 
 	public Point[] neighborShift;
 	public Point[] vertexShift;
 	public int autoTileRows;
-	protected final Config conf;
+	protected final Grid conf;
 	
 	public FieldMath(int autoTileRows) {
 		this.autoTileRows = autoTileRows;
-		this.conf = FieldHelper.config;
+		this.conf = FieldHelper.config.grid;
 		ArrayList<Point> neighbors = createNeighborShift();
 		neighborShift = new Point[neighbors.size()];
 		for (int i = 0; i < neighborShift.length; i++) {

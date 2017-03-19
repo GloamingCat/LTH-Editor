@@ -9,10 +9,10 @@ public class FieldHelper {
 	public static Config config;
 	
 	public static void reloadMath() {
-		config = (Config) Project.current.config.getData();
-		if (config.tileW == config.tileB || config.tileH == config.tileS) {
+		config = Project.current.config.getData();
+		if (config.grid.tileW == config.grid.tileB || config.grid.tileH == config.grid.tileS) {
 			math = new OrtField();
-		} else if (config.tileB == 0 && config.tileS == 0) {
+		} else if (config.grid.tileB == 0 && config.grid.tileS == 0) {
 			math = new IsoField();
 		} else {
 			math = new HexField();

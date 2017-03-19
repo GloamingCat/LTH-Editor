@@ -71,7 +71,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 				Point tilePos = FieldHelper.math.pixel2Tile(
 						e.x * 1.0f / scale - x0,
 						e.y * 1.0f / scale - y0, 
-						h * FieldHelper.config.pixelsPerHeight);
+						h * FieldHelper.config.grid.pixelsPerHeight);
 				if ((tileX != tilePos.x || tileY != tilePos.y) && field != null) {
 					if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
 						tileX = tilePos.x;

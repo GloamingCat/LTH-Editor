@@ -10,6 +10,7 @@ import gui.views.database.subcontent.TagList;
 import java.util.ArrayList;
 
 import lwt.editor.LComboView;
+import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 import lwt.widget.LTextBox;
 import lwt.widget.LText;
@@ -217,6 +218,11 @@ public class SkillTab extends DatabaseTab {
 		txtCastAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCastAnim, "userCastAnim");
 		
+		LCheckButton btnStep = new LCheckButton(grpUserAnim, SWT.NONE);
+		btnStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+		btnStep.setText(Vocab.instance.STEPONCAST);
+		addControl(btnStep, "stepOnCast");
+		
 		Group grpElements = new Group(right, SWT.NONE);
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -248,6 +254,7 @@ public class SkillTab extends DatabaseTab {
 		txtPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnSelectScript = new ScriptButton(grpScript, SWT.NONE);
+		btnSelectScript.optional = true;
 		
 		Label lblParam = new Label(grpScript, SWT.NONE);
 		lblParam.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
@@ -263,14 +270,14 @@ public class SkillTab extends DatabaseTab {
 		
 		LText txtBasicResult = new LText(grpScript, SWT.NONE);
 		txtBasicResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		addControl(spnTimeCost, "basicResult");
+		addControl(txtBasicResult, "basicResult");
 		
 		Label lblSuccessRate = new Label(grpScript, SWT.NONE);
 		lblSuccessRate.setText(Vocab.instance.SUCCESSRATE);
-		addControl(spnTimeCost, "successRate");
 		
 		LText txtSuccessRate = new LText(grpScript, SWT.NONE);
 		txtSuccessRate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(txtSuccessRate, "successRate");
 		
 		Composite bottomR = new Composite(bottom, SWT.NONE);
 		bottomR.setLayout(new FillLayout(SWT.VERTICAL));

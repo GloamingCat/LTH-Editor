@@ -81,11 +81,11 @@ public class ImageHelper {
 	}
 	
 	public static Image rampImage(PointSet points) {
-		Image img = new Image(Display.getCurrent(), (FieldHelper.config.tileW + 4) * 2, 
-				(FieldHelper.config.tileH + FieldHelper.config.pixelsPerHeight + 4) * 2);
+		Image img = new Image(Display.getCurrent(), (FieldHelper.config.grid.tileW + 4) * 2, 
+				(FieldHelper.config.grid.tileH + FieldHelper.config.grid.pixelsPerHeight + 4) * 2);
 		GC gc = new GC(img);
-		fieldPainter.paintRamp(gc, FieldHelper.config.tileW / 2 + 2, 
-				FieldHelper.config.tileH / 2 + 2, points, 1);
+		fieldPainter.paintRamp(gc, FieldHelper.config.grid.tileW / 2 + 2, 
+				FieldHelper.config.grid.tileH / 2 + 2, points, 1);
 		gc.dispose();
 		return img;
 	}

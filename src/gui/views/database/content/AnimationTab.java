@@ -6,6 +6,7 @@ import gui.views.ScriptButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
 import gui.views.database.subcontent.TransformEditor;
+import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -100,11 +101,30 @@ public class AnimationTab extends DatabaseTab {
 		audioEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addChild(audioEditor);
 		
+		Composite buttons = new Composite(grpGeneral, SWT.NONE);
+		buttons.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		GridLayout gl_buttons = new GridLayout(2, false);
+		gl_buttons.marginHeight = 0;
+		gl_buttons.marginWidth = 0;
+		buttons.setLayout(gl_buttons);
+
+		LCheckButton btnLoop = new LCheckButton(buttons, SWT.NONE);
+		btnLoop.setText(Vocab.instance.LOOP);
+		addControl(btnLoop, "loop");
+		
+		LCheckButton btnAllRows = new LCheckButton(buttons, SWT.NONE);
+		btnAllRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		btnAllRows.setText(Vocab.instance.ALLROWS);
+		addControl(btnAllRows, "allRows");
+		
 		TransformEditor transformTab = new TransformEditor(contentEditor, SWT.NONE);
 		GridData gd_transformTab = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_transformTab.widthHint = 252;
 		transformTab.setLayoutData(gd_transformTab);
 		addChild(transformTab);
+		new Label(contentEditor, SWT.NONE);
+		new Label(contentEditor, SWT.NONE);
+		new Label(contentEditor, SWT.NONE);
 
 	}
 	

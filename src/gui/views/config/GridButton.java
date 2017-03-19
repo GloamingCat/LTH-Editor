@@ -1,6 +1,6 @@
 package gui.views.config;
 
-import gui.shell.config.PartyShell;
+import gui.shell.config.GridShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
@@ -8,21 +8,21 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.Party;
+import data.Config.Grid;
 
-public class PartyButton extends LObjectButton<Party> {
+public class GridButton extends LObjectButton<Grid> {
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public PartyButton(Composite parent, int style) {
+	public GridButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<Party>() {
+		setShellFactory(new LShellFactory<Grid>() {
 			@Override
-			public LObjectShell<Party> createShell(Shell parent) {
-				return new PartyShell(parent);
+			public LObjectShell<Grid> createShell(Shell parent) {
+				return new GridShell(parent);
 			}
 		});
 	}

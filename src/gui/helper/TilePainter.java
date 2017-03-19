@@ -33,8 +33,8 @@ public class TilePainter {
 	}
 	
 	public static Image getTerrainTile(int terrainID) {
-		int w = conf.tileW;
-		int h = conf.tileH;
+		int w = conf.grid.tileW;
+		int h = conf.grid.tileH;
 		Image subImage = new Image(Display.getCurrent(), w, h);
 		
 		LDataList<Object> terrains = Project.current.terrains.getList();
@@ -66,8 +66,8 @@ public class TilePainter {
 		String path = obj.quad.imagePath;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
-		int w = conf.tileW;
-		int h = conf.tileH;
+		int w = conf.grid.tileW;
+		int h = conf.grid.tileH;
 		Image subImage = new Image(Display.getCurrent(), w, h);
 		
 		int srcX = (image.getBounds().width - w) / 2 + obj.transform.offsetX;
@@ -92,8 +92,8 @@ public class TilePainter {
 		String path = anim.imagePath;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
-		int w = conf.tileW;
-		int h = conf.tileH;
+		int w = conf.grid.tileW;
+		int h = conf.grid.tileH;
 		Image subImage = new Image(Display.getCurrent(), w, h);
 		
 		int fw = image.getBounds().width / anim.cols;
@@ -117,18 +117,18 @@ public class TilePainter {
 	
 	public static Image getRegionTile(int id) {
 		Region r =  conf.regions.get(id);
-		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, 
+		Image str = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, 
 				new Color(Display.getCurrent(),  r.rgb), true);
 		return str;
 	}
 
 	public static Image getBattlerTypeTile(BattlerType bt) {
-		Image str = ImageHelper.getStringImage(bt.code, conf.tileW, conf.tileH, null, true);
+		Image str = ImageHelper.getStringImage(bt.code, conf.grid.tileW, conf.grid.tileH, null, true);
 		return str;
 	}
 	
 	public static Image getPartyTile(int id) {
-		Image str = ImageHelper.getStringImage(id + "", conf.tileW, conf.tileH, null, true);
+		Image str = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, true);
 		return str;
 	}
 	

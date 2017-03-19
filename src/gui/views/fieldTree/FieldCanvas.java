@@ -64,7 +64,7 @@ public class FieldCanvas extends LView {
 		Image img = tileImages[x][y];
 		int w = img.getBounds().width;
 		int h = img.getBounds().height;
-		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h + FieldHelper.config.tileH, w, h);
+		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h + FieldHelper.config.grid.tileH, w, h);
 	}
 	
 	// -------------------------------------------------------------------------------------
@@ -75,8 +75,8 @@ public class FieldCanvas extends LView {
 		if (tileImages[x][y] != null)
 			tileImages[x][y].dispose();
 		
-		int imgW = FieldHelper.config.tileW * 3;
-		int imgH = FieldHelper.config.tileH * (maxHeight() + 6);
+		int imgW = FieldHelper.config.grid.tileW * 3;
+		int imgH = FieldHelper.config.grid.tileH * (maxHeight() + 6);
 		
 		Point[] shift = FieldHelper.math.neighborShift;
 		
@@ -102,8 +102,8 @@ public class FieldCanvas extends LView {
 			}
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
-			int imgW = FieldHelper.config.tileW * 3;
-			int imgH = FieldHelper.config.tileH * (maxHeight() + 6);
+			int imgW = FieldHelper.config.grid.tileW * 3;
+			int imgH = FieldHelper.config.grid.tileH * (maxHeight() + 6);
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
 					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
@@ -138,7 +138,7 @@ public class FieldCanvas extends LView {
 			y0 = 0;
 		} else {
 			pixelSize = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
-			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + FieldHelper.config.pixelsPerHeight * maxHeight());
+			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + FieldHelper.config.grid.pixelsPerHeight * maxHeight());
 		}
 		setSize(Math.round((pixelSize.x + x0*2) * scale), Math.round((pixelSize.y + y0 + x0*2) * scale));
 		redraw();

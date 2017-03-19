@@ -30,6 +30,7 @@ public class IDList extends SimpleEditableList<Integer> {
 				};
 			}
 		});
+		list.setIncludeID(false);
 	}
 	
 	public ArrayList<?> comboArray() { return null; }
@@ -61,8 +62,9 @@ public class IDList extends SimpleEditableList<Integer> {
 			}
 			@Override
 			protected String dataToString(Integer item) {
+				String s = includeID ? stringID(item) : "";
 				Object obj = comboArray().get(item);
-				return stringID(item) + obj.toString();
+				return s + obj.toString();
 			}
 		};
 	}

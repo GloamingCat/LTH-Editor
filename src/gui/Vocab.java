@@ -51,6 +51,7 @@ public class Vocab {
 	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
 	public String ITEMTYPES = "Item Types";
+	public String BATTLERTYPES = "Battler Types";
 	public String IMAGEATLASES = "Image Atlas";
 	public String CODE = "Code";
 	public String COLOR = "Color";
@@ -78,16 +79,12 @@ public class Vocab {
 	public String DASHSPEED = "Dash Speed";
 	
 	// Battle
-	public String TURNCOUNT = "Turn Limit";
 	public String TRADESKILL = "Trade Skill";
-	public String BATTLERTYPES = "Battler Types";
-	public String INDIVIDUALTURN = "Individual Turn";
-	public String GROUPESCAPE = "Group Escape";
-	public String PARTYTILEESCAPE = "Escape in Party Tile";
 	public String ATTHP = "HP attribute";
 	public String ATTSP = "SP attribute";
 	public String ATTTURN = "Turn attribute";
-	public String MAXBATTLEMEMBERS = "Max Battle Members";
+	public String ATTSTEP = "Step attribute";
+	public String ATTJUMP = "Jump attribute";
 	
 	// GUI
 	public String GUI = "GUI";
@@ -128,6 +125,7 @@ public class Vocab {
 	public String ALWAYS = "Always";
 	public String BATTLEONLY = "Battle Only";
 	public String FIELDONLY = "Field Only";
+	public String STEPONCAST = "Step on Cast";
 	public String USERANIMATIONS = "User Animations";
 	public String BATTLEANIMATIONS = "Battle Animations";
 	public String LOAD = "Load";
@@ -144,6 +142,8 @@ public class Vocab {
 	public String COLUMNS = "Columns";
 	public String ROWS = "Rows";
 	public String FRAMEDURATION = "Frame Duration";
+	public String LOOP = "Loop";
+	public String ALLROWS = "All rows";
 	
 	// Audio
 	public String SOUND = "Sound";

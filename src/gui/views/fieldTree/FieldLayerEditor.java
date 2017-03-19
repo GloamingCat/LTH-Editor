@@ -150,7 +150,7 @@ public class FieldLayerEditor extends LEditor {
 			lstObstacles.setDataCollection(tileset.obstacles);
 			lstCharacters.setDataCollection(tileset.characters);
 			lstRegions.setDataCollection(tileset.regions);
-			lstBattlerTypes.setDataCollection(conf.battle.battlerTypes);
+			lstBattlerTypes.setDataCollection(conf.battlerTypes);
 			lstParties.setDataCollection(parties);
 			layerList.setDataCollection(field.layers);
 			int layer = Project.current.fieldTree.getData().getLastLayer(field.id);

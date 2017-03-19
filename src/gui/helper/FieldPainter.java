@@ -13,7 +13,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.BattlerType;
-import data.Config;
+import data.Config.Grid;
 import data.Field;
 import data.Layer;
 import data.GameCharacter;
@@ -77,7 +77,7 @@ public class FieldPainter {
 	}
 	
 	public Image createGridTile() {
-		Config conf = FieldHelper.config;
+		Grid conf = FieldHelper.config.grid;
 		int w = conf.tileW;
 		int h = conf.tileH;
 		
@@ -104,7 +104,7 @@ public class FieldPainter {
 	}
 	
 	public void paintRamp(GC gc, int x0, int y0, PointSet points, int height) {
-		Config conf = FieldHelper.config;
+		Grid conf = FieldHelper.config.grid;
 		paintEdges(gc, x0, y0 + conf.pixelsPerHeight);
 		Point b1 = new Point(Math.round((points.b1x + x0) * scale), Math.round((points.b1y + y0 + conf.pixelsPerHeight * height) * scale));
 		Point t1 = new Point(Math.round((points.t1x + x0) * scale), Math.round((points.t1y + y0) * scale));
@@ -124,7 +124,7 @@ public class FieldPainter {
 	
 	public void paintRamp(Image image, int x0, int y0, int id) {
 		Ramp ramp = (Ramp) Project.current.ramps.getList().get(id);
-		Config conf = FieldHelper.config;
+		Grid conf = FieldHelper.config.grid;
 		GC gc = new GC(image);
 		paintRamp(gc, x0 - conf.tileW / 2, y0 - conf.tileH / 2, ramp);
 		gc.dispose();
@@ -217,8 +217,8 @@ public class FieldPainter {
 		try {
 			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
 			int id = tileset.regions.get(layer.grid[x][y]).id;
-			int w = FieldHelper.config.tileW;
-			int h = FieldHelper.config.tileH;
+			int w = FieldHelper.config.grid.tileW;
+			int h = FieldHelper.config.grid.tileH;
 			Image img = regionCache.get(id);
 			if (img == null) {
 				Region r = FieldHelper.config.regions.get(id);
@@ -240,11 +240,11 @@ public class FieldPainter {
 	public void paintType(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
 			int id = layer.grid[x][y];
-			int w = FieldHelper.config.tileW;
-			int h = FieldHelper.config.tileH;
+			int w = FieldHelper.config.grid.tileW;
+			int h = FieldHelper.config.grid.tileH;
 			Image img = typeCache.get(id);
 			if (img == null) {
-				BattlerType type = FieldHelper.config.battle.battlerTypes.get(id);
+				BattlerType type = FieldHelper.config.battlerTypes.get(id);
 				img = ImageHelper.getStringImage(type.code, w, h, null);
 				typeCache.put(id, img);
 			}
@@ -256,8 +256,8 @@ public class FieldPainter {
 	
 	public void paintParty(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		int id = layer.grid[x][y];
-		int w = FieldHelper.config.tileW;
-		int h = FieldHelper.config.tileH;
+		int w = FieldHelper.config.grid.tileW;
+		int h = FieldHelper.config.grid.tileH;
 		Image img = partyCache.get(id);
 		if (img == null) {
 			img = ImageHelper.getStringImage("" + id, w, h, null);
@@ -273,10 +273,10 @@ public class FieldPainter {
 	    src.dispose();
 	    Image img = new Image(Display.getCurrent(), imageData);
 	    
-	    int x0 = FieldHelper.config.tileW + FieldHelper.config.tileW / 2;
-	    int y0 = imgH - FieldHelper.config.tileH;
+	    int x0 = FieldHelper.config.grid.tileW + FieldHelper.config.grid.tileW / 2;
+	    int y0 = imgH - FieldHelper.config.grid.tileH;
 
-	    int pph = FieldHelper.config.pixelsPerHeight;
+	    int pph = FieldHelper.config.grid.pixelsPerHeight;
 	    
 		GC gc = new GC(img);
 		for(Layer layer : field.layers) {

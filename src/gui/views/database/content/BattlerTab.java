@@ -63,7 +63,7 @@ public class BattlerTab extends DatabaseTab {
 		LComboView cmbType = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<?> getArray() {
 				Config conf = Project.current.config.getData();
-				return conf.battle.battlerTypes;
+				return conf.battlerTypes;
 			}
 		};
 		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
