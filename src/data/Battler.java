@@ -8,7 +8,8 @@ public class Battler {
 	public boolean persistent = false;
 	public int level;
 	public int typeID;
-	public int characterID;
+	public int battleCharID;
+	public int fieldCharID;
 	public int attackID;
 	public int skillDagID;
 	public int money;

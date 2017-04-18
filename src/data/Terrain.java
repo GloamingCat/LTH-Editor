@@ -10,7 +10,7 @@ public class Terrain {
 	public int depth = 0;
 	
 	// Animation
-	public String imagePath = "";
+	public Quad quad = new Quad();
 	public int frameCount = 1;
 	public int duration = 60;
 	

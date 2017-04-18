@@ -42,17 +42,17 @@ public class TagShell extends LObjectShell<Tag> {
 	
 	public void open(Tag initial) {
 		super.open(initial);
-		txtName.setText(initial.name);
+		txtName.setText(initial.key);
 		txtValue.setText(initial.value);
 	}
 
 	@Override
 	protected Tag createResult(Tag initial) {
-		if (txtName.getText().equals(initial.name) && txtValue.getText().equals(initial.value)) {
+		if (txtName.getText().equals(initial.key) && txtValue.getText().equals(initial.value)) {
 			return null;
 		} else {
 			Tag tag = new Tag();
-			tag.name = txtName.getText();
+			tag.key = txtName.getText();
 			tag.value = txtValue.getText();
 			return tag;
 		}

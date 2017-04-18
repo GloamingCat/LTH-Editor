@@ -107,7 +107,7 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 	}
 	
 	private void setCharID(int id) {
-		GameCharacter gc = (GameCharacter) Project.current.characters.getList().get(id);
+		GameCharacter gc = (GameCharacter) Project.current.charField.getList().get(id);
 		cmbAnim.setItems(gc.animations);
 		cmbStart.setItems(gc.startListeners);
 		cmbCollision.setItems(gc.collisionListeners);
@@ -116,7 +116,7 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 	
 	public void open(CharTile initial) {
 		super.open(initial);
-		cmbID.setItems(Project.current.characters.getList());
+		cmbID.setItems(Project.current.charField.getList());
 		cmbID.setValue(initial.id);
 		cmbDir.setValue(initial.direction / 45);
 		

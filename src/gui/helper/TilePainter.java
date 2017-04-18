@@ -42,11 +42,11 @@ public class TilePainter {
 			return subImage;
 		}
 		Terrain terrain = (Terrain) terrains.get(terrainID);
-		String path = terrain.imagePath;
+		String path = terrain.quad.imagePath;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
-		int srcX = ((image.getBounds().width / terrain.frameCount) - w) / 2;
-		int srcY = ((image.getBounds().height / FieldHelper.math.autoTileRows) - h) / 2;
+		int srcX = ((terrain.quad.width / terrain.frameCount) - w) / 2 + terrain.quad.x;
+		int srcY = ((terrain.quad.height / FieldHelper.math.autoTileRows) - h) / 2 + terrain.quad.y;
 		
 		if (srcX < 0) srcX = 0;
 		if (srcY < 0) srcY = 0;
@@ -87,7 +87,7 @@ public class TilePainter {
 	}
 	
 	public static Image getCharacterTile(int id, int animID, int direction) {
-		GameCharacter c = (GameCharacter) Project.current.characters.getList().get(id);
+		GameCharacter c = (GameCharacter) Project.current.charField.getList().get(id);
 		Animation anim = (Animation) Project.current.animCharacter.getList().get(c.animations.get(animID).id);
 		String path = anim.imagePath;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);

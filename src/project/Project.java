@@ -18,7 +18,9 @@ public class Project implements LSerializer {
 	public GObjectListSerializer terrains;
 	public GObjectListSerializer obstacles;
 	public GObjectListSerializer ramps;
-	public GObjectListSerializer characters;
+	public GObjectListSerializer charBattle;
+	public GObjectListSerializer charField;
+	public GObjectListSerializer charOther;
 	public GObjectListSerializer tilesets;
 	
 	public FieldTreeSerializer fieldTree;
@@ -44,7 +46,9 @@ public class Project implements LSerializer {
 		terrains = new GObjectListSerializer(dataPath() + "terrains", Terrain.class);
 		obstacles = new GObjectListSerializer(dataPath() + "obstacles", Obstacle.class);
 		ramps = new GObjectListSerializer(dataPath() + "ramps", Ramp.class);
-		characters = new GObjectListSerializer(dataPath() + "characters", GameCharacter.class);
+		charField = new GObjectListSerializer(dataPath() + "charField", GameCharacter.class);
+		charBattle = new GObjectListSerializer(dataPath() + "charBattle", GameCharacter.class);
+		charOther = new GObjectListSerializer(dataPath() + "charOther", GameCharacter.class);
 		tilesets = new GObjectListSerializer(dataPath() + "tilesets", Tileset.class);
 		
 		fieldTree = new FieldTreeSerializer(dataPath());
@@ -54,7 +58,7 @@ public class Project implements LSerializer {
 		
 		allData = new LSerializer[] {items, skills, skillDags, battlers, status, 
 				animCharacter, animBattle, animOther, terrains, obstacles, ramps, 
-				characters, tilesets, config, fieldTree, dialogueTree };
+				charField, charBattle, charOther, tilesets, config, fieldTree, dialogueTree };
 	}
 	
 	public String dataPath() {

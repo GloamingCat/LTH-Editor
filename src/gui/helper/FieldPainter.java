@@ -142,23 +142,23 @@ public class FieldPainter {
 			Terrain terrain = (Terrain) Project.current.terrains.getList().get(id);
 			Image img = terrainCache.get(id);
 			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.imagePath);
+				img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.quad.imagePath);
 				terrainCache.put(id, img);
 			}
 			int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
-			int tw = img.getBounds().width / terrain.frameCount;
-			int th = img.getBounds().height / FieldHelper.math.autoTileRows;
+			int tw = terrain.quad.width / terrain.frameCount;
+			int th = terrain.quad.height / FieldHelper.math.autoTileRows;
 			gc.drawImage(img, 
-					0, th * rows[0], tw / 2, th / 2, 
+					terrain.quad.x, terrain.quad.y + th * rows[0], tw / 2, th / 2, 
 					x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);
 			gc.drawImage(img, 
-					tw / 2, th * rows[1], tw / 2, th / 2, 
+					terrain.quad.x + tw / 2, terrain.quad.y + th * rows[1], tw / 2, th / 2, 
 					x0, y0 - th / 2, tw / 2, th / 2);
 			gc.drawImage(img, 
-					0, th / 2 + th * rows[2], tw / 2, th / 2, 
+					terrain.quad.x, th / 2 + terrain.quad.y + th * rows[2], tw / 2, th / 2, 
 					x0 - tw / 2, y0, tw / 2, th / 2);
 			gc.drawImage(img, 
-					tw / 2, th / 2 + th * rows[3], tw / 2, th / 2, 
+					terrain.quad.x + tw / 2, terrain.quad.y + th / 2 + th * rows[3], tw / 2, th / 2, 
 					x0, y0, tw / 2, th / 2);
 		} catch(IndexOutOfBoundsException e) {
 			e.printStackTrace();
@@ -194,7 +194,7 @@ public class FieldPainter {
 			CharTile tile = tileset.characters.get(layer.grid[x][y]);
 			String key = tile.getKey();
 			
-			GameCharacter c = (GameCharacter) Project.current.characters.getList().get(tile.id);
+			GameCharacter c = (GameCharacter) Project.current.charField.getList().get(tile.id);
 			Animation anim = (Animation) Project.current.animCharacter.getList().get(c.animations.get(tile.animID).id);
 			
 			Image img = characterCache.get(key);

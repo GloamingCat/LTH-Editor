@@ -197,6 +197,11 @@ public class SkillTab extends DatabaseTab {
 		cmbIndividualAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(cmbIndividualAnimation, "individualAnimID");
 		
+		LCheckButton btnMirror = new LCheckButton(grpBattleAnim, SWT.NONE);
+		btnMirror.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+		btnMirror.setText(Vocab.instance.MIRROR);
+		addControl(btnMirror, "mirror");
+		
 		Group grpUserAnim = new Group(right, SWT.NONE);
 		grpUserAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpUserAnim.setText(Vocab.instance.USERANIMATIONS);

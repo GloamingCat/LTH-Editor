@@ -54,9 +54,14 @@ public class AttributeEditor extends LObjectEditor {
 	public void setObject(Object obj) {
 		super.setObject(obj);
 		if (obj != null) {
-			LDataList<Integer> list = getList();
-			for(int i = 0; i < list.size(); i++) {
-				spinners.get(i).setValue(list.get(i));
+			list = getList();
+			for(int i = 0; i < spinners.size(); i++) {
+				if (i < list.size()) {
+					spinners.get(i).setValue(list.get(i));
+				} else {
+					list.add(0);
+					spinners.get(i).setValue(0);
+				}
 			}
 		} else {
 			for(LSpinner spinner : spinners) {
@@ -99,6 +104,7 @@ public class AttributeEditor extends LObjectEditor {
 		spinner.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
+				System.out.println(event.newValue);
 				if (list != null) {
 					list.set(i, (Integer) event.newValue);
 				}

@@ -104,6 +104,8 @@ public class Vocab {
 	public String ITEMSTATUS = "Status ID";
 	
 	// Battler
+	public String BATTLECHAR = "Battle Character";
+	public String FIELDCHAR = "Field Character";
 	public String BATTLERTYPE = "Type";
 	public String SKILLDAG = "Skill Dag";
 	public String ATTACKSKILL = "Attack Skill";
@@ -128,6 +130,7 @@ public class Vocab {
 	public String STEPONCAST = "Step on Cast";
 	public String USERANIMATIONS = "User Animations";
 	public String BATTLEANIMATIONS = "Battle Animations";
+	public String MIRROR = "Mirror";
 	public String LOAD = "Load";
 	public String USER = "User";
 	public String CAST = "Cast";

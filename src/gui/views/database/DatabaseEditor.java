@@ -35,14 +35,35 @@ public class DatabaseEditor extends LViewFolder {
 		LViewFolder objectFolder = new LViewFolder(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.OBJECTS, objectFolder);
 		
-		CharacterTab characterTab = new CharacterTab(objectFolder.getTabFolder(), SWT.NONE);
-		objectFolder.addTab(Vocab.instance.CHARACTERS, characterTab);
-		
 		ObstacleTab obstacleTab = new ObstacleTab(objectFolder.getTabFolder(), SWT.NONE);
 		objectFolder.addTab(Vocab.instance.OBSTACLES, obstacleTab);
 		
 		RampTab rampTab = new RampTab(objectFolder.getTabFolder(), SWT.NONE);
 		objectFolder.addTab(Vocab.instance.RAMPS, rampTab);
+		
+		LViewFolder characterFolder = new LViewFolder(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.CHARACTERS, characterFolder);
+		
+		CharacterTab charFieldTab = new CharacterTab(characterFolder.getTabFolder(), SWT.NONE) {
+			public GObjectListSerializer getSerializer() {
+				return Project.current.charField;
+			}
+		};
+		characterFolder.addTab(Vocab.instance.CHARACTERS, charFieldTab);
+		
+		CharacterTab charBattleTab = new CharacterTab(characterFolder.getTabFolder(), SWT.NONE) {
+			public GObjectListSerializer getSerializer() {
+				return Project.current.charBattle;
+			}
+		};
+		characterFolder.addTab(Vocab.instance.CHARACTERS, charBattleTab);
+		
+		CharacterTab charOtherTab = new CharacterTab(characterFolder.getTabFolder(), SWT.NONE) {
+			public GObjectListSerializer getSerializer() {
+				return Project.current.charOther;
+			}
+		};
+		characterFolder.addTab(Vocab.instance.CHARACTERS, charOtherTab);
 		
 		LViewFolder animationFolder = new LViewFolder(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.ANIMATIONS, animationFolder);

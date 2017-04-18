@@ -43,18 +43,31 @@ public class BattlerTab extends DatabaseTab {
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblCharacter = new Label(grpGeneral, SWT.NONE);
-		lblCharacter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblCharacter.setText(Vocab.instance.CHARACTER);
+		Label lblBattleChar = new Label(grpGeneral, SWT.NONE);
+		lblBattleChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblBattleChar.setText(Vocab.instance.BATTLECHAR);
 		
-		LComboView cmbCharacter = new LComboView(grpGeneral, SWT.NONE) {
+		LComboView cmbBattleChar = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<?> getArray() {
-				return Project.current.characters.getList();
+				return Project.current.charBattle.getList();
 			}
 		};
-		cmbCharacter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		cmbCharacter.setOptional(false);
-		addControl(cmbCharacter, "characterID");
+		cmbBattleChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbBattleChar.setOptional(false);
+		addControl(cmbBattleChar, "battleCharID");
+		
+		Label lblFieldChar = new Label(grpGeneral, SWT.NONE);
+		lblFieldChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblFieldChar.setText(Vocab.instance.FIELDCHAR);
+		
+		LComboView cmbFieldChar = new LComboView(grpGeneral, SWT.NONE) {
+			public ArrayList<?> getArray() {
+				return Project.current.charBattle.getList();
+			}
+		};
+		cmbFieldChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbFieldChar.setOptional(true);
+		addControl(cmbFieldChar, "fieldCharID");
 		
 		Label lblType = new Label(grpGeneral, SWT.NONE);
 		lblType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -148,7 +161,7 @@ public class BattlerTab extends DatabaseTab {
 		gd_image.heightHint = 48;
 		image.setLayoutData(gd_image);
 		
-		cmbCharacter.getControl().addModifyListener(new LControlListener<Integer>() {
+		cmbBattleChar.getControl().addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				updateImage((Integer) event.newValue);
@@ -240,7 +253,7 @@ public class BattlerTab extends DatabaseTab {
 					updateImage(-1);
 				} else {
 					Battler b = (Battler) event.data;
-					updateImage(b.characterID);
+					updateImage(b.battleCharID);
 				}
 			}
 		});
@@ -255,7 +268,7 @@ public class BattlerTab extends DatabaseTab {
 		if (id == -1) {
 			image.setImage(null);
 		} else {
-			GameCharacter gc = (GameCharacter) Project.current.characters.getList().get(id);
+			GameCharacter gc = (GameCharacter) Project.current.charBattle.getList().get(id);
 			if (gc.animations.size() > 0) {
 				int animID = gc.animations.get(0).id;
 				ArrayList<?> animations = Project.current.animCharacter.getList();

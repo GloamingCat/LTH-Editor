@@ -29,7 +29,7 @@ public class Config {
 		public Script script = new Script("character/Player.lua", "");
 		public Position startPos = new Position();
 	}
-	
+
 	public static class Battle {
 		public int tradeSkillID = 0;
 		public int attHPID = 0;
@@ -53,6 +53,14 @@ public class Config {
 		public int battleCursorAnimID = 1;
 		public int tileAnimID = 2;
 		public int tileHLAnimID = 3;
+	}
+	
+	public static class Screen {
+		public int nativeWidth = 225;
+		public int nativeHeight = 400;
+		public int scaleX = 200;
+		public int scaleY = 200;
+		public int scaleType = 1;
 	}
 	
 }

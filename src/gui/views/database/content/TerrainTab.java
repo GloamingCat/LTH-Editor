@@ -2,7 +2,7 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.helper.FieldPainter;
-import gui.views.ImageButton;
+import gui.views.QuadButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
 import gui.views.database.subcontent.TagList;
@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import data.Quad;
 import project.GObjectListSerializer;
 import project.Project;
 
@@ -43,9 +44,9 @@ public class TerrainTab extends DatabaseTab {
 				FieldPainter.reload();
 			}
 		};
-		LControlListener<String> imgListener = new LControlListener<String>() {
+		LControlListener<Quad> imgListener = new LControlListener<Quad>() {
 			@Override
-			public void onModify(LControlEvent<String> event) {
+			public void onModify(LControlEvent<Quad> event) {
 				FieldPainter.reload();
 			}
 		};
@@ -144,11 +145,11 @@ public class TerrainTab extends DatabaseTab {
 		spnDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnDuration, "duration");
 		
-		ImageButton btnSelect = new ImageButton(grpGraphics, SWT.NONE);
+		QuadButton btnSelect = new QuadButton(grpGraphics, SWT.NONE);
 		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 2, 1));
-		btnSelect.addModifyListener(imgListener);
 		
-		addImageButton(btnSelect, imgIcon, "Terrain", "imagePath");
+		addQuadButton(btnSelect, imgIcon, "Terrain", "quad");
+		btnSelect.addModifyListener(imgListener);
 	}
 
 	@Override
