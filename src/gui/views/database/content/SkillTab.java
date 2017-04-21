@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import lwt.editor.LComboView;
 import lwt.widget.LCheckButton;
+import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 import lwt.widget.LTextBox;
 import lwt.widget.LText;
@@ -25,7 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Config;
 import project.GObjectListSerializer;
@@ -67,12 +67,13 @@ public class SkillTab extends DatabaseTab {
 		QuadButton btnSelect = new QuadButton(compositeIcon, SWT.NONE);
 		btnSelect.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));
 		
-		Label imgIcon = new Label(compositeIcon, SWT.NONE);
-		imgIcon.setImage(SWTResourceManager.getImage(SkillTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
+		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_imgIcon.widthHint = 48;
 		gd_imgIcon.heightHint = 48;
 		imgIcon.setLayoutData(gd_imgIcon);
+		imgIcon.setVerticalAlign(SWT.CENTER);
 		
 		addQuadButton(btnSelect, imgIcon, "Icon", "icon");
 		

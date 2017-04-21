@@ -29,6 +29,7 @@ import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
 import lwt.widget.LControl;
+import lwt.widget.LImage;
 import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Label;
@@ -116,8 +117,8 @@ public abstract class DatabaseTab extends LView {
 		addControl(button, attName);
 	}
 	
-	protected void addQuadButton(QuadButton button, Label label, String folderName, String attName) {
-		button.setLabel(label);
+	protected void addQuadButton(QuadButton button, LImage image, String folderName, String attName) {
+		button.setImage(image);
 		button.setFolder(folderName);
 		addControl(button, attName);
 	}

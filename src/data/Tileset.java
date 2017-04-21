@@ -40,9 +40,9 @@ public class Tileset {
 	public static class CharTile extends BasicTile implements LGraphical {
 		public int animID = 0;
 		public int direction = 315;
-		public int startID = -1;
-		public int collisionID = -1;
-		public int interactID = -1;
+		public Script startScript = new Script();
+		public Script collisionScript = new Script();
+		public Script interactScript = new Script();
 		public CharTile() {}
 		public CharTile(int id, int animID, int direction) {
 			this.id = id;

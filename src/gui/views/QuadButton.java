@@ -1,22 +1,23 @@
 package gui.views;
 
-import gui.helper.ImageHelper;
 import gui.shell.QuadShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
+import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import project.Project;
 import data.Quad;
 
 public class QuadButton extends LObjectButton<Quad> {
 	
 	private String folder;
-	private Label label;
+	private LImage image;
 	private Text text;
 	public boolean optional = false;
 	
@@ -34,8 +35,8 @@ public class QuadButton extends LObjectButton<Quad> {
 		this.folder = f;
 	}
 
-	public void setLabel(Label label) {
-		this.label = label;
+	public void setImage(LImage image) {
+		this.image = image;
 	}
 	
 	public void setText(Text text) {
@@ -47,14 +48,14 @@ public class QuadButton extends LObjectButton<Quad> {
 		if (value != null) {
 			button.setEnabled(true);
 			Quad s = (Quad) value;
-			if (label != null) {
-				label.setImage(ImageHelper.getImageQuad(s));
+			if (image != null) {
+				image.setImage(Project.current.imagePath() + s.imagePath, s.getRectangle());
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
-			if (label != null) {
-				label.setImage(null);
+			if (image != null) {
+				image.setImage((Image) null);
 			}
 			if (text != null) {
 				text.setText("");

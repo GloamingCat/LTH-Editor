@@ -72,7 +72,7 @@ public class ObstacleTab extends DatabaseTab {
 		TransformEditor transformEditor = new TransformEditor(other, SWT.NONE);
 		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		addChild(transformEditor);
-		transformEditor.setLabel(quadComp.getLabel());
+		//transformEditor.setLabel(quadComp.getLabel());
 	
 		Group grpTiles = new Group(lateral, SWT.NONE);
 		grpTiles.setLayout(new FillLayout());

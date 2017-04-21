@@ -8,13 +8,10 @@ public class GameCharacter {
 	public int colliderHeight = 1;
 	public LDataList<Tile> tiles = new LDataList<>();
 	
-	public LDataList<Script> startListeners = new LDataList<>();
-	public LDataList<Script> collisionListeners = new LDataList<>();
-	public LDataList<Script> interactListeners = new LDataList<>();
-	
-	public Transform transform = Transform.neutral();
 	public LDataList<Node> animations = new LDataList<>();
+	public Transform animXform = Transform.neutral();
 	public LDataList<Portrait> portraits = new LDataList<>();
+	public Transform portraitXform = Transform.neutral();
 	public LDataList<Tag> tags = new LDataList<>();
 	
 	public GameCharacter() {
@@ -30,6 +27,9 @@ public class GameCharacter {
 	public static class Portrait {
 		public String name = "New portrait";
 		public Quad quad = new Quad();
+		public String toString() {
+			return name;
+		}
 	}
 	
 	public static class Tile {

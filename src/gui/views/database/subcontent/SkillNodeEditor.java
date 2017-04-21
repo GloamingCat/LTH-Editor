@@ -41,12 +41,19 @@ public class SkillNodeEditor extends LObjectEditor {
 		cmbSkillID.setOptional(false);
 		addControl(cmbSkillID, "skillID");
 		
-		Label lblEXPCost = new Label(this, SWT.NONE);
-		lblEXPCost.setText(Vocab.instance.EXPCOST);
+		Label lblCost = new Label(this, SWT.NONE);
+		lblCost.setText(Vocab.instance.EXPCOST);
 		
-		LSpinner spnEXPCost = new LSpinner(this, SWT.NONE);
-		spnEXPCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnEXPCost, "cost");
+		LSpinner spnCost = new LSpinner(this, SWT.NONE);
+		spnCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnCost, "cost");
+		
+		Label lblLevel = new Label(this, SWT.NONE);
+		lblLevel.setText(Vocab.instance.MINLEVEL);
+		
+		LSpinner spnLevel = new LSpinner(this, SWT.NONE);
+		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnLevel, "minLevel");
 		
 		Group grpRequiredSkills = new Group(this, SWT.NONE);
 		grpRequiredSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));

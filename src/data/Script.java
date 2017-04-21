@@ -15,4 +15,8 @@ public class Script {
 		return path + "(" + param + ")";
 	}
 	
+	public Script clone() {
+		return new Script(path, param);
+	}
+	
 }

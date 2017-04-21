@@ -177,9 +177,7 @@ public class Vocab {
 	// Character
 	public String COLLISIONTILES = "Collision Tiles";
 	public String COLLIDERHEIGHT = "Collider Height";
-	public String STARTLISTENERS = "Start Scripts";
-	public String COLLISIONLISTENERS = "Collision Scripts";
-	public String INTERACTLISTENERS = "Interact Scripts";
+	public String PORTRAITS = "Portraits";
 	
 	// Ramp
 	public String HEIGHT = "Height";
@@ -212,9 +210,10 @@ public class Vocab {
 
 	// Skill Dag
 	public String SKILLNODES = "Skill Nodes";
+	public String SKILL = "Skill";
 	public String REQUIREDSKILLS = "Required Skills";
 	public String EXPCOST = "EXP Cost";
-	public String SKILL = "Skill";
+	public String MINLEVEL = "Min Level";
 	
 	// Tileset
 	public String ANIMATION = "Animation";

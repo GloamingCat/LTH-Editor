@@ -1,9 +1,11 @@
 package gui.shell.database;
 
 import gui.Vocab;
+import gui.views.ScriptButton;
 
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import lwt.dialog.LObjectShell;
 import lwt.event.LControlEvent;
@@ -25,9 +27,9 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 	private LCombo cmbAnim;
 	private LCombo cmbDir;
 	
-	private LCombo cmbStart;
-	private LCombo cmbCollision;
-	private LCombo cmbInteract;
+	private ScriptButton btnStart;
+	private ScriptButton btnCollision;
+	private ScriptButton btnInteract;
 
 	public TilesetCharShell(Shell parent) {
 		super(parent);
@@ -77,31 +79,37 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 		Group grpScript = new Group(content, SWT.NONE);
 		grpScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpScript.setText(Vocab.instance.SCRIPT);
-		grpScript.setLayout(new GridLayout(2, false));
+		grpScript.setLayout(new GridLayout(3, false));
 		
 		Label lblStartScript = new Label(grpScript, SWT.NONE);
 		lblStartScript.setText(Vocab.instance.STARTLISTENER);
 		
-		cmbStart = new LCombo(grpScript, SWT.READ_ONLY);
-		cmbStart.setIncludeID(false);
-		cmbStart.setOptional(true);
-		cmbStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Text txtStart = new Text(grpScript, SWT.NONE);
+		txtStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		btnStart = new ScriptButton(grpScript, SWT.NONE);
+		btnStart.setPathText(txtStart);
+		btnStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		Label lblCollisionScript = new Label(grpScript, SWT.NONE);
 		lblCollisionScript.setText(Vocab.instance.COLLISIONLISTENER);
 		
-		cmbCollision = new LCombo(grpScript, SWT.READ_ONLY);
-		cmbCollision.setIncludeID(false);
-		cmbCollision.setOptional(true);
-		cmbCollision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Text txtCollision = new Text(grpScript, SWT.NONE);
+		txtCollision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		btnCollision = new ScriptButton(grpScript, SWT.NONE);
+		btnCollision.setPathText(txtCollision);
+		btnCollision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 		Label lblInteractscript = new Label(grpScript, SWT.NONE);
 		lblInteractscript.setText(Vocab.instance.INTERACTLISTENER);
 		
-		cmbInteract = new LCombo(grpScript, SWT.READ_ONLY);
-		cmbInteract.setIncludeID(false);
-		cmbInteract.setOptional(true);
-		cmbInteract.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Text txtInteract = new Text(grpScript, SWT.NONE);
+		txtInteract.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		btnInteract = new ScriptButton(grpScript, SWT.NONE);
+		btnInteract.setPathText(txtInteract);
+		btnInteract.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		pack();
 	}
@@ -109,9 +117,6 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 	private void setCharID(int id) {
 		GameCharacter gc = (GameCharacter) Project.current.charField.getList().get(id);
 		cmbAnim.setItems(gc.animations);
-		cmbStart.setItems(gc.startListeners);
-		cmbCollision.setItems(gc.collisionListeners);
-		cmbInteract.setItems(gc.interactListeners);
 	}
 	
 	public void open(CharTile initial) {
@@ -122,22 +127,24 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 		
 		setCharID(initial.id);
 		cmbAnim.setValue(initial.animID);
-		cmbStart.setValue(initial.startID);
-		cmbCollision.setValue(initial.collisionID);
-		cmbInteract.setValue(initial.interactID);
+		btnStart.setValue(initial.startScript.clone());
+		btnCollision.setValue(initial.collisionScript.clone());
+		btnInteract.setValue(initial.interactScript.clone());
 	}
 
 	@Override
 	protected CharTile createResult(CharTile initial) {
 		if (cmbID.getSelectionIndex() == initial.id && cmbAnim.getSelectionIndex() == initial.animID &&
-				cmbDir.getSelectionIndex() * 45 == initial.direction && cmbStart.getSelectionIndex() == initial.startID &&
-				cmbCollision.getSelectionIndex() == initial.collisionID && cmbInteract.getSelectionIndex() == initial.interactID) {
+				cmbDir.getSelectionIndex() * 45 == initial.direction && 
+				btnStart.getValue().equals(initial.startScript) &&
+				btnCollision.getValue().equals(initial.collisionScript) && 
+				btnInteract.getValue().equals(initial.interactScript)) {
 			return null;
 		} else {
 			CharTile t = new CharTile(cmbID.getSelectionIndex(), cmbAnim.getSelectionIndex(), cmbDir.getSelectionIndex() * 45);
-			t.startID = cmbStart.getSelectionIndex();
-			t.collisionID = cmbCollision.getSelectionIndex();
-			t.interactID = cmbInteract.getSelectionIndex();
+			t.startScript = btnStart.getValue();
+			t.collisionScript = btnCollision.getValue();
+			t.interactScript = btnInteract.getValue();
 			return t;
 		}
 	}

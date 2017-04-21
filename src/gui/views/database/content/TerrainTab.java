@@ -13,6 +13,7 @@ import lwt.editor.LComboView;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckButton;
+import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -22,7 +23,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Quad;
 import project.GObjectListSerializer;
@@ -134,9 +134,11 @@ public class TerrainTab extends DatabaseTab {
 		addControl(spnFrameCount, "frameCount");
 		spnFrameCount.addModifyListener(intListener);
 		
-		Label imgIcon = new Label(grpGraphics, SWT.NONE);
-		imgIcon.setImage(SWTResourceManager.getImage(ItemTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
-		imgIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
+		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
+		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
+		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
+		imgGraphics.setHorizontalAlign(SWT.CENTER);
+		imgGraphics.setVerticalAlign(SWT.CENTER);
 		
 		Label lblFrameDuration = new Label(grpGraphics, SWT.NONE);
 		lblFrameDuration.setText(Vocab.instance.DURATION);
@@ -148,7 +150,7 @@ public class TerrainTab extends DatabaseTab {
 		QuadButton btnSelect = new QuadButton(grpGraphics, SWT.NONE);
 		btnSelect.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 2, 1));
 		
-		addQuadButton(btnSelect, imgIcon, "Terrain", "quad");
+		addQuadButton(btnSelect, imgGraphics, "Terrain", "quad");
 		btnSelect.addModifyListener(imgListener);
 	}
 

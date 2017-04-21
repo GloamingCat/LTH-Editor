@@ -7,14 +7,16 @@ import gui.views.TransformButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.CharTileListButton;
 import gui.views.database.subcontent.NodeList;
-import gui.views.database.subcontent.ScriptList;
+import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TagList;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,6 +26,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
+import data.GameCharacter.Portrait;
 import data.Node;
 import project.Project;
 
@@ -55,13 +58,13 @@ public abstract class CharacterTab extends DatabaseTab {
 		btnTiles.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		addControl(btnTiles, "tiles");
 		
-		SashForm sashForm = new SashForm(contentEditor, SWT.VERTICAL);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		SashForm middle = new SashForm(contentEditor, SWT.HORIZONTAL);
+		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		SashForm center = new SashForm(sashForm, SWT.NONE);
-		center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		SashForm lists = new SashForm(middle, SWT.VERTICAL);
+		lists.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Group grpAnimations = new Group(center, SWT.NONE);
+		Group grpAnimations = new Group(lists, SWT.NONE);
 		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		grpAnimations.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -77,12 +80,13 @@ public abstract class CharacterTab extends DatabaseTab {
 			}
 		};
 		lstAnim.attributeName = "animations";
+		lstAnim.getCollectionWidget().setIncludeID(false);
 		lstAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstAnim);
 
 		TransformButton btnTransform = new TransformButton(anim, SWT.NONE);
 		btnTransform.setText(Vocab.instance.TRANSFORM);
-		addControl(btnTransform, "transform");
+		addControl(btnTransform, "animXform");
 		
 		Label image = new Label(frmAnim, SWT.NONE);
 		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
@@ -101,51 +105,51 @@ public abstract class CharacterTab extends DatabaseTab {
 			}
 		});
 		
-		Group grpTags = new Group(center, SWT.NONE);
+		Group grpPortraits = new Group(lists, SWT.NONE);
+		grpPortraits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpPortraits.setText(Vocab.instance.PORTRAITS);
+		grpPortraits.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		SashForm frmPortrait = new SashForm(grpPortraits, SWT.HORIZONTAL);
+		Composite portrait = new Composite(frmPortrait, SWT.NONE);
+		portrait.setLayout(new GridLayout(1, false));
+		
+		PortraitList lstPortrait = new PortraitList(portrait, SWT.NONE);
+		lstPortrait.attributeName = "portraits";
+		lstPortrait.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addChild(lstPortrait);
+		
+		GridData gd_imgPortrait = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_imgPortrait.widthHint = 128;		
+		TransformButton btnPortraitXform = new TransformButton(portrait, SWT.NONE);
+		btnPortraitXform.setText(Vocab.instance.TRANSFORM);
+		addControl(btnPortraitXform, "portraitXform");
+		
+		LImage imgPotrait = new LImage(frmPortrait, SWT.NONE);
+		imgPotrait.setLayoutData(gd_imgPortrait);
+		lists.setWeights(new int[] {204, 149});
+
+		lstPortrait.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				if (event.data != null) {
+					Portrait p = (Portrait) event.data;
+					imgPotrait.setImage(Project.current.imagePath() + p.quad.imagePath, p.quad.getRectangle());
+				} else {
+					imgPotrait.setImage((Image) null);
+				}
+			}
+		});
+		
+		Group grpTags = new Group(middle, SWT.NONE);
 		grpTags.setLayout(new FillLayout());
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
+		middle.setWeights(new int[] {322, 105});
 		
-		center.setWeights(new int[] {2, 1});
-		
-		Composite bottom = new Composite(sashForm, SWT.NONE);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_bottom = new GridLayout(3, true);
-		gl_bottom.marginWidth = 0;
-		gl_bottom.marginHeight = 0;
-		bottom.setLayout(gl_bottom);
-		
-		Group grpStart = new Group(bottom, SWT.NONE);
-		grpStart.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpStart.setLayout(new FillLayout());
-		grpStart.setText(Vocab.instance.STARTLISTENERS);
-		
-		ScriptList lstStart = new ScriptList(grpStart, SWT.NONE);
-		lstStart.attributeName = "startListeners";
-		lstStart.folderName = "character";
-		addChild(lstStart);
-		
-		Group grpCollision = new Group(bottom, SWT.NONE);
-		grpCollision.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpCollision.setLayout(new FillLayout());
-		grpCollision.setText(Vocab.instance.COLLISIONLISTENERS);
-		
-		ScriptList lstCollision = new ScriptList(grpCollision, SWT.NONE);
-		lstCollision.attributeName = "collisionListeners";
-		lstCollision.folderName = "character";
-		addChild(lstCollision);
-		
-		Group grpInteract = new Group(bottom, SWT.NONE);
-		grpInteract.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpInteract.setLayout(new FillLayout());
-		grpInteract.setText(Vocab.instance.INTERACTLISTENERS);
-		
-		ScriptList lstInteract = new ScriptList(grpInteract, SWT.NONE);
-		lstInteract.attributeName = "interactListeners";
-		lstInteract.folderName = "character";
-		addChild(lstInteract);
 	}
 
 }

@@ -15,6 +15,7 @@ import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCombo;
+import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
@@ -68,10 +69,10 @@ public class SpeechEditor extends LObjectEditor {
 		cmbPortraitSide.setItems(new String[] {Vocab.instance.LEFT, Vocab.instance.RIGHT});
 		addControl(cmbPortraitSide, "portraitSide");
 		
-		Label lblPortrait = new Label(grpPortrait, SWT.NONE);
-		lblPortrait.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LImage imgPortrait = new LImage(grpPortrait, SWT.NONE);
+		imgPortrait.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		btnQuad.setLabel(lblPortrait);
+		btnQuad.setImage(imgPortrait);
 		addControl(btnQuad, "portrait");
 		
 		Group grpMessage = new Group(this, SWT.NONE);

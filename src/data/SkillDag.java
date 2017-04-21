@@ -16,12 +16,13 @@ public class SkillDag {
 	
 		public int skillID;
 		public int cost;
+		public int minLevel;
 		public LDataList<Integer> requirements = new LDataList<>();
 	
 		public String toString() {
 			Object obj = Project.current.skills.getList().get(skillID);
 			String skillName = obj.toString();
-			String cost = " (cost=" + this.cost + ") ";
+			String cost = " (cost=" + this.cost + ", level=" + this.minLevel + ")";
 			
 			String req = "[";
 			if (requirements.isEmpty()) {
