@@ -8,6 +8,7 @@ import lwt.dataserialization.LSerializer;
 public class Project implements LSerializer {
 	
 	public GObjectListSerializer battlers;
+	public GObjectListSerializer troops;
 	public GObjectListSerializer items;
 	public GObjectListSerializer skills;
 	public GObjectListSerializer skillDags;
@@ -36,6 +37,7 @@ public class Project implements LSerializer {
 		this.path = path;
 		
 		battlers = new GObjectListSerializer(dataPath() + "battlers", Battler.class);
+		troops = new GObjectListSerializer(dataPath() + "troops", Troop.class);
 		items = new GObjectListSerializer(dataPath() + "items", Item.class);
 		skills = new GObjectListSerializer(dataPath() + "skills", Skill.class);
 		skillDags = new GObjectListSerializer(dataPath() + "skillDags", SkillDag.class);
