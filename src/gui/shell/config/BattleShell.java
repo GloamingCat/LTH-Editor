@@ -17,7 +17,6 @@ import data.Config.Battle;
 
 public class BattleShell extends LObjectShell<Battle> {
 
-	private LCombo cmbTrade;
 	private LCombo cmbHPAtt;
 	private LCombo cmbSPAtt;
 	private LCombo cmbTurnAtt;
@@ -30,13 +29,6 @@ public class BattleShell extends LObjectShell<Battle> {
 		gridLayout.numColumns = 2;
 		content.setLayout(gridLayout);
 		setText(Vocab.instance.PROPERTIES + " - " + Vocab.instance.BATTLE);
-
-		Label lblTrade = new Label(content, SWT.NONE);
-		lblTrade.setText(Vocab.instance.TRADESKILL);
-		
-		cmbTrade = new LCombo(content, SWT.NONE);
-		cmbTrade.setOptional(false);
-		cmbTrade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblHP = new Label(content, SWT.NONE);
 		lblHP.setText(Vocab.instance.ATTHP);
@@ -83,14 +75,12 @@ public class BattleShell extends LObjectShell<Battle> {
 		cmbTurnAtt.setItems(Project.current.config.getData().attributes);
 		cmbStepAtt.setItems(Project.current.config.getData().attributes);
 		cmbJumpAtt.setItems(Project.current.config.getData().attributes);
-		cmbTrade.setItems(Project.current.skills.getList());
 		
 		cmbHPAtt.setValue(initial.attHPID);
 		cmbSPAtt.setValue(initial.attSPID);
 		cmbTurnAtt.setValue(initial.attTurnID);
 		cmbStepAtt.setValue(initial.attStepID);
 		cmbJumpAtt.setValue(initial.attJumpID);
-		cmbTrade.setValue(initial.tradeSkillID);
 	}
 
 	@Override
@@ -99,8 +89,7 @@ public class BattleShell extends LObjectShell<Battle> {
 				cmbSPAtt.getValue() == initial.attSPID &&
 				cmbTurnAtt.getValue() == initial.attTurnID &&
 				cmbStepAtt.getValue() == initial.attStepID &&
-				cmbJumpAtt.getValue() == initial.attJumpID &&
-				cmbTrade.getValue() == initial.tradeSkillID) {
+				cmbJumpAtt.getValue() == initial.attJumpID) {
 			return null;
 		} else {
 			Battle b = new Battle();
@@ -109,7 +98,6 @@ public class BattleShell extends LObjectShell<Battle> {
 			b.attStepID = cmbStepAtt.getValue();
 			b.attJumpID = cmbJumpAtt.getValue();
 			b.attTurnID = cmbTurnAtt.getValue();
-			b.tradeSkillID = cmbTrade.getValue();
 			return b;
 		}
 	}

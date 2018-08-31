@@ -2,10 +2,9 @@ package data;
 
 import lwt.dataestructure.LDataList;
 
-public class Status {
+public class Status extends Data {
 
 	// General
-	public String name = "";
 	public Quad icon = new Quad();
 	public Script scriptAI = new Script();
 	public int duration = -1; // <= 0 for infinite
@@ -21,9 +20,5 @@ public class Status {
 	public LDataList<Bonus> attributes = new LDataList<>();
 	public LDataList<Bonus> elements = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
-	
-	public String toString() {
-		return name;
-	}
 	
 }

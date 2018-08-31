@@ -6,23 +6,20 @@ import gui.views.database.subcontent.NeighborEditor;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-
-import lwt.dialog.LObjectShell;
-import lwt.widget.LCombo;
-
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-import project.Project;
+import lwt.dialog.LObjectShell;
+
 import data.Obstacle.Tile;
 
 public class ObstacleTileShell extends LObjectShell<Tile> {
 	
-	private LCombo cmbRamp;
 	private Spinner spnX;
 	private Spinner spnY;
+	private Spinner spnHeight;
 	private NeighborEditor neighborEditor;
 	
 	public ObstacleTileShell(Shell parent) {
@@ -37,14 +34,6 @@ public class ObstacleTileShell extends LObjectShell<Tile> {
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		grpGeneral.setLayout(new GridLayout(2, false));
-		
-		Label lblID = new Label(grpGeneral, SWT.NONE);
-		lblID.setText(Vocab.instance.RAMP);
-		
-		cmbRamp = new LCombo(grpGeneral, SWT.NONE);
-		cmbRamp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cmbRamp.setIncludeID(true);
-		cmbRamp.setOptional(true);
 
 		Label lblX = new Label(grpGeneral, SWT.NONE);
 		lblX.setText(Vocab.instance.OFFSETX);
@@ -58,6 +47,13 @@ public class ObstacleTileShell extends LObjectShell<Tile> {
 		spnY = new Spinner(grpGeneral, SWT.BORDER);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
+		Label lblHeight = new Label(grpGeneral, SWT.NONE);
+		lblHeight.setText(Vocab.instance.HEIGHT);
+		
+		spnHeight = new Spinner(grpGeneral, SWT.BORDER);
+		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnHeight.setMinimum(0);
+		
 		neighborEditor = new NeighborEditor(content, SWT.NONE);
 		neighborEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
@@ -66,16 +62,15 @@ public class ObstacleTileShell extends LObjectShell<Tile> {
 
 	public void open(Tile initial) {
 		super.open(initial);
-		cmbRamp.setItems(Project.current.ramps.getList());
-		cmbRamp.setValue(initial.rampID);
 		neighborEditor.setObject(initial.neighbors);
 		spnX.setSelection(initial.dx);
 		spnY.setSelection(initial.dy);
+		spnHeight.setSelection(initial.height);
 	}
 	
 	private boolean changed(Tile initial) {
 		if (initial.dx != spnX.getSelection() || initial.dy != spnY.getSelection()
-				|| initial.rampID != cmbRamp.getSelectionIndex()) {
+				|| initial.height != spnHeight.getSelection()) {
 			return true;
 		}
 		boolean[] newValues = neighborEditor.getValues();
@@ -92,7 +87,7 @@ public class ObstacleTileShell extends LObjectShell<Tile> {
 			Tile t = new Tile();
 			t.dx = spnX.getSelection();
 			t.dy = spnY.getSelection();
-			t.rampID = cmbRamp.getSelectionIndex();
+			t.height = spnHeight.getSelection();
 			t.neighbors = neighborEditor.getValues();
 			return t;
 		} else {

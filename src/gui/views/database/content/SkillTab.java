@@ -18,7 +18,6 @@ import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,7 +27,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import data.Config;
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class SkillTab extends DatabaseTab {
@@ -159,7 +158,8 @@ public class SkillTab extends DatabaseTab {
 		
 		LComboView cmbLoadAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
 			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
+				//TODO return Project.current.spritesheets.getList();
+				return null;
 			}
 		};
 		cmbLoadAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -170,7 +170,8 @@ public class SkillTab extends DatabaseTab {
 		
 		LComboView cmbCastAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
 			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
+				//TODO return Project.current.spritesheets.getList();
+				return null;
 			}
 		};
 		cmbCastAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -181,7 +182,8 @@ public class SkillTab extends DatabaseTab {
 		
 		LComboView cmbCenterAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
 			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
+				//TODO return Project.current.spritesheets.getList();
+				return null;
 			}
 		};
 		cmbCenterAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -192,7 +194,8 @@ public class SkillTab extends DatabaseTab {
 
 		LComboView cmbIndividualAnimation = new LComboView(grpBattleAnim, SWT.NONE) {
 			public ArrayList<Object> getArray() {
-				return Project.current.animBattle.getList();
+				//TODO return Project.current.spritesheets.getList();
+				return null;
 			}
 		};
 		cmbIndividualAnimation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -266,10 +269,7 @@ public class SkillTab extends DatabaseTab {
 		lblParam.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblParam.setText(Vocab.instance.PARAM);
 		
-		StyledText txtParam = new StyledText(grpScript, SWT.BORDER | SWT.READ_ONLY);
-		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		addScriptButton(btnSelectScript, txtPath, txtParam, "skill", "script");
+		addScriptButton(btnSelectScript, txtPath, "skill", "script");
 		
 		Label lblBasicResult = new Label(grpScript, SWT.NONE);
 		lblBasicResult.setText(Vocab.instance.BASICRESULT);
@@ -300,7 +300,7 @@ public class SkillTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.skills;
 	}
 

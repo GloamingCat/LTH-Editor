@@ -146,7 +146,8 @@ public class Vocab {
 	public String ROWS = "Rows";
 	public String FRAMEDURATION = "Frame Duration";
 	public String LOOP = "Loop";
-	public String ALLROWS = "All rows";
+	public String NOLOOP = "No Loop";
+	public String REPEAT = "Repeat";
 	
 	// Audio
 	public String SOUND = "Sound";
@@ -162,10 +163,13 @@ public class Vocab {
 	public String ROTATION = "Rotation";
 	public String SCALEX = "Scale X";
 	public String SCALEY = "Scale Y";
-	public String RED = "Red %";
-	public String BLUE = "Blue %";
-	public String GREEN = "Green %";
-	public String ALPHA = "Alpha %";
+	public String RED = "Red";
+	public String BLUE = "Blue";
+	public String GREEN = "Green";
+	public String ALPHA = "Alpha";
+	public String HUE = "Hue";
+	public String SATURATION = "Saturation";
+	public String BRIGHTNESS = "Brightness";
 	
 	// Quad
 	public String QUADX = "Quad X";
@@ -179,15 +183,10 @@ public class Vocab {
 	public String COLLIDERHEIGHT = "Collider Height";
 	public String PORTRAITS = "Portraits";
 	
-	// Ramp
+	// Obstacles
 	public String HEIGHT = "Height";
 	public String BOTTOM = "Bottom";
 	public String TOP = "Top";
-	public String LINES = "Lines";
-	public String CHOOSEDEFAULT = "Choose Default";
-	
-	// Obstacle
-	public String RAMP = "Ramp";
 	public String NEIGHBORS = "Neighbors";
 	public String TILES = "Tiles";
 
@@ -239,6 +238,10 @@ public class Vocab {
 	public String ORIGIN = "Origin";
 	public String DESTINATION = "Destination";
 	public String FADEOUT = "Fade out";
+	public String NORTH = "North";
+	public String EAST = "East";
+	public String SOUTH = "South";
+	public String WEST = "West";
 
 	// Dialogue
 	public String SPEECHES = "Speeches";

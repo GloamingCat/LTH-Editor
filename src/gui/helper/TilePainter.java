@@ -2,8 +2,6 @@ package gui.helper;
 
 import java.util.HashMap;
 
-import lwt.dataestructure.LDataList;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -37,12 +35,8 @@ public class TilePainter {
 		int h = conf.grid.tileH;
 		Image subImage = new Image(Display.getCurrent(), w, h);
 		
-		LDataList<Object> terrains = Project.current.terrains.getList();
-		if (terrainID >= terrains.size()) {
-			return subImage;
-		}
-		Terrain terrain = (Terrain) terrains.get(terrainID);
-		String path = terrain.quad.imagePath;
+		Terrain terrain = (Terrain) Project.current.terrains.getTree().get(terrainID);
+		String path = terrain.quad.path;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
 		int srcX = ((terrain.quad.width / terrain.frameCount) - w) / 2 + terrain.quad.x;
@@ -62,8 +56,8 @@ public class TilePainter {
 	}
 	
 	public static Image getObstacleTile(int id) {
-		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
-		String path = obj.quad.imagePath;
+		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
+		String path = obj.quad.path;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
 		int w = conf.grid.tileW;
@@ -87,10 +81,9 @@ public class TilePainter {
 	}
 	
 	public static Image getCharacterTile(int id, int animID, int direction) {
-		GameCharacter c = (GameCharacter) Project.current.charField.getList().get(id);
-		Animation anim = (Animation) Project.current.animCharacter.getList().get(c.animations.get(animID).id);
-		String path = anim.imagePath;
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
+		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(id);
+		Animation anim = (Animation) Project.current.animations.getTree().get(c.animations.get(animID).id);
+		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 		
 		int w = conf.grid.tileW;
 		int h = conf.grid.tileH;

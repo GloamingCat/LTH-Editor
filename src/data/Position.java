@@ -33,4 +33,8 @@ public class Position {
 		}
 	}
 	
+	public Position clone() {
+		return new Position(this);
+	}
+	
 }

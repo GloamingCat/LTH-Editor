@@ -2,9 +2,8 @@ package data;
 
 import lwt.dataestructure.LDataList;
 
-public class Item {
+public class Item extends Data {
 
-	public String name = "";
 	public String description = "";
 	public Quad icon = new Quad();
 	
@@ -21,9 +20,5 @@ public class Item {
 	
 	public LDataList<Integer> attributes = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
-	
-	public String toString() {
-		return name;
-	}
 
 }

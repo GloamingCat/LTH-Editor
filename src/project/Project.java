@@ -7,26 +7,21 @@ import lwt.dataserialization.LSerializer;
 
 public class Project implements LSerializer {
 	
-	public GObjectListSerializer battlers;
-	public GObjectListSerializer troops;
-	public GObjectListSerializer items;
-	public GObjectListSerializer skills;
-	public GObjectListSerializer skillDags;
-	public GObjectListSerializer status;
-	public GObjectListSerializer animBattle;
-	public GObjectListSerializer animCharacter;
-	public GObjectListSerializer animOther;
-	public GObjectListSerializer terrains;
-	public GObjectListSerializer obstacles;
-	public GObjectListSerializer ramps;
-	public GObjectListSerializer charBattle;
-	public GObjectListSerializer charField;
-	public GObjectListSerializer charOther;
-	public GObjectListSerializer tilesets;
+	public GObjectTreeSerializer animations;
+	
+	public GObjectTreeSerializer battlers;
+	public GObjectTreeSerializer characters;
+	public GObjectTreeSerializer classes;
+	public GObjectTreeSerializer items;
+	public GObjectTreeSerializer obstacles;
+	public GObjectTreeSerializer skills;
+	public GObjectTreeSerializer status;
+	public GObjectTreeSerializer terrains;
+	public GObjectTreeSerializer tilesets;
+	public GObjectTreeSerializer troops;
 	
 	public FieldTreeSerializer fieldTree;
 	public GObjectSerializer<Config> config;
-	public DialogueTreeSerializer dialogueTree;
 	
 	private LSerializer[] allData;
 	
@@ -36,31 +31,24 @@ public class Project implements LSerializer {
 	public Project(String path) {
 		this.path = path;
 		
-		battlers = new GObjectListSerializer(dataPath() + "battlers", Battler.class);
-		troops = new GObjectListSerializer(dataPath() + "troops", Troop.class);
-		items = new GObjectListSerializer(dataPath() + "items", Item.class);
-		skills = new GObjectListSerializer(dataPath() + "skills", Skill.class);
-		skillDags = new GObjectListSerializer(dataPath() + "skillDags", SkillDag.class);
-		status = new GObjectListSerializer(dataPath() + "status", Status.class);
-		animCharacter = new GObjectListSerializer(dataPath() + "animCharacter", Animation.class);
-		animBattle = new GObjectListSerializer(dataPath() + "animBattle", Animation.class);
-		animOther = new GObjectListSerializer(dataPath() + "animOther", Animation.class);
-		terrains = new GObjectListSerializer(dataPath() + "terrains", Terrain.class);
-		obstacles = new GObjectListSerializer(dataPath() + "obstacles", Obstacle.class);
-		ramps = new GObjectListSerializer(dataPath() + "ramps", Ramp.class);
-		charField = new GObjectListSerializer(dataPath() + "charField", GameCharacter.class);
-		charBattle = new GObjectListSerializer(dataPath() + "charBattle", GameCharacter.class);
-		charOther = new GObjectListSerializer(dataPath() + "charOther", GameCharacter.class);
-		tilesets = new GObjectListSerializer(dataPath() + "tilesets", Tileset.class);
+		animations = new GObjectTreeSerializer(dataPath() + "animations", Animation.class);
+		
+		battlers = new GObjectTreeSerializer(dataPath() + "battlers", Battler.class);
+		characters = new GObjectTreeSerializer(dataPath() + "characters", GameCharacter.class);
+		classes = new GObjectTreeSerializer(dataPath() + "classes", BattleClass.class);
+		items = new GObjectTreeSerializer(dataPath() + "items", Item.class);
+		obstacles = new GObjectTreeSerializer(dataPath() + "obstacles", Obstacle.class);
+		skills = new GObjectTreeSerializer(dataPath() + "skills", Skill.class);
+		status = new GObjectTreeSerializer(dataPath() + "status", Status.class);
+		terrains = new GObjectTreeSerializer(dataPath() + "terrains", Terrain.class);
+		tilesets = new GObjectTreeSerializer(dataPath() + "tilesets", Tileset.class);
+		troops = new GObjectTreeSerializer(dataPath() + "troops", Troop.class);
 		
 		fieldTree = new FieldTreeSerializer(dataPath());
-		dialogueTree = new DialogueTreeSerializer(dataPath());
 		
 		config = new GObjectSerializer<Config>(dataPath() + "config", Config.class);
 		
-		allData = new LSerializer[] {items, skills, skillDags, battlers, status, 
-				animCharacter, animBattle, animOther, terrains, obstacles, ramps, 
-				charField, charBattle, charOther, tilesets, config, fieldTree, dialogueTree };
+		allData = new LSerializer[] { animations };
 	}
 	
 	public String dataPath() {
@@ -86,6 +74,16 @@ public class Project implements LSerializer {
 	public String fontPath() {
 		return path + "fonts/";
 	}
+	
+	@Override
+	public void initialize() {
+		for (LSerializer data : allData) {
+			data.initialize();
+		}
+		//FieldHelper.reloadMath();
+		//TilePainter.reloadConfig();
+		current = this;
+	}	
 
 	@Override
 	public boolean save() {
@@ -103,8 +101,8 @@ public class Project implements LSerializer {
 				return false;
 		}
 		current = this;
-		FieldHelper.reloadMath();
-		TilePainter.reloadConfig();
+		//FieldHelper.reloadMath();
+		//TilePainter.reloadConfig();
 		return true;
 	}
 

@@ -21,7 +21,7 @@ public class AudioShell extends FileShell<Audio> {
 
 	private Spinner spnVolume;
 	private Spinner spnPitch;
-	private Spinner spnSpeed;
+	private Spinner spnTime;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -55,10 +55,9 @@ public class AudioShell extends FileShell<Audio> {
 		Label lblSpeed = new Label(composite, SWT.NONE);
 		lblSpeed.setText(Vocab.instance.SPEED);
 		
-		spnSpeed = new Spinner(composite, SWT.BORDER);
-		spnSpeed.setMaximum(1000);
-		spnSpeed.setMinimum(1);
-		spnSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnTime = new Spinner(composite, SWT.BORDER);
+		spnTime.setMinimum(0);
+		spnTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 	}
 	
 	public void open(Audio initial) {
@@ -67,7 +66,7 @@ public class AudioShell extends FileShell<Audio> {
 		list.select(i);
 		spnVolume.setSelection(initial.volume);
 		spnPitch.setSelection(initial.pitch);
-		spnSpeed.setSelection(initial.speed);
+		spnTime.setSelection(initial.time);
 	}
 
 	@Override
@@ -78,13 +77,13 @@ public class AudioShell extends FileShell<Audio> {
 		String newPath = folder + "/" + list.getItem(i);
 		if (newPath.equals(initial) && initial.pitch == spnPitch.getSelection() 
 				&& initial.volume == spnVolume.getSelection()
-				&& initial.speed == spnSpeed.getSelection()) {
+				&& initial.time == spnTime.getSelection()) {
 			return null;
 		} else {
 			return new Audio(newPath, 
 					spnVolume.getSelection(), 
 					spnPitch.getSelection(),
-					spnSpeed.getSelection());
+					spnTime.getSelection());
 		}
 	}
 

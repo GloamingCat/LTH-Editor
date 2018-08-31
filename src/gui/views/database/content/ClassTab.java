@@ -11,13 +11,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-import data.SkillDag.Node;
-import project.GObjectListSerializer;
+import data.BattleClass.Node;
+import project.GObjectTreeSerializer;
 import project.Project;
 
-public class SkillDagTab extends DatabaseTab {
+public class ClassTab extends DatabaseTab {
 
-	public SkillDagTab(Composite parent, int style) {
+	public ClassTab(Composite parent, int style) {
 		super(parent, style);
 
 		Group grpSkillNodes = new Group(contentEditor, SWT.NONE);
@@ -38,8 +38,8 @@ public class SkillDagTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
-		return Project.current.skillDags;
+	protected GObjectTreeSerializer getSerializer() {
+		return Project.current.classes;
 	}
 
 

@@ -49,7 +49,7 @@ public class QuadButton extends LObjectButton<Quad> {
 			button.setEnabled(true);
 			Quad s = (Quad) value;
 			if (image != null) {
-				image.setImage(Project.current.imagePath() + s.imagePath, s.getRectangle());
+				image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
 			}
 			currentValue = s;
 		} else {

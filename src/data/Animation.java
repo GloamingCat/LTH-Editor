@@ -1,26 +1,24 @@
 package data;
 
-public class Animation {
+import java.util.ArrayList;
+
+import lwt.dataestructure.LDataList;
+
+public class Animation extends Data {
 	
 	// General
-	public String name = "";
-	public String imagePath = "";
+	public Quad quad = new Quad();
 	public int rows = 8;
 	public int cols = 6;
-	public int duration = 30;
-	public boolean loop = false;
-	public boolean allRows = false;
-	public Script script = new Script();
+	public LDataList<Tag> tags = new LDataList<>();
 	
 	// Transform
 	public Transform transform = new Transform();
 	
-	//Audio
-	public Audio audio = new Audio();
-
-	@Override
-	public String toString() {
-		return name;
-	}
+	// Animation
+	public int duration = 0;
+	public int loop = 0;
+	public String animation = "";
+	public ArrayList<Audio> audio;
 	
 }

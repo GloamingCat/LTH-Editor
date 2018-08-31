@@ -1,22 +1,12 @@
 package gui.shell;
 
-import gui.Vocab;
-
 import java.io.File;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 
-import data.Script;
-
-public class ScriptShell extends FileShell<Script> {
-
-	private StyledText txtParam;
+public class ScriptShell extends FileShell<String> {
 	
 	/**
 	 * @wbp.parser.constructor
@@ -27,32 +17,23 @@ public class ScriptShell extends FileShell<Script> {
 	
 	public ScriptShell(Shell parent, String folder, boolean optional) {
 		super(parent, folder, optional);
-		
-		Group grpParam = new Group(sashForm, SWT.BORDER);
-		grpParam.setText(Vocab.instance.PARAM);
-		grpParam.setLayout(new FillLayout());
-		txtParam = new StyledText(grpParam, SWT.BORDER);
 	}
 	
-	public void open(Script initial) {
+	public void open(String initial) {
 		super.open(initial);
-		txtParam.setText(initial.param);
-		int i = indexOf(initial.path);
+		int i = indexOf(initial);
 		list.select(i);
 	}
 	
 	@Override
-	protected Script createResult(Script initial) {
+	protected String createResult(String initial) {
 		int i = list.getSelectionIndex();
 		if (i >= 0) {
 			String newValue = folder + "/" + list.getItem(i);
-			if (newValue.equals(initial.path) && txtParam.getText().equals(initial.param)) {
+			if (newValue.equals(initial)) {
 				return null;
 			} else {
-				Script s = new Script();
-				s.path = newValue;
-				s.param = txtParam.getText();
-				return s;
+				return newValue;
 			}
 		} else {
 			return null;

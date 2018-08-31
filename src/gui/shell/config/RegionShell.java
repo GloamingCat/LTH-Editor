@@ -92,7 +92,8 @@ public class RegionShell extends LObjectShell<Region> {
 		
 		lstBattlers = new IDList(grpBattler, SWT.NONE) {
 			public ArrayList<?> comboArray() {
-				return Project.current.battlers.getList();
+				//TODO return Project.current.battlers.getList();
+				return null;
 			}
 			public LDataList<Integer> getDataCollection() {
 				return battlers;

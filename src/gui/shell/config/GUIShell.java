@@ -63,13 +63,14 @@ public class GUIShell extends LObjectShell<GUI> {
 	
 	public void open(GUI initial) {
 		super.open(initial);
-		cmbCursor.setItems(Project.current.animOther.getList());
+		//TODO
+		//cmbCursor.setItems(Project.current.spritesheets.getList());
 		cmbCursor.setValue(initial.cursorAnimID);
-		cmbBattleCursor.setItems(Project.current.animOther.getList());
+		//cmbBattleCursor.setItems(Project.current.spritesheets.getList());
 		cmbBattleCursor.setValue(initial.battleCursorAnimID);
-		cmbTile.setItems(Project.current.animOther.getList());
+		//cmbTile.setItems(Project.current.spritesheets.getList());
 		cmbTile.setValue(initial.tileAnimID);
-		cmbTileHL.setItems(Project.current.animOther.getList());
+		//cmbTileHL.setItems(Project.current.spritesheets.getList());
 		cmbTileHL.setValue(initial.tileHLAnimID);
 	}
 

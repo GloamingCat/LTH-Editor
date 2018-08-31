@@ -6,17 +6,12 @@ import gui.helper.TilePainter;
 import lwt.dataestructure.LDataList;
 import lwt.datainterface.LGraphical;
 
-public class Tileset {
+public class Tileset extends Data {
 
-	public String name = "";
 	public LDataList<TerrainTile> terrains = new LDataList<>();
 	public LDataList<ObstacleTile> obstacles = new LDataList<>();
 	public LDataList<CharTile> characters = new LDataList<>();
 	public LDataList<RegionTile> regions = new LDataList<>();
-	
-	public String toString() {
-		return name;
-	}
 	
 	public static class BasicTile {
 		public int id;

@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import data.Quad;
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class TerrainTab extends DatabaseTab {
@@ -72,7 +72,8 @@ public class TerrainTab extends DatabaseTab {
 		
 		LComboView cmbStatus = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<Object> getArray() {
-				return Project.current.status.getList();
+				//TODO return Project.current.status.getList();
+				return null;
 			}
 		};
 		cmbStatus.setOptional(true);
@@ -155,7 +156,7 @@ public class TerrainTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.terrains;
 	}
 

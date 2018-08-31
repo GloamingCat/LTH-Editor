@@ -143,7 +143,7 @@ public class FieldLayerEditor extends LEditor {
 	public void setObject(Object object) {
 		if (object != null) {
 			field = (Field) object;
-			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(field.prefs.tilesetID);
+			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(field.prefs.tilesetID);
 			Config conf = Project.current.config.getData();
 			LDataList<PartyTile> parties = Tileset.createPartyArray(field.prefs.partyCount);
 			lstTerrains.setDataCollection(tileset.terrains);

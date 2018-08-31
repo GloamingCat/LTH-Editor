@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class ObstacleTab extends DatabaseTab {
@@ -84,7 +84,7 @@ public class ObstacleTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.obstacles;
 	}
 

@@ -2,12 +2,9 @@ package data;
 
 import lwt.dataestructure.LDataList;
 
-public class Obstacle {
+public class Obstacle extends Data {
 
 	// General
-	public String name = "";
-	public int colliderHeight = 1;
-	
 	public Quad quad = new Quad();
 	public Transform transform = new Transform();
 	public LDataList<Tile> tiles = new LDataList<>();
@@ -16,7 +13,7 @@ public class Obstacle {
 	public static class Tile {
 		public int dx = 0;
 		public int dy = 0;
-		public int rampID = -1;
+		public int height = 1;
 		public boolean[] neighbors = new boolean[8];
 		
 		public String toString() {
@@ -26,10 +23,6 @@ public class Obstacle {
 	
 	public Obstacle() {
 		tiles.add(new Tile());
-	}
-	
-	public String toString() {
-		return name;
 	}
 	
 }

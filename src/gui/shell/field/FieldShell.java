@@ -2,7 +2,6 @@ package gui.shell.field;
 
 import gui.Vocab;
 import gui.views.ImageButton;
-import gui.views.ScriptButton;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransitionList;
 
@@ -17,7 +16,6 @@ import lwt.widget.LCombo;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -37,11 +35,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 	private Text txtBG;
 	private LCombo cmbTileset;
 	private LCombo cmbRegion;
-
 	private ImageButton btnBG;
-	
-	private Text txtScript;
-	private StyledText txtParam;
 	
 	protected TagList lstTags;
 	protected TransitionList lstTransitions;
@@ -143,19 +137,6 @@ public class FieldShell extends LObjectShell<Prefs> {
 		gl_scriptComp.marginHeight = 0;
 		grpScript.setLayout(gl_scriptComp);
 		
-		txtScript = new Text(grpScript, SWT.BORDER | SWT.READ_ONLY);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnScript = new ScriptButton(grpScript, SWT.NONE);
-		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setFolder("eventsheet");
-		
-		txtParam = new StyledText(grpScript, SWT.BORDER | SWT.READ_ONLY);
-		txtParam.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		btnScript.setPathText(txtScript);
-		btnScript.setParamText(txtParam);
-		
 		Group grpTransitions = new Group(bottom, SWT.NONE);
 		grpTransitions.setText(Vocab.instance.TRANSITIONS);
 		grpTransitions.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -173,14 +154,12 @@ public class FieldShell extends LObjectShell<Prefs> {
 	public void open(Prefs initial) {
 		super.open(initial);
 		Config conf = (Config) Project.current.config.getData();
-		cmbTileset.setItems(Project.current.tilesets.getList());
+		//cmbTileset.setItems(Project.current.tilesets.getList()); TODO
 		cmbTileset.setValue(initial.tilesetID);
 		cmbRegion.setItems(conf.regions);
 		cmbRegion.setValue(initial.defaultRegion);
 		txtName.setText(initial.name);
 		btnBG.setValue(initial.background);
-		txtScript.setText(initial.onStart.path);
-		txtParam.setText(initial.onStart.param);
 		spnParties.setSelection(initial.partyCount);
 		
 		tags = new LDataList<Tag>();
@@ -191,7 +170,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 		
 		transitions = new LDataList<Transition>();
 		for(Transition t : initial.transitions) {
-			transitions.add(new Transition(t));
+			transitions.add(t.clone());
 		}
 		lstTransitions.onVisible();
 	}
@@ -204,9 +183,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 				cmbRegion.getSelectionIndex() == initial.defaultRegion &&
 				spnParties.getSelection() == initial.partyCount &&
 				tags.equals(initial.tags) && 
-				transitions.equals(initial.transitions) &&
-				txtScript.getText().equals(initial.onStart.path) && 
-				txtParam.getText().equals(initial.onStart.param)) {
+				transitions.equals(initial.transitions)) {
 			return null;
 		}
 		Prefs p = new Prefs();
@@ -217,8 +194,6 @@ public class FieldShell extends LObjectShell<Prefs> {
 		p.partyCount = spnParties.getSelection();
 		p.tags = tags;
 		p.transitions = transitions;
-		p.onStart.path = txtScript.getText();
-		p.onStart.param = txtParam.getText();
 		return p;
 	}
 	

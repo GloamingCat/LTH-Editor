@@ -2,16 +2,15 @@ package data;
 
 import lwt.dataestructure.LDataList;
 
-public class Skill {
+public class Skill extends Data {
 
-	public String name = "New Skill";
 	public String description = "";
 	public int type = 1;
 	public Quad icon = new Quad();
 	public int radius = 1;
 	public int range = 1;
 	
-	public Script script = new Script("battle\\effects\\HP Damage.lua", "");
+	public String script = "";
 	public String successRate = "((a:PRE() * 2 - b:EVD()) / b:EVD()) * 50";
 	public String basicResult = "(a:ATKP() * 2 - b:DEFP()) * math.random(0.8, 1.2)";
 	
@@ -32,8 +31,4 @@ public class Skill {
 	public LDataList<Bonus> elements = new LDataList<>(); 
 	public LDataList<Tag> tags = new LDataList<>();
 
-	public String toString() {
-		return name;
-	}
-	
 }

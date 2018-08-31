@@ -7,7 +7,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -18,8 +17,6 @@ import data.Field;
 import data.Layer;
 import data.GameCharacter;
 import data.Obstacle;
-import data.Ramp;
-import data.Ramp.PointSet;
 import data.Region;
 import data.Terrain;
 import data.Tileset;
@@ -102,47 +99,15 @@ public class FieldPainter {
 		int[] p = getTilePolygon(x0, y0);
 		gc.fillPolygon(p);
 	}
-	
-	public void paintRamp(GC gc, int x0, int y0, PointSet points, int height) {
-		Grid conf = FieldHelper.config.grid;
-		paintEdges(gc, x0, y0 + conf.pixelsPerHeight);
-		Point b1 = new Point(Math.round((points.b1x + x0) * scale), Math.round((points.b1y + y0 + conf.pixelsPerHeight * height) * scale));
-		Point t1 = new Point(Math.round((points.t1x + x0) * scale), Math.round((points.t1y + y0) * scale));
-		Point b2 = new Point(Math.round((points.b2x + x0) * scale), Math.round((points.b2y + y0 + conf.pixelsPerHeight * height) * scale));
-		Point t2 = new Point(Math.round((points.t2x + x0) * scale), Math.round((points.t2y + y0) * scale));
-		Point t1_ = new Point(t1.x, Math.round(t1.y + conf.pixelsPerHeight * height * scale));
-		Point t2_ = new Point(t2.x, Math.round(t2.y + conf.pixelsPerHeight * height * scale));
-		int[] p = new int[] {b1.x, b1.y, t1.x, t1.y, t2.x, t2.y, b2.x, b2.y};
-		gc.drawPolygon(p);
-		
-		p = new int[] {t1.x, t1.y, t1_.x, t1_.y, b1.x, b1.y};
-		gc.drawPolyline(p);
-		p = new int[] {t2.x, t2.y, t2_.x, t2_.y, b2.x, b2.y};
-		gc.drawPolyline(p);
-		gc.drawLine(t1_.x, t1_.y, t2_.x, t2_.y);
-	}
-	
-	public void paintRamp(Image image, int x0, int y0, int id) {
-		Ramp ramp = (Ramp) Project.current.ramps.getList().get(id);
-		Grid conf = FieldHelper.config.grid;
-		GC gc = new GC(image);
-		paintRamp(gc, x0 - conf.tileW / 2, y0 - conf.tileH / 2, ramp);
-		gc.dispose();
-	}
-	
-	public void paintRamp(GC gc, int x0, int y0, Ramp ramp) {
-		gc.setBackground(new Color(Display.getCurrent(), new RGB(127, 127, 127)));
-		paintRamp(gc, x0, y0, ramp.points, ramp.height);
-	}
-	
+
 	public void paintTerrain(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
 			int id = tileset.terrains.get(layer.grid[x][y]).id;
-			Terrain terrain = (Terrain) Project.current.terrains.getList().get(id);
+			Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
 			Image img = terrainCache.get(id);
 			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.quad.imagePath);
+				img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.quad.path);
 				terrainCache.put(id, img);
 			}
 			int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
@@ -167,22 +132,17 @@ public class FieldPainter {
 	
 	public void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0, boolean paintRamp) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
 			int id = tileset.obstacles.get(layer.grid[x][y]).id;
-			Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
+			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
 			Image img = obstacleCache.get(id);
 			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + obj.quad.imagePath);
+				img = SWTResourceManager.getImage(Project.current.imagePath() + obj.quad.path);
 				obstacleCache.put(id, img);
 			}
 			gc.drawImage(img, obj.quad.x, obj.quad.y, obj.quad.width, obj.quad.height,
 					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 					y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
-			
-			/*if (paintRamp && obj.rampID >= 0) {
-				Ramp ramp = (Ramp) Project.current.ramps.getList().get(obj.rampID);
-				paintRamp(gc, x0, y0 - FieldHelper.config.tileH / 2, ramp);
-			}*/
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -190,16 +150,17 @@ public class FieldPainter {
 	
 	public void paintCharacter(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
 			CharTile tile = tileset.characters.get(layer.grid[x][y]);
 			String key = tile.getKey();
 			
-			GameCharacter c = (GameCharacter) Project.current.charField.getList().get(tile.id);
-			Animation anim = (Animation) Project.current.animCharacter.getList().get(c.animations.get(tile.animID).id);
+			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.id);
+			int animID = c.animations.get(tile.animID).id;
+			Animation anim = (Animation) Project.current.animations.getTree().get(animID);
 			
 			Image img = characterCache.get(key);
 			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath);
+				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 				characterCache.put(key, img);
 			}
 			
@@ -215,7 +176,7 @@ public class FieldPainter {
 	
 	public void paintRegion(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getList().get(tilesetID);
+			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
 			int id = tileset.regions.get(layer.grid[x][y]).id;
 			int w = FieldHelper.config.grid.tileW;
 			int h = FieldHelper.config.grid.tileH;

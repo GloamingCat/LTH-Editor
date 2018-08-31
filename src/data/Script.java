@@ -1,22 +1,18 @@
 package data;
 
-public class Script {
+import java.util.ArrayList;
 
-	public String path = "";
-	public String param = "";
+import com.sun.javafx.collections.MappingChange.Map;
+
+public class Script extends Data {
 	
-	public Script() {}
-	public Script(String path, String param) {
-		this.param = param;
-		this.path = path;
-	}
+	public ArrayList<Command> commands = new ArrayList<>();
 	
-	public String toString() {
-		return path + "(" + param + ")";
-	}
-	
-	public Script clone() {
-		return new Script(path, param);
+	public static class Command {
+		
+		public String name = "";
+		public Map<String, Object> param;
+		
 	}
 	
 }

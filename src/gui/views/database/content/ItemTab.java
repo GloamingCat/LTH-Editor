@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class ItemTab extends DatabaseTab {
@@ -89,7 +89,8 @@ public class ItemTab extends DatabaseTab {
 		LComboView cmbSkillID = new LComboView(grpGeneral, SWT.NONE) {
 			@Override
 			public ArrayList<Object> getArray() {
-				return Project.current.skills.getList();
+				//TODO return Project.current.skills.getTree();
+				return null;
 			}
 		};
 		cmbSkillID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -103,7 +104,8 @@ public class ItemTab extends DatabaseTab {
 		LComboView cmbStatusID = new LComboView(grpGeneral, SWT.NONE) {
 			@Override
 			public ArrayList<Object> getArray() {
-				return Project.current.status.getList();
+				//TODO return Project.current.status.getList();
+				return null;
 			}
 		};
 		cmbStatusID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -151,7 +153,7 @@ public class ItemTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.items;
 	}
 

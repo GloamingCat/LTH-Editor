@@ -10,11 +10,14 @@ public class Transform {
 	public int scaleY = 100;
 	public int rotation = 0; // in degrees
 	
-	// Color transformation (percentage)
-	public int red = 100;
-	public int green = 100;
-	public int blue = 100;
-	public int alpha = 100;
+	// Color transformation
+	public int red = 255;
+	public int green = 255;
+	public int blue = 255;
+	public int alpha = 255;
+	public int hue = 0;
+	public int saturation = 100;
+	public int brightness = 100;
 	
 	public static Transform neutral() {
 		Transform t = new Transform();

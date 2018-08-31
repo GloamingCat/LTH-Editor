@@ -28,9 +28,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import data.Animation;
 import data.GameCharacter.Portrait;
 import data.Node;
+import project.GObjectTreeSerializer;
 import project.Project;
 
-public abstract class CharacterTab extends DatabaseTab {
+public class CharacterTab extends DatabaseTab {
 
 	public CharacterTab(Composite parent, int style) {
 		super(parent, style);
@@ -76,7 +77,8 @@ public abstract class CharacterTab extends DatabaseTab {
 		NodeList lstAnim = new NodeList(anim, SWT.NONE) {
 			@Override
 			protected ArrayList<?> comboArray() {
-				return Project.current.animCharacter.getList();
+				//TODO return Project.current.spritesheets.getTree();
+				return null;
 			}
 		};
 		lstAnim.attributeName = "animations";
@@ -97,8 +99,8 @@ public abstract class CharacterTab extends DatabaseTab {
 			public void onSelect(LSelectionEvent event) {
 				if (event.data != null) {
 					Node node = (Node) event.data;
-					Animation anim = (Animation) Project.current.animCharacter.getList().get(node.id);
-					image.setImage(SWTResourceManager.getImage(Project.current.imagePath() + anim.imagePath));
+					Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
+					image.setImage(SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path));
 				} else {
 					image.setImage(null);
 				}
@@ -134,7 +136,7 @@ public abstract class CharacterTab extends DatabaseTab {
 			public void onSelect(LSelectionEvent event) {
 				if (event.data != null) {
 					Portrait p = (Portrait) event.data;
-					imgPotrait.setImage(Project.current.imagePath() + p.quad.imagePath, p.quad.getRectangle());
+					imgPotrait.setImage(Project.current.imagePath() + p.quad.path, p.quad.getRectangle());
 				} else {
 					imgPotrait.setImage((Image) null);
 				}
@@ -150,6 +152,11 @@ public abstract class CharacterTab extends DatabaseTab {
 		addChild(tagEditor);
 		middle.setWeights(new int[] {322, 105});
 		
+	}
+
+	@Override
+	protected GObjectTreeSerializer getSerializer() {
+		return Project.current.characters;
 	}
 
 }

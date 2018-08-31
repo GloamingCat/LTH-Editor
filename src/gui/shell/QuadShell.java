@@ -1,14 +1,12 @@
 package gui.shell;
 
+import gui.Vocab;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import lwt.dialog.LObjectDialog;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -19,9 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import data.ImageAtlas;
 import data.Quad;
-import data.ImageAtlas.Entry;
 import project.Project;
 
 import org.eclipse.swt.widgets.Composite;
@@ -38,8 +34,6 @@ public class QuadShell extends FileShell<Quad> {
 	private Spinner spnWidth;
 	private Spinner spnHeight;
 	
-	private LObjectDialog<ImageAtlas.Entry> atlasDialog;
-	
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -49,14 +43,8 @@ public class QuadShell extends FileShell<Quad> {
 	
 	public QuadShell(Shell parent, String folder, boolean optional) {
 		super(parent, folder, optional);
-
-		atlasDialog = new LObjectDialog<>(this);
-		atlasDialog.setFactory(new LShellFactory<ImageAtlas.Entry>() {
-			@Override
-			public LObjectShell<Entry> createShell(Shell parent) {
-				return new AtlasEntryShell(parent);
-			}
-		});
+		
+		setMinimumSize(600, 400);
 		
 		list.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -85,14 +73,14 @@ public class QuadShell extends FileShell<Quad> {
 		composite.setLayout(gl_composite);
 		
 		Label lblX = new Label(composite, SWT.NONE);
-		lblX.setText("X");
+		lblX.setText(Vocab.instance.QUADX);
 		
 		spnX = new Spinner(composite, SWT.BORDER);
 		spnX.setMaximum(1024);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblWidth = new Label(composite, SWT.NONE);
-		lblWidth.setText("Width");
+		lblWidth.setText(Vocab.instance.QUADW);
 		
 		spnWidth = new Spinner(composite, SWT.BORDER);
 		spnWidth.setMaximum(1024);
@@ -100,14 +88,14 @@ public class QuadShell extends FileShell<Quad> {
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblY = new Label(composite, SWT.NONE);
-		lblY.setText("Y");
+		lblY.setText(Vocab.instance.QUADY);
 		
 		spnY = new Spinner(composite, SWT.BORDER);
 		spnY.setMaximum(1024);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblHeight = new Label(composite, SWT.NONE);
-		lblHeight.setText("Height");
+		lblHeight.setText(Vocab.instance.QUADH);
 		
 		spnHeight = new Spinner(composite, SWT.BORDER);
 		spnHeight.setMaximum(1024);
@@ -132,34 +120,16 @@ public class QuadShell extends FileShell<Quad> {
 				spnHeight.setSelection(rect.height);
 			}
 		});
-		btnFullImage.setText("Full image");
-		
-		Button btnFromAtlas = new Button(composite_2, SWT.NONE);
-		btnFromAtlas.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				ImageAtlas.Entry e = atlasDialog.open(null);
-				if (e != null) {
-					list.deselectAll();
-					label.setText(e.atlas.imagePath);
-					spnWidth.setSelection(e.atlas.width);
-					spnHeight.setSelection(e.atlas.height);
-					spnX.setSelection(e.x * e.atlas.width);
-					spnY.setSelection(e.y * e.atlas.height);
-					resetImage();
-				}
-			}
-		});
-		btnFromAtlas.setText("From Atlas");
-		
+		btnFullImage.setText(Vocab.instance.FULLIMAGE);
+
 		sashForm.setWeights(new int[] {1, 1});
 	}
 	
 	public void open(Quad initial) {
 		super.open(initial);
-		int i = indexOf(initial.imagePath);
+		int i = indexOf(initial.path);
 		list.select(i);
-		label.setText(initial.imagePath);
+		label.setText(initial.path);
 		spnX.setSelection(initial.x);
 		spnY.setSelection(initial.y);
 		spnWidth.setSelection(initial.width);
@@ -170,7 +140,7 @@ public class QuadShell extends FileShell<Quad> {
 	@Override
 	protected Quad createResult(Quad initial) {
 		String newValue = label.getText();
-		if (newValue.equals(initial.imagePath) && spnX.getSelection() == initial.x && 
+		if (newValue.equals(initial.path) && spnX.getSelection() == initial.x && 
 				spnY.getSelection() == initial.y &&
 				spnWidth.getSelection() == initial.width && 
 				spnHeight.getSelection() == initial.height) {
@@ -181,7 +151,7 @@ public class QuadShell extends FileShell<Quad> {
 			q.y = spnY.getSelection();
 			q.width = spnWidth.getSelection();
 			q.height = spnHeight.getSelection();
-			q.imagePath = newValue;
+			q.path = newValue;
 			return q;
 		}
 	}

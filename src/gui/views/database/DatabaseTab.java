@@ -2,7 +2,7 @@ package gui.views.database;
 
 import java.lang.reflect.Type;
 
-import editor.GDefaultListEditor;
+import editor.GDefaultTreeEditor;
 import gui.Vocab;
 import gui.views.ImageButton;
 import gui.views.QuadButton;
@@ -10,7 +10,6 @@ import gui.views.ScriptButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -18,16 +17,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 
 import com.google.gson.Gson;
 
 import lwt.action.LActionStack;
-import lwt.dataestructure.LDataList;
+import lwt.dataestructure.LDataTree;
 import lwt.editor.LControlView;
 import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
+import lwt.event.LInsertEvent;
+import lwt.event.LSelectionEvent;
+import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LSelectionListener;
 import lwt.widget.LControl;
 import lwt.widget.LImage;
 import lwt.widget.LText;
@@ -38,11 +41,12 @@ public abstract class DatabaseTab extends LView {
 
 	protected static Gson gson = new Gson();
 	
-	protected GDefaultListEditor<Object> listEditor;
+	protected GDefaultTreeEditor<Object> listEditor;
 	protected LObjectEditor contentEditor;
 	protected Group grpGeneral;
 	protected Label lblName;
 	protected LText txtName;
+	protected Label lblID;
 	
 	public DatabaseTab(Composite parent, int style) {
 		super(parent, style);
@@ -53,16 +57,18 @@ public abstract class DatabaseTab extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		listEditor = new GDefaultListEditor<Object>(sashForm, SWT.NONE) {
+		listEditor = new GDefaultTreeEditor<Object>(sashForm, SWT.NONE) {
 			@Override
-			public LDataList<Object> getDataCollection() {
-				return getSerializer().getList();
+			public LDataTree<Object> getDataCollection() {
+				return getSerializer().getTree();
 			}
 			@Override
 			public Type getType() {
+				System.out.println(getSerializer().getDataType());
 				return getSerializer().getDataType();
 			}
 		};
+		
 		listEditor.getCollectionWidget().setInsertNewEnabled(true);
 		listEditor.getCollectionWidget().setEditEnabled(false);
 		listEditor.getCollectionWidget().setDuplicateEnabled(true);
@@ -80,6 +86,9 @@ public abstract class DatabaseTab extends LView {
 		grpGeneral.setLayout(new GridLayout(2, false));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		
+		lblID = new Label(grpGeneral, SWT.NONE);
+		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
 		lblName = new Label(grpGeneral, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
@@ -89,11 +98,28 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.addControl(txtName, "name");
 		
 		listEditor.addChild(contentEditor);
+		listEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				if (event.data != null) {
+					LDataTree<Object> node = getSerializer().getTree().getNode(event.path);
+					lblID.setText("ID " + node.id);
+				}
+			}
+		});
+		listEditor.getCollectionWidget().addInsertListener(new LCollectionListener<Object>() {
+			@Override
+			public void onInsert(LInsertEvent<Object> event) {
+				int id = listEditor.getDataCollection().findID();
+				event.node.initID(id);
+				lblID.setText("ID " + id);
+			}
+		});
 		
 		sashForm.setWeights(new int[] {1, 2});
 	}
 	
-	protected abstract GObjectListSerializer getSerializer();
+	protected abstract GObjectTreeSerializer getSerializer();
 	
 	public void addChild(LEditor editor) {
 		contentEditor.addChild(editor);
@@ -123,9 +149,8 @@ public abstract class DatabaseTab extends LView {
 		addControl(button, attName);
 	}
 	
-	protected void addScriptButton(ScriptButton button, Text pathText, StyledText paramText, String folderName, String attName) {
+	protected void addScriptButton(ScriptButton button, Text pathText, String folderName, String attName) {
 		button.setPathText(pathText);
-		button.setParamText(paramText);
 		button.setFolder(folderName);
 		addControl(button, attName);
 	}

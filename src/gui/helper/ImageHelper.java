@@ -13,15 +13,12 @@ import project.Project;
 import data.Animation;
 import data.Obstacle;
 import data.Quad;
-import data.Ramp.PointSet;
 
 public class ImageHelper {
-
-	private static FieldPainter fieldPainter = new FieldPainter(2, false);
 	
 	public static Image getObstacleImage(int id) {
-		Obstacle obj = (Obstacle) Project.current.obstacles.getList().get(id);
-		String path = obj.quad.imagePath;
+		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
+		String path = obj.quad.path;
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
 		
 		int w = obj.quad.width;
@@ -33,8 +30,7 @@ public class ImageHelper {
 	}
 	
 	public static Image getAnimationFrame(Animation anim, int col, int row) {
-		String path = anim.imagePath;
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
+		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 		
 		int w = image.getBounds().width / anim.cols;
 		int h = image.getBounds().height / anim.rows;
@@ -80,16 +76,6 @@ public class ImageHelper {
 		}
 	}
 	
-	public static Image rampImage(PointSet points) {
-		Image img = new Image(Display.getCurrent(), (FieldHelper.config.grid.tileW + 4) * 2, 
-				(FieldHelper.config.grid.tileH + FieldHelper.config.grid.pixelsPerHeight + 4) * 2);
-		GC gc = new GC(img);
-		fieldPainter.paintRamp(gc, FieldHelper.config.grid.tileW / 2 + 2, 
-				FieldHelper.config.grid.tileH / 2 + 2, points, 1);
-		gc.dispose();
-		return img;
-	}
-	
 	public static Image transform(data.Transform t, Image original) {
 		return transform(t.offsetX, t.offsetY, t.rotation, t.scaleX, t.scaleY, 
 				t.red, t.green, t.blue, t.alpha, original);
@@ -118,7 +104,7 @@ public class ImageHelper {
 	}
 
 	public static Image getImageQuad(Quad s) {
-		Image img = SWTResourceManager.getImage(Project.current.imagePath() + s.imagePath);
+		Image img = SWTResourceManager.getImage(Project.current.imagePath() + s.path);
 		return getImageQuad(img, s.x, s.y, s.width, s.height);
 	}
 

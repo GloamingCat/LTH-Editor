@@ -34,7 +34,8 @@ public class SkillNodeEditor extends LObjectEditor {
 		
 		LComboView cmbSkillID = new LComboView(this, SWT.NONE) {
 			public ArrayList<Object> getArray() {
-				return Project.current.skills.getList();
+				//TODO return Project.current.skills.getList();
+				return null;
 			}
 		};
 		cmbSkillID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -62,7 +63,8 @@ public class SkillNodeEditor extends LObjectEditor {
 
 		IDList lstRequirements = new IDList(grpRequiredSkills, SWT.NONE) {
 			public ArrayList<?> comboArray() {
-				return Project.current.skills.getList();
+				//TODO return Project.current.skills.getList();
+				return null;
 			}
 		};
 		lstRequirements.attributeName = "requirements";

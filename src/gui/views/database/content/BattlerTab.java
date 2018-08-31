@@ -9,6 +9,7 @@ import gui.views.database.subcontent.TagList;
 
 import java.util.ArrayList;
 
+import lwt.dataestructure.LDataTree;
 import lwt.editor.LComboView;
 import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
@@ -31,7 +32,7 @@ import data.Animation;
 import data.Battler;
 import data.Config;
 import data.GameCharacter;
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class BattlerTab extends DatabaseTab {
@@ -49,7 +50,8 @@ public class BattlerTab extends DatabaseTab {
 		
 		LComboView cmbBattleChar = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<?> getArray() {
-				return Project.current.charBattle.getList();
+				//TODO return Project.current.characters.getList();
+				return null;
 			}
 		};
 		cmbBattleChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -62,7 +64,8 @@ public class BattlerTab extends DatabaseTab {
 		
 		LComboView cmbFieldChar = new LComboView(grpGeneral, SWT.NONE) {
 			public ArrayList<?> getArray() {
-				return Project.current.charBattle.getList();
+				//TODO return Project.current.characters.getList();
+				return null;
 			}
 		};
 		cmbFieldChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -87,14 +90,15 @@ public class BattlerTab extends DatabaseTab {
 		lblSkillTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblSkillTree.setText(Vocab.instance.SKILLDAG);
 		
-		LComboView cmbSkillTree = new LComboView(grpGeneral, SWT.READ_ONLY) {
+		LComboView cmbClass = new LComboView(grpGeneral, SWT.READ_ONLY) {
 			public ArrayList<?> getArray() {
-				return Project.current.skillDags.getList();
+				//TODO return Project.current.classes.getList();
+				return null;
 			}
 		};
-		cmbSkillTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		cmbSkillTree.setOptional(true);
-		addControl(cmbSkillTree, "skillDagID");
+		cmbClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbClass.setOptional(true);
+		addControl(cmbClass, "classID");
 		
 		Label lblAttackSkill = new Label(grpGeneral, SWT.NONE);
 		lblAttackSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -102,7 +106,8 @@ public class BattlerTab extends DatabaseTab {
 		
 		LComboView cmbAttackSkill = new LComboView(grpGeneral, SWT.READ_ONLY) {
 			public ArrayList<Object> getArray() {
-				return Project.current.skills.getList();
+				//TODO return Project.current.skills.getList();
+				return null;
 			}
 		};
 		cmbAttackSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -130,7 +135,7 @@ public class BattlerTab extends DatabaseTab {
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnSelect = new ScriptButton(compositeAI, SWT.NONE);
-		addScriptButton(btnSelect, txtAI, null, "ai", "scriptAI");
+		addScriptButton(btnSelect, txtAI, "ai", "scriptAI");
 		
 		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeReward = new GridLayout(4, false);
@@ -188,7 +193,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		ScriptButton btnBuild = new ScriptButton(build, SWT.NONE);
 		btnBuild.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addScriptButton(btnBuild, txtBuild, null, "build", "build");
+		addScriptButton(btnBuild, txtBuild, "build", "build");
 		
 		Label lblLevel = new Label(build, SWT.NONE);
 		lblLevel.setText(Vocab.instance.LEVEL);
@@ -232,7 +237,8 @@ public class BattlerTab extends DatabaseTab {
 		BonusList lstItems = new BonusList(grpItems, SWT.NONE) {
 			@Override
 			protected ArrayList<?> comboArray() {
-				return Project.current.items.getList();
+				//TODO return Project.current.items.getList();
+				return null;
 			}
 		};
 		lstItems.attributeName = "items";
@@ -260,7 +266,7 @@ public class BattlerTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.battlers;
 	}
 
@@ -268,15 +274,13 @@ public class BattlerTab extends DatabaseTab {
 		if (id == -1) {
 			image.setImage(null);
 		} else {
-			GameCharacter gc = (GameCharacter) Project.current.charBattle.getList().get(id);
+			GameCharacter gc = (GameCharacter) Project.current.characters.getTree().get(id);
 			if (gc.animations.size() > 0) {
 				int animID = gc.animations.get(0).id;
-				ArrayList<?> animations = Project.current.animCharacter.getList();
-				if (animations.size() > 0) {
-					Animation anim = (Animation) animations.get(animID);
-					image.setImage(SWTResourceManager.getImage(
-							Project.current.imagePath() + anim.imagePath));
-				}
+				LDataTree<?> animations = Project.current.animations.getTree();
+				Animation anim = (Animation) animations.get(animID);
+				image.setImage(SWTResourceManager.getImage(
+						Project.current.imagePath() + anim.quad.path));
 			}
 		}
 	}

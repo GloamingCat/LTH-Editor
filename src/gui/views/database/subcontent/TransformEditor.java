@@ -37,14 +37,14 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
 		
-		Label lblRotation = new Label(grpTransform, SWT.NONE);
-		lblRotation.setText(Vocab.instance.ROTATION);
+		Label lblRed = new Label(grpTransform, SWT.NONE);
+		lblRed.setText(Vocab.instance.RED);
 		
-		LSpinner spnRotation = new LSpinner(grpTransform, SWT.NONE);
-		spnRotation.setMinimum(0);
-		spnRotation.setMaximum(360);
-		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnRotation, "rotation");
+		LSpinner spnRed = new LSpinner(grpTransform, SWT.NONE);
+		spnRed.setMaximum(10000);
+		spnRed.setMinimum(0);
+		spnRed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnRed, "red");
 		
 		Label lblOffsetY = new Label(grpTransform, SWT.NONE);
 		lblOffsetY.setText(Vocab.instance.OFFSETY);
@@ -55,14 +55,14 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetY, "offsetY");
 		
-		Label lblRed = new Label(grpTransform, SWT.NONE);
-		lblRed.setText(Vocab.instance.RED);
+		Label lblGreen = new Label(grpTransform, SWT.NONE);
+		lblGreen.setText(Vocab.instance.GREEN);
 		
-		LSpinner spnRed = new LSpinner(grpTransform, SWT.NONE);
-		spnRed.setMaximum(10000);
-		spnRed.setMinimum(0);
-		spnRed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnRed, "red");
+		LSpinner spnGreen = new LSpinner(grpTransform, SWT.NONE);
+		spnGreen.setMaximum(10000);
+		spnGreen.setMinimum(0);
+		spnGreen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnGreen, "green");
 		
 		Label lblOffsetDepth = new Label(grpTransform, SWT.NONE);
 		lblOffsetDepth.setText(Vocab.instance.OFFSETDEPTH);
@@ -73,14 +73,14 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetDepth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetDepth, "offsetDepth");
 		
-		Label lblGreen = new Label(grpTransform, SWT.NONE);
-		lblGreen.setText(Vocab.instance.GREEN);
+		Label lblBlue = new Label(grpTransform, SWT.NONE);
+		lblBlue.setText(Vocab.instance.BLUE);
 		
-		LSpinner spnGreen = new LSpinner(grpTransform, SWT.NONE);
-		spnGreen.setMaximum(10000);
-		spnGreen.setMinimum(0);
-		spnGreen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnGreen, "green");
+		LSpinner spnBlue = new LSpinner(grpTransform, SWT.NONE);
+		spnBlue.setMaximum(10000);
+		spnBlue.setMinimum(0);
+		spnBlue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnBlue, "blue");
 		
 		Label lblScaleX = new Label(grpTransform, SWT.NONE);
 		lblScaleX.setText(Vocab.instance.SCALEX);
@@ -91,14 +91,14 @@ public class TransformEditor extends LObjectEditor {
 		spnScaleX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleX, "scaleX");
 		
-		Label lblBlue = new Label(grpTransform, SWT.NONE);
-		lblBlue.setText(Vocab.instance.BLUE);
+		Label lblAlpha = new Label(grpTransform, SWT.NONE);
+		lblAlpha.setText(Vocab.instance.ALPHA);
 		
-		LSpinner spnBlue = new LSpinner(grpTransform, SWT.NONE);
-		spnBlue.setMaximum(10000);
-		spnBlue.setMinimum(0);
-		spnBlue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnBlue, "blue");
+		LSpinner spnAlpha = new LSpinner(grpTransform, SWT.NONE);
+		spnAlpha.setMaximum(10000);
+		spnAlpha.setMinimum(0);
+		spnAlpha.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnAlpha, "alpha");
 		
 		Label lblScaleY = new Label(grpTransform, SWT.NONE);
 		lblScaleY.setText(Vocab.instance.SCALEY);
@@ -109,14 +109,44 @@ public class TransformEditor extends LObjectEditor {
 		spnScaleY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleY, "scaleY");
 		
-		Label lblAlpha = new Label(grpTransform, SWT.NONE);
-		lblAlpha.setText(Vocab.instance.ALPHA);
+		Label lblHue = new Label(grpTransform, SWT.NONE);
+		lblHue.setText(Vocab.instance.HUE);
 		
-		LSpinner spnAlpha = new LSpinner(grpTransform, SWT.NONE);
-		spnAlpha.setMaximum(10000);
-		spnAlpha.setMinimum(0);
-		spnAlpha.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnAlpha, "alpha");
+		LSpinner spnHue = new LSpinner(grpTransform, SWT.NONE);
+		spnHue.setMaximum(360);
+		spnHue.setMinimum(0);
+		spnHue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnHue, "hue");
+		
+		Label lblRotation = new Label(grpTransform, SWT.NONE);
+		lblRotation.setText(Vocab.instance.ROTATION);
+		
+		LSpinner spnRotation = new LSpinner(grpTransform, SWT.NONE);
+		spnRotation.setMaximum(360);
+		spnRotation.setMinimum(0);
+		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnRotation, "rotation");
+		
+		Label lblSaturation = new Label(grpTransform, SWT.NONE);
+		lblSaturation.setText(Vocab.instance.SATURATION);
+		
+		LSpinner spnSaturation = new LSpinner(grpTransform, SWT.NONE);
+		spnSaturation.setMaximum(100);
+		spnSaturation.setMinimum(0);
+		spnSaturation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnSaturation, "saturation");
+		
+		Label placeholder = new Label(grpTransform, SWT.NONE);
+		placeholder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
+		Label lblBrightness = new Label(grpTransform, SWT.NONE);
+		lblBrightness.setText(Vocab.instance.BRIGHTNESS);
+		
+		LSpinner spnBrightness = new LSpinner(grpTransform, SWT.NONE);
+		spnBrightness.setMaximum(100);
+		spnBrightness.setMinimum(0);
+		spnBrightness.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnBrightness, "brightness");
 	}
 	
 	public void setLabel(Label label) {
@@ -132,7 +162,7 @@ public class TransformEditor extends LObjectEditor {
 	}
 	
 	public void setObject(Object obj) {
-		Object value = getFieldValue(obj, "transform");
+		Object value = obj == null ? null : getFieldValue(obj, "transform");
 		super.setObject(value);
 	}
 

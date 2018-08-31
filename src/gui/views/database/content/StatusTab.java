@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import data.Config;
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class StatusTab extends DatabaseTab {
@@ -98,7 +98,7 @@ public class StatusTab extends DatabaseTab {
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnSelectAI = new ScriptButton(compositeAI, SWT.NONE);
-		addScriptButton(btnSelectAI, txtAI, null, "ai", "scriptAI");
+		addScriptButton(btnSelectAI, txtAI, "ai", "scriptAI");
 		
 		Group grpDrain = new Group(contentEditor, SWT.NONE);
 		grpDrain.setText(Vocab.instance.DRAIN);
@@ -178,7 +178,7 @@ public class StatusTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.status;
 	}
 

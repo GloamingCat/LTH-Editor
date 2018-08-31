@@ -20,7 +20,8 @@ import data.Tileset.CharTile;
 import data.Tileset.ObstacleTile;
 import data.Tileset.RegionTile;
 import data.Tileset.TerrainTile;
-import project.GObjectListSerializer;
+
+import project.GObjectTreeSerializer;
 import project.Project;
 
 import org.eclipse.swt.layout.GridLayout;
@@ -61,7 +62,8 @@ public class TilesetTab extends DatabaseTab {
 						return t;
 					}
 					protected ArrayList<?> getArray() {
-						return Project.current.terrains.getList();
+						//TODO return Project.current.terrains.getList();
+						return null;
 					}
 				};
 			}
@@ -85,7 +87,8 @@ public class TilesetTab extends DatabaseTab {
 						return t;
 					}
 					protected ArrayList<?> getArray() {
-						return Project.current.obstacles.getList();
+						//TODO return Project.current.obstacles.getList();
+						return null;
 					}
 				};
 			}
@@ -133,7 +136,7 @@ public class TilesetTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.tilesets;
 	}
 

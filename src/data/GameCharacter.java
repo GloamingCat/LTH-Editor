@@ -2,9 +2,8 @@ package data;
 
 import lwt.dataestructure.LDataList;
 
-public class GameCharacter {
+public class GameCharacter extends Data {
 
-	public String name = "New Character";
 	public int colliderHeight = 1;
 	public LDataList<Tile> tiles = new LDataList<>();
 	
@@ -18,10 +17,6 @@ public class GameCharacter {
 		Node anim = new Node();
 		animations.add(anim);
 		tiles.add(new Tile());
-	}
-	
-	public String toString() {
-		return name;
 	}
 	
 	public static class Portrait {

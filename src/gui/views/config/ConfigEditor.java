@@ -81,7 +81,10 @@ public class ConfigEditor extends LObjectEditor {
 		grpParty.setText(Vocab.instance.PARTY);
 		
 		IDList lstMembers = new IDList(grpParty, SWT.NONE) {
-			public ArrayList<?> comboArray() { return Project.current.battlers.getList(); }
+			public ArrayList<?> comboArray() { 
+				//TODO: return Project.current.battlers.getList(); 
+				return null;
+			}
 		};
 		lstMembers.attributeName = "initialMembers";
 		addChild(lstMembers);
@@ -153,9 +156,6 @@ public class ConfigEditor extends LObjectEditor {
 		grpAtlas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAtlas.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpAtlas.setText(Vocab.instance.IMAGEATLASES);
-
-		ImageAtlasList lstAtlas = new ImageAtlasList(grpAtlas, SWT.NONE);
-		addChild(lstAtlas);
 		
 	}
 	

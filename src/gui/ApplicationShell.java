@@ -2,7 +2,6 @@ package gui;
 
 import gui.views.config.ConfigEditor;
 import gui.views.database.DatabaseEditor;
-import gui.views.dialogue.DialogueTreeEditor;
 import gui.views.fieldTree.FieldTreeEditor;
 
 import org.eclipse.swt.SWT;
@@ -52,9 +51,10 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		setSize(450, 300);
 		
 		final DatabaseEditor databaseEditor = new DatabaseEditor(this, SWT.NONE);
+		
+		/*
 		final ConfigEditor configEditor = new ConfigEditor(this, SWT.NONE);
 		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
-		final DialogueTreeEditor dialogueEditorEditor = new DialogueTreeEditor(this, SWT.NONE);
 		
 		MenuItem mntmFieldEditor = new MenuItem(menuView, SWT.NONE);
 		mntmFieldEditor.addSelectionListener(new SelectionAdapter() {
@@ -65,6 +65,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		});
 		mntmFieldEditor.setText(Vocab.instance.FIELDEDITOR + "\tF2");
 		mntmFieldEditor.setAccelerator(SWT.F2);
+		*/
 		
 		MenuItem mntmDatabaseEditor = new MenuItem(menuView, SWT.NONE);
 		mntmDatabaseEditor.addSelectionListener(new SelectionAdapter() {
@@ -76,16 +77,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		mntmDatabaseEditor.setText(Vocab.instance.DATABASEEDITOR + "\tF3");
 		mntmDatabaseEditor.setAccelerator(SWT.F3);
 
-		MenuItem mntmDialogueEditor = new MenuItem(menuView, SWT.NONE);
-		mntmDialogueEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(dialogueEditorEditor);
-			}
-		});
-		mntmDialogueEditor.setText(Vocab.instance.DIALOGUEEDITOR + "\tF4");
-		mntmDialogueEditor.setAccelerator(SWT.F4);
-
+		/*
 		MenuItem mntmConfigEditor = new MenuItem(menuView, SWT.NONE);
 		mntmConfigEditor.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -95,10 +87,11 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		});
 		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF5");
 		mntmConfigEditor.setAccelerator(SWT.F5);
+		*/
 		
 		applicationName = getText();
 		if (loadDefault()) {
-			setCurrentView(configEditor);
+			setCurrentView(databaseEditor);
 		}
 	}
 	

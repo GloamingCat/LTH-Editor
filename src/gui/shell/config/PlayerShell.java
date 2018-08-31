@@ -2,7 +2,6 @@ package gui.shell.config;
 
 import gui.Vocab;
 import gui.views.PositionButton;
-import gui.views.ScriptButton;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -20,10 +19,8 @@ import org.eclipse.swt.widgets.Composite;
 
 public class PlayerShell extends LObjectShell<Player> {
 	
-	private Text txtScript;
 	private Text txtStartpos;
 	private PositionButton btnStartPos;
-	private ScriptButton btnScript;
 	private Button btnPixelMovement;
 	private Button btnStopOnCollision;
 	private Spinner spnWalk;
@@ -59,19 +56,7 @@ public class PlayerShell extends LObjectShell<Player> {
 		spnDash = new Spinner(content, SWT.BORDER);
 		spnDash.setMaximum(999);
 		spnDash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label lblScript = new Label(content, SWT.NONE);
-		lblScript.setText(Vocab.instance.SCRIPT);
-		
-		txtScript = new Text(content, SWT.BORDER | SWT.READ_ONLY);
-		GridData gd_txtScript = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_txtScript.widthHint = 159;
-		txtScript.setLayoutData(gd_txtScript);
-		
-		btnScript = new ScriptButton(content, SWT.NONE);
-		btnScript.setFolder("character");
-		btnScript.setPathText(txtScript);
-		
+	
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
@@ -92,13 +77,11 @@ public class PlayerShell extends LObjectShell<Player> {
 		spnWalk.setSelection(initial.walkSpeed);
 		btnPixelMovement.setSelection(initial.pixelMovement);
 		btnStopOnCollision.setSelection(initial.stopOnCollision);
-		btnScript.setValue(initial.script);
 	}
 
 	@Override
 	protected Player createResult(Player initial) {
 		if (btnStartPos.getValue().equals(initial.startPos) && 
-				btnScript.getValue().equals(initial.script) &&
 				spnDash.getSelection() == initial.dashSpeed &&
 				spnWalk.getSelection() == initial.walkSpeed &&
 				btnPixelMovement.getSelection() == initial.pixelMovement &&

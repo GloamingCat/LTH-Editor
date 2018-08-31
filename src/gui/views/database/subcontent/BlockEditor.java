@@ -48,10 +48,10 @@ public class BlockEditor extends LObjectEditor {
 
 	protected void resetImage() {
 		Quad quad = (Quad) currentObject;
-		String path = Project.current.imagePath() + quad.imagePath;
+		String path = Project.current.imagePath() + quad.path;
 		Image original = SWTResourceManager.getImage(path);
 		Image image;
-		if (quad.imagePath.isEmpty()) {
+		if (quad.path.isEmpty()) {
 			image = original;
 		} else {
 			image = ImageHelper.getImageQuad(original, quad.x, quad.y, quad.width, quad.height);

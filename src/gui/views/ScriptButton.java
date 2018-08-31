@@ -5,18 +5,14 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.Script;
-
-public class ScriptButton extends LObjectButton<Script> {
+public class ScriptButton extends LObjectButton<String> {
 	
 	private String folder;
 	private Text pathText;
-	private StyledText paramText;
 	public boolean optional = false;
 	
 	/**
@@ -26,9 +22,9 @@ public class ScriptButton extends LObjectButton<Script> {
 	 */
 	public ScriptButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<Script>() {
+		setShellFactory(new LShellFactory<String>() {
 			@Override
-			public LObjectShell<Script> createShell(Shell parent) {
+			public LObjectShell<String> createShell(Shell parent) {
 				return new ScriptShell(parent, folder, optional);
 			}
 		});
@@ -36,10 +32,6 @@ public class ScriptButton extends LObjectButton<Script> {
 	
 	public void setPathText(Text text) {
 		pathText = text;
-	}
-	
-	public void setParamText(StyledText text) {
-		paramText = text;
 	}
 	
 	public void setFolder(String folder) {
@@ -50,21 +42,15 @@ public class ScriptButton extends LObjectButton<Script> {
 	public void setValue(Object value) {
 		if (value != null) {
 			button.setEnabled(true);
-			Script s = (Script) value;
+			String s = (String) value;
 			if (pathText != null) {
-				pathText.setText(s.path);
-			}
-			if (paramText != null) {
-				paramText.setText(s.param);
+				pathText.setText(s);
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (pathText != null) {
 				pathText.setText("");
-			}
-			if (paramText != null) {
-				paramText.setText("");
 			}
 			currentValue = null;
 		}

@@ -2,10 +2,9 @@ package data;
 
 import lwt.dataestructure.LDataList;
 
-public class Terrain {
+public class Terrain extends Data {
 
 	// General
-	public String name = "";
 	public boolean passable = true;
 	public int depth = 0;
 	
@@ -26,9 +25,5 @@ public class Terrain {
 	
 	// Tags
 	public LDataList<Tag> tags = new LDataList<>();
-	
-	public String toString() {
-		return name;
-	}
 	
 }

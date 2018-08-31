@@ -18,7 +18,6 @@ public class Config {
 	public LDataList<String> elements = new LDataList<>();
 	public LDataList<String> itemTypes = new LDataList<>();
 	public LDataList<Region> regions = new LDataList<>();
-	public LDataList<ImageAtlas> atlases = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	
 	public static class Player {
@@ -26,7 +25,6 @@ public class Config {
 		public int walkSpeed = 120;
 		public int dashSpeed = 240;
 		public boolean stopOnCollision = true;
-		public Script script = new Script("character/Player.lua", "");
 		public Position startPos = new Position();
 	}
 

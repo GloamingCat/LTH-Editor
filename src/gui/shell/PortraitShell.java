@@ -44,7 +44,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		btnQuad.addModifyListener(new LControlListener<Quad>() {
 			@Override
 			public void onModify(LControlEvent<Quad> event) {
-				imgQuad.setImage(event.newValue.imagePath, event.newValue.getRectangle());
+				imgQuad.setImage(event.newValue.path, event.newValue.getRectangle());
 			}
 		});
 		

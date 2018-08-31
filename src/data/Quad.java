@@ -5,7 +5,7 @@ import org.eclipse.swt.graphics.Rectangle;
 public class Quad {
 
 	// Texture
-	public String imagePath = "";
+	public String path = "";
 	
 	// Quad
 	public int x = 0;
@@ -19,7 +19,7 @@ public class Quad {
 		q.y = y;
 		q.width = width;
 		q.height = height;
-		q.imagePath = imagePath;
+		q.path = path;
 		return q;
 	}
 	
@@ -28,7 +28,7 @@ public class Quad {
 			return false;
 		if (other instanceof Quad) {
 			Quad q = (Quad) other;
-			return q.x == x && q.y == y && q.width == width && q.height == height && q.imagePath.equals(imagePath);
+			return q.x == x && q.y == y && q.width == width && q.height == height && q.path.equals(path);
 		} else {
 			return false;
 		}

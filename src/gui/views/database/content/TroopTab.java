@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Group;
 
 import data.Troop;
 import data.Troop.Unit;
-import project.GObjectListSerializer;
+import project.GObjectTreeSerializer;
 import project.Project;
 
 public class TroopTab extends DatabaseTab {
@@ -68,7 +68,7 @@ public class TroopTab extends DatabaseTab {
 	}
 
 	@Override
-	protected GObjectListSerializer getSerializer() {
+	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.troops;
 	}
 
