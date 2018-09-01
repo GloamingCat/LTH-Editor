@@ -1,6 +1,7 @@
 package gui.views.database;
 
 import java.lang.reflect.Type;
+import java.util.LinkedList;
 
 import editor.GDefaultTreeEditor;
 import gui.Vocab;
@@ -87,7 +88,7 @@ public abstract class DatabaseTab extends LView {
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		
 		lblID = new Label(grpGeneral, SWT.NONE);
-		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		lblName = new Label(grpGeneral, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
@@ -110,9 +111,16 @@ public abstract class DatabaseTab extends LView {
 		listEditor.getCollectionWidget().addInsertListener(new LCollectionListener<Object>() {
 			@Override
 			public void onInsert(LInsertEvent<Object> event) {
-				int id = listEditor.getDataCollection().findID();
-				event.node.initID(id);
-				lblID.setText("ID " + id);
+				LinkedList<LDataTree<Object>> nodes = new LinkedList <>();
+				nodes.add(event.node);
+				while (!nodes.isEmpty()) {
+					int id = listEditor.getDataCollection().findID();
+					nodes.peek().initID(id);
+					for (LDataTree<Object> child : nodes.poll().children) {
+						nodes.add(child);
+					}
+				}
+				lblID.setText("ID " + event.node.id);
 			}
 		});
 		

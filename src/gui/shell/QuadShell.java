@@ -9,6 +9,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -33,6 +38,7 @@ public class QuadShell extends FileShell<Quad> {
 	private Spinner spnY;
 	private Spinner spnWidth;
 	private Spinner spnHeight;
+	private ScrolledComposite scroll;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -46,6 +52,88 @@ public class QuadShell extends FileShell<Quad> {
 		
 		setMinimumSize(600, 400);
 		
+		Composite quad = new Composite(sashForm, SWT.NONE);
+		quad.setLayout(new GridLayout(1, false));
+		
+		scroll = new ScrolledComposite(quad, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		label = new Label(scroll, SWT.NONE);
+		label.setAlignment(SWT.CENTER);
+		label.setImage(SWTResourceManager.getImage(rootPath() + result));
+		scroll.setContent(label);
+		
+		Composite spinners = new Composite(quad, SWT.NONE);
+		spinners.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_spinners = new GridLayout(4, false);
+		gl_spinners.marginHeight = 0;
+		gl_spinners.marginWidth = 0;
+		spinners.setLayout(gl_spinners);
+		
+		Label lblX = new Label(spinners, SWT.NONE);
+		lblX.setText(Vocab.instance.QUADX);
+		
+		spnX = new Spinner(spinners, SWT.BORDER);
+		spnX.setMaximum(1024);
+		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblWidth = new Label(spinners, SWT.NONE);
+		lblWidth.setText(Vocab.instance.QUADW);
+		
+		spnWidth = new Spinner(spinners, SWT.BORDER);
+		spnWidth.setMaximum(1024);
+		spnWidth.setMinimum(1);
+		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblY = new Label(spinners, SWT.NONE);
+		lblY.setText(Vocab.instance.QUADY);
+		
+		spnY = new Spinner(spinners, SWT.BORDER);
+		spnY.setMaximum(1024);
+		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblHeight = new Label(spinners, SWT.NONE);
+		lblHeight.setText(Vocab.instance.QUADH);
+		
+		spnHeight = new Spinner(spinners, SWT.BORDER);
+		spnHeight.setMaximum(1024);
+		spnHeight.setMinimum(1);
+		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Button btnFullImage = new Button(quad, SWT.NONE);
+		GridLayout gl_composite_2 = new GridLayout(2, false);
+		gl_composite_2.marginWidth = 0;
+		gl_composite_2.marginHeight = 0;
+		btnFullImage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		label.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				int x1 = spnX.getSelection();
+				int y1 = spnY.getSelection();
+				int x2 = x1 + spnWidth.getSelection() - 1;
+				int y2 = y1 + spnHeight.getSelection() - 1;
+				e.gc.drawLine(x1, y1, x2, y1);
+				e.gc.drawLine(x1, y2, x2, y2);
+				e.gc.drawLine(x1, y1, x1, y2);
+				e.gc.drawLine(x2, y1, x2, y2);
+				System.out.println(label.getBounds());
+			}
+		});
+		
+		btnFullImage.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Rectangle rect = label.getImage().getBounds();
+				spnX.setSelection(0);
+				spnY.setSelection(0);
+				spnWidth.setSelection(rect.width);
+				spnHeight.setSelection(rect.height);
+				label.redraw();
+			}
+		});
+		btnFullImage.setText(Vocab.instance.FULLIMAGE);
+
 		list.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -57,71 +145,18 @@ public class QuadShell extends FileShell<Quad> {
 			}
 		});
 		
-		Composite composite_1 = new Composite(sashForm, SWT.NONE);
-		composite_1.setLayout(new GridLayout(1, false));
-		
-		label = new Label(composite_1, SWT.NONE);
-		label.setAlignment(SWT.CENTER);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		label.setImage(SWTResourceManager.getImage(rootPath() + result));
-		
-		Composite composite = new Composite(composite_1, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_composite = new GridLayout(4, false);
-		gl_composite.marginHeight = 0;
-		gl_composite.marginWidth = 0;
-		composite.setLayout(gl_composite);
-		
-		Label lblX = new Label(composite, SWT.NONE);
-		lblX.setText(Vocab.instance.QUADX);
-		
-		spnX = new Spinner(composite, SWT.BORDER);
-		spnX.setMaximum(1024);
-		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label lblWidth = new Label(composite, SWT.NONE);
-		lblWidth.setText(Vocab.instance.QUADW);
-		
-		spnWidth = new Spinner(composite, SWT.BORDER);
-		spnWidth.setMaximum(1024);
-		spnWidth.setMinimum(1);
-		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label lblY = new Label(composite, SWT.NONE);
-		lblY.setText(Vocab.instance.QUADY);
-		
-		spnY = new Spinner(composite, SWT.BORDER);
-		spnY.setMaximum(1024);
-		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label lblHeight = new Label(composite, SWT.NONE);
-		lblHeight.setText(Vocab.instance.QUADH);
-		
-		spnHeight = new Spinner(composite, SWT.BORDER);
-		spnHeight.setMaximum(1024);
-		spnHeight.setMinimum(1);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Composite composite_2 = new Composite(composite_1, SWT.NONE);
-		GridLayout gl_composite_2 = new GridLayout(2, false);
-		gl_composite_2.marginWidth = 0;
-		gl_composite_2.marginHeight = 0;
-		composite_2.setLayout(gl_composite_2);
-		composite_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		Button btnFullImage = new Button(composite_2, SWT.NONE);
-		btnFullImage.addSelectionListener(new SelectionAdapter() {
+		ModifyListener redrawListener = new ModifyListener() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				Rectangle rect = label.getImage().getBounds();
-				spnX.setSelection(0);
-				spnY.setSelection(0);
-				spnWidth.setSelection(rect.width);
-				spnHeight.setSelection(rect.height);
+			public void modifyText(ModifyEvent arg0) {
+				label.redraw();
 			}
-		});
-		btnFullImage.setText(Vocab.instance.FULLIMAGE);
-
+		};
+		
+		spnX.addModifyListener(redrawListener);
+		spnY.addModifyListener(redrawListener);
+		spnWidth.addModifyListener(redrawListener);
+		spnHeight.addModifyListener(redrawListener);
+		
 		sashForm.setWeights(new int[] {1, 1});
 	}
 	
@@ -174,6 +209,9 @@ public class QuadShell extends FileShell<Quad> {
 		String path = rootPath() + label.getText();
 		Image image = SWTResourceManager.getImage(path);
 		label.setImage(image);
+		label.setBounds(image.getBounds());
+		scroll.setMinSize(label.getSize());
+		label.redraw();
 	}
 	
 	protected String rootPath() {

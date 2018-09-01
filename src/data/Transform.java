@@ -4,7 +4,7 @@ public class Transform {
 
 	// Space transformation
 	public int offsetX = 0;
-	public int offsetY = 8;
+	public int offsetY = 0;
 	public int offsetDepth = 0;
 	public int scaleX = 100;
 	public int scaleY = 100;

@@ -114,7 +114,7 @@ public class TransformEditor extends LObjectEditor {
 		
 		LSpinner spnHue = new LSpinner(grpTransform, SWT.NONE);
 		spnHue.setMaximum(360);
-		spnHue.setMinimum(0);
+		spnHue.setMinimum(-360);
 		spnHue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnHue, "hue");
 		
@@ -123,7 +123,7 @@ public class TransformEditor extends LObjectEditor {
 		
 		LSpinner spnRotation = new LSpinner(grpTransform, SWT.NONE);
 		spnRotation.setMaximum(360);
-		spnRotation.setMinimum(0);
+		spnRotation.setMinimum(-360);
 		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRotation, "rotation");
 		
@@ -131,7 +131,7 @@ public class TransformEditor extends LObjectEditor {
 		lblSaturation.setText(Vocab.instance.SATURATION);
 		
 		LSpinner spnSaturation = new LSpinner(grpTransform, SWT.NONE);
-		spnSaturation.setMaximum(100);
+		spnSaturation.setMaximum(10000);
 		spnSaturation.setMinimum(0);
 		spnSaturation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnSaturation, "saturation");
@@ -143,7 +143,7 @@ public class TransformEditor extends LObjectEditor {
 		lblBrightness.setText(Vocab.instance.BRIGHTNESS);
 		
 		LSpinner spnBrightness = new LSpinner(grpTransform, SWT.NONE);
-		spnBrightness.setMaximum(100);
+		spnBrightness.setMaximum(10000);
 		spnBrightness.setMinimum(0);
 		spnBrightness.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnBrightness, "brightness");

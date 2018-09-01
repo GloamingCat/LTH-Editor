@@ -29,7 +29,9 @@ public class ScriptShell extends FileShell<String> {
 	protected String createResult(String initial) {
 		int i = list.getSelectionIndex();
 		if (i >= 0) {
-			String newValue = folder + "/" + list.getItem(i);
+			String newValue = list.getItem(i);
+			if (!newValue.isEmpty())
+				newValue = newValue.substring(0, newValue.length() - 4);
 			if (newValue.equals(initial)) {
 				return null;
 			} else {

@@ -4,10 +4,13 @@ import gui.Vocab;
 import gui.views.QuadButton;
 import gui.views.ScriptButton;
 import gui.views.database.DatabaseTab;
+import gui.views.database.subcontent.AudioList;
+import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -20,6 +23,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.GObjectTreeSerializer;
 import project.Project;
+
+import org.eclipse.swt.layout.FillLayout;
 
 public class AnimationTab extends DatabaseTab {
 
@@ -34,34 +39,28 @@ public class AnimationTab extends DatabaseTab {
 		contentEditor.setLayout(new GridLayout(2, false));
 		GridLayout gridLayout = new GridLayout(2, false);
 		grpGeneral.setLayout(gridLayout);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		
-		Group grpAudio = new Group(contentEditor, SWT.NONE);
-		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpAudio.setLayout(new GridLayout(1, false));
-		grpAudio.setText(Vocab.instance.SOUND);
+		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		Label lblColumns = new Label(grpGeneral, SWT.NONE);
 		lblColumns.setText(Vocab.instance.COLUMNS);
 		
 		LSpinner spnCols = new LSpinner(grpGeneral, SWT.NONE);
-		spnCols.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnCols.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnCols, "cols");
 		
 		Label lblRows = new Label(grpGeneral, SWT.NONE);
 		lblRows.setText(Vocab.instance.ROWS);
 		
 		LSpinner spnRows = new LSpinner(grpGeneral, SWT.NONE);
-		spnRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnRows, "rows");
 
 		Label lblDuration = new Label(grpGeneral, SWT.NONE);
 		lblDuration.setText(Vocab.instance.DURATION);
 
-		LSpinner spnDuration = new LSpinner(grpGeneral, SWT.NONE);
-		spnDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnDuration, "duration");
+		LText txtDuration = new LText(grpGeneral, SWT.NONE);
+		txtDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(txtDuration, "duration");
 
 		Label lblLoop = new Label(grpGeneral, SWT.NONE);
 		lblLoop.setText(Vocab.instance.LOOP);
@@ -73,6 +72,13 @@ public class AnimationTab extends DatabaseTab {
 		cmbLoop.setItems(new String[] { Vocab.instance.NOLOOP, Vocab.instance.REPEAT, Vocab.instance.MIRROR });
 		addControl(cmbLoop, "loop");
 		
+		Label lblPattern = new Label(grpGeneral, SWT.NONE);
+		lblPattern.setText(Vocab.instance.PATTERN);
+		
+		LText txtPattern = new LText(grpGeneral, SWT.NONE);
+		txtPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(txtPattern, "pattern");
+
 		Label lblScript = new Label(grpGeneral,  SWT.NONE);
 		lblScript.setText(Vocab.instance.SCRIPT);
 
@@ -84,7 +90,7 @@ public class AnimationTab extends DatabaseTab {
 		script.setLayout(gl_script);
 		
 		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		ScriptButton btnScript = new ScriptButton(script, SWT.NONE);
 		btnScript.optional = true;
@@ -92,12 +98,16 @@ public class AnimationTab extends DatabaseTab {
 		addScriptButton(btnScript, txtScript, "animation", "animation");
 		
 		TransformEditor transformTab = new TransformEditor(contentEditor, SWT.NONE);
-		GridData gd_transformTab = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_transformTab.widthHint = 250;
+		GridData gd_transformTab = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_transformTab.widthHint = 300;
 		transformTab.setLayoutData(gd_transformTab);
 		addChild(transformTab);
 		
-		Group grpImg = new Group(contentEditor, SWT.NONE);
+		Composite bottom = new Composite(contentEditor, SWT.NONE);
+		bottom.setLayout(new GridLayout(3, false));
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		Group grpImg = new Group(bottom, SWT.NONE);
 		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_grpImg = new GridLayout(1, false);
 		gl_grpImg.marginWidth = 0;
@@ -109,10 +119,28 @@ public class AnimationTab extends DatabaseTab {
 		btnSelectImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		LImage image = new LImage(grpImg, SWT.NONE);
-		image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_image.widthHint = 150;
+		image.setLayoutData(gd_image);
 		image.setImage(SWTResourceManager.getImage(AnimationTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
 		
-		addQuadButton(btnSelectImage, image, "Animations/", "quad");
+		addQuadButton(btnSelectImage, image, "", "quad");
+		
+		Group grpAudio = new Group(bottom, SWT.NONE);
+		grpAudio.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAudio.setText(Vocab.instance.SOUND);
+		
+		AudioList lstAudio = new AudioList(grpAudio, SWT.NONE);
+		addChild(lstAudio);
+		
+		Group grpTags = new Group(bottom, SWT.NONE);
+		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList lstTag = new TagList(grpTags, SWT.NONE);
+		addChild(lstTag);
 		
 	}
 

@@ -144,16 +144,16 @@ public class Vocab {
 	// Animation
 	public String COLUMNS = "Columns";
 	public String ROWS = "Rows";
-	public String FRAMEDURATION = "Frame Duration";
 	public String LOOP = "Loop";
 	public String NOLOOP = "No Loop";
 	public String REPEAT = "Repeat";
+	public String PATTERN = "Pattern";
 	
 	// Audio
 	public String SOUND = "Sound";
 	public String VOLUME = "Volume";
 	public String PITCH = "Pitch";
-	public String SPEED = "Speed";
+	public String DELAY = "Delay";
 	
 	// Transform
 	public String TRANSFORM = "Transform";

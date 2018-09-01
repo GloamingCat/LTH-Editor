@@ -21,7 +21,7 @@ public class AudioShell extends FileShell<Audio> {
 
 	private Spinner spnVolume;
 	private Spinner spnPitch;
-	private Spinner spnTime;
+	private Spinner spnDelay;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -33,6 +33,8 @@ public class AudioShell extends FileShell<Audio> {
 	public AudioShell(Shell parent, String folder, boolean optional) {
 		super(parent, folder, optional);
 
+		setMinimumSize(400, 400);
+		
 		Composite composite = new Composite(sashForm, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -52,12 +54,14 @@ public class AudioShell extends FileShell<Audio> {
 		spnPitch.setMinimum(1);
 		spnPitch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblSpeed = new Label(composite, SWT.NONE);
-		lblSpeed.setText(Vocab.instance.SPEED);
+		Label lblDelay = new Label(composite, SWT.NONE);
+		lblDelay.setText(Vocab.instance.DELAY);
 		
-		spnTime = new Spinner(composite, SWT.BORDER);
-		spnTime.setMinimum(0);
-		spnTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnDelay = new Spinner(composite, SWT.BORDER);
+		spnDelay.setMaximum(10000);
+		spnDelay.setMinimum(0);
+		spnDelay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		sashForm.setWeights(new int[] {5, 4});
 	}
 	
 	public void open(Audio initial) {
@@ -66,7 +70,7 @@ public class AudioShell extends FileShell<Audio> {
 		list.select(i);
 		spnVolume.setSelection(initial.volume);
 		spnPitch.setSelection(initial.pitch);
-		spnTime.setSelection(initial.time);
+		spnDelay.setSelection(initial.delay);
 	}
 
 	@Override
@@ -77,19 +81,19 @@ public class AudioShell extends FileShell<Audio> {
 		String newPath = folder + "/" + list.getItem(i);
 		if (newPath.equals(initial) && initial.pitch == spnPitch.getSelection() 
 				&& initial.volume == spnVolume.getSelection()
-				&& initial.time == spnTime.getSelection()) {
+				&& initial.delay == spnDelay.getSelection()) {
 			return null;
 		} else {
 			return new Audio(newPath, 
 					spnVolume.getSelection(), 
 					spnPitch.getSelection(),
-					spnTime.getSelection());
+					spnDelay.getSelection());
 		}
 	}
 
 	protected boolean isValidFile(File file) {
 		String name = file.getName();
-		return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".mid");
+		return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
 	}
 	
 	protected String rootPath() {
