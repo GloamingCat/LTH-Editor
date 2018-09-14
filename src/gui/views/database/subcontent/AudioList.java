@@ -6,7 +6,7 @@ import gui.views.SimpleEditableList;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Audio;
+import data.subcontent.Audio;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 

@@ -1,10 +1,9 @@
 package gui.views.config;
 
-import java.util.ArrayList;
-
 import gui.Vocab;
 import gui.views.IDList;
 import lwt.action.LActionStack;
+import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
 import lwt.widget.LText;
 
@@ -81,7 +80,7 @@ public class ConfigEditor extends LObjectEditor {
 		grpParty.setText(Vocab.instance.PARTY);
 		
 		IDList lstMembers = new IDList(grpParty, SWT.NONE) {
-			public ArrayList<?> comboArray() { 
+			public LDataTree<Object> getDataTree() { 
 				//TODO: return Project.current.battlers.getList(); 
 				return null;
 			}

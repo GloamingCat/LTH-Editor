@@ -1,5 +1,8 @@
 package data;
 
+import data.subcontent.Bonus;
+import data.subcontent.Quad;
+import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Skill extends Data {

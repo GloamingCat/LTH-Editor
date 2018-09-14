@@ -8,7 +8,7 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.GUI;
+import data.config.Config.GUI;
 
 public class GUIButton extends LObjectButton<GUI> {
 

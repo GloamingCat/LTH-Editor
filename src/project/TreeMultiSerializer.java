@@ -1,7 +1,7 @@
 package project;
 
 import lwt.dataestructure.LDataTree;
-import data.Node;
+import data.subcontent.Node;
 
 public abstract class TreeMultiSerializer<DataT, CollectionT> 
 		extends GMultiSerializer<Node, DataT, CollectionT> {

@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import project.Project;
-import data.Quad;
+import data.subcontent.Quad;
 
 public class QuadButton extends LObjectButton<Quad> {
 	

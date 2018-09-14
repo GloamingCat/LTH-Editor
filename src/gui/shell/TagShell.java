@@ -2,7 +2,7 @@ package gui.shell;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.Tag;
+import data.subcontent.Tag;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;

@@ -46,7 +46,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 */
 	public ApplicationShell(Display display) {
 		super(display);
-		setMinimumSize(new Point(800, 600));
+		setMinimumSize(new Point(900, 600));
 		setText("LTH Editor");
 		setSize(450, 300);
 		

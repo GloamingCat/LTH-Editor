@@ -15,13 +15,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
-import data.Audio;
+import data.subcontent.Audio;
 
 public class AudioShell extends FileShell<Audio> {
 
 	private Spinner spnVolume;
 	private Spinner spnPitch;
-	private Spinner spnDelay;
+	private Spinner spnTime;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -55,12 +55,12 @@ public class AudioShell extends FileShell<Audio> {
 		spnPitch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblDelay = new Label(composite, SWT.NONE);
-		lblDelay.setText(Vocab.instance.DELAY);
+		lblDelay.setText(Vocab.instance.TIME);
 		
-		spnDelay = new Spinner(composite, SWT.BORDER);
-		spnDelay.setMaximum(10000);
-		spnDelay.setMinimum(0);
-		spnDelay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnTime = new Spinner(composite, SWT.BORDER);
+		spnTime.setMaximum(10000);
+		spnTime.setMinimum(0);
+		spnTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		sashForm.setWeights(new int[] {5, 4});
 	}
 	
@@ -70,7 +70,7 @@ public class AudioShell extends FileShell<Audio> {
 		list.select(i);
 		spnVolume.setSelection(initial.volume);
 		spnPitch.setSelection(initial.pitch);
-		spnDelay.setSelection(initial.delay);
+		spnTime.setSelection(initial.time);
 	}
 
 	@Override
@@ -81,13 +81,13 @@ public class AudioShell extends FileShell<Audio> {
 		String newPath = folder + "/" + list.getItem(i);
 		if (newPath.equals(initial) && initial.pitch == spnPitch.getSelection() 
 				&& initial.volume == spnVolume.getSelection()
-				&& initial.delay == spnDelay.getSelection()) {
+				&& initial.time == spnTime.getSelection()) {
 			return null;
 		} else {
 			return new Audio(newPath, 
 					spnVolume.getSelection(), 
 					spnPitch.getSelection(),
-					spnDelay.getSelection());
+					spnTime.getSelection());
 		}
 	}
 

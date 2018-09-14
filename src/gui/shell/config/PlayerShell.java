@@ -5,7 +5,7 @@ import gui.views.PositionButton;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.Player;
+import data.config.Config.Player;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.layout.GridLayout;

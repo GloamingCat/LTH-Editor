@@ -44,6 +44,7 @@ public class Vocab {
 	public String SECONDS = "sec";
 	public String PROPERTIES = "Properties";
 	public String TYPE = "Type";
+	public String DEFAULT = "Default";
 	
 	// Config
 	public String PROJECTNAME = "Project Name";
@@ -144,16 +145,15 @@ public class Vocab {
 	// Animation
 	public String COLUMNS = "Columns";
 	public String ROWS = "Rows";
-	public String LOOP = "Loop";
-	public String NOLOOP = "No Loop";
-	public String REPEAT = "Repeat";
 	public String PATTERN = "Pattern";
+	public String INTRO = "Intro";
+	public String LOOP = "Loop";
 	
 	// Audio
 	public String SOUND = "Sound";
 	public String VOLUME = "Volume";
 	public String PITCH = "Pitch";
-	public String DELAY = "Delay";
+	public String TIME = "Time";
 	
 	// Transform
 	public String TRANSFORM = "Transform";
@@ -189,6 +189,8 @@ public class Vocab {
 	public String TOP = "Top";
 	public String NEIGHBORS = "Neighbors";
 	public String TILES = "Tiles";
+	public String NONE = "None";
+	public String ALL = "All";
 
 	// Status
 	public String REMOVEONDAMAGE = "Remove on Damage";

@@ -5,7 +5,7 @@ import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 
-import data.Region;
+import data.config.Region;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 

@@ -1,4 +1,4 @@
-package data;
+package data.subcontent;
 
 import org.eclipse.swt.graphics.Rectangle;
 

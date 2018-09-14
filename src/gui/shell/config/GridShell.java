@@ -4,14 +4,13 @@ import gui.Vocab;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.Grid;
+import data.config.Config.Grid;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Button;

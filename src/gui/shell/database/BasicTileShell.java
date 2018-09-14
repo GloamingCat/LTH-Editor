@@ -16,8 +16,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-import data.Tag;
 import data.Tileset.BasicTile;
+import data.subcontent.Tag;
 
 public class BasicTileShell<T extends BasicTile> extends LObjectShell<T> {
 	

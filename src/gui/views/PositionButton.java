@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.Position;
+import data.subcontent.Position;
 
 public class PositionButton extends LObjectButton<Position> {
 

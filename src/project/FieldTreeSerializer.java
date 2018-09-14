@@ -4,7 +4,7 @@ import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import data.Field;
 import data.FieldTree;
-import data.Node;
+import data.subcontent.Node;
 
 public class FieldTreeSerializer extends TreeMultiSerializer<Field, FieldTree> {
 

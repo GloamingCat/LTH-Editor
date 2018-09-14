@@ -9,12 +9,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
-import data.BattlerType;
-import data.Config;
 import data.GameCharacter;
 import data.Obstacle;
-import data.Region;
 import data.Terrain;
+import data.config.Config;
+import data.config.Region;
+import data.subcontent.BattlerType;
 import project.Project;
 
 public class TilePainter {

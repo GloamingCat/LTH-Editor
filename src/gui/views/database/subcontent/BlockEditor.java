@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import data.Quad;
+import data.subcontent.Quad;
 import project.Project;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;

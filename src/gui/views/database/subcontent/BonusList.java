@@ -8,7 +8,7 @@ import gui.views.SimpleEditableList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import data.Bonus;
+import data.subcontent.Bonus;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;

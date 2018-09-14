@@ -13,7 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import project.Project;
-import data.Config.Battle;
+import data.config.Config.Battle;
 
 public class BattleShell extends LObjectShell<Battle> {
 

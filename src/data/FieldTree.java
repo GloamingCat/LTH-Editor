@@ -2,6 +2,7 @@ package data;
 
 import java.util.HashMap;
 
+import data.subcontent.Node;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 

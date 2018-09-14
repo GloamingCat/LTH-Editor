@@ -1,6 +1,6 @@
 package gui.helper;
 
-import data.Config;
+import data.config.Config;
 import project.Project;
 
 public class FieldHelper {

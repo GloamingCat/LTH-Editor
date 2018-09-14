@@ -13,7 +13,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
 import data.Field;
-import data.Layer;
+import data.subcontent.Layer;
 
 public class FieldCanvas extends LView {
 

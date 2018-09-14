@@ -1,5 +1,7 @@
 package data;
 
+import data.subcontent.Quad;
+import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Item extends Data {

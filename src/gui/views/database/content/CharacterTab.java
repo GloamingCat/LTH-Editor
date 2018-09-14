@@ -27,7 +27,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.GameCharacter.Portrait;
-import data.Node;
+import data.subcontent.Node;
 import project.GObjectTreeSerializer;
 import project.Project;
 

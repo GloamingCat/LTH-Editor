@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.Node;
+import data.subcontent.Node;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;

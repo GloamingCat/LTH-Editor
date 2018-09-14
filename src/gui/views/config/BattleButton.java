@@ -8,7 +8,7 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.Battle;
+import data.config.Config.Battle;
 
 public class BattleButton extends LObjectButton<Battle> {
 

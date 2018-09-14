@@ -10,8 +10,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import data.Attribute;
-import data.Config;
+import data.config.Attribute;
+import data.config.Config;
 import project.Project;
 import lwt.dataestructure.LDataList;
 import lwt.editor.LObjectEditor;

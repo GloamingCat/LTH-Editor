@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.FontData;
+import data.subcontent.FontData;
 
 public class FontButton extends LObjectButton<FontData> {
 	

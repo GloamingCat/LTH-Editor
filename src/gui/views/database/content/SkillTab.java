@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import data.Config;
+import data.config.Config;
 import project.GObjectTreeSerializer;
 import project.Project;
 

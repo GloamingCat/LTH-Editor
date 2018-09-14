@@ -5,7 +5,7 @@ import project.Project;
 import lwt.action.LAction;
 import lwt.dataestructure.LPath;
 import data.Field;
-import data.Layer;
+import data.subcontent.Layer;
 
 public class ResizeAction implements LAction {
 

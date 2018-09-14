@@ -30,8 +30,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.Battler;
-import data.Config;
 import data.GameCharacter;
+import data.config.Config;
 import project.GObjectTreeSerializer;
 import project.Project;
 

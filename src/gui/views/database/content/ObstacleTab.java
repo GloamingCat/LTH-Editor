@@ -51,7 +51,7 @@ public class ObstacleTab extends DatabaseTab {
 		
 		Group grpGraphics = new Group(other, SWT.NONE);
 		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		grpGraphics.setText("Graphics");
+		grpGraphics.setText(Vocab.instance.GRAPHICS);
 		grpGraphics.setLayout(new FillLayout());
 
 		QuadEditor quadComp = new QuadEditor(grpGraphics, 0) {

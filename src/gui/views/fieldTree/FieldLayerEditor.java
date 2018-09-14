@@ -21,13 +21,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
-import data.BattlerType;
-import data.Config;
 import data.Field;
-import data.Layer;
-import data.Layer.Info;
 import data.Tileset;
 import data.Tileset.*;
+import data.config.Config;
+import data.subcontent.BattlerType;
+import data.subcontent.Layer;
+import data.subcontent.Layer.Info;
 
 public class FieldLayerEditor extends LEditor {
 

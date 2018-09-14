@@ -1,7 +1,5 @@
 package gui.shell.config;
 
-import java.util.ArrayList;
-
 import gui.Vocab;
 import gui.views.IDList;
 
@@ -15,6 +13,7 @@ import org.eclipse.swt.widgets.Text;
 
 import lwt.LVocab;
 import lwt.dataestructure.LDataList;
+import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;
@@ -30,7 +29,7 @@ import project.Project;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-import data.Region;
+import data.config.Region;
 
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -91,9 +90,8 @@ public class RegionShell extends LObjectShell<Region> {
 		grpBattler.setText(Vocab.instance.BATTLERS);
 		
 		lstBattlers = new IDList(grpBattler, SWT.NONE) {
-			public ArrayList<?> comboArray() {
-				//TODO return Project.current.battlers.getList();
-				return null;
+			public LDataTree<Object> getDataTree() {
+				return Project.current.battlers.getTree();
 			}
 			public LDataList<Integer> getDataCollection() {
 				return battlers;

@@ -7,7 +7,8 @@ import lwt.widget.LObjectButton;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import data.Transform;
+
+import data.subcontent.Transform;
 
 public class TransformButton extends LObjectButton<Transform> {
 	

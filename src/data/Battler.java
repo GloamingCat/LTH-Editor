@@ -1,5 +1,7 @@
 package data;
 
+import data.subcontent.Bonus;
+import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Battler extends Data {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.graphics.Point;
 
-import data.Config.Grid;
+import data.config.Config.Grid;
 
 public abstract class FieldMath {
 

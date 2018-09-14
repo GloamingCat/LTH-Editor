@@ -1,5 +1,8 @@
 package data;
 
+import data.subcontent.Quad;
+import data.subcontent.Tag;
+import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
 
 public class Obstacle extends Data {

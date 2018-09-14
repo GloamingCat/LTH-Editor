@@ -23,9 +23,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import data.Field;
-import data.Layer;
-import data.Node;
-import data.Position;
+import data.subcontent.Layer;
+import data.subcontent.Node;
+import data.subcontent.Position;
 import project.Project;
 
 import org.eclipse.swt.events.SelectionAdapter;

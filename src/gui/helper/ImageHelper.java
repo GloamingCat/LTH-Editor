@@ -12,7 +12,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import project.Project;
 import data.Animation;
 import data.Obstacle;
-import data.Quad;
+import data.subcontent.Quad;
 
 public class ImageHelper {
 	
@@ -76,7 +76,7 @@ public class ImageHelper {
 		}
 	}
 	
-	public static Image transform(data.Transform t, Image original) {
+	public static Image transform(data.subcontent.Transform t, Image original) {
 		return transform(t.offsetX, t.offsetY, t.rotation, t.scaleX, t.scaleY, 
 				t.red, t.green, t.blue, t.alpha, original);
 	}

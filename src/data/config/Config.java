@@ -1,5 +1,8 @@
-package data;
+package data.config;
 
+import data.subcontent.BattlerType;
+import data.subcontent.Position;
+import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Config {

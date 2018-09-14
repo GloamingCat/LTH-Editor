@@ -1,8 +1,11 @@
-package data;
+package data.config;
 
 import lwt.dataestructure.LDataList;
 
 import org.eclipse.swt.graphics.Rectangle;
+
+import data.subcontent.Quad;
+import data.subcontent.Tag;
 
 public class GUI {
 	

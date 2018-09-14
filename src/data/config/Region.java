@@ -1,4 +1,4 @@
-package data;
+package data.config;
 
 import org.eclipse.swt.graphics.RGB;
 

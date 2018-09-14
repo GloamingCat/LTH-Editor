@@ -11,8 +11,8 @@ import lwt.widget.LImage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Quad;
 import data.GameCharacter.Portrait;
+import data.subcontent.Quad;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;

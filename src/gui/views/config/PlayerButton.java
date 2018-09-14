@@ -8,7 +8,7 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.Player;
+import data.config.Config.Player;
 
 public class PlayerButton extends LObjectButton<Player> {
 

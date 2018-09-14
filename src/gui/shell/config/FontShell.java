@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
-import data.FontData;
+import data.subcontent.FontData;
 
 import org.eclipse.swt.widgets.Text;
 

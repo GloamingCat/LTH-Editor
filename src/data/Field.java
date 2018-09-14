@@ -1,5 +1,8 @@
 package data;
 
+import data.subcontent.Layer;
+import data.subcontent.Tag;
+import data.subcontent.Transition;
 import lwt.dataestructure.LDataList;
 
 public class Field {

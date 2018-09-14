@@ -2,6 +2,7 @@ package data;
 
 import org.eclipse.swt.graphics.Image;
 
+import data.subcontent.Tag;
 import gui.helper.TilePainter;
 import lwt.dataestructure.LDataList;
 import lwt.datainterface.LGraphical;

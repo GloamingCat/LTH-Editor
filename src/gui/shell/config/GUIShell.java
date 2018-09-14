@@ -4,7 +4,7 @@ import gui.Vocab;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.GUI;
+import data.config.Config.GUI;
 import lwt.dialog.LObjectShell;
 import lwt.widget.LCombo;
 
@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 
 import project.Project;
+
 import org.eclipse.swt.graphics.Point;
 
 public class GUIShell extends LObjectShell<GUI> {

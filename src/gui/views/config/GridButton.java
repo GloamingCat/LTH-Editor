@@ -8,7 +8,7 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config.Grid;
+import data.config.Config.Grid;
 
 public class GridButton extends LObjectButton<Grid> {
 

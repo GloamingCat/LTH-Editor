@@ -1,4 +1,4 @@
-package data;
+package data.config;
 
 public class Attribute {
 

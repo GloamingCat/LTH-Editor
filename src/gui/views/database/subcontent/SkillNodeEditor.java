@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import project.Project;
+import lwt.dataestructure.LDataTree;
 import lwt.editor.LComboView;
 import lwt.editor.LObjectEditor;
 import lwt.widget.LSpinner;
@@ -62,7 +62,7 @@ public class SkillNodeEditor extends LObjectEditor {
 		grpRequiredSkills.setText(Vocab.instance.REQUIREDSKILLS);
 
 		IDList lstRequirements = new IDList(grpRequiredSkills, SWT.NONE) {
-			public ArrayList<?> comboArray() {
+			public LDataTree<Object> getDataTree() {
 				//TODO return Project.current.skills.getList();
 				return null;
 			}

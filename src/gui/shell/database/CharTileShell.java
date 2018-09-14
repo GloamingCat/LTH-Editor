@@ -18,6 +18,7 @@ public class CharTileShell extends LObjectShell<Tile> {
 	
 	private Spinner spnX;
 	private Spinner spnY;
+	private Spinner spnHeight;
 	
 	public CharTileShell(Shell parent) {
 		super(parent);
@@ -38,6 +39,12 @@ public class CharTileShell extends LObjectShell<Tile> {
 		
 		spnY = new Spinner(content, SWT.BORDER);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblHeight = new Label(content, SWT.NONE);
+		lblHeight.setText(Vocab.instance.OFFSETY);
+		
+		spnHeight = new Spinner(content, SWT.BORDER);
+		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		pack();
 	}

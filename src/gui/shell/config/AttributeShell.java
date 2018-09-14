@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.Attribute;
+import data.config.Attribute;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;

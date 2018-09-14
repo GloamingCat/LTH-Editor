@@ -20,10 +20,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import project.Project;
-import data.Config;
 import data.Field.Prefs;
-import data.Tag;
-import data.Transition;
+import data.config.Config;
+import data.subcontent.Tag;
+import data.subcontent.Transition;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;

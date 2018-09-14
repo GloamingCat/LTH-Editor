@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import data.Quad;
+import data.subcontent.Quad;
 import project.Project;
 
 import org.eclipse.swt.widgets.Composite;

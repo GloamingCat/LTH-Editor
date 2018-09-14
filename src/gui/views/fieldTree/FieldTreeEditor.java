@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 import data.Field;
 import data.Field.Prefs;
-import data.Node;
+import data.subcontent.Node;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;

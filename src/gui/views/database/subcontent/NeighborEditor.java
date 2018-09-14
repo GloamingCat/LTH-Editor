@@ -36,12 +36,12 @@ public class NeighborEditor extends LObjectEditor {
 		
 		Button btnNone = new Button(group, SWT.NONE);
 		btnNone.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnNone.setText("None");
+		btnNone.setText(Vocab.instance.NONE);
 		btnNone.addSelectionListener(allAction(false));
 		
 		Button btnAll = new Button(group, SWT.NONE);
 		btnAll.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnAll.setText("All");
+		btnAll.setText(Vocab.instance.ALL);
 		btnAll.addSelectionListener(allAction(true));
 		
 		Composite composite = new Composite(group, SWT.NONE);

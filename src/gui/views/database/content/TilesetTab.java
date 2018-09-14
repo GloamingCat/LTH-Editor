@@ -15,12 +15,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Config;
 import data.Tileset.CharTile;
 import data.Tileset.ObstacleTile;
 import data.Tileset.RegionTile;
 import data.Tileset.TerrainTile;
-
+import data.config.Config;
 import project.GObjectTreeSerializer;
 import project.Project;
 

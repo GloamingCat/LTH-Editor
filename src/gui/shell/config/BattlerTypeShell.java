@@ -12,7 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-import data.BattlerType;
+import data.subcontent.BattlerType;
 
 public class BattlerTypeShell extends LObjectShell<BattlerType> {
 	

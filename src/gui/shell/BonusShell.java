@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
-import data.Bonus;
+import data.subcontent.Bonus;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;

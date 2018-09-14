@@ -17,8 +17,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-import data.Layer.Info;
-import data.Tag;
+import data.subcontent.Tag;
+import data.subcontent.Layer.Info;
 
 import org.eclipse.swt.layout.FillLayout;
 

@@ -11,16 +11,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
-import data.BattlerType;
-import data.Config.Grid;
 import data.Field;
-import data.Layer;
 import data.GameCharacter;
 import data.Obstacle;
-import data.Region;
 import data.Terrain;
 import data.Tileset;
 import data.Tileset.CharTile;
+import data.config.Region;
+import data.config.Config.Grid;
+import data.subcontent.BattlerType;
+import data.subcontent.Layer;
 import project.Project;
 
 public class FieldPainter {

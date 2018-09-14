@@ -22,8 +22,8 @@ import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Field;
-import data.Layer;
-import data.Node;
+import data.subcontent.Layer;
+import data.subcontent.Node;
 
 import org.eclipse.swt.layout.GridLayout;
 

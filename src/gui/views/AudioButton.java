@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.Audio;
+import data.subcontent.Audio;
 
 public class AudioButton extends LObjectButton<Audio> {
 	

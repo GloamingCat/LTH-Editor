@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import data.Quad;
+import data.subcontent.Quad;
 import project.GObjectTreeSerializer;
 import project.Project;
 
