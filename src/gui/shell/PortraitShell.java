@@ -1,79 +1,109 @@
 package gui.shell;
 
-
 import gui.Vocab;
-import gui.views.QuadButton;
+import lwt.dataestructure.LDataTree;
+import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
-import lwt.widget.LImage;
+import lwt.editor.LDefaultTreeEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 import data.GameCharacter.Portrait;
-import data.subcontent.Quad;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 
+import project.Project;
+
+import org.eclipse.swt.graphics.Point;
+
 public class PortraitShell extends LObjectShell<Portrait> {
 	
+	private LDefaultTreeEditor<Object> tree;
 	private Text txtName;
-	private QuadButton btnQuad;
-	private LImage imgQuad;
+	private Spinner spnCol;
+	private Spinner spnRow;
 	
 	public PortraitShell(Shell parent) {
 		super(parent);
-		setSize(296, 300);
-		content.setLayout(new GridLayout(2, false));
+		GridData gridData = (GridData) content.getLayoutData();
+		gridData.verticalAlignment = SWT.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		setMinimumSize(new Point(400, 300));
+
+		content.setLayout(new GridLayout(4, false));
 		
 		Label lblName = new Label(content, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
 		txtName = new Text(content, SWT.BORDER);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblQuad = new Label(content, SWT.NONE);
-		lblQuad.setText(Vocab.instance.GRAPHICS);
+		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		btnQuad = new QuadButton(content, SWT.NONE);
-		btnQuad.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnQuad.addModifyListener(new LControlListener<Quad>() {
+		Label lblCol = new Label(content, SWT.NONE);
+		lblCol.setText(Vocab.instance.COLUMN);
+		
+		spnCol = new Spinner(content, SWT.BORDER);
+		spnCol.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblRow = new Label(content, SWT.NONE);
+		lblRow.setText(Vocab.instance.ROW);
+		
+		spnRow = new Spinner(content, SWT.BORDER);
+		spnRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		tree = new LDefaultTreeEditor<Object>(content, 0) {
 			@Override
-			public void onModify(LControlEvent<Quad> event) {
-				imgQuad.setImage(event.newValue.path, event.newValue.getRectangle());
-			}
-		});
-		
-		imgQuad = new LImage(content, SWT.NONE);
-		GridData gd_lblImg = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_lblImg.widthHint = 160;
-		gd_lblImg.heightHint = 100;
-		imgQuad.setLayoutData(gd_lblImg);
-		imgQuad.setVerticalAlign(SWT.CENTER);
-		imgQuad.setHorizontalAlign(SWT.CENTER);
+			public LDataTree<Object> getDataCollection() { 
+				return Project.current.animations.getTree(); }
+			@Override
+			protected Object createNewData() { return null; }
+			@Override
+			protected Object duplicateData(Object original) { return null; }
+		};
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
 		pack();
 	}
 	
 	public void open(Portrait initial) {
 		super.open(initial);
-		btnQuad.setValue(initial.quad.clone());
+		tree.onVisible();
+		tree.getCollectionWidget().select(null);
+		if (initial.id >= 0) {
+			LDataTree<Object> node = Project.current.animations.
+					getTree().findNode(initial.id);
+			if (node != null) {
+				tree.getCollectionWidget().select(node.toPath());
+			}
+		}
 		txtName.setText(initial.name);
+		spnCol.setSelection(initial.col);
+		spnRow.setSelection(initial.row);
 	}
 	
 	@Override
 	protected Portrait createResult(Portrait initial) {
-		if (txtName.getText().equals(initial.name) && btnQuad.getValue().equals(initial.quad)) {
+		int id = -1;
+		LPath path = tree.getCollectionWidget().getSelectedPath();
+		if (path == null)
+			id = initial.id;
+		else
+			id = Project.current.animations.getTree().getNode(path).id;
+		
+		if (id == initial.id && txtName.getText().equals(initial.name)) {
 			return null;
+		} else {
+			Portrait p = new Portrait();
+			p.id = id;
+			p.col = spnCol.getSelection();
+			p.row = spnRow.getSelection();
+			p.name = txtName.getText();
+			return p;
 		}
-		Portrait p = new Portrait();
-		p.name = txtName.getText();
-		p.quad = btnQuad.getValue();
-		return p;
 	}
 	
 }

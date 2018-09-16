@@ -13,6 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import data.GameCharacter.Tile;
+import org.eclipse.swt.graphics.Point;
 
 public class CharTileShell extends LObjectShell<Tile> {
 	
@@ -22,8 +23,9 @@ public class CharTileShell extends LObjectShell<Tile> {
 	
 	public CharTileShell(Shell parent) {
 		super(parent);
+		setMinimumSize(new Point(200, 39));
 		
-		GridLayout gridLayout = new GridLayout(2, true);
+		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
 		content.setLayout(gridLayout);
@@ -41,7 +43,7 @@ public class CharTileShell extends LObjectShell<Tile> {
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblHeight = new Label(content, SWT.NONE);
-		lblHeight.setText(Vocab.instance.OFFSETY);
+		lblHeight.setText(Vocab.instance.HEIGHT);
 		
 		spnHeight = new Spinner(content, SWT.BORDER);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -53,14 +55,17 @@ public class CharTileShell extends LObjectShell<Tile> {
 		super.open(initial);
 		spnX.setSelection(initial.dx);
 		spnY.setSelection(initial.dy);
+		spnHeight.setSelection(initial.height);
 	}
 
 	@Override
 	protected Tile createResult(Tile initial) {
-		if (initial.dx != spnX.getSelection() || initial.dy != spnY.getSelection()) {
+		if (initial.dx != spnX.getSelection() || initial.dy != spnY.getSelection()
+				|| initial.height != spnHeight.getSelection()) {
 			Tile t = new Tile();
 			t.dx = spnX.getSelection();
 			t.dy = spnY.getSelection();
+			t.height = spnHeight.getSelection();
 			return t;
 		} else {
 			return null;

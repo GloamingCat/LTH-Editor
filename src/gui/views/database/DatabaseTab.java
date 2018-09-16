@@ -124,7 +124,7 @@ public abstract class DatabaseTab extends LView {
 			}
 		});
 		
-		sashForm.setWeights(new int[] {1, 2});
+		sashForm.setWeights(new int[] {1, 3});
 	}
 	
 	protected abstract GObjectTreeSerializer getSerializer();

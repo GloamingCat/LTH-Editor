@@ -1,7 +1,9 @@
 package data;
 
+import java.util.HashMap;
+
+import data.subcontent.Icon;
 import data.subcontent.Node;
-import data.subcontent.Quad;
 import data.subcontent.Tag;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
@@ -9,23 +11,23 @@ import lwt.dataestructure.LDataList;
 public class GameCharacter extends Data {
 
 	public int battlerID = -1;
+	public int shadowID = -1;
 	public LDataList<Tile> tiles = new LDataList<>();
-	
-	public LDataList<Node> animations = new LDataList<>();
-	public Transform animXform = Transform.neutral();
+	public Transform transform = Transform.neutral();
 	public LDataList<Portrait> portraits = new LDataList<>();
-	public Transform portraitXform = Transform.neutral();
+	public HashMap<String, LDataList<Node>> animations = new HashMap<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	
 	public GameCharacter() {
 		Node anim = new Node();
-		animations.add(anim);
+		LDataList<Node> defaultAnims = new LDataList<>();
+		defaultAnims.add(anim);
+		animations.put("Default", defaultAnims);
 		tiles.add(new Tile());
 	}
 	
-	public static class Portrait {
+	public static class Portrait extends Icon {
 		public String name = "New portrait";
-		public Quad quad = new Quad();
 		public String toString() {
 			return name;
 		}
@@ -44,13 +46,13 @@ public class GameCharacter extends Data {
 		}
 		
 		public String toString() {
-			return "(" + dx + "," + dy + ")";
+			return "(" + dx + "," + dy + "," + height + ")";
 		}
 		
 		public boolean equals(Object other) {
 			if (other instanceof Tile) {
 				Tile t = (Tile) other;
-				return t.dx == dx && t.dy == dy;
+				return t.dx == dx && t.dy == dy && t.height == t.height;
 			} else {
 				return false;
 			}

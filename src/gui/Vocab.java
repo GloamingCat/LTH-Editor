@@ -178,9 +178,14 @@ public class Vocab {
 	public String QUADH = "Quad Height";
 	public String FULLIMAGE = "Full Image";
 	
+	// Icon
+	public String COLUMN = "Column";
+	public String ROW = "Row";
+	
 	// Character
-	public String COLLISIONTILES = "Collision Tiles";
-	public String COLLIDERHEIGHT = "Collider Height";
+	public String CHARBATTLER = "Battler";
+	public String SHADOW = "Shadow";
+	public String COLLIDERTILES = "Collision Tiles";
 	public String PORTRAITS = "Portraits";
 	
 	// Obstacles

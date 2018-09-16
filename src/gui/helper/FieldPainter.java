@@ -155,7 +155,7 @@ public class FieldPainter {
 			String key = tile.getKey();
 			
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.id);
-			int animID = c.animations.get(tile.animID).id;
+			int animID = c.animations.get("Default").get(tile.animID).id;
 			Animation anim = (Animation) Project.current.animations.getTree().get(animID);
 			
 			Image img = characterCache.get(key);

@@ -33,7 +33,6 @@ public class Project implements LSerializer {
 		this.path = path;
 		
 		animations = new GObjectTreeSerializer(dataPath() + "animations", Animation.class);
-		
 		battlers = new GObjectTreeSerializer(dataPath() + "battlers", Battler.class);
 		characters = new GObjectTreeSerializer(dataPath() + "characters", GameCharacter.class);
 		classes = new GObjectTreeSerializer(dataPath() + "classes", BattleClass.class);
@@ -47,13 +46,17 @@ public class Project implements LSerializer {
 		
 		fieldTree = new FieldTreeSerializer(dataPath());
 		
-		config = new GObjectSerializer<Config>(dataPath() + "config", Config.class);
+		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		
-		allData = new LSerializer[] { animations };
+		allData = new LSerializer[] { animations, characters, config };
 	}
 	
 	public String dataPath() {
 		return path + "data/";
+	}
+	
+	public String systemPath() {
+		return dataPath() + "system/";
 	}
 	
 	public String fieldPath() {

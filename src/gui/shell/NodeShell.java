@@ -2,69 +2,94 @@ package gui.shell;
 
 import gui.Vocab;
 
-import java.util.ArrayList;
-
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import data.subcontent.Node;
+import lwt.dataestructure.LDataTree;
+import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
+import lwt.editor.LDefaultTreeEditor;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 public abstract class NodeShell extends LObjectShell<Node> {
 	
-	private Combo cmbID;
+	private LDefaultTreeEditor<Object> tree;
 	private Text txtName;
 
 	public NodeShell(Shell parent) {
 		super(parent);
-		content.setLayout(new GridLayout(2, false));
+		GridData gridData = (GridData) content.getLayoutData();
+		gridData.verticalAlignment = SWT.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		setMinimumSize(new Point(400, 300));
 		
-		Label lblName = new Label(content, SWT.NONE);
-		lblName.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		content.setLayout(new GridLayout(1, false));
+		
+		Composite name = new Composite(content, SWT.NONE);
+		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_name = new GridLayout(2, false);
+		gl_name.marginWidth = 0;
+		gl_name.marginHeight = 0;
+		name.setLayout(gl_name);
+		
+		Label lblName = new Label(name, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
-		txtName = new Text(content, SWT.BORDER);
-		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtValue.widthHint = 170;
-		gd_txtValue.heightHint = 75;
-		txtName.setLayoutData(gd_txtValue);
+		txtName = new Text(name, SWT.BORDER);
+		txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Label lblID = new Label(content, SWT.NONE);
-		lblID.setText(Vocab.instance.ID);
-		
-		cmbID = new Combo(content, SWT.BORDER | SWT.READ_ONLY);
-		cmbID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		tree = new LDefaultTreeEditor<Object>(content, 0) {
+			@Override
+			public LDataTree<Object> getDataCollection() { return getTree(); }
+			@Override
+			protected Object createNewData() { return null; }
+			@Override
+			protected Object duplicateData(Object original) { return null; }
+		};
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		pack();
 	}
 	
 	public void open(Node initial) {
 		super.open(initial);
-		cmbID.setItems(getItems(getArray()));
-		cmbID.select(initial.id);
+		tree.onVisible();
+		tree.getCollectionWidget().select(null);
+		if (initial.id >= 0) {
+			LDataTree<Object> node = getTree().findNode(initial.id);
+			if (node != null) {
+				tree.getCollectionWidget().select(node.toPath());
+			}
+		}
 		txtName.setText(initial.name);
 	}
 
 	@Override
 	protected Node createResult(Node initial) {
-		if (cmbID.getSelectionIndex() == initial.id && txtName.getText().equals(initial.name)) {
+		int id = -1;
+		LPath path = tree.getCollectionWidget().getSelectedPath();
+		if (path == null)
+			id = initial.id;
+		else
+			id = getTree().getNode(path).id;
+		
+		if (id == initial.id && txtName.getText().equals(initial.name)) {
 			return null;
 		} else {
 			Node bonus = new Node();
-			bonus.id = cmbID.getSelectionIndex();
+			bonus.id = id;
 			bonus.name = txtName.getText();
 			return bonus;
 		}
 	}
 	
-	protected void checkSubclass() { }
-	
-	protected ArrayList<?> getArray() { return null; }
+	protected LDataTree<Object> getTree() { return null; }
 	
 }

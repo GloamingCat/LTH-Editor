@@ -10,7 +10,7 @@ public class Config {
 	// General
 	public String name = "New Project";
 	public Player player = new Player();
-	public GUI gui = new GUI();
+	public Animations animations = new Animations();
 	public Battle battle = new Battle();
 	public Grid grid = new Grid();
 	
@@ -49,11 +49,23 @@ public class Config {
 		public boolean allNeighbors = false;
 	}
 	
-	public static class GUI {
-		public int cursorAnimID = 0;
-		public int battleCursorAnimID = 1;
-		public int tileAnimID = 2;
-		public int tileHLAnimID = 3;
+	public static class Animations {
+		public int windowSkinID = 20;
+		public int frameID = 21;
+		public int cursorID = 22;
+		public int highlightID = 23;
+		public int battleCursorID = 24;
+		public int tileCursorID = 25;
+		public int tileID = 26;
+		public int gaugeFrameID = 28;
+		public int gaugeBarID = 29;
+		public int arrowID = 210;
+		
+		public LDataList<String> sets = new LDataList<>();
+		
+		public Animations() {
+			sets.add("Sleep");
+		}
 	}
 	
 	public static class Screen {

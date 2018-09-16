@@ -75,7 +75,7 @@ public class TilesetCharShell extends LObjectShell<CharTile> {
 	
 	private void setCharID(int id) {
 		GameCharacter gc = (GameCharacter) Project.current.characters.getTree().get(id);
-		cmbAnim.setItems(gc.animations);
+		cmbAnim.setItems(gc.animations.get("Default"));
 	}
 	
 	public void open(CharTile initial) {

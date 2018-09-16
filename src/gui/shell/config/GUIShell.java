@@ -4,7 +4,7 @@ import gui.Vocab;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.config.Config.GUI;
+import data.config.Config.Animations;
 import lwt.dialog.LObjectShell;
 import lwt.widget.LCombo;
 
@@ -13,11 +13,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 
-import project.Project;
-
 import org.eclipse.swt.graphics.Point;
 
-public class GUIShell extends LObjectShell<GUI> {
+public class GUIShell extends LObjectShell<Animations> {
 
 	private LCombo cmbCursor;
 	private LCombo cmbBattleCursor;
@@ -62,32 +60,32 @@ public class GUIShell extends LObjectShell<GUI> {
 		pack();
 	}
 	
-	public void open(GUI initial) {
+	public void open(Animations initial) {
 		super.open(initial);
 		//TODO
 		//cmbCursor.setItems(Project.current.spritesheets.getList());
-		cmbCursor.setValue(initial.cursorAnimID);
+		cmbCursor.setValue(initial.cursorID);
 		//cmbBattleCursor.setItems(Project.current.spritesheets.getList());
-		cmbBattleCursor.setValue(initial.battleCursorAnimID);
+		cmbBattleCursor.setValue(initial.battleCursorID);
 		//cmbTile.setItems(Project.current.spritesheets.getList());
-		cmbTile.setValue(initial.tileAnimID);
+		cmbTile.setValue(initial.tileID);
 		//cmbTileHL.setItems(Project.current.spritesheets.getList());
-		cmbTileHL.setValue(initial.tileHLAnimID);
+		cmbTileHL.setValue(initial.highlightID);
 	}
 
 	@Override
-	protected GUI createResult(GUI initial) {
-		if (cmbCursor.getSelectionIndex() == initial.cursorAnimID &&
-				cmbTile.getSelectionIndex() == initial.tileAnimID &&
-				cmbTileHL.getSelectionIndex() == initial.tileHLAnimID &&
-				cmbBattleCursor.getSelectionIndex() == initial.battleCursorAnimID) {
+	protected Animations createResult(Animations initial) {
+		if (cmbCursor.getSelectionIndex() == initial.cursorID &&
+				cmbTile.getSelectionIndex() == initial.tileID &&
+				cmbTileHL.getSelectionIndex() == initial.highlightID &&
+				cmbBattleCursor.getSelectionIndex() == initial.battleCursorID) {
 			return null;
 		} else {
-			GUI g = new GUI();
-			g.battleCursorAnimID = cmbBattleCursor.getSelectionIndex();
-			g.tileAnimID = cmbTile.getSelectionIndex();
-			g.cursorAnimID = cmbCursor.getSelectionIndex();
-			g.tileHLAnimID = cmbTileHL.getSelectionIndex();
+			Animations g = new Animations();
+			g.battleCursorID = cmbBattleCursor.getSelectionIndex();
+			g.tileID = cmbTile.getSelectionIndex();
+			g.cursorID = cmbCursor.getSelectionIndex();
+			g.highlightID = cmbTileHL.getSelectionIndex();
 			return g;
 		}
 	}

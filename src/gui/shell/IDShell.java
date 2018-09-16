@@ -24,19 +24,22 @@ public abstract class IDShell extends LObjectShell<Integer> {
 	
 	public IDShell(Shell parent, boolean optional) {
 		super(parent);
-		setMinimumSize(new Point(224, 39));
+		GridData gridData = (GridData) content.getLayoutData();
+		gridData.verticalAlignment = SWT.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		setMinimumSize(new Point(400, 300));
 		
 		content.setLayout(new GridLayout(1, false));
 		
 		tree = new LDefaultTreeEditor<Object>(content, 0) {
 			@Override
-			public LDataTree<Object> getDataCollection() { return null; }
+			public LDataTree<Object> getDataCollection() { return getTree(); }
 			@Override
 			protected Object createNewData() { return null; }
 			@Override
 			protected Object duplicateData(Object original) { return null; }
 		};
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		 		
 		btnNull = new Button(content, 0);
 		btnNull.addSelectionListener(new SelectionAdapter() {
@@ -53,7 +56,8 @@ public abstract class IDShell extends LObjectShell<Integer> {
 	
 	public void open(Integer initial) {
 		super.open(initial);
-		tree.setDataCollection(getTree());
+		tree.onVisible();
+		tree.getCollectionWidget().select(null);
 		if (initial >= 0) {
 			LDataTree<Object> node = getTree().findNode(initial);
 			if (node != null) {
@@ -78,8 +82,6 @@ public abstract class IDShell extends LObjectShell<Integer> {
 				return null;
 		}
 	}
-	
-	protected void checkSubclass() { }
 	
 	protected LDataTree<Object> getTree() { return null; }
 	

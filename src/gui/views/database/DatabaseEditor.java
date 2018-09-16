@@ -17,6 +17,12 @@ public class DatabaseEditor extends LViewFolder {
 	public DatabaseEditor(Composite parent, int style) {
 		super(parent, style);
 
+		AnimationTab animationTab = new AnimationTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.ANIMATIONS, animationTab);
+		
+		CharacterTab characterTab = new CharacterTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.CHARACTERS, characterTab);
+		
 		/*ItemTab itemTab = new ItemTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.ITEMS, itemTab);
 		
@@ -29,13 +35,7 @@ public class DatabaseEditor extends LViewFolder {
 		ObstacleTab obstacleTab = new ObstacleTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.OBSTACLES, obstacleTab);
 		
-		CharacterTab characterTab = new CharacterTab(tabFolder, SWT.NONE);
-		addTab(Vocab.instance.CHARACTERS, characterTab);*/
-		
-		AnimationTab animationTab = new AnimationTab(tabFolder, SWT.NONE);
-		addTab(Vocab.instance.ANIMATIONS, animationTab);
-		
-		/*StatusTab statusTab = new StatusTab(tabFolder, SWT.NONE);
+		StatusTab statusTab = new StatusTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.STATUS, statusTab);
 		
 		TerrainTab terrainTab = new TerrainTab(tabFolder, SWT.NONE);

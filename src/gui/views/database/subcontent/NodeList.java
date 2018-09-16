@@ -1,13 +1,12 @@
 package gui.views.database.subcontent;
 
-import java.util.ArrayList;
-
 import gui.shell.NodeShell;
 import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 
 import data.subcontent.Node;
+import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 
@@ -22,14 +21,14 @@ public class NodeList extends SimpleEditableList<Node> {
 			public LObjectShell<Node> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
 				return new NodeShell(parent) {
-					public ArrayList<?> getArray() {
-						return comboArray();
+					public LDataTree<Object> getTree() {
+						return getDataArray();
 					}
 				};
 			}
 		});
 	}
 	
-	protected ArrayList<?> comboArray() { return null; }
+	protected LDataTree<Object> getDataArray() { return null; }
 
 }

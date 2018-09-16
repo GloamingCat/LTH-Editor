@@ -276,7 +276,7 @@ public class BattlerTab extends DatabaseTab {
 		} else {
 			GameCharacter gc = (GameCharacter) Project.current.characters.getTree().get(id);
 			if (gc.animations.size() > 0) {
-				int animID = gc.animations.get(0).id;
+				int animID = gc.animations.get("Battle").get(0).id;
 				LDataTree<?> animations = Project.current.animations.getTree();
 				Animation anim = (Animation) animations.get(animID);
 				image.setImage(SWTResourceManager.getImage(

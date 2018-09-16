@@ -20,13 +20,15 @@ public abstract class IDButton extends LObjectButton<Integer> {
 	 * @param parent
 	 * @param style
 	 */
-	public IDButton(Composite parent, int style, boolean optional) {
+	public IDButton(Composite parent, int style) {
 		super(parent, style);
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {
 				return new IDShell(parent, optional) {
-					
+					protected LDataTree<Object> getTree() { 
+						return getDataTree(); 
+					}
 				};
 			}
 		});
@@ -44,8 +46,12 @@ public abstract class IDButton extends LObjectButton<Integer> {
 			button.setEnabled(true);
 			Integer id = (Integer) value;
 			if (txtName != null) {
-				Object obj = getDataTree().get(id);
-				txtName.setText(obj.toString());
+				if (id < 0)
+					txtName.setText("");
+				else {
+					Object obj = getDataTree().get(id);
+					txtName.setText(obj.toString());
+				}
 			}
 			currentValue = id;
 		} else {

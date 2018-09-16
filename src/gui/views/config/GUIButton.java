@@ -8,9 +8,9 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.config.Config.GUI;
+import data.config.Config.Animations;
 
-public class GUIButton extends LObjectButton<GUI> {
+public class GUIButton extends LObjectButton<Animations> {
 
 	/**
 	 * Create the composite.
@@ -19,9 +19,9 @@ public class GUIButton extends LObjectButton<GUI> {
 	 */
 	public GUIButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<GUI>() {
+		setShellFactory(new LShellFactory<Animations>() {
 			@Override
-			public LObjectShell<GUI> createShell(Shell parent) {
+			public LObjectShell<Animations> createShell(Shell parent) {
 				return new GUIShell(parent);
 			}
 		});
