@@ -1,13 +1,13 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.IDButton;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.AnimationList;
 import gui.views.database.subcontent.CharTileList;
+import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
+import gui.widgets.IDButton;
 import lwt.dataestructure.LDataTree;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
@@ -20,7 +20,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -28,20 +27,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.GameCharacter.Portrait;
-import data.config.Config;
 import data.subcontent.Node;
 import data.subcontent.Quad;
 import project.GObjectTreeSerializer;
 import project.Project;
 
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-
 public class CharacterTab extends DatabaseTab {
-	
-	private Composite folders;
 
 	public CharacterTab(Composite parent, int style) {
 		super(parent, style);
@@ -126,7 +117,11 @@ public class CharacterTab extends DatabaseTab {
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		grpAnimations.setLayout(new GridLayout(2, false));
 		
-		AnimationList lstAnim = new AnimationList(grpAnimations, SWT.NONE);
+		NodeList lstAnim = new NodeList(grpAnimations, SWT.NONE) {
+			protected LDataTree<Object> getDataArray() { 
+				return Project.current.animations.getTree(); 
+			}
+		};
 		GridData gd_anims = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_anims.widthHint = 128;
 		lstAnim.setLayoutData(gd_anims);
@@ -154,37 +149,6 @@ public class CharacterTab extends DatabaseTab {
 				}
 			}
 		});
-		
-		folders = new Composite(grpAnimations, SWT.NONE);
-		RowLayout rl_folders = new RowLayout(SWT.HORIZONTAL);
-		rl_folders.marginRight = 0;
-		rl_folders.marginBottom = 0;
-		rl_folders.marginLeft = 0;
-		rl_folders.marginTop = 0;
-		folders.setLayout(rl_folders);
-		folders.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		
-		Button btnDefault = new Button(folders, SWT.RADIO);
-		btnDefault.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				lstAnim.folderName = "Default";
-				lstAnim.setObject(contentEditor.getObject());
-			}
-		});
-		btnDefault.setText(Vocab.instance.DEFAULT);
-		btnDefault.setSelection(true);
-		
-		Button btnBattle = new Button(folders, SWT.RADIO);
-		btnBattle.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				lstAnim.folderName = "Battle";
-				lstAnim.setObject(contentEditor.getObject());
-			}
-		});
-		
-		btnBattle.setText(Vocab.instance.BATTLE);
 		
 		Group grpPortraits = new Group(lists, SWT.NONE);
 		grpPortraits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -231,18 +195,6 @@ public class CharacterTab extends DatabaseTab {
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);
 		
-	}
-	
-	public void onVisible() {
-		Control[] buttons = folders.getChildren();
-		for (int i = 2; i < buttons.length; i++) {
-			buttons[i].dispose();
-		}
-		//Config conf = Project.current.config.getData();
-		//for (String folder : conf.animations.sets) {
-			// create button
-		//}
-		super.onVisible();
 	}
 
 	@Override

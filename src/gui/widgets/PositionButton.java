@@ -1,6 +1,6 @@
-package gui.views;
+package gui.widgets;
 
-import gui.shell.config.FontShell;
+import gui.shell.PositionShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
@@ -9,10 +9,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.subcontent.FontData;
+import data.subcontent.Position;
 
-public class FontButton extends LObjectButton<FontData> {
-	
+public class PositionButton extends LObjectButton<Position> {
+
 	private Text text;
 	
 	/**
@@ -20,17 +20,17 @@ public class FontButton extends LObjectButton<FontData> {
 	 * @param parent
 	 * @param style
 	 */
-	public FontButton(Composite parent, int style) {
+	public PositionButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<FontData>() {
+		setShellFactory(new LShellFactory<Position>() {
 			@Override
-			public LObjectShell<FontData> createShell(Shell parent) {
-				return new FontShell(parent);
+			public LObjectShell<Position> createShell(Shell parent) {
+				return new PositionShell(parent);
 			}
 		});
 	}
 	
-	public void setPathText(Text text) {
+	public void setText(Text text) {
 		this.text = text;
 	}
 
@@ -38,7 +38,7 @@ public class FontButton extends LObjectButton<FontData> {
 	public void setValue(Object value) {
 		if (value != null) {
 			button.setEnabled(true);
-			FontData s = (FontData) value;
+			Position s = (Position) value;
 			if (text != null) {
 				text.setText(s.toString());
 			}

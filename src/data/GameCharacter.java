@@ -1,7 +1,5 @@
 package data;
 
-import java.util.HashMap;
-
 import data.subcontent.Icon;
 import data.subcontent.Node;
 import data.subcontent.Tag;
@@ -15,14 +13,11 @@ public class GameCharacter extends Data {
 	public LDataList<Tile> tiles = new LDataList<>();
 	public Transform transform = Transform.neutral();
 	public LDataList<Portrait> portraits = new LDataList<>();
-	public HashMap<String, LDataList<Node>> animations = new HashMap<>();
+	public LDataList<Node> animations = new LDataList<>();
 	public LDataList<Tag> tags = new LDataList<>();
 	
 	public GameCharacter() {
-		Node anim = new Node();
-		LDataList<Node> defaultAnims = new LDataList<>();
-		defaultAnims.add(anim);
-		animations.put("Default", defaultAnims);
+		animations.add(new Node());
 		tiles.add(new Tile());
 	}
 	

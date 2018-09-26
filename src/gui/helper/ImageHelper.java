@@ -18,13 +18,13 @@ public class ImageHelper {
 	
 	public static Image getObstacleImage(int id) {
 		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
-		String path = obj.quad.path;
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
+		Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
+		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 		
-		int w = obj.quad.width;
-		int h = obj.quad.height;
-		int srcX = obj.quad.x;
-		int srcY = obj.quad.y;
+		int w = anim.quad.width;
+		int h = anim.quad.height;
+		int srcX = anim.quad.x;
+		int srcY = anim.quad.y;
 		
 		return getImageQuad(image, srcX, srcY, w, h);
 	}

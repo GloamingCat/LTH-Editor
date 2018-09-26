@@ -1,9 +1,9 @@
 package gui.shell.field;
 
 import gui.Vocab;
-import gui.views.ImageButton;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransitionList;
+import gui.widgets.ImageButton;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -86,9 +86,8 @@ public class FieldShell extends LObjectShell<Prefs> {
 		txtBG.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		btnBG = new ImageButton(compBG, SWT.NONE);
-		btnBG.setFolder("Background");
 		btnBG.optional = true;
-		btnBG.setText(txtBG);
+		//btnBG.setText(txtBG);
 		
 		Label lblTileset = new Label(grpGeneral, SWT.NONE);
 		lblTileset.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

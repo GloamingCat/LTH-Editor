@@ -2,11 +2,11 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.QuadEditor;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.ObstacleTileList;
 import gui.views.database.subcontent.TransformEditor;
-import lwt.widget.LSpinner;
+import gui.widgets.IconButton;
+import lwt.widget.LImage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -14,7 +14,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 
 import project.GObjectTreeSerializer;
 import project.Project;
@@ -34,13 +33,6 @@ public class ObstacleTab extends DatabaseTab {
 		Composite lateral = new Composite(contentEditor, SWT.NONE);
 		lateral.setLayout(new FillLayout(SWT.VERTICAL));
 		lateral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-		
-		Label lblHeight = new Label(grpGeneral, SWT.NONE);
-		lblHeight.setText(Vocab.instance.HEIGHT);
-		
-		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.NONE);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(spnHeight, "colliderHeight");
 
 		Composite other = new Composite(contentEditor, SWT.NONE);
 		other.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -50,24 +42,18 @@ public class ObstacleTab extends DatabaseTab {
 		other.setLayout(gl_other);
 		
 		Group grpGraphics = new Group(other, SWT.NONE);
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGraphics.setText(Vocab.instance.GRAPHICS);
-		grpGraphics.setLayout(new FillLayout());
+		grpGraphics.setLayout(new GridLayout());
 
-		QuadEditor quadComp = new QuadEditor(grpGraphics, 0) {
-			@Override
-			protected String getFolder() {
-				return "Obstacle";
-			}
-		};
-		addChild(quadComp);
+		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
+		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Group grpTags = new Group(lateral, SWT.NONE);
-		grpTags.setLayout(new FillLayout());
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		IconButton btnGraphics = new IconButton(grpGraphics, SWT.NONE);
+		btnGraphics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		btnGraphics.optional = false;
+		btnGraphics.setImage(imgGraphics);
+		addControl(btnGraphics, "image");
 		
 		TransformEditor transformEditor = new TransformEditor(other, SWT.NONE);
 		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -80,6 +66,13 @@ public class ObstacleTab extends DatabaseTab {
 		
 		ObstacleTileList tileList = new ObstacleTileList(grpTiles, SWT.NONE);
 		addChild(tileList);
+		
+		Group grpTags = new Group(lateral, SWT.NONE);
+		grpTags.setLayout(new FillLayout());
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList tagEditor = new TagList(grpTags, SWT.NONE);
+		addChild(tagEditor);
 		
 	}
 

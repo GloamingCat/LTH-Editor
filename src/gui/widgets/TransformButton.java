@@ -1,4 +1,4 @@
-package gui.views;
+package gui.widgets;
 
 import gui.shell.database.TransformShell;
 import lwt.dialog.LObjectShell;

@@ -1,7 +1,6 @@
-package gui.views;
+package gui.widgets;
 
-import gui.shell.QuadShell;
-import lwt.dialog.LObjectShell;
+import gui.shell.IconShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
@@ -12,27 +11,23 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import project.Project;
-import data.subcontent.Quad;
+import data.Animation;
+import data.subcontent.Icon;
 
-public class QuadButton extends LObjectButton<Quad> {
+public class IconButton extends LObjectButton<Icon> {
 	
-	private String folder;
 	private LImage image;
 	private Text text;
 	public boolean optional = false;
 	
-	public QuadButton(Composite parent, int style) {
+	public IconButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<Quad>() {
+		setShellFactory(new LShellFactory<Icon>() {
 			@Override
-			public LObjectShell<Quad> createShell(Shell parent) {
-				return new QuadShell(parent, folder, optional);
+			public IconShell createShell(Shell parent) {
+				return new IconShell(parent, optional);
 			}
 		});
-	}
-	
-	public void setFolder(String f) {
-		this.folder = f;
 	}
 
 	public void setImage(LImage image) {
@@ -47,11 +42,15 @@ public class QuadButton extends LObjectButton<Quad> {
 	public void setValue(Object value) {
 		if (value != null) {
 			button.setEnabled(true);
-			Quad s = (Quad) value;
+			Icon i = (Icon) value;
 			if (image != null) {
-				image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
+				Animation anim = i.getAnimation();
+				if (anim != null)
+					image.setImage(Project.current.imagePath() + anim.quad.path, i.getRectangle());
+				else
+					image.setImage((Image) null);
 			}
-			currentValue = s;
+			currentValue = i;
 		} else {
 			button.setEnabled(false);
 			if (image != null) {

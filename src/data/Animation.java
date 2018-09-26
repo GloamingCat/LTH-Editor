@@ -1,5 +1,9 @@
 package data;
 
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import project.Project;
 import data.subcontent.Audio;
 import data.subcontent.Quad;
 import data.subcontent.Tag;
@@ -24,5 +28,9 @@ public class Animation extends Data {
 	public String loopPattern = "";
 	public String loopDuration = "";
 	public LDataList<Audio> audio = new LDataList<>();
+	
+	public Image getImage() {
+		return SWTResourceManager.getImage(Project.current.imagePath() + quad.path);
+	}
 	
 }

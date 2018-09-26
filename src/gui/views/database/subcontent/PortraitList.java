@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import gui.shell.PortraitShell;
+import gui.shell.database.PortraitShell;
 import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;

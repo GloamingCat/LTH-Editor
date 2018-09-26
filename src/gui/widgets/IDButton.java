@@ -1,4 +1,4 @@
-package gui.views;
+package gui.widgets;
 
 import gui.shell.IDShell;
 import lwt.dataestructure.LDataTree;
@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class IDButton extends LObjectButton<Integer> {
 	
-	private Text txtName;
+	protected Text txtName;
 	public boolean optional = false;
 	
 	/**
@@ -25,11 +25,13 @@ public abstract class IDButton extends LObjectButton<Integer> {
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {
-				return new IDShell(parent, optional) {
+				IDShell shell = new IDShell(parent) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 
 					}
 				};
+				shell.setOptional(optional);
+				return shell;
 			}
 		});
 	}

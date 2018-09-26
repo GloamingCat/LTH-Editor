@@ -21,11 +21,13 @@ public class IDList extends SimpleEditableList<Integer> {
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {
-				return new IDShell(parent, false) {
+				IDShell shell = new IDShell(parent) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}
 				};
+				shell.setOptional(false);
+				return shell;
 			}
 		});
 		list.setIncludeID(false);

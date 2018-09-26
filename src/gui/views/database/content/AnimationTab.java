@@ -1,12 +1,12 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.QuadButton;
-import gui.views.ScriptButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
+import gui.widgets.QuadButton;
+import gui.widgets.ScriptButton;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -24,6 +24,7 @@ import org.eclipse.swt.layout.FillLayout;
 
 import project.GObjectTreeSerializer;
 import project.Project;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 

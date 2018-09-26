@@ -2,10 +2,10 @@ package gui.views.database.content;
 
 import gui.Vocab;
 import gui.helper.FieldPainter;
-import gui.views.QuadButton;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
 import gui.views.database.subcontent.TagList;
+import gui.widgets.QuadButton;
 
 import java.util.ArrayList;
 

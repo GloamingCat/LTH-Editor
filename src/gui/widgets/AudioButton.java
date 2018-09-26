@@ -1,6 +1,6 @@
-package gui.views;
+package gui.widgets;
 
-import gui.shell.PositionShell;
+import gui.shell.AudioShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
@@ -9,23 +9,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.subcontent.Position;
+import data.subcontent.Audio;
 
-public class PositionButton extends LObjectButton<Position> {
-
+public class AudioButton extends LObjectButton<Audio> {
+	
+	private String folder;
 	private Text text;
+	public boolean optional = false;
 	
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public PositionButton(Composite parent, int style) {
+	public AudioButton(Composite parent, int style) {
 		super(parent, style);
-		setShellFactory(new LShellFactory<Position>() {
+		optional = true;
+		setShellFactory(new LShellFactory<Audio>() {
 			@Override
-			public LObjectShell<Position> createShell(Shell parent) {
-				return new PositionShell(parent);
+			public LObjectShell<Audio> createShell(Shell parent) {
+				return new AudioShell(parent, folder, optional);
 			}
 		});
 	}
@@ -34,11 +37,15 @@ public class PositionButton extends LObjectButton<Position> {
 		this.text = text;
 	}
 
+	public void setFolder(String folder) {
+		this.folder = folder;
+	}
+
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
 			button.setEnabled(true);
-			Position s = (Position) value;
+			Audio s = (Audio) value;
 			if (text != null) {
 				text.setText(s.toString());
 			}

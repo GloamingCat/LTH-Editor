@@ -1,7 +1,7 @@
 package gui.shell.field;
 
 import gui.Vocab;
-import gui.views.PositionButton;
+import gui.widgets.PositionButton;
 
 import org.eclipse.swt.widgets.Shell;
 

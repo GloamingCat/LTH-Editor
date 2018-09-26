@@ -3,6 +3,7 @@ package gui.shell;
 import gui.Vocab;
 
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import lwt.dataestructure.LDataTree;
@@ -11,6 +12,7 @@ import lwt.dialog.LObjectShell;
 import lwt.editor.LDefaultTreeEditor;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.graphics.Point;
@@ -19,19 +21,22 @@ import org.eclipse.swt.events.SelectionEvent;
 
 public abstract class IDShell extends LObjectShell<Integer> {
 	
-	private LDefaultTreeEditor<Object> tree;
-	private Button btnNull;
+	protected LDefaultTreeEditor<Object> tree;
+	protected Button btnNull;
 	
-	public IDShell(Shell parent, boolean optional) {
+	public IDShell(Shell parent) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
 		setMinimumSize(new Point(400, 300));
 		
-		content.setLayout(new GridLayout(1, false));
+		content.setLayout(new FillLayout());
 		
-		tree = new LDefaultTreeEditor<Object>(content, 0) {
+		Composite compTree = new Composite(content, SWT.NONE);
+		compTree.setLayout(new GridLayout(1, false));
+		
+		tree = new LDefaultTreeEditor<Object>(compTree, 0) {
 			@Override
 			public LDataTree<Object> getDataCollection() { return getTree(); }
 			@Override
@@ -41,7 +46,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 		};
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		 		
-		btnNull = new Button(content, 0);
+		btnNull = new Button(compTree, 0);
 		btnNull.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -49,9 +54,12 @@ public abstract class IDShell extends LObjectShell<Integer> {
 			}
 		});
 		btnNull.setText(Vocab.instance.NONE);
-		btnNull.setEnabled(optional);
 
 		pack();
+	}
+	
+	public void setOptional(boolean value) {
+		btnNull.setEnabled(value);
 	}
 	
 	public void open(Integer initial) {
@@ -83,6 +91,6 @@ public abstract class IDShell extends LObjectShell<Integer> {
 		}
 	}
 	
-	protected LDataTree<Object> getTree() { return null; }
+	protected abstract LDataTree<Object> getTree();
 	
 }

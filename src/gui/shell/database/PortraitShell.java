@@ -1,4 +1,4 @@
-package gui.shell;
+package gui.shell.database;
 
 import gui.Vocab;
 import lwt.dataestructure.LDataTree;

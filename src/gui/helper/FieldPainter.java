@@ -7,6 +7,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -135,14 +136,17 @@ public class FieldPainter {
 			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
 			int id = tileset.obstacles.get(layer.grid[x][y]).id;
 			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
+			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
 			Image img = obstacleCache.get(id);
 			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + obj.quad.path);
+				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 				obstacleCache.put(id, img);
 			}
-			gc.drawImage(img, obj.quad.x, obj.quad.y, obj.quad.width, obj.quad.height,
+			Rectangle rect = obj.image.getRectangle();
+			gc.drawImage(img, rect.x, rect.y, rect.width, rect.height,
 					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
-					y0 - img.getBounds().height + obj.transform.offsetY, obj.quad.width, obj.quad.height);
+					y0 - img.getBounds().height + obj.transform.offsetY, 
+					rect.width, rect.height);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -155,7 +159,7 @@ public class FieldPainter {
 			String key = tile.getKey();
 			
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.id);
-			int animID = c.animations.get("Default").get(tile.animID).id;
+			int animID = c.animations.get(tile.animID).id;
 			Animation anim = (Animation) Project.current.animations.getTree().get(animID);
 			
 			Image img = characterCache.get(key);

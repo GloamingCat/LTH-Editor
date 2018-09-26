@@ -5,9 +5,9 @@ import java.util.LinkedList;
 
 import editor.GDefaultTreeEditor;
 import gui.Vocab;
-import gui.views.ImageButton;
-import gui.views.QuadButton;
-import gui.views.ScriptButton;
+import gui.widgets.ImageButton;
+import gui.widgets.QuadButton;
+import gui.widgets.ScriptButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -145,9 +145,9 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.addControl(view, attName);
 	}
 	
-	protected void addImageButton(ImageButton button, Label label, String folderName, String attName) {
+	protected void addImageButton(ImageButton button, LImage label, Text text, String attName) {
 		button.setLabel(label);
-		button.setFolder(folderName);
+		button.setNameText(text);
 		addControl(button, attName);
 	}
 	

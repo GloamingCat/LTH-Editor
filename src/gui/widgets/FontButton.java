@@ -1,6 +1,6 @@
-package gui.views;
+package gui.widgets;
 
-import gui.shell.AudioShell;
+import gui.shell.config.FontShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
@@ -9,43 +9,36 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import data.subcontent.Audio;
+import data.subcontent.FontData;
 
-public class AudioButton extends LObjectButton<Audio> {
+public class FontButton extends LObjectButton<FontData> {
 	
-	private String folder;
 	private Text text;
-	public boolean optional = false;
 	
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public AudioButton(Composite parent, int style) {
+	public FontButton(Composite parent, int style) {
 		super(parent, style);
-		optional = true;
-		setShellFactory(new LShellFactory<Audio>() {
+		setShellFactory(new LShellFactory<FontData>() {
 			@Override
-			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, folder, optional);
+			public LObjectShell<FontData> createShell(Shell parent) {
+				return new FontShell(parent);
 			}
 		});
 	}
 	
-	public void setText(Text text) {
+	public void setPathText(Text text) {
 		this.text = text;
-	}
-
-	public void setFolder(String folder) {
-		this.folder = folder;
 	}
 
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
 			button.setEnabled(true);
-			Audio s = (Audio) value;
+			FontData s = (FontData) value;
 			if (text != null) {
 				text.setText(s.toString());
 			}
