@@ -28,6 +28,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class IconShell extends LObjectShell<Icon> {
 	
@@ -38,6 +39,7 @@ public class IconShell extends LObjectShell<Icon> {
 	
 	public IconShell(Shell parent, boolean optional) {
 		super(parent);
+		setSize(600, 400);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
@@ -62,7 +64,9 @@ public class IconShell extends LObjectShell<Icon> {
 		tree.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				
+				Animation anim = (Animation) getTree().getNode(event.path).data;
+				image.setImage(anim.getImage());
+				image.redraw();
 			}
 		});
 		 		
@@ -77,10 +81,11 @@ public class IconShell extends LObjectShell<Icon> {
 		btnNull.setEnabled(optional);
 		
 		image = new LImage(sashForm, SWT.NONE);
+		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		image.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 				Animation anim = (Animation) tree.getCollectionWidget().getSelectedObject();
-				if (anim != null) {
+				if (anim != null && anim.cols > 0 && anim.rows > 0) {
 					int w = anim.quad.width / anim.cols;
 					int h = anim.quad.height / anim.rows;
 					e.gc.drawRectangle(w * col, h * row, w, h);
@@ -99,7 +104,7 @@ public class IconShell extends LObjectShell<Icon> {
 			}
 		});
 		
-		pack();
+		sashForm.setWeights(new int[] {1, 2});
 	}
 	
 	public void open(Icon initial) {
@@ -112,6 +117,9 @@ public class IconShell extends LObjectShell<Icon> {
 			LDataTree<Object> node = getTree().findNode(initial.id);
 			if (node != null) {
 				tree.getCollectionWidget().select(node.toPath());
+				Animation anim = (Animation) node.data;
+				image.setImage(anim.getImage());
+				image.redraw();
 			}
 		} else {
 			col = row = 0;
