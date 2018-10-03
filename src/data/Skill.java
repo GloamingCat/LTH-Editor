@@ -28,8 +28,12 @@ public class Skill extends Data {
 	public boolean mirror = true;
 	
 	// Animation Options
-	public boolean damageAnim = true;
+	public String introTime = "";
 	public String castTime = "";
+	public String centerTime = "";
+	public String targetTime = "";
+	public String finishTime = "";
+	public boolean damageAnim = true;
 	
 	// Effects
 	public LDataList<Effect> effects = new LDataList<>();

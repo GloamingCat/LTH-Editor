@@ -62,6 +62,8 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 			@Override
 			protected String dataToString(Bonus item) {
 				Object obj = dataTree().get(item.id);
+				if (obj == null)
+					return stringID(item.id);
 				return stringID(item.id) + obj.toString() + ": " + item.value;
 			}
 		};

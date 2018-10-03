@@ -293,18 +293,47 @@ public class SkillTab extends DatabaseTab {
 		tabAnimOptions.setText(Vocab.instance.OPTIONS);
 		Composite animOptions = new Composite(tabAnim, SWT.NONE);
 		tabAnimOptions.setControl(animOptions);
-		animOptions.setLayout(new GridLayout(2, false));
+		animOptions.setLayout(new GridLayout(4, false));
 		
-		LCheckButton btnDamageAnim = new LCheckButton(animOptions, SWT.NONE);
-		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
-		addControl(btnDamageAnim, "damageAnim");
+		Label lblIntroTime = new Label(animOptions, SWT.NONE);
+		lblIntroTime.setText(Vocab.instance.INTROTIME);
+		
+		LText txtIntroTime = new LText(animOptions, SWT.NONE);
+		txtIntroTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtIntroTime, "introTime");
 		
 		Label lblCastTime = new Label(animOptions, SWT.NONE);
 		lblCastTime.setText(Vocab.instance.CASTTIME);
 		
 		LText txtCastTime = new LText(animOptions, SWT.NONE);
+		txtCastTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCastTime, "castTime");
+		
+		Label lblCenterTime = new Label(animOptions, SWT.NONE);
+		lblCenterTime.setText(Vocab.instance.CENTERTIME);
+		
+		LText txtCenterTime = new LText(animOptions, SWT.NONE);
+		txtCenterTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtCenterTime, "centerTime");
+		
+		Label lblTargetTime = new Label(animOptions, SWT.NONE);
+		lblTargetTime.setText(Vocab.instance.TARGETTIME);
+		
+		LText txtTargetTime = new LText(animOptions, SWT.NONE);
+		txtTargetTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtTargetTime, "targetTime");
+		
+		Label lblFinishTime = new Label(animOptions, SWT.NONE);
+		lblFinishTime.setText(Vocab.instance.FINISHTIME);
+		
+		LText txtFinishTime = new LText(animOptions, SWT.NONE);
+		txtFinishTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtFinishTime, "finishTime");
+		
+		LCheckButton btnDamageAnim = new LCheckButton(animOptions, SWT.NONE);
+		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
+		addControl(btnDamageAnim, "damageAnim");
 		
 		// Range
 		
@@ -350,7 +379,7 @@ public class SkillTab extends DatabaseTab {
 		
 		// Other
 		
-		Composite bottom = new Composite(contentEditor, SWT.HORIZONTAL);
+		Composite bottom = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_bottom = new GridLayout(3, true);
 		gl_bottom.verticalSpacing = 0;
 		gl_bottom.marginHeight = 0;

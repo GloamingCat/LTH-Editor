@@ -143,7 +143,11 @@ public class Vocab {
 	public String CAST = "Cast";
 	public String INDIVIDUAL = "Individual";
 	public String DAMAGEANIM = "Damage Animation";
+	public String INTROTIME = "Intro Time";
 	public String CASTTIME = "Cast Time";
+	public String CENTERTIME = "Center Time";
+	public String TARGETTIME = "Target Time";
+	public String FINISHTIME = "Finish Time";
 	public String FAR = "Far";
 	public String NEAR = "Near";
 	public String MIN = "Minimum";
