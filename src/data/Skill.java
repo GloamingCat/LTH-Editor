@@ -1,37 +1,79 @@
 package data;
 
 import data.subcontent.Bonus;
-import data.subcontent.Quad;
+import data.subcontent.Icon;
 import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Skill extends Data {
 
+	// General
 	public String description = "";
-	public int type = 1;
-	public Quad icon = new Quad();
-	public int radius = 1;
-	public int range = 1;
-	
+	public Icon icon = new Icon();
 	public String script = "";
-	public String successRate = "((a:PRE() * 2 - b:EVD()) / b:EVD()) * 50";
-	public String basicResult = "(a:ATKP() * 2 - b:DEFP()) * math.random(0.8, 1.2)";
+	public int type = 1; // 0 => Offensive, 1 => Supportive, 2 => General
+	public int targetType = 0; // 0 => Any tile, 1 => Any character, 2 => Living only, 3 => Dead only
+	public int restriction = 0; // 0 => Anywhere, 1 => Battle only, 2 => Field only
+	public LDataList<Tag> costs = new LDataList<>();
 	
-	public int energyCost = 10;
-	public int timeCost = 100; // percentage
-	public int restriction = 0;
-	
+	// User Animations
 	public String userLoadAnim = "";
 	public String userCastAnim = "";
 	public boolean stepOnCast = true;
 	
+	// Battle Animations
 	public int loadAnimID = -1;
 	public int castAnimID = -1;
-	public int centerAnimID = -1;
 	public int individualAnimID = -1;
 	public boolean mirror = true;
 	
+	// Animation Options
+	public boolean damageAnim = true;
+	public String castTime = "";
+	
+	// Effects
+	public LDataList<Effect> effects = new LDataList<>();
 	public LDataList<Bonus> elements = new LDataList<>(); 
+	public LDataList<Bonus> status = new LDataList<>(); 
+	public boolean userElements = true;
+	
+	// Range
+	public Range effectRange = new Range();
+	public Range castRange = new Range();
+	
+	// Tags
 	public LDataList<Tag> tags = new LDataList<>();
+	
+	public Skill() {
+		effects.add(new Effect());
+		costs.add(new Tag("sp", "10"));
+	}
+	
+	public static class Range {
+		
+		public int minh = 0;
+		public int maxh = 0;
+		public int far = 1;
+		public int near = 0;
+		
+		public String toString() {
+			return "Circle [" + near + ", " + far + "], Height [" + minh + ", " + maxh + "]";
+		}
+		
+	}
+	
+	public static class Effect {
+		
+		public String key = "hp";
+		public String basicResult = "100";
+		public String successRate = "100";
+		public boolean heal = false;
+		public boolean absorb = false;
+		
+		public String toString() {
+			return "\"" + key + "\": " + basicResult;
+		}
+		
+	}
 
 }

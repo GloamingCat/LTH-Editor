@@ -1,5 +1,7 @@
 package gui.shell;
 
+import gui.Vocab;
+
 import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Tag;
@@ -22,14 +24,14 @@ public class TagShell extends LObjectShell<Tag> {
 		content.setLayout(new GridLayout(2, false));
 		
 		Label lblName = new Label(content, SWT.NONE);
-		lblName.setText("Name");
+		lblName.setText(Vocab.instance.NAME);
 		
 		txtName = new Text(content, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblValue = new Label(content, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		lblValue.setText("Value");
+		lblValue.setText(Vocab.instance.VALUE);
 		
 		txtValue = new StyledText(content, SWT.BORDER);
 		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

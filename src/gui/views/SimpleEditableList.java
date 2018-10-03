@@ -23,6 +23,11 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		getCollectionWidget().setDragEnabled(true);
 	}
 	
+	public SimpleEditableList(Composite parent, Type type) {
+		this(parent, 0);
+		this.type = type;
+	}
+	
 	@Override
 	public void setDataCollection(LDataCollection<T> list) {
 		currentList = (LDataList<T>) list;

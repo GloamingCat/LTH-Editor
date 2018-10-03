@@ -2,13 +2,12 @@ package gui.shell;
 
 import gui.Vocab;
 
-import java.util.ArrayList;
-
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
 import data.subcontent.Bonus;
+import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;
@@ -45,7 +44,7 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 	
 	public void open(Bonus initial) {
 		super.open(initial);
-		cmbID.setItems(getItems(getArray()));
+		//cmbID.setItems(getItems(getArray()));
 		cmbID.select(initial.id);
 		spnValue.setSelection(initial.value);
 	}
@@ -64,6 +63,6 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 	
 	protected void checkSubclass() { }
 	
-	protected ArrayList<?> getArray() { return null; }
+	protected LDataTree<?> getTree() { return null; }
 	
 }

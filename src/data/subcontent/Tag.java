@@ -12,6 +12,11 @@ public class Tag {
 		value = other.value;
 	}
 	
+	public Tag(String key, String value) {
+		this.key = key;
+		this.value = value;
+	}
+	
 	public String toString() {
 		return "\"" + key + "\": " + value;
 	}

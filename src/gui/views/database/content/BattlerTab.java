@@ -221,9 +221,9 @@ public class BattlerTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected ArrayList<?> comboArray() {
+			protected LDataTree<?> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements;
+				return conf.elements.toTree();
 			}
 		};
 		lstElements.attributeName = "elements";
@@ -236,7 +236,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		BonusList lstItems = new BonusList(grpItems, SWT.NONE) {
 			@Override
-			protected ArrayList<?> comboArray() {
+			protected LDataTree<?> dataTree() {
 				//TODO return Project.current.items.getList();
 				return null;
 			}

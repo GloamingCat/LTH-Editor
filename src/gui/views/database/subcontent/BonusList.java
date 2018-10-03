@@ -1,7 +1,5 @@
 package gui.views.database.subcontent;
 
-import java.util.ArrayList;
-
 import gui.shell.BonusShell;
 import gui.views.SimpleEditableList;
 
@@ -16,7 +14,7 @@ import lwt.dialog.LShellFactory;
 import lwt.event.LEditEvent;
 import lwt.widget.LList;
 
-public class BonusList extends SimpleEditableList<Bonus> {
+public abstract class BonusList extends SimpleEditableList<Bonus> {
 
 	public BonusList(Composite parent, int style) {
 		super(parent, style);
@@ -27,8 +25,8 @@ public class BonusList extends SimpleEditableList<Bonus> {
 			public LObjectShell<Bonus> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
 				return new BonusShell(parent) {
-					public ArrayList<?> getArray() {
-						return comboArray();
+					public LDataTree<?> getTree() {
+						return dataTree();
 					};
 				};
 			}
@@ -63,12 +61,12 @@ public class BonusList extends SimpleEditableList<Bonus> {
 			}
 			@Override
 			protected String dataToString(Bonus item) {
-				Object obj = comboArray().get(item.id);
+				Object obj = dataTree().get(item.id);
 				return stringID(item.id) + obj.toString() + ": " + item.value;
 			}
 		};
 	}
 	
-	protected ArrayList<?> comboArray() { return null; }
+	protected abstract LDataTree<?> dataTree();
 
 }

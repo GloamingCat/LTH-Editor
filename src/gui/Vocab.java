@@ -37,6 +37,7 @@ public class Vocab {
 	// Common
 	public String ID = "ID";
 	public String NAME = "Name";
+	public String KEY = "Key";
 	public String ICON = "Icon";
 	public String DESCRIPTION = "Description";
 	public String VALUE = "Value";
@@ -45,6 +46,7 @@ public class Vocab {
 	public String PROPERTIES = "Properties";
 	public String TYPE = "Type";
 	public String DEFAULT = "Default";
+	public String OPTIONS = "Options";
 	
 	// Config
 	public String PROJECTNAME = "Project Name";
@@ -118,12 +120,16 @@ public class Vocab {
 	public String LEVEL = "Level";
 	
 	// Skill
-	public String RADIUS = "Radius";
 	public String RANGE = "Range";
-	public String EPCOST = "EP Cost";
-	public String TIMECOST = "Time Cost";
+	public String EFFECT = "Effect";
+	public String COSTS = "Costs";
 	public String ATTACK = "Attack";
 	public String SUPPORT = "Support";
+	public String TARGETTYPE = "Target";
+	public String ANYTILE = "Any tile";
+	public String ANYCHARACTER = "Any character";
+	public String LIVINGONLY = "Living only";
+	public String DEADONLY = "Dead only";
 	public String RESTRICTIONS = "Restrictions";
 	public String ALWAYS = "Always";
 	public String BATTLEONLY = "Battle Only";
@@ -135,12 +141,19 @@ public class Vocab {
 	public String LOAD = "Load";
 	public String USER = "User";
 	public String CAST = "Cast";
-	public String CENTER = "Center";
 	public String INDIVIDUAL = "Individual";
-	public String EFFECT = "Effect";
-	public String PARAM = "Param";
+	public String DAMAGEANIM = "Damage Animation";
+	public String CASTTIME = "Cast Time";
+	public String FAR = "Far";
+	public String NEAR = "Near";
+	public String MIN = "Minimum";
+	public String MAX = "Maximum";
+	public String EFFECTS = "Effects";
 	public String BASICRESULT = "Basic Result";
 	public String SUCCESSRATE = "Success Rate";
+	public String HEAL = "Heal";
+	public String ABSORB = "Absorb";
+	public String USERELEMENTS = "Include user's elements";
 	
 	// Animation
 	public String COLUMNS = "Columns";

@@ -7,8 +7,7 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.QuadButton;
 import gui.widgets.ScriptButton;
 
-import java.util.ArrayList;
-
+import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
@@ -145,9 +144,9 @@ public class StatusTab extends DatabaseTab {
 		
 		BonusList lstAttributes = new BonusList(grpAttributes, SWT.NONE) {
 			@Override
-			protected ArrayList<?> comboArray() {
+			protected LDataTree<?> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.attributes;
+				return conf.attributes.toTree();
 			}
 		};
 		lstAttributes.attributeName = "attributes";
@@ -160,9 +159,9 @@ public class StatusTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected ArrayList<?> comboArray() {
+			protected LDataTree<?> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements;
+				return conf.elements.toTree();
 			}
 		};
 		lstElements.attributeName = "elements";
