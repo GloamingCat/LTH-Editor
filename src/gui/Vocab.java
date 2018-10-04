@@ -50,6 +50,7 @@ public class Vocab {
 	
 	// Config
 	public String PROJECTNAME = "Project Name";
+	public String TROOP = "Troop";
 	public String SOUNDS = "Sounds";
 	public String FONTS = "Fonts";
 	public String REGIONS = "Regions";
@@ -71,7 +72,10 @@ public class Vocab {
 	public String TILEBASE = "Tile Base";
 	public String TILESIDE = "Tile Side";
 	public String PIXELHEIGHT = "Pixels/Height";
+	public String DEPTHHEIGHT = "Depth/Height";
 	public String ALLNEIGHBORS = "8 neighbors";
+	public String OVERPASSALLIES = "Overpass Allies";
+	public String OVERPASSDEADS = "Overpass Deads";
 	
 	// Player
 	public String PLAYER = "Player";
@@ -82,12 +86,17 @@ public class Vocab {
 	public String DASHSPEED = "Dash Speed";
 	
 	// Battle
-	public String TRADESKILL = "Trade Skill";
-	public String ATTHP = "HP attribute";
-	public String ATTSP = "SP attribute";
-	public String ATTTURN = "Turn attribute";
-	public String ATTSTEP = "Step attribute";
-	public String ATTJUMP = "Jump attribute";
+	public String MAXLEVEL = "Max Level";
+	public String ATTHP = "HP Attribute";
+	public String ATTSP = "SP Attribute";
+	public String ATTSTEP = "Step Attribute";
+	public String ATTJUMP = "Jump Attribute";
+	
+	// Troop
+	public String INITIALTROOP = "Initial Troop";
+	public String MAXMEMBERS = "Max Members";
+	public String WIDTH = "Width";
+	public String HEIGHT = "Height";
 	
 	// GUI
 	public String GUI = "GUI";
@@ -206,7 +215,6 @@ public class Vocab {
 	public String PORTRAITS = "Portraits";
 	
 	// Obstacles
-	public String HEIGHT = "Height";
 	public String BOTTOM = "Bottom";
 	public String TOP = "Top";
 	public String NEIGHBORS = "Neighbors";

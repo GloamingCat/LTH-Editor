@@ -1,14 +1,12 @@
 package data.config;
 
-public class Attribute {
+import data.Data;
 
-	public String name = "New Attribute";
+public class Attribute extends Data {
+
+	public String key = "attr";
 	public String shortName = "ATTR";
 	public String script = "";
-	public boolean mutable = false;
-	
-	public String toString() {
-		return name;
-	}
+	public int visibility = 1; // 1 => primary, 2 => secondary, 0 => not visible
 	
 }

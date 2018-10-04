@@ -1,7 +1,5 @@
 package project;
 
-import gui.helper.FieldHelper;
-import gui.helper.TilePainter;
 import data.*;
 import data.config.Config;
 import lwt.dataserialization.LSerializer;
@@ -48,7 +46,7 @@ public class Project implements LSerializer {
 		
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		
-		allData = new LSerializer[] { animations, skills, characters, obstacles };
+		allData = new LSerializer[] { animations, skills, characters, obstacles, config };
 	}
 	
 	public String dataPath() {

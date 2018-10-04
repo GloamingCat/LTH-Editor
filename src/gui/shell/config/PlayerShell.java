@@ -13,7 +13,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Composite;
 
@@ -21,8 +20,6 @@ public class PlayerShell extends LObjectShell<Player> {
 	
 	private Text txtStartpos;
 	private PositionButton btnStartPos;
-	private Button btnPixelMovement;
-	private Button btnStopOnCollision;
 	private Spinner spnWalk;
 	private Spinner spnDash;
 	private Composite composite;
@@ -60,12 +57,6 @@ public class PlayerShell extends LObjectShell<Player> {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
-
-		btnPixelMovement = new Button(composite, SWT.CHECK);
-		btnPixelMovement.setText(Vocab.instance.PIXELMOV);
-		
-		btnStopOnCollision = new Button(composite, SWT.CHECK);
-		btnStopOnCollision.setText(Vocab.instance.STOPCOLL);
 		
 		pack();
 	}
@@ -75,24 +66,18 @@ public class PlayerShell extends LObjectShell<Player> {
 		btnStartPos.setValue(initial.startPos);
 		spnDash.setSelection(initial.dashSpeed);
 		spnWalk.setSelection(initial.walkSpeed);
-		btnPixelMovement.setSelection(initial.pixelMovement);
-		btnStopOnCollision.setSelection(initial.stopOnCollision);
 	}
 
 	@Override
 	protected Player createResult(Player initial) {
 		if (btnStartPos.getValue().equals(initial.startPos) && 
 				spnDash.getSelection() == initial.dashSpeed &&
-				spnWalk.getSelection() == initial.walkSpeed &&
-				btnPixelMovement.getSelection() == initial.pixelMovement &&
-				btnStopOnCollision.getSelection() == initial.stopOnCollision) {
+				spnWalk.getSelection() == initial.walkSpeed) {
 			return null;
 		} else {
 			Player player = new Player();
 			player.dashSpeed = spnDash.getSelection();
 			player.walkSpeed = spnWalk.getSelection();
-			player.pixelMovement = btnPixelMovement.getSelection();
-			player.stopOnCollision = btnStopOnCollision.getSelection();
 			player.startPos = btnStartPos.getValue();
 			return player;
 		}

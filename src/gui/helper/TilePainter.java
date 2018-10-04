@@ -14,7 +14,6 @@ import data.Obstacle;
 import data.Terrain;
 import data.config.Config;
 import data.config.Region;
-import data.subcontent.BattlerType;
 import project.Project;
 
 public class TilePainter {
@@ -114,11 +113,6 @@ public class TilePainter {
 		Region r =  conf.regions.get(id);
 		Image str = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, 
 				new Color(Display.getCurrent(),  r.rgb), true);
-		return str;
-	}
-
-	public static Image getBattlerTypeTile(BattlerType bt) {
-		Image str = ImageHelper.getStringImage(bt.code, conf.grid.tileW, conf.grid.tileH, null, true);
 		return str;
 	}
 	

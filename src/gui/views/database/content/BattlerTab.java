@@ -71,21 +71,7 @@ public class BattlerTab extends DatabaseTab {
 		cmbFieldChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbFieldChar.setOptional(true);
 		addControl(cmbFieldChar, "fieldCharID");
-		
-		Label lblType = new Label(grpGeneral, SWT.NONE);
-		lblType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblType.setText(Vocab.instance.BATTLERTYPE);
-		
-		LComboView cmbType = new LComboView(grpGeneral, SWT.NONE) {
-			public ArrayList<?> getArray() {
-				Config conf = Project.current.config.getData();
-				return conf.battlerTypes;
-			}
-		};
-		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		cmbType.setOptional(false);
-		addControl(cmbType, "typeID");
-		
+
 		Label lblSkillTree = new Label(grpGeneral, SWT.NONE);
 		lblSkillTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblSkillTree.setText(Vocab.instance.SKILLDAG);

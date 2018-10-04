@@ -1,14 +1,12 @@
 package data;
 
 import data.subcontent.Bonus;
-import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Battler extends Data {
 
 	public boolean persistent = false;
 	public int level;
-	public int typeID;
 	public int battleCharID;
 	public int fieldCharID;
 	public int attackID;
@@ -21,6 +19,5 @@ public class Battler extends Data {
 	public LDataList<Integer> skills = new LDataList<>();
 	public LDataList<Bonus> items = new LDataList<>();
 	public LDataList<Bonus> elements = new LDataList<>();
-	public LDataList<Tag> tags = new LDataList<>();
 
 }

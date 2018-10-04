@@ -52,7 +52,10 @@ public abstract class IDButton extends LObjectButton<Integer> {
 					txtName.setText("");
 				else {
 					Object obj = getDataTree().get(id);
-					txtName.setText(obj.toString());
+					if (obj != null)
+						txtName.setText(obj.toString());
+					else 
+						txtName.setText("");
 				}
 			}
 			currentValue = id;

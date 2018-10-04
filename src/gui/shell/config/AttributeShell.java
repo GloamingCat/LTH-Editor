@@ -2,7 +2,6 @@ package gui.shell.config;
 
 import gui.Vocab;
 
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -19,7 +18,6 @@ public class AttributeShell extends LObjectShell<Attribute> {
 	
 	private Text txtName;
 	private Text txtShortName;
-	private Button btnMutable;
 	private StyledText txtScript;
 
 	public AttributeShell(Shell parent) {
@@ -37,12 +35,6 @@ public class AttributeShell extends LObjectShell<Attribute> {
 		
 		txtShortName = new Text(content, SWT.BORDER);
 		txtShortName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Label lblMutable = new Label(content, SWT.NONE);
-		lblMutable.setText(Vocab.instance.MUTABLE);
-		
-		btnMutable = new Button(content, SWT.CHECK);
-		btnMutable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Label lblScript = new Label(content, SWT.NONE);
 		lblScript.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
@@ -62,20 +54,18 @@ public class AttributeShell extends LObjectShell<Attribute> {
 		txtName.setText(initial.name);
 		txtShortName.setText(initial.shortName);
 		txtScript.setText(initial.script);
-		btnMutable.setSelection(initial.mutable);
 	}
 
 	@Override
 	protected Attribute createResult(Attribute initial) {
 		if (txtName.getText().equals(initial.name) && txtShortName.getText().equals(initial.shortName)
-				&& txtScript.getText().equals(initial.script) && btnMutable.getSelection() == initial.mutable) {
+				&& txtScript.getText().equals(initial.script)) {
 			return null;
 		} else {
 			Attribute att = new Attribute();
 			att.name = txtName.getText();
 			att.shortName = txtShortName.getText();
 			att.script = txtScript.getText();
-			att.mutable = btnMutable.getSelection();
 			return att;
 		}
 	}

@@ -39,7 +39,7 @@ public class RegionShell extends LObjectShell<Region> {
 	private IDList lstBattlers;
 	private RGB rgb;
 	private Label imgColor;
-	private LDataList<Integer> battlers = new LDataList<>();
+	private LDataList<Integer> troops = new LDataList<>();
 	
 	public RegionShell(Shell parent) {
 		super(parent);
@@ -94,7 +94,7 @@ public class RegionShell extends LObjectShell<Region> {
 				return Project.current.battlers.getTree();
 			}
 			public LDataList<Integer> getDataCollection() {
-				return battlers;
+				return troops;
 			}
 		};
 
@@ -108,9 +108,9 @@ public class RegionShell extends LObjectShell<Region> {
 		imgColor.setBackground(new Color(Display.getCurrent(), rgb));
 		imgColor.redraw();
 		
-		battlers = new LDataList<Integer>();
-		for (Integer i : initial.battlers) {
-			battlers.add(i);
+		troops = new LDataList<Integer>();
+		for (Integer i : initial.troops) {
+			troops.add(i);
 		}
 		lstBattlers.onVisible();
 	}
@@ -119,13 +119,13 @@ public class RegionShell extends LObjectShell<Region> {
 	protected Region createResult(Region initial) {
 		if (txtName.getText().equals(initial.name) && 
 				rgb.equals(initial.rgb) &&
-				battlers.equals(initial.battlers)) {
+				troops.equals(initial.troops)) {
 			return null;
 		} else {
 			Region r = new Region();
 			r.name = txtName.getText();
 			r.rgb = rgb;
-			r.battlers = battlers;
+			r.troops = troops;
 			return r;
 		}
 	}

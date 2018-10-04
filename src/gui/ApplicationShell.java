@@ -2,7 +2,6 @@ package gui;
 
 import gui.views.config.ConfigEditor;
 import gui.views.database.DatabaseEditor;
-import gui.views.fieldTree.FieldTreeEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -46,14 +45,32 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 */
 	public ApplicationShell(Display display) {
 		super(display);
-		setMinimumSize(new Point(900, 600));
+		setSize(new Point(900, 600));
 		setText("LTH Editor");
-		setSize(450, 300);
 		
 		final DatabaseEditor databaseEditor = new DatabaseEditor(this, SWT.NONE);
+		MenuItem mntmDatabaseEditor = new MenuItem(menuView, SWT.NONE);
+		mntmDatabaseEditor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setCurrentView(databaseEditor);
+			}
+		});
+		mntmDatabaseEditor.setText(Vocab.instance.DATABASEEDITOR + "\tF3");
+		mntmDatabaseEditor.setAccelerator(SWT.F3);
+
+		final ConfigEditor configEditor = new ConfigEditor(this, SWT.NONE);
+		MenuItem mntmConfigEditor = new MenuItem(menuView, SWT.NONE);
+		mntmConfigEditor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setCurrentView(configEditor);
+			}
+		});
+		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF5");
+		mntmConfigEditor.setAccelerator(SWT.F5);
 		
 		/*
-		final ConfigEditor configEditor = new ConfigEditor(this, SWT.NONE);
 		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
 		
 		MenuItem mntmFieldEditor = new MenuItem(menuView, SWT.NONE);
@@ -65,28 +82,6 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		});
 		mntmFieldEditor.setText(Vocab.instance.FIELDEDITOR + "\tF2");
 		mntmFieldEditor.setAccelerator(SWT.F2);
-		*/
-		
-		MenuItem mntmDatabaseEditor = new MenuItem(menuView, SWT.NONE);
-		mntmDatabaseEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(databaseEditor);
-			}
-		});
-		mntmDatabaseEditor.setText(Vocab.instance.DATABASEEDITOR + "\tF3");
-		mntmDatabaseEditor.setAccelerator(SWT.F3);
-
-		/*
-		MenuItem mntmConfigEditor = new MenuItem(menuView, SWT.NONE);
-		mntmConfigEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(configEditor);
-			}
-		});
-		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF5");
-		mntmConfigEditor.setAccelerator(SWT.F5);
 		*/
 		
 		applicationName = getText();

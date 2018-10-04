@@ -2,7 +2,6 @@ package data;
 
 import data.subcontent.Icon;
 import data.subcontent.Node;
-import data.subcontent.Tag;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
 
@@ -14,7 +13,6 @@ public class GameCharacter extends Data {
 	public Transform transform = Transform.neutral();
 	public LDataList<Portrait> portraits = new LDataList<>();
 	public LDataList<Node> animations = new LDataList<>();
-	public LDataList<Tag> tags = new LDataList<>();
 	
 	public GameCharacter() {
 		animations.add(new Node());

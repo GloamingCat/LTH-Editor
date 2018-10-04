@@ -6,7 +6,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import project.Project;
 import data.subcontent.Audio;
 import data.subcontent.Quad;
-import data.subcontent.Tag;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
 
@@ -17,7 +16,6 @@ public class Animation extends Data {
 	public Quad quad = new Quad();
 	public int rows = 1;
 	public int cols = 1;
-	public LDataList<Tag> tags = new LDataList<>();
 	
 	// Transform
 	public Transform transform = new Transform();

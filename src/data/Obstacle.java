@@ -1,7 +1,6 @@
 package data;
 
 import data.subcontent.Icon;
-import data.subcontent.Tag;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
 
@@ -11,7 +10,6 @@ public class Obstacle extends Data {
 	public Icon image = new Icon();
 	public Transform transform = new Transform();
 	public LDataList<Tile> tiles = new LDataList<>();
-	public LDataList<Tag> tags = new LDataList<>();
 	
 	public Obstacle() {
 		tiles.add(new Tile());

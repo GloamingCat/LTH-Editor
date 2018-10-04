@@ -20,7 +20,6 @@ import data.Tileset;
 import data.Tileset.CharTile;
 import data.config.Region;
 import data.config.Config.Grid;
-import data.subcontent.BattlerType;
 import data.subcontent.Layer;
 import project.Project;
 
@@ -202,23 +201,6 @@ public class FieldPainter {
 		}
 	}
 	
-	public void paintType(Layer layer, int x, int y, GC gc, int x0, int y0) {
-		try {
-			int id = layer.grid[x][y];
-			int w = FieldHelper.config.grid.tileW;
-			int h = FieldHelper.config.grid.tileH;
-			Image img = typeCache.get(id);
-			if (img == null) {
-				BattlerType type = FieldHelper.config.battlerTypes.get(id);
-				img = ImageHelper.getStringImage(type.code, w, h, null);
-				typeCache.put(id, img);
-			}
-			gc.drawImage(img, 0, 0, w, h, x0 - w/ 2, y0 - h / 2, w, h);
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void paintParty(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		int id = layer.grid[x][y];
 		int w = FieldHelper.config.grid.tileW;
@@ -281,19 +263,14 @@ public class FieldPainter {
 				default:
 					if (layer == currentLayer) {
 						if (layer.grid[x][y] >= 0) {
-							switch(layer.info.type) {
-							case 3: // Region Layer
+							if (layer.info.type == 2) {
+								// Region Layer
 								paintRegion(field.prefs.tilesetID, layer, x, y, 
 										gc, x0, y0 - layer.info.height * pph);
-								break;
-							case 4: // Type Layer
-								paintType(layer, x, y, 
-										gc, x0, y0 - layer.info.height * pph);
-								break;
-							case 5: // Party Layer
+							} else { 
+								// Party Layer
 								paintParty(layer, x, y, 
 										gc, x0, y0 - layer.info.height * pph);
-								break;
 							}
 						}
 						if (showGrid) {

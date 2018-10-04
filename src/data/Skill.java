@@ -45,9 +45,6 @@ public class Skill extends Data {
 	public Range effectRange = new Range();
 	public Range castRange = new Range();
 	
-	// Tags
-	public LDataList<Tag> tags = new LDataList<>();
-	
 	public Skill() {
 		effects.add(new Effect());
 		costs.add(new Tag("sp", "10"));
