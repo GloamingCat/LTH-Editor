@@ -36,11 +36,11 @@ public class DatabaseEditor extends LViewFolder {
 		addTab(Vocab.instance.ITEMS, itemTab);
 		
 		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
-		addTab(Vocab.instance.BATTLERS, battlerTab);
+		addTab(Vocab.instance.BATTLERS, battlerTab);*/
 		
 		TerrainTab terrainTab = new TerrainTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.TERRAINS, terrainTab);
-		 */
+		
 	}
 
 }

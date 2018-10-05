@@ -121,6 +121,7 @@ public class AnimationTab extends DatabaseTab {
 		gd_image.widthHint = 150;
 		image.setLayoutData(gd_image);
 		image.setImage(SWTResourceManager.getImage(AnimationTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
+		transformTab.setImage(image);
 		
 		addQuadButton(btnSelectImage, image, "", "quad");
 		

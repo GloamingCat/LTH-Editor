@@ -4,15 +4,21 @@ import gui.shell.IDShell;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
+import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import project.Project;
+import data.Animation;
+
 public abstract class IDButton extends LObjectButton<Integer> {
 	
 	protected Text txtName;
+	protected LImage image;
 	public boolean optional = false;
 	
 	/**
@@ -41,6 +47,10 @@ public abstract class IDButton extends LObjectButton<Integer> {
 	public void setNameText(Text text) {
 		txtName = text;
 	}
+	
+	public void setImage(LImage img) {
+		image = img;
+	}
 
 	@Override
 	public void setValue(Object value) {
@@ -56,6 +66,14 @@ public abstract class IDButton extends LObjectButton<Integer> {
 						txtName.setText(obj.toString());
 					else 
 						txtName.setText("");
+				}
+			}
+			if (image != null) {
+				Animation anim = (Animation) Project.current.animations.getTree().get(id);
+				if (anim == null)
+					image.setImage((Image) null); 
+				else {
+					image.setImage(anim.getImage(), anim.quad.getRectangle());
 				}
 			}
 			currentValue = id;

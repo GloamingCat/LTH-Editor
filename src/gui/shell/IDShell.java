@@ -77,18 +77,11 @@ public abstract class IDShell extends LObjectShell<Integer> {
 	@Override
 	protected Integer createResult(Integer initial) {
 		LPath path = tree.getCollectionWidget().getSelectedPath();
-		if (path == null) {
-			if (initial < 0)
-				return null;
-			else
-				return getTree().getNode(path).id;
-		} else {
-			int id = getTree().getNode(path).id;
-			if (id != initial)
-				return id;
-			else
-				return null;
-		}
+		int id = path == null ? -1 : getTree().getNode(path).id;
+		if (id == initial)
+			return null;
+		else 
+			return id;
 	}
 	
 	protected abstract LDataTree<Object> getTree();

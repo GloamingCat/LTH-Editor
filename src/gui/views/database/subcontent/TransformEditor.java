@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import lwt.editor.LObjectEditor;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LSpinner;
 
 public class TransformEditor extends LObjectEditor {
@@ -18,6 +20,7 @@ public class TransformEditor extends LObjectEditor {
 	private LSpinner spnOffsetX;
 	private LSpinner spnOffsetY;
 	public String attributeName = "transform";
+	public Composite image = null;
 
 	public TransformEditor(Composite parent, int style) {
 		super(parent, style);
@@ -32,6 +35,13 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetX.setMinimum(-1024);
 		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
+		spnOffsetX.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (image != null)
+					image.redraw();
+			}
+		});
 		
 		Label lblRed = new Label(this, SWT.NONE);
 		lblRed.setText(Vocab.instance.RED);
@@ -50,6 +60,13 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetY.setMinimum(-1024);
 		spnOffsetY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetY, "offsetY");
+		spnOffsetY.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (image != null)
+					image.redraw();
+			}
+		});
 		
 		Label lblGreen = new Label(this, SWT.NONE);
 		lblGreen.setText(Vocab.instance.GREEN);
@@ -145,16 +162,17 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnBrightness, "brightness");
 	}
 	
-	public void setLabel(Composite label) {
+	public void setImage(Composite label) {
 		label.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
 				int x = (Integer) spnOffsetX.getValue();
 				int y = (Integer) spnOffsetY.getValue();
-				e.gc.drawLine(x - 2, y, x + 3, y);
+				e.gc.drawLine(x - 2, y, x + 2, y);
 				e.gc.drawLine(x, y - 2, x, y + 2);
 			}
 		});
+		image = label;
 	}
 	
 	public void setObject(Object obj) {

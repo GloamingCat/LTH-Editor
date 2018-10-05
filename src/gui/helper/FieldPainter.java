@@ -105,26 +105,29 @@ public class FieldPainter {
 			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
 			int id = tileset.terrains.get(layer.grid[x][y]).id;
 			Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
-			Image img = terrainCache.get(id);
-			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + terrain.quad.path);
-				terrainCache.put(id, img);
+			Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
+			if (anim != null) {
+				Image img = terrainCache.get(id);
+				if (img == null) {
+					img = anim.getImage();
+					terrainCache.put(id, img);
+				}
+				int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
+				int tw = anim.quad.width / anim.cols;
+				int th = anim.quad.height / FieldHelper.math.autoTileRows;
+				gc.drawImage(img, 
+						anim.quad.x, anim.quad.y + th * rows[0], tw / 2, th / 2, 
+						x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);
+				gc.drawImage(img, 
+						anim.quad.x + tw / 2, anim.quad.y + th * rows[1], tw / 2, th / 2, 
+						x0, y0 - th / 2, tw / 2, th / 2);
+				gc.drawImage(img, 
+						anim.quad.x, th / 2 + anim.quad.y + th * rows[2], tw / 2, th / 2, 
+						x0 - tw / 2, y0, tw / 2, th / 2);
+				gc.drawImage(img, 
+						anim.quad.x + tw / 2, anim.quad.y + th / 2 + th * rows[3], tw / 2, th / 2, 
+						x0, y0, tw / 2, th / 2);
 			}
-			int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
-			int tw = terrain.quad.width / terrain.frameCount;
-			int th = terrain.quad.height / FieldHelper.math.autoTileRows;
-			gc.drawImage(img, 
-					terrain.quad.x, terrain.quad.y + th * rows[0], tw / 2, th / 2, 
-					x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);
-			gc.drawImage(img, 
-					terrain.quad.x + tw / 2, terrain.quad.y + th * rows[1], tw / 2, th / 2, 
-					x0, y0 - th / 2, tw / 2, th / 2);
-			gc.drawImage(img, 
-					terrain.quad.x, th / 2 + terrain.quad.y + th * rows[2], tw / 2, th / 2, 
-					x0 - tw / 2, y0, tw / 2, th / 2);
-			gc.drawImage(img, 
-					terrain.quad.x + tw / 2, terrain.quad.y + th / 2 + th * rows[3], tw / 2, th / 2, 
-					x0, y0, tw / 2, th / 2);
 		} catch(IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}

@@ -35,22 +35,25 @@ public class TilePainter {
 		Image subImage = new Image(Display.getCurrent(), w, h);
 		
 		Terrain terrain = (Terrain) Project.current.terrains.getTree().get(terrainID);
-		String path = terrain.quad.path;
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
-		
-		int srcX = ((terrain.quad.width / terrain.frameCount) - w) / 2 + terrain.quad.x;
-		int srcY = ((terrain.quad.height / FieldHelper.math.autoTileRows) - h) / 2 + terrain.quad.y;
-		
-		if (srcX < 0) srcX = 0;
-		if (srcY < 0) srcY = 0;
-		if (image.getBounds().width < w) w = image.getBounds().width;
-		if (image.getBounds().height < h) h = image.getBounds().height;
-		
-		//
-		GC gc = new GC(subImage);
-		gc.drawImage(image, srcX, srcY, w, h, 0, 0, w, h);
-		gc.dispose();
-		//
+		Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
+		if (anim != null) {
+			String path = anim.quad.path;
+			Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
+			
+			int srcX = ((anim.quad.width / anim.cols) - w) / 2 + anim.quad.x;
+			int srcY = ((anim.quad.height / FieldHelper.math.autoTileRows) - h) / 2 + anim.quad.y;
+			
+			if (srcX < 0) srcX = 0;
+			if (srcY < 0) srcY = 0;
+			if (image.getBounds().width < w) w = image.getBounds().width;
+			if (image.getBounds().height < h) h = image.getBounds().height;
+			
+			//
+			GC gc = new GC(subImage);
+			gc.drawImage(image, srcX, srcY, w, h, 0, 0, w, h);
+			gc.dispose();
+			//
+		}
 		return subImage;
 	}
 	
