@@ -55,10 +55,14 @@ public class ObstacleTab extends DatabaseTab {
 		btnGraphics.setImage(imgGraphics);
 		addControl(btnGraphics, "image");
 		
-		TransformEditor transformEditor = new TransformEditor(other, SWT.NONE);
-		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		Group grpTransform = new Group(other, SWT.NONE);
+		grpTransform.setText(Vocab.instance.TRANSFORM);
+		grpTransform.setLayout(new FillLayout());
+		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformEditor);
-		//transformEditor.setLabel(quadComp.getLabel());
+		transformEditor.setLabel(imgGraphics);
 	
 		Group grpTiles = new Group(lateral, SWT.NONE);
 		grpTiles.setLayout(new FillLayout());

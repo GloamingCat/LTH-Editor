@@ -97,8 +97,12 @@ public class AnimationTab extends DatabaseTab {
 		gd_right.widthHint = 300;
 		right.setLayoutData(gd_right);
 		
-		TransformEditor transformTab = new TransformEditor(right, SWT.NONE);
-		transformTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Group grpTransform = new Group(right, SWT.NONE);
+		grpTransform.setText(Vocab.instance.TRANSFORM);
+		grpTransform.setLayout(new FillLayout());
+		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformTab);
 		
 		Group grpImg = new Group(right, SWT.NONE);

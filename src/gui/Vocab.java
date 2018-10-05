@@ -174,6 +174,7 @@ public class Vocab {
 	public String PATTERN = "Pattern";
 	public String INTRO = "Intro";
 	public String LOOP = "Loop";
+	public String DURATION = "Duration";
 	
 	// Audio
 	public String SOUND = "Sound";
@@ -223,13 +224,23 @@ public class Vocab {
 	public String ALL = "All";
 
 	// Status
+	public String VISIBLE = "Visible";
+	public String PRIORITY = "Priority";
+	public String KO = "KO";
+	public String DEACTIVATE = "Deactivate";
+	public String CUMULATIVE = "Cumulative";
+	public String DURABILITY = "Durability";
+	public String CHARANIM = "Character Animation Set";
+	public String OVERRIDE = "Override";
+	public String TURNS = "Turns";
+	public String REMOVEONKO = "Remove on KO";
 	public String REMOVEONDAMAGE = "Remove on Damage";
-	public String DURATION = "Duration";
 	public String DRAIN = "Drain";
-	public String HPDRAIN = "HP Drain";
-	public String MPDRAIN = "MP Drain";
+	public String DRAINATT = "Attribute";
+	public String DRAINVALUE = "Value";
 	public String PERCENTAGE = "Percentage";
-	public String FREQUENCE = "Frequence";
+	public String FREQUENCY = "Frequency";
+	public String STATUSCANCEL = "Cancel";
 
 	// Terrain
 	public String MOVECOST = "Move Cost";

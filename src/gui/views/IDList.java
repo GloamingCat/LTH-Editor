@@ -13,7 +13,7 @@ import lwt.dialog.LShellFactory;
 import lwt.event.LEditEvent;
 import lwt.widget.LList;
 
-public class IDList extends SimpleEditableList<Integer> {
+public abstract class IDList extends SimpleEditableList<Integer> {
 
 	public IDList(Composite parent, int style) {
 		super(parent, style);
@@ -33,7 +33,7 @@ public class IDList extends SimpleEditableList<Integer> {
 		list.setIncludeID(false);
 	}
 	
-	public LDataTree<Object> getDataTree() { return null; }
+	public abstract LDataTree<Object> getDataTree();
 	
 	protected LList<Integer, Integer> createList() {
 		return new LList<Integer, Integer>(this, SWT.NONE) {

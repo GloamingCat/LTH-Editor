@@ -1,16 +1,18 @@
 package gui.views.database.content;
 
 import gui.Vocab;
+import gui.views.IDList;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.QuadButton;
+import gui.views.database.subcontent.TransformEditor;
+import gui.widgets.IconButton;
 import gui.widgets.ScriptButton;
-
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -37,6 +39,8 @@ public class StatusTab extends DatabaseTab {
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
+		// Icon
+		
 		Label lblIcon = new Label(grpGeneral, SWT.NONE);
 		lblIcon.setText(Vocab.instance.ICON);
 		
@@ -47,7 +51,7 @@ public class StatusTab extends DatabaseTab {
 		compositeIcon.setLayout(gl_compositeIcon);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		QuadButton btnSelectIcon = new QuadButton(compositeIcon, SWT.NONE);
+		IconButton btnSelectIcon = new IconButton(compositeIcon, SWT.NONE);
 		btnSelectIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));
 		
 		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
@@ -58,30 +62,69 @@ public class StatusTab extends DatabaseTab {
 		imgIcon.setLayoutData(gd_imgIcon);
 		imgIcon.setVerticalAlign(SWT.CENTER);
 		
-		addQuadButton(btnSelectIcon, imgIcon, "Icon", "icon");
+		btnSelectIcon.setImage(imgIcon);
+		addControl(btnSelectIcon, "icon");
 		
-		Label lblDuration = new Label(grpGeneral, SWT.NONE);
-		lblDuration.setText(Vocab.instance.DURATION);
+		// Script
 		
-		Composite compositeDuration = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeDuration = new GridLayout(2, false);
-		gl_compositeDuration.marginWidth = 0;
-		gl_compositeDuration.marginHeight = 0;
-		compositeDuration.setLayout(gl_compositeDuration);
-		compositeDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Label lblScript = new Label(grpGeneral, SWT.NONE);
+		lblScript.setText(Vocab.instance.SCRIPT);
 		
-		LSpinner spnDuration = new LSpinner(compositeDuration, SWT.NONE);
-		spnDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		spnDuration.setMinimum(-1);
-		addControl(spnDuration, "duration");
+		Composite compositeScript = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeScript = new GridLayout(2, false);
+		gl_compositeScript.marginHeight = 0;
+		gl_compositeScript.marginWidth = 0;
+		compositeScript.setLayout(gl_compositeScript);
+		compositeScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label lblSeconds = new Label(compositeDuration, SWT.NONE);
-		lblSeconds.setText(Vocab.instance.SECONDS);
+		Text txtScript = new Text(compositeScript, SWT.BORDER | SWT.READ_ONLY);
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LCheckButton btnRemoveOnDamage = new LCheckButton(grpGeneral, SWT.NONE);
-		btnRemoveOnDamage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
-		addControl(btnRemoveOnDamage, "removeOnDamage");
+		ScriptButton btnSelectScript = new ScriptButton(compositeScript, SWT.NONE);
+		btnSelectScript.optional = true;
+		addScriptButton(btnSelectScript, txtScript, "status", "script");
+		
+		// General
+		
+		Label lblPrioriy = new Label(grpGeneral, SWT.NONE);
+		lblPrioriy.setText(Vocab.instance.PRIORITY);
+		
+		Composite compositeVisible = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeVisible = new GridLayout(2, false);
+		gl_compositeVisible.marginHeight = 0;
+		gl_compositeVisible.marginWidth = 0;
+		compositeVisible.setLayout(gl_compositeVisible);
+		compositeVisible.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		LSpinner spnPriority = new LSpinner(compositeVisible, SWT.NONE);
+		spnPriority.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnPriority.setMinimum(0);
+		spnPriority.setMaximum(200);
+		addControl(spnPriority, "priority");
+		
+		LCheckButton btnVisible = new LCheckButton(compositeVisible, SWT.NONE);
+		btnVisible.setText(Vocab.instance.VISIBLE);
+		addControl(btnVisible, "visible");
+		
+		new Label(grpGeneral, SWT.NONE);
+		Composite options = new Composite(grpGeneral,  SWT.NONE);
+		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		options.setLayout(new GridLayout(2, false));
+		
+		LCheckButton btnKO = new LCheckButton(options, SWT.NONE);
+		btnKO.setText(Vocab.instance.KO);
+		addControl(btnKO, "ko");
+		
+		LCheckButton btnDeactivate = new LCheckButton(options, SWT.NONE);
+		btnDeactivate.setText(Vocab.instance.DEACTIVATE);
+		addControl(btnDeactivate, "deactivate");
+		
+		LCheckButton btnCumulative = new LCheckButton(options, SWT.NONE);
+		btnCumulative.setText(Vocab.instance.CUMULATIVE);
+		addControl(btnCumulative, "cumulative");
+		new Label(options, SWT.NONE);
+		
+		// AI Script
 		
 		Label lblAI = new Label(grpGeneral, SWT.NONE);
 		lblAI.setText(Vocab.instance.AI);
@@ -97,45 +140,111 @@ public class StatusTab extends DatabaseTab {
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnSelectAI = new ScriptButton(compositeAI, SWT.NONE);
-		addScriptButton(btnSelectAI, txtAI, "ai", "scriptAI");
+		btnSelectAI.optional = true;
+		addScriptButton(btnSelectAI, txtAI, "ai", "AI");
+		
+		// Graphics
+		
+		Group grpGraphics = new Group(contentEditor, SWT.NONE);
+		grpGraphics.setLayout(new GridLayout(2, false));
+		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpGraphics.setText(Vocab.instance.GRAPHICS);
+		
+		Label lblCharAnim = new Label(grpGraphics, SWT.NONE);
+		lblCharAnim.setText(Vocab.instance.CHARANIM);
+		
+		LText txtCharAnim = new LText(grpGraphics, SWT.NONE);
+		txtCharAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtCharAnim, "charAnim");
+		
+		TransformEditor transform = new TransformEditor(grpGraphics, SWT.NONE);
+		transform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		addChild(transform);
+		
+		LCheckButton btnOverride = new LCheckButton(grpGraphics, SWT.NONE);
+		btnOverride.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 1));
+		btnOverride.setText(Vocab.instance.OVERRIDE);
+		addControl(btnOverride, "override");
+		
+		// Drain
 		
 		Group grpDrain = new Group(contentEditor, SWT.NONE);
 		grpDrain.setText(Vocab.instance.DRAIN);
-		grpDrain.setLayout(new GridLayout(2, false));
+		grpDrain.setLayout(new GridLayout(3, false));
 		grpDrain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		Label lblHpDrain = new Label(grpDrain, SWT.NONE);
-		lblHpDrain.setText(Vocab.instance.HPDRAIN);
+		Label lblDrainAtt = new Label(grpDrain, SWT.NONE);
+		lblDrainAtt.setText(Vocab.instance.DRAINATT);
 		
-		LSpinner spnHPDrain = new LSpinner(grpDrain, SWT.NONE);
-		spnHPDrain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnHPDrain, "hpDrain");
+		LText txtDrainAtt = new LText(grpDrain, SWT.NONE);
+		txtDrainAtt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(txtDrainAtt, "drainAtt");
 		
-		Label lblMpDrain = new Label(grpDrain, SWT.NONE);
-		lblMpDrain.setText(Vocab.instance.MPDRAIN);
+		Label lblDrain = new Label(grpDrain, SWT.NONE);
+		lblDrain.setText(Vocab.instance.DRAINVALUE);
 		
-		LSpinner spnMPDrain = new LSpinner(grpDrain, SWT.NONE);
-		spnMPDrain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(spnMPDrain, "mpDrain");
+		LSpinner spnDrain = new LSpinner(grpDrain, SWT.NONE);
+		spnDrain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnDrain, "drainValue");
 		
 		LCheckButton btnPercentage = new LCheckButton(grpDrain, SWT.NONE);
-		btnPercentage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnPercentage.setText(Vocab.instance.PERCENTAGE);
 		addControl(btnPercentage, "percentage");
 		
-		Label lblFrequence = new Label(grpDrain, SWT.NONE);
-		lblFrequence.setText(Vocab.instance.FREQUENCE);
+		Label lblFrequency = new Label(grpDrain, SWT.NONE);
+		lblFrequency.setText(Vocab.instance.FREQUENCY);
 		
-		LSpinner spnFrequence = new LSpinner(grpDrain, SWT.NONE);
-		spnFrequence.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(spnFrequence, "frequence");
+		LSpinner spnFrequency = new LSpinner(grpDrain, SWT.NONE);
+		spnFrequency.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		addControl(spnFrequency, "frequency");
+		
+		// Durability
+		
+		Group grpDurability = new Group(contentEditor, SWT.NONE);
+		grpDurability.setLayout(new GridLayout(2, false));
+		grpDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpDurability.setText(Vocab.instance.DURABILITY);
+		
+		Label lblTurns = new Label(grpDurability, SWT.NONE);
+		lblTurns.setText(Vocab.instance.TURNS);
+		
+		LSpinner spnTurns = new LSpinner(grpDurability, SWT.NONE);
+		spnTurns.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnTurns.setMinimum(-1);
+		addControl(spnTurns, "duration");
+		
+		LCheckButton btnRemoveOnKO = new LCheckButton(grpDurability, SWT.NONE);
+		btnRemoveOnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
+		addControl(btnRemoveOnKO, "removeOnKO");
+		
+		LCheckButton btnRemoveOnDamage = new LCheckButton(grpDurability, SWT.NONE);
+		btnRemoveOnDamage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
+		addControl(btnRemoveOnDamage, "removeOnDamage");
+		
+		// Lists
 		
 		Composite compositeOther = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_compositeOther = new GridLayout(3, true);
+		GridLayout gl_compositeOther = new GridLayout(4, true);
 		gl_compositeOther.marginWidth = 0;
 		gl_compositeOther.marginHeight = 0;
 		compositeOther.setLayout(gl_compositeOther);
 		compositeOther.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		Group grpCancel = new Group(compositeOther, SWT.NONE);
+		grpCancel.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpCancel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpCancel.setText(Vocab.instance.STATUSCANCEL);
+		
+		IDList lstCancel = new IDList(grpCancel, SWT.NONE) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.status.getTree();
+			}
+		};
+		lstCancel.attributeName = "cancel";
+		addChild(lstCancel);
 		
 		Group grpAttributes = new Group(compositeOther, SWT.NONE);
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -174,6 +283,7 @@ public class StatusTab extends DatabaseTab {
 		
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor);	
+
 	}
 
 	@Override

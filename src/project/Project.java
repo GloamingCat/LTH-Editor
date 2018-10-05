@@ -46,7 +46,8 @@ public class Project implements LSerializer {
 		
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		
-		allData = new LSerializer[] { animations, skills, characters, obstacles, config };
+		allData = new LSerializer[] { animations, characters, obstacles, status, skills, 
+				config };
 	}
 	
 	public String dataPath() {

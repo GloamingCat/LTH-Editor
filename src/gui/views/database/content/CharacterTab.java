@@ -183,8 +183,12 @@ public class CharacterTab extends DatabaseTab {
 			}
 		});
 		
-		TransformEditor transformTab = new TransformEditor(middle, SWT.NONE);
-		transformTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Group grpTransform = new Group(middle, SWT.NONE);
+		grpTransform.setText(Vocab.instance.TRANSFORM);
+		grpTransform.setLayout(new FillLayout());
+		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformTab);
 		
 		Group grpTags = new Group(middle, SWT.NONE);
