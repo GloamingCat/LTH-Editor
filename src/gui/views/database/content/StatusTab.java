@@ -51,17 +51,16 @@ public class StatusTab extends DatabaseTab {
 		compositeIcon.setLayout(gl_compositeIcon);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IconButton btnSelectIcon = new IconButton(compositeIcon, SWT.NONE);
-		btnSelectIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));
-		
 		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_imgIcon.widthHint = 48;
 		gd_imgIcon.heightHint = 48;
-		imgIcon.setLayoutData(gd_imgIcon);
 		imgIcon.setVerticalAlign(SWT.CENTER);
+		imgIcon.setLayoutData(gd_imgIcon);
 		
+		IconButton btnSelectIcon = new IconButton(compositeIcon, SWT.NONE);
+		btnSelectIcon.optional = false;
 		btnSelectIcon.setImage(imgIcon);
 		addControl(btnSelectIcon, "icon");
 		

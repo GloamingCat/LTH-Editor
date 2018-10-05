@@ -29,7 +29,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(400, 300));
+		setMinimumSize(new Point(350, 500));
 		
 		content.setLayout(new FillLayout());
 		

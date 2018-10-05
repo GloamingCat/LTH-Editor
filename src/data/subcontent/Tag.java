@@ -2,8 +2,8 @@ package data.subcontent;
 
 public class Tag {
 
-	public String key = "newTag";
-	public String value = "";
+	public String key = "key";
+	public String value = "value";
 	
 	public Tag() {}
 	

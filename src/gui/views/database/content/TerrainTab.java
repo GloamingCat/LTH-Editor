@@ -132,6 +132,12 @@ public class TerrainTab extends DatabaseTab {
 		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGraphics.setText(Vocab.instance.GRAPHICS);
 		
+		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
+		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
+		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		imgGraphics.setHorizontalAlign(SWT.CENTER);
+		imgGraphics.setVerticalAlign(SWT.CENTER);
+		
 		IDButton btnAnim = new IDButton(grpGraphics, SWT.NONE) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
@@ -139,12 +145,6 @@ public class TerrainTab extends DatabaseTab {
 		};
 		btnAnim.optional = true;
 		addControl(btnAnim, "animID");
-		
-		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
-		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		imgGraphics.setHorizontalAlign(SWT.CENTER);
-		imgGraphics.setVerticalAlign(SWT.CENTER);
 		btnAnim.setImage(imgGraphics);
 		
 		// Elements

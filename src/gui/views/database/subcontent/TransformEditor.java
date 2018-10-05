@@ -168,6 +168,7 @@ public class TransformEditor extends LObjectEditor {
 			public void paintControl(PaintEvent e) {
 				int x = (Integer) spnOffsetX.getValue();
 				int y = (Integer) spnOffsetY.getValue();
+				x -= 1;
 				e.gc.drawLine(x - 2, y, x + 2, y);
 				e.gc.drawLine(x, y - 2, x, y + 2);
 			}

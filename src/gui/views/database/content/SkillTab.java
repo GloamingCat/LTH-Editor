@@ -72,8 +72,8 @@ public class SkillTab extends DatabaseTab {
 		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_imgIcon.widthHint = 48;
 		gd_imgIcon.heightHint = 48;
-		imgIcon.setLayoutData(gd_imgIcon);
 		imgIcon.setVerticalAlign(SWT.CENTER);
+		imgIcon.setLayoutData(gd_imgIcon);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, SWT.NONE);
 		btnGraphics.optional = false;

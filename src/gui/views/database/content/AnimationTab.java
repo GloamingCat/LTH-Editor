@@ -113,9 +113,6 @@ public class AnimationTab extends DatabaseTab {
 		grpImg.setLayout(gl_grpImg);
 		grpImg.setText(Vocab.instance.GRAPHICS);
 		
-		QuadButton btnSelectImage = new QuadButton(grpImg, SWT.NONE);
-		btnSelectImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		
 		LImage image = new LImage(grpImg, SWT.NONE);
 		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_image.widthHint = 150;
@@ -123,6 +120,8 @@ public class AnimationTab extends DatabaseTab {
 		image.setImage(SWTResourceManager.getImage(AnimationTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
 		transformTab.setImage(image);
 		
+		QuadButton btnSelectImage = new QuadButton(grpImg, SWT.NONE);
+		btnSelectImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		addQuadButton(btnSelectImage, image, "", "quad");
 		
 		Group grpIntro = new Group(contentEditor, SWT.NONE);

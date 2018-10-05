@@ -11,6 +11,7 @@ import lwt.dialog.LObjectShell;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -24,6 +25,7 @@ public class EffectShell extends LObjectShell<Effect> {
 
 	public EffectShell(Shell parent) {
 		super(parent);
+		setMinimumSize(new Point(455, 193));
 		content.setLayout(new GridLayout(2, false));
 		
 		Label lblName = new Label(content, SWT.NONE);
