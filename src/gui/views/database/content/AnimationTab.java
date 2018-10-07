@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioList;
@@ -22,7 +23,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.layout.FillLayout;
 
-import project.GObjectTreeSerializer;
 import project.Project;
 
 import org.eclipse.swt.events.SelectionAdapter;

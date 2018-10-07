@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import org.eclipse.swt.widgets.Composite;
 
-import editor.GDefaultListEditor;
+import gson.editor.GDefaultListEditor;
 import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 

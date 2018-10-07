@@ -1,5 +1,6 @@
 package project;
 
+import gson.project.GMultiSerializer;
 import lwt.dataestructure.LDataTree;
 import data.subcontent.Node;
 

@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.CharTileList;
@@ -29,7 +30,6 @@ import data.Animation;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
 import data.subcontent.Quad;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 public class CharacterTab extends DatabaseTab {

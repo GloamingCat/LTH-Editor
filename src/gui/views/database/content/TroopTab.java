@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.UnitList;
@@ -15,7 +16,6 @@ import org.eclipse.swt.widgets.Group;
 
 import data.Troop;
 import data.Troop.Unit;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 public class TroopTab extends DatabaseTab {

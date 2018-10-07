@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
@@ -32,7 +33,6 @@ import data.Animation;
 import data.Battler;
 import data.GameCharacter;
 import data.config.Config;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 public class BattlerTab extends DatabaseTab {
@@ -207,9 +207,9 @@ public class BattlerTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toTree();
+				return conf.elements.toObjectTree();
 			}
 		};
 		lstElements.attributeName = "elements";
@@ -222,9 +222,8 @@ public class BattlerTab extends DatabaseTab {
 		
 		BonusList lstItems = new BonusList(grpItems, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
-				//TODO return Project.current.items.getList();
-				return null;
+			protected LDataTree<Object> dataTree() {
+				return Project.current.items.getTree();
 			}
 		};
 		lstItems.attributeName = "items";

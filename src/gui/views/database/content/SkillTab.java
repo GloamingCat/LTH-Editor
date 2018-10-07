@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
@@ -30,7 +31,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
 
 import data.config.Config;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 import org.eclipse.swt.widgets.TabItem;
@@ -394,11 +394,12 @@ public class SkillTab extends DatabaseTab {
 		
 		BonusList lstStatus = new BonusList(grpStatus, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				return Project.current.status.getTree();
 			}
 		};
 		lstStatus.attributeName = "status";
+		lstStatus.setIncludeID(false);
 		addChild(lstStatus);
 		
 		Group grpElements = new Group(bottom, SWT.NONE);
@@ -411,9 +412,9 @@ public class SkillTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toTree();
+				return conf.elements.toObjectTree();
 			}
 		};
 		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

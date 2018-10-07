@@ -3,7 +3,8 @@ package gui.views.database;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
-import editor.GDefaultTreeEditor;
+import gson.editor.GDefaultTreeEditor;
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.widgets.ImageButton;
 import gui.widgets.QuadButton;
@@ -17,8 +18,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
-
-import project.GObjectTreeSerializer;
 
 import com.google.gson.Gson;
 

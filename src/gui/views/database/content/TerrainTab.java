@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AudioEditor;
@@ -21,7 +22,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import data.config.Config;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 public class TerrainTab extends DatabaseTab {
@@ -110,9 +110,9 @@ public class TerrainTab extends DatabaseTab {
 		
 		BonusList lstAttributes = new BonusList(grpAtt, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.attributes.toTree();
+				return conf.attributes.toObjectTree();
 			}
 		};
 		lstAttributes.attributeName = "attributes";
@@ -156,9 +156,9 @@ public class TerrainTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toTree();
+				return conf.elements.toObjectTree();
 			}
 		};
 		lstElements.attributeName = "elements";

@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
@@ -25,7 +26,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import project.GObjectTreeSerializer;
 import project.Project;
 
 import org.eclipse.swt.widgets.TabFolder;
@@ -150,7 +150,7 @@ public class ItemTab extends DatabaseTab {
 		TabItem tbtmBattleStatus = new TabItem(equipFolder, SWT.NONE);
 		tbtmBattleStatus.setText(Vocab.instance.STATUS);
 		BonusList lstBattleStatus = new BonusList(equipFolder, SWT.NONE) {
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				return Project.current.status.getTree();
 			}
 		};
@@ -162,9 +162,9 @@ public class ItemTab extends DatabaseTab {
 		tbtmElements.setText(Vocab.instance.ELEMENTS);
 		BonusList lstElements = new BonusList(equipFolder, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toTree();
+				return conf.elements.toObjectTree();
 			}
 		};
 		lstElements.setIncludeID(false);
@@ -210,7 +210,7 @@ public class ItemTab extends DatabaseTab {
 		TabItem tbtmStatus = new TabItem(useFolder, SWT.NONE);
 		tbtmStatus.setText(Vocab.instance.STATUSADD);
 		BonusList lstStatus = new BonusList(useFolder, SWT.NONE) {
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				return Project.current.status.getTree();
 			}
 		};
@@ -222,9 +222,9 @@ public class ItemTab extends DatabaseTab {
 		tbtmElementsAdd.setText(Vocab.instance.ELEMENTADD);
 		BonusList lstElementsAdd = new BonusList(useFolder, SWT.NONE) {
 			@Override
-			protected LDataTree<?> dataTree() {
+			protected LDataTree<Object> dataTree() {
 				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toTree();
+				return conf.elements.toObjectTree();
 			}
 		};
 		lstElementsAdd.setIncludeID(false);

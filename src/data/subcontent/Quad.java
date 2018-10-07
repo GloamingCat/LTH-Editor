@@ -1,5 +1,6 @@
 package data.subcontent;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
 public class Quad {
@@ -36,6 +37,10 @@ public class Quad {
 	
 	public Rectangle getRectangle() {
 		return new Rectangle(x, y, width, height);
+	}
+
+	public Point getSize() {
+		return new Point(width, height);
 	}
 	
 }

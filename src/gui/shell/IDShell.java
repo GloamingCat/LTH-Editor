@@ -45,7 +45,8 @@ public abstract class IDShell extends LObjectShell<Integer> {
 			protected Object duplicateData(Object original) { return null; }
 		};
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		 		
+		tree.getCollectionWidget().dragEnabled = false;
+		
 		btnNull = new Button(compTree, 0);
 		btnNull.addSelectionListener(new SelectionAdapter() {
 			@Override

@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.SkillNodeEditor;
@@ -12,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import data.BattleClass.Node;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 public class ClassTab extends DatabaseTab {

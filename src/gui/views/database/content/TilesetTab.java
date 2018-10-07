@@ -3,6 +3,7 @@ package gui.views.database.content;
 import java.util.ArrayList;
 
 import lwt.dialog.LObjectShell;
+import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.database.BasicTileShell;
 import gui.shell.database.TilesetCharShell;
@@ -20,7 +21,6 @@ import data.Tileset.ObstacleTile;
 import data.Tileset.RegionTile;
 import data.Tileset.TerrainTile;
 import data.config.Config;
-import project.GObjectTreeSerializer;
 import project.Project;
 
 import org.eclipse.swt.layout.GridLayout;

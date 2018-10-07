@@ -4,8 +4,10 @@ import gui.Vocab;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -36,6 +38,7 @@ public class IconShell extends LObjectShell<Icon> {
 	protected Button btnNull;
 	protected LImage image;
 	protected int col, row;
+	private ScrolledComposite scroll;
 	
 	public IconShell(Shell parent, boolean optional) {
 		super(parent);
@@ -65,10 +68,10 @@ public class IconShell extends LObjectShell<Icon> {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Animation anim = (Animation) getTree().getNode(event.path).data;
-				image.setImage(anim.getImage());
-				image.redraw();
+				setImage(anim);
 			}
 		});
+		tree.getCollectionWidget().dragEnabled = false;
 		 		
 		btnNull = new Button(compTree, 0);
 		btnNull.addSelectionListener(new SelectionAdapter() {
@@ -80,7 +83,12 @@ public class IconShell extends LObjectShell<Icon> {
 		btnNull.setText(Vocab.instance.NONE);
 		btnNull.setEnabled(optional);
 		
-		image = new LImage(sashForm, SWT.NONE);
+		scroll = new ScrolledComposite(sashForm, SWT.NONE);
+		scroll.setExpandVertical(true);
+		scroll.setExpandHorizontal(true);
+		scroll.setLayout(new FillLayout());
+		
+		image = new LImage(scroll, SWT.NONE);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		image.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
@@ -103,8 +111,16 @@ public class IconShell extends LObjectShell<Icon> {
 				}
 			}
 		});
+		scroll.setContent(image);
 		
 		sashForm.setWeights(new int[] {1, 2});
+	}
+	
+	private void setImage(Animation anim) {
+		Image img = anim.getImage();
+		image.setImage(img);
+		scroll.setMinSize(anim.quad.getSize());
+		image.redraw();
 	}
 	
 	public void open(Icon initial) {
@@ -117,9 +133,7 @@ public class IconShell extends LObjectShell<Icon> {
 			LDataTree<Object> node = getTree().findNode(initial.id);
 			if (node != null) {
 				tree.getCollectionWidget().select(node.toPath());
-				Animation anim = (Animation) node.data;
-				image.setImage(anim.getImage());
-				image.redraw();
+				setImage((Animation) node.data);
 			}
 		} else {
 			col = row = 0;

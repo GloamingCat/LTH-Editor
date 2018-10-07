@@ -54,6 +54,7 @@ public abstract class NodeShell extends LObjectShell<Node> {
 			protected Object duplicateData(Object original) { return null; }
 		};
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tree.getCollectionWidget().dragEnabled = false;
 		
 		pack();
 	}
@@ -73,23 +74,19 @@ public abstract class NodeShell extends LObjectShell<Node> {
 
 	@Override
 	protected Node createResult(Node initial) {
-		int id = -1;
 		LPath path = tree.getCollectionWidget().getSelectedPath();
-		if (path == null)
-			id = initial.id;
-		else
-			id = getTree().getNode(path).id;
+		int id = path == null ? -1 : getTree().getNode(path).id;
 		
 		if (id == initial.id && txtName.getText().equals(initial.name)) {
 			return null;
 		} else {
-			Node bonus = new Node();
-			bonus.id = id;
-			bonus.name = txtName.getText();
-			return bonus;
+			Node node = new Node();
+			node.id = id;
+			node.name = txtName.getText();
+			return node;
 		}
 	}
 	
-	protected LDataTree<Object> getTree() { return null; }
+	protected abstract LDataTree<Object> getTree();
 	
 }
