@@ -1,7 +1,7 @@
 package gui.shell.config;
 
 import gui.Vocab;
-import gui.views.IDList;
+import gui.widgets.IDList;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;

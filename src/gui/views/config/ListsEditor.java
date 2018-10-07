@@ -1,7 +1,8 @@
 package gui.views.config;
 
 import gui.Vocab;
-import gui.views.IDList;
+import gui.widgets.IDList;
+import gui.widgets.NameList;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;

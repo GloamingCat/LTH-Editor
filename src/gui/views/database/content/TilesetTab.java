@@ -6,8 +6,8 @@ import lwt.dialog.LObjectShell;
 import gui.Vocab;
 import gui.shell.database.BasicTileShell;
 import gui.shell.database.TilesetCharShell;
-import gui.views.GraphicalList;
 import gui.views.database.DatabaseTab;
+import gui.widgets.GraphicalList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;

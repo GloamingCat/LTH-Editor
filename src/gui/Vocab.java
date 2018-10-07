@@ -48,6 +48,10 @@ public class Vocab {
 	public String DEFAULT = "Default";
 	public String OPTIONS = "Options";
 	
+	// ========================================================================
+	// Config
+	// ========================================================================
+	
 	// Config
 	public String PROJECTNAME = "Project Name";
 	public String TROOP = "Troop";
@@ -98,22 +102,31 @@ public class Vocab {
 	public String WIDTH = "Width";
 	public String HEIGHT = "Height";
 	
-	// GUI
+	// Animations
 	public String GUI = "GUI";
 	public String CURSORANIMID = "Cursor Animation";
 	public String BATTLECURSORANIMID = "Battle Cursor Animation";
 	public String TILEANIMID = "Tile Animation";
 	public String TILEHLANIMID = "Tile Highlight Animation";
 	
+	// ========================================================================
+	// Database
+	// ========================================================================
+	
 	// Item
 	public String PRICE = "Price";
-	public String WEIGHT = "Weight";
-	public String CANSELL = "Can sell";
-	public String CANEQUIP = "Can equip";
-	public String CANUSE = "Can use";
-	public String CANCONSUME = "Can consume";
+	public String SELLABLE = "Sellable";
+	public String USE = "Use";
+	public String CONSUME = "Consume on use";
 	public String ITEMSKILL = "Skill ID";
-	public String ITEMSTATUS = "Status ID";
+	public String STATUSADD = "Status";
+	public String ELEMENTADD = "Elements";
+	public String EQUIP = "Equip";
+	public String SLOT = "Slot Type";
+	public String ALLSLOTS = "Use all slots of type";
+	public String BLOCKED = "Blocked";
+	public String ATTADD = "By constant";
+	public String ATTMUL = "By percentage";
 	
 	// Battler
 	public String BATTLECHAR = "Battle Character";
@@ -176,44 +189,18 @@ public class Vocab {
 	public String LOOP = "Loop";
 	public String DURATION = "Duration";
 	
-	// Audio
-	public String SOUND = "Sound";
-	public String VOLUME = "Volume";
-	public String PITCH = "Pitch";
-	public String TIME = "Time";
-	
-	// Transform
-	public String TRANSFORM = "Transform";
-	public String OFFSETX = "Offset X";
-	public String OFFSETY = "Offset Y";
-	public String OFFSETDEPTH = "Offset Depth";
-	public String ROTATION = "Rotation";
-	public String SCALEX = "Scale X";
-	public String SCALEY = "Scale Y";
-	public String RED = "Red";
-	public String BLUE = "Blue";
-	public String GREEN = "Green";
-	public String ALPHA = "Alpha";
-	public String HUE = "Hue";
-	public String SATURATION = "Saturation";
-	public String BRIGHTNESS = "Brightness";
-	
-	// Quad
-	public String QUADX = "Quad X";
-	public String QUADY = "Quad Y";
-	public String QUADW = "Quad Width";
-	public String QUADH = "Quad Height";
-	public String FULLIMAGE = "Full Image";
-	
-	// Icon
-	public String COLUMN = "Column";
-	public String ROW = "Row";
-	
 	// Character
 	public String CHARBATTLER = "Battler";
 	public String SHADOW = "Shadow";
 	public String COLLIDERTILES = "Collision Tiles";
 	public String PORTRAITS = "Portraits";
+	
+	// Class
+	public String SKILLNODES = "Skill Nodes";
+	public String SKILL = "Skill";
+	public String REQUIREDSKILLS = "Required Skills";
+	public String EXPCOST = "EXP Cost";
+	public String MINLEVEL = "Min Level";
 	
 	// Obstacles
 	public String BOTTOM = "Bottom";
@@ -249,13 +236,43 @@ public class Vocab {
 	public String LIFETIME = "Life time";
 	public String REMOVEONEXIT = "Remove on Exit";
 	public String RESETTIME = "Reset time";
-
-	// Skill Dag
-	public String SKILLNODES = "Skill Nodes";
-	public String SKILL = "Skill";
-	public String REQUIREDSKILLS = "Required Skills";
-	public String EXPCOST = "EXP Cost";
-	public String MINLEVEL = "Min Level";
+	
+	// ========================================================================
+	// Sub-content
+	// ========================================================================
+	
+	// Audio
+	public String SOUND = "Sound";
+	public String VOLUME = "Volume";
+	public String PITCH = "Pitch";
+	public String TIME = "Time";
+	
+	// Transform
+	public String TRANSFORM = "Transform";
+	public String OFFSETX = "Offset X";
+	public String OFFSETY = "Offset Y";
+	public String OFFSETDEPTH = "Offset Depth";
+	public String ROTATION = "Rotation";
+	public String SCALEX = "Scale X";
+	public String SCALEY = "Scale Y";
+	public String RED = "Red";
+	public String BLUE = "Blue";
+	public String GREEN = "Green";
+	public String ALPHA = "Alpha";
+	public String HUE = "Hue";
+	public String SATURATION = "Saturation";
+	public String BRIGHTNESS = "Brightness";
+	
+	// Quad
+	public String QUADX = "Quad X";
+	public String QUADY = "Quad Y";
+	public String QUADW = "Quad Width";
+	public String QUADH = "Quad Height";
+	public String FULLIMAGE = "Full Image";
+	
+	// Icon
+	public String COLUMN = "Column";
+	public String ROW = "Row";
 	
 	// Tileset
 	public String ANIMATION = "Animation";
@@ -264,6 +281,10 @@ public class Vocab {
 	public String COLLISIONLISTENER = "Collision";
 	public String INTERACTLISTENER = "Interact";
 
+	// ========================================================================
+	// Field
+	// ========================================================================
+	
 	// Field
 	public String BACKGROUND = "Background";
 	public String TILESET = "Tileset";
@@ -286,6 +307,10 @@ public class Vocab {
 	public String SOUTH = "South";
 	public String WEST = "West";
 
+	// ========================================================================
+	// Events
+	// ========================================================================
+	
 	// Dialogue
 	public String SPEECHES = "Speeches";
 	public String PORTRAIT = "Portrait";

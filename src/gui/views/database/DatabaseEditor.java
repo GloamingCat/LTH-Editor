@@ -32,10 +32,10 @@ public class DatabaseEditor extends LViewFolder {
 		SkillTab skillTab = new SkillTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.SKILLS, skillTab);
 		
-		/*ItemTab itemTab = new ItemTab(tabFolder, SWT.NONE);
+		ItemTab itemTab = new ItemTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.ITEMS, itemTab);
 		
-		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
+		/*BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.BATTLERS, battlerTab);*/
 		
 		TerrainTab terrainTab = new TerrainTab(tabFolder, SWT.NONE);

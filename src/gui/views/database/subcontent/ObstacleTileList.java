@@ -1,7 +1,7 @@
 package gui.views.database.subcontent;
 
 import gui.shell.database.ObstacleTileShell;
-import gui.views.SimpleEditableList;
+import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;

@@ -1,7 +1,7 @@
 package gui.views.fieldTree;
 
 import gui.shell.field.LayerShell;
-import gui.views.GraphicalList;
+import gui.widgets.GraphicalList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;

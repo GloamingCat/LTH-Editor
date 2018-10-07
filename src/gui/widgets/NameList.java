@@ -1,7 +1,6 @@
-package gui.views.config;
+package gui.widgets;
 
 import gui.shell.NameShell;
-import gui.views.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 

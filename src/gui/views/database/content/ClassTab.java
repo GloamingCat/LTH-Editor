@@ -1,9 +1,9 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.SimpleEditableList;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.SkillNodeEditor;
+import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

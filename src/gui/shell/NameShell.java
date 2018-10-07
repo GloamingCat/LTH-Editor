@@ -1,6 +1,7 @@
 package gui.shell;
 
 import gui.Vocab;
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -8,6 +9,7 @@ import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -17,6 +19,7 @@ public class NameShell extends LObjectShell<String> {
 
 	public NameShell(Shell parent) {
 		super(parent);
+		setMinimumSize(new Point(300, 120));
 		
 		content.setLayout(new GridLayout(2, false));
 		

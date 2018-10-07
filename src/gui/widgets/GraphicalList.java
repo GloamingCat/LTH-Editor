@@ -1,4 +1,4 @@
-package gui.views;
+package gui.widgets;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;

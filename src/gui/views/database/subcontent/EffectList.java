@@ -1,7 +1,7 @@
 package gui.views.database.subcontent;
 
-import gui.shell.EffectShell;
-import gui.views.SimpleEditableList;
+import gui.shell.database.EffectShell;
+import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;

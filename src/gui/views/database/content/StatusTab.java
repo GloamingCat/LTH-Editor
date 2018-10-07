@@ -1,11 +1,11 @@
 package gui.views.database.content;
 
 import gui.Vocab;
-import gui.views.IDList;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
+import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.ScriptButton;
 import lwt.dataestructure.LDataTree;
