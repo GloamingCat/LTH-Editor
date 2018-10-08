@@ -394,7 +394,7 @@ public class SkillTab extends DatabaseTab {
 		
 		BonusList lstStatus = new BonusList(grpStatus, SWT.NONE) {
 			@Override
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				return Project.current.status.getTree();
 			}
 		};
@@ -412,7 +412,7 @@ public class SkillTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements.toObjectTree();
 			}

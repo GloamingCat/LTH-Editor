@@ -24,7 +24,10 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 
 	public BonusShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(240, 39));
+		GridData gridData = (GridData) content.getLayoutData();
+		gridData.verticalAlignment = SWT.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		setMinimumSize(new Point(372, 329));
 		content.setLayout(new GridLayout(2, false));
 		
 		Label lblValue = new Label(content, SWT.NONE);

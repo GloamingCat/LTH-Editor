@@ -9,12 +9,12 @@ import lwt.dataserialization.LSerializer;
 public class Project implements LSerializer {
 	
 	public GObjectTreeSerializer animations;
-	
 	public GObjectTreeSerializer battlers;
 	public GObjectTreeSerializer characters;
 	public GObjectTreeSerializer classes;
 	public GObjectTreeSerializer items;
 	public GObjectTreeSerializer obstacles;
+	public GObjectTreeSerializer scripts;
 	public GObjectTreeSerializer skills;
 	public GObjectTreeSerializer status;
 	public GObjectTreeSerializer terrains;
@@ -38,6 +38,7 @@ public class Project implements LSerializer {
 		classes = new GObjectTreeSerializer(dataPath() + "classes", BattleClass.class);
 		items = new GObjectTreeSerializer(dataPath() + "items", Item.class);
 		obstacles = new GObjectTreeSerializer(dataPath() + "obstacles", Obstacle.class);
+		scripts = new GObjectTreeSerializer(dataPath() + "scripts", Script.class);
 		skills = new GObjectTreeSerializer(dataPath() + "skills", Skill.class);
 		status = new GObjectTreeSerializer(dataPath() + "status", Status.class);
 		terrains = new GObjectTreeSerializer(dataPath() + "terrains", Terrain.class);
@@ -48,8 +49,9 @@ public class Project implements LSerializer {
 		
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		
-		allData = new LSerializer[] { animations, characters, obstacles, status, skills, 
-				items, terrains, config };
+		allData = new LSerializer[] { animations, battlers, characters, classes,
+				items, obstacles, scripts, skills, status, terrains, 
+				config };
 	}
 	
 	public String dataPath() {

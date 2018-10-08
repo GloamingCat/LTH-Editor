@@ -33,8 +33,6 @@ public abstract class IDList extends SimpleEditableList<Integer> {
 		list.setIncludeID(false);
 	}
 	
-	public abstract LDataTree<Object> getDataTree();
-	
 	protected LList<Integer, Integer> createList() {
 		return new LList<Integer, Integer>(this, SWT.NONE) {
 			@Override
@@ -58,9 +56,19 @@ public abstract class IDList extends SimpleEditableList<Integer> {
 			}
 			@Override
 			public LDataTree<Integer> duplicateNode(LPath path) {
-				return toNode (path);
+				return new LDataTree<Integer>(toObject(path));
+			}
+			@Override
+			protected String dataToString(Integer id) {
+				Object obj = getDataTree().get(id);
+				String idstr = includeID ? stringID(id) : "";
+				if (obj == null)
+					return idstr + "    ";
+				return idstr + obj.toString();
 			}
 		};
 	}
 
+	public abstract LDataTree<Object> getDataTree();
+	
 }

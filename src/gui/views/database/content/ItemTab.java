@@ -150,7 +150,7 @@ public class ItemTab extends DatabaseTab {
 		TabItem tbtmBattleStatus = new TabItem(equipFolder, SWT.NONE);
 		tbtmBattleStatus.setText(Vocab.instance.STATUS);
 		BonusList lstBattleStatus = new BonusList(equipFolder, SWT.NONE) {
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				return Project.current.status.getTree();
 			}
 		};
@@ -162,7 +162,7 @@ public class ItemTab extends DatabaseTab {
 		tbtmElements.setText(Vocab.instance.ELEMENTS);
 		BonusList lstElements = new BonusList(equipFolder, SWT.NONE) {
 			@Override
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements.toObjectTree();
 			}
@@ -210,7 +210,7 @@ public class ItemTab extends DatabaseTab {
 		TabItem tbtmStatus = new TabItem(useFolder, SWT.NONE);
 		tbtmStatus.setText(Vocab.instance.STATUSADD);
 		BonusList lstStatus = new BonusList(useFolder, SWT.NONE) {
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				return Project.current.status.getTree();
 			}
 		};
@@ -222,7 +222,7 @@ public class ItemTab extends DatabaseTab {
 		tbtmElementsAdd.setText(Vocab.instance.ELEMENTADD);
 		BonusList lstElementsAdd = new BonusList(useFolder, SWT.NONE) {
 			@Override
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements.toObjectTree();
 			}

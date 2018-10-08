@@ -26,7 +26,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 					org.eclipse.swt.widgets.Shell parent) {
 				return new BonusShell(parent) {
 					public LDataTree<Object> getTree() {
-						return dataTree();
+						return getDataTree();
 					};
 				};
 			}
@@ -61,7 +61,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 			}
 			@Override
 			protected String dataToString(Bonus item) {
-				Object obj = dataTree().get(item.id);
+				Object obj = getDataTree().get(item.id);
 				String id = includeID ? stringID(item.id) : "";
 				if (obj == null)
 					return id + "    ";
@@ -70,6 +70,6 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 		};
 	}
 	
-	protected abstract LDataTree<Object> dataTree();
+	protected abstract LDataTree<Object> getDataTree();
 
 }

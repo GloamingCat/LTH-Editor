@@ -110,7 +110,7 @@ public class TerrainTab extends DatabaseTab {
 		
 		BonusList lstAttributes = new BonusList(grpAtt, SWT.NONE) {
 			@Override
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.attributes.toObjectTree();
 			}
@@ -156,7 +156,7 @@ public class TerrainTab extends DatabaseTab {
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
-			protected LDataTree<Object> dataTree() {
+			protected LDataTree<Object> getDataTree() {
 				Config conf = (Config) Project.current.config.getData();
 				return conf.elements.toObjectTree();
 			}

@@ -129,17 +129,22 @@ public class Vocab {
 	public String ATTMUL = "By percentage";
 	
 	// Battler
-	public String BATTLECHAR = "Battle Character";
-	public String FIELDCHAR = "Field Character";
-	public String BATTLERTYPE = "Type";
-	public String SKILLDAG = "Skill Dag";
+	public String CLASS = "Class";
 	public String ATTACKSKILL = "Attack Skill";
 	public String PERSISTENT = "Persistent";
 	public String AI = "AI";
 	public String MONEY = "Money";
 	public String EXP = "EXP";
-	public String BUILD = "Build";
 	public String LEVEL = "Level";
+	public String INITIAL = "Initial";
+	public String DROP = "Drop";
+	public String STATE = "State";
+	public String FREE = "Free";
+	public String NOTEMPTY = "Never empty";
+	public String ALLEQUIPED = "All equiped";
+	public String UNCHANGABLE = "Unchangable";
+	public String INVISIBLE = "Invisible";
+	public String EQUIPITEM = "Item ID";
 	
 	// Skill
 	public String RANGE = "Range";
