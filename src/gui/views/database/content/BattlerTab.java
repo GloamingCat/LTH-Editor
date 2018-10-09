@@ -33,8 +33,6 @@ public class BattlerTab extends DatabaseTab {
 	public BattlerTab(Composite parent, int style) {
 		super(parent, style);
 		
-		contentEditor.setLayout(new GridLayout(2, false));
-		
 		new Label(grpGeneral,  SWT.NONE);
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -137,19 +135,14 @@ public class BattlerTab extends DatabaseTab {
 		addControl(spnEXP, "exp");
 		
 		Group grpAtt = new Group(contentEditor, SWT.NONE);
-		grpAtt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpAtt.setLayout(new GridLayout(1, true));
+		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
+		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_grpAtt.heightHint = 100;
+		grpAtt.setLayoutData(gd_grpAtt);
 		grpAtt.setText(Vocab.instance.ATTRIBUTES);
-		
-		Composite build = new Composite(grpAtt, SWT.NONE);
-		build.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_build = new GridLayout(1, false);
-		gl_build.marginWidth = 0;
-		gl_build.marginHeight = 0;
-		build.setLayout(gl_build);
-		
+
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
-		attEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));		
+		attEditor.setColumns(4);
 		addChild(attEditor);
 		
 		Composite other = new Composite(contentEditor, SWT.NONE);

@@ -14,13 +14,11 @@ public class Vocab {
 	public String ANIMATIONS = "Animations";
 	public String BATTLERS = "Battlers";
 	public String CHARACTERS = "Characters";
+	public String CLASSES = "Classes";
 	public String ITEMS = "Items";
 	public String SKILLS = "Skills";
-	public String SKILLDAGS = "Skill Dags";
 	public String STATUS = "Status";
-	public String OBJECTS = "Objects";
 	public String OBSTACLES = "Obstacles";
-	public String RAMPS = "Ramps";
 	public String TERRAINS = "Terrains";
 	public String TILESETS = "Tilesets";
 	
@@ -201,6 +199,8 @@ public class Vocab {
 	public String PORTRAITS = "Portraits";
 	
 	// Class
+	public String BUILD = "Build";
+	public String EXPCURVE = "EXP Curve";;
 	public String SKILLNODES = "Skill Nodes";
 	public String SKILL = "Skill";
 	public String REQUIREDSKILLS = "Required Skills";

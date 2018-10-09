@@ -77,9 +77,11 @@ public abstract class DatabaseTab extends LView {
 		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
+		GridLayout gridLayout = new GridLayout(2, false);
+		gridLayout.verticalSpacing = 0;
 		contentEditor = new LObjectEditor(sashForm, SWT.NONE);
 		contentEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		contentEditor.setLayout(new GridLayout(1, false));
+		contentEditor.setLayout(gridLayout);
 		
 		grpGeneral = new Group(contentEditor, SWT.NONE);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

@@ -37,7 +37,9 @@ public class StatusTab extends DatabaseTab {
 	public StatusTab(Composite parent, int style) {
 		super(parent, style);
 		
-		contentEditor.setLayout(new GridLayout(2, false));
+		GridLayout gridLayout = new GridLayout(2, false);
+		gridLayout.verticalSpacing = 0;
+		contentEditor.setLayout(gridLayout);
 		
 		// Icon
 		

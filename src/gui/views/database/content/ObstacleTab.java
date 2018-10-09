@@ -27,9 +27,7 @@ public class ObstacleTab extends DatabaseTab {
 	 */
 	public ObstacleTab(Composite parent, int style) {
 		super(parent, style);
-		
-		contentEditor.setLayout(new GridLayout(2, false));
-		
+
 		Composite lateral = new Composite(contentEditor, SWT.NONE);
 		lateral.setLayout(new FillLayout(SWT.VERTICAL));
 		lateral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));

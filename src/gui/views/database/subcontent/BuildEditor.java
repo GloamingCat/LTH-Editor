@@ -17,23 +17,23 @@ import lwt.dataestructure.LDataList;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
-import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
-public class AttributeEditor extends LObjectEditor {
+public class BuildEditor extends LObjectEditor {
 
-	protected LDataList<Integer> values;
-	protected ArrayList<LSpinner> spinners;
+	protected LDataList<String> values;
+	protected ArrayList<LText> texts;
 	protected ScrolledComposite scrollComp;
 	protected Composite content;
 	protected int columns = 2;
 	
-	protected LDataList<Integer> list;
+	protected LDataList<String> list;
 	
-	public AttributeEditor(Composite parent, int style) {
+	public BuildEditor(Composite parent, int style) {
 		super(parent, style);
 		
 		setLayout(new FillLayout());
-		spinners = new ArrayList<>();
+		texts = new ArrayList<>();
 		
 		scrollComp = new ScrolledComposite(this, SWT.V_SCROLL);
 		scrollComp.setExpandVertical(true);
@@ -46,26 +46,28 @@ public class AttributeEditor extends LObjectEditor {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private LDataList<Integer> getList() {
-		Object value = getFieldValue(currentObject, "attributes");
-		return (LDataList<Integer>) value;
+	private LDataList<String> getList() {
+		Object value = getFieldValue(currentObject, "build");
+		return (LDataList<String>) value;
 	}
 	
 	public void setObject(Object obj) {
 		super.setObject(obj);
 		if (obj != null) {
 			list = getList();
-			for(int i = 0; i < spinners.size(); i++) {
+			for(int i = 0; i < texts.size(); i++) {
 				if (i < list.size()) {
-					spinners.get(i).setValue(list.get(i));
+					texts.get(i).setValue(list.get(i));
 				} else {
-					list.add(0);
-					spinners.get(i).setValue(0);
+					String value = "0";
+					list.add(value);
+					texts.get(i).setValue(value);
 				}
 			}
 		} else {
-			for(LSpinner spinner : spinners) {
-				spinner.setValue(null);
+			for(LText text : texts) {
+				text.setValue(null);
+				text.setEnabled(false);
 			}
 		}
 	}
@@ -75,7 +77,7 @@ public class AttributeEditor extends LObjectEditor {
 	}
 	
 	public void onVisible() {
-		spinners.clear();
+		texts.clear();
 		content.dispose();
 		content = new Composite(scrollComp, SWT.NONE);
 		content.setLayout(new GridLayout(columns, false));
@@ -86,26 +88,26 @@ public class AttributeEditor extends LObjectEditor {
 			Label label = new Label(content, SWT.NONE);
 			label.setText(att.shortName);
 			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-			LSpinner spinner = createSpinner(i);
-			spinners.add(spinner);
+			LText text = createText(i);
+			texts.add(text);
 		}
 		scrollComp.setContent(content);
 		scrollComp.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 	
-	private LSpinner createSpinner(final int i) {
-		LSpinner spinner = new LSpinner(content, SWT.NONE);
-		spinner.setActionStack(getActionStack());
-		spinner.addModifyListener(new LControlListener<Integer>() {
+	private LText createText(final int i) {
+		LText text = new LText(content, SWT.NONE);
+		text.setActionStack(getActionStack());
+		text.addModifyListener(new LControlListener<String>() {
 			@Override
-			public void onModify(LControlEvent<Integer> event) {
+			public void onModify(LControlEvent<String> event) {
 				if (list != null) {
-					list.set(i, (Integer) event.newValue);
+					list.set(i, event.newValue);
 				}
 			}
 		});
-		spinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		return spinner;
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		return text;
 	}
 
 }

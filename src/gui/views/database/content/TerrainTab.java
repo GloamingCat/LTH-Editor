@@ -33,9 +33,7 @@ public class TerrainTab extends DatabaseTab {
 	 */
 	public TerrainTab(Composite parent, int style) {
 		super(parent, style);
-		
-		contentEditor.setLayout(new GridLayout(2, false));
-		
+
 		Label lblMoveCost = new Label(grpGeneral, SWT.NONE);
 		lblMoveCost.setText(Vocab.instance.MOVECOST);
 		

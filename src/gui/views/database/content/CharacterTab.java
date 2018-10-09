@@ -36,9 +36,6 @@ public class CharacterTab extends DatabaseTab {
 
 	public CharacterTab(Composite parent, int style) {
 		super(parent, style);
-		GridLayout gl_content = new GridLayout(2, false);
-		gl_content.verticalSpacing = 0;
-		contentEditor.setLayout(gl_content);
 		
 		Label lblBattler = new Label(grpGeneral, SWT.NONE);
 		lblBattler.setText(Vocab.instance.CHARBATTLER);

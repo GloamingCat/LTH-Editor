@@ -42,8 +42,6 @@ public class ItemTab extends DatabaseTab {
 	 */
 	public ItemTab(Composite parent, int style) {
 		super(parent, style);
-		GridLayout gridLayout = (GridLayout) contentEditor.getLayout();
-		gridLayout.numColumns = 2;
 		
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));

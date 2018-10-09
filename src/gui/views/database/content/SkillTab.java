@@ -45,8 +45,6 @@ public class SkillTab extends DatabaseTab {
 	public SkillTab(Composite parent, int style) {
 		super(parent, style);
 
-		contentEditor.setLayout(new GridLayout(2, false));
-
 		Label lblDescription = new Label(grpGeneral, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		lblDescription.setText(Vocab.instance.DESCRIPTION);

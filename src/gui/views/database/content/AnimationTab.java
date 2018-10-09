@@ -41,10 +41,6 @@ public class AnimationTab extends DatabaseTab {
 	public AnimationTab(Composite parent, int style) {
 		super(parent, style);
 		
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.verticalSpacing = 0;
-		contentEditor.setLayout(gridLayout);
-		grpGeneral.setLayout(new GridLayout(2, false));
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gridData.widthHint = 240;
 		grpGeneral.setLayoutData(gridData);
@@ -92,6 +88,7 @@ public class AnimationTab extends DatabaseTab {
 		GridLayout gl_right = new GridLayout(1, false);
 		gl_right.marginWidth = 0;
 		gl_right.marginHeight = 0;
+		gl_right.verticalSpacing = 0;
 		right.setLayout(gl_right);
 		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 4);
 		gd_right.widthHint = 300;
