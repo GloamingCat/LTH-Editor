@@ -21,7 +21,7 @@ public class Battler extends Data {
 	public LDataList<Bonus> elements = new LDataList<>();
 	
 	// Items
-	public LDataList<Bonus> items = new LDataList<>();
+	public LDataList<Drop> items = new LDataList<>();
 	public LDataList<Equip> equip = new LDataList<>();
 	
 	public static class Equip {
@@ -38,6 +38,36 @@ public class Battler extends Data {
 				return key + ": " + item.toString();
 		}
 		
+		public boolean equals(Object other) {
+			if (other instanceof Equip) {
+				Equip equip = (Equip) other;
+				return equip.id == id && equip.state == state && equip.key.equals(key);
+			} else {
+				return false;
+			}
+		}
+		
+		public Equip clone() {
+			Equip e = new Equip();
+			e.id = id;
+			e.key = key;
+			e.state = state;
+			return e;
+		}
+		
+	}
+	
+	public static class Drop extends Bonus {
+		
+		public int count = 1;
+		
+		public String toString() {
+			Item item = (Item) Project.current.items.getTree().get(id);
+			if (item == null)
+				return "NULL";
+			else
+				return item.toString() + " x " + count + " (" + this.value + "%)";
+		}
 	}
 	
 }

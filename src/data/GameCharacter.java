@@ -1,5 +1,6 @@
 package data;
 
+import project.Project;
 import data.subcontent.Icon;
 import data.subcontent.Node;
 import data.subcontent.Transform;
@@ -17,6 +18,19 @@ public class GameCharacter extends Data {
 	public GameCharacter() {
 		animations.add(new Node());
 		tiles.add(new Tile());
+	}
+	
+	public Animation defaultAnimation() {
+		if (animations.isEmpty())
+			return null;
+		int id = 0;
+		for (Node n : animations) {
+			if (n.name.contains("Battle:Idle")) {
+				id = n.id;
+				break;
+			}
+		}
+		return (Animation) Project.current.animations.getData().get(id);
 	}
 	
 	public static class Portrait extends Icon {

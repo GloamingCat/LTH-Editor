@@ -50,7 +50,7 @@ public class Project implements LSerializer {
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		
 		allData = new LSerializer[] { animations, battlers, characters, classes,
-				items, obstacles, scripts, skills, status, terrains, 
+				items, obstacles, scripts, skills, status, terrains, troops, 
 				config };
 	}
 	

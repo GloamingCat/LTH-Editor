@@ -21,6 +21,7 @@ public class Vocab {
 	public String OBSTACLES = "Obstacles";
 	public String TERRAINS = "Terrains";
 	public String TILESETS = "Tilesets";
+	public String TROOPS = "Troops";
 	
 	// Groups
 	public String GENERAL = "General";
@@ -39,6 +40,8 @@ public class Vocab {
 	public String ICON = "Icon";
 	public String DESCRIPTION = "Description";
 	public String VALUE = "Value";
+	public String CHANCE = "Chance";
+	public String COUNT = "Count";
 	public String PATH = "Path";
 	public String SECONDS = "sec";
 	public String PROPERTIES = "Properties";
@@ -241,6 +244,12 @@ public class Vocab {
 	public String LIFETIME = "Life time";
 	public String REMOVEONEXIT = "Remove on Exit";
 	public String RESETTIME = "Reset time";
+	
+	// Troops
+	public String UNITS = "Units";
+	public String BACKUP = "Backup";
+	public String POSITIONX = "Grid X";
+	public String POSITIONY = "Grid Y";
 	
 	// ========================================================================
 	// Sub-content

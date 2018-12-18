@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.EquipList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
@@ -219,13 +220,7 @@ public class BattlerTab extends DatabaseTab {
 		TabItem tbtmDrop = new TabItem(tabItems, SWT.NONE);
 		tbtmDrop.setText(Vocab.instance.DROP);
 		
-		BonusList lstDrop = new BonusList(tabItems, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.items.getTree();
-			}
-		};
-		lstDrop.attributeName = "items";
+		DropList lstDrop = new DropList(tabItems, SWT.NONE);
 		tbtmDrop.setControl(lstDrop);
 		addChild(lstDrop);
 		

@@ -35,6 +35,9 @@ public class DatabaseEditor extends LViewFolder {
 		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.BATTLERS, battlerTab);
 		
+		TroopTab troopTab = new TroopTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.TROOPS, troopTab);
+		
 		ClassTab classesTab = new ClassTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.CLASSES, classesTab);
 		

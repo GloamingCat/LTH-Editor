@@ -16,7 +16,6 @@ import data.Field;
 import data.GameCharacter;
 import data.Obstacle;
 import data.Terrain;
-import data.Tileset;
 import data.Tileset.CharTile;
 import data.config.Region;
 import data.config.Config.Grid;
@@ -100,10 +99,9 @@ public class FieldPainter {
 		gc.fillPolygon(p);
 	}
 
-	public void paintTerrain(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintTerrain(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
-			int id = tileset.terrains.get(layer.grid[x][y]).id;
+			int id = layer.grid[x][y];
 			Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
 			Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
 			if (anim != null) {
@@ -133,10 +131,9 @@ public class FieldPainter {
 		}
 	}
 	
-	public void paintObstacle(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0, boolean paintRamp) {
+	public void paintObstacle(Layer layer, int x, int y, GC gc, int x0, int y0, boolean paintRamp) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
-			int id = tileset.obstacles.get(layer.grid[x][y]).id;
+			int id = layer.grid[x][y];
 			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
 			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
 			Image img = obstacleCache.get(id);
@@ -154,10 +151,8 @@ public class FieldPainter {
 		}
 	}
 	
-	public void paintCharacter(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintCharacter(CharTile tile, int x, int y, GC gc, int x0, int y0) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
-			CharTile tile = tileset.characters.get(layer.grid[x][y]);
 			String key = tile.getKey();
 			
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.id);
@@ -180,10 +175,9 @@ public class FieldPainter {
 		}
 	}
 	
-	public void paintRegion(int tilesetID, Layer layer, int x, int y, GC gc, int x0, int y0) {
+	public void paintRegion(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(tilesetID);
-			int id = tileset.regions.get(layer.grid[x][y]).id;
+			int id = layer.grid[x][y];
 			int w = FieldHelper.config.grid.tileW;
 			int h = FieldHelper.config.grid.tileH;
 			Image img = regionCache.get(id);
@@ -235,7 +229,7 @@ public class FieldPainter {
 				case 0:
 					// Terrain Layer
 					if (layer.grid[x][y] >= 0) {
-						paintTerrain(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
+						paintTerrain(layer, x, y, gc, x0, y0 - layer.info.height * pph);
 					}
 					if (showGrid && layer == currentLayer) {
 						paintEdges(gc, x0, y0 - layer.info.height * pph);
@@ -246,21 +240,12 @@ public class FieldPainter {
 					if (showGrid && layer == currentLayer) {
 						paintEdges(gc, x0, y0 - layer.info.height * pph);
 						if (layer.grid[x][y] >= 0) {
-							paintObstacle(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph, true);
+							paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, true);
 						}
 					} else {
 						if (layer.grid[x][y] >= 0) {
-							paintObstacle(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph, false);
+							paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, false);
 						}
-					}
-					break;
-				case 2:
-					// Character Layer
-					if (showGrid && layer == currentLayer) {
-						paintEdges(gc, x0, y0 - layer.info.height * pph);
-					}
-					if (layer.grid[x][y] >= 0) {
-						paintCharacter(field.prefs.tilesetID, layer, x, y, gc, x0, y0 - layer.info.height * pph);
 					}
 					break;
 				default:
@@ -268,7 +253,7 @@ public class FieldPainter {
 						if (layer.grid[x][y] >= 0) {
 							if (layer.info.type == 2) {
 								// Region Layer
-								paintRegion(field.prefs.tilesetID, layer, x, y, 
+								paintRegion(layer, x, y, 
 										gc, x0, y0 - layer.info.height * pph);
 							} else { 
 								// Party Layer
@@ -284,6 +269,7 @@ public class FieldPainter {
 				}
 			}
 		}
+		// TODO: paint characters
 		gc.dispose();
 		return img;
 	}
