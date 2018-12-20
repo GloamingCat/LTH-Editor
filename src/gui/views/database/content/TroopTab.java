@@ -74,7 +74,7 @@ public class TroopTab extends DatabaseTab {
 				return Project.current.scripts.getTree();
 			}
 		};
-		btnAI.optional = false;
+		btnAI.optional = true;
 		btnAI.setNameText(txtAI);
 		addControl(btnAI, "scriptID");
 		

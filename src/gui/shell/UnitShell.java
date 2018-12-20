@@ -48,7 +48,7 @@ public class UnitShell extends LObjectShell<Unit> {
 		content.setLayout(new GridLayout(5, false));
 		
 		Label lblKey = new Label(content, SWT.NONE);
-		lblKey.setText("Key");
+		lblKey.setText(Vocab.instance.KEY);
 		
 		txtKey = new Text(content, SWT.BORDER);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
