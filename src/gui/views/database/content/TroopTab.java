@@ -89,7 +89,7 @@ public class TroopTab extends DatabaseTab {
 		grpItems.setText(Vocab.instance.ITEMS);
 		
 		DropList lstItems = new DropList(grpItems, SWT.NONE);
-		addChild(lstItems);
+		addChild(lstItems, "items");
 		
 		Composite gridEditor = new Composite(contentEditor, SWT.NONE);
 		GridData gd_gridEditor = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);

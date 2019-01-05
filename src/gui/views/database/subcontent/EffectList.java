@@ -15,7 +15,6 @@ public class EffectList extends SimpleEditableList<Effect> {
 	public EffectList(Composite parent, int style) {
 		super(parent, style);
 		type = Effect.class;
-		attributeName = "effects";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Effect>() {
 			@Override

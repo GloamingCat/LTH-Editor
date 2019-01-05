@@ -89,8 +89,7 @@ public class CharacterTab extends DatabaseTab {
 		grpTiles.setLayout(new FillLayout());
 		
 		CharTileList lstTiles = new CharTileList(grpTiles, SWT.NONE);
-		lstTiles.attributeName = "tiles";
-		addChild(lstTiles);
+		addChild(lstTiles, "tiles");
 		
 		Composite middle = new Composite(contentEditor, SWT.NONE);
 		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -122,9 +121,8 @@ public class CharacterTab extends DatabaseTab {
 		GridData gd_anims = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_anims.widthHint = 128;
 		lstAnim.setLayoutData(gd_anims);
-		lstAnim.attributeName = "animations";
 		lstAnim.getCollectionWidget().setIncludeID(false);
-		addChild(lstAnim);
+		addChild(lstAnim, "animations");
 		
 		LImage imgAnim = new LImage(grpAnimations, SWT.NONE);
 		imgAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -156,8 +154,7 @@ public class CharacterTab extends DatabaseTab {
 		GridData gd_portraits = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_portraits.widthHint = 128;
 		lstPortraits.setLayoutData(gd_portraits);
-		lstPortraits.attributeName = "portraits";
-		addChild(lstPortraits);
+		addChild(lstPortraits, "portraits");
 		
 		LImage imgPotrait = new LImage(grpPortraits, SWT.NONE);
 		imgPotrait.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -193,8 +190,8 @@ public class CharacterTab extends DatabaseTab {
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 	}
 

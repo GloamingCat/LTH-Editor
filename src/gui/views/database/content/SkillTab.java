@@ -169,8 +169,7 @@ public class SkillTab extends DatabaseTab {
 		GridData gd_lstCost = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_lstCost.heightHint = 60;
 		lstCost.setLayoutData(gd_lstCost);
-		lstCost.attributeName = "costs";
-		addChild(lstCost);
+		addChild(lstCost, "costs");
 		
 		// Animations
 		
@@ -373,7 +372,7 @@ public class SkillTab extends DatabaseTab {
 		grpEffects.setText(Vocab.instance.EFFECTS);
 		
 		EffectList lstEffects = new EffectList(grpEffects, SWT.NONE);
-		addChild(lstEffects);
+		addChild(lstEffects, "effects");
 		
 		// Other
 		
@@ -396,9 +395,8 @@ public class SkillTab extends DatabaseTab {
 				return Project.current.status.getTree();
 			}
 		};
-		lstStatus.attributeName = "status";
 		lstStatus.setIncludeID(false);
-		addChild(lstStatus);
+		addChild(lstStatus, "status");
 		
 		Group grpElements = new Group(bottom, SWT.NONE);
 		GridLayout gl_grpElements = new GridLayout(1, false);
@@ -416,8 +414,7 @@ public class SkillTab extends DatabaseTab {
 			}
 		};
 		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		lstElements.attributeName = "elements";
-		addChild(lstElements);
+		addChild(lstElements, "elements");
 		
 		LCheckButton btnUserElements = new LCheckButton(grpElements, SWT.NONE);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
@@ -428,8 +425,8 @@ public class SkillTab extends DatabaseTab {
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 
 	}
 

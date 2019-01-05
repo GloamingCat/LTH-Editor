@@ -15,7 +15,6 @@ public class ObstacleTileList extends SimpleEditableList<Tile> {
 	public ObstacleTileList(Composite parent, int style) {
 		super(parent, style);
 		type = Tile.class;
-		attributeName = "tiles";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Tile>() {
 			@Override

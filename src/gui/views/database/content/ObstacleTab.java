@@ -66,14 +66,14 @@ public class ObstacleTab extends DatabaseTab {
 		grpTiles.setText(Vocab.instance.TILES);
 		
 		ObstacleTileList tileList = new ObstacleTileList(grpTiles, SWT.NONE);
-		addChild(tileList);
+		addChild(tileList, "tiles");
 		
 		Group grpTags = new Group(lateral, SWT.NONE);
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 	}
 

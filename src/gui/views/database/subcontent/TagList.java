@@ -15,7 +15,6 @@ public class TagList extends SimpleEditableList<Tag> {
 	public TagList(Composite parent, int style) {
 		super(parent, style);
 		type = Tag.class;
-		attributeName = "tags";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Tag>() {
 			@Override

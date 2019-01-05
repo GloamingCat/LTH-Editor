@@ -113,8 +113,7 @@ public class TerrainTab extends DatabaseTab {
 				return conf.attributes.toObjectTree();
 			}
 		};
-		lstAttributes.attributeName = "attributes";
-		addChild(lstAttributes);
+		addChild(lstAttributes, "attributes");
 		
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_bottom = new GridLayout(3, false);
@@ -159,8 +158,7 @@ public class TerrainTab extends DatabaseTab {
 				return conf.elements.toObjectTree();
 			}
 		};
-		lstElements.attributeName = "elements";
-		addChild(lstElements);
+		addChild(lstElements, "elements");
 		
 		// Tags
 		
@@ -170,8 +168,8 @@ public class TerrainTab extends DatabaseTab {
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 
 	}
 

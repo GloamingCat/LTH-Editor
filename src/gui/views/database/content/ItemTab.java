@@ -143,7 +143,7 @@ public class ItemTab extends DatabaseTab {
 		tbtmAttributes.setText(Vocab.instance.ATTRIBUTES);
 		AttributeList attributes = new AttributeList(equipFolder, SWT.NONE);
 		tbtmAttributes.setControl(attributes);
-		addChild(attributes);
+		addChild(attributes, "attributes");
 		
 		TabItem tbtmBattleStatus = new TabItem(equipFolder, SWT.NONE);
 		tbtmBattleStatus.setText(Vocab.instance.STATUS);
@@ -203,7 +203,7 @@ public class ItemTab extends DatabaseTab {
 		tbtmEffects.setText(Vocab.instance.EFFECTS);
 		EffectList lstEffects = new EffectList(useFolder, SWT.NONE);
 		tbtmEffects.setControl(lstEffects);
-		addChild(lstEffects);
+		addChild(lstEffects, "effects");
 		
 		TabItem tbtmStatus = new TabItem(useFolder, SWT.NONE);
 		tbtmStatus.setText(Vocab.instance.STATUSADD);
@@ -236,8 +236,8 @@ public class ItemTab extends DatabaseTab {
 		grpTags.setLayout(new FillLayout());
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 	}
 
 	@Override

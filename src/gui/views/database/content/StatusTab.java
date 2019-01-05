@@ -244,8 +244,7 @@ public class StatusTab extends DatabaseTab {
 				return Project.current.status.getTree();
 			}
 		};
-		lstCancel.attributeName = "cancel";
-		addChild(lstCancel);
+		addChild(lstCancel, "cancel");
 		
 		Group grpAttributes = new Group(compositeOther, SWT.NONE);
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -259,8 +258,7 @@ public class StatusTab extends DatabaseTab {
 				return conf.attributes.toObjectTree();
 			}
 		};
-		lstAttributes.attributeName = "attributes";
-		addChild(lstAttributes);
+		addChild(lstAttributes, "attributes");
 
 		Group grpElements = new Group(compositeOther, SWT.NONE);
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -274,16 +272,15 @@ public class StatusTab extends DatabaseTab {
 				return conf.elements.toObjectTree();
 			}
 		};
-		lstElements.attributeName = "elements";
-		addChild(lstElements);
+		addChild(lstElements, "elements");
 		
 		Group grpTags = new Group(compositeOther, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);	
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");	
 
 	}
 

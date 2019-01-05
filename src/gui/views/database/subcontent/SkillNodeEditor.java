@@ -69,16 +69,15 @@ public class SkillNodeEditor extends LObjectEditor {
 				return Project.current.skills.getTree();
 			}
 		};
-		lstRequirements.attributeName = "requirements";
 		lstRequirements.setLayout(new FillLayout(SWT.HORIZONTAL));
-		addChild(lstRequirements);
+		addChild(lstRequirements, "requirements");
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setText(Vocab.instance.TAGS);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 	}
 

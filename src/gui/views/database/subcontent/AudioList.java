@@ -17,7 +17,6 @@ public class AudioList extends SimpleEditableList<Audio> {
 	public AudioList(Composite parent, int style) {
 		super(parent, style);
 		type = Audio.class;
-		attributeName = "audio";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override

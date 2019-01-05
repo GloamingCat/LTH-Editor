@@ -10,7 +10,6 @@ import lwt.dataestructure.LDataList;
 
 public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 
-	public String attributeName;
 	public Type type;
 	protected LDataList<T> currentList;
 	
@@ -41,17 +40,6 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 	
 	public Type getType() {
 		return type;
-	}
-
-	@Override
-	public void setObject(Object object) {
-		if (object == null || attributeName == null || 
-				attributeName.isEmpty()) {
-			super.setObject(object);
-			return;
-		}
-		Object value = getFieldValue(object, attributeName);
-		super.setObject(value);
 	}
 	
 }

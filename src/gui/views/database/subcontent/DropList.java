@@ -15,7 +15,6 @@ public class DropList extends SimpleEditableList<Drop> {
 	public DropList(Composite parent, int style) {
 		super(parent, style);
 		type = Drop.class;
-		attributeName = "items";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Drop>() {
 			@Override

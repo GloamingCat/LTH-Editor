@@ -15,7 +15,6 @@ public class EquipList extends SimpleEditableList<Equip> {
 	public EquipList(Composite parent, int style) {
 		super(parent, style);
 		type = Equip.class;
-		attributeName = "equip";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Equip>() {
 			@Override

@@ -43,7 +43,7 @@ public class ClassTab extends DatabaseTab {
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		addChild(tagEditor, "tags");
 		
 		Label lblCurve = new Label(grpGeneral, SWT.NONE);
 		lblCurve.setText(Vocab.instance.EXPCURVE);

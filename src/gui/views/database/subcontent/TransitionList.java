@@ -15,7 +15,6 @@ public class TransitionList extends SimpleEditableList<Transition> {
 	public TransitionList(Composite parent, int style) {
 		super(parent, style);
 		type = Transition.class;
-		attributeName = "transitions";
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Transition>() {
 			@Override

@@ -186,9 +186,8 @@ public class BattlerTab extends DatabaseTab {
 				return Project.current.status.getTree();
 			}
 		};
-		lstStatus.attributeName = "status";
 		tbtmStatus.setControl(lstStatus);
-		addChild(lstStatus);
+		addChild(lstStatus, "status");
 		
 		// Elements
 		
@@ -202,9 +201,8 @@ public class BattlerTab extends DatabaseTab {
 				return conf.elements.toObjectTree();
 			}
 		};
-		lstElements.attributeName = "elements";
 		tbtmElements.setControl(lstElements);
-		addChild(lstElements);
+		addChild(lstElements, "elements");
 		
 		// Items
 		
@@ -222,7 +220,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		DropList lstDrop = new DropList(tabItems, SWT.NONE);
 		tbtmDrop.setControl(lstDrop);
-		addChild(lstDrop);
+		addChild(lstDrop, "items");
 		
 		// Equip
 		
@@ -231,7 +229,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		EquipList lstEquip = new EquipList(tabItems, SWT.NONE);
 		tbtmEquip.setControl(lstEquip);
-		addChild(lstEquip);
+		addChild(lstEquip, "equip");
 
 		// Tags
 		
@@ -240,8 +238,8 @@ public class BattlerTab extends DatabaseTab {
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor);
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 	}
 

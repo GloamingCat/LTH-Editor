@@ -181,7 +181,7 @@ public class AnimationTab extends DatabaseTab {
 		grpAudio.setText(Vocab.instance.SOUND);
 		
 		AudioList lstAudio = new AudioList(grpAudio, SWT.NONE);
-		addChild(lstAudio);
+		addChild(lstAudio, "audio");
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -189,7 +189,7 @@ public class AnimationTab extends DatabaseTab {
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList lstTag = new TagList(grpTags, SWT.NONE);
-		addChild(lstTag);
+		addChild(lstTag, "tags");
 		
 		addDurationListener(btnIntroDuration, txtIntroDuration);
 		addDurationListener(btnLoopDuration, txtLoopDuration);
