@@ -14,7 +14,6 @@ public class RegionList extends SimpleEditableList<Region> {
 	public RegionList(Composite parent, int style) {
 		super(parent, style);
 		type = Region.class;
-		attributeName = "regions";
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<Region>() {
 			@Override

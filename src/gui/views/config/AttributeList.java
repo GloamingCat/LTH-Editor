@@ -16,10 +16,8 @@ public class AttributeList extends SimpleEditableList<Attribute> {
 	
 	public AttributeList(Composite parent, int style) {
 		super(parent, style);
-		attributeName = "attributes";
 		type = Attribute.class;
 		setIncludeID(true);
-
 		setShellFactory(new LShellFactory<Attribute>() {
 			@Override
 			public LObjectShell<Attribute> createShell(

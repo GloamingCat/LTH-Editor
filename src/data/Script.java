@@ -1,19 +1,12 @@
 package data;
 
-import java.util.ArrayList;
-
-import com.google.gson.JsonElement;
+import lwt.dataestructure.LDataList;
+import data.subcontent.Constant;
 
 public class Script extends Data {
 	
-	public ArrayList<Command> commands = new ArrayList<>();
 	public boolean global = false;
-	
-	public static class Command {
-		
-		public String name = "";
-		public JsonElement param;
-		
-	}
+	public String commands = "";
+	public LDataList<Constant> constants = new LDataList<>();
 	
 }

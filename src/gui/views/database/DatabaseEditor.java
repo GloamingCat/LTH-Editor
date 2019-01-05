@@ -47,6 +47,9 @@ public class DatabaseEditor extends LViewFolder {
 		TerrainTab terrainTab = new TerrainTab(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.TERRAINS, terrainTab);
 		
+		ScriptTab scriptTab = new ScriptTab(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.SCRIPTS, scriptTab);
+		
 	}
 
 }

@@ -2,7 +2,6 @@ package gui.widgets;
 
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LImage;
-import lwt.widget.LText;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;

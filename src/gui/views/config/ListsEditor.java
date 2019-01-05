@@ -1,21 +1,17 @@
 package gui.views.config;
 
 import gui.Vocab;
-import gui.widgets.IDList;
+import gui.widgets.ConstantList;
 import gui.widgets.NameList;
 import lwt.action.LActionStack;
-import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
-import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 
 import project.Project;
 
@@ -39,9 +35,8 @@ public class ListsEditor extends LObjectEditor {
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
 		NameList lstElements = new NameList(grpElements, SWT.NONE);
-		lstElements.attributeName = "elements";
 		lstElements.setIncludeID(true);		
-		addChild(lstElements);
+		addChild(lstElements, "elements");
 		
 		Group grpRegions = new Group(this, SWT.NONE);
 		grpRegions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -49,7 +44,7 @@ public class ListsEditor extends LObjectEditor {
 		grpRegions.setText(Vocab.instance.REGIONS);
 		
 		RegionList lstRegions = new RegionList(grpRegions, SWT.NONE);
-		addChild(lstRegions);
+		addChild(lstRegions, "regions");
 
 		Group grpAttributes = new Group(this, SWT.NONE);
 		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -57,7 +52,15 @@ public class ListsEditor extends LObjectEditor {
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
-		addChild(lstAttributes);
+		addChild(lstAttributes, "attributes");
+		
+		Group grpConstants = new Group(this, SWT.NONE);
+		grpConstants.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpConstants.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpConstants.setText(Vocab.instance.CONSTANTS);
+
+		ConstantList lstConstants = new ConstantList(grpConstants, SWT.NONE);
+		addChild(lstConstants, "constants");
 
 	}
 	

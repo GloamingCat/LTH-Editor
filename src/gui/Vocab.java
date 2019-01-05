@@ -16,6 +16,7 @@ public class Vocab {
 	public String CHARACTERS = "Characters";
 	public String CLASSES = "Classes";
 	public String ITEMS = "Items";
+	public String SCRIPTS = "Scripts";
 	public String SKILLS = "Skills";
 	public String STATUS = "Status";
 	public String OBSTACLES = "Obstacles";
@@ -217,6 +218,10 @@ public class Vocab {
 	public String TILES = "Tiles";
 	public String NONE = "None";
 	public String ALL = "All";
+	
+	// Scripts
+	public String CONSTANTS = "Constants";
+	public String COMMANDS = "Commands";
 
 	// Status
 	public String VISIBLE = "Visible";
@@ -322,7 +327,7 @@ public class Vocab {
 	public String WEST = "West";
 
 	// ========================================================================
-	// Events
+	// Other
 	// ========================================================================
 	
 	// Dialogue
