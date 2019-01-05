@@ -42,9 +42,7 @@ public class Battler extends Data {
 			if (other instanceof Equip) {
 				Equip equip = (Equip) other;
 				return equip.id == id && equip.state == state && equip.key.equals(key);
-			} else {
-				return false;
-			}
+			} else return false;
 		}
 		
 		public Equip clone() {
@@ -68,6 +66,14 @@ public class Battler extends Data {
 			else
 				return item.toString() + " x " + count + " (" + this.value + "%)";
 		}
+		
+		public boolean equals(Object obj) {
+			if (obj instanceof Drop) {
+				Drop other = (Drop) obj;
+				return other.id == id && other.count == count && other.value == value;
+			} else return false;
+		}
+		
 	}
 	
 }

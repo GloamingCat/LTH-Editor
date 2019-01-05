@@ -231,23 +231,16 @@ public class PositionShell extends LObjectShell<Position> {
 
 	@Override
 	protected Position createResult(Position initial) {
-		if (spnX.getSelection() == initial.x && spnY.getSelection() == initial.y &&
-				cmbDirection.getSelectionIndex() == initial.direction &&
-				cmbLayer.getSelectionIndex() == initial.z &&
-				canvas.field.id == initial.fieldID)
-			return null;
-		else {
-			Position pos = new Position();
-			pos.x = spnX.getSelection();
-			pos.y = spnY.getSelection();
-			pos.z = cmbLayer.getSelectionIndex();
-			pos.direction = cmbDirection.getSelectionIndex() - 1;
-			if (pos.direction >= 0) {
-				pos.direction *= 45;
-			}
-			pos.fieldID = canvas.field.id;
-			return pos;
+		Position pos = new Position();
+		pos.x = spnX.getSelection();
+		pos.y = spnY.getSelection();
+		pos.z = cmbLayer.getSelectionIndex();
+		pos.direction = cmbDirection.getSelectionIndex() - 1;
+		if (pos.direction >= 0) {
+			pos.direction *= 45;
 		}
+		pos.fieldID = canvas.field.id;
+		return pos;
 	}
 	
 }

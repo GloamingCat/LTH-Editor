@@ -39,11 +39,7 @@ public class NameShell extends LObjectShell<String> {
 
 	@Override
 	protected String createResult(String initial) {
-		if (txtName.getText().equals(initial)) {
-			return null;
-		} else {
-			return txtName.getText();
-		}
+		return txtName.getText();
 	}
 
 }

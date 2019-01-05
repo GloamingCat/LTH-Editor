@@ -34,10 +34,22 @@ public class GameCharacter extends Data {
 	}
 	
 	public static class Portrait extends Icon {
+		
 		public String name = "New portrait";
+		
 		public String toString() {
 			return name;
 		}
+		
+		public boolean equals(Object obj) {
+			if (!super.equals(obj))
+				return false;
+			if (obj instanceof Portrait) {
+				Portrait other = (Portrait) obj;
+				return other.name.equals(name);
+			} else return false;
+		}
+		
 	}
 	
 	public static class Tile {
@@ -60,9 +72,7 @@ public class GameCharacter extends Data {
 			if (other instanceof Tile) {
 				Tile t = (Tile) other;
 				return t.dx == dx && t.dy == dy && t.height == t.height;
-			} else {
-				return false;
-			}
+			} else return false;
 		}
 	}
 	

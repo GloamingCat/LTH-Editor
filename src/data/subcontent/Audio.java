@@ -23,4 +23,13 @@ public class Audio {
 				" " + volume + " " + pitch + " " + time;
 	}
 	
+	public boolean equals(Object other) {
+		if (other instanceof Audio) {
+			Audio audio = (Audio) other;
+			return audio.path.equals(path) && audio.pitch == pitch 
+					&& audio.volume == volume && audio.time == time;
+		} else
+			return false;
+	}
+	
 }

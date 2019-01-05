@@ -62,17 +62,11 @@ public class AttributeBonusShell extends LObjectShell<Attribute> {
 
 	@Override
 	protected Attribute createResult(Attribute initial) {
-		if (txtKey.getText().equals(initial.key) &&
-				spnAdd.getSelection() == initial.add &&
-				spnMul.getSelection() == initial.mul) {
-			return null;
-		} else {
-			Attribute att = new Attribute();
-			att.key = txtKey.getText();
-			att.add = spnAdd.getSelection();
-			att.mul = spnMul.getSelection();
-			return att;
-		}
+		Attribute att = new Attribute();
+		att.key = txtKey.getText();
+		att.add = spnAdd.getSelection();
+		att.mul = spnMul.getSelection();
+		return att;
 	}
 	
 }

@@ -67,32 +67,15 @@ public class ObstacleTileShell extends LObjectShell<Tile> {
 		spnY.setSelection(initial.dy);
 		spnHeight.setSelection(initial.height);
 	}
-	
-	private boolean changed(Tile initial) {
-		if (initial.dx != spnX.getSelection() || initial.dy != spnY.getSelection()
-				|| initial.height != spnHeight.getSelection()) {
-			return true;
-		}
-		boolean[] newValues = neighborEditor.getValues();
-		for(int i = 0; i < 8; i++) {
-			if(initial.neighbors[i] != newValues[i])
-				return true;
-		}
-		return false;
-	}
 
 	@Override
 	protected Tile createResult(Tile initial) {
-		if (changed(initial)) {
-			Tile t = new Tile();
-			t.dx = spnX.getSelection();
-			t.dy = spnY.getSelection();
-			t.height = spnHeight.getSelection();
-			t.neighbors = neighborEditor.getValues();
-			return t;
-		} else {
-			return null;
-		}
+		Tile t = new Tile();
+		t.dx = spnX.getSelection();
+		t.dy = spnY.getSelection();
+		t.height = spnHeight.getSelection();
+		t.neighbors = neighborEditor.getValues();
+		return t;
 	}
 	
 }

@@ -38,6 +38,13 @@ public class Item extends Data {
 			return key + " * " + (mul / 100 + 1) + " + " + add;
 		}
 		
+		public boolean equals(Object obj) {
+			if (obj instanceof Attribute) {
+				Attribute other = (Attribute) obj;
+				return other.add == add && other.mul == mul && other.key.equals(key);
+			} else return false;
+		}
+		
 	}
 
 }

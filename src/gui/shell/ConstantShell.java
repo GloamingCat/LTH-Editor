@@ -100,17 +100,11 @@ public class ConstantShell extends LObjectShell<Constant> {
 
 	@Override
 	protected Constant createResult(Constant initial) {
-		if (txtName.getText().equals(initial.name) &&
-				cmbType.getSelectionIndex() == initial.type &&
-				txtValue.getText().equals(initial.value.toString()))
-			return null;
-		else {
-			Constant c = new Constant();
-			c.name = txtName.getText();
-			c.type = cmbType.getSelectionIndex();
-			c.value = parser.parse(txtValue.getText()).getAsJsonObject();
-			return c;
-		}
+		Constant c = new Constant();
+		c.name = txtName.getText();
+		c.type = cmbType.getSelectionIndex();
+		c.value = parser.parse(txtValue.getText()).getAsJsonObject();
+		return c;
 	}
 
 }

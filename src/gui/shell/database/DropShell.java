@@ -78,18 +78,11 @@ public class DropShell extends LObjectShell<Drop> {
 	@Override
 	protected Drop createResult(Drop initial) {
 		LPath path = tree.getCollectionWidget().getSelectedPath();
-		int id = path == null ? -1 : getTree().getNode(path).id;
-		
-		if (id == initial.id && spnChance.getSelection() == initial.value
-				&& spnCount.getSelection() == initial.count) {
-			return null;
-		} else {
-			Drop drop = new Drop();
-			drop.id = id;
-			drop.value = spnChance.getSelection();
-			drop.count = spnCount.getSelection();
-			return drop;
-		}
+		Drop drop = new Drop();
+		drop.id = path == null ? -1 : getTree().getNode(path).id;
+		drop.value = spnChance.getSelection();
+		drop.count = spnCount.getSelection();
+		return drop;
 	}
 	
 	protected LDataTree<Object> getTree() {

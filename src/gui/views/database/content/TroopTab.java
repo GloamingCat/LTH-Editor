@@ -25,8 +25,8 @@ import org.eclipse.swt.widgets.Text;
 import data.Animation;
 import data.GameCharacter;
 import data.Troop;
-import data.Troop.Unit;
 import data.config.Config;
+import data.subcontent.Unit;
 import project.Project;
 
 import org.eclipse.swt.layout.GridData;

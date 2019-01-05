@@ -79,16 +79,10 @@ public class AudioShell extends FileShell<Audio> {
 		if (i < 0)
 			return null;
 		String newPath = folder + "/" + list.getItem(i);
-		if (newPath.equals(initial) && initial.pitch == spnPitch.getSelection() 
-				&& initial.volume == spnVolume.getSelection()
-				&& initial.time == spnTime.getSelection()) {
-			return null;
-		} else {
-			return new Audio(newPath, 
-					spnVolume.getSelection(), 
-					spnPitch.getSelection(),
-					spnTime.getSelection());
-		}
+		return new Audio(newPath, 
+			spnVolume.getSelection(), 
+			spnPitch.getSelection(),
+			spnTime.getSelection());
 	}
 
 	protected boolean isValidFile(File file) {

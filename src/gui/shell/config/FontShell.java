@@ -60,15 +60,9 @@ public class FontShell extends FileShell<FontData> {
 		int i = list.getSelectionIndex();
 		if (i < 0)
 			return null;
-		String newPath = folder + "/" + list.getItem(i);
-		if (newPath.equals(initial.path) && initial.size == spnSize.getSelection() 
-				&& txtFormat.getText().equals(initial.format)) {
-			return null;
-		} else {
-			return new FontData(newPath, 
-					spnSize.getSelection(), 
-					txtFormat.getText());
-		}
+		return new FontData(folder + "/" + list.getItem(i), 
+			spnSize.getSelection(), 
+			txtFormat.getText());
 	}
 
 	protected boolean isValidFile(File file) {

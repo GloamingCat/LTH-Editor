@@ -6,16 +6,16 @@ import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 
-public class ScriptShell extends FileShell<String> {
+public class LuaShell extends FileShell<String> {
 	
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public ScriptShell(Shell parent) {
+	public LuaShell(Shell parent) {
 		this(parent, "", true);
 	}
 	
-	public ScriptShell(Shell parent, String folder, boolean optional) {
+	public LuaShell(Shell parent, String folder, boolean optional) {
 		super(parent, folder, optional);
 	}
 	
@@ -32,11 +32,7 @@ public class ScriptShell extends FileShell<String> {
 			String newValue = list.getItem(i);
 			if (!newValue.isEmpty())
 				newValue = newValue.substring(0, newValue.length() - 4);
-			if (newValue.equals(initial)) {
-				return null;
-			} else {
-				return newValue;
-			}
+			return newValue;
 		} else {
 			return null;
 		}

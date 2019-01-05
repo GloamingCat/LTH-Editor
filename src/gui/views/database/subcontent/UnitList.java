@@ -6,7 +6,7 @@ import gui.widgets.SimpleEditableList;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.Troop.Unit;
+import data.subcontent.Unit;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 

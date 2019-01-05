@@ -66,16 +66,10 @@ public abstract class BonusShell extends LObjectShell<Bonus> {
 	@Override
 	protected Bonus createResult(Bonus initial) {
 		LPath path = tree.getCollectionWidget().getSelectedPath();
-		int id = path == null ? -1 : getTree().getNode(path).id;
-		
-		if (id == initial.id && spnValue.getSelection() == initial.value) {
-			return null;
-		} else {
-			Bonus bonus = new Bonus();
-			bonus.id = id;
-			bonus.value = spnValue.getSelection();
-			return bonus;
-		}
+		Bonus bonus = new Bonus();
+		bonus.id = path == null ? -1 : getTree().getNode(path).id;
+		bonus.value = spnValue.getSelection();
+		return bonus;
 	}
 	
 	protected abstract LDataTree<Object> getTree();

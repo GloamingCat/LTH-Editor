@@ -73,17 +73,11 @@ public class EquipShell extends LObjectShell<Equip> {
 
 	@Override
 	protected Equip createResult(Equip initial) {
-		if (btnItem.getValue() == initial.id && 
-				cmbState.getSelectionIndex() == initial.state &&
-				txtKey.getText().equals(initial.key)) {
-			return null;
-		} else {
-			Equip eq = new Equip();
-			eq.key = txtKey.getText();
-			eq.state = cmbState.getSelectionIndex();
-			eq.id = btnItem.getValue();
-			return eq;
-		}
+		Equip eq = new Equip();
+		eq.key = txtKey.getText();
+		eq.state = cmbState.getSelectionIndex();
+		eq.id = btnItem.getValue();
+		return eq;
 	}
 	
 }

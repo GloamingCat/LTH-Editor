@@ -58,18 +58,11 @@ public class AttributeShell extends LObjectShell<Attribute> {
 
 	@Override
 	protected Attribute createResult(Attribute initial) {
-		if (txtName.getText().equals(initial.name) && txtShortName.getText().equals(initial.shortName)
-				&& txtScript.getText().equals(initial.script)) {
-			return null;
-		} else {
-			Attribute att = new Attribute();
-			att.name = txtName.getText();
-			att.shortName = txtShortName.getText();
-			att.script = txtScript.getText();
-			return att;
-		}
+		Attribute att = new Attribute();
+		att.name = txtName.getText();
+		att.shortName = txtShortName.getText();
+		att.script = txtScript.getText();
+		return att;
 	}
-	
-	protected void checkSubclass() { }
 	
 }

@@ -50,16 +50,10 @@ public class TagShell extends LObjectShell<Tag> {
 
 	@Override
 	protected Tag createResult(Tag initial) {
-		if (txtName.getText().equals(initial.key) && txtValue.getText().equals(initial.value)) {
-			return null;
-		} else {
-			Tag tag = new Tag();
-			tag.key = txtName.getText();
-			tag.value = txtValue.getText();
-			return tag;
-		}
+		Tag tag = new Tag();
+		tag.key = txtName.getText();
+		tag.value = txtValue.getText();
+		return tag;
 	}
-	
-	protected void checkSubclass() { }
 	
 }

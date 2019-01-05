@@ -11,5 +11,12 @@ public class Bonus {
 		id = copy.id;
 		value = copy.value;
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj instanceof Bonus) {
+			Bonus bonus = (Bonus) obj;
+			return bonus.id == id && bonus.value == value;
+		} else return false;
+	}
 
 }

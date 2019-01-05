@@ -93,17 +93,12 @@ public class PortraitShell extends LObjectShell<Portrait> {
 			id = initial.id;
 		else
 			id = Project.current.animations.getTree().getNode(path).id;
-		
-		if (id == initial.id && txtName.getText().equals(initial.name)) {
-			return null;
-		} else {
-			Portrait p = new Portrait();
-			p.id = id;
-			p.col = spnCol.getSelection();
-			p.row = spnRow.getSelection();
-			p.name = txtName.getText();
-			return p;
-		}
+		Portrait p = new Portrait();
+		p.id = id;
+		p.col = spnCol.getSelection();
+		p.row = spnRow.getSelection();
+		p.name = txtName.getText();
+		return p;
 	}
 	
 }

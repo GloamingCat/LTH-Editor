@@ -12,4 +12,11 @@ public class Constant {
 		return name + "=" + value.toString();
 	}
 	
+	public boolean equals(Object obj) {
+		if (obj instanceof Constant) {
+			Constant other = (Constant) obj;
+			return other.name.equals(name) && other.type == type && other.value.equals(value);
+		} else return false;
+	}
+	
 }

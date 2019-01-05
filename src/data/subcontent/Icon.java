@@ -35,4 +35,11 @@ public class Icon {
 		return new Rectangle(x, y, w, h);
 	}
 	
+	public boolean equals(Object obj) {
+		if (obj instanceof Icon) {
+			Icon other = (Icon) obj;
+			return other.id == id && other.col == col && other.row == row;
+		} else return false;
+	}
+	
 }

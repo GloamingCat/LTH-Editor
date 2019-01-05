@@ -75,6 +75,15 @@ public class Skill extends Data {
 			return "\"" + key + "\": " + basicResult;
 		}
 		
+		public boolean equals(Effect obj) {
+			if (obj instanceof Effect) {
+				Effect other = (Effect) obj;
+				return other.heal == heal && other.absorb == absorb && other.key.equals(key)
+						&& other.basicResult.equals(basicResult) 
+						&& other.successRate.equals(successRate);
+			} else return false;
+		}
+		
 	}
 
 }

@@ -143,15 +143,11 @@ public class IconShell extends LObjectShell<Icon> {
 	@Override
 	protected Icon createResult(Icon initial) {
 		int id = getTree().getNode(tree.getCollectionWidget().getSelectedPath()).id;
-		if (initial.id == id && col == initial.col && row == initial.row)
-			return null;
-		else {
-			Icon icon = new Icon();
-			icon.id = id;
-			icon.col = col;
-			icon.row = row;
-			return icon;
-		}
+		Icon icon = new Icon();
+		icon.id = id;
+		icon.col = col;
+		icon.row = row;
+		return icon;
 	}
 	
 	public void setOptional(boolean value) {

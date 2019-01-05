@@ -174,21 +174,13 @@ public class QuadShell extends FileShell<Quad> {
 
 	@Override
 	protected Quad createResult(Quad initial) {
-		String newValue = label.getText();
-		if (newValue.equals(initial.path) && spnX.getSelection() == initial.x && 
-				spnY.getSelection() == initial.y &&
-				spnWidth.getSelection() == initial.width && 
-				spnHeight.getSelection() == initial.height) {
-			return null;
-		} else {
-			Quad q = new Quad();
-			q.x = spnX.getSelection();
-			q.y = spnY.getSelection();
-			q.width = spnWidth.getSelection();
-			q.height = spnHeight.getSelection();
-			q.path = newValue;
-			return q;
-		}
+		Quad q = new Quad();
+		q.x = spnX.getSelection();
+		q.y = spnY.getSelection();
+		q.width = spnWidth.getSelection();
+		q.height = spnHeight.getSelection();
+		q.path = label.getText();
+		return q;
 	}
 
 	protected boolean isValidFile(File entry) {

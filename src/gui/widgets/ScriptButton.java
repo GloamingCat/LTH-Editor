@@ -1,6 +1,6 @@
 package gui.widgets;
 
-import gui.shell.ScriptShell;
+import gui.shell.LuaShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
@@ -25,7 +25,7 @@ public class ScriptButton extends LObjectButton<String> {
 		setShellFactory(new LShellFactory<String>() {
 			@Override
 			public LObjectShell<String> createShell(Shell parent) {
-				return new ScriptShell(parent, folder, optional);
+				return new LuaShell(parent, folder, optional);
 			}
 		});
 	}

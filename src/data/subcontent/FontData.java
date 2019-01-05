@@ -16,4 +16,12 @@ public class FontData {
 	public String toString() {
 		return path.replace("fonts/", "") + " " + size;
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj instanceof FontData) {
+			FontData other = (FontData) obj;
+			return other.path.equals(path) && other.size == size && other.format.equals(format);
+		} else return false;
+	}
+	
 }

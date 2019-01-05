@@ -60,16 +60,11 @@ public class CharTileShell extends LObjectShell<Tile> {
 
 	@Override
 	protected Tile createResult(Tile initial) {
-		if (initial.dx != spnX.getSelection() || initial.dy != spnY.getSelection()
-				|| initial.height != spnHeight.getSelection()) {
-			Tile t = new Tile();
-			t.dx = spnX.getSelection();
-			t.dy = spnY.getSelection();
-			t.height = spnHeight.getSelection();
-			return t;
-		} else {
-			return null;
-		}
+		Tile t = new Tile();
+		t.dx = spnX.getSelection();
+		t.dy = spnY.getSelection();
+		t.height = spnHeight.getSelection();
+		return t;
 	}
 	
 }

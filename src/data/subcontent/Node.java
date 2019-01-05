@@ -19,7 +19,7 @@ public class Node {
 	public boolean equals(Node node) {
 		if (node instanceof Node) {
 			Node n = (Node) node;
-			return n.id == id;
+			return n.id == id && name.equals(n.name);
 		}
 		return false;
 	}

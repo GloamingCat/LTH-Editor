@@ -66,21 +66,13 @@ public class EffectShell extends LObjectShell<Effect> {
 
 	@Override
 	protected Effect createResult(Effect initial) {
-		if (txtKey.getText().equals(initial.key) && 
-				txtBasicResult.getText().equals(initial.basicResult) &&
-				txtSuccessRate.getText().equals(initial.successRate) &&
-				btnHeal.getSelection() == initial.heal &&
-				btnAbsorb.getSelection() == initial.absorb) {
-			return null;
-		} else {
-			Effect effect = new Effect();
-			effect.key = txtKey.getText();
-			effect.successRate = txtSuccessRate.getText();
-			effect.basicResult = txtBasicResult.getText();
-			effect.heal = btnHeal.getSelection();
-			effect.absorb = btnAbsorb.getSelection();
-			return effect;
-		}
+		Effect effect = new Effect();
+		effect.key = txtKey.getText();
+		effect.successRate = txtSuccessRate.getText();
+		effect.basicResult = txtBasicResult.getText();
+		effect.heal = btnHeal.getSelection();
+		effect.absorb = btnAbsorb.getSelection();
+		return effect;
 	}
 	
 }

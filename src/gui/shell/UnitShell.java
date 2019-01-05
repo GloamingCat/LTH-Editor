@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Battler.Equip;
-import data.Troop.Unit;
+import data.subcontent.Unit;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
@@ -122,27 +122,19 @@ public class UnitShell extends LObjectShell<Unit> {
 		for (Equip e : initial.equip) {
 			equip.add(e.clone());
 		}
+		lstEquip.setObject(equip);
 	}
 	
 	@Override
 	protected Unit createResult(Unit initial) {
-		if (initial.key.equals(txtKey.getText()) &&
-				initial.x == spnX.getSelection() &&
-				initial.y == spnY.getSelection() &&
-				initial.equip.equals(lstEquip) &&
-				initial.battlerID == btnBattler.getValue() &&
-				initial.charID == btnChar.getValue())
-			return null;
-		else {
-			Unit u = new Unit();
-			u.key = txtKey.getText();
-			u.x = spnX.getSelection();
-			u.y = spnY.getSelection();
-			u.equip = equip;
-			u.charID = btnChar.getValue();
-			u.battlerID = btnBattler.getValue();
-			return u;
-		}
+		Unit u = new Unit();
+		u.key = txtKey.getText();
+		u.x = spnX.getSelection();
+		u.y = spnY.getSelection();
+		u.equip = equip;
+		u.charID = btnChar.getValue();
+		u.battlerID = btnBattler.getValue();
+		return u;
 	}
 
 }

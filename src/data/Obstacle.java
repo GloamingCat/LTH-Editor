@@ -33,6 +33,7 @@ public class Obstacle extends Data {
 				return false;
 			}
 		}
+		
 	}
 	
 }

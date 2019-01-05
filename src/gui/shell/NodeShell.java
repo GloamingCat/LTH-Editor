@@ -75,16 +75,10 @@ public abstract class NodeShell extends LObjectShell<Node> {
 	@Override
 	protected Node createResult(Node initial) {
 		LPath path = tree.getCollectionWidget().getSelectedPath();
-		int id = path == null ? -1 : getTree().getNode(path).id;
-		
-		if (id == initial.id && txtName.getText().equals(initial.name)) {
-			return null;
-		} else {
-			Node node = new Node();
-			node.id = id;
-			node.name = txtName.getText();
-			return node;
-		}
+		Node node = new Node();
+		node.id = path == null ? -1 : getTree().getNode(path).id;
+		node.name = txtName.getText();
+		return node;
 	}
 	
 	protected abstract LDataTree<Object> getTree();
