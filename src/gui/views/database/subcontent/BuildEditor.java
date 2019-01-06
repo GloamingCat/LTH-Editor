@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import data.config.Attribute;
-import data.config.Config;
 import project.Project;
 import lwt.dataestructure.LDataList;
 import lwt.editor.LObjectEditor;
@@ -79,8 +78,7 @@ public class BuildEditor extends LObjectEditor {
 	public void onVisible() {
 		content.setLayout(new GridLayout(columns, false));
 		Control[] controls = content.getChildren();
-		Config config = (Config) Project.current.config.getData();
-		ArrayList<Attribute> attributes = config.attributes;
+		ArrayList<Object> attributes = Project.current.attributes.getList();
 		// Add spinners for exceeding attributes
 		for(int i = controls.length / 2; i < attributes.size(); i ++) {
 			Label label = new Label(content, SWT.NONE);
@@ -95,7 +93,7 @@ public class BuildEditor extends LObjectEditor {
 		controls = content.getChildren();
 		texts.clear();
 		for (int i = 0; i < attributes.size(); i++)	{
-			Attribute att = attributes.get(i);
+			Attribute att = (Attribute) attributes.get(i);
 			Label label = (Label) controls[i * 2];
 			label.setText(att.shortName);
 			LText text = (LText) controls[i * 2 + 1];

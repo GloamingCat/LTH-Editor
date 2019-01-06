@@ -21,7 +21,6 @@ import org.eclipse.swt.layout.GridLayout;
 
 import project.Project;
 import data.Field.Prefs;
-import data.config.Config;
 import data.subcontent.Tag;
 import data.subcontent.Transition;
 
@@ -151,10 +150,8 @@ public class FieldShell extends LObjectShell<Prefs> {
 	
 	public void open(Prefs initial) {
 		super.open(initial);
-		Config conf = (Config) Project.current.config.getData();
-		//cmbTileset.setItems(Project.current.tilesets.getList()); TODO
 		cmbTileset.setValue(initial.tilesetID);
-		cmbRegion.setItems(conf.regions);
+		cmbRegion.setItems(Project.current.regions.getList());
 		cmbRegion.setValue(initial.defaultRegion);
 		txtName.setText(initial.name);
 		btnBG.setValue(initial.background);

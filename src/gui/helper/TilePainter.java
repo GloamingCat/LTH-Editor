@@ -113,7 +113,7 @@ public class TilePainter {
 	}
 	
 	public static Image getRegionTile(int id) {
-		Region r =  conf.regions.get(id);
+		Region r = (Region) Project.current.regions.getData().get(id);
 		Image str = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, 
 				new Color(Display.getCurrent(),  r.rgb), true);
 		return str;

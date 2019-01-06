@@ -31,8 +31,6 @@ import project.Project;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
-import data.config.Config;
-
 public class ItemTab extends DatabaseTab {
 
 	/**
@@ -161,8 +159,7 @@ public class ItemTab extends DatabaseTab {
 		BonusList lstElements = new BonusList(equipFolder, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
-				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toObjectTree();
+				return Project.current.elements.getList().toTree();
 			}
 		};
 		lstElements.setIncludeID(false);
@@ -220,8 +217,7 @@ public class ItemTab extends DatabaseTab {
 		BonusList lstElementsAdd = new BonusList(useFolder, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
-				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toObjectTree();
+				return Project.current.elements.getList().toTree();
 			}
 		};
 		lstElementsAdd.setIncludeID(false);

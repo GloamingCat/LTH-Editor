@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
 
-import data.config.Config;
 import project.Project;
 
 import org.eclipse.swt.widgets.TabItem;
@@ -407,8 +406,7 @@ public class SkillTab extends DatabaseTab {
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
-				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toObjectTree();
+				return Project.current.elements.getList().toTree();
 			}
 		};
 		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

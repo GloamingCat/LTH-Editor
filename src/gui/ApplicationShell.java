@@ -1,7 +1,7 @@
 package gui;
 
-import gui.views.config.ConfigEditor;
 import gui.views.database.DatabaseEditor;
+import gui.views.system.SystemEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -59,16 +59,16 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		mntmDatabaseEditor.setText(Vocab.instance.DATABASEEDITOR + "\tF3");
 		mntmDatabaseEditor.setAccelerator(SWT.F3);
 
-		final ConfigEditor configEditor = new ConfigEditor(this, SWT.NONE);
-		MenuItem mntmConfigEditor = new MenuItem(menuView, SWT.NONE);
-		mntmConfigEditor.addSelectionListener(new SelectionAdapter() {
+		final SystemEditor systemEditor = new SystemEditor(this, SWT.NONE);
+		MenuItem mntmSystemEditor = new MenuItem(menuView, SWT.NONE);
+		mntmSystemEditor.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(configEditor);
+				setCurrentView(systemEditor);
 			}
 		});
-		mntmConfigEditor.setText(Vocab.instance.CONFIGEDITOR + "\tF5");
-		mntmConfigEditor.setAccelerator(SWT.F5);
+		mntmSystemEditor.setText(Vocab.instance.SYSTEMEDITOR + "\tF5");
+		mntmSystemEditor.setAccelerator(SWT.F5);
 		
 		/*
 		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 

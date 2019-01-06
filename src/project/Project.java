@@ -1,13 +1,16 @@
 package project;
 
+import gson.project.GObjectListSerializer;
 import gson.project.GObjectSerializer;
 import gson.project.GObjectTreeSerializer;
 import data.*;
-import data.config.Config;
+import data.config.*;
+import data.subcontent.Constant;
 import lwt.dataserialization.LSerializer;
 
 public class Project implements LSerializer {
 	
+	// Database
 	public GObjectTreeSerializer animations;
 	public GObjectTreeSerializer battlers;
 	public GObjectTreeSerializer characters;
@@ -21,8 +24,17 @@ public class Project implements LSerializer {
 	public GObjectTreeSerializer tilesets;
 	public GObjectTreeSerializer troops;
 	
-	public FieldTreeSerializer fieldTree;
+	// System
 	public GObjectSerializer<Config> config;
+	public GObjectListSerializer attributes;
+	public GObjectListSerializer constants;
+	public GObjectListSerializer elements;
+	public GObjectListSerializer equipTypes;
+	public GObjectListSerializer plugins;
+	public GObjectListSerializer regions;
+	
+	public FieldTreeSerializer fieldTree;
+	
 	
 	private LSerializer[] allData;
 	
@@ -32,6 +44,7 @@ public class Project implements LSerializer {
 	public Project(String path) {
 		this.path = path;
 		
+		// Database
 		animations = new GObjectTreeSerializer(dataPath() + "animations", Animation.class);
 		battlers = new GObjectTreeSerializer(dataPath() + "battlers", Battler.class);
 		characters = new GObjectTreeSerializer(dataPath() + "characters", GameCharacter.class);
@@ -45,13 +58,20 @@ public class Project implements LSerializer {
 		tilesets = new GObjectTreeSerializer(dataPath() + "tilesets", Tileset.class);
 		troops = new GObjectTreeSerializer(dataPath() + "troops", Troop.class);
 		
-		fieldTree = new FieldTreeSerializer(dataPath());
-		
+		// System
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
+		attributes = new GObjectListSerializer(systemPath() + "attributes", Attribute.class);
+		constants = new GObjectListSerializer(systemPath() + "constants", Constant.class);
+		elements = new GObjectListSerializer(systemPath() + "elements", Data.class);
+		equipTypes = new GObjectListSerializer(systemPath() + "equipTypes", EquipType.class);
+		plugins = new GObjectListSerializer(systemPath() + "plugins", Plugin.class);
+		regions = new GObjectListSerializer(systemPath() + "regions", Region.class);
+		
+		fieldTree = new FieldTreeSerializer(dataPath());
 		
 		allData = new LSerializer[] { animations, battlers, characters, classes,
 				items, obstacles, scripts, skills, status, terrains, troops, 
-				config };
+				config, attributes, constants, elements, equipTypes, plugins, regions };
 	}
 	
 	public String dataPath() {

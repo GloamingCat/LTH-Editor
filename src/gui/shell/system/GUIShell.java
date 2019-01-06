@@ -1,4 +1,4 @@
-package gui.shell.config;
+package gui.shell.system;
 
 import gui.Vocab;
 import gui.shell.ObjectShell;

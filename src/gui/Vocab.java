@@ -5,7 +5,7 @@ public class Vocab {
 	public static Vocab instance = new Vocab();
 	
 	public String DATABASEEDITOR = "Database Editor";
-	public String CONFIGEDITOR = "Config Editor";
+	public String SYSTEMEDITOR = "System Editor";
 	public String FIELDEDITOR = "Field Editor";
 	public String GUIEDITOR = "GUI Editor";
 	public String DIALOGUEEDITOR = "Dialogue Editor";

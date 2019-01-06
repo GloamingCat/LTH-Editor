@@ -1,6 +1,6 @@
-package gui.views.config;
+package gui.views.system;
 
-import gui.shell.config.EquipTypeShell;
+import gui.shell.system.EquipTypeShell;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;

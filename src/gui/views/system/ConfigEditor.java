@@ -1,4 +1,4 @@
-package gui.views.config;
+package gui.views.system;
 
 import gui.Vocab;
 import gui.widgets.IDButton;
@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
-public class SystemEditor extends LView {
+public class ConfigEditor extends LView {
 
 	private LObjectEditor editor;
 	
@@ -31,7 +31,7 @@ public class SystemEditor extends LView {
 	 * @param parent
 	 * @param style
 	 */
-	public SystemEditor(Composite parent, int style) {
+	public ConfigEditor(Composite parent, int style) {
 		super(parent, style);
 
 		actionStack = new LActionStack(this);

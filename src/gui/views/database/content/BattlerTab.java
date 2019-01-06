@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import data.config.Config;
 import project.Project;
 
 import org.eclipse.swt.widgets.TabFolder;
@@ -199,8 +198,7 @@ public class BattlerTab extends DatabaseTab {
 		BonusList lstElements = new BonusList(tabInitial, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
-				Config conf = (Config) Project.current.config.getData();
-				return conf.elements.toObjectTree();
+				return Project.current.elements.getList().toTree();
 			}
 		};
 		tbtmElements.setControl(lstElements);

@@ -1,4 +1,4 @@
-package gui.views.config;
+package gui.views.system;
 
 import gui.Vocab;
 import gui.widgets.ConstantList;
@@ -8,14 +8,18 @@ import lwt.editor.LObjectEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
 
 public class ListsEditor extends LObjectEditor {
+	
+	private NameList lstElements;
+	private EquipTypeList lstEquipTypes;
+	private ConstantList lstConstants;
+	private AttributeList lstAttributes;
+	private RegionList lstRegions;
 
 	/**
 	 * Create the composite.
@@ -26,68 +30,72 @@ public class ListsEditor extends LObjectEditor {
 		super(parent, style);
 
 		actionStack = new LActionStack(this);
-		
-		setLayout(new GridLayout(3, true));
+		setLayout(new FillLayout(SWT.VERTICAL));
 
+		Composite top = new Composite(this, SWT.NONE);
+		Composite bottom = new Composite(this, SWT.NONE);
+		top.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
 		// Elements
 		
-		Group grpElements = new Group(this, SWT.NONE);
-		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Group grpElements = new Group(top, SWT.NONE);
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		NameList lstElements = new NameList(grpElements, SWT.NONE);
-		lstElements.setIncludeID(true);		
+		lstElements = new NameList(grpElements, SWT.NONE);
+		lstElements.setIncludeID(true);
 		addChild(lstElements, "elements");
 		
 		// Regions
 		
-		Group grpRegions = new Group(this, SWT.NONE);
-		grpRegions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Group grpRegions = new Group(top, SWT.NONE);
 		grpRegions.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpRegions.setText(Vocab.instance.REGIONS);
 		
-		RegionList lstRegions = new RegionList(grpRegions, SWT.NONE);
+		lstRegions = new RegionList(grpRegions, SWT.NONE);
 		addChild(lstRegions, "regions");
 
 		// Attributes
 		
-		Group grpAttributes = new Group(this, SWT.NONE);
-		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Group grpAttributes = new Group(top, SWT.NONE);
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 
-		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
+		lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		addChild(lstAttributes, "attributes");
+		bottom.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		// Constants
 		
-		Group grpConstants = new Group(this, SWT.NONE);
-		grpConstants.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Group grpConstants = new Group(bottom, SWT.NONE);
 		grpConstants.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpConstants.setText(Vocab.instance.CONSTANTS);
 
-		ConstantList lstConstants = new ConstantList(grpConstants, SWT.NONE);
+		lstConstants = new ConstantList(grpConstants, SWT.NONE);
 		addChild(lstConstants, "constants");
 		
-		Group grpEquipTypes = new Group(this, SWT.NONE);
+		Group grpEquipTypes = new Group(bottom, SWT.NONE);
 		grpEquipTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpEquipTypes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grpEquipTypes.setText(Vocab.instance.EQUIPTYPES);
 		
-		EquipTypeList lstEquipTypes = new EquipTypeList(grpEquipTypes, SWT.NONE);
+		lstEquipTypes = new EquipTypeList(grpEquipTypes, SWT.NONE);
 		addChild(lstEquipTypes, "equipTypes");
 		
-		Group grpPlugins = new Group(this, SWT.NONE);
+		Group grpPlugins = new Group(bottom, SWT.NONE);
 		grpPlugins.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpPlugins.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grpPlugins.setText(Vocab.instance.PLUGINS);
 
 	}
 	
 	public void onVisible() {
-		setObject(Project.current.config.getData());
 		onChildVisible();
+		lstAttributes.setObject(Project.current.attributes.getList());
+		lstElements.setObject(Project.current.elements.getList());
+		lstEquipTypes.setObject(Project.current.equipTypes.getList());
+		lstConstants.setObject(Project.current.constants.getList());
+		lstRegions.setObject(Project.current.regions.getList());
+		
+		//lstPlugins.setObject(Project.current.plugins.getList());
 	}
 	
 }

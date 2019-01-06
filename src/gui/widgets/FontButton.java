@@ -1,6 +1,6 @@
 package gui.widgets;
 
-import gui.shell.config.FontShell;
+import gui.shell.system.FontShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;

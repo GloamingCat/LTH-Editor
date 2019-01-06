@@ -1,11 +1,8 @@
 package data.config;
 
-import data.Data;
 import data.subcontent.Audio;
-import data.subcontent.Constant;
 import data.subcontent.Icon;
 import data.subcontent.Position;
-import lwt.dataestructure.LDataList;
 
 public class Config {
 	
@@ -17,20 +14,11 @@ public class Config {
 	public Troop troop = new Troop();
 	public Grid grid = new Grid();
 	
-	public Animations animations = new Animations();
-	public Icons icons = new Icons();
 	public Screen screen = new Screen();
 	
+	public Animations animations = new Animations();
+	public Icons icons = new Icons();
 	public Sounds sounds = new Sounds();
-	
-	// Lists
-	
-	public LDataList<Attribute> attributes = new LDataList<>();
-	public LDataList<Data> elements = new LDataList<>();
-	public LDataList<EquipType> equipTypes = new LDataList<>();
-	public LDataList<Region> regions = new LDataList<>();
-	public LDataList<Plugin> plugins = new LDataList<>();
-	public LDataList<Constant> constants = new LDataList<>();
 	
 	// System
 	

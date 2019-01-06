@@ -182,7 +182,7 @@ public class FieldPainter {
 			int h = FieldHelper.config.grid.tileH;
 			Image img = regionCache.get(id);
 			if (img == null) {
-				Region r = FieldHelper.config.regions.get(id);
+				Region r = (Region) Project.current.regions.getData().get(id);
 				img = new Image(Display.getCurrent(), w, h);
 				Image str = ImageHelper.getStringImage(id + "", w, h, null);
 				GC strGC = new GC(img);
