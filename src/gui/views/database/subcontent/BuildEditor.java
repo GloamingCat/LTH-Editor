@@ -8,6 +8,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import data.config.Attribute;
@@ -76,18 +77,28 @@ public class BuildEditor extends LObjectEditor {
 	}
 	
 	public void onVisible() {
-		texts.clear();
-		content.dispose();
-		content = new Composite(scrollComp, SWT.NONE);
 		content.setLayout(new GridLayout(columns, false));
+		Control[] controls = content.getChildren();
 		Config config = (Config) Project.current.config.getData();
 		ArrayList<Attribute> attributes = config.attributes;
-		for(int i = 0; i < attributes.size(); i++) {
-			Attribute att = attributes.get(i);
+		// Add spinners for exceeding attributes
+		for(int i = controls.length / 2; i < attributes.size(); i ++) {
 			Label label = new Label(content, SWT.NONE);
-			label.setText(att.shortName);
 			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-			LText text = createText(i);
+			createText(i);
+		}
+		// Remove exceeding spinners
+		for (int i = attributes.size() * 2; i < controls.length; i++) {
+			controls[i].dispose();
+		}
+		// Update texts
+		controls = content.getChildren();
+		texts.clear();
+		for (int i = 0; i < attributes.size(); i++)	{
+			Attribute att = attributes.get(i);
+			Label label = (Label) controls[i * 2];
+			label.setText(att.shortName);
+			LText text = (LText) controls[i * 2 + 1];
 			texts.add(text);
 		}
 		scrollComp.setContent(content);
@@ -102,6 +113,7 @@ public class BuildEditor extends LObjectEditor {
 			public void onModify(LControlEvent<String> event) {
 				if (list != null) {
 					list.set(i, event.newValue);
+					System.out.println(event.newValue);
 				}
 			}
 		});

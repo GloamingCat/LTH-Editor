@@ -141,7 +141,7 @@ public class BattlerTab extends DatabaseTab {
 
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
 		attEditor.setColumns(4);
-		addChild(attEditor);
+		addChild(attEditor, "attributes");
 		
 		Composite other = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_other = new GridLayout(3, false);

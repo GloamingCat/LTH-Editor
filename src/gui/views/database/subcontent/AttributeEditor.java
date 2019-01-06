@@ -8,6 +8,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import data.config.Attribute;
@@ -47,8 +48,7 @@ public class AttributeEditor extends LObjectEditor {
 	
 	@SuppressWarnings("unchecked")
 	private LDataList<Integer> getList() {
-		Object value = getFieldValue(currentObject, "attributes");
-		return (LDataList<Integer>) value;
+		return (LDataList<Integer>) currentObject;
 	}
 	
 	public void setObject(Object obj) {
@@ -75,18 +75,28 @@ public class AttributeEditor extends LObjectEditor {
 	}
 	
 	public void onVisible() {
-		spinners.clear();
-		content.dispose();
-		content = new Composite(scrollComp, SWT.NONE);
 		content.setLayout(new GridLayout(columns, false));
+		Control[] controls = content.getChildren();
 		Config config = (Config) Project.current.config.getData();
 		ArrayList<Attribute> attributes = config.attributes;
-		for(int i = 0; i < attributes.size(); i++) {
-			Attribute att = attributes.get(i);
+		// Add spinners for exceeding attributes
+		for(int i = controls.length / 2; i < attributes.size(); i ++) {
 			Label label = new Label(content, SWT.NONE);
-			label.setText(att.shortName);
 			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-			LSpinner spinner = createSpinner(i);
+			createSpinner(i);
+		}
+		// Remove exceeding spinners
+		for (int i = attributes.size() * 2; i < controls.length; i++) {
+			controls[i].dispose();
+		}
+		// Update spinners
+		controls = content.getChildren();
+		spinners.clear();
+		for (int i = 0; i < attributes.size(); i++)	{
+			Attribute att = attributes.get(i);
+			Label label = (Label) controls[i * 2];
+			label.setText(att.shortName);
+			LSpinner spinner = (LSpinner) controls[i * 2 + 1];
 			spinners.add(spinner);
 		}
 		scrollComp.setContent(content);
