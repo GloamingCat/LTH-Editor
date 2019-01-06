@@ -2,7 +2,7 @@ package gui.shell;
 
 import gui.widgets.ImageButton;
 import gui.widgets.QuadButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -19,6 +19,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 public class ObjectShell<T> extends LObjectShell<T> {
 	
@@ -36,13 +37,18 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	@SuppressWarnings("unchecked")
 	public void open(T initial) {
 		super.open(initial);
-		T copy = (T) gson.fromJson("{}", initial.getClass());
+		T copy = (T) gson.fromJson(gson.toJson(initial), initial.getClass());
+		System.out.println(initial);
 		contentEditor.setObject(copy);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected T createResult(T initial) {
+		JsonElement c = gson.toJsonTree(contentEditor.getObject());
+		JsonElement i = gson.toJsonTree(initial);
+		if (i.equals(c))
+			return null;
 		return (T) contentEditor.getObject();
 	}
 	
@@ -74,7 +80,7 @@ public class ObjectShell<T> extends LObjectShell<T> {
 		addControl(button, attName);
 	}
 	
-	protected void addScriptButton(ScriptButton button, Text pathText, String folderName, String attName) {
+	protected void addScriptButton(LuaButton button, Text pathText, String folderName, String attName) {
 		button.setPathText(pathText);
 		button.setFolder(folderName);
 		addControl(button, attName);

@@ -181,7 +181,7 @@ public class CharacterTab extends DatabaseTab {
 		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
-		addChild(transformTab);
+		addChild(transformTab, "transform");
 		
 		Group grpTags = new Group(middle, SWT.NONE);
 		grpTags.setLayout(new FillLayout());

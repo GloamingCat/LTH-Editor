@@ -3,14 +3,13 @@ package gui.shell;
 import java.io.File;
 import java.util.ArrayList;
 
+import lwt.dialog.LObjectShell;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-
-import lwt.dialog.LObjectShell;
-
 import org.eclipse.swt.layout.FillLayout;
 
 public abstract class FileShell<T> extends LObjectShell<T> {

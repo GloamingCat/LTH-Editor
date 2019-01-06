@@ -8,7 +8,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.widgets.ImageButton;
 import gui.widgets.QuadButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -156,7 +156,7 @@ public abstract class DatabaseTab extends LView {
 		addControl(button, attName);
 	}
 	
-	protected void addScriptButton(ScriptButton button, Text pathText, String folderName, String attName) {
+	protected void addScriptButton(LuaButton button, Text pathText, String folderName, String attName) {
 		button.setPathText(pathText);
 		button.setFolder(folderName);
 		addControl(button, attName);

@@ -8,7 +8,7 @@ import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
@@ -81,7 +81,7 @@ public class StatusTab extends DatabaseTab {
 		Text txtScript = new Text(compositeScript, SWT.BORDER | SWT.READ_ONLY);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnSelectScript = new ScriptButton(compositeScript, SWT.NONE);
+		LuaButton btnSelectScript = new LuaButton(compositeScript, SWT.NONE);
 		btnSelectScript.optional = true;
 		addScriptButton(btnSelectScript, txtScript, "status", "script");
 		
@@ -140,7 +140,7 @@ public class StatusTab extends DatabaseTab {
 		Text txtAI = new Text(compositeAI, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnSelectAI = new ScriptButton(compositeAI, SWT.NONE);
+		LuaButton btnSelectAI = new LuaButton(compositeAI, SWT.NONE);
 		btnSelectAI.optional = true;
 		addScriptButton(btnSelectAI, txtAI, "ai", "AI");
 		
@@ -158,9 +158,9 @@ public class StatusTab extends DatabaseTab {
 		txtCharAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCharAnim, "charAnim");
 		
-		TransformEditor transform = new TransformEditor(grpGraphics, SWT.NONE);
-		transform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		addChild(transform);
+		TransformEditor transformEditor = new TransformEditor(grpGraphics, SWT.NONE);
+		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		addChild(transformEditor, "transform");
 		
 		LCheckButton btnOverride = new LCheckButton(grpGraphics, SWT.NONE);
 		btnOverride.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 1));

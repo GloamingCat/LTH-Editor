@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class ScriptButton extends LObjectButton<String> {
+public class LuaButton extends LObjectButton<String> {
 	
 	private String folder;
 	private Text pathText;
@@ -20,7 +20,7 @@ public class ScriptButton extends LObjectButton<String> {
 	 * @param parent
 	 * @param style
 	 */
-	public ScriptButton(Composite parent, int style) {
+	public LuaButton(Composite parent, int style) {
 		super(parent, style);
 		setShellFactory(new LShellFactory<String>() {
 			@Override

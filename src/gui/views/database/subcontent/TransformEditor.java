@@ -19,7 +19,6 @@ public class TransformEditor extends LObjectEditor {
 	
 	private LSpinner spnOffsetX;
 	private LSpinner spnOffsetY;
-	public String attributeName = "transform";
 	public Composite image = null;
 
 	public TransformEditor(Composite parent, int style) {
@@ -174,11 +173,6 @@ public class TransformEditor extends LObjectEditor {
 			}
 		});
 		image = label;
-	}
-	
-	public void setObject(Object obj) {
-		Object value = obj == null ? null : getFieldValue(obj, attributeName);
-		super.setObject(value);
 	}
 
 }

@@ -7,7 +7,7 @@ import gui.views.database.subcontent.AudioList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.QuadButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -58,7 +58,7 @@ public class AnimationTab extends DatabaseTab {
 		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnScript = new ScriptButton(script, SWT.NONE);
+		LuaButton btnScript = new LuaButton(script, SWT.NONE);
 		btnScript.optional = true;
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addScriptButton(btnScript, txtScript, "animation", "script");
@@ -100,7 +100,7 @@ public class AnimationTab extends DatabaseTab {
 		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
-		addChild(transformTab);
+		addChild(transformTab, "transform");
 		
 		Group grpImg = new Group(right, SWT.NONE);
 		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -181,6 +181,7 @@ public class AnimationTab extends DatabaseTab {
 		grpAudio.setText(Vocab.instance.SOUND);
 		
 		AudioList lstAudio = new AudioList(grpAudio, SWT.NONE);
+		lstAudio.folder = "sfx";
 		addChild(lstAudio, "audio");
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
@@ -216,6 +217,8 @@ public class AnimationTab extends DatabaseTab {
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				if (text.getValue().isEmpty())
+					return;
 				String[] times = text.getValue().split("\\s+");
 				if (times.length > 0) {
 					int cols = spnCols.getValue();

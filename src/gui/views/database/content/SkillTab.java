@@ -9,7 +9,7 @@ import gui.views.database.subcontent.RangeEditor;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 
 import java.util.ArrayList;
 
@@ -93,7 +93,7 @@ public class SkillTab extends DatabaseTab {
 		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnScript = new ScriptButton(script, SWT.NONE);
+		LuaButton btnScript = new LuaButton(script, SWT.NONE);
 		btnScript.optional = true;
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addScriptButton(btnScript, txtScript, "skill", "script");
