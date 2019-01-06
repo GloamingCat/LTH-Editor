@@ -8,6 +8,7 @@ import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
 import lwt.widget.LCheckButton;
+import lwt.widget.LCombo;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -68,9 +69,94 @@ public class ConfigEditor extends LView {
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		editor.addControl(txtName, "name");
 		
+		// Screen
+		
+		Group grpScreen = new Group(left, SWT.NONE);
+		grpScreen.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpScreen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpScreen.setText(Vocab.instance.SCREEN);
+		
+		LObjectEditor screenEditor = new LObjectEditor(grpScreen, SWT.NONE);
+		editor.addChild(screenEditor, "screen");
+		screenEditor.setLayout(new GridLayout(3, false));
+		
+		Label lblCover = new Label(screenEditor, SWT.NONE);
+		lblCover.setText(Vocab.instance.COVER);
+		
+		Text txtCover = new Text(screenEditor, SWT.BORDER | SWT.READ_ONLY);
+		txtCover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnCover = new IDButton(screenEditor, 0) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		btnCover.setNameText(txtCover);
+		screenEditor.addControl(btnCover, "coverID");
+		
+		Label lblFps = new Label(screenEditor, SWT.NONE);
+		lblFps.setText(Vocab.instance.FPSLIMIT);
+		
+		LSpinner spnFps = new LSpinner(screenEditor, SWT.NONE);
+		spnFps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		screenEditor.addControl(spnFps, "fpsLimit");
+		spnFps.setMinimum(1);
+		spnFps.setMaximum(9999);
+		
+		Label lblNativeWidth = new Label(screenEditor, SWT.NONE);
+		lblNativeWidth.setText(Vocab.instance.NATIVEWIDTH);
+		
+		LSpinner spnNativeWidth = new LSpinner(screenEditor, SWT.NONE);
+		spnNativeWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		screenEditor.addControl(spnNativeWidth, "nativeWidth");
+		spnNativeWidth.setMinimum(1);
+		spnNativeWidth.setMaximum(9999);
+		
+		Label lblNativeHeight = new Label(screenEditor, SWT.NONE);
+		lblNativeHeight.setText(Vocab.instance.NATIVEHEIGHT);
+		
+		LSpinner spnNativeHeight = new LSpinner(screenEditor, SWT.NONE);
+		spnNativeHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		screenEditor.addControl(spnNativeHeight, "nativeHeight");
+		spnNativeHeight.setMinimum(1);
+		spnNativeHeight.setMaximum(9999);
+		
+		Label lblWidthScale = new Label(screenEditor, SWT.NONE);
+		lblWidthScale.setText(Vocab.instance.WIDTHSCALE);
+		
+		LSpinner spnWidthScale = new LSpinner(screenEditor, SWT.NONE);
+		spnWidthScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		screenEditor.addControl(spnWidthScale, "widthScale");
+		spnWidthScale.setMinimum(1);
+		spnWidthScale.setMaximum(9999);
+		
+		Label lblHeightScale = new Label(screenEditor, SWT.NONE);
+		lblHeightScale.setText(Vocab.instance.HEIGHTSCALE);
+		
+		LSpinner spnHeightScale = new LSpinner(screenEditor, SWT.NONE);
+		spnHeightScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		screenEditor.addControl(spnHeightScale, "heightScale");
+		spnHeightScale.setMinimum(1);
+		spnHeightScale.setMaximum(9999);
+		
+		Label lblScaleType = new Label(screenEditor, SWT.NONE);
+		lblScaleType.setText(Vocab.instance.SCALETYPE);
+		
+		LCombo cmbScale = new LCombo(screenEditor, SWT.NONE);
+		cmbScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		cmbScale.setOptional(false);
+		cmbScale.setIncludeID(false);
+		cmbScale.setItems(new String[] {
+			Vocab.instance.NOSCALE,
+			Vocab.instance.KEEPRATIO,
+			Vocab.instance.FREESCALE
+		});
+		screenEditor.addControl(cmbScale, "scaleType");
+		
 		// Player
 		
-		Group grpPlayer = new Group(left, SWT.NONE);
+		Group grpPlayer = new Group(right, SWT.NONE);
 		grpPlayer.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpPlayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPlayer.setText(Vocab.instance.PLAYER);

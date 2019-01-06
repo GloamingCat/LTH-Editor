@@ -81,6 +81,19 @@ public class Vocab {
 	public String OVERPASSALLIES = "Overpass Allies";
 	public String OVERPASSDEADS = "Overpass Deads";
 	
+	// Screen
+	public String SCREEN = "Screen";
+	public String COVER = "Cover";
+	public String FPSLIMIT = "FPS Limit";
+	public String NATIVEWIDTH = "Native Width";
+	public String NATIVEHEIGHT = "Native Height";
+	public String WIDTHSCALE = "Width Scale";
+	public String HEIGHTSCALE = "Height Scale";
+	public String SCALETYPE = "Scale Type";
+	public String NOSCALE = "No Scale";
+	public String KEEPRATIO = "Keep Ratio";
+	public String FREESCALE = "Fill Screen";
+	
 	// Player
 	public String PLAYER = "Player";
 	public String STARTPOS = "Start Position";
