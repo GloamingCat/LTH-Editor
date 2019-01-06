@@ -6,6 +6,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
+import gui.widgets.IDButton;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
@@ -41,6 +42,24 @@ public class StatusTab extends DatabaseTab {
 		gridLayout.verticalSpacing = 0;
 		contentEditor.setLayout(gridLayout);
 		
+		// Script
+		
+		Label lblScript = new Label(grpGeneral, SWT.NONE);
+		lblScript.setText(Vocab.instance.SCRIPT);
+		
+		Composite compositeScript = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeScript = new GridLayout(2, false);
+		gl_compositeScript.marginHeight = 0;
+		gl_compositeScript.marginWidth = 0;
+		compositeScript.setLayout(gl_compositeScript);
+		compositeScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		Text txtScript = new Text(compositeScript, SWT.BORDER | SWT.READ_ONLY);
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		LuaButton btnSelectScript = new LuaButton(compositeScript, 1);
+		addScriptButton(btnSelectScript, txtScript, "status", "script");
+		
 		// Icon
 		
 		Label lblIcon = new Label(grpGeneral, SWT.NONE);
@@ -65,25 +84,6 @@ public class StatusTab extends DatabaseTab {
 		btnSelectIcon.optional = false;
 		btnSelectIcon.setImage(imgIcon);
 		addControl(btnSelectIcon, "icon");
-		
-		// Script
-		
-		Label lblScript = new Label(grpGeneral, SWT.NONE);
-		lblScript.setText(Vocab.instance.SCRIPT);
-		
-		Composite compositeScript = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeScript = new GridLayout(2, false);
-		gl_compositeScript.marginHeight = 0;
-		gl_compositeScript.marginWidth = 0;
-		compositeScript.setLayout(gl_compositeScript);
-		compositeScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
-		Text txtScript = new Text(compositeScript, SWT.BORDER | SWT.READ_ONLY);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		LuaButton btnSelectScript = new LuaButton(compositeScript, SWT.NONE);
-		btnSelectScript.optional = true;
-		addScriptButton(btnSelectScript, txtScript, "status", "script");
 		
 		// General
 		
@@ -125,24 +125,29 @@ public class StatusTab extends DatabaseTab {
 		addControl(btnCumulative, "cumulative");
 		new Label(options, SWT.NONE);
 		
-		// AI Script
+		// Behavior Script
 		
-		Label lblAI = new Label(grpGeneral, SWT.NONE);
-		lblAI.setText(Vocab.instance.AI);
+		Label lblBehavior = new Label(grpGeneral, SWT.NONE);
+		lblBehavior.setText(Vocab.instance.BEHAVIOR);
 		
-		Composite compositeAI = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeAI = new GridLayout(2, false);
-		gl_compositeAI.marginHeight = 0;
-		gl_compositeAI.marginWidth = 0;
-		compositeAI.setLayout(gl_compositeAI);
-		compositeAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Composite compBehaveor = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compBehavior = new GridLayout(2, false);
+		gl_compBehavior.marginHeight = 0;
+		gl_compBehavior.marginWidth = 0;
+		compBehaveor.setLayout(gl_compBehavior);
+		compBehaveor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Text txtAI = new Text(compositeAI, SWT.BORDER | SWT.READ_ONLY);
-		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Text txtBehavior = new Text(compBehaveor, SWT.BORDER | SWT.READ_ONLY);
+		txtBehavior.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LuaButton btnSelectAI = new LuaButton(compositeAI, SWT.NONE);
-		btnSelectAI.optional = true;
-		addScriptButton(btnSelectAI, txtAI, "ai", "AI");
+		IDButton btnBehavior = new IDButton(compBehaveor, 1) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.scripts.getTree();
+			}
+		};
+		btnBehavior.setNameText(txtBehavior);
+		addControl(btnBehavior, "behaviorID");
 		
 		// Graphics
 		

@@ -45,6 +45,8 @@ public class AnimationTab extends DatabaseTab {
 		gridData.widthHint = 240;
 		grpGeneral.setLayoutData(gridData);
 		
+		// Script
+		
 		Label lblScript = new Label(grpGeneral,  SWT.NONE);
 		lblScript.setText(Vocab.instance.SCRIPT);
 		
@@ -58,11 +60,12 @@ public class AnimationTab extends DatabaseTab {
 		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LuaButton btnScript = new LuaButton(script, SWT.NONE);
-		btnScript.optional = true;
+		LuaButton btnScript = new LuaButton(script, 1);
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addScriptButton(btnScript, txtScript, "animation", "script");
 
+		// Size
+		
 		Composite size = new Composite(grpGeneral, SWT.NONE);
 		size.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 		GridLayout gl_size = new GridLayout(4, false);
@@ -84,6 +87,8 @@ public class AnimationTab extends DatabaseTab {
 		spnRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRows, "rows");
 
+		// Transform
+		
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_right = new GridLayout(1, false);
 		gl_right.marginWidth = 0;
@@ -101,6 +106,8 @@ public class AnimationTab extends DatabaseTab {
 		
 		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformTab, "transform");
+		
+		// Graphics
 		
 		Group grpImg = new Group(right, SWT.NONE);
 		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -120,6 +127,8 @@ public class AnimationTab extends DatabaseTab {
 		QuadButton btnSelectImage = new QuadButton(grpImg, SWT.NONE);
 		btnSelectImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		addQuadButton(btnSelectImage, image, "", "quad");
+		
+		// Intro
 		
 		Group grpIntro = new Group(contentEditor, SWT.NONE);
 		grpIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -146,6 +155,8 @@ public class AnimationTab extends DatabaseTab {
 		Button btnIntroDuration = new Button(grpIntro, SWT.NONE);
 		btnIntroDuration.setText(Vocab.instance.DEFAULT);
 		
+		// Loop
+		
 		Group grpLoop = new Group(contentEditor, SWT.NONE);
 		grpLoop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		grpLoop.setLayout(new GridLayout(3, false));
@@ -171,6 +182,8 @@ public class AnimationTab extends DatabaseTab {
 		Button btnLoopDuration = new Button(grpLoop, SWT.NONE);
 		btnLoopDuration.setText(Vocab.instance.DEFAULT);
 		
+		// Audio
+		
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
 		bottom.setLayout(new GridLayout(2, true));
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -183,6 +196,8 @@ public class AnimationTab extends DatabaseTab {
 		AudioList lstAudio = new AudioList(grpAudio, SWT.NONE);
 		lstAudio.folder = "sfx";
 		addChild(lstAudio, "audio");
+		
+		// Tags
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));

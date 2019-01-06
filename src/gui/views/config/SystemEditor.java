@@ -185,13 +185,13 @@ public class SystemEditor extends LView {
 		
 		LObjectEditor battleEditor = new LObjectEditor(grpBattle, SWT.NONE);
 		editor.addChild(battleEditor, "battle");
-		battleEditor.setLayout(new GridLayout(3, false));
+		battleEditor.setLayout(new GridLayout(2, false));
 		
 		Label lblMaxLevel = new Label(battleEditor, SWT.NONE);
 		lblMaxLevel.setText(Vocab.instance.MAXLEVEL);
 		
 		LSpinner spnMaxLevel = new LSpinner(battleEditor, SWT.NONE);
-		spnMaxLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		spnMaxLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		battleEditor.addControl(spnMaxLevel, "maxLevel");
 		spnMaxLevel.setMaximum(9999);
 		
@@ -199,44 +199,29 @@ public class SystemEditor extends LView {
 		lblAttHP.setText(Vocab.instance.ATTHP);
 		
 		LText txtAttHP = new LText(battleEditor, SWT.NONE);
-		txtAttHP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		txtAttHP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttHP, "attHP");
 		
 		Label lblAttSP = new Label(battleEditor, SWT.NONE);
 		lblAttSP.setText(Vocab.instance.ATTSP);
 		
 		LText txtAttSP = new LText(battleEditor, SWT.NONE);
-		txtAttSP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		txtAttSP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttSP, "attSP");
 		
 		Label lblAttStep = new Label(battleEditor, SWT.NONE);
 		lblAttStep.setText(Vocab.instance.ATTSTEP);
 		
 		LText txtAttStep = new LText(battleEditor, SWT.NONE);
-		txtAttStep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		txtAttStep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttStep, "attStep");
 		
 		Label lblAttJump = new Label(battleEditor, SWT.NONE);
 		lblAttJump.setText(Vocab.instance.ATTSTEP);
 		
 		LText txtAttJump = new LText(battleEditor, SWT.NONE);
-		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttJump, "attJump");
-		
-		Label lblItemSkill = new Label(battleEditor, SWT.NONE);
-		lblItemSkill.setText(Vocab.instance.ITEMSKILL);
-		
-		Text txtItemSkill = new Text(battleEditor, SWT.BORDER | SWT.READ_ONLY);
-		txtItemSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnItemSkill = new IDButton(battleEditor, 0) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
-		btnItemSkill.setNameText(txtItemSkill);
-		battleEditor.addControl(btnItemSkill, "itemSkillID");
 
 		// Troop
 		
@@ -258,7 +243,7 @@ public class SystemEditor extends LView {
 		IDButton btnInitialTroop = new IDButton(troopEditor, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
+				return Project.current.troops.getTree();
 			}
 		};
 		btnInitialTroop.setNameText(txtInitialTroop);

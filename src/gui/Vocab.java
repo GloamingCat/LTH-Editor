@@ -56,14 +56,12 @@ public class Vocab {
 	
 	// Config
 	public String PROJECTNAME = "Project Name";
-	public String TROOP = "Troop";
 	public String SOUNDS = "Sounds";
 	public String FONTS = "Fonts";
+	public String LISTS = "Lists";
 	public String REGIONS = "Regions";
-	public String ITEMTYPES = "Item Types";
-	public String BATTLERTYPES = "Battler Types";
-	public String IMAGEATLASES = "Image Atlas";
-	public String CODE = "Code";
+	public String EQUIPTYPES = "Equip Types";
+	public String PLUGINS = "Plugins";
 	public String COLOR = "Color";
 	
 	// Attributes
@@ -99,6 +97,7 @@ public class Vocab {
 	public String ATTJUMP = "Jump Attribute";
 	
 	// Troop
+	public String TROOP = "Troop";
 	public String INITIALTROOP = "Initial Troop";
 	public String MAXMEMBERS = "Max Members";
 	public String WIDTH = "Width";
@@ -120,7 +119,7 @@ public class Vocab {
 	public String SELLABLE = "Sellable";
 	public String USE = "Use";
 	public String CONSUME = "Consume on use";
-	public String ITEMSKILL = "Skill ID";
+	public String ITEMSKILL = "Item Skill ID";
 	public String STATUSADD = "Status";
 	public String ELEMENTADD = "Elements";
 	public String EQUIP = "Equip";
@@ -230,6 +229,7 @@ public class Vocab {
 	public String DEACTIVATE = "Deactivate";
 	public String CUMULATIVE = "Cumulative";
 	public String DURABILITY = "Durability";
+	public String BEHAVIOR = "Behavior";
 	public String CHARANIM = "Character Animation Set";
 	public String OVERRIDE = "Override";
 	public String TURNS = "Turns";

@@ -47,6 +47,7 @@ public class SkillNodeEditor extends LObjectEditor {
 			}
 		};
 		btnID.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnID.setNameText(txtID);
 		addControl(btnID, "id");
 		
 		Label lblLevel = new Label(this, SWT.NONE);

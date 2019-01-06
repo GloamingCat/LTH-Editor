@@ -20,6 +20,9 @@ public class ConfigEditor extends LViewFolder {
 		SystemEditor systemEditor = new SystemEditor(tabFolder, SWT.NONE);
 		addTab(Vocab.instance.GENERAL, systemEditor);
 
+		ListsEditor listsEditor = new ListsEditor(tabFolder, SWT.NONE);
+		addTab(Vocab.instance.LISTS, listsEditor);
+		
 	}
 	
 }

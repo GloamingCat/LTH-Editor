@@ -5,6 +5,7 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -13,7 +14,6 @@ public class LuaButton extends LObjectButton<String> {
 	
 	private String folder;
 	private Text pathText;
-	public boolean optional = false;
 	
 	/**
 	 * Create the composite.
@@ -21,11 +21,11 @@ public class LuaButton extends LObjectButton<String> {
 	 * @param style
 	 */
 	public LuaButton(Composite parent, int style) {
-		super(parent, style);
+		super(parent, SWT.NONE);
 		setShellFactory(new LShellFactory<String>() {
 			@Override
 			public LObjectShell<String> createShell(Shell parent) {
-				return new LuaShell(parent, folder, optional);
+				return new LuaShell(parent, folder, style != 0);
 			}
 		});
 	}

@@ -15,7 +15,7 @@ public class Status extends Data {
 	public boolean cumulative = false;
 	public boolean deactivate = false;
 	public boolean ko = false;
-	public String AI = "";
+	public int behaviorID = -1;
 	
 	// Graphics
 	public String charAnim = "";

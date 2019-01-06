@@ -34,11 +34,44 @@ public class BattlerTab extends DatabaseTab {
 	public BattlerTab(Composite parent, int style) {
 		super(parent, style);
 		
-		new Label(grpGeneral,  SWT.NONE);
+		new Label(grpGeneral, SWT.NONE);
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
+		
+		// Level
+		
+		Label lblLevel = new Label(grpGeneral, SWT.NONE);
+		lblLevel.setText(Vocab.instance.LEVEL);
+		
+		LSpinner spnLevel = new LSpinner(grpGeneral, SWT.NONE);
+		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(spnLevel, "level");
+		
+		// Rewards
+		
+		Label lblMoney = new Label(grpGeneral, SWT.NONE);
+		lblMoney.setText(Vocab.instance.MONEY);
+		
+		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeReward = new GridLayout(3, false);
+		gl_compositeReward.marginWidth = 0;
+		gl_compositeReward.marginHeight = 0;
+		compositeReward.setLayout(gl_compositeReward);
+		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		LSpinner spnMoney = new LSpinner(compositeReward, SWT.NONE);
+		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnMoney, "money");
+		
+		Label lblExp = new Label(compositeReward, SWT.NONE);
+		lblExp.setText(Vocab.instance.EXP);
+		
+		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
+		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnEXP, "exp");
+		
 		
 		Composite select = new Composite(grpGeneral, SWT.NONE);
 		select.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -100,37 +133,7 @@ public class BattlerTab extends DatabaseTab {
 		btnAttack.setNameText(txtAttack);
 		addControl(btnAttack, "attackID");
 		
-		// Level
-		
-		Label lblLevel = new Label(grpGeneral, SWT.NONE);
-		lblLevel.setText(Vocab.instance.LEVEL);
-		
-		LSpinner spnLevel = new LSpinner(grpGeneral, SWT.NONE);
-		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(spnLevel, "level");
-		
-		// Rewards
-		
-		Label lblMoney = new Label(grpGeneral, SWT.NONE);
-		lblMoney.setText(Vocab.instance.MONEY);
-		
-		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeReward = new GridLayout(3, false);
-		gl_compositeReward.marginWidth = 0;
-		gl_compositeReward.marginHeight = 0;
-		compositeReward.setLayout(gl_compositeReward);
-		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
-		LSpinner spnMoney = new LSpinner(compositeReward, SWT.NONE);
-		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnMoney, "money");
-		
-		Label lblExp = new Label(compositeReward, SWT.NONE);
-		lblExp.setText(Vocab.instance.EXP);
-		
-		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
-		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnEXP, "exp");
+		// Attributes
 		
 		Group grpAtt = new Group(contentEditor, SWT.NONE);
 		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -142,6 +145,8 @@ public class BattlerTab extends DatabaseTab {
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
 		attEditor.setColumns(4);
 		addChild(attEditor, "attributes");
+		
+		// Initial state
 		
 		Composite other = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_other = new GridLayout(3, false);

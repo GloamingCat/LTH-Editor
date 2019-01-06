@@ -2,6 +2,7 @@ package data.config;
 
 import data.Data;
 import data.subcontent.Audio;
+import data.subcontent.Constant;
 import data.subcontent.Icon;
 import data.subcontent.Position;
 import lwt.dataestructure.LDataList;
@@ -29,6 +30,7 @@ public class Config {
 	public LDataList<EquipType> equipTypes = new LDataList<>();
 	public LDataList<Region> regions = new LDataList<>();
 	public LDataList<Plugin> plugins = new LDataList<>();
+	public LDataList<Constant> constants = new LDataList<>();
 	
 	// System
 	

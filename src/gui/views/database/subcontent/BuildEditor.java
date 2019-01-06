@@ -113,7 +113,6 @@ public class BuildEditor extends LObjectEditor {
 			public void onModify(LControlEvent<String> event) {
 				if (list != null) {
 					list.set(i, event.newValue);
-					System.out.println(event.newValue);
 				}
 			}
 		});
