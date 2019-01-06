@@ -40,9 +40,10 @@ public class EquipTypeShell extends ObjectShell<EquipType> {
 		Label lblState = new Label(contentEditor, SWT.NONE);
 		lblState.setText(Vocab.instance.STATE);
 		
-		LCombo cmbState = new LCombo(contentEditor, SWT.READ_ONLY);
+		LCombo cmbState = new LCombo(contentEditor, SWT.NONE);
 		cmbState.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cmbState.setIncludeID(false);
+		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {
 				Vocab.instance.FREE, Vocab.instance.NOTEMPTY,
 				Vocab.instance.ALLEQUIPED, Vocab.instance.UNCHANGABLE,

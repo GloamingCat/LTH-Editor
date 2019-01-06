@@ -14,17 +14,17 @@ public class Troop extends Data {
 	public boolean persistent = false;
 	public int money = 100;
 	public LDataList<Drop> items = new LDataList<>();
-	
-	public LDataList<Unit> current = new LDataList<>();
-	public LDataList<Unit> backup = new LDataList<>();
+	public LDataList<Unit> members = new LDataList<>();
 	
 	public Point getSize() {
 		Config.Troop conf = Project.current.config.getData().troop;
 		int x = conf.width;
 		int y = conf.height;
-		for (Unit u : current) {
-			x = Math.max(x, u.x);
-			y = Math.max(y, u.y);
+		for (Unit u : members) {
+			if (!u.backup) {
+				x = Math.max(x, u.x);
+				y = Math.max(y, u.y);
+			}
 		}
 		return new Point(x, y);
 	}

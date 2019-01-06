@@ -10,8 +10,9 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
-import gui.views.database.subcontent.UnitList;
+import gui.views.database.subcontent.UnitEditor;
 import gui.widgets.IDButton;
+import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -46,6 +47,12 @@ public class TroopTab extends DatabaseTab {
 	public TroopTab(Composite parent, int style) {
 		super(parent, style);
 		
+		new Label(grpGeneral, SWT.NONE);
+		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
+		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		addControl(btnPersistent, "persistent");
+		
 		Label lblMoney = new Label(grpGeneral, SWT.NONE);
 		lblMoney.setText(Vocab.instance.MONEY);
 		
@@ -77,11 +84,7 @@ public class TroopTab extends DatabaseTab {
 		btnAI.setNameText(txtAI);
 		addControl(btnAI, "scriptID");
 		
-		new Label(grpGeneral, SWT.NONE);
-		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
-		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnPersistent.setText(Vocab.instance.PERSISTENT);
-		addControl(btnPersistent, "persistent");
+		// Items
 		
 		Group grpItems = new Group(contentEditor, SWT.NONE);
 		grpItems.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -91,28 +94,30 @@ public class TroopTab extends DatabaseTab {
 		DropList lstItems = new DropList(grpItems, SWT.NONE);
 		addChild(lstItems, "items");
 		
-		Composite gridEditor = new Composite(contentEditor, SWT.NONE);
+		// Units
+		
+		Group grpMembers = new Group(contentEditor, SWT.NONE);
+		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grpMembers.setLayout(new GridLayout(2, false));
+		grpMembers.setText(Vocab.instance.UNITS);
+		
+		Composite gridEditor = new Composite(grpMembers, SWT.NONE);
 		GridData gd_gridEditor = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_gridEditor.widthHint = 241;
 		gridEditor.setLayoutData(gd_gridEditor);
 		
-		Composite units = new Composite(contentEditor, SWT.NONE);
-		units.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		units.setLayout(new FillLayout(SWT.VERTICAL));
+		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers, SWT.NONE);
+		lstMembers.getCollectionWidget().setEditEnabled(false);
+		lstMembers.setIncludeID(false);
+		lstMembers.type = Unit.class;
+		GridData gd_lstUnits = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_lstUnits.widthHint = 220;
+		lstMembers.setLayoutData(gd_lstUnits);
+		addChild(lstMembers, "members");
 		
-		Group grpCurrent = new Group(units, SWT.NONE);
-		grpCurrent.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpCurrent.setText(Vocab.instance.UNITS);
-		
-		UnitList lstCurrent = new UnitList(grpCurrent, SWT.NONE);
-		addChild(lstCurrent, "current");
-		
-		Group grpBackup = new Group(units, SWT.NONE);
-		grpBackup.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpBackup.setText(Vocab.instance.BACKUP);
-		
-		UnitList lstBackup = new UnitList(grpBackup, SWT.NONE);
-		addChild(lstBackup, "backup");
+		UnitEditor unitEditor = new UnitEditor(grpMembers, SWT.NONE);
+		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		lstMembers.addChild(unitEditor);
 		
 		gridEditor.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
@@ -122,11 +127,14 @@ public class TroopTab extends DatabaseTab {
 						e.gc.drawRectangle(i * tWidth, j * tHeight, tWidth, tHeight);
 				if (contentEditor.getObject() != null) {
 					Troop troop = (Troop) contentEditor.getObject();
-					for (Unit u : troop.current) {
+					for (Unit u : troop.members) {
+						if (u.backup)
+							continue;
 						GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
 						Animation anim = c == null ? null : c.defaultAnimation();
 						Image img = anim == null ? null : anim.getImage();
-						if (img == null) continue;
+						if (img == null) 
+							continue;
 						int w = anim.quad.width / anim.cols;
 						int h = anim.quad.height / anim.rows;
 						int x = anim.quad.x + w;
@@ -136,7 +144,7 @@ public class TroopTab extends DatabaseTab {
 						e.gc.drawImage(img, 
 								x, y, w, h, tWidth * (u.x - 1), tHeight * (u.y - 1), w, h);
 					}
-					Unit u = lstCurrent.getCollectionWidget().getSelectedObject();
+					Unit u = lstMembers.getCollectionWidget().getSelectedObject();
 					if (u == null) return;
 					e.gc.drawRectangle((u.x - 1) * tWidth + 2, (u.y - 1) * tHeight + 2,
 							tWidth - 4, tHeight - 4);
@@ -158,11 +166,11 @@ public class TroopTab extends DatabaseTab {
 				gridEditor.redraw();
 			}
 		};
-		lstCurrent.getCollectionWidget().addEditListener(listener);
-		lstCurrent.getCollectionWidget().addInsertListener(listener);
-		lstCurrent.getCollectionWidget().addDeleteListener(listener);
-		lstCurrent.getCollectionWidget().addMoveListener(listener);
-		lstCurrent.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+		lstMembers.getCollectionWidget().addEditListener(listener);
+		lstMembers.getCollectionWidget().addInsertListener(listener);
+		lstMembers.getCollectionWidget().addDeleteListener(listener);
+		lstMembers.getCollectionWidget().addMoveListener(listener);
+		lstMembers.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			public void onSelect(LSelectionEvent event) {
 				gridEditor.redraw();
 			}
