@@ -68,7 +68,7 @@ public class TroopTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAI = new IDButton(select, SWT.NONE, true) {
+		IDButton btnAI = new IDButton(select, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.scripts.getTree();
@@ -77,8 +77,9 @@ public class TroopTab extends DatabaseTab {
 		btnAI.setNameText(txtAI);
 		addControl(btnAI, "scriptID");
 		
+		new Label(grpGeneral, SWT.NONE);
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
-		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		

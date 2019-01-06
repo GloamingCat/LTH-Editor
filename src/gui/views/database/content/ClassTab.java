@@ -36,7 +36,7 @@ public class ClassTab extends DatabaseTab {
 		grpBuild.setText(Vocab.instance.BUILD);
 		
 		BuildEditor buildEditor = new BuildEditor(grpBuild, SWT.NONE);
-		addChild(buildEditor);
+		addChild(buildEditor, "build");
 		
 		Group grpTags = new Group(right, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));

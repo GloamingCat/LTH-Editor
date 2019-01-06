@@ -229,7 +229,7 @@ public class SystemEditor extends LView {
 		Text txtItemSkill = new Text(battleEditor, SWT.BORDER | SWT.READ_ONLY);
 		txtItemSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnItemSkill = new IDButton(battleEditor, SWT.NONE, false) {
+		IDButton btnItemSkill = new IDButton(battleEditor, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.skills.getTree();
@@ -255,7 +255,7 @@ public class SystemEditor extends LView {
 		Text txtInitialTroop = new Text(troopEditor, SWT.BORDER | SWT.READ_ONLY);
 		txtInitialTroop.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnInitialTroop = new IDButton(troopEditor, SWT.NONE, false) {
+		IDButton btnInitialTroop = new IDButton(troopEditor, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.skills.getTree();

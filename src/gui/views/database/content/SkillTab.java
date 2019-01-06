@@ -208,7 +208,7 @@ public class SkillTab extends DatabaseTab {
 		Text txtLoadAnim = new Text(battleAnim, SWT.BORDER | SWT.READ_ONLY);
 		txtLoadAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IDButton btnLoadAnim = new IDButton(battleAnim, SWT.NONE, true) {
+		IDButton btnLoadAnim = new IDButton(battleAnim, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
@@ -223,7 +223,7 @@ public class SkillTab extends DatabaseTab {
 		Text txtCastAnim = new Text(battleAnim, SWT.BORDER | SWT.READ_ONLY);
 		txtCastAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IDButton btnCastAnim = new IDButton(battleAnim, SWT.NONE, true) {
+		IDButton btnCastAnim = new IDButton(battleAnim, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
@@ -238,7 +238,7 @@ public class SkillTab extends DatabaseTab {
 		Text txtIndAnim = new Text(battleAnim, SWT.BORDER | SWT.READ_ONLY);
 		txtIndAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IDButton btnIndAnim = new IDButton(battleAnim, SWT.NONE, true) {
+		IDButton btnIndAnim = new IDButton(battleAnim, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();

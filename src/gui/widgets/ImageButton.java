@@ -17,10 +17,6 @@ public class ImageButton extends IDButton {
 		super(parent, style);
 	}
 	
-	public ImageButton(Composite parent, int style, boolean optional) {
-		super(parent, style, optional);
-	}
-
 	public void setLabel(LImage label) {
 		this.label = label;
 	}

@@ -78,7 +78,7 @@ public class UnitShell extends ObjectShell<Unit> {
 		Text txtChar = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
 		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnChar = new IDButton(compIDs, SWT.NONE, false) {
+		IDButton btnChar = new IDButton(compIDs, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.characters.getTree();
@@ -93,7 +93,7 @@ public class UnitShell extends ObjectShell<Unit> {
 		Text txtBattler = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnBattler = new IDButton(compIDs, SWT.NONE, true) {
+		IDButton btnBattler = new IDButton(compIDs, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();

@@ -1,86 +1,54 @@
 package gui.shell.config;
 
 import gui.Vocab;
+import gui.shell.ObjectShell;
 import gui.widgets.PositionButton;
 
 import org.eclipse.swt.widgets.Shell;
 
 import data.config.Config.Player;
-import lwt.dialog.LObjectShell;
+import lwt.widget.LSpinner;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Composite;
 
-public class PlayerShell extends LObjectShell<Player> {
-	
-	private Text txtStartpos;
-	private PositionButton btnStartPos;
-	private Spinner spnWalk;
-	private Spinner spnDash;
-	private Composite composite;
+public class PlayerShell extends ObjectShell<Player> {
 
 	public PlayerShell(Shell parent) {
 		super(parent);
 		setText(Vocab.instance.PLAYER + " - " + Vocab.instance.PROPERTIES);
-		content.setLayout(new GridLayout(5, false));
+		contentEditor.setLayout(new GridLayout(3, false));
 		
-		Label lblWalkSpeed = new Label(content, SWT.NONE);
+		Label lblWalkSpeed = new Label(contentEditor, SWT.NONE);
 		lblWalkSpeed.setText(Vocab.instance.WALKSPEED);
 		
-		spnWalk = new Spinner(content, SWT.BORDER);
+		LSpinner spnWalk = new LSpinner(contentEditor);
 		spnWalk.setMaximum(999);
-		GridData gd_spnWalk = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_spnWalk.widthHint = 47;
-		spnWalk.setLayoutData(gd_spnWalk);
-
-		Label lblStartPos = new Label(content, SWT.NONE);
-		lblStartPos.setText(Vocab.instance.STARTPOS);
+		spnWalk.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(spnWalk, "walkSpeed");
 		
-		txtStartpos = new Text(content, SWT.BORDER | SWT.READ_ONLY);
-		txtStartpos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		btnStartPos = new PositionButton(content, SWT.NONE);
-		btnStartPos.setText(txtStartpos);
-		
-		Label lblDashSpeed = new Label(content, SWT.NONE);
+		Label lblDashSpeed = new Label(contentEditor, SWT.NONE);
 		lblDashSpeed.setText(Vocab.instance.DASHSPEED);
 		
-		spnDash = new Spinner(content, SWT.BORDER);
+		LSpinner spnDash = new LSpinner(contentEditor);
 		spnDash.setMaximum(999);
-		spnDash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	
-		composite = new Composite(content, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
+		spnDash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(spnDash, "dashSpeed");
 		
-		pack();
-	}
-	
-	public void open(Player initial) {
-		super.open(initial);
-		btnStartPos.setValue(initial.startPos);
-		spnDash.setSelection(initial.dashSpeed);
-		spnWalk.setSelection(initial.walkSpeed);
-	}
+		Label lblStartPos = new Label(contentEditor, SWT.NONE);
+		lblStartPos.setText(Vocab.instance.STARTPOS);
+		
+		Text txtStartpos = new Text(contentEditor, SWT.BORDER | SWT.READ_ONLY);
+		txtStartpos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-	@Override
-	protected Player createResult(Player initial) {
-		if (btnStartPos.getValue().equals(initial.startPos) && 
-				spnDash.getSelection() == initial.dashSpeed &&
-				spnWalk.getSelection() == initial.walkSpeed) {
-			return null;
-		} else {
-			Player player = new Player();
-			player.dashSpeed = spnDash.getSelection();
-			player.walkSpeed = spnWalk.getSelection();
-			player.startPos = btnStartPos.getValue();
-			return player;
-		}
+		PositionButton btnStartPos = new PositionButton(contentEditor, SWT.NONE);
+		btnStartPos.setText(txtStartpos);
+		addControl(btnStartPos, "startPos");
+
+		pack();
 	}
 	
 }

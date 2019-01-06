@@ -55,7 +55,7 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAI = new IDButton(select, SWT.NONE, true) {
+		IDButton btnAI = new IDButton(select, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.scripts.getTree();
@@ -73,7 +73,7 @@ public class BattlerTab extends DatabaseTab {
 		Text txtClass = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnClass = new IDButton(select, SWT.NONE, false) {
+		IDButton btnClass = new IDButton(select, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.classes.getTree();
@@ -91,7 +91,7 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAttack = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAttack = new IDButton(select, SWT.NONE, false) {
+		IDButton btnAttack = new IDButton(select, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.skills.getTree();

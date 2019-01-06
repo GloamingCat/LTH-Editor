@@ -85,7 +85,7 @@ public class FieldShell extends LObjectShell<Prefs> {
 		txtBG = new Text(compBG, SWT.BORDER | SWT.READ_ONLY);
 		txtBG.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		btnBG = new ImageButton(compBG, SWT.NONE, true);
+		btnBG = new ImageButton(compBG, 1);
 		//btnBG.setText(txtBG);
 		
 		Label lblTileset = new Label(grpGeneral, SWT.NONE);

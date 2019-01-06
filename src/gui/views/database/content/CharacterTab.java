@@ -50,7 +50,7 @@ public class CharacterTab extends DatabaseTab {
 		Text txtBattler = new Text(battler, SWT.BORDER | SWT.READ_ONLY);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IDButton btnBattler = new IDButton(battler, SWT.NONE, true) {
+		IDButton btnBattler = new IDButton(battler, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();
@@ -72,7 +72,7 @@ public class CharacterTab extends DatabaseTab {
 		Text txtShadow = new Text(shadow, SWT.BORDER | SWT.READ_ONLY);
 		txtShadow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IDButton btnShadow = new IDButton(shadow, SWT.NONE, true) {
+		IDButton btnShadow = new IDButton(shadow, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();

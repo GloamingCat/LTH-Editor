@@ -47,8 +47,7 @@ public class BuildEditor extends LObjectEditor {
 	
 	@SuppressWarnings("unchecked")
 	private LDataList<String> getList() {
-		Object value = getFieldValue(currentObject, "build");
-		return (LDataList<String>) value;
+		return (LDataList<String>) currentObject;
 	}
 	
 	public void setObject(Object obj) {

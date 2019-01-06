@@ -1,103 +1,71 @@
 package gui.shell.config;
 
 import gui.Vocab;
+import gui.shell.ObjectShell;
 
 import org.eclipse.swt.widgets.Shell;
 
 import data.config.Config.Grid;
-import lwt.dialog.LObjectShell;
+import lwt.widget.LCheckButton;
+import lwt.widget.LSpinner;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Button;
 
-public class GridShell extends LObjectShell<Grid> {
-	
-	private Spinner spnW;
-	private Spinner spnH;
-	private Spinner spnB;
-	private Spinner spnS;
-	private Spinner spnPPH;
-	private Button btnNeighbors;
+public class GridShell extends ObjectShell<Grid> {
 	
 	public GridShell(Shell parent) {
 		super(parent);
 		setMinimumSize(new Point(200, 0));
 		setText(Vocab.instance.GRID + " - " + Vocab.instance.PROPERTIES);
-		content.setLayout(new GridLayout(2, false));
+		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblTileWidth = new Label(content, SWT.NONE);
+		Label lblTileWidth = new Label(contentEditor, SWT.NONE);
 		lblTileWidth.setText(Vocab.instance.TILEWIDTH);
 		
-		spnW = new Spinner(content, SWT.BORDER);
+		LSpinner spnW = new LSpinner(contentEditor, SWT.NONE);
 		spnW.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnW, "tileW");
 		
-		Label lblTileHeight = new Label(content, SWT.NONE);
+		Label lblTileHeight = new Label(contentEditor, SWT.NONE);
 		lblTileHeight.setText(Vocab.instance.TILEHEIGHT);
 		
-		spnH = new Spinner(content, SWT.BORDER);
+		LSpinner spnH = new LSpinner(contentEditor, SWT.NONE);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnH, "tileH");
 		
-		Label lblTileBase = new Label(content, SWT.NONE);
+		Label lblTileBase = new Label(contentEditor, SWT.NONE);
 		lblTileBase.setText(Vocab.instance.TILEBASE);
 		
-		spnB = new Spinner(content, SWT.BORDER);
+		LSpinner spnB = new LSpinner(contentEditor, SWT.NONE);
 		spnB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnB, "tileB");
 		
-		Label lblTileSide = new Label(content, SWT.NONE);
+		Label lblTileSide = new Label(contentEditor, SWT.NONE);
 		lblTileSide.setText(Vocab.instance.TILESIDE);
 		
-		spnS = new Spinner(content, SWT.BORDER);
+		LSpinner spnS = new LSpinner(contentEditor, SWT.NONE);
 		spnS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnS, "tileS");
 		
-		Label lblPixelsheight = new Label(content, SWT.NONE);
+		Label lblPixelsheight = new Label(contentEditor, SWT.NONE);
 		lblPixelsheight.setText(Vocab.instance.PIXELHEIGHT);
 		
-		spnPPH = new Spinner(content, SWT.BORDER);
+		LSpinner spnPPH = new LSpinner(contentEditor, SWT.NONE);
 		spnPPH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnPPH, "pixelsPerHeight");
 		
-		Label lblAllNeighbors = new Label(content, SWT.NONE);
+		Label lblAllNeighbors = new Label(contentEditor, SWT.NONE);
 		lblAllNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
 		
-		btnNeighbors = new Button(content, SWT.CHECK);
+		LCheckButton btnNeighbors = new LCheckButton(contentEditor, SWT.NONE);
 		btnNeighbors.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
+		addControl(btnNeighbors, "allNeighbors");
+		
 		pack();
-	}
-	
-	public void open(Grid initial) {
-		super.open(initial);
-		spnW.setSelection(initial.tileW);
-		spnH.setSelection(initial.tileH);
-		spnB.setSelection(initial.tileB);
-		spnS.setSelection(initial.tileS);
-		spnPPH.setSelection(initial.pixelsPerHeight);
-		btnNeighbors.setSelection(initial.allNeighbors);
-	}
-
-	@Override
-	protected Grid createResult(Grid initial) {
-		if (btnNeighbors.getSelection() == initial.allNeighbors &&
-				spnW.getSelection() == initial.tileW &&
-				spnH.getSelection() == initial.tileH &&
-				spnB.getSelection() == initial.tileB &&
-				spnS.getSelection() == initial.tileS &&
-				spnPPH.getSelection() == initial.pixelsPerHeight) {
-			return null;
-		} else {
-			Grid g = new Grid();
-			g.tileW = spnW.getSelection();
-			g.tileH = spnH.getSelection();
-			g.tileB = spnB.getSelection();
-			g.tileS = spnS.getSelection();
-			g.pixelsPerHeight = spnPPH.getSelection();
-			g.allNeighbors = btnNeighbors.getSelection();
-			return g;
-		}
 	}
 	
 }

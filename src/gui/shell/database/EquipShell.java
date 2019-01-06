@@ -53,7 +53,7 @@ public class EquipShell extends LObjectShell<Equip> {
 		
 		txtItem = new Text(content, SWT.BORDER | SWT.READ_ONLY);
 		txtItem.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnItem = new IDButton(content, SWT.NONE, true) {
+		btnItem = new IDButton(content, 1) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.items.getTree();
 			}

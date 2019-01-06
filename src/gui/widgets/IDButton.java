@@ -7,6 +7,7 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -19,22 +20,18 @@ public abstract class IDButton extends LObjectButton<Integer> {
 	
 	protected Text txtName;
 	protected LImage image;
-	
-	public IDButton(Composite parent, int style) {
-		this(parent, style, false);
-	}
-	
+
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public IDButton(Composite parent, int style, boolean optional) {
-		super(parent, style);
+	public IDButton(Composite parent, int style) {
+		super(parent, SWT.NONE);
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {
-				IDShell shell = new IDShell(parent, optional) {
+				IDShell shell = new IDShell(parent, style != 0) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 
 					}
