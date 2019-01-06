@@ -85,13 +85,12 @@ public class UnitShell extends LObjectShell<Unit> {
 		Text txtChar = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
 		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		btnChar = new IDButton(compIDs, SWT.NONE) {
+		btnChar = new IDButton(compIDs, SWT.NONE, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.characters.getTree();
 			}
 		};
-		btnChar.optional = false;
 		btnChar.setNameText(txtChar);
 		
 		Label lblBattler = new Label(compIDs, SWT.NONE);
@@ -100,13 +99,12 @@ public class UnitShell extends LObjectShell<Unit> {
 		Text txtBattler = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		btnBattler = new IDButton(compIDs, SWT.NONE) {
+		btnBattler = new IDButton(compIDs, SWT.NONE, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();
 			}
 		};
-		btnBattler.optional = true;
 		btnBattler.setNameText(txtBattler);
 
 		pack();

@@ -41,7 +41,7 @@ public class SkillNodeEditor extends LObjectEditor {
 		Text txtID = new Text(id, SWT.BORDER | SWT.READ_ONLY);
 		txtID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnID = new IDButton(id, SWT.NONE) {
+		IDButton btnID = new IDButton(id, SWT.NONE, false) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.skills.getTree();
 			}

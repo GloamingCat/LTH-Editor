@@ -55,13 +55,12 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAI = new IDButton(select, SWT.NONE) {
+		IDButton btnAI = new IDButton(select, SWT.NONE, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.scripts.getTree();
 			}
 		};
-		btnAI.optional = false;
 		btnAI.setNameText(txtAI);
 		addControl(btnAI, "scriptID");
 		
@@ -74,13 +73,12 @@ public class BattlerTab extends DatabaseTab {
 		Text txtClass = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnClass = new IDButton(select, SWT.NONE) {
+		IDButton btnClass = new IDButton(select, SWT.NONE, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.classes.getTree();
 			}
 		};
-		btnClass.optional = true;
 		btnClass.setNameText(txtClass);
 		addControl(btnClass, "classID");
 		
@@ -93,13 +91,12 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAttack = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAttack = new IDButton(select, SWT.NONE) {
+		IDButton btnAttack = new IDButton(select, SWT.NONE, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.skills.getTree();
 			}
 		};
-		btnAttack.optional = true;
 		btnAttack.setNameText(txtAttack);
 		addControl(btnAttack, "attackID");
 		

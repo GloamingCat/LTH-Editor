@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Text;
 
 import com.google.gson.Gson;
 
-import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LControlView;
 import lwt.editor.LEditor;
@@ -53,7 +52,7 @@ public abstract class DatabaseTab extends LView {
 		
 		setLayout(new FillLayout());
 		
-		actionStack = new LActionStack(this);
+		createActionStack();
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
@@ -64,7 +63,6 @@ public abstract class DatabaseTab extends LView {
 			}
 			@Override
 			public Type getType() {
-				System.out.println(getSerializer().getDataType());
 				return getSerializer().getDataType();
 			}
 		};

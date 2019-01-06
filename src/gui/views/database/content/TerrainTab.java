@@ -67,12 +67,11 @@ public class TerrainTab extends DatabaseTab {
 		Text txtStatus = new Text(status, SWT.BORDER | SWT.READ_ONLY);
 		txtStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnStatus = new IDButton(status, SWT.NONE) {
+		IDButton btnStatus = new IDButton(status, SWT.NONE, true) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.status.getTree();
 			}
 		};
-		btnStatus.optional = true;
 		btnStatus.setNameText(txtStatus);
 		addControl(btnStatus, "statusID");
 		
@@ -135,12 +134,11 @@ public class TerrainTab extends DatabaseTab {
 		imgGraphics.setHorizontalAlign(SWT.CENTER);
 		imgGraphics.setVerticalAlign(SWT.CENTER);
 		
-		IDButton btnAnim = new IDButton(grpGraphics, SWT.NONE) {
+		IDButton btnAnim = new IDButton(grpGraphics, SWT.NONE, true) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
 			}
 		};
-		btnAnim.optional = true;
 		addControl(btnAnim, "animID");
 		btnAnim.setImage(imgGraphics);
 		

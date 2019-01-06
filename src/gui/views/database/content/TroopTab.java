@@ -68,13 +68,12 @@ public class TroopTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAI = new IDButton(select, SWT.NONE) {
+		IDButton btnAI = new IDButton(select, SWT.NONE, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.scripts.getTree();
 			}
 		};
-		btnAI.optional = true;
 		btnAI.setNameText(txtAI);
 		addControl(btnAI, "scriptID");
 		

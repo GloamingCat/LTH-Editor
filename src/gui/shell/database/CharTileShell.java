@@ -1,11 +1,11 @@
 package gui.shell.database;
 
 import gui.Vocab;
+import gui.shell.ObjectShell;
 
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Spinner;
 
-import lwt.dialog.LObjectShell;
+import lwt.widget.LSpinner;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
@@ -13,13 +13,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import data.GameCharacter.Tile;
+
 import org.eclipse.swt.graphics.Point;
 
-public class CharTileShell extends LObjectShell<Tile> {
-	
-	private Spinner spnX;
-	private Spinner spnY;
-	private Spinner spnHeight;
+public class CharTileShell extends ObjectShell<Tile> {
 	
 	public CharTileShell(Shell parent) {
 		super(parent);
@@ -28,43 +25,30 @@ public class CharTileShell extends LObjectShell<Tile> {
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
-		content.setLayout(gridLayout);
+		contentEditor.setLayout(gridLayout);
 
-		Label lblX = new Label(content, SWT.NONE);
+		Label lblX = new Label(contentEditor, SWT.NONE);
 		lblX.setText(Vocab.instance.OFFSETX);
 		
-		spnX = new Spinner(content, SWT.BORDER);
+		LSpinner spnX = new LSpinner(contentEditor, SWT.BORDER);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnX, "dx");
 		
-		Label lblY = new Label(content, SWT.NONE);
+		Label lblY = new Label(contentEditor, SWT.NONE);
 		lblY.setText(Vocab.instance.OFFSETY);
 		
-		spnY = new Spinner(content, SWT.BORDER);
+		LSpinner spnY = new LSpinner(contentEditor, SWT.BORDER);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnY, "dy");
 		
-		Label lblHeight = new Label(content, SWT.NONE);
+		Label lblHeight = new Label(contentEditor, SWT.NONE);
 		lblHeight.setText(Vocab.instance.HEIGHT);
 		
-		spnHeight = new Spinner(content, SWT.BORDER);
+		LSpinner spnHeight = new LSpinner(contentEditor, SWT.BORDER);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnHeight, "height");
 
 		pack();
-	}
-
-	public void open(Tile initial) {
-		super.open(initial);
-		spnX.setSelection(initial.dx);
-		spnY.setSelection(initial.dy);
-		spnHeight.setSelection(initial.height);
-	}
-
-	@Override
-	protected Tile createResult(Tile initial) {
-		Tile t = new Tile();
-		t.dx = spnX.getSelection();
-		t.dy = spnY.getSelection();
-		t.height = spnHeight.getSelection();
-		return t;
 	}
 	
 }

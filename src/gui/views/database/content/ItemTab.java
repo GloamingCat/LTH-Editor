@@ -182,12 +182,11 @@ public class ItemTab extends DatabaseTab {
 		Text txtSkill = new Text(grpUse, SWT.BORDER | SWT.READ_ONLY);
 		txtSkill.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		IDButton btnSkill = new IDButton(grpUse, SWT.NONE) {
+		IDButton btnSkill = new IDButton(grpUse, SWT.NONE, true) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.skills.getTree();
 			}
 		};
-		btnSkill.optional = true;
 		btnSkill.setNameText(txtSkill);
 		addControl(btnSkill, "skillID");
 		
