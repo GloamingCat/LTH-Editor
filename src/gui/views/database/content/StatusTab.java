@@ -79,8 +79,7 @@ public class StatusTab extends DatabaseTab {
 		imgIcon.setVerticalAlign(SWT.CENTER);
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		IconButton btnSelectIcon = new IconButton(compositeIcon, SWT.NONE);
-		btnSelectIcon.optional = false;
+		IconButton btnSelectIcon = new IconButton(compositeIcon, 1);
 		btnSelectIcon.setImage(imgIcon);
 		addControl(btnSelectIcon, "icon");
 		

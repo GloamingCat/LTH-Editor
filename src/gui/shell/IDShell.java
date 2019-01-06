@@ -15,7 +15,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 	
 	protected LNodeSelector<Object> tree;
 	
-	public IDShell(Shell parent, boolean optional) {
+	public IDShell(Shell parent, int style) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -23,7 +23,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 		setMinimumSize(new Point(350, 500));
 		
 		content.setLayout(new FillLayout());
-		tree = new LNodeSelector<>(content, SWT.NONE, optional);
+		tree = new LNodeSelector<>(content, style);
 		tree.setCollection(getTree());
 
 		pack();

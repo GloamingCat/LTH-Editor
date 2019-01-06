@@ -5,6 +5,7 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -18,14 +19,13 @@ public class IconButton extends LObjectButton<Icon> {
 	
 	private LImage image;
 	private Text text;
-	public boolean optional = false;
 	
 	public IconButton(Composite parent, int style) {
-		super(parent, style);
+		super(parent, SWT.NONE);
 		setShellFactory(new LShellFactory<Icon>() {
 			@Override
 			public IconShell createShell(Shell parent) {
-				return new IconShell(parent, optional);
+				return new IconShell(parent, style);
 			}
 		});
 	}

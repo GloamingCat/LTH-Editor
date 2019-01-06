@@ -112,7 +112,7 @@ public class CharacterTab extends DatabaseTab {
 		grpAnimations.setLayout(new GridLayout(2, false));
 		
 		NodeList lstAnim = new NodeList(grpAnimations, SWT.NONE) {
-			protected LDataTree<Object> getDataArray() { 
+			protected LDataTree<Object> getDataTree() { 
 				return Project.current.animations.getTree(); 
 			}
 		};

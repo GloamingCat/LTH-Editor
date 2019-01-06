@@ -31,7 +31,7 @@ public abstract class IDButton extends LObjectButton<Integer> {
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {
-				IDShell shell = new IDShell(parent, style != 0) {
+				IDShell shell = new IDShell(parent, style) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 
 					}

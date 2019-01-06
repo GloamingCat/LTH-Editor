@@ -10,7 +10,7 @@ import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 
-public class NodeList extends SimpleEditableList<Node> {
+public abstract class NodeList extends SimpleEditableList<Node> {
 
 	public NodeList(Composite parent, int style) {
 		super(parent, style);
@@ -22,13 +22,13 @@ public class NodeList extends SimpleEditableList<Node> {
 					org.eclipse.swt.widgets.Shell parent) {
 				return new NodeShell(parent) {
 					public LDataTree<Object> getTree() {
-						return getDataArray();
+						return getDataTree();
 					}
 				};
 			}
 		});
 	}
 	
-	protected LDataTree<Object> getDataArray() { return null; }
+	protected abstract LDataTree<Object> getDataTree();
 
 }

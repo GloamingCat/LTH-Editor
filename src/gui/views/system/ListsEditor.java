@@ -81,6 +81,8 @@ public class ListsEditor extends LObjectEditor {
 		lstEquipTypes = new EquipTypeList(grpEquipTypes, SWT.NONE);
 		addChild(lstEquipTypes, "equipTypes");
 		
+		// Plug-ins
+		
 		Group grpPlugins = new Group(bottom, SWT.NONE);
 		grpPlugins.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpPlugins.setText(Vocab.instance.PLUGINS);
@@ -94,7 +96,6 @@ public class ListsEditor extends LObjectEditor {
 		lstEquipTypes.setObject(Project.current.equipTypes.getList());
 		lstConstants.setObject(Project.current.constants.getList());
 		lstRegions.setObject(Project.current.regions.getList());
-		
 		//lstPlugins.setObject(Project.current.plugins.getList());
 	}
 	

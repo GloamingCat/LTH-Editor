@@ -74,8 +74,7 @@ public class ItemTab extends DatabaseTab {
 		imgIcon.setVerticalAlign(SWT.CENTER);
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		IconButton btnGraphics = new IconButton(compositeIcon, SWT.NONE);
-		btnGraphics.optional = false;
+		IconButton btnGraphics = new IconButton(compositeIcon, 0);
 		btnGraphics.setImage(imgIcon);
 		addControl(btnGraphics, "icon");
 		

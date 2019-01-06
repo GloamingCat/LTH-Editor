@@ -93,8 +93,7 @@ public class SkillTab extends DatabaseTab {
 		imgIcon.setVerticalAlign(SWT.CENTER);
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		IconButton btnGraphics = new IconButton(compositeIcon, SWT.NONE);
-		btnGraphics.optional = false;
+		IconButton btnGraphics = new IconButton(compositeIcon, 1);
 		btnGraphics.setImage(imgIcon);
 		addControl(btnGraphics, "icon");
 		

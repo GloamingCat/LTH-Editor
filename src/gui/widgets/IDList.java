@@ -21,7 +21,7 @@ public abstract class IDList extends SimpleEditableList<Integer> {
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(Shell parent) {
-				IDShell shell = new IDShell(parent, false) {
+				IDShell shell = new IDShell(parent, SWT.NONE) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}

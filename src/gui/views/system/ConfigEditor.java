@@ -1,6 +1,8 @@
 package gui.views.system;
 
 import gui.Vocab;
+import gui.views.database.subcontent.NodeList;
+import gui.views.database.subcontent.PortraitList;
 import gui.widgets.IDButton;
 import gui.widgets.PositionButton;
 import lwt.action.LActionStack;
@@ -21,6 +23,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import data.config.Config.AnimNode;
+import data.config.Config.IconNode;
 import project.Project;
 
 public class ConfigEditor extends LView {
@@ -37,10 +41,10 @@ public class ConfigEditor extends LView {
 
 		actionStack = new LActionStack(this);
 		
-		setLayout(new GridLayout(2, true));
+		setLayout(new GridLayout(3, false));
 		
 		editor = new LObjectEditor(this, SWT.NONE);
-		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		editor.setLayout(new GridLayout(2, false));
 		addChild(editor);
 		
@@ -52,13 +56,17 @@ public class ConfigEditor extends LView {
 		gl_left.marginHeight = 0;
 		left.setLayout(gl_left);
 		
+		Composite middle = new Composite(this, SWT.NONE);
+		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout gl_middle = new GridLayout(1, false);
+		gl_middle.verticalSpacing = 0;
+		gl_middle.marginHeight = 0;
+		gl_middle.marginWidth = 0;
+		middle.setLayout(gl_middle);
+		
 		Composite right = new Composite(this, SWT.NONE);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.verticalSpacing = 0;
-		gl_right.marginHeight = 0;
-		gl_right.marginWidth = 0;
-		right.setLayout(gl_right);
+		right.setLayout(new FillLayout(SWT.VERTICAL));
 		
 		// Name
 		
@@ -156,7 +164,7 @@ public class ConfigEditor extends LView {
 		
 		// Player
 		
-		Group grpPlayer = new Group(right, SWT.NONE);
+		Group grpPlayer = new Group(middle, SWT.NONE);
 		grpPlayer.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpPlayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPlayer.setText(Vocab.instance.PLAYER);
@@ -264,7 +272,7 @@ public class ConfigEditor extends LView {
 		
 		// Battle
 		
-		Group grpBattle = new Group(right, SWT.NONE);
+		Group grpBattle = new Group(middle, SWT.NONE);
 		grpBattle.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpBattle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpBattle.setText(Vocab.instance.BATTLE);
@@ -311,7 +319,7 @@ public class ConfigEditor extends LView {
 
 		// Troop
 		
-		Group grpTroop = new Group(right, SWT.NONE);
+		Group grpTroop = new Group(middle, SWT.NONE);
 		grpTroop.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTroop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTroop.setText(Vocab.instance.TROOP);
@@ -355,6 +363,32 @@ public class ConfigEditor extends LView {
 		LSpinner spnWidth = new LSpinner(troopEditor, SWT.NONE);
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		troopEditor.addControl(spnWidth, "width");
+		
+		// Animations
+		
+		Group grpAnimations = new Group(right, SWT.NONE);
+		grpAnimations.setText(Vocab.instance.ANIMATIONS);
+		grpAnimations.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		NodeList lstAnimations = new NodeList(grpAnimations, SWT.NONE) {
+			@Override
+			protected LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		lstAnimations.type = AnimNode.class;
+		lstAnimations.setIncludeID(false);
+		editor.addChild(lstAnimations, "animations");
+		
+		// Icons
+		
+		Group grpIcons = new Group(right, SWT.NONE);
+		grpIcons.setText(Vocab.instance.ICONS);
+		grpIcons.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		PortraitList lstIcons = new PortraitList(grpIcons, SWT.NONE);
+		lstIcons.type = IconNode.class;
+		editor.addChild(lstIcons, "icons");
 		
 	}
 	

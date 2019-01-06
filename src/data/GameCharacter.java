@@ -35,7 +35,7 @@ public class GameCharacter extends Data {
 	
 	public static class Portrait extends Icon {
 		
-		public String name = "New portrait";
+		public String name = "New";
 		
 		public String toString() {
 			return name;

@@ -1,24 +1,38 @@
 package data.config;
 
-import data.subcontent.Audio;
-import data.subcontent.Icon;
+import project.Project;
+import lwt.dataestructure.LDataList;
+import data.Animation;
+import data.GameCharacter.Portrait;
+import data.subcontent.Node;
 import data.subcontent.Position;
 
 public class Config {
 	
 	// General
 	public String name = "New Project";
-	
 	public Player player = new Player();
 	public Battle battle = new Battle();
 	public Troop troop = new Troop();
 	public Grid grid = new Grid();
-	
 	public Screen screen = new Screen();
 	
-	public Animations animations = new Animations();
-	public Icons icons = new Icons();
-	public Sounds sounds = new Sounds();
+	public static class AnimNode extends Node {
+		public String toString() {
+			Animation anim = (Animation) Project.current.animations.getTree().get(id);
+			return name + ": " + (anim == null ? "NULL" : anim.toString());
+		}
+	}
+	
+	public static class IconNode extends Portrait {
+		public String toString() {
+			Animation anim = (Animation) Project.current.animations.getTree().get(id);
+			return name + ": " + (anim == null ? "NULL" : anim.toString());
+		}
+	}
+	
+	public LDataList<AnimNode> animations = new LDataList<>();
+	public LDataList<IconNode> icons = new LDataList<>();
 	
 	// System
 	
@@ -64,57 +78,6 @@ public class Config {
 		public int scaleType = 1;
 		public int fpsLimit = 120;
 		public int coverID = 211;
-	}
-	
-	// Graphics
-	
-	public static class Animations {
-		public int windowSkinID = 20;
-		public int frameID = 21;
-		public int cursorID = 22;
-		public int highlightID = 23;
-		public int battleCursorID = 24;
-		public int tileCursorID = 25;
-		public int tileID = 26;
-		public int gaugeFrameID = 28;
-		public int gaugeBarID = 29;
-		public int arrowID = 210;
-	}
-	
-	public static class Icons {
-		public Icon gold = new Icon();
-		public Icon location = new Icon();
-		public Icon time = new Icon();
-	}
-	
-	// Audio
-	
-	public static class Sounds {
-		// GUI
-		public Audio buttonConfirm = new Audio();
-		public Audio buttonCancel = new Audio();
-		public Audio buttonError = new Audio();
-		public Audio buttonSelect = new Audio();
-		public Audio text = new Audio();
-		public Audio menu = new Audio();
-		public Audio equip = new Audio();
-		public Audio unequip = new Audio();
-		public Audio buy = new Audio();
-		public Audio sell = new Audio();
-		public Audio save = new Audio();
-		public Audio load = new Audio();
-		public Audio exp = new Audio();
-		public Audio levelup = new Audio();
-		// Battle
-		public Audio allyKO = new Audio();
-		public Audio enemyKO = new Audio();
-		public Audio battleIntro = new Audio();
-		// Themes
-		public Audio titleTheme = new Audio();
-		public Audio battleTheme = new Audio();
-		public Audio victoryTheme = new Audio();
-		public Audio gameoverTheme = new Audio();
-		
 	}
 	
 }

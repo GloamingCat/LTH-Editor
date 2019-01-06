@@ -35,7 +35,6 @@ public class Project implements LSerializer {
 	
 	public FieldTreeSerializer fieldTree;
 	
-	
 	private LSerializer[] allData;
 	
 	public static Project current = null;

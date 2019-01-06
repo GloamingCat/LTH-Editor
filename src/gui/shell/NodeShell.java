@@ -20,7 +20,7 @@ public abstract class NodeShell extends ObjectShell<Node> {
 
 	public NodeShell(Shell parent) {
 		super(parent);
-		GridData gridData = (GridData) contentEditor.getLayoutData();
+		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
 		setMinimumSize(new Point(400, 300));
@@ -37,11 +37,12 @@ public abstract class NodeShell extends ObjectShell<Node> {
 		Label lblName = new Label(name, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
-		LText txtName = new LText(name, SWT.BORDER);
+		LText txtName = new LText(name, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addControl(txtName, "name");
 		
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, SWT.NONE, false);
+		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, SWT.NONE);
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tree.setCollection(getTree());
 		addControl(tree, "id");
 		

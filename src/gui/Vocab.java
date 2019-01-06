@@ -56,8 +56,7 @@ public class Vocab {
 	
 	// Config
 	public String PROJECTNAME = "Project Name";
-	public String SOUNDS = "Sounds";
-	public String FONTS = "Fonts";
+	public String ICONS = "Icons";
 	public String LISTS = "Lists";
 	public String REGIONS = "Regions";
 	public String EQUIPTYPES = "Equip Types";

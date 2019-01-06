@@ -32,7 +32,7 @@ public class IconShell extends LObjectShell<Icon> {
 	protected int col, row;
 	private ScrolledComposite scroll;
 	
-	public IconShell(Shell parent, boolean optional) {
+	public IconShell(Shell parent, int style) {
 		super(parent);
 		setSize(600, 400);
 		GridData gridData = (GridData) content.getLayoutData();
@@ -44,7 +44,7 @@ public class IconShell extends LObjectShell<Icon> {
 		
 		SashForm sashForm = new SashForm(content, SWT.HORIZONTAL);
 		
-		tree = new LNodeSelector<Object>(sashForm, SWT.NONE, optional);
+		tree = new LNodeSelector<Object>(sashForm, style);
 		tree.setCollection(getTree());
 		tree.addModifyListener(new LControlListener<Integer>() {
 			@Override
@@ -67,7 +67,7 @@ public class IconShell extends LObjectShell<Icon> {
 				if (anim != null && anim.cols > 0 && anim.rows > 0) {
 					int w = anim.quad.width / anim.cols;
 					int h = anim.quad.height / anim.rows;
-					e.gc.drawRectangle(w * col, h * row, w, h);
+					e.gc.drawRectangle(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
 				}
 			}
 		});
@@ -76,8 +76,8 @@ public class IconShell extends LObjectShell<Icon> {
 			public void mouseUp(MouseEvent arg0) {
 				Animation anim = (Animation) tree.getSelectedObject();
 				if (anim != null) {
-					col = (int) arg0.x / (anim.quad.width / anim.cols);
-					row = (int) arg0.y / (anim.quad.height / anim.rows);
+					col = (int) (arg0.x - anim.quad.x) / (anim.quad.width / anim.cols);
+					row = (int) (arg0.y - anim.quad.y) / (anim.quad.height / anim.rows);
 					image.redraw();
 				}
 			}

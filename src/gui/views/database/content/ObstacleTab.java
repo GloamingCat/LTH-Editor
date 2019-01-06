@@ -47,9 +47,8 @@ public class ObstacleTab extends DatabaseTab {
 		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
 		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		IconButton btnGraphics = new IconButton(grpGraphics, SWT.NONE);
+		IconButton btnGraphics = new IconButton(grpGraphics, 0);
 		btnGraphics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		btnGraphics.optional = false;
 		btnGraphics.setImage(imgGraphics);
 		addControl(btnGraphics, "image");
 		
