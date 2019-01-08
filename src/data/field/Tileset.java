@@ -1,7 +1,8 @@
-package data;
+package data.field;
 
 import org.eclipse.swt.graphics.Image;
 
+import data.Data;
 import data.subcontent.Tag;
 import gui.helper.TilePainter;
 import lwt.dataestructure.LDataList;
@@ -30,27 +31,6 @@ public class Tileset extends Data {
 		@Override
 		public Image toImage() {
 			return TilePainter.getObstacleTile(id);
-		}
-	}
-	
-	public static class CharTile extends BasicTile implements LGraphical {
-		public int animID = 0;
-		public int direction = 315;
-		public Script startScript = new Script();
-		public Script collisionScript = new Script();
-		public Script interactScript = new Script();
-		public CharTile() {}
-		public CharTile(int id, int animID, int direction) {
-			this.id = id;
-			this.animID = animID;
-			this.direction = direction;
-		}
-		@Override
-		public Image toImage() {
-			return TilePainter.getCharacterTile(id, animID, direction);
-		}
-		public String getKey() {
-			return id + "," + animID + "," + direction;
 		}
 	}
 	

@@ -12,8 +12,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
-import data.Field;
-import data.subcontent.Layer;
+import data.field.Field;
+import data.field.Layer;
 
 public class FieldCanvas extends LView {
 
@@ -43,8 +43,9 @@ public class FieldCanvas extends LView {
 		Image img = new Image(egc.getDevice(), getSize().x, getSize().y); 
 		GC gc = new GC(img);
 		gc.setBackground(egc.getBackground());
-		painter.paintBackground(field, x0, y0, maxHeight(), gc);
-
+		painter.paintBackground(field, field.prefs.background, x0, y0, gc);
+		painter.paintBackground(field, field.prefs.parallax, x0, y0, gc);
+		
 		for(int k = field.sizeX - 1; k >= 0; k--) {
 			for(int i = k, j = 0; i < field.sizeX && j < field.sizeY; i++, j++) {
 				drawTile(gc, i, j);
@@ -76,7 +77,7 @@ public class FieldCanvas extends LView {
 			tileImages[x][y].dispose();
 		
 		int imgW = FieldHelper.config.grid.tileW * 3;
-		int imgH = FieldHelper.config.grid.tileH * (maxHeight() + 6);
+		int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
 		
 		Point[] shift = FieldHelper.math.neighborShift;
 		
@@ -103,7 +104,7 @@ public class FieldCanvas extends LView {
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
 			int imgW = FieldHelper.config.grid.tileW * 3;
-			int imgH = FieldHelper.config.grid.tileH * (maxHeight() + 6);
+			int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
 					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
@@ -138,7 +139,8 @@ public class FieldCanvas extends LView {
 			y0 = 0;
 		} else {
 			pixelSize = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
-			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + FieldHelper.config.grid.pixelsPerHeight * maxHeight());
+			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
+					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
 		setSize(Math.round((pixelSize.x + x0*2) * scale), Math.round((pixelSize.y + y0 + x0*2) * scale));
 		redraw();
@@ -169,18 +171,6 @@ public class FieldCanvas extends LView {
 			updateAllTileImages();
 			rescale(scale);
 		}
-	}
-	
-	// -------------------------------------------------------------------------------------
-	// Auxiliary
-	// -------------------------------------------------------------------------------------
-	
-	public int maxHeight() {
-		int maxHeight = 0;
-		for(Layer l : field.layers) {
-			maxHeight = Math.max(maxHeight, l.info.height);
-		}
-		return maxHeight;
 	}
 	
 }

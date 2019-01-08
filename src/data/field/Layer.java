@@ -1,12 +1,12 @@
-package data.subcontent;
+package data.field;
 
+import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
 public class Layer {
 	
 	public static class Info {
 		public String name = "New Layer";
-		public int type = 0;
 		public int height = 0;
 		public LDataList<Tag> tags = new LDataList<>();
 	}
@@ -37,7 +37,6 @@ public class Layer {
 		}
 		info.name = original.info.name;
 		info.height = original.info.height;
-		info.type = original.info.type;
 		info.tags = new LDataList<Tag>(original.info.tags);
 	}
 

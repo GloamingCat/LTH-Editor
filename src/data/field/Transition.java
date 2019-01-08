@@ -1,4 +1,6 @@
-package data.subcontent;
+package data.field;
+
+import data.subcontent.Position;
 
 public class Transition {
 

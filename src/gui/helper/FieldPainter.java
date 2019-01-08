@@ -12,14 +12,15 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
-import data.Field;
 import data.GameCharacter;
 import data.Obstacle;
 import data.Terrain;
-import data.Tileset.CharTile;
 import data.config.Region;
 import data.config.Config.Grid;
-import data.subcontent.Layer;
+import data.field.CharTile;
+import data.field.Field;
+import data.field.Layer;
+import data.subcontent.Quad;
 import project.Project;
 
 public class FieldPainter {
@@ -28,7 +29,6 @@ public class FieldPainter {
 	private static HashMap<Integer, Image> obstacleCache = new HashMap<>();
 	private static HashMap<String, Image> characterCache = new HashMap<>();
 	private static HashMap<Integer, Image> regionCache = new HashMap<>();
-	private static HashMap<Integer, Image> typeCache = new HashMap<>();
 	private static HashMap<Integer, Image> partyCache = new HashMap<>();
 	
 	public float scale = 1;
@@ -52,14 +52,10 @@ public class FieldPainter {
 		for(Image img : regionCache.values()) {
 			img.dispose();
 		}
-		for(Image img : typeCache.values()) {
-			img.dispose();
-		}
 		terrainCache.clear();
 		obstacleCache.clear();
 		characterCache.clear();
 		regionCache.clear();
-		typeCache.clear();
 	}
 	
 	public int[] getTilePolygon(int x0, int y0) {
@@ -107,7 +103,7 @@ public class FieldPainter {
 			if (anim != null) {
 				Image img = terrainCache.get(id);
 				if (img == null) {
-					img = anim.getImage();
+					img = anim.quad.getImage();
 					terrainCache.put(id, img);
 				}
 				int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
@@ -146,17 +142,19 @@ public class FieldPainter {
 					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 					y0 - img.getBounds().height + obj.transform.offsetY, 
 					rect.width, rect.height);
+			// TODO: ramp
+			
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void paintCharacter(CharTile tile, int x, int y, GC gc, int x0, int y0) {
+	public void paintCharacter(CharTile tile, GC gc, int x0, int y0) {
 		try {
 			String key = tile.getKey();
 			
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.id);
-			int animID = c.animations.get(tile.animID).id;
+			int animID = c.findAnimation(tile.anim);
 			Animation anim = (Animation) Project.current.animations.getTree().get(animID);
 			
 			Image img = characterCache.get(key);
@@ -223,62 +221,73 @@ public class FieldPainter {
 	    int pph = FieldHelper.config.grid.pixelsPerHeight;
 	    
 		GC gc = new GC(img);
-		for(Layer layer : field.layers) {
-			if (layer.visible) {
-				switch(layer.info.type) {
-				case 0:
-					// Terrain Layer
-					if (layer.grid[x][y] >= 0) {
-						paintTerrain(layer, x, y, gc, x0, y0 - layer.info.height * pph);
-					}
-					if (showGrid && layer == currentLayer) {
-						paintEdges(gc, x0, y0 - layer.info.height * pph);
-					}
-					break;
-				case 1:
-					// Obstacle Layer
-					if (showGrid && layer == currentLayer) {
-						paintEdges(gc, x0, y0 - layer.info.height * pph);
-						if (layer.grid[x][y] >= 0) {
-							paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, true);
-						}
-					} else {
-						if (layer.grid[x][y] >= 0) {
-							paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, false);
-						}
-					}
-					break;
-				default:
-					if (layer == currentLayer) {
-						if (layer.grid[x][y] >= 0) {
-							if (layer.info.type == 2) {
-								// Region Layer
-								paintRegion(layer, x, y, 
-										gc, x0, y0 - layer.info.height * pph);
-							} else { 
-								// Party Layer
-								paintParty(layer, x, y, 
-										gc, x0, y0 - layer.info.height * pph);
-							}
-						}
-						if (showGrid) {
-							paintEdges(gc, x0, y0 - layer.info.height * pph);
-						}
-					}
-					break;
+		// Terrain Layers
+		for (Layer layer : field.layers.terrain) {
+			if (!layer.visible)
+				continue;
+			if (layer.grid[x][y] >= 0) {
+				paintTerrain(layer, x, y, gc, x0, y0 - layer.info.height * pph);
+			}
+			if (showGrid && layer == currentLayer) {
+				paintEdges(gc, x0, y0 - layer.info.height * pph);
+			}
+		}
+		// Obstacle Layers
+		for (Layer layer : field.layers.obstacle) {
+			if (!layer.visible)
+				continue;
+			if (showGrid && layer == currentLayer) {
+				paintEdges(gc, x0, y0 - layer.info.height * pph);
+				if (layer.grid[x][y] >= 0) {
+					paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, true);
+				}
+			} else {
+				if (layer.grid[x][y] >= 0) {
+					paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, false);
 				}
 			}
 		}
-		// TODO: paint characters
+		// Region Layers
+		for (Layer layer : field.layers.region) {
+			if (!layer.visible || layer != currentLayer)
+				continue;
+			paintRegion(layer, x, y, 
+					gc, x0, y0 - layer.info.height * pph);
+			if (showGrid) {
+				paintEdges(gc, x0, y0 - layer.info.height * pph);
+			}
+			break;
+		}
+		// Party Layers
+		for (Layer layer : field.layers.party) {
+			if (!layer.visible || layer != currentLayer)
+				continue;
+			paintParty(layer, x, y, 
+					gc, x0, y0 - layer.info.height * pph);
+			if (showGrid) {
+				paintEdges(gc, x0, y0 - layer.info.height * pph);
+			}
+			break;
+		}
+		// Characters
+		for (CharTile tile : field.characters) {
+			if (tile.x != x || tile.y != y)
+				continue;
+			paintCharacter(tile, gc, x0, y0 - tile.h * pph);
+		}
 		gc.dispose();
 		return img;
 	}
 	
-	public void paintBackground(Field field, int x0, int y0, int maxHeight, GC gc) {
-		if (field.prefs.background.isEmpty() == false) {
-			Image bg = SWTResourceManager.getImage(Project.current.imagePath() + field.prefs.background);
-			Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, maxHeight);
-			gc.drawImage(bg, x0 + center.x - bg.getBounds().width / 2, y0 + center.y - bg.getBounds().height / 2);
+	public void paintBackground(Field field, Quad quad, int x0, int y0, GC gc) {
+		if (quad.path.isEmpty() == false) {
+			Image bg = quad.getImage();
+			Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
+			x0 += center.x - quad.width / 2;
+			y0 += center.y - quad.height / 2;
+			gc.drawImage(bg, 
+					quad.x, quad.y, quad.width, quad.height,
+					x0, y0, quad.width, quad.height);
 		}
 	}
 

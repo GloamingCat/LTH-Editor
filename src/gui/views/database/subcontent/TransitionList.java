@@ -6,7 +6,7 @@ import gui.widgets.SimpleEditableList;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import data.subcontent.Transition;
+import data.field.Transition;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 

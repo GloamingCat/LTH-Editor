@@ -90,7 +90,7 @@ public class IconShell extends LObjectShell<Icon> {
 	private void setImage(Animation anim) {
 		if (anim == null)
 			return;
-		Image img = anim.getImage();
+		Image img = anim.quad.getImage();
 		image.setImage(img);
 		scroll.setMinSize(anim.quad.getSize());
 		image.redraw();

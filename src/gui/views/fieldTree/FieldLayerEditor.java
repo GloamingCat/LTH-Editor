@@ -21,11 +21,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
-import data.Field;
-import data.Tileset;
-import data.Tileset.*;
-import data.subcontent.Layer;
-import data.subcontent.Layer.Info;
+import data.field.CharTile;
+import data.field.Field;
+import data.field.Layer;
+import data.field.Tileset;
+import data.field.Layer.Info;
+import data.field.Tileset.*;
 
 public class FieldLayerEditor extends LEditor {
 
@@ -57,7 +58,7 @@ public class FieldLayerEditor extends LEditor {
 		layerList = new LListEditor<Layer, Layer.Info>(form, SWT.NONE) {
 			@Override
 			protected LDataList<Layer> getDataCollection() {
-				return field == null ? null : field.layers;
+				return field == null ? null : field.layers.terrain;
 			}
 			@Override
 			protected Layer createNewData() {
@@ -69,11 +70,11 @@ public class FieldLayerEditor extends LEditor {
 			}
 			@Override
 			protected Info getEditableData(LPath path) {
-				return field.layers.get(path.index).info;
+				return field.layers.terrain.get(path.index).info;
 			}
 			@Override
 			protected void setEditableData(LPath path, Info newData) {
-				field.layers.get(path.index).info = newData;
+				field.layers.terrain.get(path.index).info = newData;
 			}
 		};
 		layerList.setShellFactory(new LShellFactory<Info>() {
@@ -95,7 +96,8 @@ public class FieldLayerEditor extends LEditor {
 				Layer l = (Layer) event.data;
 				selectLayer(l);
 				if (field != null && event.path != null) {
-					Project.current.fieldTree.getData().setLastLayer(field.id, event.path.index);
+					Project.current.fieldTree.getData().
+					 	setLastTerrainLayer(field.id, event.path.index);
 				}
 			}
 		});
@@ -138,15 +140,14 @@ public class FieldLayerEditor extends LEditor {
 	public void setObject(Object object) {
 		if (object != null) {
 			field = (Field) object;
-			Tileset tileset = (Tileset) Project.current.tilesets.getTree().get(field.prefs.tilesetID);
 			LDataList<PartyTile> parties = Tileset.createPartyArray(field.prefs.partyCount);
-			lstTerrains.setDataCollection(tileset.terrains);
-			lstObstacles.setDataCollection(tileset.obstacles);
-			lstCharacters.setDataCollection(tileset.characters);
-			lstRegions.setDataCollection(tileset.regions);
+			//lstTerrains.setDataCollection(Project.current.terrains.getTree());
+			//lstObstacles.setDataCollection(tileset.obstacles);
+			//lstCharacters.setDataCollection(tileset.characters);
+			//lstRegions.setDataCollection(tileset.regions);
 			lstParties.setDataCollection(parties);
-			layerList.setDataCollection(field.layers);
-			int layer = Project.current.fieldTree.getData().getLastLayer(field.id);
+			layerList.setDataCollection(field.layers.terrain);
+			int layer = Project.current.fieldTree.getData().getLastTerrainLayer(field.id);
 			layerList.getCollectionWidget().forceSelection(new LPath(layer));
 		} else {
 			lstTerrains.setDataCollection(null);
@@ -161,7 +162,7 @@ public class FieldLayerEditor extends LEditor {
 	protected void setType(int type) {
 		switch(type) {
 		case 0:
-			stack.topControl = lstTerrains;
+			
 			break;
 		case 1:
 			stack.topControl = lstObstacles;
@@ -182,13 +183,13 @@ public class FieldLayerEditor extends LEditor {
 			stack.topControl = lstTerrains;
 			tileset.layout();
 		} else {
-			setType(layer.info.type);
+			//setType(layer.info.type);
 		}
 	}
 	
 	public void onLayerEdit(Info newInfo) {
 		fieldEditor.updateCanvas();
-		setType(newInfo.type);
+		//setType(newInfo.type);
 	}
 
 }

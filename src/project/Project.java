@@ -5,6 +5,7 @@ import gson.project.GObjectSerializer;
 import gson.project.GObjectTreeSerializer;
 import data.*;
 import data.config.*;
+import data.field.Tileset;
 import data.subcontent.Constant;
 import lwt.dataserialization.LSerializer;
 
@@ -66,7 +67,7 @@ public class Project implements LSerializer {
 		plugins = new GObjectListSerializer(systemPath() + "plugins", Plugin.class);
 		regions = new GObjectListSerializer(systemPath() + "regions", Region.class);
 		
-		fieldTree = new FieldTreeSerializer(dataPath());
+		fieldTree = new FieldTreeSerializer(fieldPath());
 		
 		allData = new LSerializer[] { animations, battlers, characters, classes,
 				items, obstacles, scripts, skills, status, terrains, troops, 

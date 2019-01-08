@@ -22,9 +22,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-import data.Field;
-import data.subcontent.Layer;
-import data.subcontent.Node;
+import data.field.Field;
+import data.field.Layer;
+import data.field.FieldNode;
 import data.subcontent.Position;
 import project.Project;
 
@@ -36,7 +36,7 @@ import org.eclipse.swt.events.PaintEvent;
 
 public class PositionShell extends LObjectShell<Position> {
 	
-	private LTree<Node, Field.Prefs> tree;
+	private LTree<FieldNode, Field> tree;
 	private EditableFieldCanvas canvas;
 	private Combo cmbLayer;
 	private Combo cmbDirection;
@@ -55,31 +55,30 @@ public class PositionShell extends LObjectShell<Position> {
 		SashForm sashForm = new SashForm(content, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		tree = new LTree<Node, Field.Prefs>(sashForm, SWT.NONE) {
+		tree = new LTree<FieldNode, Field>(sashForm, SWT.NONE) {
 			@Override
-			protected LDataTree<Node> emptyNode() {
+			protected LDataTree<FieldNode> emptyNode() {
 				return null;
 			}
 			@Override
-			protected LDataTree<Node> duplicateNode(LPath nodePath) {
+			protected LDataTree<FieldNode> duplicateNode(LPath nodePath) {
 				return null;
 			}
 			@Override
-			public LDataTree<Node> toNode(LPath path) {
-				return Project.current.fieldTree.getData().root.getNode(path);
+			public LDataTree<FieldNode> toNode(LPath path) {
+				return Project.current.fieldTree.getData().getNode(path);
 			}
 			@Override
-			public Node toObject(LPath path) {
+			public FieldNode toObject(LPath path) {
 				return toNode(path).data;
 			}
 		};
 		tree.setDragEnabled(false);
-		tree.setDataCollection(Project.current.fieldTree.getData().root);
+		tree.setDataCollection(Project.current.fieldTree.getData());
 		tree.addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				Node node = (Node) event.data;
-				setField(node);
+				setField(event.id, (FieldNode) event.data);
 			}
 		});
 		
@@ -181,17 +180,17 @@ public class PositionShell extends LObjectShell<Position> {
 	}
 	
 	private void setLayer(int i) {
-		Layer layer = canvas.field.layers.get(i);
+		Layer layer = canvas.field.layers.terrain.get(i);
 		canvas.setCurrentLayer(layer);
 	}
 	
-	private void setField(Node node) {
-		if (canvas.field != null && canvas.field.id == node.id)
+	private void setField(int id, FieldNode node) {
+		if (canvas.field != null && canvas.field.id == id)
 			return;
-		Field field = Project.current.fieldTree.loadData(node);
+		Field field = Project.current.fieldTree.loadField(node);
 		canvas.setField(field);
 		refreshLayerCombo();
-		if (cmbLayer.getSelectionIndex() >= field.layers.size()
+		if (cmbLayer.getSelectionIndex() >= field.layers.terrain.size()
 				|| cmbLayer.getSelectionIndex() < 0) {
 			cmbLayer.select(0);
 		}
@@ -218,9 +217,9 @@ public class PositionShell extends LObjectShell<Position> {
 	}
 	
 	private void refreshLayerCombo() {
-		String[] layers = new String[canvas.field.layers.size()];
+		String[] layers = new String[canvas.field.layers.terrain.size()];
 		for(int i = 0; i < layers.length; i++) {
-			layers[i] = canvas.field.layers.get(i).info.name;
+			layers[i] = canvas.field.layers.terrain.get(i).info.name;
 		}
 		cmbLayer.setItems(layers);
 	}

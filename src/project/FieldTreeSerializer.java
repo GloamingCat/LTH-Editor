@@ -1,48 +1,85 @@
 package project;
 
-import lwt.dataestructure.LDataTree;
+import gson.project.GMultiSerializer;
 import lwt.dataestructure.LPath;
-import data.Field;
-import data.FieldTree;
-import data.subcontent.Node;
+import data.field.Field;
+import data.field.FieldNode;
+import data.field.FieldTree;
 
-public class FieldTreeSerializer extends TreeMultiSerializer<Field, FieldTree> {
-
+public class FieldTreeSerializer extends 
+	GMultiSerializer<FieldNode, Field, FieldTree> {
+	
 	public FieldTreeSerializer(String folder) {
-		super(folder + "fields/", "fieldTree", FieldTree.class, Field.class);
+		super(folder, "fieldTree", FieldTree.class, FieldNode.class);
 	}
 	
-	public Field loadField(LPath path) {
-		LDataTree<Node> node = data.root.getNode(path);
-		return loadData(node.data);
-	}
-
-	public void setField(LPath path, Field newField) {
-		LDataTree<Node> node = data.root.getNode(path);
-		newField.id = node.data.id;
-		node.data.name = newField.prefs.name;
-		loadedData.put(node.data, newField);
-	}
+	// Load
 
 	@Override
-	public Field newData(Node node) {
-		Field field = new Field(node.id, 15, 15);
-		node.name = field.prefs.name;
+	public String toFileName(FieldNode node, Field data) {
+		return data.id + "";
+	}
+	
+	public boolean load() {
+		if (super.load()) {
+			data.restoreParents();
+			return true;
+		}
+		return false;
+	}
+	
+	public Field loadField(FieldNode node) {
+		Field field = loadedData.get(node);
+		if (field == null) {
+			int id = data.findNode(data).id;
+			nodeSerializer.setPath(folder + id + ".json");
+			if (nodeSerializer.load()) {
+				field = nodeSerializer.getData();
+			} else {
+				field = new Field(id, 10, 10);
+			}
+			loadedData.put(node, field);
+		}
 		return field;
 	}
 
-	@Override
-	public Field duplicateData(Node node, Field original) {
-		Field newField = gson.fromJson(gson.toJson(original), Field.class);
-		newField.id = node.id;
-		node.name = node.name;
-		node.name = newField.prefs.name;
-		return newField;
+	public Field loadField(LPath path) {
+		return loadField(data.getNode(path).data);
+	}
+	
+	// New
+	
+	public FieldNode newNode() {
+		FieldNode node = new FieldNode();
+		node.name = "New Dialog Folder";
+		int id = data.findID();
+		loadedData.put(node, newField(id, node));
+		return node;
+	}
+	
+	public Field newField(int id, FieldNode node) {
+		Field field = new Field(id, 10, 10);
+		node.name = field.prefs.name;
+		return field;
+	}
+	
+	// Duplicate
+	
+	public FieldNode duplicateNode(FieldNode node) {
+		FieldNode copy = node.clone();
+		copy.name = node.name;
+		int id = data.findID();
+		Field data = loadField(node);
+		loadedData.put(node, duplicateField(id, data));
+		return copy;
 	}
 
-	@Override
-	public LDataTree<Node> getRoot() {
-		return data.root;
+	public Field duplicateField(int id, Field original) {
+		Field newField = gson.fromJson(gson.toJson(original), Field.class);
+		newField.id = id;
+		FieldNode node = data.findNode(id).data;
+		node.name = newField.prefs.name;
+		return newField;
 	}
 
 }

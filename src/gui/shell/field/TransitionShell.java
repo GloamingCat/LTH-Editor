@@ -5,7 +5,7 @@ import gui.widgets.PositionButton;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.subcontent.Transition;
+import data.field.Transition;
 import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.layout.GridLayout;

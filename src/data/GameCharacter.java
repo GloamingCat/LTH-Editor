@@ -33,6 +33,16 @@ public class GameCharacter extends Data {
 		return (Animation) Project.current.animations.getData().get(id);
 	}
 	
+	public int findAnimation(String key) {
+		if (animations.isEmpty())
+			return -1;
+		for (Node n : animations) {
+			if (n.name.equals(key))
+				return n.id;
+		}
+		return -1;
+	}
+	
 	public static class Portrait extends Icon {
 		
 		public String name = "New";

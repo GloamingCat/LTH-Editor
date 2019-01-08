@@ -72,7 +72,7 @@ public abstract class IDButton extends LObjectButton<Integer> {
 				if (anim == null)
 					image.setImage((Image) null); 
 				else {
-					image.setImage(anim.getImage(), anim.quad.getRectangle());
+					image.setImage(anim.quad.getImage(), anim.quad.getRectangle());
 				}
 			}
 			currentValue = id;

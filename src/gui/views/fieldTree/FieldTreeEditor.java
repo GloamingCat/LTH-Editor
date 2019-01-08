@@ -13,9 +13,9 @@ import project.Project;
 
 import com.google.gson.Gson;
 
-import data.Field;
-import data.Field.Prefs;
-import data.subcontent.Node;
+import data.field.Field;
+import data.field.Field.Prefs;
+import data.field.FieldNode;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
@@ -32,7 +32,7 @@ public class FieldTreeEditor extends LView {
 
 	protected static Gson gson = new Gson();
 	
-	protected LTreeEditor<Node, Field.Prefs> treeEditor;
+	protected LTreeEditor<FieldNode, Field.Prefs> treeEditor;
 	protected FieldEditor fieldEditor;
 	protected FieldLayerEditor sideEditor;
 	
@@ -45,17 +45,17 @@ public class FieldTreeEditor extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		treeEditor = new LTreeEditor<Node, Field.Prefs>(sashForm, SWT.NONE) {
+		treeEditor = new LTreeEditor<FieldNode, Field.Prefs>(sashForm, SWT.NONE) {
 			@Override
-			public LDataTree<Node> getDataCollection() {
-				return Project.current.fieldTree.getData().root;
+			public LDataTree<FieldNode> getDataCollection() {
+				return Project.current.fieldTree.getData();
 			}
 			@Override
-			public Node createNewData() {
+			public FieldNode createNewData() {
 				return Project.current.fieldTree.newNode();
 			}
 			@Override
-			public Node duplicateData(Node original) {
+			public FieldNode duplicateData(FieldNode original) {
 				return Project.current.fieldTree.duplicateNode(original);
 			}
 			@Override
@@ -69,10 +69,11 @@ public class FieldTreeEditor extends LView {
 			@Override
 			public void forceFirstSelection() {
 				if (getDataCollection() != null) {
-					LDataTree<Node> tree = getDataCollection().toTree();
+					LDataTree<FieldNode> tree = getDataCollection().toTree();
 					getCollectionWidget().setItems(tree);
-					LPath lastPath = Project.current.fieldTree.getData().lastField;
-					getCollectionWidget().forceSelection(lastPath);
+					int lastField = Project.current.fieldTree.getData().lastField;
+					LDataTree<FieldNode> lastNode = Project.current.fieldTree.getData().findNode(lastField);
+					getCollectionWidget().forceSelection(lastNode.toPath());
 				} else {
 					getCollectionWidget().setItems(null);
 					getCollectionWidget().forceSelection(null);
@@ -87,21 +88,22 @@ public class FieldTreeEditor extends LView {
 		treeEditor.setShellFactory(new LShellFactory<Prefs>() {
 			@Override
 			public LObjectShell<Prefs> createShell(Shell parent) {
-				Node n = treeEditor.getCollectionWidget().getSelectedObject();
-				LObjectShell<Prefs> shell = new FieldShell(parent);
-				shell.setText(String.format("[%03d]", n.id) + n.name);
+				FieldNode n = treeEditor.getCollectionWidget().getSelectedObject();
+				FieldShell shell = new FieldShell(parent);
+				int id = Project.current.fieldTree.getData().findNode(n).id;
+				shell.setText(String.format("[%03d] ", id) + n.name);
 				return shell;
 			}
 		});
 		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				Project.current.fieldTree.getData().lastField = event.path;
+				Project.current.fieldTree.getData().lastField = event.id;
 			}
 		});
 		treeEditor.getCollectionWidget().addEditListener(new LCollectionListener<Prefs>() {
 			public void onEdit(LEditEvent<Prefs> e) {
-				LDataTree<Node> node = Project.current.fieldTree.getData().root.getNode(e.path);
+				LDataTree<FieldNode> node = Project.current.fieldTree.getData().getNode(e.path);
 				node.data.name = e.newData.name;
 				treeEditor.getCollectionWidget().refreshObject(e.path);
 			}

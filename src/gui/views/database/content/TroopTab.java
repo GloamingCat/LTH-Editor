@@ -132,7 +132,7 @@ public class TroopTab extends DatabaseTab {
 							continue;
 						GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
 						Animation anim = c == null ? null : c.defaultAnimation();
-						Image img = anim == null ? null : anim.getImage();
+						Image img = anim == null ? null : anim.quad.getImage();
 						if (img == null) 
 							continue;
 						int w = anim.quad.width / anim.cols;

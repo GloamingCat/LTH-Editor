@@ -318,9 +318,9 @@ public class Vocab {
 	
 	// Field
 	public String BACKGROUND = "Background";
-	public String TILESET = "Tileset";
+	public String PARALLAX = "Parallax";
 	public String DEFAULTREGION = "Default Region";
-	public String PARTYCOUNT = "Party Count";
+	public String PARTYCOUNT = "Parties";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";

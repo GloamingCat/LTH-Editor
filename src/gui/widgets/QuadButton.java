@@ -19,14 +19,13 @@ public class QuadButton extends LObjectButton<Quad> {
 	private String folder;
 	private LImage image;
 	private Text text;
-	public boolean optional = false;
 	
 	public QuadButton(Composite parent, int style) {
 		super(parent, style);
 		setShellFactory(new LShellFactory<Quad>() {
 			@Override
 			public LObjectShell<Quad> createShell(Shell parent) {
-				return new QuadShell(parent, folder, optional);
+				return new QuadShell(parent, folder, style != 0);
 			}
 		});
 	}

@@ -21,9 +21,9 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
-import data.Field;
-import data.subcontent.Layer;
-import data.subcontent.Node;
+import data.field.Field;
+import data.field.FieldNode;
+import data.field.Layer;
 
 import org.eclipse.swt.layout.GridLayout;
 
@@ -33,7 +33,7 @@ public class FieldEditor extends LObjectEditor {
 	private Label tileCoord;
 	private ScrolledComposite scrolledComposite;
 	public EditableFieldCanvas canvas;
-	public LTreeEditor<Node, Field.Prefs> treeEditor;
+	public LTreeEditor<FieldNode, Field.Prefs> treeEditor;
 	
 	/**
 	 * Create the composite.
@@ -131,9 +131,10 @@ public class FieldEditor extends LObjectEditor {
 	@Override
 	public void setObject(Object obj) {
 		if (obj != null) {
-			Node node = (Node) obj;
-			if (canvas.field == null || canvas.field.id != node.id) {
-				Field field = Project.current.fieldTree.loadData(node);
+			FieldNode node = (FieldNode) obj;
+			int id = Project.current.fieldTree.getData().findNode(obj).id;
+			if (canvas.field == null || canvas.field.id != id) {
+				Field field = Project.current.fieldTree.loadField(node);
 				selectField(field);
 				super.setObject(field);
 			}

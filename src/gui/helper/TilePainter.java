@@ -83,10 +83,10 @@ public class TilePainter {
 		return subImage;
 	}
 	
-	public static Image getCharacterTile(int id, int animID, int direction) {
+	public static Image getCharacterTile(int id, String animKey, int direction) {
 		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(id);
 		Animation anim = (Animation) Project.current.animations.getTree().
-				get(c.animations.get(animID).id);
+				get(c.findAnimation(animKey));
 		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 		
 		int w = conf.grid.tileW;

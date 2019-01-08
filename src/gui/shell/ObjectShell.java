@@ -29,7 +29,7 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	public ObjectShell(Shell parent) {
 		super(parent);
 		content.setLayout(new FillLayout());
-		content.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		contentEditor = new LObjectEditor(content, SWT.NONE);
 		contentEditor.createActionStack();
 	}
