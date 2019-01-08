@@ -3,6 +3,7 @@ package project;
 import gson.project.GObjectListSerializer;
 import gson.project.GObjectSerializer;
 import gson.project.GObjectTreeSerializer;
+import gui.helper.TilePainter;
 import data.*;
 import data.config.*;
 import data.field.Tileset;
@@ -69,8 +70,8 @@ public class Project implements LSerializer {
 		
 		fieldTree = new FieldTreeSerializer(fieldPath());
 		
-		allData = new LSerializer[] { animations, battlers, characters, classes,
-				items, obstacles, scripts, skills, status, terrains, troops, 
+		allData = new LSerializer[] { fieldTree, animations, battlers, characters, 
+				classes, items, obstacles, scripts, skills, status, terrains, troops, 
 				config, attributes, constants, elements, equipTypes, plugins, regions };
 	}
 	
@@ -108,7 +109,7 @@ public class Project implements LSerializer {
 			data.initialize();
 		}
 		//FieldHelper.reloadMath();
-		//TilePainter.reloadConfig();
+		TilePainter.reloadConfig();
 		current = this;
 	}	
 

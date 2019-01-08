@@ -127,7 +127,7 @@ public class FieldPainter {
 		}
 	}
 	
-	public void paintObstacle(Layer layer, int x, int y, GC gc, int x0, int y0, boolean paintRamp) {
+	public void paintObstacle(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
 			int id = layer.grid[x][y];
 			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
@@ -142,8 +142,6 @@ public class FieldPainter {
 					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 					y0 - img.getBounds().height + obj.transform.offsetY, 
 					rect.width, rect.height);
-			// TODO: ramp
-			
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -238,13 +236,9 @@ public class FieldPainter {
 				continue;
 			if (showGrid && layer == currentLayer) {
 				paintEdges(gc, x0, y0 - layer.info.height * pph);
-				if (layer.grid[x][y] >= 0) {
-					paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, true);
-				}
-			} else {
-				if (layer.grid[x][y] >= 0) {
-					paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph, false);
-				}
+			}
+			if (layer.grid[x][y] >= 0) {
+				paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph);
 			}
 		}
 		// Region Layers
@@ -253,7 +247,7 @@ public class FieldPainter {
 				continue;
 			paintRegion(layer, x, y, 
 					gc, x0, y0 - layer.info.height * pph);
-			if (showGrid) {
+			if (showGrid && layer == currentLayer) {
 				paintEdges(gc, x0, y0 - layer.info.height * pph);
 			}
 			break;

@@ -10,7 +10,7 @@ public class FieldTreeSerializer extends
 	GMultiSerializer<FieldNode, Field, FieldTree> {
 	
 	public FieldTreeSerializer(String folder) {
-		super(folder, "fieldTree", FieldTree.class, FieldNode.class);
+		super(folder, "tree", FieldTree.class, Field.class);
 	}
 	
 	// Load
@@ -31,7 +31,7 @@ public class FieldTreeSerializer extends
 	public Field loadField(FieldNode node) {
 		Field field = loadedData.get(node);
 		if (field == null) {
-			int id = data.findNode(data).id;
+			int id = data.getFieldID(node);
 			nodeSerializer.setPath(folder + id + ".json");
 			if (nodeSerializer.load()) {
 				field = nodeSerializer.getData();
@@ -77,7 +77,7 @@ public class FieldTreeSerializer extends
 	public Field duplicateField(int id, Field original) {
 		Field newField = gson.fromJson(gson.toJson(original), Field.class);
 		newField.id = id;
-		FieldNode node = data.findNode(id).data;
+		FieldNode node = data.getFieldNode(id);
 		node.name = newField.prefs.name;
 		return newField;
 	}

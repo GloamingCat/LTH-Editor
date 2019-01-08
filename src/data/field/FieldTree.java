@@ -14,6 +14,16 @@ public class FieldTree extends LDataTree<FieldNode> {
 		addChild(node);
 	}
 	
+	public int getFieldID(FieldNode node) {
+		LDataTree<FieldNode> child = findNode(node);
+		return child == null ? -1 : child.id;
+	}
+	
+	public FieldNode getFieldNode(int id) {
+		LDataTree<FieldNode> child = findNode(id);
+		return child == null ? null : child.data;
+	}
+	
 	public void setLastTerrainLayer(int fieldID, int layerID) {
 		FieldNode node = findNode(fieldID).data;
 		node.lastTerrainLayer = layerID;
@@ -23,5 +33,5 @@ public class FieldTree extends LDataTree<FieldNode> {
 		FieldNode node = findNode(fieldID).data;
 		return node.lastTerrainLayer;
 	}
-
+	
 }

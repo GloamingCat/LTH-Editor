@@ -10,7 +10,17 @@ public class FieldNode {
 	public int lastPartyLayer = -1;
 	
 	public FieldNode clone() {
-		return this; // TODO
+		FieldNode copy = new FieldNode();
+		copy.lastTerrainLayer = lastTerrainLayer;
+		copy.lastObstacleLayer = lastObstacleLayer;
+		copy.lastRegionLayer = lastRegionLayer;
+		copy.lastPartyLayer = lastPartyLayer;
+		copy.name = name;
+		return copy;
+	}
+	
+	public String toString() {
+		return name;
 	}
 	
 }

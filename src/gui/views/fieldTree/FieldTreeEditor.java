@@ -1,5 +1,7 @@
 package gui.views.fieldTree;
 
+import gui.helper.FieldHelper;
+import gui.helper.TilePainter;
 import gui.shell.field.FieldShell;
 
 import org.eclipse.swt.SWT;
@@ -73,7 +75,7 @@ public class FieldTreeEditor extends LView {
 					getCollectionWidget().setItems(tree);
 					int lastField = Project.current.fieldTree.getData().lastField;
 					LDataTree<FieldNode> lastNode = Project.current.fieldTree.getData().findNode(lastField);
-					getCollectionWidget().forceSelection(lastNode.toPath());
+					getCollectionWidget().forceSelection(lastNode == null ? null : lastNode.toPath());
 				} else {
 					getCollectionWidget().setItems(null);
 					getCollectionWidget().forceSelection(null);
@@ -123,6 +125,12 @@ public class FieldTreeEditor extends LView {
 		treeEditor.setActionStack(getActionStack());
 		
 		sashForm.setWeights(new int[] {1, 3, 1});
+	}
+	
+	public void onVisible() {
+		TilePainter.reloadConfig();
+		FieldHelper.reloadMath();
+		super.onVisible();
 	}
 
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import gui.views.database.DatabaseEditor;
+import gui.views.fieldTree.FieldTreeEditor;
 import gui.views.system.SystemEditor;
 
 import org.eclipse.swt.SWT;
@@ -48,6 +49,18 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		setSize(new Point(900, 600));
 		setText("LTH Editor");
 		
+		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
+		
+		MenuItem mntmFieldEditor = new MenuItem(menuView, SWT.NONE);
+		mntmFieldEditor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setCurrentView(fieldTreeEditor);
+			}
+		});
+		mntmFieldEditor.setText(Vocab.instance.FIELDEDITOR + "\tF2");
+		mntmFieldEditor.setAccelerator(SWT.F2);
+		
 		final DatabaseEditor databaseEditor = new DatabaseEditor(this, SWT.NONE);
 		MenuItem mntmDatabaseEditor = new MenuItem(menuView, SWT.NONE);
 		mntmDatabaseEditor.addSelectionListener(new SelectionAdapter() {
@@ -67,26 +80,12 @@ public class ApplicationShell extends LDefaultApplicationShell {
 				setCurrentView(systemEditor);
 			}
 		});
-		mntmSystemEditor.setText(Vocab.instance.SYSTEMEDITOR + "\tF5");
-		mntmSystemEditor.setAccelerator(SWT.F5);
-		
-		/*
-		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
-		
-		MenuItem mntmFieldEditor = new MenuItem(menuView, SWT.NONE);
-		mntmFieldEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(fieldTreeEditor);
-			}
-		});
-		mntmFieldEditor.setText(Vocab.instance.FIELDEDITOR + "\tF2");
-		mntmFieldEditor.setAccelerator(SWT.F2);
-		*/
+		mntmSystemEditor.setText(Vocab.instance.SYSTEMEDITOR + "\tF4");
+		mntmSystemEditor.setAccelerator(SWT.F4);
 		
 		applicationName = getText();
 		if (loadDefault()) {
-			setCurrentView(databaseEditor);
+			setCurrentView(fieldTreeEditor);
 		}
 	}
 	
