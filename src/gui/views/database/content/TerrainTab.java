@@ -33,6 +33,14 @@ public class TerrainTab extends DatabaseTab {
 	public TerrainTab(Composite parent, int style) {
 		super(parent, style);
 
+		Composite right = new Composite(contentEditor,  SWT.NONE);
+		right.setLayout(new FillLayout(SWT.VERTICAL));
+		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
+		gd_right.widthHint = 224;
+		right.setLayoutData(gd_right);
+		
+		// General
+		
 		Label lblMoveCost = new Label(grpGeneral, SWT.NONE);
 		lblMoveCost.setText(Vocab.instance.MOVECOST);
 		
@@ -55,6 +63,8 @@ public class TerrainTab extends DatabaseTab {
 		
 		Label lblStatus = new Label(grpGeneral, SWT.NONE);
 		lblStatus.setText(Vocab.instance.STATUS);
+		
+		// Status
 		
 		Composite status = new Composite(grpGeneral, SWT.NONE);
 		status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -86,6 +96,8 @@ public class TerrainTab extends DatabaseTab {
 		spnLifeTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnLifeTime, "lifeTime");
 
+		// Step Audio
+		
 		Label lblAudio = new Label(grpGeneral, SWT.NONE);
 		lblAudio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblAudio.setText(Vocab.instance.SOUND);
@@ -97,11 +109,8 @@ public class TerrainTab extends DatabaseTab {
 		
 		// Attributes
 		
-		Group grpAtt = new Group(contentEditor, SWT.NONE);
+		Group grpAtt = new Group(right, SWT.NONE);
 		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_grpAtt.widthHint = 224;
-		grpAtt.setLayoutData(gd_grpAtt);
 		grpAtt.setText(Vocab.instance.ATTRIBUTES);
 		
 		BonusList lstAttributes = new BonusList(grpAtt, SWT.NONE) {
@@ -112,16 +121,9 @@ public class TerrainTab extends DatabaseTab {
 		};
 		addChild(lstAttributes, "attributes");
 		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(3, false);
-		gl_bottom.marginHeight = 0;
-		gl_bottom.marginWidth = 0;
-		bottom.setLayout(gl_bottom);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
 		// Graphics
 		
-		Group grpGraphics = new Group(bottom, SWT.NONE);
+		Group grpGraphics = new Group(contentEditor, SWT.NONE);
 		grpGraphics.setLayout(new GridLayout(1, false));
 		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGraphics.setText(Vocab.instance.GRAPHICS);
@@ -142,9 +144,8 @@ public class TerrainTab extends DatabaseTab {
 		
 		// Elements
 		
-		Group grpElements = new Group(bottom, SWT.NONE);
+		Group grpElements = new Group(right, SWT.NONE);
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
 		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
@@ -157,10 +158,8 @@ public class TerrainTab extends DatabaseTab {
 		
 		// Tags
 		
-		Group grpTags = new Group(bottom, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1));
+		Group grpTags = new Group(right, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList lstTags = new TagList(grpTags, SWT.NONE);
