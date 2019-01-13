@@ -48,7 +48,7 @@ public class ResizeAction implements LAction {
 					}
 				}
 			}
-			layers.add(newLayer);
+			newLayers.add(newLayer);
 			newLayer.info = l.info;
 			newLayer.visible = l.visible;
 		}

@@ -20,6 +20,7 @@ public class ResizeShell extends LObjectShell<Point> {
 
 	public ResizeShell(Shell parent) {
 		super(parent);
+		setMinimumSize(new Point(180, 39));
 		
 		content.setLayout(new GridLayout(2, false));
 		
