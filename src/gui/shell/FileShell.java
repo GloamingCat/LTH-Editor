@@ -17,6 +17,7 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 	protected String folder;
 	protected SashForm sashForm;
 	protected List list;
+	protected boolean optional;
 	
 	public FileShell(Shell parent, int style) {
 		this(parent, "", true);
@@ -27,6 +28,7 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 	 */
 	public FileShell(Shell parent, String folder, boolean optional) {
 		super(parent);
+		this.optional = optional;
 		this.folder = folder;
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -37,6 +39,10 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		
 		list = new List(sashForm, SWT.BORDER | SWT.V_SCROLL);
 		list.setItems(getItems(folder + "/", optional));
+	}
+	
+	protected boolean nullSelected() {
+		return optional && list.getSelectionIndex() == 0;
 	}
 
 	protected int indexOf(String path) {

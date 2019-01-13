@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
-import gui.shell.field.FieldShell;
+import gui.shell.field.FieldPrefShell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -94,7 +94,7 @@ public class FieldTreeEditor extends LView {
 			@Override
 			public LObjectShell<Prefs> createShell(Shell parent) {
 				FieldNode n = treeEditor.getCollectionWidget().getSelectedObject();
-				FieldShell shell = new FieldShell(parent);
+				FieldPrefShell shell = new FieldPrefShell(parent);
 				int id = Project.current.fieldTree.getData().findNode(n).id;
 				shell.setText(String.format("[%03d] ", id) + n.name);
 				return shell;
@@ -111,6 +111,7 @@ public class FieldTreeEditor extends LView {
 				LDataTree<FieldNode> node = Project.current.fieldTree.getData().getNode(e.path);
 				node.data.name = e.newData.name;
 				treeEditor.getCollectionWidget().refreshObject(e.path);
+				fieldEditor.canvas.redraw();
 			}
 		});
 		

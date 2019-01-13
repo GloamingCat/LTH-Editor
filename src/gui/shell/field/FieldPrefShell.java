@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.Group;
 
 import project.Project;
 
-public class FieldShell extends ObjectShell<Field.Prefs> {
+public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 
-	public FieldShell(Shell parent) {
+	public FieldPrefShell(Shell parent) {
 		super(parent);
 
 		setMinimumSize(300, 400);
@@ -75,6 +75,8 @@ public class FieldShell extends ObjectShell<Field.Prefs> {
 		LImage imgPL = new LImage(grpPL, SWT.NONE);
 		imgPL.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		btnPL.setImage(imgPL);
+		
+		pack();
 		
 	}
 }

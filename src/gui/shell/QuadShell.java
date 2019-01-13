@@ -175,11 +175,12 @@ public class QuadShell extends FileShell<Quad> {
 	@Override
 	protected Quad createResult(Quad initial) {
 		Quad q = new Quad();
-		q.x = spnX.getSelection();
-		q.y = spnY.getSelection();
-		q.width = spnWidth.getSelection();
-		q.height = spnHeight.getSelection();
-		q.path = label.getText();
+		Rectangle rect = label.getImage().getBounds();
+		q.x = Math.min(spnX.getSelection(), rect.width);
+		q.y = Math.min(spnY.getSelection(), rect.height);
+		q.width = Math.min(spnWidth.getSelection(), rect.width);
+		q.height = Math.min(spnHeight.getSelection(), rect.height);
+		q.path = nullSelected() ? "" : label.getText();
 		return q;
 	}
 

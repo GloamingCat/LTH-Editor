@@ -16,7 +16,7 @@ import data.subcontent.Quad;
 
 public class QuadButton extends LObjectButton<Quad> {
 	
-	private String folder;
+	private String folder = "";
 	private LImage image;
 	private Text text;
 	
