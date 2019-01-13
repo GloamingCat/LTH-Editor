@@ -10,12 +10,16 @@ public class Field {
 	public int id;
 	public int sizeX;
 	public int sizeY;
-	public Prefs prefs = new Prefs();
 	
-	public Script onStart = new Script();
+	public Prefs prefs = new Prefs();
+	public Layers layers = new Layers();
+	
+	public Script setupScript = new Script();
+	public Script enterScript = new Script();
+	
 	public LDataList<Transition> transitions = new LDataList<>(); 
 	public LDataList<CharTile> characters = new LDataList<>();
-	public Layers layers = new Layers();
+	
 	
 	public Field() {}
 	
@@ -27,17 +31,21 @@ public class Field {
 	}
 	
 	public static class Prefs extends Data {
+		
 		public Quad background = new Quad();
 		public Quad parallax = new Quad();
 		public int defaultRegion = 0;
 		public int partyCount = 2;
+		
 	}
 	
 	public static class Layers {
+		
 		public LDataList<Layer> terrain = new LDataList<>();
 		public LDataList<Layer> obstacle = new LDataList<>();
 		public LDataList<Layer> region = new LDataList<>();
-		public LDataList<Layer> party = new LDataList<>();	
+		public LDataList<Layer> party = new LDataList<>();
+		
 		public int maxHeight() {
 			int maxH = 0;
 			for (Layer l : terrain)
@@ -50,6 +58,7 @@ public class Field {
 				maxH = Math.max(maxH, l.info.height);
 			return maxH;
 		}
+		
 	}
 	
 }

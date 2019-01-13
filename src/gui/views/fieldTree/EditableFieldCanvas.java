@@ -10,7 +10,6 @@ import java.util.Stack;
 
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -25,9 +24,6 @@ public class EditableFieldCanvas extends FieldCanvas {
 	private int tool;
 	private Point selectionPoint;
 	private int[][] selection;
-	
-	protected int tileX = 0;
-	protected int tileY = 0;
 	
 	protected boolean draggingLeft = false;
 	protected Point dragOrigin = null;
@@ -63,29 +59,6 @@ public class EditableFieldCanvas extends FieldCanvas {
 				}
 			}
 			
-		});
-		
-		addMouseMoveListener(new MouseMoveListener() {
-			public void mouseMove(MouseEvent e) {
-				int h = currentLayer == null ? 0 : currentLayer.info.height;
-				Point tilePos = FieldHelper.math.pixel2Tile(
-						e.x * 1.0f / scale - x0,
-						e.y * 1.0f / scale - y0, 
-						h * FieldHelper.config.grid.pixelsPerHeight);
-				if ((tileX != tilePos.x || tileY != tilePos.y) && field != null) {
-					if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
-						tileX = tilePos.x;
-						tileY = tilePos.y;
-						if (dragOrigin != null) {
-							redraw();
-						}
-						onTileEnter(tilePos.x, tilePos.y);
-						if (draggingLeft) {
-							onTileLeftClick(tileX, tileY);
-						}
-					}
-				}
-			}
 		});
 		
 		addPaintListener(new PaintListener() {
@@ -232,7 +205,11 @@ public class EditableFieldCanvas extends FieldCanvas {
 			}
 		}
 	}
-
-	public void onTileEnter(int x, int y) { }
+	
+	public void onTileEnter(int x, int y) {
+		if (draggingLeft) {
+			onTileLeftClick(x, y);
+		}
+	}
 	
 }

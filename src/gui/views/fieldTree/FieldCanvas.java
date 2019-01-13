@@ -5,11 +5,15 @@ import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 
 import data.field.Field;
@@ -22,6 +26,10 @@ public class FieldCanvas extends LView {
 	public float scale = 1;
 	public int x0;
 	public int y0;
+	
+	protected Point mousePoint = new Point(0, 0);
+	protected int tileX = 0;
+	protected int tileY = 0;
 
 	// Image cache
 	private Image[][] tileImages;
@@ -29,6 +37,7 @@ public class FieldCanvas extends LView {
 
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);
+		setBackground(new Color(getDisplay(), new RGB(255, 255, 255)));
 				
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
@@ -37,12 +46,34 @@ public class FieldCanvas extends LView {
 	        	}
 	        }
 	    });
+		
+		addMouseMoveListener(new MouseMoveListener() {
+			public void mouseMove(MouseEvent e) {
+				int h = currentLayer == null ? 0 : currentLayer.info.height;
+				Point tilePos = FieldHelper.math.pixel2Tile(
+						e.x * 1.0f / scale - x0,
+						e.y * 1.0f / scale - y0, 
+						h * FieldHelper.config.grid.pixelsPerHeight);
+				if ((tileX != tilePos.x || tileY != tilePos.y) && field != null) {
+					if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
+						tileX = tilePos.x;
+						tileY = tilePos.y;
+						mousePoint = FieldHelper.math.tile2Pixel(tileX, tileY, h);
+						redraw();
+						onTileEnter(tileX, tileY);
+					}
+				}
+			}
+		});
 	}
+	
+	public void onTileEnter(int x, int y) { }
 
 	private void drawAllTiles(GC egc) {
 		Image img = new Image(egc.getDevice(), getSize().x, getSize().y); 
 		GC gc = new GC(img);
 		gc.setBackground(egc.getBackground());
+		gc.fillRectangle(getBounds());
 		painter.paintBackground(field, field.prefs.background, x0, y0, gc);
 		painter.paintBackground(field, field.prefs.parallax, x0, y0, gc);
 		
@@ -56,16 +87,27 @@ public class FieldCanvas extends LView {
 				drawTile(gc, i, j);
 			}
 		}
+		drawCursor(gc);
 		egc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
 				0, 0, Math.round(img.getBounds().width * scale), Math.round(img.getBounds().height * scale));
 	}
 	
-	private void drawTile(GC gc, int x, int y) {
-		Point pos = FieldHelper.math.tile2Pixel(x, y, 0);
-		Image img = tileImages[x][y];
+	private void drawTile(GC gc, int i, int j) {
+		Point pos = FieldHelper.math.tile2Pixel(i, j, 0);
+		Image img = tileImages[i][j];
 		int w = img.getBounds().width;
 		int h = img.getBounds().height;
-		gc.drawImage(img, 0, 0, w, h, x0 + pos.x - w / 2, y0 + pos.y - h + FieldHelper.config.grid.tileH, w, h);
+		int x = x0 + pos.x - w / 2;
+		int y = y0 + pos.y - h + FieldHelper.config.grid.tileH;
+		gc.drawImage(img, 0, 0, w, h, x, y, w, h);
+	}
+	
+	private void drawCursor(GC gc) {
+		float scale = painter.scale;
+		painter.scale = scale * 0.75f;
+		System.out.println(mousePoint);
+		painter.paintEdges(gc, mousePoint.x + x0, mousePoint.y + y0);
+		painter.scale = scale;
 	}
 	
 	// -------------------------------------------------------------------------------------
@@ -142,8 +184,8 @@ public class FieldCanvas extends LView {
 			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
 					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
-		setSize(Math.round((pixelSize.x + x0*2) * scale), Math.round((pixelSize.y + y0 + x0*2) * scale));
-		redraw();
+		setSize(Math.round((pixelSize.x + x0*2) * scale), 
+				Math.round((pixelSize.y + y0 + x0*2) * scale));
 	}
 	
 	public void setCurrentLayer(Layer layer) {

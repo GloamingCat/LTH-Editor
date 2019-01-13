@@ -62,8 +62,8 @@ public class FieldPainter {
 		Point[] shift = FieldHelper.math.vertexShift;
 		int[] p = new int[shift.length * 2];
 		for(int i = 0; i < shift.length; i++) {
-			p[i * 2] = Math.round((shift[i].x + x0) * scale);
-			p[i * 2 + 1] = Math.round((shift[i].y + y0) * scale);
+			p[i * 2] = Math.round((shift[i].x * scale + x0));
+			p[i * 2 + 1] = Math.round((shift[i].y * scale + y0));
 		}
 		return p;
 	}

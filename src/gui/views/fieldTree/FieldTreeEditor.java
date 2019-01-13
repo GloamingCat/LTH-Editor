@@ -1,5 +1,7 @@
 package gui.views.fieldTree;
 
+import java.util.LinkedList;
+
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import gui.shell.field.FieldShell;
@@ -26,6 +28,7 @@ import lwt.dialog.LShellFactory;
 import lwt.editor.LTreeEditor;
 import lwt.editor.LView;
 import lwt.event.LEditEvent;
+import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
@@ -110,18 +113,33 @@ public class FieldTreeEditor extends LView {
 				treeEditor.getCollectionWidget().refreshObject(e.path);
 			}
 		});
-		addChild(treeEditor);
 		
 		fieldEditor = new FieldEditor(sashForm, SWT.NONE);
 		fieldEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		sideEditor = new FieldLayerEditor(sashForm, SWT.NONE);
 		sideEditor.setFieldEditor(fieldEditor);
+		
+		treeEditor.getCollectionWidget().addInsertListener(new LCollectionListener<FieldNode>() {
+			@Override
+			public void onInsert(LInsertEvent<FieldNode> event) {
+				LinkedList<LDataTree<FieldNode>> nodes = new LinkedList <>();
+				nodes.add(event.node);
+				while (!nodes.isEmpty()) {
+					int id = treeEditor.getDataCollection().findID();
+					nodes.peek().initID(id);
+					for (LDataTree<FieldNode> child : nodes.poll().children) {
+						nodes.add(child);
+					}
+				}
+				fieldEditor.lblID.setText("ID " + event.node.id);
+			}
+		});
 
 		treeEditor.addChild(fieldEditor);
 		fieldEditor.addChild(sideEditor);
 		fieldEditor.treeEditor = treeEditor;
-		
+		addChild(treeEditor);
 		treeEditor.setActionStack(getActionStack());
 		
 		sashForm.setWeights(new int[] {1, 3, 1});

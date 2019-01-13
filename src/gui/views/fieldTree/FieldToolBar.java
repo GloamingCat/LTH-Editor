@@ -1,5 +1,7 @@
 package gui.views.fieldTree;
 
+import gui.Vocab;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -60,7 +62,7 @@ public class FieldToolBar extends LWidget {
 			}
 		});
 		tltmShowGrid.setSelection(true);
-		tltmShowGrid.setText("Show Grid");
+		tltmShowGrid.setText(Vocab.instance.SHOWGRID);
 		
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		
@@ -71,7 +73,7 @@ public class FieldToolBar extends LWidget {
 				onResize();
 			}
 		});
-		tltmResize.setText("Resize");
+		tltmResize.setText(Vocab.instance.RESIZE);
 		tltmResize.setSelection(true);
 		
 		pack();

@@ -327,6 +327,8 @@ public class Vocab {
 	public String SIZEX = "Width";
 	public String SIZEY = "Height";
 	public String PARTY = "Party";
+	public String SHOWGRID = "Show Grid";
+	public String RESIZE = "Resize";
 	
 	// Transition
 	public String TRANSITIONS = "Transitions";

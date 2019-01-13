@@ -53,6 +53,7 @@ public class FieldTreeSerializer extends
 		FieldNode node = new FieldNode();
 		node.name = "New Dialog Folder";
 		int id = data.findID();
+		System.out.println(id);
 		loadedData.put(node, newField(id, node));
 		return node;
 	}

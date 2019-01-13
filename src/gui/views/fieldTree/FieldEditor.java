@@ -35,6 +35,8 @@ public class FieldEditor extends LObjectEditor {
 	public EditableFieldCanvas canvas;
 	public LTreeEditor<FieldNode, Field.Prefs> treeEditor;
 	
+	Label lblID;
+	
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -42,7 +44,7 @@ public class FieldEditor extends LObjectEditor {
 	 */
 	public FieldEditor(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new GridLayout(1, false));
+		setLayout(new GridLayout(2, false));
 		
 		toolBar = new FieldToolBar(this, SWT.NONE) {
 			public void onSelectTool(int i) {
@@ -66,13 +68,17 @@ public class FieldEditor extends LObjectEditor {
 				}
 			}
 		};
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		lblID = new Label(this, SWT.NONE);
+		lblID.setText("ID: 9999");
 		
 		scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
 			public void onTileEnter(int x, int y) {
+				super.onTileEnter(x, y);
 				tileCoord.setText("(" + x + ", " + y + ")");
 			}
 		};
@@ -114,6 +120,7 @@ public class FieldEditor extends LObjectEditor {
 				canvas.rescale(1.0f * scale.getSelection() / 100);
 				lblScale.setText(scale.getSelection() + "%");
 				scrolledComposite.setMinSize(canvas.getSize());
+				canvas.redraw();
 			}
 		});
 		
@@ -124,6 +131,8 @@ public class FieldEditor extends LObjectEditor {
 	}
 	
 	public void selectField(Field field) {
+		if (field != null)
+			lblID.setText("ID: " + field.id);
 		canvas.setField(field);
 		scrolledComposite.setMinSize(canvas.getSize());
 	}
