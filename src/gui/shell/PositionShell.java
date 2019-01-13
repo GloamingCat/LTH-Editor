@@ -1,10 +1,12 @@
 package gui.shell;
 
+import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.EditableFieldCanvas;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -18,7 +20,9 @@ import lwt.widget.LTree;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -36,6 +40,8 @@ import org.eclipse.swt.events.PaintEvent;
 
 public class PositionShell extends LObjectShell<Position> {
 	
+	private Color cursorColor = new Color(Display.getDefault(), new RGB(255, 0, 0));
+	
 	private LTree<FieldNode, Field> tree;
 	private EditableFieldCanvas canvas;
 	private Combo cmbLayer;
@@ -43,6 +49,7 @@ public class PositionShell extends LObjectShell<Position> {
 	private Spinner spnX;
 	private Spinner spnY;
 	private ScrolledComposite scrolledComposite;
+	private Label lblPos;
 
 	public PositionShell(Shell parent) {
 		super(parent);
@@ -82,26 +89,7 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		});
 		
-		Composite field = new Composite(sashForm, SWT.NONE);
-		field.setLayout(new GridLayout(3, false));
-		
-		Label lblLayer = new Label(field, SWT.NONE);
-		lblLayer.setText("Height");
-		
-		cmbLayer = new Combo(field, SWT.READ_ONLY);
-		cmbLayer.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setLayer(cmbLayer.getSelectionIndex());
-			}
-		});
-		cmbLayer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Label label = new Label(field, SWT.NONE);
-		label.setText("(-99, -99)");
-		
-		scrolledComposite = new ScrolledComposite(field, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
 			public void onTileLeftClick(int x, int y) {
@@ -111,7 +99,7 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 			public void onTileRightClick(int x, int y, Point origin) {}
 			public void onTileEnter(int x, int y) {
-				label.setText("(" + x + "," + y + ")");
+				lblPos.setText("(" + x + "," + y + ")");
 			}
 		};
 		canvas.addPaintListener(new PaintListener() {
@@ -132,6 +120,7 @@ public class PositionShell extends LObjectShell<Position> {
 					poly[i] += p.x + canvas.x0;
 					poly[i + 1] += p.y + canvas.y0;
 				}
+				e.gc.setForeground(cursorColor);
 				e.gc.drawPolygon(poly);
 			}
 		});
@@ -139,13 +128,26 @@ public class PositionShell extends LObjectShell<Position> {
 		scrolledComposite.setContent(canvas);
 
 		Composite bottom = new Composite(content, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(3, false);
+		GridLayout gl_bottom = new GridLayout(6, false);
 		gl_bottom.marginWidth = 0;
 		gl_bottom.marginHeight = 0;
 		bottom.setLayout(gl_bottom);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
+		Label lblLayer = new Label(bottom, SWT.NONE);
+		lblLayer.setText(Vocab.instance.LAYER);
+		
+		cmbLayer = new Combo(bottom, SWT.READ_ONLY);
+		cmbLayer.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setLayer(cmbLayer.getSelectionIndex());
+			}
+		});
+		cmbLayer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
 		Composite coordinates = new Composite(bottom, SWT.NONE);
+		coordinates.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		GridLayout gl_coordinates = new GridLayout(4, false);
 		gl_coordinates.marginHeight = 0;
 		gl_coordinates.marginWidth = 0;
@@ -153,7 +155,6 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		Label lblX = new Label(coordinates, SWT.NONE);
 		lblX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblX.setBounds(0, 0, 55, 15);
 		lblX.setText("X");
 		
 		spnX = new Spinner(coordinates, SWT.BORDER);
@@ -168,15 +169,20 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		Label lblDirection = new Label(bottom, SWT.NONE);
 		lblDirection.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblDirection.setText("Direction");
+		lblDirection.setText(Vocab.instance.DIRECTION);
 		
 		cmbDirection = new Combo(bottom, SWT.READ_ONLY);
-		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		String[] d = new String[] {"", "0°", "45°", "90°", "135°", 
 				"180°", "225°", "270°", "315°"};
 		cmbDirection.setItems(d);
+		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		lblPos = new Label(bottom, SWT.NONE);
+		lblPos.setText("(-99, -99)");
 		
 		sashForm.setWeights(new int[] {1, 3});
+		
+		pack();
 	}
 	
 	private void setLayer(int i) {
@@ -203,7 +209,6 @@ public class PositionShell extends LObjectShell<Position> {
 		super.open(initial);		
 		LPath path = findPath(initial.fieldID);
 		tree.forceSelection(path);
-		
 		spnX.setSelection(initial.x);
 		spnY.setSelection(initial.y);
 		if (initial.direction == -1) {
@@ -214,6 +219,7 @@ public class PositionShell extends LObjectShell<Position> {
 		refreshLayerCombo();
 		cmbLayer.select(initial.z);
 		setLayer(initial.z);
+		content.layout();
 	}
 	
 	private void refreshLayerCombo() {

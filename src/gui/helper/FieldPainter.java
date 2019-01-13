@@ -274,15 +274,15 @@ public class FieldPainter {
 	}
 	
 	public void paintBackground(Field field, Quad quad, int x0, int y0, GC gc) {
-		if (quad.path.isEmpty() == false) {
-			Image bg = quad.getImage();
-			Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
-			x0 += center.x - quad.width / 2;
-			y0 += center.y - quad.height / 2;
-			gc.drawImage(bg, 
-					quad.x, quad.y, quad.width, quad.height,
-					x0, y0, quad.width, quad.height);
-		}
+		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
+			return;
+		Image bg = quad.getImage();
+		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
+		x0 += center.x - quad.width / 2;
+		y0 += center.y - quad.height / 2;
+		gc.drawImage(bg, 
+			quad.x, quad.y, quad.width, quad.height,
+			x0, y0, quad.width, quad.height);
 	}
 
 }

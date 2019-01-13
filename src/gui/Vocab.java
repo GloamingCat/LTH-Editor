@@ -307,7 +307,6 @@ public class Vocab {
 	
 	// Tileset
 	public String ANIMATION = "Animation";
-	public String DIRECTION = "Direction";
 	public String STARTLISTENER = "Start";
 	public String COLLISIONLISTENER = "Collision";
 	public String INTERACTLISTENER = "Interact";
@@ -330,6 +329,11 @@ public class Vocab {
 	public String SHOWGRID = "Show Grid";
 	public String RESIZE = "Resize";
 	
+	// Position
+	public String POSITION = "Position";
+	public String LAYER = "Layer";
+	public String DIRECTION = "Direction";
+	
 	// Transition
 	public String TRANSITIONS = "Transitions";
 	public String ORIGIN = "Origin";
@@ -339,27 +343,5 @@ public class Vocab {
 	public String EAST = "East";
 	public String SOUTH = "South";
 	public String WEST = "West";
-
-	// ========================================================================
-	// Other
-	// ========================================================================
-	
-	// Dialogue
-	public String SPEECHES = "Speeches";
-	public String PORTRAIT = "Portrait";
-	public String RIGHT = "Right";
-	public String LEFT = "Left";
-	public String MESSAGE = "Message";
-	public String CHARNAME = "Character Name";
-	public String SIZE = "Size";
-	public String POSITION = "Position";
-	public String CUSTOMWIDTH = "Custom Width";
-	public String CUSTOMHEIGHT = "Custom Height";
-	public String LINECOUNT = "Max lines";
-	public String CUSTOM = "Custom";
-	public String MINWIDTH = "Minimum width";
-	public String SCREENWIDTH = "Screen width";
-	public String MINHEIGHT = "Minimum height";
-	public String MAXLINES = "Number of lines";
 
 }

@@ -197,6 +197,7 @@ public class ConfigEditor extends LView {
 		
 		PositionButton btnStartPos = new PositionButton(playerEditor, SWT.NONE);
 		btnStartPos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnStartPos.setText(txtPos);
 		playerEditor.addControl(btnStartPos, "startPos");
 		
 		// Grid
