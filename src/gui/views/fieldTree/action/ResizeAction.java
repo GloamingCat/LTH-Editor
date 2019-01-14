@@ -1,6 +1,7 @@
 package gui.views.fieldTree.action;
 
 import gui.views.fieldTree.FieldEditor;
+import gui.views.fieldTree.FieldTreeEditor;
 import project.Project;
 import lwt.action.LAction;
 import lwt.dataestructure.LDataList;
@@ -19,23 +20,22 @@ public class ResizeAction implements LAction {
 	private Field.Layers newLayers = new Field.Layers();
 	
 	private LPath path;
-	private FieldEditor editor;
 	
-	public ResizeAction (FieldEditor editor, int newW, int newH) {
-		oldW = editor.canvas.field.sizeX;
-		oldH = editor.canvas.field.sizeY;
-		oldLayers = editor.canvas.field.layers;
+	public ResizeAction (int newW, int newH) {
+		Field field = FieldEditor.instance.canvas.field;
+		oldW = field.sizeX;
+		oldH = field.sizeY;
+		oldLayers = field.layers;
 		this.newW = newW;
 		this.newH = newH;
-		oldLayers = editor.canvas.field.layers;
+		oldLayers = field.layers;
 		resize(oldLayers.terrain, newLayers.terrain);
 		resize(oldLayers.obstacle, newLayers.obstacle);
 		resize(oldLayers.region, newLayers.region);
 		resize(oldLayers.party, newLayers.party);
-		this.editor = editor;
-		this.path = editor.treeEditor.getCollectionWidget().getSelectedPath();
+		this.path = FieldTreeEditor.instance.fieldTree.getSelectedPath();
 	}
-	
+
 	private void resize(LDataList<Layer> layers, LDataList<Layer> newLayers) {
 		for(Layer l : layers) {
 			Layer newLayer = new Layer(newW, newH);
@@ -59,8 +59,8 @@ public class ResizeAction implements LAction {
 		field.sizeX = newW;
 		field.sizeY = newH;
 		field.layers = newLayers;
-		editor.canvas.field = null;
-		editor.treeEditor.getCollectionWidget().forceSelection(path);	
+		FieldEditor.instance.canvas.field = null;
+		FieldTreeEditor.instance.fieldTree.forceSelection(path);	
 	}
 	
 	public void undo() {
@@ -68,8 +68,8 @@ public class ResizeAction implements LAction {
 		field.sizeX = oldW;
 		field.sizeY = oldH;
 		field.layers = oldLayers;
-		editor.canvas.field = null;
-		editor.treeEditor.getCollectionWidget().forceSelection(path);
+		FieldEditor.instance.canvas.field = null;
+		FieldTreeEditor.instance.fieldTree.forceSelection(path);
 	}
 	
 }

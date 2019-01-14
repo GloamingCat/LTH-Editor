@@ -1,6 +1,8 @@
 package gui.views.fieldTree;
 
 import gui.Vocab;
+import gui.shell.field.ResizeShell;
+import gui.views.fieldTree.action.ResizeAction;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -8,16 +10,24 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import lwt.dialog.LObjectDialog;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.widget.LWidget;
 
 public class FieldToolBar extends LWidget {
 
+	// External
+	public static FieldToolBar instance;
+	
 	public FieldToolBar(Composite parent, int style) {
 		super(parent, style);
+		instance = this;
 		setSize(new Point(440, 0));
 		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
 		setLayout(fillLayout);
@@ -54,6 +64,56 @@ public class FieldToolBar extends LWidget {
 		
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		
+		ToolItem tltmTerrain = new ToolItem(toolBar, SWT.RADIO);
+		tltmTerrain.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				onSelectEditor(0);
+			}
+		});
+		tltmTerrain.setSelection(true);
+		tltmTerrain.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/terrain.png"));
+		
+		ToolItem tltmObstacle = new ToolItem(toolBar, SWT.RADIO);
+		tltmObstacle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				onSelectEditor(1);
+			}
+		});
+		tltmObstacle.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/object.png"));
+		
+		ToolItem tltmChar = new ToolItem(toolBar, SWT.RADIO);
+		tltmChar.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				onSelectEditor(2);
+			}
+		});
+		tltmChar.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/character.png"));
+		
+		ToolItem tltmRegion = new ToolItem(toolBar, SWT.RADIO);
+		tltmRegion.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				onSelectEditor(3);
+			}
+		});
+		tltmRegion.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/region.png"));
+		
+		/*
+		ToolItem tltmParty = new ToolItem(toolBar, SWT.RADIO);
+		tltmParty.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				onSelectEditor(4);
+			}
+		});
+		tltmParty.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/eraser.png"));
+		*/
+		
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		
 		ToolItem tltmShowGrid = new ToolItem(toolBar, SWT.CHECK);
 		tltmShowGrid.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -79,8 +139,38 @@ public class FieldToolBar extends LWidget {
 		pack();
 	}
 	
-	public void onSelectTool(int i) {}
-	public void onShowGrid(boolean i) {}
-	public void onResize() {}
+	public void onSelectEditor(int i) {
+		FieldSideEditor.instance.selectEditor(i);
+	}
+	
+	public void onSelectTool(int i) {
+		FieldEditor.instance.canvas.setTool(i);
+	}
+	
+	public void onShowGrid(boolean i) {
+		FieldEditor.instance.canvas.setShowGrid(i);
+	}
+	
+	public void onResize() {
+		Point size = new Point(FieldSideEditor.instance.field.sizeX, 
+				FieldSideEditor.instance.field.sizeY);
+		LObjectDialog<Point> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
+		dialog.setFactory(new LShellFactory<Point>() {
+			@Override
+			public LObjectShell<Point> createShell(Shell parent) {
+				return new ResizeShell(parent);
+			}
+		});
+		size = dialog.open(size);
+		if (size != null) {
+			resizeField(size.x, size.y);
+		}
+	}
+	
+	private void resizeField(int w, int h) {
+		ResizeAction action = new ResizeAction(w, h);
+		FieldEditor.instance.canvas.getActionStack().newAction(action);
+		action.redo();
+	}
 
 }

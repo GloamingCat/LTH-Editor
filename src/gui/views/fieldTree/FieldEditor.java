@@ -1,24 +1,16 @@
 package gui.views.fieldTree;
 
-import gui.shell.field.ResizeShell;
-import gui.views.fieldTree.action.ResizeAction;
-import lwt.dialog.LObjectDialog;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShellFactory;
 import lwt.editor.LObjectEditor;
-import lwt.editor.LTreeEditor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.field.Field;
@@ -29,14 +21,12 @@ import org.eclipse.swt.layout.GridLayout;
 
 public class FieldEditor extends LObjectEditor {
 
-	private FieldToolBar toolBar;
+	public static FieldEditor instance;
+	public EditableFieldCanvas canvas;
+	
 	private Label tileCoord;
 	private ScrolledComposite scrolledComposite;
-	public EditableFieldCanvas canvas;
-	public LTreeEditor<FieldNode, Field.Prefs> treeEditor;
-	
-	Label lblID;
-	
+		
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -44,43 +34,33 @@ public class FieldEditor extends LObjectEditor {
 	 */
 	public FieldEditor(Composite parent, int style) {
 		super(parent, style);
+		instance = this;
 		setLayout(new GridLayout(2, false));
 		
-		toolBar = new FieldToolBar(this, SWT.NONE) {
-			public void onSelectTool(int i) {
-				canvas.setTool(i);
-			}
-			public void onShowGrid(boolean i) {
-				canvas.setShowGrid(i);
-			}
-			public void onResize() {
-				Point size = new Point(canvas.field.sizeX, canvas.field.sizeY);
-				LObjectDialog<Point> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
-				dialog.setFactory(new LShellFactory<Point>() {
-					@Override
-					public LObjectShell<Point> createShell(Shell parent) {
-						return new ResizeShell(parent);
-					}
-				});
-				size = dialog.open(size);
-				if (size != null) {
-					resizeField(size.x, size.y);
-				}
-			}
-		};
+		FieldToolBar toolBar = new FieldToolBar(this, SWT.NONE);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		lblID = new Label(this, SWT.NONE);
+		Label lblID = new Label(this, SWT.NONE);
 		lblID.setText("ID: 9999");
 		
 		scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
+			
 			public void onTileEnter(int x, int y) {
 				super.onTileEnter(x, y);
 				tileCoord.setText("(" + x + ", " + y + ")");
 			}
+			
+			public void setField(Field field) {
+				super.setField(field);
+				if (field == null)
+					lblID.setText("ID: -1");
+				else
+					lblID.setText("ID: " + field.id);
+			}
+			
 		};
 		addChild(canvas);
 		scrolledComposite.setContent(canvas);
@@ -131,8 +111,6 @@ public class FieldEditor extends LObjectEditor {
 	}
 	
 	public void selectField(Field field) {
-		if (field != null)
-			lblID.setText("ID: " + field.id);
 		canvas.setField(field);
 		scrolledComposite.setMinSize(canvas.getSize());
 	}
@@ -152,20 +130,5 @@ public class FieldEditor extends LObjectEditor {
 			super.setObject(null);
 		}
 	}
-	
-	public void updateCanvas() {
-		canvas.updateAllTileImages();
-	}
 
-	public void onSelectTile(int index) {
-		canvas.setSelection(new int[][] {{index}}, new Point(0, 0));
-	}
-	
-	private void resizeField(int w, int h) {
-		ResizeAction action = new ResizeAction(this, w, h);
-		getActionStack().newAction(action);
-		action.redo();
-		scrolledComposite.setMinSize(canvas.getSize());
-	}
-	
 }

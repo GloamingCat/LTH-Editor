@@ -41,7 +41,7 @@ public class FieldCanvas extends LView {
 				
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
-	        	if (field != null && currentLayer != null) {
+	        	if (field != null) {
 	        		drawAllTiles(e.gc);
 	        	}
 	        }
@@ -105,7 +105,6 @@ public class FieldCanvas extends LView {
 	private void drawCursor(GC gc) {
 		float scale = painter.scale;
 		painter.scale = scale * 0.75f;
-		System.out.println(mousePoint);
 		painter.paintEdges(gc, mousePoint.x + x0, mousePoint.y + y0);
 		painter.scale = scale;
 	}
@@ -137,12 +136,8 @@ public class FieldCanvas extends LView {
 	}
 	
 	public void updateAllTileImages() {
-		if (currentLayer == null) {
-			if (field == null) {
-				clearTileImages(0, 0);
-			} else {
-				clearTileImages(field.sizeX, field.sizeY);
-			}
+		if (field == null) {
+			clearTileImages(0, 0);
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
 			int imgW = FieldHelper.config.grid.tileW * 3;

@@ -76,6 +76,10 @@ public class EditableFieldCanvas extends FieldCanvas {
 		selection[0][0] = 0;
 		selectionPoint = new Point(0, 0);
 	}
+	
+	// -------------------------------------------------------------------------------------
+	// Draw
+	// -------------------------------------------------------------------------------------
 
 	private void drawSelection(GC gc) {
 		Point p1 = FieldHelper.math.tile2Pixel(tileX, tileY, currentLayer.info.height);
@@ -95,13 +99,18 @@ public class EditableFieldCanvas extends FieldCanvas {
 	// Tools
 	// -------------------------------------------------------------------------------------
 	
-	public void setTool(int t) {
-		tool = t;
-	}
-	
 	public void setSelection(int[][] s, Point p) {
 		selection = s;
 		selectionPoint = p;
+	}
+	
+	public void setSelection(int index) {
+		selection = new int[][] {{index}};
+		selectionPoint = new Point(0, 0);
+	}
+	
+	public void setTool(int t) {
+		tool = t;
 	}
 	
 	private void useTool(int x, int y) {
@@ -204,6 +213,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 				selection[i][j] = grid[x1 + i][y1 + j];
 			}
 		}
+		FieldSideEditor.instance.unselectTiles();
 	}
 	
 	public void onTileEnter(int x, int y) {

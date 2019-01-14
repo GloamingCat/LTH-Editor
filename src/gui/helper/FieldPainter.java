@@ -132,12 +132,15 @@ public class FieldPainter {
 			int id = layer.grid[x][y];
 			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
 			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
+			if (anim == null)
+				return;
 			Image img = obstacleCache.get(id);
 			if (img == null) {
 				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
 				obstacleCache.put(id, img);
 			}
 			Rectangle rect = obj.image.getRectangle();
+			y0 += Project.current.config.getData().grid.tileH / 2;
 			gc.drawImage(img, rect.x, rect.y, rect.width, rect.height,
 					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
 					y0 - img.getBounds().height + obj.transform.offsetY, 
@@ -213,7 +216,7 @@ public class FieldPainter {
 	    src.dispose();
 	    Image img = new Image(Display.getCurrent(), imageData);
 	    
-	    int x0 = FieldHelper.config.grid.tileW + FieldHelper.config.grid.tileW / 2;
+	    int x0 = imgW / 2;
 	    int y0 = imgH - FieldHelper.config.grid.tileH;
 
 	    int pph = FieldHelper.config.grid.pixelsPerHeight;

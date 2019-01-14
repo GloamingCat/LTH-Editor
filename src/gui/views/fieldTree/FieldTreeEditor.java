@@ -9,7 +9,6 @@ import gui.shell.field.FieldPrefShell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -32,17 +31,18 @@ import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LTree;
 
 public class FieldTreeEditor extends LView {
 
+	public static FieldTreeEditor instance;
 	protected static Gson gson = new Gson();
 	
-	protected LTreeEditor<FieldNode, Field.Prefs> treeEditor;
-	protected FieldEditor fieldEditor;
-	protected FieldLayerEditor sideEditor;
+	public LTree<FieldNode, Field.Prefs> fieldTree;
 	
 	public FieldTreeEditor(Composite parent, int style) {
 		super(parent, style);
+		instance = this;
 		
 		setLayout(new FillLayout());
 		
@@ -50,7 +50,7 @@ public class FieldTreeEditor extends LView {
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		
-		treeEditor = new LTreeEditor<FieldNode, Field.Prefs>(sashForm, SWT.NONE) {
+		LTreeEditor<FieldNode, Field.Prefs> treeEditor = new LTreeEditor<FieldNode, Field.Prefs>(sashForm, SWT.NONE) {
 			@Override
 			public LDataTree<FieldNode> getDataCollection() {
 				return Project.current.fieldTree.getData();
@@ -100,6 +100,16 @@ public class FieldTreeEditor extends LView {
 				return shell;
 			}
 		});
+		addChild(treeEditor);
+		treeEditor.setActionStack(getActionStack());
+		fieldTree = treeEditor.getCollectionWidget();
+
+		FieldEditor fieldEditor = new FieldEditor(sashForm, SWT.NONE);		
+		treeEditor.addChild(fieldEditor);
+		
+		FieldSideEditor sideEditor = new FieldSideEditor(sashForm, SWT.NONE);
+		fieldEditor.addChild(sideEditor);
+		
 		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -114,13 +124,6 @@ public class FieldTreeEditor extends LView {
 				fieldEditor.canvas.redraw();
 			}
 		});
-		
-		fieldEditor = new FieldEditor(sashForm, SWT.NONE);
-		fieldEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		sideEditor = new FieldLayerEditor(sashForm, SWT.NONE);
-		sideEditor.setFieldEditor(fieldEditor);
-		
 		treeEditor.getCollectionWidget().addInsertListener(new LCollectionListener<FieldNode>() {
 			@Override
 			public void onInsert(LInsertEvent<FieldNode> event) {
@@ -133,15 +136,8 @@ public class FieldTreeEditor extends LView {
 						nodes.add(child);
 					}
 				}
-				fieldEditor.lblID.setText("ID " + event.node.id);
 			}
 		});
-
-		treeEditor.addChild(fieldEditor);
-		fieldEditor.addChild(sideEditor);
-		fieldEditor.treeEditor = treeEditor;
-		addChild(treeEditor);
-		treeEditor.setActionStack(getActionStack());
 		
 		sashForm.setWeights(new int[] {1, 3, 1});
 	}
