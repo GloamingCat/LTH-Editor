@@ -21,7 +21,7 @@ public class CharTile extends BasicTile implements LGraphical {
 	public int charID = 11;
 	public int battlerID = -1;
 	
-	public String anim = "Idle";
+	public String animation = "Idle";
 	public int direction = 315;
 	
 	public Script startScript = new Script();
@@ -32,10 +32,15 @@ public class CharTile extends BasicTile implements LGraphical {
 
 	@Override
 	public Image toImage() {
-		return TilePainter.getCharacterTile(id, anim, direction);
+		return TilePainter.getCharacterTile(id, animation, direction);
 	}
+	
 	public String getKey() {
-		return id + "," + anim + "," + direction;
+		return id + "," + animation + "," + direction;
+	}
+	
+	public String toString() {
+		return key;
 	}
 	
 }

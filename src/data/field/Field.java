@@ -1,5 +1,6 @@
 package data.field;
 
+import gui.Vocab;
 import data.Data;
 import data.Script;
 import data.subcontent.Quad;
@@ -19,7 +20,6 @@ public class Field {
 	
 	public LDataList<Transition> transitions = new LDataList<>(); 
 	public LDataList<CharTile> characters = new LDataList<>();
-	
 	
 	public Field() {}
 	
@@ -59,6 +59,14 @@ public class Field {
 			return maxH;
 		}
 		
+	}
+	
+	public LDataList<String> createPartyArray() {
+		LDataList<String> list = new LDataList<>();
+		for(int i = 0; i < prefs.partyCount; i++) {
+			list.add(Vocab.instance.PARTY + " " + i);
+		}
+		return list;
 	}
 	
 }

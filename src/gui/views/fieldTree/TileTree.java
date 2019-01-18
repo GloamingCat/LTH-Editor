@@ -1,6 +1,7 @@
 package gui.views.fieldTree;
 
 import lwt.dataestructure.LDataTree;
+import lwt.editor.LState;
 import lwt.editor.LView;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
@@ -46,6 +47,16 @@ public abstract class TileTree extends LView {
 		super.onVisible();
 		selector.setCollection(getTree());
 		selector.setValue(0);
+	}
+	
+	public LState getState() {
+		final Integer id = selector.getValue();
+		return new LState() {
+			@Override
+			public void reset() {
+				selector.setValue(id);
+			}
+		};
 	}
 	
 	public abstract LDataTree<Object> getTree();

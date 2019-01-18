@@ -15,6 +15,7 @@ import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LCombo;
 import lwt.widget.LTree;
 
 import org.eclipse.swt.widgets.Label;
@@ -45,7 +46,7 @@ public class PositionShell extends LObjectShell<Position> {
 	private LTree<FieldNode, Field> tree;
 	private EditableFieldCanvas canvas;
 	private Combo cmbLayer;
-	private Combo cmbDirection;
+	private LCombo cmbDirection;
 	private Spinner spnX;
 	private Spinner spnY;
 	private ScrolledComposite scrolledComposite;
@@ -171,10 +172,11 @@ public class PositionShell extends LObjectShell<Position> {
 		lblDirection.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDirection.setText(Vocab.instance.DIRECTION);
 		
-		cmbDirection = new Combo(bottom, SWT.READ_ONLY);
-		String[] d = new String[] {"", "0°", "45°", "90°", "135°", 
+		cmbDirection = new LCombo(bottom, SWT.READ_ONLY);
+		String[] d = new String[] {"0°", "45°", "90°", "135°", 
 				"180°", "225°", "270°", "315°"};
 		cmbDirection.setItems(d);
+		cmbDirection.setOptional(true);
 		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		lblPos = new Label(bottom, SWT.NONE);
@@ -212,9 +214,9 @@ public class PositionShell extends LObjectShell<Position> {
 		spnX.setSelection(initial.x);
 		spnY.setSelection(initial.y);
 		if (initial.direction == -1) {
-			cmbDirection.select(0);
+			cmbDirection.setValue(-1);
 		} else {
-			cmbDirection.select(initial.direction / 45 + 1);
+			cmbDirection.setValue(initial.direction / 45);
 		}
 		refreshLayerCombo();
 		cmbLayer.select(initial.z);
@@ -240,7 +242,7 @@ public class PositionShell extends LObjectShell<Position> {
 		pos.x = spnX.getSelection();
 		pos.y = spnY.getSelection();
 		pos.z = cmbLayer.getSelectionIndex();
-		pos.direction = cmbDirection.getSelectionIndex() - 1;
+		pos.direction = cmbDirection.getSelectionIndex();
 		if (pos.direction >= 0) {
 			pos.direction *= 45;
 		}

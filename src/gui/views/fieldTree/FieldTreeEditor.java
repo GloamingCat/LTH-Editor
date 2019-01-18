@@ -101,7 +101,6 @@ public class FieldTreeEditor extends LView {
 			}
 		});
 		addChild(treeEditor);
-		treeEditor.setActionStack(getActionStack());
 		fieldTree = treeEditor.getCollectionWidget();
 
 		FieldEditor fieldEditor = new FieldEditor(sashForm, SWT.NONE);		
