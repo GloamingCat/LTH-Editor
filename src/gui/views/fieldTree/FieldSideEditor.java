@@ -3,6 +3,7 @@ package gui.views.fieldTree;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LEditor;
+import lwt.widget.LImage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -10,8 +11,11 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
+import data.Obstacle;
+import data.Terrain;
 import data.field.Field;
 import data.field.Layer;
+import data.subcontent.Icon;
 
 public class FieldSideEditor extends LEditor {
 
@@ -44,13 +48,25 @@ public class FieldSideEditor extends LEditor {
 			}
 		};
 		lstTerrain.setEditor(this);
+		
 		TileTree selTerrain = new TileTree(terrain, SWT.NONE) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.terrains.getTree();
 			}
+			@Override
+			public void updateImage(Object obj) {
+				int id = ((Terrain) obj).animID;
+				Icon icon = new Icon(id, 0, 0);
+				image.setImage(icon.getImage(), icon.getRectangle());
+			}
 		};
 		addChild(selTerrain);
+		
+		LImage imgTerrain = new LImage(terrain, SWT.NONE);
+		imgTerrain.setHorizontalAlign(SWT.CENTER);
+		imgTerrain.setVerticalAlign(SWT.CENTER);
+		selTerrain.image = imgTerrain;
 		
 		// Obstacle
 		
@@ -61,14 +77,25 @@ public class FieldSideEditor extends LEditor {
 			}
 		};
 		lstObstacle.setEditor(this);
+		
 		TileTree selObstacle = new TileTree(obstacle, SWT.NONE) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.obstacles.getTree();
 			}
+			@Override
+			public void updateImage(Object obj) {
+				Icon icon = ((Obstacle) obj).image;
+				image.setImage(icon.getImage(), icon.getRectangle());
+			}
 		};
 		addChild(selObstacle);
-
+		
+		LImage imgObstacle = new LImage(obstacle, SWT.NONE);
+		imgObstacle.setHorizontalAlign(SWT.CENTER);
+		imgObstacle.setVerticalAlign(SWT.CENTER);
+		selObstacle.image = imgObstacle;
+		
 		lists = new LayerList[] { lstTerrain, lstObstacle };
 		trees = new TileTree[] { selTerrain, selObstacle };
 	}

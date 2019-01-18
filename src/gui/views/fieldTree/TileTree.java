@@ -29,6 +29,10 @@ public abstract class TileTree extends LView {
 		selector.addModifyListener(new LControlListener<Integer>() {
 			public void onModify(LControlEvent<Integer> event) {
 				FieldEditor.instance.canvas.setSelection(event.newValue);
+				if (image != null) {
+					Object obj = getTree().get(event.newValue);
+					updateImage(obj);
+				}
 			}
 		});
 		
@@ -42,9 +46,9 @@ public abstract class TileTree extends LView {
 		super.onVisible();
 		selector.setCollection(getTree());
 		selector.setValue(0);
-		System.out.println("bla 0");
 	}
 	
 	public abstract LDataTree<Object> getTree();
+	public abstract void updateImage(Object obj);
 
 }

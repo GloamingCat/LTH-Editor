@@ -1,5 +1,6 @@
 package data.subcontent;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 
 import project.Project;
@@ -12,6 +13,7 @@ public class Icon {
 	public int row = 0;
 	
 	public Icon() {}
+	
 	public Icon(int id, int col, int row) {
 		this.id = id;
 		this.col = col;
@@ -20,6 +22,15 @@ public class Icon {
 	
 	public Animation getAnimation() {
 		return (Animation) Project.current.animations.getTree().get(id);
+	}
+	
+	public String getImagePath() {
+		Animation anim = getAnimation();
+		return anim == null ? null : anim.quad.path;
+	}
+	
+	public Image getImage() {
+		return getAnimation().quad.getImage();
 	}
 
 	public Rectangle getRectangle() {
