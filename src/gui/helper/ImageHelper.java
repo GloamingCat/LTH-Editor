@@ -17,8 +17,10 @@ public class ImageHelper {
 	    gc.fillRectangle(0, 0, imgW, imgH);
 	    gc.dispose();
 	    ImageData imageData = src.getImageData();
-	    imageData.transparentPixel = imageData.getPixel(0, 0);
-	    return correctTransparency(src);
+	    imageData.transparentPixel = -1;
+	    Image img = correctTransparency(imageData);
+	    src.dispose();
+	    return img;
 	}
 	
 	public static Image correctTransparency(Image image) {
@@ -29,6 +31,7 @@ public class ImageHelper {
 	
 	public static Image correctTransparency(ImageData imageData) {
 		int len = imageData.width * imageData.height;
+		imageData.transparentPixel = -1;
 		imageData.alphaData = new byte[len];
 		for (int idx = 0; idx < len; idx++) {
 	        final int coord = (idx * 4) + 3;
@@ -45,7 +48,6 @@ public class ImageHelper {
 			gc.fillRectangle(0, 0, w, h);
 		}
 		gc.setAlpha(255);
-		//gc.setTextAntialias(0);
 		Point size = gc.stringExtent(s);
 		int x = (w - size.x) / 2;
 		int y = (h - size.y) / 2;

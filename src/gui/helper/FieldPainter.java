@@ -157,11 +157,7 @@ public class FieldPainter {
 	}
 	
 	public Image createTileImage(int x, int y, int imgW, int imgH, Layer currentLayer, Field field) {
-		Image src = new Image(Display.getCurrent(), imgW, imgH);        
-	    ImageData imageData = src.getImageData();
-	    imageData.transparentPixel = imageData.getPixel(0, 0);
-	    src.dispose();
-	    Image img = new Image(Display.getCurrent(), imageData);
+		Image img = ImageHelper.newImage(imgW, imgH);
 	    
 	    int x0 = imgW / 2;
 	    int y0 = imgH - FieldHelper.config.grid.tileH;
@@ -209,7 +205,7 @@ public class FieldPainter {
 			paintCharacter(tile, gc, x0, y0 - tile.h * pph);
 		}
 		gc.dispose();
-		return img;
+		return ImageHelper.correctTransparency(img);
 	}
 
 }

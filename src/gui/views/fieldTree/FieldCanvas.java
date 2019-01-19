@@ -15,6 +15,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.Field;
 import data.field.Layer;
@@ -42,6 +43,7 @@ public class FieldCanvas extends LView {
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
 	        	if (field != null) {
+	        		e.gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 	        		drawAllTiles(e.gc);
 	        	}
 	        }
@@ -73,7 +75,7 @@ public class FieldCanvas extends LView {
 		Image img = new Image(egc.getDevice(), getSize().x, getSize().y); 
 		GC gc = new GC(img);
 		gc.setBackground(egc.getBackground());
-		gc.fillRectangle(getBounds());
+		gc.fillRectangle(img.getBounds());
 		painter.paintBackground(field, field.prefs.background, x0, y0, gc);
 		painter.paintBackground(field, field.prefs.parallax, x0, y0, gc);
 		
@@ -116,12 +118,9 @@ public class FieldCanvas extends LView {
 	public void updateTileImage(int x, int y) {
 		if (tileImages[x][y] != null)
 			tileImages[x][y].dispose();
-		
 		int imgW = FieldHelper.config.grid.tileW * 3;
 		int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
-		
 		Point[] shift = FieldHelper.math.neighborShift;
-		
 		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, currentLayer, field);
 		for(int k = 0; k < shift.length; k++) {
 			int _x = x + shift[k].x;

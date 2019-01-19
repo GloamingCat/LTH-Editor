@@ -74,7 +74,7 @@ public class TilePainter {
 		if (anim == null)
 			return null;
 		Rectangle rect = obj.image.getRectangle();
-		img = ImageHelper.newImage( rect.width, rect.height);
+		img = ImageHelper.newImage(rect.width, rect.height);
 		GC gc = new GC(img);
 		gc.drawImage(obj.image.getImage(), rect.x, rect.y, rect.width, rect.height,
 				0, 0, rect.width * anim.transform.scaleX / 100, rect.height * anim.transform.scaleY / 100);
@@ -104,7 +104,6 @@ public class TilePainter {
 		gc.drawImage(anim.quad.getImage(), anim.quad.x + w * col, anim.quad.y + h * tile.row, 
 				w, h, - w / 2 + anim.transform.offsetX, - h + anim.transform.offsetY, w, h);
 		gc.dispose();
-		img = ImageHelper.correctTransparency(img);
 		img = ImageHelper.colorTransform(img, anim.transform.hue + c.transform.hue, 
 				anim.transform.saturation * c.transform.saturation * 0.0001f, 
 				anim.transform.brightness * c.transform.brightness * 0.0001f);
