@@ -101,8 +101,9 @@ public class TilePainter {
 		int col = anim.getFirstFrame();
 		img = ImageHelper.newImage(w, h);
 		GC gc = new GC(img);
-		gc.drawImage(anim.quad.getImage(), anim.quad.x + w * col, anim.quad.y + h * tile.row, 
-				w, h, - w / 2 + anim.transform.offsetX, - h + anim.transform.offsetY, w, h);
+		gc.drawImage(anim.quad.getImage(), 
+				anim.quad.x + w * col, anim.quad.y + h * tile.row, w, h, 
+				0, 0, w, h);
 		gc.dispose();
 		img = ImageHelper.colorTransform(img, anim.transform.hue + c.transform.hue, 
 				anim.transform.saturation * c.transform.saturation * 0.0001f, 

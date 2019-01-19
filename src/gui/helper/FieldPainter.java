@@ -121,6 +121,15 @@ public class FieldPainter {
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
 			Animation anim = (Animation) Project.current.animations.getTree().
 					get(c.findAnimation(tile.animation));
+			if (c.shadowID >= 0) {
+				Animation shadow = (Animation) Project.current.animations.getTree().get(c.shadowID);
+				int sw = shadow.quad.width / shadow.cols;
+				int sh = shadow.quad.height / shadow.rows;
+				int scol = shadow.getFirstFrame();
+				gc.drawImage(shadow.quad.getImage(), 
+						shadow.quad.x + sw * scol, shadow.quad.y, sw, sh, 
+						x0 - shadow.transform.offsetX, y0 - shadow.transform.offsetY, sw, sh);
+			}
 			gc.drawImage(img, x0 - anim.transform.offsetX, y0 - anim.transform.offsetY);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
