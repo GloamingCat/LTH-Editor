@@ -72,7 +72,11 @@ public class FieldCanvas extends LView {
 	public void onTileEnter(int x, int y) { }
 
 	private void drawAllTiles(GC egc) {
-		Image img = new Image(egc.getDevice(), getSize().x, getSize().y); 
+		Point size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
+		int w = x0 * 2;
+		int h = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
+				FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
+		Image img = new Image(egc.getDevice(), size.x + w, size.y + h); 
 		GC gc = new GC(img);
 		gc.setBackground(egc.getBackground());
 		gc.fillRectangle(img.getBounds());
@@ -178,8 +182,8 @@ public class FieldCanvas extends LView {
 			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
 					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
-		setSize(Math.round((pixelSize.x + x0*2) * scale), 
-				Math.round((pixelSize.y + y0 + x0*2) * scale));
+		setSize(Math.round((pixelSize.x + x0*2 - FieldHelper.config.grid.tileW) * scale), 
+				Math.round((pixelSize.y + y0) * scale));
 	}
 	
 	public void setCurrentLayer(Layer layer) {
