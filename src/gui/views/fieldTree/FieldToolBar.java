@@ -82,24 +82,24 @@ public class FieldToolBar extends LWidget {
 			}
 		});
 		tltmObstacle.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/object.png"));
-		
-		ToolItem tltmChar = new ToolItem(toolBar, SWT.RADIO);
-		tltmChar.addSelectionListener(new SelectionAdapter() {
+
+		ToolItem tltmRegion = new ToolItem(toolBar, SWT.RADIO);
+		tltmRegion.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				onSelectEditor(2);
 			}
 		});
-		tltmChar.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/character.png"));
+		tltmRegion.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/region.png"));
 		
-		ToolItem tltmRegion = new ToolItem(toolBar, SWT.RADIO);
-		tltmRegion.addSelectionListener(new SelectionAdapter() {
+		ToolItem tltmChar = new ToolItem(toolBar, SWT.RADIO);
+		tltmChar.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				onSelectEditor(3);
 			}
 		});
-		tltmRegion.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/region.png"));
+		tltmChar.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/character.png"));
 		
 		/*
 		ToolItem tltmParty = new ToolItem(toolBar, SWT.RADIO);

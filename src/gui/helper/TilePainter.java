@@ -5,8 +5,8 @@ import java.util.HashMap;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.GameCharacter;
@@ -14,114 +14,123 @@ import data.Obstacle;
 import data.Terrain;
 import data.config.Config;
 import data.config.Region;
+import data.field.CharTile;
 import project.Project;
 
 public class TilePainter {
 
 	private static Config conf;
 	
-	public static HashMap<Integer, Image> terrainTiles = new HashMap<>();
-	public static HashMap<Integer, Image> obstacleTiles = new HashMap<>();
-	public static HashMap<String, Image> characterTiles = new HashMap<>();
-	public static HashMap<Integer, Image> regionTiles = new HashMap<>();
+	public static HashMap<Integer, Image> terrainCache = new HashMap<>();
+	public static HashMap<Integer, Image> obstacleCache = new HashMap<>();
+	public static HashMap<String, Image> characterCache = new HashMap<>();
+	public static HashMap<String, Image> regionCache = new HashMap<>();
 	
-	public static void reloadConfig() {
+	public static void reload() {
+		for(Image img : terrainCache.values()) {
+			img.dispose();
+		}
+		for(Image img : obstacleCache.values()) {
+			img.dispose();
+		}
+		for(Image img : characterCache.values()) {
+			img.dispose();
+		}
+		for(Image img : regionCache.values()) {
+			img.dispose();
+		}
+		terrainCache.clear();
+		obstacleCache.clear();
+		characterCache.clear();
+		regionCache.clear();
 		conf = (Config) Project.current.config.getData();
 	}
 	
-	public static Image getTerrainTile(int terrainID) {
-		int w = conf.grid.tileW;
-		int h = conf.grid.tileH;
-		Image subImage = new Image(Display.getCurrent(), w, h);
-		
-		Terrain terrain = (Terrain) Project.current.terrains.getTree().get(terrainID);
-		Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
-		if (anim != null) {
-			String path = anim.quad.path;
-			Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
-			
-			int srcX = ((anim.quad.width / anim.cols) - w) / 2 + anim.quad.x;
-			int srcY = ((anim.quad.height / FieldHelper.math.autoTileRows) - h) / 2 + anim.quad.y;
-			
-			if (srcX < 0) srcX = 0;
-			if (srcY < 0) srcY = 0;
-			if (image.getBounds().width < w) w = image.getBounds().width;
-			if (image.getBounds().height < h) h = image.getBounds().height;
-			
-			//
-			GC gc = new GC(subImage);
-			gc.drawImage(image, srcX, srcY, w, h, 0, 0, w, h);
-			gc.dispose();
-			//
+	public static Image getTerrainTile(Integer id) {
+		Image img = terrainCache.get(id);
+		if (img != null) {
+			return img;
 		}
-		return subImage;
+		Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
+		if (terrain == null)
+			return null;
+		Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
+		if (anim == null)
+			return null;
+		System.out.println(id + " " + anim.quad.path);
+		int w = anim.quad.width / anim.cols;
+		int h = anim.quad.height / anim.rows;
+		img = ImageHelper.newImage(w, h);
+		GC gc = new GC(img);
+		gc.drawImage(anim.quad.getImage(), anim.quad.x, anim.quad.y, w, h, 0, 0, w, h);
+		gc.dispose();
+		img = ImageHelper.correctTransparency(img);
+		terrainCache.put(id, img);
+		return img;
 	}
 	
-	public static Image getObstacleTile(int id) {
+	public static Image getObstacleTile(Integer id) {
+		Image img = obstacleCache.get(id);
+		if (img != null)
+			return img;
 		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
+		if (obj == null)
+			return null;
 		Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
-		String path = anim.quad.path;
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
-		
-		int w = conf.grid.tileW;
-		int h = conf.grid.tileH;
-		Image subImage = new Image(Display.getCurrent(), w, h);
-		
-		int srcX = (image.getBounds().width - w) / 2 + obj.transform.offsetX;
-		int srcY = image.getBounds().height - obj.transform.offsetY - h / 2;
-		
-		if (srcX < 0) srcX = 0;
-		if (srcY < 0) srcY = 0;
-		if (image.getBounds().width - srcX < w) w = image.getBounds().width - srcX;
-		if (image.getBounds().height - srcY < h) h = image.getBounds().height - srcY;
-		
-		//
-		GC gc = new GC(subImage);
-		gc.drawImage(image, srcX, srcY, w, h, 0, 0, w, h);
+		if (anim == null)
+			return null;
+		Rectangle rect = obj.image.getRectangle();
+		img = ImageHelper.newImage( rect.width, rect.height);
+		GC gc = new GC(img);
+		System.out.println(obj.image);
+		gc.drawImage(obj.image.getImage(), rect.x, rect.y, rect.width, rect.height,
+				0, 0, rect.width, rect.height);
 		gc.dispose();
-		//
-		return subImage;
+		img = ImageHelper.correctTransparency(img);
+		obstacleCache.put(id, img);
+		return img;
 	}
 	
-	public static Image getCharacterTile(int id, String animKey, int direction) {
-		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(id);
+	public static Image getCharacterTile(CharTile tile) {
+		String key = tile.charID + "." + tile.animation + "." + tile.direction;
+		Image img = characterCache.get(key);
+		if (img != null)
+			return img;
+		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
+		if (c == null)
+			return null;
 		Animation anim = (Animation) Project.current.animations.getTree().
-				get(c.findAnimation(animKey));
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
-		
-		int w = conf.grid.tileW;
-		int h = conf.grid.tileH;
-		Image subImage = new Image(Display.getCurrent(), w, h);
-		
-		int fw = image.getBounds().width / anim.cols;
-		int fh = image.getBounds().height / anim.rows;
-		
-		int srcX = (fw - w) / 2;
-		int srcY = fh * (direction / 45) + (fh - h) / 2;
-		
-		if (srcX < 0) srcX = 0;
-		if (srcY < 0) srcY = 0;
-		if (image.getBounds().width - srcX < w) w = image.getBounds().width - srcX;
-		if (image.getBounds().height - srcY < h) h = image.getBounds().height - srcY;
-		
-		//
-		GC gc = new GC(subImage);
-		gc.drawImage(image, srcX, srcY, w, h, 0, 0, w, h);
+				get(c.findAnimation(tile.animation));
+		if (anim == null)
+			return null;
+		int w = anim.quad.width / anim.cols;
+		int h = anim.quad.height / anim.rows;
+		img = ImageHelper.newImage(w, h);
+		GC gc = new GC(img);
+		gc.drawImage(anim.quad.getImage(), 0, h * tile.direction / 45, w, h, 
+				- w / 2 + anim.transform.offsetX, - h + anim.transform.offsetY, w, h);
 		gc.dispose();
-		//
-		return subImage;
+		img = ImageHelper.correctTransparency(img);
+		characterCache.put(key, img);
+		return img;
 	}
 	
-	public static Image getRegionTile(int id) {
+	public static Image getRegionTile(int id, boolean rect) {
+		String key = id + " " + rect;
+		Image img = regionCache.get(key);
+		if (img != null)
+			return img;
+		if (id < 0)
+			return null;
 		Region r = (Region) Project.current.regions.getData().get(id);
-		Image str = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, 
-				new Color(Display.getCurrent(),  r.rgb), true);
-		return str;
+		if (rect)
+			img = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, 
+				new Color(Display.getCurrent(), r.rgb), true);
+		else
+			img = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, false);
+		img = ImageHelper.correctTransparency(img);
+		regionCache.put(key, img);
+		return img;
 	}
-	
-	public static Image getPartyTile(int id) {
-		Image str = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, true);
-		return str;
-	}
-	
+
 }

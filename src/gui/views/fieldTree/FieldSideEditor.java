@@ -2,6 +2,7 @@ package gui.views.fieldTree;
 
 import java.util.ArrayList;
 
+import gui.helper.TilePainter;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
@@ -15,12 +16,10 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
-import data.Obstacle;
-import data.Terrain;
 import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
-import data.subcontent.Icon;
+
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -60,6 +59,7 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		lstTerrain.setEditor(this);
+		addChild(lstTerrain);
 		
 		TileTree selTerrain = new TileTree(terrain, SWT.NONE) {
 			@Override
@@ -67,10 +67,8 @@ public class FieldSideEditor extends LObjectEditor {
 				return Project.current.terrains.getTree();
 			}
 			@Override
-			public void updateImage(Object obj) {
-				int id = ((Terrain) obj).animID;
-				Icon icon = new Icon(id, 0, 0);
-				image.setImage(icon.getImage(), icon.getRectangle());
+			public void updateImage(Object obj, int id) {
+				image.setImage(TilePainter.getTerrainTile(id));
 			}
 		};
 		addChild(selTerrain);
@@ -89,6 +87,7 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		lstObstacle.setEditor(this);
+		addChild(lstObstacle);
 		
 		TileTree selObstacle = new TileTree(obstacle, SWT.NONE) {
 			@Override
@@ -96,9 +95,8 @@ public class FieldSideEditor extends LObjectEditor {
 				return Project.current.obstacles.getTree();
 			}
 			@Override
-			public void updateImage(Object obj) {
-				Icon icon = ((Obstacle) obj).image;
-				image.setImage(icon.getImage(), icon.getRectangle());
+			public void updateImage(Object obj, int id) {
+				image.setImage(TilePainter.getObstacleTile(id));
 			}
 		};
 		addChild(selObstacle);
@@ -108,10 +106,39 @@ public class FieldSideEditor extends LObjectEditor {
 		imgObstacle.setVerticalAlign(SWT.CENTER);
 		selObstacle.image = imgObstacle;
 		
+		// Region
+		
+		SashForm region = new SashForm(this, SWT.VERTICAL);
+		LayerList lstRegion = new LayerList(region, 1) {
+			public LDataList<Layer> getLayerList() {
+				return field.layers.region;
+			}
+		};
+		lstRegion.setEditor(this);
+		addChild(lstRegion);
+		
+		TileTree selRegion = new TileTree(region, SWT.NONE) {
+			@Override
+			public LDataTree<Object> getTree() {
+				return Project.current.regions.getList().toTree();
+			}
+			@Override
+			public void updateImage(Object obj, int id) {
+				image.setImage(TilePainter.getRegionTile(id, true));
+			}
+		};
+		addChild(selRegion);
+		
+		LImage imgRegion = new LImage(region, SWT.NONE);
+		imgRegion.setHorizontalAlign(SWT.CENTER);
+		imgRegion.setVerticalAlign(SWT.CENTER);
+		selRegion.image = imgRegion;
+		
 		// Characters
 		
 		Composite character = new Composite(this, SWT.NONE);
 		character.setLayout(new GridLayout(1, false));
+		
 		lstChars = new SimpleEditableList<>(character, SWT.NONE);
 		lstChars.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		lstChars.getCollectionWidget().setEditEnabled(false);
@@ -121,10 +148,10 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		charEditor = new CharTileEditor(character, SWT.NONE);
 		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		lstChars.addChild(charEditor);		
+		lstChars.addChild(charEditor);
 		
-		lists = new LayerList[] { lstTerrain, lstObstacle };
-		trees = new TileTree[] { selTerrain, selObstacle };
+		lists = new LayerList[] { lstTerrain, lstObstacle, lstRegion };
+		trees = new TileTree[] { selTerrain, selObstacle, selRegion };
 	}
 
 	@Override
@@ -147,8 +174,13 @@ public class FieldSideEditor extends LObjectEditor {
 	}
 
 	public void selectEditor(int i) {
-		stack.topControl = getChildren()[i];
 		editor = i;
+		if (i < lists.length){ // Terrain, Obstacle, Region
+			lists[editor].onVisible();
+			selectLayer(lists[i].getLayer());
+		} else // Character
+			selectLayer(null);
+		stack.topControl = getChildren()[i];
 		layout();
 	}
 
@@ -160,14 +192,14 @@ public class FieldSideEditor extends LObjectEditor {
 	
 	public void onVisible() {
 		super.onVisible();
-		if (editor <= 1)
-			lists[editor].onVisible();
+		editor = 2;
+		selectEditor(editor);
 	}
 	
 	public ArrayList<LState> getChildrenStates() {
 		ArrayList<LState> states = super.getChildrenStates();
-		int editor = this.editor;
-		states.add(new LState() {
+		final int editor = this.editor;
+		states.add(0, new LState() {
 			@Override
 			public void reset() {
 				selectEditor(editor);

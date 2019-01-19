@@ -3,10 +3,10 @@ package project;
 import gson.project.GObjectListSerializer;
 import gson.project.GObjectSerializer;
 import gson.project.GObjectTreeSerializer;
+import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import data.*;
 import data.config.*;
-import data.field.Tileset;
 import data.subcontent.Constant;
 import lwt.dataserialization.LSerializer;
 
@@ -23,7 +23,6 @@ public class Project implements LSerializer {
 	public GObjectTreeSerializer skills;
 	public GObjectTreeSerializer status;
 	public GObjectTreeSerializer terrains;
-	public GObjectTreeSerializer tilesets;
 	public GObjectTreeSerializer troops;
 	
 	// System
@@ -56,7 +55,6 @@ public class Project implements LSerializer {
 		skills = new GObjectTreeSerializer(dataPath() + "skills", Skill.class);
 		status = new GObjectTreeSerializer(dataPath() + "status", Status.class);
 		terrains = new GObjectTreeSerializer(dataPath() + "terrains", Terrain.class);
-		tilesets = new GObjectTreeSerializer(dataPath() + "tilesets", Tileset.class);
 		troops = new GObjectTreeSerializer(dataPath() + "troops", Troop.class);
 		
 		// System
@@ -108,8 +106,8 @@ public class Project implements LSerializer {
 		for (LSerializer data : allData) {
 			data.initialize();
 		}
-		//FieldHelper.reloadMath();
-		TilePainter.reloadConfig();
+		FieldHelper.reloadMath();
+		TilePainter.reload();
 		current = this;
 	}	
 

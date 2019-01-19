@@ -1,14 +1,8 @@
 package data.field;
 
-import gui.helper.TilePainter;
-import lwt.datainterface.LGraphical;
-
-import org.eclipse.swt.graphics.Image;
-
 import data.Script;
-import data.field.Tileset.BasicTile;
 
-public class CharTile extends BasicTile implements LGraphical {
+public class CharTile {
 	
 	public String key = "charKey";
 	public boolean persistent = false;
@@ -30,15 +24,6 @@ public class CharTile extends BasicTile implements LGraphical {
 	
 	public CharTile() {}
 
-	@Override
-	public Image toImage() {
-		return TilePainter.getCharacterTile(id, animation, direction);
-	}
-	
-	public String getKey() {
-		return id + "," + animation + "," + direction;
-	}
-	
 	public String toString() {
 		return key;
 	}

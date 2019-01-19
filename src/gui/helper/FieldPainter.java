@@ -1,18 +1,13 @@
 package gui.helper;
 
-import java.util.HashMap;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
-import data.GameCharacter;
 import data.Obstacle;
 import data.Terrain;
 import data.config.Region;
@@ -24,38 +19,15 @@ import data.subcontent.Quad;
 import project.Project;
 
 public class FieldPainter {
-
-	private static HashMap<Integer, Image> terrainCache = new HashMap<>();
-	private static HashMap<Integer, Image> obstacleCache = new HashMap<>();
-	private static HashMap<String, Image> characterCache = new HashMap<>();
-	private static HashMap<Integer, Image> regionCache = new HashMap<>();
-	private static HashMap<Integer, Image> partyCache = new HashMap<>();
 	
 	public float scale = 1;
-	public boolean showGrid = true;
+	public boolean showGrid = false;
+	
+	public FieldPainter() {	}
 	
 	public FieldPainter(float scale, boolean showGrid) {
 		this.scale = scale;
 		this.showGrid = showGrid;
-	}
-	
-	public static void reload() {
-		for(Image img : terrainCache.values()) {
-			img.dispose();
-		}
-		for(Image img : obstacleCache.values()) {
-			img.dispose();
-		}
-		for(Image img : characterCache.values()) {
-			img.dispose();
-		}
-		for(Image img : regionCache.values()) {
-			img.dispose();
-		}
-		terrainCache.clear();
-		obstacleCache.clear();
-		characterCache.clear();
-		regionCache.clear();
 	}
 	
 	public int[] getTilePolygon(int x0, int y0) {
@@ -101,11 +73,7 @@ public class FieldPainter {
 			Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
 			Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
 			if (anim != null) {
-				Image img = terrainCache.get(id);
-				if (img == null) {
-					img = anim.quad.getImage();
-					terrainCache.put(id, img);
-				}
+				Image img = anim.quad.getImage();
 				int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
 				int tw = anim.quad.width / anim.cols;
 				int th = anim.quad.height / FieldHelper.math.autoTileRows;
@@ -129,22 +97,13 @@ public class FieldPainter {
 	
 	public void paintObstacle(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			int id = layer.grid[x][y];
-			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
-			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
-			if (anim == null)
+			Image img = TilePainter.getObstacleTile(layer.grid[x][y]);
+			if (img == null)
 				return;
-			Image img = obstacleCache.get(id);
-			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
-				obstacleCache.put(id, img);
-			}
-			Rectangle rect = obj.image.getRectangle();
 			y0 += Project.current.config.getData().grid.tileH / 2;
-			gc.drawImage(img, rect.x, rect.y, rect.width, rect.height,
-					x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
-					y0 - img.getBounds().height + obj.transform.offsetY, 
-					rect.width, rect.height);
+			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(layer.grid[x][y]);
+			gc.drawImage(img, x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
+					y0 - img.getBounds().height + obj.transform.offsetY);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -152,23 +111,10 @@ public class FieldPainter {
 	
 	public void paintCharacter(CharTile tile, GC gc, int x0, int y0) {
 		try {
-			String key = tile.getKey();
-			
-			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.id);
-			int animID = c.findAnimation(tile.animation);
-			Animation anim = (Animation) Project.current.animations.getTree().get(animID);
-			
-			Image img = characterCache.get(key);
-			if (img == null) {
-				img = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
-				characterCache.put(key, img);
-			}
-			
-			int w = img.getBounds().width / anim.cols;
-			int h = img.getBounds().height / anim.rows;
-			
-			gc.drawImage(img, 0, h * tile.direction / 45, w, h, 
-					x0 - w / 2 + anim.transform.offsetX, y0 - h + anim.transform.offsetY, w, h);
+			Image img = TilePainter.getCharacterTile(tile);
+			if (img == null)
+				return;
+			gc.drawImage(img, x0, y0);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -176,37 +122,31 @@ public class FieldPainter {
 	
 	public void paintRegion(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
-			int id = layer.grid[x][y];
-			int w = FieldHelper.config.grid.tileW;
-			int h = FieldHelper.config.grid.tileH;
-			Image img = regionCache.get(id);
-			if (img == null) {
-				Region r = (Region) Project.current.regions.getData().get(id);
-				img = new Image(Display.getCurrent(), w, h);
-				Image str = ImageHelper.getStringImage(id + "", w, h, null);
-				GC strGC = new GC(img);
-				strGC.setBackground(new Color(Display.getCurrent(), r.rgb));
-				strGC.fillPolygon(getTilePolygon(0, 0));
-				strGC.drawImage(str, 0, 0);
-				strGC.dispose();
-				regionCache.put(id, img);
-			}
-			gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
+			Image img = TilePainter.getRegionTile(layer.grid[x][y], false);
+			if (img == null)
+				return;
+			Region r = (Region) Project.current.regions.getData().get(layer.grid[x][y]);
+			gc.setAlpha(200);
+			gc.setBackground(new Color(Display.getCurrent(), r.rgb));
+			paintHex(gc, x0, y0);
+			gc.setAlpha(255);
+			Grid conf = FieldHelper.config.grid;
+			gc.drawImage(img, x0 - conf.tileW / 2, y0 - conf.tileH / 2);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void paintParty(Layer layer, int x, int y, GC gc, int x0, int y0) {
-		int id = layer.grid[x][y];
-		int w = FieldHelper.config.grid.tileW;
-		int h = FieldHelper.config.grid.tileH;
-		Image img = partyCache.get(id);
-		if (img == null) {
-			img = ImageHelper.getStringImage("" + id, w, h, null);
-			partyCache.put(id, img);
-		}
-		gc.drawImage(img, 0, 0, w, h, x0 - w / 2, y0 - h / 2, w, h);
+	public void paintBackground(Field field, Quad quad, int x0, int y0, GC gc) {
+		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
+			return;
+		Image bg = quad.getImage();
+		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
+		x0 += center.x - quad.width / 2;
+		y0 += center.y - quad.height / 2;
+		gc.drawImage(bg, 
+			quad.x, quad.y, quad.width, quad.height,
+			x0, y0, quad.width, quad.height);
 	}
 	
 	public Image createTileImage(int x, int y, int imgW, int imgH, Layer currentLayer, Field field) {
@@ -246,22 +186,11 @@ public class FieldPainter {
 		}
 		// Region Layers
 		for (Layer layer : field.layers.region) {
-			if (!layer.visible || layer != currentLayer)
+			if (!layer.visible)
 				continue;
 			paintRegion(layer, x, y, 
 					gc, x0, y0 - layer.info.height * pph);
 			if (showGrid && layer == currentLayer) {
-				paintEdges(gc, x0, y0 - layer.info.height * pph);
-			}
-			break;
-		}
-		// Party Layers
-		for (Layer layer : field.layers.party) {
-			if (!layer.visible || layer != currentLayer)
-				continue;
-			paintParty(layer, x, y, 
-					gc, x0, y0 - layer.info.height * pph);
-			if (showGrid) {
 				paintEdges(gc, x0, y0 - layer.info.height * pph);
 			}
 			break;
@@ -274,18 +203,6 @@ public class FieldPainter {
 		}
 		gc.dispose();
 		return img;
-	}
-	
-	public void paintBackground(Field field, Quad quad, int x0, int y0, GC gc) {
-		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
-			return;
-		Image bg = quad.getImage();
-		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
-		x0 += center.x - quad.width / 2;
-		y0 += center.y - quad.height / 2;
-		gc.drawImage(bg, 
-			quad.x, quad.y, quad.width, quad.height,
-			x0, y0, quad.width, quad.height);
 	}
 
 }

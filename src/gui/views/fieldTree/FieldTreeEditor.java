@@ -142,7 +142,7 @@ public class FieldTreeEditor extends LView {
 	}
 	
 	public void onVisible() {
-		TilePainter.reloadConfig();
+		TilePainter.reload();
 		FieldHelper.reloadMath();
 		super.onVisible();
 	}

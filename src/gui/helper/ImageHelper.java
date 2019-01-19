@@ -4,78 +4,64 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import project.Project;
-import data.Animation;
-import data.Obstacle;
-import data.subcontent.Quad;
 
 public class ImageHelper {
 	
-	public static Image getObstacleImage(int id) {
-		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
-		Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
-		
-		int w = anim.quad.width;
-		int h = anim.quad.height;
-		int srcX = anim.quad.x;
-		int srcY = anim.quad.y;
-		
-		return getImageQuad(image, srcX, srcY, w, h);
+	public static Image newImage(int imgW, int imgH) {
+		Image src = new Image(Display.getCurrent(), imgW, imgH);   
+	    GC gc = new GC(src);
+	    gc.setAlpha(0);
+	    gc.fillRectangle(0, 0, imgW, imgH);
+	    gc.dispose();
+	    ImageData imageData = src.getImageData();
+	    imageData.transparentPixel = imageData.getPixel(0, 0);
+	    return correctTransparency(src);
 	}
 	
-	public static Image getAnimationFrame(Animation anim, int col, int row) {
-		Image image = SWTResourceManager.getImage(Project.current.imagePath() + anim.quad.path);
-		
-		int w = image.getBounds().width / anim.cols;
-		int h = image.getBounds().height / anim.rows;
-		
-		return getImageQuad(image, w * col, h * row, w, h);
+	public static Image correctTransparency(Image src) {
+		final ImageData imageData = src.getImageData();
+		final int len = src.getBounds().width * src.getBounds().height;
+		imageData.alphaData = new byte[len];
+		for (int idx = 0; idx < len; idx++) {
+	        final int coord = (idx * 4) + 3;
+	        imageData.alphaData[idx] = imageData.data[coord];
+	    }
+		src.dispose();
+		return new Image(Display.getCurrent(), imageData);
 	}
 	
 	public static Image getStringImage(String s, int w, int h, Color background, boolean borders) {
 		Image image = new Image(Display.getCurrent(), w, h);
-		//
 		GC gc = new GC(image);
 		if (background != null) {
 			gc.setBackground(background);
 			gc.fillRectangle(0, 0, w, h);
 		}
+		gc.setAlpha(255);
+		//gc.setTextAntialias(0);
 		Point size = gc.stringExtent(s);
 		int x = (w - size.x) / 2;
 		int y = (h - size.y) / 2;
-		gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
+		gc.setForeground(image.getDevice().getSystemColor(SWT.COLOR_BLACK));
 		gc.drawText(s, x, y);
 		if (borders) {
 			gc.drawRectangle(2, 2, w - 5, h - 5);
 		}
 		gc.dispose();
-		//
-		return image;
+	    ImageData imageData = image.getImageData();
+	    imageData.transparentPixel = imageData.getPixel(0, 0);
+	    image.dispose();
+		return new Image(Display.getCurrent(), imageData);
 	}
 	
 	public static Image getStringImage(String s, int w, int h, Color background) {
 		return getStringImage(s, w, h, background, false);
 	}
-	
-	public static Image getImageQuad(Image image, int x, int y, int w, int h) {
-		try {
-			Image subImage = new Image(Display.getCurrent(), w, h);
-			GC gc = new GC(subImage);
-			gc.drawImage(image, x, y, w, h, 0, 0, w, h);
-			gc.dispose();
-			return subImage;
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			return SWTResourceManager.getImage("");
-		}
-	}
-	
+
 	public static Image transform(data.subcontent.Transform t, Image original) {
 		return transform(t.offsetX, t.offsetY, t.rotation, t.scaleX, t.scaleY, 
 				t.red, t.green, t.blue, t.alpha, original);
@@ -101,11 +87,6 @@ public class ImageHelper {
 		gc.drawImage(original, 0, 0);
 		gc.dispose();
 		return img;
-	}
-
-	public static Image getImageQuad(Quad s) {
-		Image img = SWTResourceManager.getImage(Project.current.imagePath() + s.path);
-		return getImageQuad(img, s.x, s.y, s.width, s.height);
 	}
 
 }

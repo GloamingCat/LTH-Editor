@@ -95,6 +95,10 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		getLayerList().get(path.index).info = newData;
 	}
 	
+	public Layer getLayer() {
+		return getCollectionWidget().getSelectedObject();
+	}
+	
 	public abstract LDataList<Layer> getLayerList();
 
 }

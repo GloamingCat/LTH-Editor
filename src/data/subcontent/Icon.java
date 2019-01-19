@@ -53,4 +53,8 @@ public class Icon {
 		} else return false;
 	}
 	
+	public String toString() {
+		return id + ", " + col + ", " + row;
+	}
+	
 }

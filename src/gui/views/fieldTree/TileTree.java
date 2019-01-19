@@ -1,6 +1,7 @@
 package gui.views.fieldTree;
 
 import lwt.dataestructure.LDataTree;
+import lwt.dataestructure.LPath;
 import lwt.editor.LState;
 import lwt.editor.LView;
 import lwt.event.LControlEvent;
@@ -31,8 +32,7 @@ public abstract class TileTree extends LView {
 			public void onModify(LControlEvent<Integer> event) {
 				FieldEditor.instance.canvas.setSelection(event.newValue);
 				if (image != null) {
-					Object obj = getTree().get(event.newValue);
-					updateImage(obj);
+					updateImage(selector.getSelectedObject(), event.newValue);
 				}
 			}
 		});
@@ -45,8 +45,9 @@ public abstract class TileTree extends LView {
 	
 	public void onVisible() {
 		super.onVisible();
+		LPath path = selector.getSelectedPath();
 		selector.setCollection(getTree());
-		selector.setValue(0);
+		selector.setValue(path);
 	}
 	
 	public LState getState() {
@@ -60,6 +61,6 @@ public abstract class TileTree extends LView {
 	}
 	
 	public abstract LDataTree<Object> getTree();
-	public abstract void updateImage(Object obj);
+	public abstract void updateImage(Object obj, int id);
 
 }
