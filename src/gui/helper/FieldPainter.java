@@ -8,6 +8,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 
 import data.Animation;
+import data.GameCharacter;
 import data.Obstacle;
 import data.Terrain;
 import data.config.Region;
@@ -58,7 +59,10 @@ public class FieldPainter {
 	}
 	
 	public void paintEdges(GC gc, int x0, int y0) {
+		float scale = this.scale;
+		this.scale *= 0.95f;
 		int[] p = getTilePolygon(x0, y0);
+		this.scale = scale;
 		gc.drawPolygon(p);
 	}
 	
@@ -114,7 +118,10 @@ public class FieldPainter {
 			Image img = TilePainter.getCharacterTile(tile);
 			if (img == null)
 				return;
-			gc.drawImage(img, x0, y0);
+			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
+			Animation anim = (Animation) Project.current.animations.getTree().
+					get(c.findAnimation(tile.animation));
+			gc.drawImage(img, x0 - anim.transform.offsetX, y0 - anim.transform.offsetY);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -173,6 +180,17 @@ public class FieldPainter {
 				paintEdges(gc, x0, y0 - layer.info.height * pph);
 			}
 		}
+		// Region Layers
+		for (Layer layer : field.layers.region) {
+			if (!layer.visible || layer != currentLayer)
+				continue;
+			paintRegion(layer, x, y, 
+					gc, x0, y0 - layer.info.height * pph);
+			if (showGrid && layer == currentLayer) {
+				paintEdges(gc, x0, y0 - layer.info.height * pph);
+			}
+			break;
+		}
 		// Obstacle Layers
 		for (Layer layer : field.layers.obstacle) {
 			if (!layer.visible)
@@ -183,17 +201,6 @@ public class FieldPainter {
 			if (layer.grid[x][y] >= 0) {
 				paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph);
 			}
-		}
-		// Region Layers
-		for (Layer layer : field.layers.region) {
-			if (!layer.visible)
-				continue;
-			paintRegion(layer, x, y, 
-					gc, x0, y0 - layer.info.height * pph);
-			if (showGrid && layer == currentLayer) {
-				paintEdges(gc, x0, y0 - layer.info.height * pph);
-			}
-			break;
 		}
 		// Characters
 		for (CharTile tile : field.characters) {

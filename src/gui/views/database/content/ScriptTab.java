@@ -51,7 +51,6 @@ public class ScriptTab extends DatabaseTab {
 		LTextBox txtCommands = new LTextBox(grpCommands, SWT.NONE);
 		addControl(txtCommands, "commands");
 		
-		
 	}
 
 	@Override

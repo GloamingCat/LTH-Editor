@@ -197,6 +197,8 @@ public class EditableFieldCanvas extends FieldCanvas {
 	}
 	
 	public void onTileRightClick(int x, int y, Point origin) {
+		if (currentLayer == null)
+			return;
 		if (origin == null)
 			origin = new Point(tileX, tileY);
 		int[][] grid = currentLayer.grid;

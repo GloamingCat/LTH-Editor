@@ -192,7 +192,6 @@ public class FieldSideEditor extends LObjectEditor {
 	
 	public void onVisible() {
 		super.onVisible();
-		editor = 2;
 		selectEditor(editor);
 	}
 	

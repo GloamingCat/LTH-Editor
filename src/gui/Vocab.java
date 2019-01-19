@@ -231,6 +231,7 @@ public class Vocab {
 	public String ALL = "All";
 	
 	// Scripts
+	public String GLOBAL = "Global";
 	public String CONSTANTS = "Constants";
 	public String COMMANDS = "Commands";
 

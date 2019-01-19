@@ -138,7 +138,7 @@ public class FieldTreeEditor extends LView {
 			}
 		});
 		
-		sashForm.setWeights(new int[] {1, 3, 1});
+		sashForm.setWeights(new int[] {9, 29, 12});
 	}
 	
 	public void onVisible() {

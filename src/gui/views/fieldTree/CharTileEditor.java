@@ -2,14 +2,16 @@ package gui.views.fieldTree;
 
 import gui.Vocab;
 import gui.widgets.IDButton;
+import gui.widgets.ScriptButton;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckButton;
 import lwt.widget.LCombo;
 import lwt.widget.LSpinner;
@@ -84,10 +86,42 @@ public class CharTileEditor extends LObjectEditor {
 		
 		LSpinner spnX = new LSpinner(position);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnX, "x");
+		
 		LSpinner spnY = new LSpinner(position);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnY, "y");
+		
 		LSpinner spnH = new LSpinner(position);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnH, "h");
+		
+		spnX.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.updateTileImage(event.oldValue, spnY.getValue());
+				FieldEditor.instance.canvas.updateTileImage(event.newValue, spnY.getValue());
+				FieldEditor.instance.canvas.redraw();
+			}
+		});
+		spnY.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.oldValue);
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.newValue);
+				FieldEditor.instance.canvas.redraw();
+			}
+		});
+		spnH.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+				FieldEditor.instance.canvas.redraw();
+			}
+		});
 		
 		Label lblDir = new Label(this, SWT.NONE);
 		lblDir.setText(Vocab.instance.DIRECTION);
@@ -96,8 +130,18 @@ public class CharTileEditor extends LObjectEditor {
 		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		String[] d = new String[] {"0°", "45°", "90°", "135°", 
 				"180°", "225°", "270°", "315°"};
+		cmbDir.setIncludeID(false);
+		cmbDir.setOptional(false);
 		cmbDir.setItems(d);
-		addControl(cmbDir, "direction");
+		addControl(cmbDir, "row");
+		cmbDir.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+				FieldEditor.instance.canvas.redraw();
+			}
+		});
 		
 		Label lblAnim = new Label(this, SWT.NONE);
 		lblAnim.setText(Vocab.instance.ANIMATION);
@@ -105,7 +149,6 @@ public class CharTileEditor extends LObjectEditor {
 		LText txtAnim = new LText(this);
 		txtAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(txtAnim, "animation");
-		
 		
 		// Battle
 		
@@ -136,28 +179,28 @@ public class CharTileEditor extends LObjectEditor {
 		Group grpScripts = new Group(this, SWT.NONE);
 		grpScripts.setLayout(new GridLayout(2, false));
 		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
-		grpScripts.setText("Scripts");
+		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
 		Label lblStart = new Label(grpScripts, SWT.NONE);
 		lblStart.setText(Vocab.instance.STARTLISTENER);
 		
-		Button btnStart = new Button(grpScripts, SWT.NONE);
+		ScriptButton btnStart = new ScriptButton(grpScripts, SWT.NONE);
 		btnStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		btnStart.setText("Select");
+		addControl(btnStart, "startScript");
 		
 		Label lblCollision = new Label(grpScripts, SWT.NONE);
 		lblCollision.setText(Vocab.instance.COLLISIONLISTENER);
 		
-		Button btnCollision = new Button(grpScripts, SWT.NONE);
+		ScriptButton btnCollision = new ScriptButton(grpScripts, SWT.NONE);
 		btnCollision.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnCollision.setText("Select");
+		addControl(btnCollision, "collisionScript");
 		
 		Label lblInteract = new Label(grpScripts, SWT.NONE);
 		lblInteract.setText(Vocab.instance.INTERACTLISTENER);
 		
-		Button btnInteract = new Button(grpScripts, SWT.NONE);
+		ScriptButton btnInteract = new ScriptButton(grpScripts, SWT.NONE);
 		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnInteract.setText("Select");
+		addControl(btnInteract, "interactScript");
 
 	}
 
@@ -166,4 +209,5 @@ public class CharTileEditor extends LObjectEditor {
 			return;
 		cmbParty.setItems(FieldEditor.instance.canvas.field.createPartyArray());
 	}
+	
 }
