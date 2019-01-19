@@ -16,11 +16,13 @@ public class ImageHelper {
 	    gc.setAlpha(0);
 	    gc.fillRectangle(0, 0, imgW, imgH);
 	    gc.dispose();
-	    ImageData imageData = src.getImageData();
-	    imageData.transparentPixel = -1;
-	    Image img = correctTransparency(imageData);
-	    src.dispose();
-	    return img;
+	    //ImageData imageData = src.getImageData();
+	    //imageData.transparentPixel = -1;
+	    
+	    //Image img = correctTransparency(imageData);
+	    //src.dispose();
+	    //return img;
+	    return src;
 	}
 	
 	public static Image correctTransparency(Image image) {

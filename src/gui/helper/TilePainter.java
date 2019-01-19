@@ -74,12 +74,18 @@ public class TilePainter {
 		if (anim == null)
 			return null;
 		Rectangle rect = obj.image.getRectangle();
+		int w = rect.width * anim.transform.scaleX / 100;
+		int h = rect.height * anim.transform.scaleY / 100;
 		img = ImageHelper.newImage(rect.width, rect.height);
 		GC gc = new GC(img);
-		gc.drawImage(obj.image.getImage(), rect.x, rect.y, rect.width, rect.height,
-				0, 0, rect.width * anim.transform.scaleX / 100, rect.height * anim.transform.scaleY / 100);
+		gc.drawImage(obj.image.getImage(), 
+				rect.x, rect.y, rect.width, rect.height,
+				0, 0, w, h);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
+		img = ImageHelper.colorTransform(img, anim.transform.hue + obj.transform.hue, 
+				anim.transform.saturation * obj.transform.saturation * 0.0001f, 
+				anim.transform.brightness * obj.transform.brightness * 0.0001f);
 		obstacleCache.put(id, img);
 		return img;
 	}

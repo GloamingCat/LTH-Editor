@@ -104,10 +104,10 @@ public class FieldPainter {
 			Image img = TilePainter.getObstacleTile(layer.grid[x][y]);
 			if (img == null)
 				return;
-			y0 += Project.current.config.getData().grid.tileH / 2;
 			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(layer.grid[x][y]);
-			gc.drawImage(img, x0 - img.getBounds().width / 2 + obj.transform.offsetX, 
-					y0 - img.getBounds().height + obj.transform.offsetY);
+			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
+			gc.drawImage(img, x0 - obj.transform.offsetX - anim.transform.offsetX, 
+					y0 - obj.transform.offsetY - anim.transform.offsetY);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -130,7 +130,8 @@ public class FieldPainter {
 						shadow.quad.x + sw * scol, shadow.quad.y, sw, sh, 
 						x0 - shadow.transform.offsetX, y0 - shadow.transform.offsetY, sw, sh);
 			}
-			gc.drawImage(img, x0 - anim.transform.offsetX, y0 - anim.transform.offsetY);
+			gc.drawImage(img, x0 - c.transform.offsetX - anim.transform.offsetX, 
+					y0 - c.transform.offsetY - anim.transform.offsetY);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
