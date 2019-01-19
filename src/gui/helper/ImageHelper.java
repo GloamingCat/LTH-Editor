@@ -1,5 +1,8 @@
 package gui.helper;
 
+import lwt.LHelper;
+import lwt.widget.LImage;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -7,6 +10,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+
+import data.subcontent.Transform;
 
 public class ImageHelper {
 	
@@ -69,63 +74,31 @@ public class ImageHelper {
 		return getStringImage(s, w, h, background, false);
 	}
 
-	public static Image colorTransform(Image src, float _h, float _s, float _v) {
-		if (_h == 0 && _s == 1 && _v == 1)
+	public static Image colorTransform(Image src, 
+			float r, float g, float b, float a,
+			float h, float s, float v) {
+		if (r == 1 && g == 1 && b == 1 && a == 1 && 
+				h == 0 && s == 1 && v == 1)
 			return src;
-		_h /= 60;
-		ImageData data = src.getImageData();
-		ImageData newdata = (ImageData) data.clone();
-		for (int i = 0; i < data.data.length; i += 4) {
-			float r = (data.data[i] & 0xFF) / 255f;
-			float g = (data.data[i+1] & 0xFF) / 255f;
-			float b = (data.data[i+2] & 0xFF) / 255f;
-
-			if (r == 1 && g == 1 && b == 1)
-				continue;
-			
-		    float max = Math.max(Math.max(r, g), b);
-		    float min = Math.min(Math.min(r, g), b);
-			
-		    float h = 360 - _h;
-		    if (r == max) {
-		    	h += (g - b) / (max - min);
-		    } else if (g == max) {
-		    	h += (b - r) / (max - min) + 2;
-		    } else {
-		    	h += (r - g) / (max - min) + 4;
-		    }
-		    h = h % 6;
-		    
-		    float s = 0, v = 0;
-		    if (max > 0) {
-		    	s = Math.max(0, Math.min(1, _s * (max - min) / max));
-		    	v = Math.max(0, Math.min(1, _v * max));
-		    }
-
-			if (s < 0.001) {
-				r = g = b = v;
-			} else {
-				int hi = (int) Math.floor(h);
-			    float f = h - hi;
-			    float p = v * (1 - s);
-			    float q = v * (1 - f * s);
-			    float t = v * (1 - (1 - f) * s);
-			    switch(hi) {
-			        case 0: r = v; g = t; b = p; break;
-			        case 1: r = q; g = v; b = p; break;
-			        case 2: r = p; g = v; b = t; break;
-			        case 3: r = p; g = q; b = v; break;
-			        case 4: r = t; g = p; b = v; break;
-			        case 5: r = v; g = p; b = q; break;
-			    }
-			}
-			newdata.data[i] = (byte) Math.round(r * 255);
-			newdata.data[i+1] = (byte) Math.round(g * 255);
-			newdata.data[i+2] = (byte) Math.round(b * 255);
-			newdata.data[i+3] = data.data[i+3];
-		}
+		ImageData newdata = LHelper.colorTransform(src.getImageData(), 
+				r, g, b, a, h, s, v);
 		src.dispose();
 		return correctTransparency(newdata);
+	}
+	
+	public static void setColorTransform(LImage img, Transform t1, Transform t2) {
+		img.setRGBA(t1.red / 255f * t2.red / 255f,
+				t1.green / 255f * t2.green / 255f,
+				t1.blue / 255f * t2.blue / 255f,
+				t1.alpha / 255f * t2.alpha / 255f);
+		img.setHSV(t1.hue + t2.hue,
+				t1.saturation / 100f * t2.saturation / 100f,
+				t1.brightness / 100f * t2.brightness / 100f);
+	}
+	
+	public static void setColorTransform(LImage img, Transform t) {
+		img.setRGBA(t.red / 255f, t.green / 255f, t.blue / 255f, t.alpha / 255f);
+		img.setHSV(t.hue, t.saturation / 100f, t.brightness / 100f);
 	}
 
 }

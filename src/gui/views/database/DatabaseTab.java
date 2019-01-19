@@ -7,7 +7,6 @@ import gson.editor.GDefaultTreeEditor;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.widgets.ImageButton;
-import gui.widgets.QuadButton;
 import gui.widgets.LuaButton;
 
 import org.eclipse.swt.SWT;
@@ -147,12 +146,6 @@ public abstract class DatabaseTab extends LView {
 	protected void addImageButton(ImageButton button, LImage label, Text text, String attName) {
 		button.setLabel(label);
 		button.setNameText(text);
-		addControl(button, attName);
-	}
-	
-	protected void addQuadButton(QuadButton button, LImage image, String folderName, String attName) {
-		button.setImage(image);
-		button.setFolder(folderName);
 		addControl(button, attName);
 	}
 	

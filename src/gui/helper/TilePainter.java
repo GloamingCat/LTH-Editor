@@ -64,9 +64,14 @@ public class TilePainter {
 		gc.drawImage(anim.quad.getImage(), anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
-		img = ImageHelper.colorTransform(img, anim.transform.hue, 
-				anim.transform.saturation * 0.01f, 
-				anim.transform.brightness * 0.01f);
+		img = ImageHelper.colorTransform(img,
+				anim.transform.red / 255f,
+				anim.transform.green / 255f,
+				anim.transform.blue / 255f,
+				anim.transform.alpha / 255f,
+				anim.transform.hue, 
+				anim.transform.saturation / 100f, 
+				anim.transform.brightness / 100f);
 		terrainCache.put(id, img);
 		return img;
 	}
@@ -91,9 +96,14 @@ public class TilePainter {
 				0, 0, w, h);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
-		img = ImageHelper.colorTransform(img, anim.transform.hue + obj.transform.hue, 
-				anim.transform.saturation * obj.transform.saturation * 0.0001f, 
-				anim.transform.brightness * obj.transform.brightness * 0.0001f);
+		img = ImageHelper.colorTransform(img, 
+				anim.transform.red / 255f * obj.transform.red / 255f,
+				anim.transform.green / 255f * obj.transform.green / 255f,
+				anim.transform.blue / 255f * obj.transform.blue / 255f,
+				anim.transform.alpha / 255f * obj.transform.alpha / 255f,
+				anim.transform.hue + obj.transform.hue, 
+				anim.transform.saturation * obj.transform.saturation / 10000f, 
+				anim.transform.brightness * obj.transform.brightness / 10000f);
 		obstacleCache.put(id, img);
 		return img;
 	}
@@ -119,9 +129,14 @@ public class TilePainter {
 				anim.quad.x + w * col, anim.quad.y + h * tile.row, w, h, 
 				0, 0, w, h);
 		gc.dispose();
-		img = ImageHelper.colorTransform(img, anim.transform.hue + c.transform.hue, 
-				anim.transform.saturation * c.transform.saturation * 0.0001f, 
-				anim.transform.brightness * c.transform.brightness * 0.0001f);
+		img = ImageHelper.colorTransform(img, 
+				anim.transform.red / 255f * c.transform.red / 255f,
+				anim.transform.green / 255f * c.transform.green / 255f,
+				anim.transform.blue / 255f * c.transform.blue / 255f,
+				anim.transform.alpha / 255f * c.transform.alpha / 255f,
+				anim.transform.hue + c.transform.hue, 
+				anim.transform.saturation * c.transform.saturation / 10000f, 
+				anim.transform.brightness * c.transform.brightness / 10000f);
 		characterCache.put(key, img);
 		return img;
 	}

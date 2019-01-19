@@ -20,7 +20,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
@@ -104,8 +103,8 @@ public class AnimationTab extends DatabaseTab {
 		grpTransform.setLayout(new FillLayout());
 		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
-		addChild(transformTab, "transform");
+		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE);
+		addChild(transformEditor, "transform");
 		
 		// Graphics
 		
@@ -121,12 +120,13 @@ public class AnimationTab extends DatabaseTab {
 		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_image.widthHint = 150;
 		image.setLayoutData(gd_image);
-		image.setImage(SWTResourceManager.getImage(AnimationTab.class, "/javax/swing/plaf/basic/icons/image-delayed.png"));
-		transformTab.setImage(image);
+		transformEditor.setImage(image);
 		
-		QuadButton btnSelectImage = new QuadButton(grpImg, SWT.NONE);
-		btnSelectImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		addQuadButton(btnSelectImage, image, "", "quad");
+		QuadButton btnImage = new QuadButton(grpImg, SWT.NONE);
+		btnImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		btnImage.setImage(image);
+		btnImage.setTransform(transformEditor);
+		addControl(btnImage, "quad");
 		
 		// Intro
 		

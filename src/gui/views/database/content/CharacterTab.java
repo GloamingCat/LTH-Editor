@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.helper.ImageHelper;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.CharTileList;
 import gui.views.database.subcontent.NodeList;
@@ -27,9 +28,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
+import data.GameCharacter;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
-import data.subcontent.Quad;
 import project.Project;
 
 public class CharacterTab extends DatabaseTab {
@@ -131,7 +132,9 @@ public class CharacterTab extends DatabaseTab {
 					Node node = (Node) event.data;
 					Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
 					if (anim != null) {
+						GameCharacter c = (GameCharacter) contentEditor.getObject();
 						Rectangle rect = anim.quad.getRectangle();
+						ImageHelper.setColorTransform(imgAnim, anim.transform, c.transform);
 						imgAnim.setImage(SWTResourceManager.getImage(
 								Project.current.imagePath() + anim.quad.path), rect);
 					} else {
@@ -167,8 +170,10 @@ public class CharacterTab extends DatabaseTab {
 						imgPotrait.setImage((Image) null);
 						return;
 					}
-					Quad quad = ((Animation) obj).quad;
-					imgPotrait.setImage(Project.current.imagePath() + quad.path, quad.getRectangle());
+					GameCharacter c = (GameCharacter) contentEditor.getObject();
+					Animation anim = (Animation) obj;
+					ImageHelper.setColorTransform(imgPotrait, anim.transform, c.transform);
+					imgPotrait.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
 				} else {
 					imgPotrait.setImage((Image) null);
 				}

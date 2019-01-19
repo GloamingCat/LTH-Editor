@@ -1,6 +1,8 @@
 package gui.widgets;
 
+import gui.helper.ImageHelper;
 import gui.shell.QuadShell;
+import gui.views.database.subcontent.TransformEditor;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
@@ -13,11 +15,13 @@ import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import data.subcontent.Quad;
+import data.subcontent.Transform;
 
 public class QuadButton extends LObjectButton<Quad> {
 	
 	private String folder = "";
 	private LImage image;
+	private TransformEditor transform;
 	private Text text;
 	
 	public QuadButton(Composite parent, int style) {
@@ -38,6 +42,10 @@ public class QuadButton extends LObjectButton<Quad> {
 		this.image = image;
 	}
 	
+	public void setTransform(TransformEditor transform) {
+		this.transform = transform;
+	}
+	
 	public void setText(Text text) {
 		this.text = text;
 	}
@@ -48,6 +56,11 @@ public class QuadButton extends LObjectButton<Quad> {
 			button.setEnabled(true);
 			Quad s = (Quad) value;
 			if (image != null) {
+				if (transform != null) {
+					Transform t = (Transform) transform.getObject();
+					if (t != null)
+						ImageHelper.setColorTransform(image, t);
+				}
 				image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
 			}
 			currentValue = s;
