@@ -102,7 +102,6 @@ public class CharTileEditor extends LObjectEditor {
 				if (event == null || event.oldValue == null) return;
 				FieldEditor.instance.canvas.updateTileImage(event.oldValue, spnY.getValue());
 				FieldEditor.instance.canvas.updateTileImage(event.newValue, spnY.getValue());
-				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		spnY.addModifyListener(new LControlListener<Integer>() {
@@ -111,7 +110,6 @@ public class CharTileEditor extends LObjectEditor {
 				if (event == null || event.oldValue == null) return;
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.oldValue);
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.newValue);
-				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		spnH.addModifyListener(new LControlListener<Integer>() {
@@ -119,7 +117,6 @@ public class CharTileEditor extends LObjectEditor {
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
-				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		
@@ -139,7 +136,6 @@ public class CharTileEditor extends LObjectEditor {
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
-				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		
@@ -149,6 +145,14 @@ public class CharTileEditor extends LObjectEditor {
 		LText txtAnim = new LText(this);
 		txtAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(txtAnim, "animation");
+		
+		btnChar.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+			}
+		});
 		
 		// Battle
 		

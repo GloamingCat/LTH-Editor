@@ -27,23 +27,17 @@ public class TilePainter {
 	public static HashMap<String, Image> regionCache = new HashMap<>();
 	
 	public static void reload() {
-		for(Image img : terrainCache.values()) {
-			img.dispose();
-		}
-		for(Image img : obstacleCache.values()) {
-			img.dispose();
-		}
-		for(Image img : characterCache.values()) {
-			img.dispose();
-		}
-		for(Image img : regionCache.values()) {
-			img.dispose();
-		}
-		terrainCache.clear();
-		obstacleCache.clear();
-		characterCache.clear();
-		regionCache.clear();
+		reload(terrainCache);
+		reload(obstacleCache);
+		reload(regionCache);
+		reload(characterCache);
 		conf = (Config) Project.current.config.getData();
+	}
+	
+	public static void reload(HashMap<?, Image> map) {
+		for(Image img : map.values())
+			img.dispose();
+		map.clear();
 	}
 	
 	public static Image getTerrainTile(Integer id) {
@@ -82,9 +76,8 @@ public class TilePainter {
 		Rectangle rect = obj.image.getRectangle();
 		img = ImageHelper.newImage( rect.width, rect.height);
 		GC gc = new GC(img);
-		System.out.println(obj.image);
 		gc.drawImage(obj.image.getImage(), rect.x, rect.y, rect.width, rect.height,
-				0, 0, rect.width, rect.height);
+				0, 0, rect.width * anim.transform.scaleX / 100, rect.height * anim.transform.scaleY / 100);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
 		obstacleCache.put(id, img);
@@ -112,6 +105,9 @@ public class TilePainter {
 				w, h, - w / 2 + anim.transform.offsetX, - h + anim.transform.offsetY, w, h);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
+		img = ImageHelper.colorTransform(img, anim.transform.hue + c.transform.hue, 
+				anim.transform.saturation * c.transform.saturation * 0.0001f, 
+				anim.transform.brightness * c.transform.brightness * 0.0001f);
 		characterCache.put(key, img);
 		return img;
 	}
