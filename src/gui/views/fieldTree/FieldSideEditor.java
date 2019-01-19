@@ -68,7 +68,7 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 			@Override
 			public void updateImage(Object obj, int id) {
-				image.setImage(TilePainter.getTerrainTile(id));
+				image.setImage(TilePainter.getTerrainTile(id, false));
 			}
 		};
 		addChild(selTerrain);

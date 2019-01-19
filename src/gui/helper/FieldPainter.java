@@ -31,6 +31,10 @@ public class FieldPainter {
 		this.showGrid = showGrid;
 	}
 	
+	// -------------------------------------------------------------------------------------
+	// Grid
+	// -------------------------------------------------------------------------------------
+	
 	public int[] getTilePolygon(int x0, int y0) {
 		Point[] shift = FieldHelper.math.vertexShift;
 		int[] p = new int[shift.length * 2];
@@ -70,30 +74,36 @@ public class FieldPainter {
 		int[] p = getTilePolygon(x0, y0);
 		gc.fillPolygon(p);
 	}
+	
+	// -------------------------------------------------------------------------------------
+	// Tiles
+	// -------------------------------------------------------------------------------------
 
 	public void paintTerrain(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
 			int id = layer.grid[x][y];
+			Image img = TilePainter.getTerrainTile(id, true);
+			if (img == null)
+				return;
 			Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
 			Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
-			if (anim != null) {
-				Image img = anim.quad.getImage();
-				int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
-				int tw = anim.quad.width / anim.cols;
-				int th = anim.quad.height / FieldHelper.math.autoTileRows;
-				gc.drawImage(img, 
-						anim.quad.x, anim.quad.y + th * rows[0], tw / 2, th / 2, 
-						x0 - tw / 2, y0 - th / 2, tw / 2, th / 2);
-				gc.drawImage(img, 
-						anim.quad.x + tw / 2, anim.quad.y + th * rows[1], tw / 2, th / 2, 
-						x0, y0 - th / 2, tw / 2, th / 2);
-				gc.drawImage(img, 
-						anim.quad.x, th / 2 + anim.quad.y + th * rows[2], tw / 2, th / 2, 
-						x0 - tw / 2, y0, tw / 2, th / 2);
-				gc.drawImage(img, 
-						anim.quad.x + tw / 2, anim.quad.y + th / 2 + th * rows[3], tw / 2, th / 2, 
-						x0, y0, tw / 2, th / 2);
-			}
+			int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
+			int w = img.getBounds().width / (anim.cols * 2);
+			int h = img.getBounds().height / (anim.rows * 2);
+			int dx = x0 - (anim.transform.offsetX * anim.transform.scaleX) / 10000;
+			int dy = y0 - (anim.transform.offsetY * anim.transform.scaleY) / 10000;
+			gc.drawImage(img, 
+					0, h * 2 * rows[0], w, h, 
+					dx - w, dy - h, w, h);
+			gc.drawImage(img, 
+					w, h * 2 * rows[1], w, h, 
+					dx, dy - h, w, h);
+			gc.drawImage(img, 
+					0, h + h * 2 * rows[2], w, h, 
+					dx - w, dy, w, h);
+			gc.drawImage(img, 
+					w, h + h * 2 * rows[3], w, h, 
+					dx, dy, w, h);
 		} catch(IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -108,6 +118,23 @@ public class FieldPainter {
 			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
 			gc.drawImage(img, x0 - obj.transform.offsetX - anim.transform.offsetX, 
 					y0 - obj.transform.offsetY - anim.transform.offsetY);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void paintRegion(Layer layer, int x, int y, GC gc, int x0, int y0) {
+		try {
+			Image img = TilePainter.getRegionTile(layer.grid[x][y], false);
+			if (img == null)
+				return;
+			Region r = (Region) Project.current.regions.getData().get(layer.grid[x][y]);
+			gc.setAlpha(200);
+			gc.setBackground(new Color(Display.getCurrent(), r.rgb));
+			paintHex(gc, x0, y0);
+			gc.setAlpha(255);
+			Grid conf = FieldHelper.config.grid;
+			gc.drawImage(img, x0 - conf.tileW / 2, y0 - conf.tileH / 2);
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -137,22 +164,9 @@ public class FieldPainter {
 		}
 	}
 	
-	public void paintRegion(Layer layer, int x, int y, GC gc, int x0, int y0) {
-		try {
-			Image img = TilePainter.getRegionTile(layer.grid[x][y], false);
-			if (img == null)
-				return;
-			Region r = (Region) Project.current.regions.getData().get(layer.grid[x][y]);
-			gc.setAlpha(200);
-			gc.setBackground(new Color(Display.getCurrent(), r.rgb));
-			paintHex(gc, x0, y0);
-			gc.setAlpha(255);
-			Grid conf = FieldHelper.config.grid;
-			gc.drawImage(img, x0 - conf.tileW / 2, y0 - conf.tileH / 2);
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-		}
-	}
+	// -------------------------------------------------------------------------------------
+	// Field
+	// -------------------------------------------------------------------------------------
 	
 	public void paintBackground(Field field, Quad quad, int x0, int y0, GC gc) {
 		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
