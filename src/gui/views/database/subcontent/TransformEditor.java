@@ -243,6 +243,18 @@ public class TransformEditor extends LObjectEditor {
 			image.redraw();
 		}
 	}
+
+	public void updateColorTransform(LImage img) {
+		Transform t1 = (Transform) currentObject;
+		if (t1 != null) {
+			Transform t2 = secondaryTransform();
+			if (t2 != null) {
+				ImageHelper.setColorTransform(img, t1, t2);
+			} else {
+				ImageHelper.setColorTransform(img, t1);
+			}
+		}
+	}
 	
 	public Transform secondaryTransform() { return null; }
 

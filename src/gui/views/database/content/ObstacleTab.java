@@ -16,6 +16,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
+import data.Animation;
+import data.Obstacle;
+import data.subcontent.Transform;
 import project.Project;
 
 public class ObstacleTab extends DatabaseTab {
@@ -56,7 +59,15 @@ public class ObstacleTab extends DatabaseTab {
 		grpTransform.setLayout(new FillLayout());
 		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE);
+		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE) {
+			public Transform secondaryTransform() {
+				Obstacle o = (Obstacle) contentEditor.getObject();
+				Animation a = (Animation) Project.current.animations.getData().get(o.image.id);
+				if (a == null)
+					return null;
+				return a.transform;
+			}
+		};
 		addChild(transformEditor, "transform");
 		
 		btnGraphics.setImage(imgGraphics);

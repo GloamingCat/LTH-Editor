@@ -1,6 +1,5 @@
 package gui.widgets;
 
-import gui.helper.ImageHelper;
 import gui.shell.IconShell;
 import gui.views.database.subcontent.TransformEditor;
 import lwt.dialog.LShellFactory;
@@ -16,7 +15,6 @@ import org.eclipse.swt.widgets.Text;
 import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
-import data.subcontent.Transform;
 
 public class IconButton extends LObjectButton<Icon> {
 	
@@ -53,9 +51,7 @@ public class IconButton extends LObjectButton<Icon> {
 			Icon i = (Icon) value;
 			if (image != null) {
 				if (transform != null) {
-					Transform t = (Transform) transform.getObject();
-					if (t != null)
-						ImageHelper.setColorTransform(image, t);
+					transform.updateColorTransform(image);
 				}
 				Animation anim = i.getAnimation();
 				if (anim != null)
