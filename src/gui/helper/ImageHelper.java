@@ -17,34 +17,25 @@ public class ImageHelper {
 	
 	public static Image newImage(int imgW, int imgH) {
 		Image src = new Image(Display.getCurrent(), imgW, imgH);
-	    GC gc = new GC(src);
-	    gc.setAlpha(0);
-	    gc.fillRectangle(0, 0, imgW, imgH);
-	    gc.dispose();
-	    //ImageData imageData = src.getImageData();
-	    //imageData.transparentPixel = -1;
-	    
-	    //Image img = correctTransparency(imageData);
-	    //src.dispose();
-	    //return img;
 	    return src;
 	}
 	
 	public static Image correctTransparency(Image image) {
-		Image img = correctTransparency(image.getImageData());
+		ImageData data = image.getImageData();
+		correctTransparency(data);
 		image.dispose();
-		return img;
+		return new Image(Display.getCurrent(), data);
 	}
 	
-	public static Image correctTransparency(ImageData imageData) {
+	public static void correctTransparency(ImageData imageData) {
 		int len = imageData.width * imageData.height;
 		imageData.transparentPixel = -1;
+		imageData.alpha = -1;
 		imageData.alphaData = new byte[len];
 		for (int idx = 0; idx < len; idx++) {
 	        final int coord = (idx * 4) + 3;
 	        imageData.alphaData[idx] = imageData.data[coord];
 	    }
-		return new Image(Display.getCurrent(), imageData);
 	}
 	
 	public static Image getStringImage(String s, int w, int h, Color background, boolean borders) {
@@ -52,9 +43,8 @@ public class ImageHelper {
 		GC gc = new GC(image);
 		if (background != null) {
 			gc.setBackground(background);
-			gc.fillRectangle(0, 0, w, h);
+			gc.fillRectangle(1, 1, w-2, h-2);
 		}
-		gc.setAlpha(255);
 		Point size = gc.stringExtent(s);
 		int x = (w - size.x) / 2;
 		int y = (h - size.y) / 2;
@@ -75,15 +65,16 @@ public class ImageHelper {
 	}
 
 	public static Image colorTransform(Image src, 
-			float r, float g, float b, float a,
+			float r, float g, float b,
 			float h, float s, float v) {
-		if (r == 1 && g == 1 && b == 1 && a == 1 && 
+		if (r == 1 && g == 1 && b == 1 && 
 				h == 0 && s == 1 && v == 1)
 			return src;
 		ImageData newdata = LHelper.colorTransform(src.getImageData(), 
-				r, g, b, a, h, s, v);
+				r, g, b, h, s, v);
 		src.dispose();
-		return correctTransparency(newdata);
+		correctTransparency(newdata);
+		return new Image(Display.getCurrent(), newdata);
 	}
 	
 	public static void setColorTransform(LImage img, Transform t1, Transform t2) {

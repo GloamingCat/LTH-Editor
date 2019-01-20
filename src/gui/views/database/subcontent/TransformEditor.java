@@ -1,6 +1,7 @@
 package gui.views.database.subcontent;
 
 import gui.Vocab;
+import gui.helper.ImageHelper;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -10,21 +11,42 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import data.subcontent.Transform;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
+import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 
 public class TransformEditor extends LObjectEditor {
 	
 	private LSpinner spnOffsetX;
 	private LSpinner spnOffsetY;
-	public Composite image = null;
+	public LImage image = null;
 
 	public TransformEditor(Composite parent, int style) {
 		super(parent, style);
 
 		setLayout(new GridLayout(4, false));
+		
+		LControlListener<Integer> updateColor = new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (image != null && currentObject != null && event.oldValue != null) {
+					ImageHelper.setColorTransform(image, (Transform) currentObject);
+					image.setImage(image.getOriginalImage(), image.getRectangle());
+					onChangeColor();
+				}
+			}
+		};
+		LControlListener<Integer> updateOffset = new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (image != null)
+					image.redraw();
+				onChangeOffset();
+			}
+		};
 		
 		Label lblOffsetX = new Label(this, SWT.NONE);
 		lblOffsetX.setText(Vocab.instance.OFFSETX);
@@ -34,13 +56,7 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetX.setMinimum(-1024);
 		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
-		spnOffsetX.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (image != null)
-					image.redraw();
-			}
-		});
+		spnOffsetX.addModifyListener(updateOffset);
 		
 		Label lblRed = new Label(this, SWT.NONE);
 		lblRed.setText(Vocab.instance.RED);
@@ -50,6 +66,7 @@ public class TransformEditor extends LObjectEditor {
 		spnRed.setMinimum(0);
 		spnRed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRed, "red");
+		spnRed.addModifyListener(updateColor);
 		
 		Label lblOffsetY = new Label(this, SWT.NONE);
 		lblOffsetY.setText(Vocab.instance.OFFSETY);
@@ -59,13 +76,7 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetY.setMinimum(-1024);
 		spnOffsetY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetY, "offsetY");
-		spnOffsetY.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (image != null)
-					image.redraw();
-			}
-		});
+		spnOffsetY.addModifyListener(updateOffset);
 		
 		Label lblGreen = new Label(this, SWT.NONE);
 		lblGreen.setText(Vocab.instance.GREEN);
@@ -75,6 +86,7 @@ public class TransformEditor extends LObjectEditor {
 		spnGreen.setMinimum(0);
 		spnGreen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnGreen, "green");
+		spnGreen.addModifyListener(updateColor);
 		
 		Label lblOffsetDepth = new Label(this, SWT.NONE);
 		lblOffsetDepth.setText(Vocab.instance.OFFSETDEPTH);
@@ -93,6 +105,7 @@ public class TransformEditor extends LObjectEditor {
 		spnBlue.setMinimum(0);
 		spnBlue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnBlue, "blue");
+		spnBlue.addModifyListener(updateColor);
 		
 		Label lblScaleX = new Label(this, SWT.NONE);
 		lblScaleX.setText(Vocab.instance.SCALEX);
@@ -111,6 +124,7 @@ public class TransformEditor extends LObjectEditor {
 		spnAlpha.setMinimum(0);
 		spnAlpha.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnAlpha, "alpha");
+		spnAlpha.addModifyListener(updateColor);
 		
 		Label lblScaleY = new Label(this, SWT.NONE);
 		lblScaleY.setText(Vocab.instance.SCALEY);
@@ -129,6 +143,7 @@ public class TransformEditor extends LObjectEditor {
 		spnHue.setMinimum(-360);
 		spnHue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnHue, "hue");
+		spnHue.addModifyListener(updateColor);
 		
 		Label lblRotation = new Label(this, SWT.NONE);
 		lblRotation.setText(Vocab.instance.ROTATION);
@@ -147,6 +162,7 @@ public class TransformEditor extends LObjectEditor {
 		spnSaturation.setMinimum(0);
 		spnSaturation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnSaturation, "saturation");
+		spnSaturation.addModifyListener(updateColor);
 		
 		Label placeholder = new Label(this, SWT.NONE);
 		placeholder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -159,9 +175,10 @@ public class TransformEditor extends LObjectEditor {
 		spnBrightness.setMinimum(0);
 		spnBrightness.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnBrightness, "brightness");
+		spnBrightness.addModifyListener(updateColor);
 	}
 	
-	public void setImage(Composite label) {
+	public void setImage(LImage label) {
 		label.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
@@ -174,5 +191,8 @@ public class TransformEditor extends LObjectEditor {
 		});
 		image = label;
 	}
+	
+	public void onChangeOffset() {}
+	public void onChangeColor() {}
 
 }

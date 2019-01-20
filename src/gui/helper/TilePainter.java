@@ -61,6 +61,7 @@ public class TilePainter {
 		int dh = (h * anim.transform.scaleY) / 100;
 		img = ImageHelper.newImage(dw, dh);
 		GC gc = new GC(img);
+		gc.setAlpha(anim.transform.alpha);
 		gc.drawImage(anim.quad.getImage(), anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
@@ -68,7 +69,6 @@ public class TilePainter {
 				anim.transform.red / 255f,
 				anim.transform.green / 255f,
 				anim.transform.blue / 255f,
-				anim.transform.alpha / 255f,
 				anim.transform.hue, 
 				anim.transform.saturation / 100f, 
 				anim.transform.brightness / 100f);
@@ -91,6 +91,7 @@ public class TilePainter {
 		int h = rect.height * anim.transform.scaleY / 100;
 		img = ImageHelper.newImage(rect.width, rect.height);
 		GC gc = new GC(img);
+		gc.setAlpha(anim.transform.alpha * obj.transform.alpha / 255);
 		gc.drawImage(obj.image.getImage(), 
 				rect.x, rect.y, rect.width, rect.height,
 				0, 0, w, h);
@@ -100,10 +101,9 @@ public class TilePainter {
 				anim.transform.red / 255f * obj.transform.red / 255f,
 				anim.transform.green / 255f * obj.transform.green / 255f,
 				anim.transform.blue / 255f * obj.transform.blue / 255f,
-				anim.transform.alpha / 255f * obj.transform.alpha / 255f,
 				anim.transform.hue + obj.transform.hue, 
-				anim.transform.saturation * obj.transform.saturation / 10000f, 
-				anim.transform.brightness * obj.transform.brightness / 10000f);
+				anim.transform.saturation / 100f * obj.transform.saturation / 100f, 
+				anim.transform.brightness / 100f * obj.transform.brightness / 100f);
 		obstacleCache.put(id, img);
 		return img;
 	}
@@ -125,6 +125,7 @@ public class TilePainter {
 		int col = anim.getFirstFrame();
 		img = ImageHelper.newImage(w, h);
 		GC gc = new GC(img);
+		gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
 		gc.drawImage(anim.quad.getImage(), 
 				anim.quad.x + w * col, anim.quad.y + h * tile.row, w, h, 
 				0, 0, w, h);
@@ -133,10 +134,9 @@ public class TilePainter {
 				anim.transform.red / 255f * c.transform.red / 255f,
 				anim.transform.green / 255f * c.transform.green / 255f,
 				anim.transform.blue / 255f * c.transform.blue / 255f,
-				anim.transform.alpha / 255f * c.transform.alpha / 255f,
 				anim.transform.hue + c.transform.hue, 
-				anim.transform.saturation * c.transform.saturation / 10000f, 
-				anim.transform.brightness * c.transform.brightness / 10000f);
+				anim.transform.saturation / 100f * c.transform.saturation / 100f, 
+				anim.transform.brightness / 100f * c.transform.brightness / 100f);
 		characterCache.put(key, img);
 		return img;
 	}
@@ -150,11 +150,10 @@ public class TilePainter {
 			return null;
 		Region r = (Region) Project.current.regions.getData().get(id);
 		if (rect)
-			img = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, 
+			img = ImageHelper.getStringImage(id + "", conf.grid.tileW + 1, conf.grid.tileH + 1, 
 				new Color(Display.getCurrent(), r.rgb), true);
 		else
 			img = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, false);
-		img = ImageHelper.correctTransparency(img);
 		regionCache.put(key, img);
 		return img;
 	}
