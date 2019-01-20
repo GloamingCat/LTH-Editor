@@ -20,9 +20,12 @@ import lwt.widget.LSpinner;
 
 public class TransformEditor extends LObjectEditor {
 	
+	public LImage image = null;
 	private LSpinner spnOffsetX;
 	private LSpinner spnOffsetY;
-	public LImage image = null;
+	private LSpinner spnScaleY;
+	private LSpinner spnScaleX;
+	private LSpinner spnRotation;
 
 	public TransformEditor(Composite parent, int style) {
 		super(parent, style);
@@ -32,19 +35,22 @@ public class TransformEditor extends LObjectEditor {
 		LControlListener<Integer> updateColor = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
-				if (image != null && currentObject != null && event.oldValue != null) {
-					ImageHelper.setColorTransform(image, (Transform) currentObject);
-					image.setImage(image.getOriginalImage(), image.getRectangle());
-					onChangeColor();
-				}
+				if (event.oldValue == null) return;
+				onChangeColor((Transform) currentObject);
 			}
 		};
 		LControlListener<Integer> updateOffset = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
-				if (image != null)
-					image.redraw();
-				onChangeOffset();
+				if (event.oldValue == null) return;
+				onChangeOffset((Transform) currentObject);
+			}
+		};
+		LControlListener<Integer> updateScale = new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event.oldValue == null) return;
+				onChangeScale((Transform) currentObject);
 			}
 		};
 		
@@ -110,11 +116,12 @@ public class TransformEditor extends LObjectEditor {
 		Label lblScaleX = new Label(this, SWT.NONE);
 		lblScaleX.setText(Vocab.instance.SCALEX);
 		
-		LSpinner spnScaleX = new LSpinner(this, SWT.NONE);
+		spnScaleX = new LSpinner(this, SWT.NONE);
 		spnScaleX.setMaximum(10000);
 		spnScaleX.setMinimum(-10000);
 		spnScaleX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleX, "scaleX");
+		spnScaleX.addModifyListener(updateScale);
 		
 		Label lblAlpha = new Label(this, SWT.NONE);
 		lblAlpha.setText(Vocab.instance.ALPHA);
@@ -129,11 +136,12 @@ public class TransformEditor extends LObjectEditor {
 		Label lblScaleY = new Label(this, SWT.NONE);
 		lblScaleY.setText(Vocab.instance.SCALEY);
 		
-		LSpinner spnScaleY = new LSpinner(this, SWT.NONE);
+		spnScaleY = new LSpinner(this, SWT.NONE);
 		spnScaleY.setMaximum(10000);
 		spnScaleY.setMinimum(-10000);
 		spnScaleY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleY, "scaleY");
+		spnScaleY.addModifyListener(updateScale);
 		
 		Label lblHue = new Label(this, SWT.NONE);
 		lblHue.setText(Vocab.instance.HUE);
@@ -148,7 +156,7 @@ public class TransformEditor extends LObjectEditor {
 		Label lblRotation = new Label(this, SWT.NONE);
 		lblRotation.setText(Vocab.instance.ROTATION);
 		
-		LSpinner spnRotation = new LSpinner(this, SWT.NONE);
+		spnRotation = new LSpinner(this, SWT.NONE);
 		spnRotation.setMaximum(360);
 		spnRotation.setMinimum(-360);
 		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -178,21 +186,53 @@ public class TransformEditor extends LObjectEditor {
 		spnBrightness.addModifyListener(updateColor);
 	}
 	
-	public void setImage(LImage label) {
-		label.addPaintListener(new PaintListener() {
+	public void setImage(LImage img) {
+		img.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				int x = (Integer) spnOffsetX.getValue();
-				int y = (Integer) spnOffsetY.getValue();
+				if (currentObject == null)
+					return;
+				Transform t = (Transform) currentObject;
+				float sw = t.scaleX / 100f;
+				float sh = t.scaleY / 100f;
+				int x = Math.round(t.offsetX * sw) + e.x;
+				int y = Math.round(t.offsetY * sh) + e.y;
 				x -= 1;
 				e.gc.drawLine(x - 2, y, x + 2, y);
 				e.gc.drawLine(x, y - 2, x, y + 2);
 			}
 		});
-		image = label;
+		image = img;
 	}
 	
-	public void onChangeOffset() {}
-	public void onChangeColor() {}
+	public void setObject(Object obj) {
+		if (obj != null && image != null) {
+			Transform t = (Transform) obj;
+			image.setRGBA(t.red, t.green, t.blue, t.alpha);
+			image.setHSV(t.hue, t.saturation, t.brightness);
+			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
+		}
+		super.setObject(obj);
+	}
+	
+	public void onChangeOffset(Transform t) {
+		if (image != null)
+			image.redraw();
+	}
+	
+	public void onChangeColor(Transform t) {
+		if (image != null && currentObject != null) {
+			ImageHelper.setColorTransform(image, t);
+			image.setImage(image.getOriginalImage(), image.getRectangle());
+			image.redraw();
+		}
+	}
+	
+	public void onChangeScale(Transform t) {
+		if (image != null) {
+			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
+			image.redraw();
+		}
+	}
 
 }
