@@ -49,7 +49,6 @@ public class ObstacleTab extends DatabaseTab {
 		
 		IconButton btnGraphics = new IconButton(grpGraphics, 0);
 		btnGraphics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		btnGraphics.setImage(imgGraphics);
 		addControl(btnGraphics, "image");
 		
 		Group grpTransform = new Group(other, SWT.NONE);
@@ -59,6 +58,10 @@ public class ObstacleTab extends DatabaseTab {
 		
 		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformEditor, "transform");
+		
+		btnGraphics.setImage(imgGraphics);
+		btnGraphics.setTransform(transformEditor);
+		transformEditor.setImage(imgGraphics);
 	
 		Group grpTiles = new Group(lateral, SWT.NONE);
 		grpTiles.setLayout(new FillLayout());

@@ -208,6 +208,9 @@ public class TransformEditor extends LObjectEditor {
 	public void setObject(Object obj) {
 		if (obj != null && image != null) {
 			Transform t = (Transform) obj;
+			Transform t2 = secondaryTransform();
+			if (t2 != null)
+				t = new Transform().combine(t).combine(t2);
 			image.setRGBA(t.red, t.green, t.blue, t.alpha);
 			image.setHSV(t.hue, t.saturation, t.brightness);
 			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
@@ -222,6 +225,9 @@ public class TransformEditor extends LObjectEditor {
 	
 	public void onChangeColor(Transform t) {
 		if (image != null && currentObject != null) {
+			Transform t2 = secondaryTransform();
+			if (t2 != null)
+				t = new Transform().combine(t).combine(t2);
 			ImageHelper.setColorTransform(image, t);
 			image.setImage(image.getOriginalImage(), image.getRectangle());
 			image.redraw();
@@ -230,9 +236,14 @@ public class TransformEditor extends LObjectEditor {
 	
 	public void onChangeScale(Transform t) {
 		if (image != null) {
+			Transform t2 = secondaryTransform();
+			if (t2 != null)
+				t = new Transform().combine(t).combine(t2);
 			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
 			image.redraw();
 		}
 	}
+	
+	public Transform secondaryTransform() { return null; }
 
 }
