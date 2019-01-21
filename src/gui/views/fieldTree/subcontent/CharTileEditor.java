@@ -1,6 +1,7 @@
-package gui.views.fieldTree;
+package gui.views.fieldTree.subcontent;
 
 import gui.Vocab;
+import gui.views.fieldTree.FieldEditor;
 import gui.widgets.IDButton;
 import gui.widgets.ScriptButton;
 
@@ -41,48 +42,15 @@ public class CharTileEditor extends LObjectEditor {
 		super(parent, style);
 		setLayout(new GridLayout(3, false));
 		
-		// General
-		
-		Label lblKey = new Label(this, SWT.NONE);
-		lblKey.setText(Vocab.instance.KEY);
-		
-		LText txtKey = new LText(this, SWT.NONE);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		addControl(txtKey, "key");
-		
-		Label lblPersistent = new Label(this, SWT.NONE);
-		lblPersistent.setText(Vocab.instance.PERSISTENT);
-		
-		LCheckButton btnPersistent = new LCheckButton(this, SWT.NONE);
-		btnPersistent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		addControl(btnPersistent, "persistent");
-		
-		// Char
-		
-		Label lblChar = new Label(this, SWT.NONE);
-		lblChar.setText(Vocab.instance.CHARACTER);
-		
-		Text txtChar = new Text(this, SWT.BORDER | SWT.READ_ONLY);
-		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnChar = new IDButton(this, SWT.NONE) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.characters.getTree();
-			}
-		};
-		btnChar.setNameText(txtChar);
-		addControl(btnChar, "charID");
-		
-		Label lblPos = new Label(this, SWT.NONE);
-		lblPos.setText(Vocab.instance.POSITION);
-		
 		Composite position = new Composite(this, SWT.NONE);
-		GridLayout gl_position = new GridLayout(3, false);
+		GridLayout gl_position = new GridLayout(4, false);
 		gl_position.marginWidth = 0;
 		gl_position.marginHeight = 0;
 		position.setLayout(gl_position);
-		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		
+		Label lblPos = new Label(position, SWT.NONE);
+		lblPos.setText(Vocab.instance.POSITION);
 		
 		LSpinner spnX = new LSpinner(position);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -119,6 +87,39 @@ public class CharTileEditor extends LObjectEditor {
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
 			}
 		});
+		
+		// General
+		
+		Label lblKey = new Label(this, SWT.NONE);
+		lblKey.setText(Vocab.instance.KEY);
+		
+		LText txtKey = new LText(this, SWT.NONE);
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(txtKey, "key");
+		
+		Label lblPersistent = new Label(this, SWT.NONE);
+		lblPersistent.setText(Vocab.instance.PERSISTENT);
+		
+		LCheckButton btnPersistent = new LCheckButton(this, SWT.NONE);
+		btnPersistent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		addControl(btnPersistent, "persistent");
+		
+		// Char
+		
+		Label lblChar = new Label(this, SWT.NONE);
+		lblChar.setText(Vocab.instance.CHARACTER);
+		
+		Text txtChar = new Text(this, SWT.BORDER | SWT.READ_ONLY);
+		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnChar = new IDButton(this, SWT.NONE) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.characters.getTree();
+			}
+		};
+		btnChar.setNameText(txtChar);
+		addControl(btnChar, "charID");
 		
 		Label lblDir = new Label(this, SWT.NONE);
 		lblDir.setText(Vocab.instance.DIRECTION);
@@ -211,7 +212,7 @@ public class CharTileEditor extends LObjectEditor {
 	public void setField(Field field) {
 		if (currentObject == null)
 			return;
-		cmbParty.setItems(FieldEditor.instance.canvas.field.createPartyArray());
+		cmbParty.setItems(FieldEditor.instance.canvas.field.parties);
 	}
 	
 }

@@ -330,6 +330,12 @@ public class Vocab {
 	public String SHOWGRID = "Show Grid";
 	public String RESIZE = "Resize";
 	
+	// Party
+	public String PLAYERPARTY = "Player Party";
+	public String PARTYGEN = "Unit Generation";
+	public String TROOPUNITS = "Troop Units";
+	public String FIELDCHARS = "Field Characters";
+	
 	// Position
 	public String POSITION = "Position";
 	public String LAYER = "Layer";

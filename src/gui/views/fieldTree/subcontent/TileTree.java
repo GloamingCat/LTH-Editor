@@ -1,5 +1,6 @@
-package gui.views.fieldTree;
+package gui.views.fieldTree.subcontent;
 
+import gui.views.fieldTree.FieldEditor;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.editor.LState;

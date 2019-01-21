@@ -2,7 +2,6 @@ package gui.shell.field;
 
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
-import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import gui.Vocab;
 import gui.shell.ObjectShell;
@@ -42,13 +41,6 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		cmbRegion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbRegion.setItems(Project.current.regions.getData());
 		addControl(cmbRegion, "defaultRegion");
-		
-		Label lblPartyCount = new Label(contentEditor, SWT.NONE);
-		lblPartyCount.setText(Vocab.instance.PARTYCOUNT);
-		
-		LSpinner spnParties = new LSpinner(contentEditor);
-		spnParties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnParties, "partyCount");
 
 		Group grpBG = new Group(contentEditor, SWT.NONE);
 		grpBG.setLayout(new GridLayout(2, false));

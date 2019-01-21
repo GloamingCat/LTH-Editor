@@ -1,6 +1,8 @@
-package gui.views.fieldTree;
+package gui.views.fieldTree.subcontent;
 
 import gui.shell.field.LayerShell;
+import gui.views.fieldTree.FieldEditor;
+import gui.views.fieldTree.FieldSideEditor;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
+import data.field.Field;
 import data.field.Layer;
 import data.field.Layer.Info;
 
@@ -64,19 +67,20 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		this.editor = parent;
 	}
 	
-	public void onSetField() {
+	public void setObject(Object obj) {
+		Field field = (Field) obj;
 		if (editor.field == null) {
 			setDataCollection(null);
 		} else {
-			setDataCollection(getLayerList());
+			super.setObject(getLayerList(field));
 			int layer = Project.current.fieldTree.getData().getLastLayer(editor.field.id, type);
 			getCollectionWidget().forceSelection(new LPath(layer));
 		}
 	}
-
+	
 	@Override
 	protected LDataList<Layer> getDataCollection() {
-		return editor.field == null ? null : getLayerList();
+		return editor.field == null ? null : getLayerList(editor.field);
 	}
 	@Override
 	protected Layer createNewData() {
@@ -88,17 +92,17 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	}
 	@Override
 	protected Info getEditableData(LPath path) {
-		return getLayerList().get(path.index).info;
+		return getLayerList(editor.field).get(path.index).info;
 	}
 	@Override
 	protected void setEditableData(LPath path, Info newData) {
-		getLayerList().get(path.index).info = newData;
+		getLayerList(editor.field).get(path.index).info = newData;
 	}
 	
 	public Layer getLayer() {
 		return getCollectionWidget().getSelectedObject();
 	}
 	
-	public abstract LDataList<Layer> getLayerList();
+	public abstract LDataList<Layer> getLayerList(Field field);
 
 }

@@ -101,7 +101,6 @@ public class FieldToolBar extends LWidget {
 		});
 		tltmChar.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/character.png"));
 		
-		/*
 		ToolItem tltmParty = new ToolItem(toolBar, SWT.RADIO);
 		tltmParty.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -109,8 +108,7 @@ public class FieldToolBar extends LWidget {
 				onSelectEditor(4);
 			}
 		});
-		tltmParty.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/eraser.png"));
-		*/
+		tltmParty.setImage(SWTResourceManager.getImage(FieldEditor.class, "/img/party.png"));
 		
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		

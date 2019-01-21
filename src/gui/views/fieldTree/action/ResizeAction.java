@@ -32,7 +32,6 @@ public class ResizeAction implements LAction {
 		resize(oldLayers.terrain, newLayers.terrain);
 		resize(oldLayers.obstacle, newLayers.obstacle);
 		resize(oldLayers.region, newLayers.region);
-		resize(oldLayers.party, newLayers.party);
 		this.path = FieldTreeEditor.instance.fieldTree.getSelectedPath();
 	}
 

@@ -1,6 +1,5 @@
 package data.field;
 
-import gui.Vocab;
 import data.Data;
 import data.Script;
 import data.subcontent.Quad;
@@ -20,6 +19,8 @@ public class Field {
 	
 	public LDataList<Transition> transitions = new LDataList<>(); 
 	public LDataList<CharTile> characters = new LDataList<>();
+	public LDataList<Party> parties = new LDataList<>();
+	public int playerParty = -1;
 	
 	public Field() {}
 	
@@ -35,8 +36,6 @@ public class Field {
 		public Quad background = new Quad();
 		public Quad parallax = new Quad();
 		public int defaultRegion = 0;
-		public int partyCount = 2;
-		
 	}
 	
 	public static class Layers {
@@ -44,7 +43,6 @@ public class Field {
 		public LDataList<Layer> terrain = new LDataList<>();
 		public LDataList<Layer> obstacle = new LDataList<>();
 		public LDataList<Layer> region = new LDataList<>();
-		public LDataList<Layer> party = new LDataList<>();
 		
 		public int maxHeight() {
 			int maxH = 0;
@@ -54,19 +52,9 @@ public class Field {
 				maxH = Math.max(maxH, l.info.height);
 			for (Layer l : region)
 				maxH = Math.max(maxH, l.info.height);
-			for (Layer l : party)
-				maxH = Math.max(maxH, l.info.height);
 			return maxH;
 		}
 		
-	}
-	
-	public LDataList<String> createPartyArray() {
-		LDataList<String> list = new LDataList<>();
-		for(int i = 0; i < prefs.partyCount; i++) {
-			list.add(Vocab.instance.PARTY + " " + i);
-		}
-		return list;
 	}
 	
 }

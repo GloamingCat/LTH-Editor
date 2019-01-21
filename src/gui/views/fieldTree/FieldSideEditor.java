@@ -2,24 +2,36 @@ package gui.views.fieldTree;
 
 import java.util.ArrayList;
 
+import gui.Vocab;
 import gui.helper.TilePainter;
+import gui.views.fieldTree.subcontent.CharTileEditor;
+import gui.views.fieldTree.subcontent.LayerList;
+import gui.views.fieldTree.subcontent.PartyEditor;
+import gui.views.fieldTree.subcontent.TileTree;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LState;
+import lwt.event.LDeleteEvent;
+import lwt.event.LInsertEvent;
+import lwt.event.listener.LCollectionListener;
+import lwt.widget.LCombo;
 import lwt.widget.LImage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import project.Project;
 import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
+import data.field.Party;
 
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -35,9 +47,11 @@ public class FieldSideEditor extends LObjectEditor {
 	private LayerList[] lists;
 	private TileTree[] trees;
 	
-	private CharTileEditor charEditor;
 	private SimpleEditableList<CharTile> lstChars;
-	
+	private SimpleEditableList<Party> lstParties;
+	private CharTileEditor charEditor;
+	private PartyEditor partyEditor;
+	private LCombo cmbPlayerParty;
 	
 	/**
 	 * Create the composite.
@@ -54,7 +68,7 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		SashForm terrain = new SashForm(this, SWT.VERTICAL);
 		LayerList lstTerrain = new LayerList(terrain, 0) {
-			public LDataList<Layer> getLayerList() {
+			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.terrain;
 			}
 		};
@@ -82,7 +96,7 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		SashForm obstacle = new SashForm(this, SWT.VERTICAL);
 		LayerList lstObstacle = new LayerList(obstacle, 1) {
-			public LDataList<Layer> getLayerList() {
+			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.obstacle;
 			}
 		};
@@ -110,7 +124,7 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		SashForm region = new SashForm(this, SWT.VERTICAL);
 		LayerList lstRegion = new LayerList(region, 1) {
-			public LDataList<Layer> getLayerList() {
+			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.region;
 			}
 		};
@@ -150,6 +164,46 @@ public class FieldSideEditor extends LObjectEditor {
 		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		lstChars.addChild(charEditor);
 		
+		// Party
+		
+		Composite party = new Composite(this, SWT.NONE);
+		party.setLayout(new GridLayout(2, false));
+		
+		Label lblPlayerParty = new Label(party, SWT.NONE);
+		lblPlayerParty.setText(Vocab.instance.PLAYERPARTY);
+		
+		cmbPlayerParty = new LCombo(party, SWT.NONE);
+		cmbPlayerParty.setIncludeID(false);
+		cmbPlayerParty.setOptional(true);
+		cmbPlayerParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		addControl(cmbPlayerParty, "playerParty");
+		
+		Composite partylist = new Composite(party, SWT.NONE);
+		partylist.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		partylist.setLayout(new FillLayout(SWT.VERTICAL));
+		
+		LCollectionListener<Party> listener = new LCollectionListener<Party>() {
+			public void onInsert(LInsertEvent<Party> event) {
+				cmbPlayerParty.setItems(field.parties);
+				cmbPlayerParty.setValue(field.playerParty);
+			}
+			public void onDelete(LDeleteEvent<Party> event) {
+				cmbPlayerParty.setItems(field.parties);
+				cmbPlayerParty.setValue(field.playerParty);
+			}
+		};
+		
+		lstParties = new SimpleEditableList<>(partylist, SWT.NONE);
+		lstParties.getCollectionWidget().setEditEnabled(false);
+		lstParties.setIncludeID(true);
+		lstParties.type = Party.class;
+		addChild(lstParties, "parties");
+		lstParties.getCollectionWidget().addInsertListener(listener);
+		lstParties.getCollectionWidget().addDeleteListener(listener);
+		
+		partyEditor = new PartyEditor(partylist, SWT.NONE);
+		lstParties.addChild(partyEditor);
+		
 		lists = new LayerList[] { lstTerrain, lstObstacle, lstRegion };
 		trees = new TileTree[] { selTerrain, selObstacle, selRegion };
 	}
@@ -157,11 +211,9 @@ public class FieldSideEditor extends LObjectEditor {
 	@Override
 	public void setObject(Object object) {
 		field = (Field) object;
-		for (LayerList l : lists)
-			l.onSetField();
-		lstChars.setDataCollection(field.characters);
-		lstChars.forceFirstSelection();
+		cmbPlayerParty.setItems(field.parties);
 		charEditor.setField(field);
+		super.setObject(object);
 	}
 	
 	public void selectLayer(Layer layer) {
@@ -178,7 +230,7 @@ public class FieldSideEditor extends LObjectEditor {
 		if (i < lists.length){ // Terrain, Obstacle, Region
 			lists[editor].onVisible();
 			selectLayer(lists[i].getLayer());
-		} else // Character
+		} else // Character, Party
 			selectLayer(null);
 		stack.topControl = getChildren()[i];
 		layout();
