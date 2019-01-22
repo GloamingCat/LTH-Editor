@@ -31,6 +31,7 @@ public class FieldCanvas extends LView {
 	protected Point mousePoint = new Point(0, 0);
 	protected int tileX = 0;
 	protected int tileY = 0;
+	protected int height = 0;
 
 	// Image cache
 	private Image[][] tileImages;
@@ -51,16 +52,15 @@ public class FieldCanvas extends LView {
 		
 		addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				int h = currentLayer == null ? 0 : currentLayer.info.height;
 				Point tilePos = FieldHelper.math.pixel2Tile(
 						e.x * 1.0f / scale - x0,
 						e.y * 1.0f / scale - y0, 
-						h * FieldHelper.config.grid.pixelsPerHeight);
+						height * FieldHelper.config.grid.pixelsPerHeight);
 				if ((tileX != tilePos.x || tileY != tilePos.y) && field != null) {
 					if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
 						tileX = tilePos.x;
 						tileY = tilePos.y;
-						mousePoint = FieldHelper.math.tile2Pixel(tileX, tileY, h);
+						mousePoint = FieldHelper.math.tile2Pixel(tileX, tileY, height);
 						redraw();
 						onTileEnter(tileX, tileY);
 					}
@@ -189,8 +189,14 @@ public class FieldCanvas extends LView {
 	public void setCurrentLayer(Layer layer) {
 		if (currentLayer != layer) {
 			currentLayer = layer;
+			if (layer != null)
+				setHeight(layer.info.height);
 			updateAllTileImages();
 		}
+	}
+	
+	public void setHeight(int h) {
+		height = h;
 	}
 	
 	public void setShowGrid(boolean value) {

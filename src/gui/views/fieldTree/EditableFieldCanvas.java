@@ -2,6 +2,7 @@ package gui.views.fieldTree;
 
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.action.BucketAction;
+import gui.views.fieldTree.action.CharAction;
 import gui.views.fieldTree.action.EraseAction;
 import gui.views.fieldTree.action.PencilAction;
 
@@ -19,9 +20,12 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import data.field.CharTile;
+
 public class EditableFieldCanvas extends FieldCanvas {
 
-	private int tool;
+	private int tool = 0;
+	private int mode = 0;
 	private Point selectionPoint;
 	private int[][] selection;
 	
@@ -40,30 +44,30 @@ public class EditableFieldCanvas extends FieldCanvas {
 			public void mouseDown(MouseEvent e) {
 				if (tileX < 0 || tileX >= field.sizeX || tileY < 0 || tileY >= field.sizeY)
 					return;
+				dragOrigin = new Point(tileX, tileY);
 				if (e.button == 1) {	// Left button.
-					onTileLeftClick(tileX, tileY);
 					draggingLeft = true;
-				} else {				// Right button.
-					dragOrigin = new Point(tileX, tileY);
+					onTileLeftDown();
+				} else if (!draggingLeft) {
+					onTileRightDown();
 				}
 			}
-			
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (e.button == 1) { 	// Left button.
+				if (e.button == 1) { // Left button.
+					if (draggingLeft)
+						onTileLeftUp();
 					draggingLeft = false;
-				} else {				// Right button.
-					onTileRightClick(tileX, tileY, dragOrigin);
-					dragOrigin = null;
-					redraw();
+				} else if (!draggingLeft) {	// Right button.
+					onTileRightUp();
 				}
+				dragOrigin = null;
 			}
-			
 		});
 		
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
-	        	if (currentLayer != null && dragOrigin != null) {
+	        	if (currentLayer != null && dragOrigin != null && !draggingLeft) {
             		e.gc.setAlpha(150);
             		e.gc.setBackground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
             		e.gc.setForeground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
@@ -96,7 +100,36 @@ public class EditableFieldCanvas extends FieldCanvas {
 	}
 	
 	// -------------------------------------------------------------------------------------
-	// Tools
+	// Mouse Call backs
+	// -------------------------------------------------------------------------------------
+
+	public void onTileLeftDown() {
+		if (mode == 0)	 // Layers
+			useTool(tileX, tileY); 
+	}
+	
+	public void onTileLeftUp() {
+		if (mode == 1)	// Characters
+			moveCharacter(tileX, tileY, dragOrigin);
+	}
+	
+	public void onTileRightDown() {}
+	
+	public void onTileRightUp() {
+		if (dragOrigin == null)
+			return;
+		onSelect();
+		redraw();
+	}
+	
+	public void onTileEnter(int x, int y) {
+		if (draggingLeft) {
+			onTileLeftDown();
+		}
+	}
+	
+	// -------------------------------------------------------------------------------------
+	// Editing
 	// -------------------------------------------------------------------------------------
 	
 	public void setSelection(int[][] s, Point p) {
@@ -109,9 +142,43 @@ public class EditableFieldCanvas extends FieldCanvas {
 		selectionPoint = new Point(0, 0);
 	}
 	
+	public void onSelect() {
+		if (currentLayer == null)
+			return;
+		Point origin = dragOrigin;
+		if (origin == null)
+			origin = new Point(tileX, tileY);
+		int[][] grid = currentLayer.grid;
+		
+		int x1 = Math.min(tileX, origin.x);
+		int y1 = Math.min(tileY, origin.y);
+		int x2 = Math.max(tileX, origin.x); 
+		int y2 = Math.max(tileY, origin.y);
+		
+		selectionPoint = new Point(tileX - x1, tileY - y1);
+		selection = new int[x2 - x1 + 1][y2 - y1 + 1];
+		for(int i = 0; i < selection.length; i++) {
+			for(int j = 0; j < selection[i].length; j++) {
+				selection[i][j] = grid[x1 + i][y1 + j];
+			}
+		}
+		if (selection.length == 1 && selection[0].length == 1)
+			FieldSideEditor.instance.selectTile(selection[0][0]);
+		else
+			FieldSideEditor.instance.unselectTiles();
+	}
+	
 	public void setTool(int t) {
 		tool = t;
 	}
+	
+	public void setMode(int m) {
+		mode = m;
+	}
+	
+	// -------------------------------------------------------------------------------------
+	// Layers
+	// -------------------------------------------------------------------------------------
 	
 	private void useTool(int x, int y) {
 		int[][] grid = currentLayer.grid;
@@ -147,7 +214,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 				values[i][j] = grid[tileX + i][tileY + j];
 			}
 		}
-		PencilAction action = new PencilAction(grid, tileX, tileY, values, selection, this);
+		PencilAction action = new PencilAction(grid, tileX, tileY, values, selection);
 		if (action.apply(selection)) {
 			getActionStack().newAction(action);
 		}
@@ -189,39 +256,21 @@ public class EditableFieldCanvas extends FieldCanvas {
 	}
 	
 	// -------------------------------------------------------------------------------------
-	// Mouse Call backs
+	// Character
 	// -------------------------------------------------------------------------------------
-
-	public void onTileLeftClick(int x, int y) {
-		useTool(x, y);
-	}
 	
-	public void onTileRightClick(int x, int y, Point origin) {
-		if (currentLayer == null)
-			return;
+	public CharTile moveCharacter(int x, int y, Point origin) {
 		if (origin == null)
-			origin = new Point(tileX, tileY);
-		int[][] grid = currentLayer.grid;
-		
-		int x1 = Math.min(tileX, origin.x);
-		int y1 = Math.min(tileY, origin.y);
-		int x2 = Math.max(tileX, origin.x); 
-		int y2 = Math.max(tileY, origin.y);
-		
-		selectionPoint = new Point(tileX - x1, tileY - y1);
-		selection = new int[x2 - x1 + 1][y2 - y1 + 1];
-		for(int i = 0; i < selection.length; i++) {
-			for(int j = 0; j < selection[i].length; j++) {
-				selection[i][j] = grid[x1 + i][y1 + j];
-			}
-		}
-		FieldSideEditor.instance.unselectTiles();
+			return null;
+		if (origin.x == tileX && origin.y == tileY)
+			return null;
+		CharTile tile = field.findCharacter(origin.x, origin.y, height);
+		if (tile == null)
+			return null;
+		CharAction action = new CharAction(tile, x, y, height);
+		action.redo();
+		getActionStack().newAction(action);
+		return tile;
 	}
-	
-	public void onTileEnter(int x, int y) {
-		if (draggingLeft) {
-			onTileLeftClick(x, y);
-		}
-	}
-	
+
 }

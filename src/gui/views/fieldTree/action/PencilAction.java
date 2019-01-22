@@ -1,6 +1,6 @@
 package gui.views.fieldTree.action;
 
-import gui.views.fieldTree.FieldCanvas;
+import gui.views.fieldTree.FieldEditor;
 import lwt.action.LAction;
 
 public class PencilAction implements LAction {
@@ -10,15 +10,13 @@ public class PencilAction implements LAction {
 	private int[][] oldValues;
 	private int[][] newValues;
 	private int[][] grid;
-	private FieldCanvas canvas;
-	
-	public PencilAction(int[][] grid, int x, int y, int[][] oldValues, int[][] newValues, FieldCanvas canvas) {
+
+	public PencilAction(int[][] grid, int x, int y, int[][] oldValues, int[][] newValues) {
 		this.grid = grid;
 		this.x = x;
 		this.y = y;
 		this.oldValues = oldValues;
 		this.newValues = newValues;
-		this.canvas = canvas;
 	}
 	
 	@Override
@@ -39,13 +37,13 @@ public class PencilAction implements LAction {
 					continue;
 				if (selection[i][j] != grid[x + i][y + j]) {
 					grid[x + i][y + j] = selection[i][j];
-					canvas.updateTileImage(x + i,  y + j);
+					FieldEditor.instance.canvas.updateTileImage(x + i,  y + j);
 					needsRedraw = true;
 				}
 			}
 		}
 		if (needsRedraw) {
-			canvas.redraw();
+			FieldEditor.instance.canvas.redraw();
 		}
 		return needsRedraw;
 	}

@@ -40,15 +40,23 @@ public abstract class TileTree extends LView {
 		
 	}
 	
-	public void unselect() {
-		selector.setValue(null);
+	public void setTile(int id) {
+		if (id == -1)
+			selector.setValue(null);
+		else {
+			LDataTree<Object> node = getTree().findNode(id);
+			selector.setValue(node == null ? null : node.toPath());
+		}
 	}
 	
 	public void onVisible() {
 		super.onVisible();
 		LPath path = selector.getSelectedPath();
 		selector.setCollection(getTree());
-		selector.setValue(path);
+		if (path != null)
+			selector.setValue(path);
+		else
+			selector.forceFirstSelection();
 	}
 	
 	public LState getState() {

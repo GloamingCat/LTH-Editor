@@ -93,12 +93,12 @@ public class PositionShell extends LObjectShell<Position> {
 		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
-			public void onTileLeftClick(int x, int y) {
+			public void onTileLeftDown(int x, int y) {
 				spnX.setSelection(x);
 				spnY.setSelection(y);
 				canvas.redraw();
 			}
-			public void onTileRightClick(int x, int y, Point origin) {}
+			public void onTileRightDown(int x, int y) {}
 			public void onTileEnter(int x, int y) {
 				lblPos.setText("(" + x + "," + y + ")");
 			}

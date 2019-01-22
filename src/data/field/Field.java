@@ -57,4 +57,12 @@ public class Field {
 		
 	}
 	
+	public CharTile findCharacter(int x, int y, int h) {
+		for (CharTile t : characters) {
+			if (t.x == x && t.y == y && t.h == h)
+				return t;
+		}
+		return null;
+	}
+	
 }

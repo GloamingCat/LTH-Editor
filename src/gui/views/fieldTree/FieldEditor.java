@@ -6,12 +6,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import project.Project;
+import data.field.CharTile;
 import data.field.Field;
 import data.field.FieldNode;
 import data.field.Layer;
@@ -58,6 +60,14 @@ public class FieldEditor extends LObjectEditor {
 					lblID.setText("ID: -1");
 				else
 					lblID.setText("ID: " + field.id);
+			}
+			
+			public CharTile moveCharacter(int x, int y, Point origin) {
+				CharTile tile = super.moveCharacter(x, y, origin);
+				if (tile == null)
+					return null;
+				FieldSideEditor.instance.onMoveCharacter(tile);
+				return tile;
 			}
 			
 		};

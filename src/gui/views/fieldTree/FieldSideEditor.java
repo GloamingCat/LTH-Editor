@@ -1,7 +1,5 @@
 package gui.views.fieldTree;
 
-import java.util.ArrayList;
-
 import gui.Vocab;
 import gui.helper.TilePainter;
 import gui.views.fieldTree.subcontent.CharTileEditor;
@@ -12,10 +10,11 @@ import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
-import lwt.editor.LState;
 import lwt.event.LDeleteEvent;
 import lwt.event.LInsertEvent;
+import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
 
@@ -159,6 +158,15 @@ public class FieldSideEditor extends LObjectEditor {
 		lstChars.setIncludeID(false);
 		lstChars.type = CharTile.class;
 		addChild(lstChars, "characters");
+		lstChars.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				if (event == null || event.data == null)
+					return;
+				CharTile tile = (CharTile) event.data;
+				FieldEditor.instance.canvas.setHeight(tile.h);
+			}
+		});
 		
 		charEditor = new CharTileEditor(character, SWT.NONE);
 		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -207,6 +215,11 @@ public class FieldSideEditor extends LObjectEditor {
 		lists = new LayerList[] { lstTerrain, lstObstacle, lstRegion };
 		trees = new TileTree[] { selTerrain, selObstacle, selRegion };
 	}
+	
+	public void onVisible() {
+		super.onVisible();
+		//selectEditor(editor);
+	}
 
 	@Override
 	public void setObject(Object object) {
@@ -228,35 +241,36 @@ public class FieldSideEditor extends LObjectEditor {
 	public void selectEditor(int i) {
 		editor = i;
 		if (i < lists.length){ // Terrain, Obstacle, Region
-			lists[editor].onVisible();
+			lists[i].onVisible();
 			selectLayer(lists[i].getLayer());
-		} else // Character, Party
+			FieldEditor.instance.canvas.setMode(0);
+		} else {
 			selectLayer(null);
+			if (i == lists.length) { // Character {
+				lstChars.onVisible();
+				FieldEditor.instance.canvas.setMode(1);
+			} else {
+				lstParties.onVisible();
+				FieldEditor.instance.canvas.setMode(2);
+			}
+		}
+		System.out.println("editor " + i);
 		stack.topControl = getChildren()[i];
 		layout();
+	}
+	
+	public void selectTile(int i) {
+		trees[editor].setTile(i);
 	}
 
 	public void unselectTiles() {
 		for (TileTree t : trees) {
-			t.unselect();
+			t.setTile(-1);
 		}
 	}
-	
-	public void onVisible() {
-		super.onVisible();
-		selectEditor(editor);
-	}
-	
-	public ArrayList<LState> getChildrenStates() {
-		ArrayList<LState> states = super.getChildrenStates();
-		final int editor = this.editor;
-		states.add(0, new LState() {
-			@Override
-			public void reset() {
-				selectEditor(editor);
-			}
-		});
-		return states;
+
+	public void onMoveCharacter(CharTile tile) {
+		charEditor.setPosition(tile);
 	}
 
 }

@@ -25,6 +25,7 @@ import project.Project;
 
 import org.eclipse.swt.widgets.Text;
 
+import data.field.CharTile;
 import data.field.Field;
 
 import org.eclipse.swt.widgets.Group;
@@ -32,6 +33,9 @@ import org.eclipse.swt.widgets.Group;
 public class CharTileEditor extends LObjectEditor {
 
 	private LCombo cmbParty;
+	private LSpinner spnX;
+	private LSpinner spnY;
+	private LSpinner spnH;
 	
 	/**
 	 * Create the composite.
@@ -52,15 +56,15 @@ public class CharTileEditor extends LObjectEditor {
 		Label lblPos = new Label(position, SWT.NONE);
 		lblPos.setText(Vocab.instance.POSITION);
 		
-		LSpinner spnX = new LSpinner(position);
+		spnX = new LSpinner(position);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnX, "x");
 		
-		LSpinner spnY = new LSpinner(position);
+		spnY = new LSpinner(position);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnY, "y");
 		
-		LSpinner spnH = new LSpinner(position);
+		spnH = new LSpinner(position);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnH, "h");
 		
@@ -84,6 +88,7 @@ public class CharTileEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.setHeight(spnH.getValue());
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
 			}
 		});
@@ -213,6 +218,12 @@ public class CharTileEditor extends LObjectEditor {
 		if (currentObject == null)
 			return;
 		cmbParty.setItems(FieldEditor.instance.canvas.field.parties);
+	}
+
+	public void setPosition(CharTile tile) {
+		spnX.setValue(tile.x);
+		spnY.setValue(tile.y);
+		spnH.setValue(tile.h);
 	}
 	
 }

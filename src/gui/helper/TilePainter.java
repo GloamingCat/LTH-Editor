@@ -42,15 +42,15 @@ public class TilePainter {
 	
 	public static Image getTerrainTile(Integer id, boolean full) {
 		Image img = terrainCache.get(id + "" + full);
-		if (img != null) {
-			return img;
-		}
+		if (img != null) return img;
+		
 		Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
-		if (terrain == null)
-			return null;
+		if (terrain == null) return null;
 		Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
-		if (anim == null)
-			return null;
+		if (anim == null) return null;
+		Image terrainImg = anim.quad.getImage();
+		if (terrainImg == null) return null;
+		
 		int w = anim.quad.width;
 		int h = anim.quad.height;
 		if (!full) {
@@ -62,7 +62,7 @@ public class TilePainter {
 		img = ImageHelper.newImage(dw, dh);
 		GC gc = new GC(img);
 		gc.setAlpha(anim.transform.alpha);
-		gc.drawImage(anim.quad.getImage(), anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
+		gc.drawImage(terrainImg, anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
 		gc.dispose();
 		img = ImageHelper.correctTransparency(img);
 		img = ImageHelper.colorTransform(img,
