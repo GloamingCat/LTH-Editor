@@ -67,12 +67,11 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		this.editor = parent;
 	}
 	
-	public void setObject(Object obj) {
-		Field field = (Field) obj;
-		if (editor.field == null) {
+	public void setField(Field field) {
+		if (field == null) {
 			setDataCollection(null);
 		} else {
-			super.setObject(getLayerList(field));
+			setDataCollection(getLayerList(field));
 			int layer = Project.current.fieldTree.getData().getLastLayer(editor.field.id, type);
 			getCollectionWidget().select(new LPath(layer));
 		}

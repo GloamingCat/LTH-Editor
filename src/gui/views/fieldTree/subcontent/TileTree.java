@@ -52,7 +52,7 @@ public abstract class TileTree extends LView {
 	public void onVisible() {
 		super.onVisible();
 		LPath path = selector.getSelectedPath();
-		selector.setCollection(getTree());
+		updateCollection();
 		if (path != null)
 			selector.setValue(path);
 		else
@@ -67,6 +67,10 @@ public abstract class TileTree extends LView {
 				selector.setValue(id);
 			}
 		};
+	}
+	
+	public void updateCollection() {
+		selector.setCollection(getTree());
 	}
 	
 	public abstract LDataTree<Object> getTree();

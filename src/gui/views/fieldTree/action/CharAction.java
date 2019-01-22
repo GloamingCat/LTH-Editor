@@ -2,6 +2,7 @@ package gui.views.fieldTree.action;
 
 import data.field.CharTile;
 import gui.views.fieldTree.FieldEditor;
+import gui.views.fieldTree.FieldSideEditor;
 import lwt.action.LAction;
 
 public class CharAction implements LAction {
@@ -29,6 +30,7 @@ public class CharAction implements LAction {
 		tile.h = h0;
 		FieldEditor.instance.canvas.updateTileImage(x0, y0);
 		FieldEditor.instance.canvas.updateTileImage(x, y);
+		FieldSideEditor.instance.onMoveCharacter(tile);
 	}
 
 	@Override
@@ -38,6 +40,7 @@ public class CharAction implements LAction {
 		tile.h = h;
 		FieldEditor.instance.canvas.updateTileImage(x0, y0);
 		FieldEditor.instance.canvas.updateTileImage(x, y);
+		FieldSideEditor.instance.onMoveCharacter(tile);
 	}
 
 }

@@ -72,7 +72,6 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		lstTerrain.setEditor(this);
-		addChild(lstTerrain);
 		
 		TileTree selTerrain = new TileTree(terrain, SWT.NONE) {
 			@Override
@@ -84,7 +83,6 @@ public class FieldSideEditor extends LObjectEditor {
 				image.setImage(TilePainter.getTerrainTile(id, false));
 			}
 		};
-		addChild(selTerrain);
 		
 		LImage imgTerrain = new LImage(terrain, SWT.NONE);
 		imgTerrain.setHorizontalAlign(SWT.CENTER);
@@ -100,7 +98,6 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		lstObstacle.setEditor(this);
-		addChild(lstObstacle);
 		
 		TileTree selObstacle = new TileTree(obstacle, SWT.NONE) {
 			@Override
@@ -112,7 +109,6 @@ public class FieldSideEditor extends LObjectEditor {
 				image.setImage(TilePainter.getObstacleTile(id));
 			}
 		};
-		addChild(selObstacle);
 		
 		LImage imgObstacle = new LImage(obstacle, SWT.NONE);
 		imgObstacle.setHorizontalAlign(SWT.CENTER);
@@ -128,7 +124,6 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		lstRegion.setEditor(this);
-		addChild(lstRegion);
 		
 		TileTree selRegion = new TileTree(region, SWT.NONE) {
 			@Override
@@ -140,7 +135,6 @@ public class FieldSideEditor extends LObjectEditor {
 				image.setImage(TilePainter.getRegionTile(id, true));
 			}
 		};
-		addChild(selRegion);
 		
 		LImage imgRegion = new LImage(region, SWT.NONE);
 		imgRegion.setHorizontalAlign(SWT.CENTER);
@@ -217,8 +211,8 @@ public class FieldSideEditor extends LObjectEditor {
 	}
 	
 	public void onVisible() {
-		super.onVisible();
-		//selectEditor(editor);
+		for (TileTree t : trees)
+			t.updateCollection();
 	}
 
 	@Override
@@ -226,7 +220,10 @@ public class FieldSideEditor extends LObjectEditor {
 		field = (Field) object;
 		cmbPlayerParty.setItems(field.parties);
 		charEditor.setField(field);
+		for (LayerList l : lists)
+			l.setField(field);
 		super.setObject(object);
+		selectEditor(editor);
 	}
 	
 	public void selectLayer(Layer layer) {
