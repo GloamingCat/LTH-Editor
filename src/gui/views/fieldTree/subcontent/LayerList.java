@@ -73,7 +73,8 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		} else {
 			setDataCollection(getLayerList(field));
 			int layer = Project.current.fieldTree.getData().getLastLayer(editor.field.id, type);
-			getCollectionWidget().select(new LPath(layer));
+			if (layer >= 0)
+				getCollectionWidget().select(new LPath(layer));
 		}
 	}
 	

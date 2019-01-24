@@ -31,6 +31,7 @@ public class TilePainter {
 		reload(regionCache);
 		reload(characterCache);
 		conf = (Config) Project.current.config.getData();
+		System.gc();
 	}
 	
 	public static void reload(HashMap<?, Image> map) {

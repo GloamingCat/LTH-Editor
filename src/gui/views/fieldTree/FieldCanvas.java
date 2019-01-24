@@ -61,8 +61,8 @@ public class FieldCanvas extends LView {
 						tileX = tilePos.x;
 						tileY = tilePos.y;
 						mousePoint = FieldHelper.math.tile2Pixel(tileX, tileY, height);
-						redraw();
 						onTileEnter(tileX, tileY);
+						redraw();
 					}
 				}
 			}
@@ -111,7 +111,7 @@ public class FieldCanvas extends LView {
 	protected void drawCursor(GC gc) {
 		float scale = painter.scale;
 		painter.scale = scale * 0.75f;
-		painter.paintEdges(gc, mousePoint.x + x0, mousePoint.y + y0);
+		painter.drawTile(gc, mousePoint.x + x0, mousePoint.y + y0);
 		painter.scale = scale;
 	}
 	
@@ -167,6 +167,7 @@ public class FieldCanvas extends LView {
 			}
 		}
 		tileImages = new Image[sizeX][sizeY];
+		System.gc();
 	}
 	
 	// -------------------------------------------------------------------------------------

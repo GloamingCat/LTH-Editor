@@ -2,9 +2,7 @@ package gui.helper;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -45,24 +43,7 @@ public class FieldPainter {
 		return p;
 	}
 	
-	public Image createGridTile() {
-		Grid conf = FieldHelper.config.grid;
-		int w = conf.tileW;
-		int h = conf.tileH;
-		
-		Image img = new Image(Display.getCurrent(), w, h);
-
-		GC gc = new GC(img);
-		paintEdges(gc, w / 2, h / 2);
-		gc.dispose();
-		
-		ImageData data = img.getImageData();
-		data.transparentPixel = -256;
-		
-		return new Image(img.getDevice(), data, data.getTransparencyMask());
-	}
-	
-	public void paintEdges(GC gc, int x0, int y0) {
+	public void drawTile(GC gc, int x0, int y0) {
 		float scale = this.scale;
 		this.scale *= 0.95f;
 		int[] p = getTilePolygon(x0, y0);
@@ -70,7 +51,7 @@ public class FieldPainter {
 		gc.drawPolygon(p);
 	}
 	
-	public void paintHex(GC gc, int x0, int y0) {
+	public void fillTile(GC gc, int x0, int y0) {
 		int[] p = getTilePolygon(x0, y0);
 		gc.fillPolygon(p);
 	}
@@ -131,7 +112,7 @@ public class FieldPainter {
 			Region r = (Region) Project.current.regions.getData().get(layer.grid[x][y]);
 			gc.setAlpha(200);
 			gc.setBackground(SWTResourceManager.getColor(r.rgb));
-			paintHex(gc, x0, y0);
+			fillTile(gc, x0, y0);
 			gc.setAlpha(255);
 			Grid conf = FieldHelper.config.grid;
 			gc.drawImage(img, x0 - conf.tileW / 2, y0 - conf.tileH / 2);
@@ -197,7 +178,7 @@ public class FieldPainter {
 				paintTerrain(layer, x, y, gc, x0, y0 - layer.info.height * pph);
 			}
 			if (showGrid && layer == currentLayer) {
-				paintEdges(gc, x0, y0 - layer.info.height * pph);
+				drawTile(gc, x0, y0 - layer.info.height * pph);
 			}
 		}
 		// Region Layers
@@ -207,7 +188,7 @@ public class FieldPainter {
 			paintRegion(layer, x, y, 
 					gc, x0, y0 - layer.info.height * pph);
 			if (showGrid && layer == currentLayer) {
-				paintEdges(gc, x0, y0 - layer.info.height * pph);
+				drawTile(gc, x0, y0 - layer.info.height * pph);
 			}
 			break;
 		}
@@ -216,7 +197,7 @@ public class FieldPainter {
 			if (!layer.visible)
 				continue;
 			if (showGrid && layer == currentLayer) {
-				paintEdges(gc, x0, y0 - layer.info.height * pph);
+				drawTile(gc, x0, y0 - layer.info.height * pph);
 			}
 			if (layer.grid[x][y] >= 0) {
 				paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph);

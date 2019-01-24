@@ -1,5 +1,6 @@
 package gui.views.fieldTree;
 
+import gui.helper.TilePainter;
 import lwt.editor.LObjectEditor;
 
 import org.eclipse.swt.SWT;
@@ -138,6 +139,7 @@ public class FieldEditor extends LObjectEditor {
 			FieldNode node = (FieldNode) obj;
 			int id = Project.current.fieldTree.getData().getFieldID(node);
 			if (canvas.field == null || canvas.field.id != id) {
+				TilePainter.reload();
 				Field field = Project.current.fieldTree.loadField(node);
 				selectField(field);
 				super.setObject(field);

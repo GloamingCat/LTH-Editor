@@ -227,12 +227,14 @@ public class FieldSideEditor extends LObjectEditor {
 	@Override
 	public void setObject(Object object) {
 		field = (Field) object;
-		cmbPlayerParty.setItems(field.parties);
-		charEditor.setField(field);
-		for (LayerList l : lists)
-			l.setField(field);
+		if (field != null) {
+			cmbPlayerParty.setItems(field.parties);
+			charEditor.setField(field);
+		}
 		super.setObject(object);
 		selectEditor(editor);
+		for (LayerList l : lists)
+			l.setField(field);	
 	}
 	
 	public void selectLayer(Layer layer) {

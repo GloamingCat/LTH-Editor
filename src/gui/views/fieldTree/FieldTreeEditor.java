@@ -113,6 +113,7 @@ public class FieldTreeEditor extends LView {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Project.current.fieldTree.getData().lastField = event.id;
+				System.gc();
 			}
 		});
 		treeEditor.getCollectionWidget().addEditListener(new LCollectionListener<Prefs>() {
