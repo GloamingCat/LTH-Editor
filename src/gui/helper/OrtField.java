@@ -8,6 +8,7 @@ public class OrtField extends FieldMath {
 
 	public OrtField() {
 		super(6);
+		initialDirection = 0;
 	}
 	
 	protected ArrayList<Point> createNeighborShift() {

@@ -19,11 +19,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.Field;
 import data.field.Layer;
+import data.field.Party;
 
 public class FieldCanvas extends LView {
 
 	public Field field;
 	public Layer currentLayer;
+	public Party currentParty;
 	public float scale = 1;
 	public int x0;
 	public int y0;
@@ -71,7 +73,7 @@ public class FieldCanvas extends LView {
 	
 	public void onTileEnter(int x, int y) { }
 
-	private void drawAllTiles(GC egc) {
+	protected void drawAllTiles(GC egc) {
 		Point size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
 		int w = x0 * 2;
 		int h = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
@@ -98,7 +100,7 @@ public class FieldCanvas extends LView {
 				0, 0, Math.round(img.getBounds().width * scale), Math.round(img.getBounds().height * scale));
 	}
 	
-	private void drawTile(GC gc, int i, int j) {
+	protected void drawTile(GC gc, int i, int j) {
 		Point pos = FieldHelper.math.tile2Pixel(i, j, 0);
 		Image img = tileImages[i][j];
 		int w = img.getBounds().width;
@@ -108,7 +110,7 @@ public class FieldCanvas extends LView {
 		gc.drawImage(img, 0, 0, w, h, x, y, w, h);
 	}
 	
-	private void drawCursor(GC gc) {
+	protected void drawCursor(GC gc) {
 		float scale = painter.scale;
 		painter.scale = scale * 0.75f;
 		painter.paintEdges(gc, mousePoint.x + x0, mousePoint.y + y0);
@@ -125,14 +127,16 @@ public class FieldCanvas extends LView {
 		int imgW = FieldHelper.config.grid.tileW * 3;
 		int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
 		Point[] shift = FieldHelper.math.neighborShift;
-		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, currentLayer, field);
+		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, 
+				currentLayer, field);
 		for(int k = 0; k < shift.length; k++) {
 			int _x = x + shift[k].x;
 			int _y = y + shift[k].y;
 			if (_x >= 0 && _x < field.sizeX && _y >= 0 && _y < field.sizeY) {
 				if (tileImages[_x][_y] != null)
 					tileImages[_x][_y].dispose();
-				tileImages[_x][_y] = painter.createTileImage(_x, _y, imgW, imgH, currentLayer, field);
+				tileImages[_x][_y] = painter.createTileImage(_x, _y, imgW, imgH, 
+						currentLayer,field);
 			}
 		}
 		redraw();
@@ -147,7 +151,8 @@ public class FieldCanvas extends LView {
 			int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
-					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
+					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, 
+							currentLayer, field);
 				}
 			}
 		}
@@ -197,6 +202,13 @@ public class FieldCanvas extends LView {
 	
 	public void setHeight(int h) {
 		height = h;
+	}
+	
+	public void setParty(Party party) {
+		if (party != currentParty) {
+			currentParty = party;
+			redraw();
+		}
 	}
 	
 	public void setShowGrid(boolean value) {

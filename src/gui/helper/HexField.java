@@ -8,6 +8,7 @@ public class HexField extends BaseIsoField {
 
 	public HexField() {
 		super(9);
+		initialDirection = 315;
 	}
 	
 	protected void removePoints(ArrayList<Point> p) {

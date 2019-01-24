@@ -8,6 +8,7 @@ public class IsoField extends BaseIsoField {
 
 	public IsoField() {
 		super(6);
+		initialDirection = 315;
 	}
 
 	protected void removePoints(ArrayList<Point> p) {

@@ -11,6 +11,7 @@ public abstract class FieldMath {
 	public Point[] neighborShift;
 	public Point[] vertexShift;
 	public int autoTileRows;
+	public int initialDirection;
 	protected final Grid conf;
 	
 	public FieldMath(int autoTileRows) {

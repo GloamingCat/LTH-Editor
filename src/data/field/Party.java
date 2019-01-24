@@ -1,5 +1,6 @@
 package data.field;
 
+import project.Project;
 import lwt.dataestructure.LDataList;
 
 public class Party {
@@ -23,6 +24,20 @@ public class Party {
 	
 	public String toString() {
 		return "";
+	}
+	
+	public int maxX() {
+		if (direction % 2 == 0)
+			return x + Project.current.config.getData().troop.width;
+		else
+			return x + Project.current.config.getData().troop.height;
+	}
+	
+	public int maxY() {
+		if (direction % 2 == 0)
+			return y + Project.current.config.getData().troop.height;
+		else
+			return y + Project.current.config.getData().troop.width;
 	}
 
 }

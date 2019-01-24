@@ -202,6 +202,15 @@ public class FieldSideEditor extends LObjectEditor {
 		addChild(lstParties, "parties");
 		lstParties.getCollectionWidget().addInsertListener(listener);
 		lstParties.getCollectionWidget().addDeleteListener(listener);
+		lstParties.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				if (event == null || event.data == null)
+					return;
+				Party party = (Party) event.data;
+				FieldEditor.instance.canvas.setParty(party);
+			}
+		});
 		
 		partyEditor = new PartyEditor(partylist, SWT.NONE);
 		lstParties.addChild(partyEditor);
@@ -237,21 +246,22 @@ public class FieldSideEditor extends LObjectEditor {
 
 	public void selectEditor(int i) {
 		editor = i;
-		if (i < lists.length){ // Terrain, Obstacle, Region
+		if (i < lists.length){ 			// Terrain, Obstacle, Region
 			lists[i].onVisible();
 			selectLayer(lists[i].getLayer());
+			FieldEditor.instance.canvas.setParty(null);
 			FieldEditor.instance.canvas.setMode(0);
 		} else {
 			selectLayer(null);
-			if (i == lists.length) { // Character {
+			if (i == lists.length) { 	// Character
 				lstChars.onVisible();
+				FieldEditor.instance.canvas.setParty(null);
 				FieldEditor.instance.canvas.setMode(1);
-			} else {
+			} else { 					// Party
 				lstParties.onVisible();
 				FieldEditor.instance.canvas.setMode(2);
 			}
 		}
-		System.out.println("editor " + i);
 		stack.topControl = getChildren()[i];
 		layout();
 	}

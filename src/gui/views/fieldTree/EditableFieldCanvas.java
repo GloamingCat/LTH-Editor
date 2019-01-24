@@ -15,10 +15,12 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.CharTile;
 
@@ -67,10 +69,13 @@ public class EditableFieldCanvas extends FieldCanvas {
 		
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
-	        	if (currentLayer != null && dragOrigin != null && !draggingLeft) {
+	        	if (currentParty != null) {
+	        		e.gc.setAlpha(150);
+	        		e.gc.setBackground(new Color(Display.getCurrent(), new RGB(120, 120, 255)));
+            		drawParty(e.gc);
+	        	} else if (currentLayer != null && dragOrigin != null && !draggingLeft) {
             		e.gc.setAlpha(150);
             		e.gc.setBackground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
-            		e.gc.setForeground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
             		drawSelection(e.gc);
 	        	}
 	        }
@@ -85,18 +90,36 @@ public class EditableFieldCanvas extends FieldCanvas {
 	// Draw
 	// -------------------------------------------------------------------------------------
 
-	private void drawSelection(GC gc) {
+	protected void drawSelection(GC gc) {
 		Point p1 = FieldHelper.math.tile2Pixel(tileX, tileY, currentLayer.info.height);
 		Point p2 = FieldHelper.math.tile2Pixel(tileX, dragOrigin.y, currentLayer.info.height);
 		Point p3 = FieldHelper.math.tile2Pixel(dragOrigin.x, dragOrigin.y, currentLayer.info.height);
 		Point p4 = FieldHelper.math.tile2Pixel(dragOrigin.x, tileY, currentLayer.info.height);
-		
 		int[] poly = new int[] {p1.x + x0, p1.y + y0,
 								p2.x + x0, p2.y + y0,
 								p3.x + x0, p3.y + y0,
 								p4.x + x0, p4.y + y0,
 								p1.x + x0, p1.y + y0 };
 		gc.fillPolygon(poly);
+	}
+	
+	protected void drawParty(GC gc) {
+		int maxx = currentParty.maxX();
+		int maxy = currentParty.maxY();
+		Point p1 = FieldHelper.math.tile2Pixel(maxx, maxy, currentParty.h);
+		Point p2 = FieldHelper.math.tile2Pixel(maxx, currentParty.y, currentParty.h);
+		Point p3 = FieldHelper.math.tile2Pixel(currentParty.x, currentParty.y, currentParty.h);
+		Point p4 = FieldHelper.math.tile2Pixel(currentParty.x, maxy, currentParty.h);
+		int[] poly = new int[] {p1.x + x0, p1.y + y0,
+								p2.x + x0, p2.y + y0,
+								p3.x + x0, p3.y + y0,
+								p4.x + x0, p4.y + y0,
+								p1.x + x0, p1.y + y0 };
+		gc.fillPolygon(poly);
+		int direction = (currentParty.direction * 90 + FieldHelper.math.initialDirection) % 360;
+		Image arrow = SWTResourceManager.getImage(this.getClass(), "/img/falsearrow_" + direction + ".png");
+		gc.drawImage(arrow, x0 + (p1.x + p3.x - arrow.getBounds().width) / 2, 
+				y0 + (p1.y + p3.y - arrow.getBounds().height) / 2);
 	}
 	
 	// -------------------------------------------------------------------------------------
