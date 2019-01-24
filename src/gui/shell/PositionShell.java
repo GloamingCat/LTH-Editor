@@ -6,9 +6,20 @@ import gui.views.fieldTree.EditableFieldCanvas;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
@@ -18,30 +29,13 @@ import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LTree;
 
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
 import data.field.Field;
 import data.field.Layer;
 import data.field.FieldNode;
 import data.subcontent.Position;
 import project.Project;
 
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.PaintEvent;
-
 public class PositionShell extends LObjectShell<Position> {
-	
-	private Color cursorColor = new Color(Display.getDefault(), new RGB(255, 0, 0));
 	
 	private LTree<FieldNode, Field> tree;
 	private EditableFieldCanvas canvas;
@@ -121,7 +115,7 @@ public class PositionShell extends LObjectShell<Position> {
 					poly[i] += p.x + canvas.x0;
 					poly[i + 1] += p.y + canvas.y0;
 				}
-				e.gc.setForeground(cursorColor);
+				e.gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 				e.gc.drawPolygon(poly);
 			}
 		});

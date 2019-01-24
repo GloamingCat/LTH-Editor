@@ -9,17 +9,15 @@ import gui.views.fieldTree.action.PencilAction;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.CharTile;
@@ -70,12 +68,12 @@ public class EditableFieldCanvas extends FieldCanvas {
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
 	        	if (currentParty != null) {
-	        		e.gc.setAlpha(150);
-	        		e.gc.setBackground(new Color(Display.getCurrent(), new RGB(120, 120, 255)));
+	        		e.gc.setAlpha(100);
+	        		e.gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLUE));
             		drawParty(e.gc);
 	        	} else if (currentLayer != null && dragOrigin != null && !draggingLeft) {
-            		e.gc.setAlpha(150);
-            		e.gc.setBackground(new Color(Display.getCurrent(), new RGB(255, 255, 80)));
+            		e.gc.setAlpha(100);
+            		e.gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_YELLOW));
             		drawSelection(e.gc);
 	        	}
 	        }
@@ -118,6 +116,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 		gc.fillPolygon(poly);
 		int direction = (currentParty.direction * 90 + FieldHelper.math.initialDirection) % 360;
 		Image arrow = SWTResourceManager.getImage(this.getClass(), "/img/falsearrow_" + direction + ".png");
+		gc.setAlpha(255);
 		gc.drawImage(arrow, x0 + (p1.x + p3.x - arrow.getBounds().width) / 2, 
 				y0 + (p1.y + p3.y - arrow.getBounds().height) / 2);
 	}

@@ -9,11 +9,9 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -41,12 +39,12 @@ public class FieldCanvas extends LView {
 
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);
-		setBackground(new Color(getDisplay(), new RGB(255, 255, 255)));
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 				
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
 	        	if (field != null) {
-	        		e.gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+	        		e.gc.setBackground(getBackground());
 	        		drawAllTiles(e.gc);
 	        	}
 	        }

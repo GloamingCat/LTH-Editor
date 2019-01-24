@@ -2,11 +2,10 @@ package gui.helper;
 
 import java.util.HashMap;
 
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.GameCharacter;
@@ -151,7 +150,7 @@ public class TilePainter {
 		Region r = (Region) Project.current.regions.getData().get(id);
 		if (rect)
 			img = ImageHelper.getStringImage(id + "", conf.grid.tileW + 1, conf.grid.tileH + 1, 
-				new Color(Display.getCurrent(), r.rgb), true);
+				SWTResourceManager.getColor(r.rgb), true);
 		else
 			img = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, false);
 		regionCache.put(key, img);

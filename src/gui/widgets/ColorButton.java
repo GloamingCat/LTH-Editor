@@ -10,8 +10,8 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ColorButton extends LControl<RGB> {
 	
@@ -36,7 +36,7 @@ public class ColorButton extends LControl<RGB> {
 				if (newRGB != null && !newRGB.equals(currentValue)) {
 					newModifyAction(currentValue, newRGB);
 					setValue(newRGB);
-					imgColor.setBackground(new Color(arg0.display, newRGB));
+					imgColor.setBackground(SWTResourceManager.getColor(newRGB));
 					imgColor.redraw();
 				}
 			}
@@ -57,12 +57,12 @@ public class ColorButton extends LControl<RGB> {
 		if (value != null) {
 			button.setEnabled(true);
 			currentValue = (RGB) value;
-			imgColor.setBackground(new Color(imgColor.getDisplay(), currentValue));
+			imgColor.setBackground(SWTResourceManager.getColor(currentValue));
 			imgColor.redraw();
 		} else {
 			button.setEnabled(false);
 			currentValue = null;
-			imgColor.setBackground(new Color(imgColor.getDisplay(), new RGB(0, 0, 0)));
+			imgColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 			imgColor.redraw();
 		}
 	}

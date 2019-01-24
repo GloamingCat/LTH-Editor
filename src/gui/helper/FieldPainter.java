@@ -1,11 +1,11 @@
 package gui.helper;
 
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.GameCharacter;
@@ -130,7 +130,7 @@ public class FieldPainter {
 				return;
 			Region r = (Region) Project.current.regions.getData().get(layer.grid[x][y]);
 			gc.setAlpha(200);
-			gc.setBackground(new Color(Display.getCurrent(), r.rgb));
+			gc.setBackground(SWTResourceManager.getColor(r.rgb));
 			paintHex(gc, x0, y0);
 			gc.setAlpha(255);
 			Grid conf = FieldHelper.config.grid;
