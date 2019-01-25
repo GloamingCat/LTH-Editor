@@ -71,15 +71,14 @@ public class FieldTreeSerializer extends
 		copy.name = node.name;
 		int id = data.findID();
 		Field data = loadField(node);
-		loadedData.put(node, duplicateField(id, data));
+		loadedData.put(copy, duplicateField(id, data));
 		return copy;
 	}
 
 	public Field duplicateField(int id, Field original) {
-		Field newField = gson.fromJson(gson.toJson(original), Field.class);
+		String json = gson.toJson(original, Field.class);
+		Field newField = gson.fromJson(json, Field.class);
 		newField.id = id;
-		FieldNode node = data.getFieldNode(id);
-		node.name = newField.prefs.name;
 		return newField;
 	}
 
