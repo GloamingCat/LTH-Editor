@@ -239,11 +239,6 @@ public class FieldSideEditor extends LObjectEditor {
 	
 	public void selectLayer(Layer layer) {
 		FieldEditor.instance.selectLayer(layer);
-		if (layer == null) {
-			stack.topControl = getChildren()[0];
-			editor = 0;
-			layout();
-		}
 	}
 
 	public void selectEditor(int i) {

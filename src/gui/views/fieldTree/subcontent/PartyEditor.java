@@ -59,23 +59,21 @@ public class PartyEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(event.oldValue, spnY.getValue());
-				FieldEditor.instance.canvas.updateTileImage(event.newValue, spnY.getValue());
+				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		spnY.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.oldValue);
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.newValue);
+				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		spnH.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		
@@ -92,8 +90,8 @@ public class PartyEditor extends LObjectEditor {
 		cmbDir.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
-				//if (event == null || event.oldValue == null) return;
-				//FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+				if (event == null || event.oldValue == null) return;
+				FieldEditor.instance.canvas.redraw();
 			}
 		});
 		
