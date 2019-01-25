@@ -5,6 +5,8 @@ import lwt.dataestructure.LDataList;
 
 public class Party {
 
+	public String name = "New Party";
+	
 	// How member's characters are generated.
 	// 0 => They are not. The characters from the field are used.
 	// 1 => Using the troop's grid.
@@ -23,7 +25,7 @@ public class Party {
 	public LDataList<Integer> troops = new LDataList<>();
 	
 	public String toString() {
-		return "";
+		return name;
 	}
 	
 	public int maxX() {

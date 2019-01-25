@@ -2,6 +2,7 @@ package gui.views.fieldTree.subcontent;
 
 import gui.Vocab;
 import gui.views.fieldTree.FieldEditor;
+import gui.views.fieldTree.FieldSideEditor;
 import gui.widgets.IDList;
 
 import org.eclipse.swt.SWT;
@@ -18,6 +19,8 @@ import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCombo;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
+
 import org.eclipse.swt.layout.FillLayout;
 
 public class PartyEditor extends LObjectEditor {
@@ -77,6 +80,19 @@ public class PartyEditor extends LObjectEditor {
 			}
 		});
 		
+		Label lblName = new Label(this, SWT.NONE);
+		lblName.setText(Vocab.instance.NAME);
+		
+		LText txtName = new LText(this);
+		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtName, "name");
+		txtName.addModifyListener(new LControlListener<String>() {
+			@Override
+			public void onModify(LControlEvent<String> event) {
+				FieldSideEditor.instance.updatePartyNames();
+			}
+		});
+		
 		Label lblDir = new Label(this, SWT.NONE);
 		lblDir.setText(Vocab.instance.DIRECTION);
 		
@@ -107,13 +123,6 @@ public class PartyEditor extends LObjectEditor {
 		cmbGen.setOptional(false);
 		cmbGen.setItems(s);
 		addControl(cmbGen, "memberGen");
-		cmbGen.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				//if (event == null || event.oldValue == null) return;
-				//FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
-			}
-		});
 		
 		Group grpTroops = new Group(this, SWT.NONE);
 		grpTroops.setLayout(new FillLayout(SWT.HORIZONTAL));

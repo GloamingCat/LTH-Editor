@@ -205,7 +205,7 @@ public class FieldSideEditor extends LObjectEditor {
 		lstParties.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				if (event == null || event.data == null)
+				if (event == null)
 					return;
 				Party party = (Party) event.data;
 				FieldEditor.instance.canvas.setParty(party);
@@ -275,6 +275,16 @@ public class FieldSideEditor extends LObjectEditor {
 
 	public void onMoveCharacter(CharTile tile) {
 		charEditor.setPosition(tile);
+	}
+	
+	public void updatePartyNames() {
+		if (field == null)
+			cmbPlayerParty.setItems((String[]) null);
+		else {
+			int index = cmbPlayerParty.getSelectionIndex();
+			cmbPlayerParty.setItems(field.parties);
+			cmbPlayerParty.setSelectionIndex(index);
+		}
 	}
 
 }
