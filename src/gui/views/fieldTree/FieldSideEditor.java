@@ -118,7 +118,7 @@ public class FieldSideEditor extends LObjectEditor {
 		// Region
 		
 		SashForm region = new SashForm(this, SWT.VERTICAL);
-		LayerList lstRegion = new LayerList(region, 1) {
+		LayerList lstRegion = new LayerList(region, 2) {
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.region;
 			}
@@ -232,9 +232,9 @@ public class FieldSideEditor extends LObjectEditor {
 			charEditor.setField(field);
 		}
 		super.setObject(object);
-		selectEditor(editor);
 		for (LayerList l : lists)
 			l.setField(field);	
+		selectEditor(editor);
 	}
 	
 	public void selectLayer(Layer layer) {

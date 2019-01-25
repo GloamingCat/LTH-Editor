@@ -50,10 +50,10 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 			public void onSelect(LSelectionEvent event) {
 				Layer l = (Layer) event.data;
 				editor.selectLayer(l);
-				if (editor.field != null && event.path != null) {
-					Project.current.fieldTree.getData().
-			 			setLastLayer(editor.field.id, event.path.index, type);
-				}
+				if (editor.field == null || event.path == null)
+					return;
+				Project.current.fieldTree.getData().
+					setLastLayer(editor.field.id, event.path.index, type);
 			}
 		});
 		getCollectionWidget().setEditEnabled(true);
@@ -72,7 +72,7 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 			setDataCollection(null);
 		} else {
 			setDataCollection(getLayerList(field));
-			int layer = Project.current.fieldTree.getData().getLastLayer(editor.field.id, type);
+			int layer = Project.current.fieldTree.getData().getLastLayer(field.id, type);
 			if (layer >= 0)
 				getCollectionWidget().select(new LPath(layer));
 		}

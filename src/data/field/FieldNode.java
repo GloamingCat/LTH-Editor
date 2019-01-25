@@ -4,7 +4,7 @@ public class FieldNode {
 
 	public String name = "New Field";
 	
-	public int[] lastLayers = new int[] {-1, -1, -1, -1};
+	public int[] lastLayers = new int[] {-1, -1, -1};
 	
 	public FieldNode clone() {
 		FieldNode copy = new FieldNode();

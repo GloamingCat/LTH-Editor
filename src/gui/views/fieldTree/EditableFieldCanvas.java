@@ -203,6 +203,8 @@ public class EditableFieldCanvas extends FieldCanvas {
 	// -------------------------------------------------------------------------------------
 	
 	private void useTool(int x, int y) {
+		if (currentLayer == null)
+			return;
 		int[][] grid = currentLayer.grid;
 		switch(tool) {
 		case 0: // pencil

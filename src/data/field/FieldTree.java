@@ -7,12 +7,6 @@ public class FieldTree extends LDataTree<FieldNode> {
 	private static final long serialVersionUID = 1971762099996146816L;
 	
 	public int lastField = -1;
-
-	public FieldTree() {
-		LDataTree<FieldNode> node = new LDataTree<FieldNode>(new FieldNode());
-		node.id = 0;
-		addChild(node);
-	}
 	
 	public int getFieldID(FieldNode node) {
 		LDataTree<FieldNode> child = findNode(node);
@@ -25,13 +19,13 @@ public class FieldTree extends LDataTree<FieldNode> {
 	}
 	
 	public void setLastLayer(int fieldID, int layerID, int layerType) {
-		LDataTree<FieldNode> child = findNode(id);
+		LDataTree<FieldNode> child = findNode(fieldID);
 		if (child != null)
 			child.data.lastLayers[layerType] = layerID;
 	}
 
 	public int getLastLayer(int fieldID, int layerType) {
-		LDataTree<FieldNode> child = findNode(id);
+		LDataTree<FieldNode> child = findNode(fieldID);
 		return child == null ? 0 : child.data.lastLayers[layerType];
 	}
 	
