@@ -54,7 +54,7 @@ public class IconButton extends LObjectButton<Icon> {
 					transform.updateColorTransform(image);
 				}
 				Animation anim = i.getAnimation();
-				if (anim != null)
+				if (anim != null && !anim.quad.path.isEmpty())
 					image.setImage(Project.current.imagePath() + anim.quad.path, i.getRectangle());
 				else
 					image.setImage((Image) null);

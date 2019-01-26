@@ -5,6 +5,8 @@ import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -40,7 +42,7 @@ public class FieldCanvas extends LView {
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-				
+		
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
 	        	if (field != null) {
@@ -67,6 +69,14 @@ public class FieldCanvas extends LView {
 				}
 			}
 		});
+		
+		addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent arg0) {
+				clearTileImages(0, 0);
+			}
+		});
+		
 	}
 	
 	public void onTileEnter(int x, int y) { }
@@ -227,11 +237,6 @@ public class FieldCanvas extends LView {
 			updateAllTileImages();
 			rescale(scale);
 		}
-	}
-	
-	public void dispose() {
-		super.dispose();
-		clearTileImages(0, 0);
 	}
 	
 }

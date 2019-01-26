@@ -173,6 +173,10 @@ public class CharacterTab extends DatabaseTab {
 					GameCharacter c = (GameCharacter) contentEditor.getObject();
 					Animation anim = (Animation) obj;
 					ImageHelper.setColorTransform(imgPotrait, anim.transform, c.transform);
+					if (anim.quad.path.isEmpty()) {
+						imgPotrait.setImage((Image) null);
+						return;
+					}
 					imgPotrait.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
 				} else {
 					imgPotrait.setImage((Image) null);

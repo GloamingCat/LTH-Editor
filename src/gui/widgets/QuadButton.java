@@ -57,7 +57,8 @@ public class QuadButton extends LObjectButton<Quad> {
 				if (transform != null) {
 					transform.updateColorTransform(image);
 				}
-				image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
+				if (!s.path.isEmpty())
+					image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
 			}
 			currentValue = s;
 		} else {
