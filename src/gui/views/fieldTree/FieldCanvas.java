@@ -96,6 +96,8 @@ public class FieldCanvas extends LView {
 		drawCursor(gc);
 		egc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
 				0, 0, Math.round(img.getBounds().width * scale), Math.round(img.getBounds().height * scale));
+		gc.dispose();
+		img.dispose();
 	}
 	
 	protected void drawTile(GC gc, int i, int j) {
@@ -125,16 +127,14 @@ public class FieldCanvas extends LView {
 		int imgW = FieldHelper.config.grid.tileW * 3;
 		int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
 		Point[] shift = FieldHelper.math.neighborShift;
-		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, 
-				currentLayer, field);
+		tileImages[x][y] = painter.createTileImage(x, y, imgW, imgH, currentLayer, field);
 		for(int k = 0; k < shift.length; k++) {
 			int _x = x + shift[k].x;
 			int _y = y + shift[k].y;
 			if (_x >= 0 && _x < field.sizeX && _y >= 0 && _y < field.sizeY) {
 				if (tileImages[_x][_y] != null)
 					tileImages[_x][_y].dispose();
-				tileImages[_x][_y] = painter.createTileImage(_x, _y, imgW, imgH, 
-						currentLayer,field);
+				tileImages[_x][_y] = painter.createTileImage(_x, _y, imgW, imgH, currentLayer,field);
 			}
 		}
 		redraw();
@@ -149,8 +149,7 @@ public class FieldCanvas extends LView {
 			int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
-					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, 
-							currentLayer, field);
+					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
 				}
 			}
 		}
@@ -160,7 +159,7 @@ public class FieldCanvas extends LView {
 	private void clearTileImages(int sizeX, int sizeY) {
 		if (tileImages != null) {
 			for (int i = 0; i < tileImages.length; i++) {
-				for(int j = 0; j < tileImages[0].length; j++) {
+				for(int j = 0; j < tileImages[i].length; j++) {
 					if (tileImages[i][j] != null)
 						tileImages[i][j].dispose();
 				}
@@ -228,6 +227,11 @@ public class FieldCanvas extends LView {
 			updateAllTileImages();
 			rescale(scale);
 		}
+	}
+	
+	public void dispose() {
+		super.dispose();
+		clearTileImages(0, 0);
 	}
 	
 }

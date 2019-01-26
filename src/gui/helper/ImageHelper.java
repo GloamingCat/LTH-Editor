@@ -70,11 +70,21 @@ public class ImageHelper {
 		if (r == 1 && g == 1 && b == 1 && 
 				h == 0 && s == 1 && v == 1)
 			return src;
-		ImageData newdata = LHelper.colorTransform(src.getImageData(), 
-				r, g, b, h, s, v);
+		ImageData newdata = src.getImageData();
+		LHelper.colorTransform(newdata, r, g, b, h, s, v);
 		src.dispose();
 		correctTransparency(newdata);
 		return new Image(Display.getCurrent(), newdata);
+	}
+	
+	public static void colorTransform(ImageData src, 
+			float r, float g, float b,
+			float h, float s, float v) {
+		if (r == 1 && g == 1 && b == 1 && 
+				h == 0 && s == 1 && v == 1)
+			return;
+		LHelper.colorTransform(src, r, g, b, h, s, v);
+		correctTransparency(src);
 	}
 	
 	public static void setColorTransform(LImage img, Transform t1, Transform t2) {

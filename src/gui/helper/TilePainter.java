@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -20,7 +22,7 @@ public class TilePainter {
 
 	private static Config conf;
 	
-	public static HashMap<Integer, Image> terrainCache = new HashMap<>();
+	public static HashMap<String, Image> terrainCache = new HashMap<>();
 	public static HashMap<Integer, Image> obstacleCache = new HashMap<>();
 	public static HashMap<String, Image> characterCache = new HashMap<>();
 	public static HashMap<String, Image> regionCache = new HashMap<>();
@@ -41,7 +43,8 @@ public class TilePainter {
 	}
 	
 	public static Image getTerrainTile(Integer id, boolean full) {
-		Image img = terrainCache.get(id + "" + full);
+		String key = id + "" + full;
+		Image img = terrainCache.get(key);
 		if (img != null) return img;
 		
 		Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
@@ -64,15 +67,18 @@ public class TilePainter {
 		gc.setAlpha(anim.transform.alpha);
 		gc.drawImage(terrainImg, anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
 		gc.dispose();
-		img = ImageHelper.correctTransparency(img);
-		img = ImageHelper.colorTransform(img,
+		ImageData data = img.getImageData();
+		ImageHelper.correctTransparency(data);
+		ImageHelper.colorTransform(data,
 				anim.transform.red / 255f,
 				anim.transform.green / 255f,
 				anim.transform.blue / 255f,
 				anim.transform.hue, 
 				anim.transform.saturation / 100f, 
 				anim.transform.brightness / 100f);
-		terrainCache.put(id, img);
+		img.dispose();
+		img = new Image(Display.getCurrent(), data);
+		terrainCache.put(key, img);
 		return img;
 	}
 	
@@ -96,14 +102,17 @@ public class TilePainter {
 				rect.x, rect.y, rect.width, rect.height,
 				0, 0, w, h);
 		gc.dispose();
-		img = ImageHelper.correctTransparency(img);
-		img = ImageHelper.colorTransform(img, 
-				anim.transform.red / 255f * obj.transform.red / 255f,
-				anim.transform.green / 255f * obj.transform.green / 255f,
-				anim.transform.blue / 255f * obj.transform.blue / 255f,
-				anim.transform.hue + obj.transform.hue, 
-				anim.transform.saturation / 100f * obj.transform.saturation / 100f, 
-				anim.transform.brightness / 100f * obj.transform.brightness / 100f);
+		ImageData data = img.getImageData();
+		ImageHelper.correctTransparency(data);
+		ImageHelper.colorTransform(img, 
+			anim.transform.red / 255f * obj.transform.red / 255f,
+			anim.transform.green / 255f * obj.transform.green / 255f,
+			anim.transform.blue / 255f * obj.transform.blue / 255f,
+			anim.transform.hue + obj.transform.hue, 
+			anim.transform.saturation / 100f * obj.transform.saturation / 100f, 
+			anim.transform.brightness / 100f * obj.transform.brightness / 100f);
+		img.dispose();
+		img = new Image(Display.getCurrent(), data);
 		obstacleCache.put(id, img);
 		return img;
 	}
@@ -130,13 +139,16 @@ public class TilePainter {
 				anim.quad.x + w * col, anim.quad.y + h * tile.row, w, h, 
 				0, 0, w, h);
 		gc.dispose();
-		img = ImageHelper.colorTransform(img, 
+		ImageData data = img.getImageData();
+		ImageHelper.colorTransform(data, 
 				anim.transform.red / 255f * c.transform.red / 255f,
 				anim.transform.green / 255f * c.transform.green / 255f,
 				anim.transform.blue / 255f * c.transform.blue / 255f,
 				anim.transform.hue + c.transform.hue, 
 				anim.transform.saturation / 100f * c.transform.saturation / 100f, 
 				anim.transform.brightness / 100f * c.transform.brightness / 100f);
+		img.dispose();
+		img = new Image(Display.getCurrent(), data);
 		characterCache.put(key, img);
 		return img;
 	}
