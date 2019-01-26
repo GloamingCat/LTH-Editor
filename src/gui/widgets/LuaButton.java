@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class LuaButton extends LObjectButton<String> {
 	
-	private String folder;
+	private String folder = "";
 	private Text pathText;
 	
 	/**

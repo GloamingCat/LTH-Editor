@@ -195,6 +195,7 @@ public class CharTileEditor extends LObjectEditor {
 		lblStart.setText(Vocab.instance.LOADSCRIPT);
 		
 		ScriptButton btnStart = new ScriptButton(grpScripts, SWT.NONE);
+		btnStart.setFolder("events/");
 		btnStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		addControl(btnStart, "startScript");
 		
@@ -202,6 +203,7 @@ public class CharTileEditor extends LObjectEditor {
 		lblCollision.setText(Vocab.instance.COLLIDESCRIPT);
 		
 		ScriptButton btnCollision = new ScriptButton(grpScripts, SWT.NONE);
+		btnCollision.setFolder("events/");
 		btnCollision.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnCollision, "collisionScript");
 		
@@ -209,6 +211,7 @@ public class CharTileEditor extends LObjectEditor {
 		lblInteract.setText(Vocab.instance.INTERACTSCRIPT);
 		
 		ScriptButton btnInteract = new ScriptButton(grpScripts, SWT.NONE);
+		btnInteract.setFolder("events/");
 		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnInteract, "interactScript");
 

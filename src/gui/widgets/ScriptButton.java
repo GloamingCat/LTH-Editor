@@ -14,7 +14,7 @@ import data.subcontent.Script;
 
 public class ScriptButton extends LObjectButton<Script> {
 	
-	private String folder;
+	private String folder = "";
 	private Text pathText;
 	
 	/**
