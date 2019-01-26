@@ -2,65 +2,85 @@ package gui.shell.system;
 
 import gui.Vocab;
 import gui.shell.ObjectShell;
+import gui.views.database.subcontent.TagList;
+import gui.widgets.FileSelector;
 
+import java.io.File;
+
+import lwt.widget.LCheckButton;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Shell;
 
-import data.config.EquipType;
-import lwt.widget.LCombo;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import data.config.Plugin;
+import project.Project;
 
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 
-public class PluginShell extends ObjectShell<EquipType> {
-
+public class PluginShell extends ObjectShell<Plugin> {
+	
+	private FileSelector selFile;
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public PluginShell(Shell parent) {
-		super(parent);
-		
-		setText(Vocab.instance.PLUGINS);
-		contentEditor.setLayout(new GridLayout(2, false));
-		
-		Label lblName = new Label(contentEditor, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
-
-		LText txtName = new LText(contentEditor, SWT.NONE);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(txtName, "name");
-		
-		Label lblKey = new Label(contentEditor, SWT.NONE);
-		lblKey.setText(Vocab.instance.KEY);
-
-		LText txtKey = new LText(contentEditor, SWT.NONE);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(txtKey, "key");
-		
-		Label lblState = new Label(contentEditor, SWT.NONE);
-		lblState.setText(Vocab.instance.STATE);
-		
-		LCombo cmbState = new LCombo(contentEditor, SWT.NONE);
-		cmbState.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cmbState.setIncludeID(false);
-		cmbState.setOptional(false);
-		cmbState.setItems(new String[] {
-				Vocab.instance.FREE, Vocab.instance.NOTEMPTY,
-				Vocab.instance.ALLEQUIPED, Vocab.instance.UNCHANGABLE,
-				Vocab.instance.INVISIBLE
-		});
-		addControl(cmbState, "state");
-		
-		Label lblCount = new Label(contentEditor, SWT.NONE);
-		lblCount.setText(Vocab.instance.COUNT);
-		
-		LSpinner spnCount = new LSpinner(contentEditor);
-		spnCount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		spnCount.setMinimum(1);
-		spnCount.setMaximum(99);
-		addControl(spnCount, "count");
-		
-		pack();
+		this(parent, "", 1);
 	}
 	
+	public PluginShell(Shell parent, String folder, int optional) {
+		super(parent);
+		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
+		SashForm form = new SashForm(contentEditor, SWT.NONE);
+		selFile = new FileSelector(form, optional) {
+			@Override
+			protected String rootPath() {
+				return Project.current.scriptPath();
+			}
+			@Override
+			protected boolean isValidFile(File f) {
+				return f.getName().endsWith(".lua");
+			}
+		};
+		selFile.setFolder(folder);
+		
+		Composite composite = new Composite(form, SWT.NONE);
+		GridLayout gl_composite = new GridLayout(1, false);
+		gl_composite.marginHeight = 0;
+		gl_composite.marginWidth = 0;
+		composite.setLayout(gl_composite);
+		
+		Group grpParameters = new Group(composite, SWT.NONE);
+		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpParameters.setText(Vocab.instance.PARAM);
+		grpParameters.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		TagList lstParam = new TagList(grpParameters, SWT.NONE);
+		addChild(lstParam, "tags");
+		
+		LCheckButton btnON = new LCheckButton(composite, SWT.NONE);
+		btnON.setText(Vocab.instance.PLUGINON);
+		addControl(btnON, "on");
+		
+		form.setWeights(new int[] {1, 1});
+	}
+	
+	public void open(Plugin initial) {
+		super.open(initial);
+		selFile.setSelectedFile(initial.name);
+	}
+	
+	@Override
+	protected Plugin createResult(Plugin initial) {
+		Plugin script = (Plugin) contentEditor.getObject();
+		script.name = selFile.getSelectedFile();
+		if (script.name == null)
+			script.name = "";
+		return super.createResult(initial);
+	}
 }

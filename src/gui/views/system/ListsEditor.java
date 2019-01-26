@@ -20,6 +20,7 @@ public class ListsEditor extends LObjectEditor {
 	private ConstantList lstConstants;
 	private AttributeList lstAttributes;
 	private RegionList lstRegions;
+	private PluginList lstPlugins;
 
 	/**
 	 * Create the composite.
@@ -86,6 +87,9 @@ public class ListsEditor extends LObjectEditor {
 		Group grpPlugins = new Group(bottom, SWT.NONE);
 		grpPlugins.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpPlugins.setText(Vocab.instance.PLUGINS);
+		
+		lstPlugins = new PluginList(grpPlugins, SWT.NONE);
+		addChild(lstPlugins, "plugins");
 
 	}
 	
@@ -96,7 +100,7 @@ public class ListsEditor extends LObjectEditor {
 		lstEquipTypes.setObject(Project.current.equipTypes.getList());
 		lstConstants.setObject(Project.current.constants.getList());
 		lstRegions.setObject(Project.current.regions.getList());
-		//lstPlugins.setObject(Project.current.plugins.getList());
+		lstPlugins.setObject(Project.current.plugins.getList());
 	}
 	
 }

@@ -61,6 +61,7 @@ public class Vocab {
 	public String REGIONS = "Regions";
 	public String EQUIPTYPES = "Equip Types";
 	public String PLUGINS = "Plugins";
+	public String PLUGINON = "ON";
 	public String CONSTANTS = "Constants";
 	public String COLOR = "Color";
 	
