@@ -18,8 +18,8 @@ public class CharTile {
 	public String animation = "Idle";
 	public int row = 7;
 	
-	public Script startScript = new Script();
-	public Script collisionScript = new Script();
+	public Script loadScript = new Script();
+	public Script collideScript = new Script();
 	public Script interactScript = new Script();
 	
 	public CharTile() {}

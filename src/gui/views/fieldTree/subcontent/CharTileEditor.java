@@ -187,31 +187,43 @@ public class CharTileEditor extends LObjectEditor {
 		addControl(btnBattler, "battlerID");
 		
 		Group grpScripts = new Group(this, SWT.NONE);
-		grpScripts.setLayout(new GridLayout(2, false));
+		grpScripts.setLayout(new GridLayout(3, false));
 		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
 		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
-		Label lblStart = new Label(grpScripts, SWT.NONE);
-		lblStart.setText(Vocab.instance.LOADSCRIPT);
+		Label lblLoad = new Label(grpScripts, SWT.NONE);
+		lblLoad.setText(Vocab.instance.LOADSCRIPT);
 		
-		ScriptButton btnStart = new ScriptButton(grpScripts, SWT.NONE);
-		btnStart.setFolder("events/");
-		btnStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		addControl(btnStart, "startScript");
+		Text txtLoad = new Text(grpScripts, SWT.BORDER | SWT.READ_ONLY);
+		txtLoad.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblCollision = new Label(grpScripts, SWT.NONE);
-		lblCollision.setText(Vocab.instance.COLLIDESCRIPT);
+		ScriptButton btnLoad = new ScriptButton(grpScripts, 1);
+		btnLoad.setFolder("events/");
+		btnLoad.setPathText(txtLoad);
+		btnLoad.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		addControl(btnLoad, "loadScript");
 		
-		ScriptButton btnCollision = new ScriptButton(grpScripts, SWT.NONE);
-		btnCollision.setFolder("events/");
-		btnCollision.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		addControl(btnCollision, "collisionScript");
+		Label lblCollide = new Label(grpScripts, SWT.NONE);
+		lblCollide.setText(Vocab.instance.COLLIDESCRIPT);
+		
+		Text txtCollide = new Text(grpScripts, SWT.BORDER | SWT.READ_ONLY);
+		txtCollide.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ScriptButton btnCollide = new ScriptButton(grpScripts, 1);
+		btnCollide.setFolder("events/");
+		btnCollide.setPathText(txtCollide);
+		btnCollide.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		addControl(btnCollide, "collideScript");
 		
 		Label lblInteract = new Label(grpScripts, SWT.NONE);
 		lblInteract.setText(Vocab.instance.INTERACTSCRIPT);
 		
-		ScriptButton btnInteract = new ScriptButton(grpScripts, SWT.NONE);
+		Text txtInteract = new Text(grpScripts, SWT.BORDER | SWT.READ_ONLY);
+		txtInteract.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ScriptButton btnInteract = new ScriptButton(grpScripts, 1);
 		btnInteract.setFolder("events/");
+		btnInteract.setPathText(txtInteract);
 		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnInteract, "interactScript");
 

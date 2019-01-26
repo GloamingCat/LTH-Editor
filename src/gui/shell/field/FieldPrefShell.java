@@ -41,22 +41,22 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		contentEditor.setLayout(gridLayout);
 		
 		Group grpGeneral = new Group(contentEditor, SWT.NONE);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 		grpGeneral.setText("General");
-		grpGeneral.setLayout(new GridLayout(2, false));
+		grpGeneral.setLayout(new GridLayout(3, false));
 		
 		Label lblName = new Label(grpGeneral, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
 		LText text = new LText(grpGeneral, SWT.NONE);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(text, "name");
 		
 		Label lblDefaultRegions = new Label(grpGeneral, SWT.NONE);
 		lblDefaultRegions.setText(Vocab.instance.DEFAULTREGION);
 		
 		LCombo cmbRegion = new LCombo(grpGeneral);
-		cmbRegion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbRegion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		cmbRegion.setItems(Project.current.regions.getData());
 		addControl(cmbRegion, "defaultRegion");
 		
@@ -66,13 +66,18 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.NONE);
 		spnHeight.setMinimum(0);
 		spnHeight.setMaximum(99);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(spnHeight, "maxHeight");
 		
 		Label lblScript = new Label(grpGeneral, SWT.NONE);
 		lblScript.setText(Vocab.instance.LOADSCRIPT);
 		
+		Text txtScript = new Text(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
 		ScriptButton btnScript = new ScriptButton(grpGeneral, SWT.NONE);
+		btnScript.setPathText(txtScript);
+		btnScript.setFolder("events/");
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");
 		

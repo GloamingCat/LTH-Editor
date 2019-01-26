@@ -327,9 +327,9 @@ public class Vocab {
 	
 	// Character
 	public String ANIMATION = "Animation";
-	public String LOADSCRIPT = "Load Script";
-	public String COLLIDESCRIPT = "Collide Script";
-	public String INTERACTSCRIPT = "Interact Script";
+	public String LOADSCRIPT = "Load";
+	public String COLLIDESCRIPT = "Collide";
+	public String INTERACTSCRIPT = "Interact";
 	
 	// Party
 	public String PLAYERPARTY = "Player Party";

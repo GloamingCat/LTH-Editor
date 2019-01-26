@@ -9,7 +9,7 @@ public class Transition {
 	public Position destination = new Position();
 	public Position start = new Position();
 	public Position end = new Position();
-	public int fade = 60;
+	public int fade = 30;
 	
 	public String toString() {
 		return destination.toString();
