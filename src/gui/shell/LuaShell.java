@@ -1,27 +1,18 @@
 package gui.shell;
 
-import gui.Vocab;
-import gui.views.database.subcontent.TagList;
 import gui.widgets.FileSelector;
 
 import java.io.File;
 
-import lwt.widget.LCheckButton;
+import lwt.dialog.LObjectShell;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.layout.FillLayout;
 
-import data.subcontent.Script;
 import project.Project;
 
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
-public class LuaShell extends ObjectShell<Script> {
+public class LuaShell extends LObjectShell<String> {
 	
 	private FileSelector selFile;
 	
@@ -34,9 +25,8 @@ public class LuaShell extends ObjectShell<Script> {
 	
 	public LuaShell(Shell parent, String folder, int optional) {
 		super(parent);
-		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
-		SashForm form = new SashForm(contentEditor, SWT.NONE);
-		selFile = new FileSelector(form, optional) {
+		content.setLayout(new FillLayout(SWT.HORIZONTAL));
+		selFile = new FileSelector(content, optional) {
 			@Override
 			protected String rootPath() {
 				return Project.current.scriptPath();
@@ -47,39 +37,18 @@ public class LuaShell extends ObjectShell<Script> {
 			}
 		};
 		selFile.setFolder(folder);
-		
-		Composite composite = new Composite(form, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(1, false);
-		gl_composite.marginHeight = 0;
-		gl_composite.marginWidth = 0;
-		composite.setLayout(gl_composite);
-		
-		Group grpParameters = new Group(composite, SWT.NONE);
-		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpParameters.setText(Vocab.instance.PARAM);
-		grpParameters.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		TagList lstParam = new TagList(grpParameters, SWT.NONE);
-		addChild(lstParam, "tags");
-		
-		LCheckButton btnGlobal = new LCheckButton(composite, SWT.NONE);
-		btnGlobal.setText(Vocab.instance.GLOBAL);
-		addControl(btnGlobal, "global");
-		
-		form.setWeights(new int[] {1, 1});
 	}
 	
-	public void open(Script initial) {
+	public void open(String initial) {
 		super.open(initial);
-		selFile.setSelectedFile(initial.name);
+		selFile.setSelectedFile(initial);
 	}
 	
 	@Override
-	protected Script createResult(Script initial) {
-		Script script = (Script) contentEditor.getObject();
-		script.name = selFile.getSelectedFile();
-		if (script.name == null)
-			script.name = "";
-		return super.createResult(initial);
+	protected String createResult(String initial) {
+		String path = selFile.getSelectedFile();
+		if (initial.equals(path))
+			return null;
+		return path;
 	}
 }

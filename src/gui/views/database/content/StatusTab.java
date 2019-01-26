@@ -9,6 +9,7 @@ import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
+import gui.widgets.ScriptButton;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
@@ -139,7 +140,7 @@ public class StatusTab extends DatabaseTab {
 		Text txtBehavior = new Text(compBehavior, SWT.BORDER | SWT.READ_ONLY);
 		txtBehavior.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LuaButton btnBehavior = new LuaButton(compBehavior, 1);
+		ScriptButton btnBehavior = new ScriptButton(compBehavior, 1);
 		btnBehavior.setPathText(txtBehavior);
 		btnBehavior.setFolder("ai");
 		addControl(btnBehavior, "behavior");

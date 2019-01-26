@@ -10,7 +10,7 @@ import gui.views.database.subcontent.EquipList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IDList;
-import gui.widgets.LuaButton;
+import gui.widgets.ScriptButton;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
@@ -72,7 +72,6 @@ public class BattlerTab extends DatabaseTab {
 		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnEXP, "exp");
 		
-		
 		Composite select = new Composite(grpGeneral, SWT.NONE);
 		select.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		GridLayout gl_select = new GridLayout(3, false);
@@ -88,7 +87,7 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LuaButton btnAI = new LuaButton(select, 1);
+		ScriptButton btnAI = new ScriptButton(select, 1);
 		btnAI.setPathText(txtAI);
 		btnAI.setFolder("ai/");
 		addControl(btnAI, "ai");

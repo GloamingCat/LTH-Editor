@@ -3,7 +3,7 @@ package gui.views.fieldTree.subcontent;
 import gui.Vocab;
 import gui.views.fieldTree.FieldEditor;
 import gui.widgets.IDButton;
-import gui.widgets.LuaButton;
+import gui.widgets.ScriptButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -194,21 +194,21 @@ public class CharTileEditor extends LObjectEditor {
 		Label lblStart = new Label(grpScripts, SWT.NONE);
 		lblStart.setText(Vocab.instance.LOADSCRIPT);
 		
-		LuaButton btnStart = new LuaButton(grpScripts, SWT.NONE);
+		ScriptButton btnStart = new ScriptButton(grpScripts, SWT.NONE);
 		btnStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		addControl(btnStart, "startScript");
 		
 		Label lblCollision = new Label(grpScripts, SWT.NONE);
 		lblCollision.setText(Vocab.instance.COLLIDESCRIPT);
 		
-		LuaButton btnCollision = new LuaButton(grpScripts, SWT.NONE);
+		ScriptButton btnCollision = new ScriptButton(grpScripts, SWT.NONE);
 		btnCollision.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnCollision, "collisionScript");
 		
 		Label lblInteract = new Label(grpScripts, SWT.NONE);
 		lblInteract.setText(Vocab.instance.INTERACTSCRIPT);
 		
-		LuaButton btnInteract = new LuaButton(grpScripts, SWT.NONE);
+		ScriptButton btnInteract = new ScriptButton(grpScripts, SWT.NONE);
 		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnInteract, "interactScript");
 

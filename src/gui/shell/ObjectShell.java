@@ -2,7 +2,7 @@ package gui.shell;
 
 import gui.widgets.ImageButton;
 import gui.widgets.QuadButton;
-import gui.widgets.LuaButton;
+import gui.widgets.ScriptButton;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -79,7 +79,7 @@ public class ObjectShell<T> extends LObjectShell<T> {
 		addControl(button, attName);
 	}
 	
-	protected void addScriptButton(LuaButton button, Text pathText, String folderName, String attName) {
+	protected void addScriptButton(ScriptButton button, Text pathText, String folderName, String attName) {
 		button.setPathText(pathText);
 		button.setFolder(folderName);
 		addControl(button, attName);

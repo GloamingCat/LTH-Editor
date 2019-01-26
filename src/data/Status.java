@@ -9,7 +9,7 @@ import lwt.dataestructure.LDataList;
 public class Status extends Data {
 	
 	// General
-	public Script script = new Script();
+	public String script = "";
 	public Icon icon = new Icon();
 	public int priority = 100;
 	public boolean visible = true;
