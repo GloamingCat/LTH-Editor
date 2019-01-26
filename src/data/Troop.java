@@ -4,13 +4,14 @@ import org.eclipse.swt.graphics.Point;
 
 import data.Battler.Drop;
 import data.config.Config;
+import data.subcontent.Script;
 import data.subcontent.Unit;
 import project.Project;
 import lwt.dataestructure.LDataList;
 
 public class Troop extends Data {
 
-	public int scriptID = -1;
+	public Script ai = new Script();
 	public boolean persistent = false;
 	public int money = 100;
 	public LDataList<Drop> items = new LDataList<>();

@@ -1,8 +1,8 @@
 package data.field;
 
 import data.Data;
-import data.Script;
 import data.subcontent.Quad;
+import data.subcontent.Script;
 import lwt.dataestructure.LDataList;
 
 public class Field {

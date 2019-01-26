@@ -38,7 +38,6 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	public void open(T initial) {
 		super.open(initial);
 		T copy = (T) gson.fromJson(gson.toJson(initial), initial.getClass());
-		System.out.println(initial);
 		contentEditor.setObject(copy);
 	}
 

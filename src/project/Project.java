@@ -19,7 +19,6 @@ public class Project implements LSerializer {
 	public GObjectTreeSerializer classes;
 	public GObjectTreeSerializer items;
 	public GObjectTreeSerializer obstacles;
-	public GObjectTreeSerializer scripts;
 	public GObjectTreeSerializer skills;
 	public GObjectTreeSerializer status;
 	public GObjectTreeSerializer terrains;
@@ -51,7 +50,6 @@ public class Project implements LSerializer {
 		classes = new GObjectTreeSerializer(dataPath() + "classes", BattleClass.class);
 		items = new GObjectTreeSerializer(dataPath() + "items", Item.class);
 		obstacles = new GObjectTreeSerializer(dataPath() + "obstacles", Obstacle.class);
-		scripts = new GObjectTreeSerializer(dataPath() + "scripts", Script.class);
 		skills = new GObjectTreeSerializer(dataPath() + "skills", Skill.class);
 		status = new GObjectTreeSerializer(dataPath() + "status", Status.class);
 		terrains = new GObjectTreeSerializer(dataPath() + "terrains", Terrain.class);
@@ -69,7 +67,7 @@ public class Project implements LSerializer {
 		fieldTree = new FieldTreeSerializer(fieldPath());
 		
 		allData = new LSerializer[] { fieldTree, animations, battlers, characters, 
-				classes, items, obstacles, scripts, skills, status, terrains, troops, 
+				classes, items, obstacles, skills, status, terrains, troops, 
 				config, attributes, constants, elements, equipTypes, plugins, regions };
 	}
 	

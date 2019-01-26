@@ -10,7 +10,7 @@ import gui.shell.ObjectShell;
 import gui.views.fieldTree.FieldSideEditor;
 import gui.widgets.PositionButton;
 import gui.widgets.QuadButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Shell;
@@ -72,7 +72,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		Label lblScript = new Label(grpGeneral, SWT.NONE);
 		lblScript.setText(Vocab.instance.LOADSCRIPT);
 		
-		ScriptButton btnScript = new ScriptButton(grpGeneral, SWT.NONE);
+		LuaButton btnScript = new LuaButton(grpGeneral, SWT.NONE);
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");
 		

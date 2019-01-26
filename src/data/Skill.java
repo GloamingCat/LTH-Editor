@@ -2,6 +2,7 @@ package data;
 
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
+import data.subcontent.Script;
 import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 
@@ -10,7 +11,7 @@ public class Skill extends Data {
 	// General
 	public String description = "";
 	public Icon icon = new Icon();
-	public String script = "";
+	public Script script = new Script();
 	public int type = 1; // 0 => Offensive, 1 => Supportive, 2 => General
 	public int targetType = 0; // 0 => Any tile, 1 => Any character, 2 => Living only, 3 => Dead only
 	public int restriction = 0; // 0 => Anywhere, 1 => Battle only, 2 => Field only

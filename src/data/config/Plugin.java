@@ -1,16 +1,9 @@
 package data.config;
 
-import data.subcontent.Tag;
-import lwt.dataestructure.LDataList;
+import data.Data;
 
-public class Plugin {
+public class Plugin extends Data {
 
-	public String path = "";
 	public boolean on = true;
-	public LDataList<Tag> params = new LDataList<>();
-	
-	public String toString() {
-		return path;
-	}
 	
 }

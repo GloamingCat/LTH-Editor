@@ -1,6 +1,5 @@
 package gui.views.database.content;
 
-import lwt.dataestructure.LDataTree;
 import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
@@ -11,7 +10,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.UnitEditor;
-import gui.widgets.IDButton;
+import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
@@ -75,14 +74,10 @@ public class TroopTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAI = new IDButton(select, 1) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.scripts.getTree();
-			}
-		};
-		btnAI.setNameText(txtAI);
-		addControl(btnAI, "scriptID");
+		LuaButton btnAI = new LuaButton(select, 1);
+		btnAI.setPathText(txtAI);
+		btnAI.setFolder("ai/");
+		addControl(btnAI, "ai");
 		
 		// Items
 		

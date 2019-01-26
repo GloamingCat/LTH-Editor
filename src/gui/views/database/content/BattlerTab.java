@@ -10,6 +10,7 @@ import gui.views.database.subcontent.EquipList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IDList;
+import gui.widgets.LuaButton;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
@@ -87,14 +88,10 @@ public class BattlerTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnAI = new IDButton(select, 1) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.scripts.getTree();
-			}
-		};
-		btnAI.setNameText(txtAI);
-		addControl(btnAI, "scriptID");
+		LuaButton btnAI = new LuaButton(select, 1);
+		btnAI.setPathText(txtAI);
+		btnAI.setFolder("ai/");
+		addControl(btnAI, "ai");
 		
 		// Class
 		

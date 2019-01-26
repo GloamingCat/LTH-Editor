@@ -2,20 +2,21 @@ package data;
 
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
+import data.subcontent.Script;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
 
 public class Status extends Data {
 	
 	// General
-	public String script = "";
+	public Script script = new Script();
 	public Icon icon = new Icon();
 	public int priority = 100;
 	public boolean visible = true;
 	public boolean cumulative = false;
 	public boolean deactivate = false;
 	public boolean ko = false;
-	public int behaviorID = -1;
+	public Script behavior = new Script();
 	
 	// Graphics
 	public String charAnim = "";

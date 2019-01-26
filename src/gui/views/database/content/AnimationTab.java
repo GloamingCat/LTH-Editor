@@ -61,7 +61,9 @@ public class AnimationTab extends DatabaseTab {
 		
 		LuaButton btnScript = new LuaButton(script, 1);
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addScriptButton(btnScript, txtScript, "animation", "script");
+		btnScript.setFolder("animation/");
+		btnScript.setPathText(txtScript);
+		addControl(btnScript, "script");
 
 		// Size
 		

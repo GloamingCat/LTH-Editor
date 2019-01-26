@@ -6,7 +6,6 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
-import gui.widgets.IDButton;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
@@ -57,7 +56,9 @@ public class StatusTab extends DatabaseTab {
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LuaButton btnSelectScript = new LuaButton(compositeScript, 1);
-		addScriptButton(btnSelectScript, txtScript, "status", "script");
+		btnSelectScript.setPathText(txtScript);
+		btnSelectScript.setFolder("status/");
+		addControl(btnSelectScript, "script");
 		
 		// Icon
 		
@@ -128,24 +129,20 @@ public class StatusTab extends DatabaseTab {
 		Label lblBehavior = new Label(grpGeneral, SWT.NONE);
 		lblBehavior.setText(Vocab.instance.BEHAVIOR);
 		
-		Composite compBehaveor = new Composite(grpGeneral, SWT.NONE);
+		Composite compBehavior = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compBehavior = new GridLayout(2, false);
 		gl_compBehavior.marginHeight = 0;
 		gl_compBehavior.marginWidth = 0;
-		compBehaveor.setLayout(gl_compBehavior);
-		compBehaveor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compBehavior.setLayout(gl_compBehavior);
+		compBehavior.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Text txtBehavior = new Text(compBehaveor, SWT.BORDER | SWT.READ_ONLY);
+		Text txtBehavior = new Text(compBehavior, SWT.BORDER | SWT.READ_ONLY);
 		txtBehavior.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnBehavior = new IDButton(compBehaveor, 1) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.scripts.getTree();
-			}
-		};
-		btnBehavior.setNameText(txtBehavior);
-		addControl(btnBehavior, "behaviorID");
+		LuaButton btnBehavior = new LuaButton(compBehavior, 1);
+		btnBehavior.setPathText(txtBehavior);
+		btnBehavior.setFolder("ai");
+		addControl(btnBehavior, "behavior");
 		
 		// Graphics
 		

@@ -20,7 +20,7 @@ public class PluginShell extends ObjectShell<EquipType> {
 	public PluginShell(Shell parent) {
 		super(parent);
 		
-		setText(Vocab.instance.EQUIP);
+		setText(Vocab.instance.PLUGINS);
 		contentEditor.setLayout(new GridLayout(2, false));
 		
 		Label lblName = new Label(contentEditor, SWT.NONE);

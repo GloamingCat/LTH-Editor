@@ -61,6 +61,7 @@ public class Vocab {
 	public String REGIONS = "Regions";
 	public String EQUIPTYPES = "Equip Types";
 	public String PLUGINS = "Plugins";
+	public String CONSTANTS = "Constants";
 	public String COLOR = "Color";
 	
 	// Attributes
@@ -229,11 +230,6 @@ public class Vocab {
 	public String TILES = "Tiles";
 	public String NONE = "None";
 	public String ALL = "All";
-	
-	// Scripts
-	public String GLOBAL = "Global";
-	public String CONSTANTS = "Constants";
-	public String COMMANDS = "Commands";
 
 	// Status
 	public String VISIBLE = "Visible";
@@ -305,6 +301,10 @@ public class Vocab {
 	// Icon
 	public String COLUMN = "Column";
 	public String ROW = "Row";
+	
+	// Script
+	public String PARAM = "Parameters";
+	public String GLOBAL = "Global";
 
 	// ========================================================================
 	// Field

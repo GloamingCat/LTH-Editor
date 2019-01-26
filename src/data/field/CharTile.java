@@ -1,6 +1,6 @@
 package data.field;
 
-import data.Script;
+import data.subcontent.Script;
 
 public class CharTile {
 	
