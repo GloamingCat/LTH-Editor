@@ -13,11 +13,6 @@ public class Field {
 	
 	public Prefs prefs = new Prefs();
 	public Layers layers = new Layers();
-	
-	public Script setupScript = new Script();
-	public Script enterScript = new Script();
-	
-	public LDataList<Transition> transitions = new LDataList<>(); 
 	public LDataList<CharTile> characters = new LDataList<>();
 	public LDataList<Party> parties = new LDataList<>();
 	public int playerParty = -1;
@@ -33,9 +28,13 @@ public class Field {
 	
 	public static class Prefs extends Data {
 		
+		public int defaultRegion = 0;
+		public int maxHeight = 4;
+		public Script loadScript = new Script();
 		public Quad background = new Quad();
 		public Quad parallax = new Quad();
-		public int defaultRegion = 0;
+		public LDataList<Transition> transitions = new LDataList<>(); 
+		
 	}
 	
 	public static class Layers {

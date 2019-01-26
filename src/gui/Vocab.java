@@ -305,12 +305,6 @@ public class Vocab {
 	// Icon
 	public String COLUMN = "Column";
 	public String ROW = "Row";
-	
-	// Tileset
-	public String ANIMATION = "Animation";
-	public String STARTLISTENER = "Start";
-	public String COLLISIONLISTENER = "Collision";
-	public String INTERACTLISTENER = "Interact";
 
 	// ========================================================================
 	// Field
@@ -320,7 +314,7 @@ public class Vocab {
 	public String BACKGROUND = "Background";
 	public String PARALLAX = "Parallax";
 	public String DEFAULTREGION = "Default Region";
-	public String PARTYCOUNT = "Parties";
+	public String MAXHEIGHT = "Max Height";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
@@ -329,6 +323,12 @@ public class Vocab {
 	public String PARTY = "Party";
 	public String SHOWGRID = "Show Grid";
 	public String RESIZE = "Resize";
+	
+	// Character
+	public String ANIMATION = "Animation";
+	public String LOADSCRIPT = "Load Script";
+	public String COLLIDESCRIPT = "Collide Script";
+	public String INTERACTSCRIPT = "Interact Script";
 	
 	// Party
 	public String PLAYERPARTY = "Player Party";
@@ -343,12 +343,9 @@ public class Vocab {
 	
 	// Transition
 	public String TRANSITIONS = "Transitions";
-	public String ORIGIN = "Origin";
 	public String DESTINATION = "Destination";
+	public String ORIGSTART = "Start";
+	public String ORIGEND = "End";
 	public String FADEOUT = "Fade out";
-	public String NORTH = "North";
-	public String EAST = "East";
-	public String SOUTH = "South";
-	public String WEST = "West";
 
 }

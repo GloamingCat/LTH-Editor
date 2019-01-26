@@ -5,6 +5,7 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -20,14 +21,18 @@ public class PositionButton extends LObjectButton<Position> {
 	 * @param parent
 	 * @param style
 	 */
-	public PositionButton(Composite parent, int style) {
-		super(parent, style);
+	public PositionButton(Composite parent, int fieldID) {
+		super(parent, SWT.NONE);
 		setShellFactory(new LShellFactory<Position>() {
 			@Override
 			public LObjectShell<Position> createShell(Shell parent) {
-				return new PositionShell(parent);
+				return new PositionShell(parent, fieldID);
 			}
 		});
+	}
+	
+	public PositionButton(Composite parent) {
+		this(parent, -1);
 	}
 	
 	public void setText(Text text) {

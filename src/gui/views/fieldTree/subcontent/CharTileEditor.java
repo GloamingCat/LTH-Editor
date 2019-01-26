@@ -192,21 +192,21 @@ public class CharTileEditor extends LObjectEditor {
 		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
 		Label lblStart = new Label(grpScripts, SWT.NONE);
-		lblStart.setText(Vocab.instance.STARTLISTENER);
+		lblStart.setText(Vocab.instance.LOADSCRIPT);
 		
 		ScriptButton btnStart = new ScriptButton(grpScripts, SWT.NONE);
 		btnStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		addControl(btnStart, "startScript");
 		
 		Label lblCollision = new Label(grpScripts, SWT.NONE);
-		lblCollision.setText(Vocab.instance.COLLISIONLISTENER);
+		lblCollision.setText(Vocab.instance.COLLIDESCRIPT);
 		
 		ScriptButton btnCollision = new ScriptButton(grpScripts, SWT.NONE);
 		btnCollision.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnCollision, "collisionScript");
 		
 		Label lblInteract = new Label(grpScripts, SWT.NONE);
-		lblInteract.setText(Vocab.instance.INTERACTLISTENER);
+		lblInteract.setText(Vocab.instance.INTERACTSCRIPT);
 		
 		ScriptButton btnInteract = new ScriptButton(grpScripts, SWT.NONE);
 		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

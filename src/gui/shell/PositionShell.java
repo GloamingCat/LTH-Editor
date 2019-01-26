@@ -45,8 +45,17 @@ public class PositionShell extends LObjectShell<Position> {
 	private Spinner spnY;
 	private ScrolledComposite scrolledComposite;
 	private Label lblPos;
+	
+	private LPath path = null;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public PositionShell(Shell parent) {
+		this(parent, -1);
+	}
+	
+	public PositionShell(Shell parent, int fieldID) {
 		super(parent);
 		setMinimumSize(new Point(640, 480));
 		GridData gridData = (GridData) content.getLayoutData();
@@ -83,6 +92,12 @@ public class PositionShell extends LObjectShell<Position> {
 				setField(event.id, (FieldNode) event.data);
 			}
 		});
+		
+		if (fieldID >= 0) {
+			LDataTree<FieldNode> node = Project.current.fieldTree.getData().findNode(fieldID);
+			path = node == null ? null : node.toPath();
+			tree.setEnabled(false);
+		}
 		
 		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 
@@ -167,10 +182,11 @@ public class PositionShell extends LObjectShell<Position> {
 		lblDirection.setText(Vocab.instance.DIRECTION);
 		
 		cmbDirection = new LCombo(bottom, SWT.READ_ONLY);
+		cmbDirection.setOptional(true);
+		cmbDirection.setIncludeID(false);
 		String[] d = new String[] {"0°", "45°", "90°", "135°", 
 				"180°", "225°", "270°", "315°"};
 		cmbDirection.setItems(d);
-		cmbDirection.setOptional(true);
 		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		lblPos = new Label(bottom, SWT.NONE);
@@ -202,9 +218,13 @@ public class PositionShell extends LObjectShell<Position> {
 	}
 	
 	public void open(Position initial) {
-		super.open(initial);		
-		LPath path = findPath(initial.fieldID);
-		tree.forceSelection(path);
+		super.open(initial);	
+		if (path == null) {
+			LPath path = findPath(initial.fieldID);
+			tree.forceSelection(path);
+		} else {
+			tree.forceSelection(path);
+		}
 		spnX.setSelection(initial.x);
 		spnY.setSelection(initial.y);
 		if (initial.direction == -1) {
