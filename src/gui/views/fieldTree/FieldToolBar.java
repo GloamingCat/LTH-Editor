@@ -8,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -150,23 +151,24 @@ public class FieldToolBar extends LWidget {
 	}
 	
 	public void onResize() {
-		Point size = new Point(FieldSideEditor.instance.field.sizeX, 
+		Rectangle size = new Rectangle(SWT.LEFT, SWT.TOP, 
+				FieldSideEditor.instance.field.sizeX, 
 				FieldSideEditor.instance.field.sizeY);
-		LObjectDialog<Point> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
-		dialog.setFactory(new LShellFactory<Point>() {
+		LObjectDialog<Rectangle> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
+		dialog.setFactory(new LShellFactory<Rectangle>() {
 			@Override
-			public LObjectShell<Point> createShell(Shell parent) {
+			public LObjectShell<Rectangle> createShell(Shell parent) {
 				return new ResizeShell(parent);
 			}
 		});
 		size = dialog.open(size);
 		if (size != null) {
-			resizeField(size.x, size.y);
+			resizeField(size);
 		}
 	}
 	
-	private void resizeField(int w, int h) {
-		ResizeAction action = new ResizeAction(w, h);
+	private void resizeField(Rectangle size) {
+		ResizeAction action = new ResizeAction(size.width, size.height, size.x, size.y);
 		FieldEditor.instance.canvas.getActionStack().newAction(action);
 		action.redo();
 	}

@@ -15,24 +15,38 @@ public class ResizeAction implements LAction {
 	private int oldH;
 	private int newW;
 	private int newH;
+	private int x0 = 0;
+	private int y0 = 0;
 	
 	private Field.Layers oldLayers;
 	private Field.Layers newLayers = new Field.Layers();
 	
 	private LPath path;
 	
-	public ResizeAction (int newW, int newH) {
+	public ResizeAction (int newW, int newH, int alignX, int alignY) {
+		this.newW = newW;
+		this.newH = newH;
+		this.path = FieldTreeEditor.instance.fieldTree.getSelectedPath();
 		Field field = FieldEditor.instance.canvas.field;
 		oldW = field.sizeX;
 		oldH = field.sizeY;
 		oldLayers = field.layers;
-		this.newW = newW;
-		this.newH = newH;
-		oldLayers = field.layers;
+		// X anchor
+		if (alignX == 1) {
+			x0 = (oldW - newW) / 2;
+		} else if (alignX == 2) {
+			x0 = oldW - newW;
+		}
+		// Y anchor
+		if (alignY == 1) {
+			y0 = (oldH - newH) / 2;
+		} else if (alignY == 2) {
+			y0 = oldH - newH;
+		}
+		// Create layers
 		resize(oldLayers.terrain, newLayers.terrain);
 		resize(oldLayers.obstacle, newLayers.obstacle);
 		resize(oldLayers.region, newLayers.region);
-		this.path = FieldTreeEditor.instance.fieldTree.getSelectedPath();
 	}
 
 	private void resize(LDataList<Layer> layers, LDataList<Layer> newLayers) {
@@ -40,8 +54,9 @@ public class ResizeAction implements LAction {
 			Layer newLayer = new Layer(newW, newH);
 			for(int i = 0; i < newW; i++) {
 				for(int j = 0; j < newH; j++) {
-					if (i < oldW && j < oldH) {
-						newLayer.grid[i][j] = l.grid[i][j];
+					int x = x0 + i, y = y0 + j;
+					if (x < oldW && y < oldH && x >= 0 && y >= 0) {
+						newLayer.grid[i][j] = l.grid[x][y];
 					} else {
 						newLayer.grid[i][j] = -1;
 					}

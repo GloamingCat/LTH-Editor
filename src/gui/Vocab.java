@@ -317,14 +317,21 @@ public class Vocab {
 	public String BGM = "BGM";
 	public String BACKGROUND = "Background";
 	public String PARALLAX = "Parallax";
-	public String SIZEX = "Width";
-	public String SIZEY = "Height";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
 	public String PARTY = "Party";
 	public String SHOWGRID = "Show Grid";
+	
+	// Resize
 	public String RESIZE = "Resize";
+	public String SIZEX = "Width";
+	public String SIZEY = "Height";
+	public String ALIGNX = "Horizontal Anchor";
+	public String ALIGNY = "Vertical Anchor";
+	public String LEFT = "Left";
+	public String CENTER = "Center";
+	public String RIGHT = "Right";
 	
 	// Character
 	public String ANIMATION = "Animation";
