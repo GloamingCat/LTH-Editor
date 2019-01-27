@@ -5,6 +5,7 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -15,16 +16,14 @@ public class AudioButton extends LObjectButton<Audio> {
 	
 	private String folder;
 	private Text text;
-	public boolean optional = false;
 	
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public AudioButton(Composite parent, int style) {
-		super(parent, style);
-		optional = true;
+	public AudioButton(Composite parent, int optional) {
+		super(parent, SWT.NONE);
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {
@@ -40,7 +39,7 @@ public class AudioButton extends LObjectButton<Audio> {
 	public void setFolder(String folder) {
 		this.folder = folder;
 	}
-
+	
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {

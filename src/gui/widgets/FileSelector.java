@@ -12,7 +12,6 @@ public abstract class FileSelector extends LNodeSelector<String> {
 
 	protected LDataTree<String> root;
 	protected String folder;
-	protected boolean optional;
 	
 	/**
 	 * Create the composite.
@@ -25,7 +24,7 @@ public abstract class FileSelector extends LNodeSelector<String> {
 	
 	public void setFolder(String folder) {
 		this.folder = folder;
-		root = new LDataTree<String>(folder);
+		root = new LDataTree<String>(folder.substring(0, folder.length() - 1));
 		setFiles(root, rootPath() + folder);
 		setCollection(root);
 	}
@@ -52,9 +51,10 @@ public abstract class FileSelector extends LNodeSelector<String> {
 		LDataTree<String> node = root.getNode(path);
 		if (node == null || node.id == -1)
 			return null;
-		String file = "";
+		String file = node.data;
+		node = node.parent;
 		while (node != null) {
-			file = node.data + file;
+			file = node.data + '/' + file;
 			node = node.parent;
 		}
 		return file;

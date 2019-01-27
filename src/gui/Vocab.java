@@ -312,15 +312,16 @@ public class Vocab {
 	// ========================================================================
 	
 	// Field
-	public String BACKGROUND = "Background";
-	public String PARALLAX = "Parallax";
 	public String DEFAULTREGION = "Default Region";
 	public String MAXHEIGHT = "Max Height";
+	public String BGM = "BGM";
+	public String BACKGROUND = "Background";
+	public String PARALLAX = "Parallax";
+	public String SIZEX = "Width";
+	public String SIZEY = "Height";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
-	public String SIZEX = "Width";
-	public String SIZEY = "Height";
 	public String PARTY = "Party";
 	public String SHOWGRID = "Show Grid";
 	public String RESIZE = "Resize";

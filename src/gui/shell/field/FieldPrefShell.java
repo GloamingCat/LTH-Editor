@@ -8,6 +8,7 @@ import lwt.widget.LText;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.fieldTree.FieldSideEditor;
+import gui.widgets.AudioButton;
 import gui.widgets.PositionButton;
 import gui.widgets.QuadButton;
 import gui.widgets.ScriptButton;
@@ -35,7 +36,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 	public FieldPrefShell(Shell parent) {
 		super(parent);
 
-		setMinimumSize(400, 400);
+		setMinimumSize(600, 400);
 		GridLayout gridLayout = new GridLayout(2, true);
 		gridLayout.verticalSpacing = 0;
 		contentEditor.setLayout(gridLayout);
@@ -68,6 +69,17 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		spnHeight.setMaximum(99);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(spnHeight, "maxHeight");
+		
+		Label lblBGM = new Label(grpGeneral, SWT.NONE);
+		lblBGM.setText(Vocab.instance.BGM);
+		
+		Text txtBGM = new Text(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
+		txtBGM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		AudioButton btnBGM = new AudioButton(grpGeneral, 1);
+		btnBGM.setText(txtBGM);
+		btnBGM.setFolder("bgm/");
+		addControl(btnBGM, "bgm");
 		
 		Label lblScript = new Label(grpGeneral, SWT.NONE);
 		lblScript.setText(Vocab.instance.LOADSCRIPT);
@@ -173,8 +185,9 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		LSpinner spnFade = new LSpinner(transitionEditor);
 		spnFade.setMinimum(-1);
 		spnFade.setMaximum(99999);
-		spnFade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		spnFade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		transitionEditor.addControl(spnFade, "fade");
+		new Label(transitionEditor, SWT.NONE);
 		
 		pack();
 		

@@ -21,7 +21,7 @@ public class AudioList extends SimpleEditableList<Audio> {
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, folder, false);
+				return new AudioShell(parent, folder, 0);
 			}
 		});
 	}
