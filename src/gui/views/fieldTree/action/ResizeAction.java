@@ -6,6 +6,7 @@ import project.Project;
 import lwt.action.LAction;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
+import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
 
@@ -69,20 +70,28 @@ public class ResizeAction implements LAction {
 	}
 	
 	public void redo() {
+		FieldTreeEditor.instance.fieldTree.forceSelection(null);
 		Field field = Project.current.fieldTree.loadField(path);
 		field.sizeX = newW;
 		field.sizeY = newH;
 		field.layers = newLayers;
-		FieldEditor.instance.canvas.field = null;
-		FieldTreeEditor.instance.fieldTree.forceSelection(path);	
+		for (CharTile t : field.characters) {
+			t.x -= x0;
+			t.y -= y0;
+		}
+		FieldTreeEditor.instance.fieldTree.forceSelection(path);
 	}
 	
 	public void undo() {
+		FieldTreeEditor.instance.fieldTree.forceSelection(null);
 		Field field = Project.current.fieldTree.loadField(path);
 		field.sizeX = oldW;
 		field.sizeY = oldH;
 		field.layers = oldLayers;
-		FieldEditor.instance.canvas.field = null;
+		for (CharTile t : field.characters) {
+			t.x += x0;
+			t.y += y0;
+		}
 		FieldTreeEditor.instance.fieldTree.forceSelection(path);
 	}
 	
