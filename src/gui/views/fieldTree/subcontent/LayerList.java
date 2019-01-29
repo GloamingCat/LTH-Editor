@@ -13,6 +13,7 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -32,7 +33,7 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	 * @param style
 	 */
 	public LayerList(Composite parent, int type) {
-		super(parent, 0);
+		super(parent, SWT.CHECK);
 		this.type = type;
 		setShellFactory(new LShellFactory<Info>() {
 			@Override
@@ -49,11 +50,16 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Layer l = (Layer) event.data;
-				editor.selectLayer(l);
-				if (editor.field == null || event.path == null)
-					return;
-				Project.current.fieldTree.getData().
-					setLastLayer(editor.field.id, event.path.index, type);
+				if (event.detail == SWT.CHECK) { 
+					l.visible = !l.visible;
+					FieldEditor.instance.canvas.updateAllTileImages();
+				} else {
+					editor.selectLayer(l);
+					if (editor.field == null || event.path == null)
+						return;
+					Project.current.fieldTree.getData().
+						setLastLayer(editor.field.id, event.path.index, type);
+				}
 			}
 		});
 		getCollectionWidget().setEditEnabled(true);
@@ -71,10 +77,13 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		if (field == null) {
 			setDataCollection(null);
 		} else {
-			setDataCollection(getLayerList(field));
+			LDataList<Layer> layers = getLayerList(field);
+			setDataCollection(layers);
 			int layer = Project.current.fieldTree.getData().getLastLayer(field.id, type);
 			if (layer >= 0)
 				getCollectionWidget().select(new LPath(layer));
+			for (LPath path = new LPath(0); path.index < layers.size(); path.index++)
+				getCollectionWidget().setChecked(path, layers.get(path.index).visible);
 		}
 	}
 	
