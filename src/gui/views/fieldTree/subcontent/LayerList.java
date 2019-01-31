@@ -67,6 +67,8 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		getCollectionWidget().setDuplicateEnabled(true);
 		getCollectionWidget().setDeleteEnabled(true);
 		getCollectionWidget().setDragEnabled(true);
+		getCollectionWidget().setCopyEnabled(true);
+		getCollectionWidget().setPasteEnabled(true);
 	}
 	
 	public void setEditor(FieldSideEditor parent) {

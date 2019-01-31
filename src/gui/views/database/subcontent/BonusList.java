@@ -55,8 +55,8 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 				return new LDataTree<Bonus>(new Bonus());
 			}
 			@Override
-			public LDataTree<Bonus> duplicateNode(LPath path) {
-				Bonus copy = new Bonus(toObject(path));
+			public LDataTree<Bonus> duplicateNode(LDataTree<Bonus> node) {
+				Bonus copy = new Bonus(node.data);
 				return new LDataTree<Bonus> (copy);
 			}
 			@Override

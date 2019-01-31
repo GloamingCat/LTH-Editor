@@ -72,7 +72,7 @@ public class PositionShell extends LObjectShell<Position> {
 				return null;
 			}
 			@Override
-			protected LDataTree<FieldNode> duplicateNode(LPath nodePath) {
+			protected LDataTree<FieldNode> duplicateNode(LDataTree<FieldNode> node) {
 				return null;
 			}
 			@Override

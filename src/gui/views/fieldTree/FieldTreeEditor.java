@@ -90,6 +90,8 @@ public class FieldTreeEditor extends LView {
 		treeEditor.getCollectionWidget().setDuplicateEnabled(true);
 		treeEditor.getCollectionWidget().setDragEnabled(true);
 		treeEditor.getCollectionWidget().setDeleteEnabled(true);
+		treeEditor.getCollectionWidget().setCopyEnabled(true);
+		treeEditor.getCollectionWidget().setPasteEnabled(true);
 		treeEditor.setShellFactory(new LShellFactory<Prefs>() {
 			@Override
 			public LObjectShell<Prefs> createShell(Shell parent) {

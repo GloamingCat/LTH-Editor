@@ -70,6 +70,8 @@ public abstract class DatabaseTab extends LView {
 		listEditor.getCollectionWidget().setDuplicateEnabled(true);
 		listEditor.getCollectionWidget().setDragEnabled(true);
 		listEditor.getCollectionWidget().setDeleteEnabled(true);
+		listEditor.getCollectionWidget().setCopyEnabled(true);
+		listEditor.getCollectionWidget().setPasteEnabled(true);
 		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		

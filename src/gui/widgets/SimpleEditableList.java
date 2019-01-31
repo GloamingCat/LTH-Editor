@@ -20,6 +20,8 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		getCollectionWidget().setDuplicateEnabled(true);
 		getCollectionWidget().setDeleteEnabled(true);
 		getCollectionWidget().setDragEnabled(true);
+		getCollectionWidget().setCopyEnabled(true);
+		getCollectionWidget().setPasteEnabled(true);
 	}
 	
 	public SimpleEditableList(Composite parent, Type type) {

@@ -54,8 +54,8 @@ public abstract class IDList extends SimpleEditableList<Integer> {
 				return new LDataTree<Integer>(0);
 			}
 			@Override
-			public LDataTree<Integer> duplicateNode(LPath path) {
-				return new LDataTree<Integer>(toObject(path));
+			public LDataTree<Integer> duplicateNode(LDataTree<Integer> node) {
+				return new LDataTree<Integer>(node.data);
 			}
 			@Override
 			protected String dataToString(Integer id) {

@@ -19,9 +19,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import lwt.dialog.LObjectDialog;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LWidget;
 
-public class FieldToolBar extends LWidget {
+public class FieldToolBar extends Composite {
 
 	// External
 	public static FieldToolBar instance;
