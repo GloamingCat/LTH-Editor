@@ -233,6 +233,8 @@ public class CharTileEditor extends LObjectEditor {
 		if (currentObject == null)
 			return;
 		cmbParty.setItems(FieldEditor.instance.canvas.field.parties);
+		spnX.setMaximum(field.sizeX - 1);
+		spnY.setMaximum(field.sizeY - 1);
 	}
 
 	public void setPosition(CharTile tile) {

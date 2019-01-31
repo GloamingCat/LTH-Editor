@@ -22,6 +22,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import project.Project;
@@ -45,12 +46,22 @@ public class FieldSideEditor extends LObjectEditor {
 	
 	private LayerList[] lists;
 	private TileTree[] trees;
+	private Composite editors;
 	
 	private SimpleEditableList<CharTile> lstChars;
 	private SimpleEditableList<Party> lstParties;
 	private CharTileEditor charEditor;
 	private PartyEditor partyEditor;
 	private LCombo cmbPlayerParty;
+	private Label lblTitle;
+	
+	private static String[] titles = new String[] { 
+		Vocab.instance.TERRAIN,
+		Vocab.instance.OBSTACLE,
+		Vocab.instance.REGION,
+		Vocab.instance.CHARACTER,
+		Vocab.instance.PARTY
+	};
 	
 	/**
 	 * Create the composite.
@@ -61,19 +72,35 @@ public class FieldSideEditor extends LObjectEditor {
 		super(parent, style);
 		instance = this;
 		
-		setLayout(stack);
+		setLayout(new GridLayout());
+		
+		lblTitle = new Label(this, SWT.NONE);
+		lblTitle.setAlignment(SWT.CENTER);
+		lblTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblTitle.setText(Vocab.instance.TERRAIN);
+		
+		editors = new Composite(this, SWT.NONE);
+		editors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		editors.setLayout(stack);
 		
 		// Terrain
 		
-		SashForm terrain = new SashForm(this, SWT.VERTICAL);
-		LayerList lstTerrain = new LayerList(terrain, 0) {
+		SashForm terrain = new SashForm(editors, SWT.VERTICAL);
+		
+		Group grpTerrainLayers = new Group(terrain, SWT.NONE);
+		grpTerrainLayers.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpTerrainLayers.setText(Vocab.instance.LAYERS);
+		LayerList lstTerrain = new LayerList(grpTerrainLayers, 0) {
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.terrain;
 			}
 		};
 		lstTerrain.setEditor(this);
 		
-		TileTree selTerrain = new TileTree(terrain, SWT.NONE) {
+		Group grpTerrainTiles = new Group(terrain, SWT.NONE);
+		grpTerrainTiles.setLayout(new FillLayout(SWT.VERTICAL));
+		grpTerrainTiles.setText(Vocab.instance.TILES);
+		TileTree selTerrain = new TileTree(grpTerrainTiles, SWT.NONE) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.terrains.getTree();
@@ -84,22 +111,30 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		
-		LImage imgTerrain = new LImage(terrain, SWT.NONE);
+		LImage imgTerrain = new LImage(grpTerrainTiles, SWT.NONE);
 		imgTerrain.setHorizontalAlign(SWT.CENTER);
 		imgTerrain.setVerticalAlign(SWT.CENTER);
 		selTerrain.image = imgTerrain;
+		terrain.setWeights(new int[] {1, 2});
 		
 		// Obstacle
 		
-		SashForm obstacle = new SashForm(this, SWT.VERTICAL);
-		LayerList lstObstacle = new LayerList(obstacle, 1) {
+		SashForm obstacle = new SashForm(editors, SWT.VERTICAL);
+		
+		Group grpObstacleLayers = new Group(obstacle, SWT.NONE);
+		grpObstacleLayers.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpObstacleLayers.setText(Vocab.instance.LAYERS);
+		LayerList lstObstacle = new LayerList(grpObstacleLayers, 1) {
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.obstacle;
 			}
 		};
 		lstObstacle.setEditor(this);
 		
-		TileTree selObstacle = new TileTree(obstacle, SWT.NONE) {
+		Group grpObstacleTiles = new Group(obstacle, SWT.NONE);
+		grpObstacleTiles.setLayout(new FillLayout(SWT.VERTICAL));
+		grpObstacleTiles.setText(Vocab.instance.TILES);
+		TileTree selObstacle = new TileTree(grpObstacleTiles, SWT.NONE) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.obstacles.getTree();
@@ -110,22 +145,31 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		
-		LImage imgObstacle = new LImage(obstacle, SWT.NONE);
+		LImage imgObstacle = new LImage(grpObstacleTiles, SWT.NONE);
 		imgObstacle.setHorizontalAlign(SWT.CENTER);
 		imgObstacle.setVerticalAlign(SWT.CENTER);
 		selObstacle.image = imgObstacle;
+		obstacle.setWeights(new int[] {1, 2});
 		
 		// Region
 		
-		SashForm region = new SashForm(this, SWT.VERTICAL);
-		LayerList lstRegion = new LayerList(region, 2) {
+		SashForm region = new SashForm(editors, SWT.VERTICAL);
+		region.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Group grpRegionLayers = new Group(region, SWT.NONE);
+		grpRegionLayers.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpRegionLayers.setText(Vocab.instance.LAYERS);
+		LayerList lstRegion = new LayerList(grpRegionLayers, 2) {
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.region;
 			}
 		};
 		lstRegion.setEditor(this);
 		
-		TileTree selRegion = new TileTree(region, SWT.NONE) {
+		Group grpRegionTiles = new Group(region, SWT.NONE);
+		grpRegionTiles.setLayout(new FillLayout(SWT.VERTICAL));
+		grpRegionTiles.setText(Vocab.instance.TILES);
+		TileTree selRegion = new TileTree(grpRegionTiles, SWT.NONE) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.regions.getList().toTree();
@@ -136,15 +180,31 @@ public class FieldSideEditor extends LObjectEditor {
 			}
 		};
 		
-		LImage imgRegion = new LImage(region, SWT.NONE);
+		LImage imgRegion = new LImage(grpRegionTiles, SWT.NONE);
 		imgRegion.setHorizontalAlign(SWT.CENTER);
 		imgRegion.setVerticalAlign(SWT.CENTER);
 		selRegion.image = imgRegion;
+		region.setWeights(new int[] {1, 2});
 		
 		// Characters
 		
-		Composite character = new Composite(this, SWT.NONE);
-		character.setLayout(new GridLayout(1, false));
+		Composite character = new Composite(editors, SWT.NONE);
+		character.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_character = new GridLayout(1, false);
+		gl_character.marginHeight = 0;
+		gl_character.marginWidth = 0;
+		character.setLayout(gl_character);
+		
+		LCollectionListener<CharTile> charListener = new LCollectionListener<CharTile>() {
+			public void onInsert(LInsertEvent<CharTile> event) {
+				if (event != null && event.node != null)
+					FieldEditor.instance.canvas.updateTileImage(event.node.data.x, event.node.data.y);
+			}
+			public void onDelete(LDeleteEvent<CharTile> event) {
+				if (event != null && event.node != null)
+					FieldEditor.instance.canvas.updateTileImage(event.node.data.x, event.node.data.y);
+			}
+		};
 		
 		lstChars = new SimpleEditableList<>(character, SWT.NONE);
 		lstChars.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -152,6 +212,7 @@ public class FieldSideEditor extends LObjectEditor {
 		lstChars.setIncludeID(false);
 		lstChars.type = CharTile.class;
 		addChild(lstChars, "characters");
+		lstChars.getCollectionWidget().addInsertListener(charListener);
 		lstChars.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -168,8 +229,12 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		// Party
 		
-		Composite party = new Composite(this, SWT.NONE);
-		party.setLayout(new GridLayout(2, false));
+		Composite party = new Composite(editors, SWT.NONE);
+		party.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_party = new GridLayout(2, false);
+		gl_party.marginWidth = 0;
+		gl_party.marginHeight = 0;
+		party.setLayout(gl_party);
 		
 		Label lblPlayerParty = new Label(party, SWT.NONE);
 		lblPlayerParty.setText(Vocab.instance.PLAYERPARTY);
@@ -184,7 +249,7 @@ public class FieldSideEditor extends LObjectEditor {
 		partylist.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		partylist.setLayout(new FillLayout(SWT.VERTICAL));
 		
-		LCollectionListener<Party> listener = new LCollectionListener<Party>() {
+		LCollectionListener<Party> partyListener = new LCollectionListener<Party>() {
 			public void onInsert(LInsertEvent<Party> event) {
 				cmbPlayerParty.setItems(field.parties);
 				cmbPlayerParty.setValue(field.playerParty);
@@ -200,8 +265,8 @@ public class FieldSideEditor extends LObjectEditor {
 		lstParties.setIncludeID(true);
 		lstParties.type = Party.class;
 		addChild(lstParties, "parties");
-		lstParties.getCollectionWidget().addInsertListener(listener);
-		lstParties.getCollectionWidget().addDeleteListener(listener);
+		lstParties.getCollectionWidget().addInsertListener(partyListener);
+		lstParties.getCollectionWidget().addDeleteListener(partyListener);
 		lstParties.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -259,8 +324,9 @@ public class FieldSideEditor extends LObjectEditor {
 				FieldEditor.instance.canvas.setMode(2);
 			}
 		}
-		stack.topControl = getChildren()[i];
-		layout();
+		lblTitle.setText(titles[i]);
+		stack.topControl = editors.getChildren()[i];
+		editors.layout();
 	}
 	
 	public void selectTile(int i) {

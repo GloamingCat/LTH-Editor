@@ -322,6 +322,7 @@ public class Vocab {
 	public String REGION = "Region";
 	public String PARTY = "Party";
 	public String SHOWGRID = "Show Grid";
+	public String LAYERS = "Layers";
 	
 	// Resize
 	public String RESIZE = "Resize";
