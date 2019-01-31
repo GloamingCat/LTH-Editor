@@ -3,14 +3,17 @@ package gui.views.database.content;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.helper.ImageHelper;
+import gui.shell.database.CharTileShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.CharTileList;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDButton;
+import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LImage;
@@ -24,12 +27,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
 import data.GameCharacter;
 import data.GameCharacter.Portrait;
+import data.GameCharacter.Tile;
 import data.subcontent.Node;
 import project.Project;
 
@@ -87,7 +92,15 @@ public class CharacterTab extends DatabaseTab {
 		grpTiles.setText(Vocab.instance.COLLIDERTILES);
 		grpTiles.setLayout(new FillLayout());
 		
-		CharTileList lstTiles = new CharTileList(grpTiles, SWT.NONE);
+		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles, SWT.NONE);
+		lstTiles.type = Tile.class;
+		lstTiles.setIncludeID(false);
+		lstTiles.setShellFactory(new LShellFactory<Tile>() {
+			@Override
+			public LObjectShell<Tile> createShell(Shell parent) {
+				return new CharTileShell(parent);
+			}
+		});
 		addChild(lstTiles, "tiles");
 		
 		Composite middle = new Composite(contentEditor, SWT.NONE);

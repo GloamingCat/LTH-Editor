@@ -2,11 +2,14 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.shell.database.ObstacleTileShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TagList;
-import gui.views.database.subcontent.ObstacleTileList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IconButton;
+import gui.widgets.SimpleEditableList;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 
 import org.eclipse.swt.SWT;
@@ -15,9 +18,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Shell;
 
 import data.Animation;
 import data.Obstacle;
+import data.Obstacle.Tile;
 import data.subcontent.Transform;
 import project.Project;
 
@@ -78,7 +83,15 @@ public class ObstacleTab extends DatabaseTab {
 		grpTiles.setLayout(new FillLayout());
 		grpTiles.setText(Vocab.instance.TILES);
 		
-		ObstacleTileList tileList = new ObstacleTileList(grpTiles, SWT.NONE);
+		SimpleEditableList<Tile> tileList = new SimpleEditableList<Tile>(grpTiles, SWT.NONE);
+		tileList.type = Tile.class;
+		tileList.setIncludeID(false);
+		tileList.setShellFactory(new LShellFactory<Tile>() {
+			@Override
+			public LObjectShell<Tile> createShell(Shell parent) {
+				return new ObstacleTileShell(parent);
+			}
+		});
 		addChild(tileList, "tiles");
 		
 		Group grpTags = new Group(lateral, SWT.NONE);

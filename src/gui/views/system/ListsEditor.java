@@ -1,7 +1,6 @@
 package gui.views.system;
 
 import gui.Vocab;
-import gui.widgets.ConstantList;
 import gui.widgets.NameList;
 import lwt.action.LActionStack;
 import lwt.editor.LObjectEditor;

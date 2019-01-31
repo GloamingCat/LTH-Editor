@@ -1,12 +1,16 @@
 package gui.views.database.content;
 
+import lwt.dataestructure.LDataTree;
+import lwt.editor.LObjectEditor;
+import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
-import gui.views.database.subcontent.SkillNodeEditor;
 import gui.views.database.subcontent.TagList;
+import gui.widgets.IDButton;
+import gui.widgets.IDList;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
@@ -16,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import data.BattleClass.Node;
 import project.Project;
@@ -66,9 +71,68 @@ public class ClassTab extends DatabaseTab {
 		lstNodes.setLayoutData(gd_lstNodes);
 		addChild(lstNodes, "skills");
 		
-		SkillNodeEditor nodeEditor = new SkillNodeEditor(grpSkillNodes, SWT.NONE);
+		// Skill Nodes
+		
+		LObjectEditor nodeEditor = new LObjectEditor(grpSkillNodes, SWT.NONE);
 		nodeEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		lstNodes.addChild(nodeEditor);
+		
+		GridLayout gridLayout = new GridLayout(2, false);
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		nodeEditor.setLayout(gridLayout);
+		
+		Composite id = new Composite(nodeEditor, SWT.NONE);
+		id.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		GridLayout gl_id = new GridLayout(3, false);
+		gl_id.marginWidth = 0;
+		gl_id.marginHeight = 0;
+		id.setLayout(gl_id);
+		
+		Label lblSkill = new Label(id, SWT.NONE);
+		lblSkill.setText(Vocab.instance.SKILL);
+		
+		Text txtID = new Text(id, SWT.BORDER | SWT.READ_ONLY);
+		txtID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnID = new IDButton(id, 0) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.skills.getTree();
+			}
+		};
+		btnID.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnID.setNameText(txtID);
+		nodeEditor.addControl(btnID, "id");
+		
+		Label lblLevel = new Label(nodeEditor, SWT.NONE);
+		lblLevel.setText(Vocab.instance.MINLEVEL);
+		
+		LSpinner spnLevel = new LSpinner(nodeEditor, SWT.NONE);
+		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		nodeEditor.addControl(spnLevel, "level");
+		
+		Composite bottom = new Composite(nodeEditor, SWT.NONE);
+		bottom.setLayout(new FillLayout(SWT.VERTICAL));
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+		
+		Group grpRequiredSkills = new Group(bottom, SWT.NONE);
+		grpRequiredSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpRequiredSkills.setText(Vocab.instance.REQUIREDSKILLS);
+
+		IDList lstRequirements = new IDList(grpRequiredSkills, SWT.NONE) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.skills.getTree();
+			}
+		};
+		lstRequirements.setLayout(new FillLayout(SWT.HORIZONTAL));
+		nodeEditor.addChild(lstRequirements, "requirements");
+		
+		Group grpSkillTags = new Group(bottom, SWT.NONE);
+		grpSkillTags.setText(Vocab.instance.TAGS);
+		grpSkillTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		TagList lstSkillTags = new TagList(grpSkillTags, SWT.NONE);
+		nodeEditor.addChild(lstSkillTags, "tags");
 
 	}
 

@@ -2,12 +2,15 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.shell.AudioShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.AudioList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.QuadButton;
+import gui.widgets.SimpleEditableList;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -19,6 +22,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.FillLayout;
 
@@ -26,6 +30,8 @@ import project.Project;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+
+import data.subcontent.Audio;
 
 public class AnimationTab extends DatabaseTab {
 
@@ -196,8 +202,15 @@ public class AnimationTab extends DatabaseTab {
 		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAudio.setText(Vocab.instance.SOUND);
 		
-		AudioList lstAudio = new AudioList(grpAudio, SWT.NONE);
-		lstAudio.folder = "sfx";
+		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio, SWT.NONE);
+		lstAudio.type = Audio.class;
+		lstAudio.setIncludeID(false);
+		lstAudio.setShellFactory(new LShellFactory<Audio>() {
+			@Override
+			public LObjectShell<Audio> createShell(Shell parent) {
+				return new AudioShell(parent, "sfx", 0);
+			}
+		});
 		addChild(lstAudio, "audio");
 		
 		// Tags

@@ -138,6 +138,7 @@ public class ItemTab extends DatabaseTab {
 		
 		TabItem tbtmAttributes = new TabItem(equipFolder, SWT.NONE);
 		tbtmAttributes.setText(Vocab.instance.ATTRIBUTES);
+		
 		AttributeList attributes = new AttributeList(equipFolder, SWT.NONE);
 		tbtmAttributes.setControl(attributes);
 		addChild(attributes, "attributes");
