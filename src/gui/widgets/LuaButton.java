@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.Text;
 
 public class LuaButton extends LObjectButton<String> {
 	
-	private String folder = "";
 	private Text pathText;
 	
 	/**
@@ -25,17 +24,13 @@ public class LuaButton extends LObjectButton<String> {
 		setShellFactory(new LShellFactory<String>() {
 			@Override
 			public LObjectShell<String> createShell(Shell parent) {
-				return new LuaShell(parent, folder, optional);
+				return new LuaShell(parent, optional);
 			}
 		});
 	}
 	
 	public void setPathText(Text text) {
 		pathText = text;
-	}
-	
-	public void setFolder(String folder) {
-		this.folder = folder;
 	}
 
 	@Override

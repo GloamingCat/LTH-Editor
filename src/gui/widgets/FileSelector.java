@@ -3,7 +3,6 @@ package gui.widgets;
 import java.io.File;
 
 import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
 import lwt.widget.LNodeSelector;
 
 import org.eclipse.swt.widgets.Composite;
@@ -11,7 +10,6 @@ import org.eclipse.swt.widgets.Composite;
 public abstract class FileSelector extends LNodeSelector<String> {
 
 	protected LDataTree<String> root;
-	protected String folder;
 	
 	/**
 	 * Create the composite.
@@ -23,10 +21,13 @@ public abstract class FileSelector extends LNodeSelector<String> {
 	}
 	
 	public void setFolder(String folder) {
-		this.folder = folder;
-		root = new LDataTree<String>(folder.substring(0, folder.length() - 1));
-		setFiles(root, rootPath() + folder);
+		root = new LDataTree<String>(folder);
+		setFiles(root, folder);
 		setCollection(root);
+	}
+	
+	public String getRootFolder() {
+		return root.data;
 	}
 	
 	protected void setFiles(LDataTree<String> tree, String path) {
@@ -43,17 +44,21 @@ public abstract class FileSelector extends LNodeSelector<String> {
 			}
 		}
 	}
-
-	public String getSelectedFile() {
-		LPath path = getSelectedPath();
-		if (path == null)
-			return null;
-		LDataTree<String> node = root.getNode(path);
+	
+	public String getFile(int id) {
+		LDataTree<String> node = root.findNode(id);
 		if (node == null || node.id == -1)
 			return null;
+		return node.data;
+	}
+
+	public String getSelectedFile() {
+		LDataTree<String> node = getSelectedNode();
+		if (node == null || node.id == -1)
+			return "";
 		String file = node.data;
 		node = node.parent;
-		while (node != null) {
+		while (node != root) {
 			file = node.data + '/' + file;
 			node = node.parent;
 		}
@@ -68,7 +73,7 @@ public abstract class FileSelector extends LNodeSelector<String> {
 	public LDataTree<String> findNode(String file) {
 		String[] names = file.split("/");
 		LDataTree<String> node = root;
-		for (int i = 1; i < names.length; i++) {
+		for (int i = 0; i < names.length; i++) {
 			LDataTree<String> child = findChild(names[i], node);
 			if (child == null)
 				return null;
@@ -87,6 +92,5 @@ public abstract class FileSelector extends LNodeSelector<String> {
 	}
 
 	protected abstract boolean isValidFile(File entry);
-	protected abstract String rootPath();
 
 }

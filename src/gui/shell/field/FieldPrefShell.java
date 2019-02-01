@@ -78,7 +78,6 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		AudioButton btnBGM = new AudioButton(grpGeneral, 1);
 		btnBGM.setText(txtBGM);
-		btnBGM.setFolder("bgm/");
 		addControl(btnBGM, "bgm");
 		
 		Label lblScript = new Label(grpGeneral, SWT.NONE);
@@ -89,7 +88,6 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		ScriptButton btnScript = new ScriptButton(grpGeneral, SWT.NONE);
 		btnScript.setPathText(txtScript);
-		btnScript.setFolder("events/");
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");
 		

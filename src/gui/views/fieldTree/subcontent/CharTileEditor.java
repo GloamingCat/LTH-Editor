@@ -198,7 +198,6 @@ public class CharTileEditor extends LObjectEditor {
 		txtLoad.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnLoad = new ScriptButton(grpScripts, 1);
-		btnLoad.setFolder("events/");
 		btnLoad.setPathText(txtLoad);
 		btnLoad.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnLoad, "loadScript");
@@ -210,7 +209,6 @@ public class CharTileEditor extends LObjectEditor {
 		txtCollide.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnCollide = new ScriptButton(grpScripts, 1);
-		btnCollide.setFolder("events/");
 		btnCollide.setPathText(txtCollide);
 		btnCollide.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnCollide, "collideScript");
@@ -222,7 +220,6 @@ public class CharTileEditor extends LObjectEditor {
 		txtInteract.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnInteract = new ScriptButton(grpScripts, 1);
-		btnInteract.setFolder("events/");
 		btnInteract.setPathText(txtInteract);
 		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnInteract, "interactScript");

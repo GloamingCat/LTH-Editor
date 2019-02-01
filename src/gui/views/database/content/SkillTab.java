@@ -61,7 +61,6 @@ public class SkillTab extends DatabaseTab {
 		
 		LuaButton btnScript = new LuaButton(script, 1);
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setFolder("skill/");
 		btnScript.setPathText(txtScript);
 		addControl(btnScript, "script");
 		

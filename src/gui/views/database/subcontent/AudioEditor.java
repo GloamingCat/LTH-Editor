@@ -31,8 +31,4 @@ public class AudioEditor extends LObjectEditor {
 		
 	}
 	
-	public void setFolder(String folder) {
-		btnSelectSound.setFolder(folder);
-	}
-	
 }

@@ -104,7 +104,6 @@ public class TerrainTab extends DatabaseTab {
 		
 		AudioEditor audioEditor = new AudioEditor(grpGeneral, SWT.NONE);
 		audioEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		audioEditor.setFolder("sfx");
 		addChild(audioEditor);
 		
 		// Attributes

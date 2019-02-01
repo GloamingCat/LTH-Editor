@@ -67,7 +67,6 @@ public class AnimationTab extends DatabaseTab {
 		
 		LuaButton btnScript = new LuaButton(script, 1);
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setFolder("animation/");
 		btnScript.setPathText(txtScript);
 		addControl(btnScript, "script");
 
@@ -129,7 +128,7 @@ public class AnimationTab extends DatabaseTab {
 		gd_image.widthHint = 150;
 		image.setLayoutData(gd_image);
 		
-		QuadButton btnImage = new QuadButton(grpImg, SWT.NONE);
+		QuadButton btnImage = new QuadButton(grpImg, 0);
 		btnImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		addControl(btnImage, "quad");
 		
@@ -208,7 +207,7 @@ public class AnimationTab extends DatabaseTab {
 		lstAudio.setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, "sfx", 0);
+				return new AudioShell(parent, 0);
 			}
 		});
 		addChild(lstAudio, "audio");

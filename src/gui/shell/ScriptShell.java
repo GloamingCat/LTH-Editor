@@ -25,28 +25,17 @@ public class ScriptShell extends ObjectShell<Script> {
 	
 	private FileSelector selFile;
 	
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public ScriptShell(Shell parent) {
-		this(parent, "", 1);
-	}
-	
-	public ScriptShell(Shell parent, String folder, int optional) {
+	public ScriptShell(Shell parent, int optional) {
 		super(parent);
 		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
 		SashForm form = new SashForm(contentEditor, SWT.NONE);
 		selFile = new FileSelector(form, optional) {
 			@Override
-			protected String rootPath() {
-				return Project.current.scriptPath();
-			}
-			@Override
 			protected boolean isValidFile(File f) {
 				return f.getName().endsWith(".lua");
 			}
 		};
-		selFile.setFolder(folder);
+		selFile.setFolder(Project.current.scriptPath());
 		
 		Composite composite = new Composite(form, SWT.NONE);
 		GridLayout gl_composite = new GridLayout(1, false);

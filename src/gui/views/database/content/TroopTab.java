@@ -76,7 +76,6 @@ public class TroopTab extends DatabaseTab {
 		
 		ScriptButton btnAI = new ScriptButton(select, 1);
 		btnAI.setPathText(txtAI);
-		btnAI.setFolder("ai/");
 		addControl(btnAI, "ai");
 		
 		// Items

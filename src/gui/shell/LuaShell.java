@@ -20,23 +20,19 @@ public class LuaShell extends LObjectShell<String> {
 	 * @wbp.parser.constructor
 	 */
 	public LuaShell(Shell parent) {
-		this(parent, "", 1);
+		this(parent, 1);
 	}
 	
-	public LuaShell(Shell parent, String folder, int optional) {
+	public LuaShell(Shell parent, int optional) {
 		super(parent);
 		content.setLayout(new FillLayout(SWT.HORIZONTAL));
 		selFile = new FileSelector(content, optional) {
-			@Override
-			protected String rootPath() {
-				return Project.current.scriptPath();
-			}
 			@Override
 			protected boolean isValidFile(File f) {
 				return f.getName().endsWith(".lua");
 			}
 		};
-		selFile.setFolder(folder);
+		selFile.setFolder(Project.current.scriptPath());
 	}
 	
 	public void open(String initial) {

@@ -14,7 +14,6 @@ import data.subcontent.Audio;
 
 public class AudioButton extends LObjectButton<Audio> {
 	
-	private String folder;
 	private Text text;
 	
 	/**
@@ -27,17 +26,13 @@ public class AudioButton extends LObjectButton<Audio> {
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, folder, optional);
+				return new AudioShell(parent, optional);
 			}
 		});
 	}
 	
 	public void setText(Text text) {
 		this.text = text;
-	}
-
-	public void setFolder(String folder) {
-		this.folder = folder;
 	}
 	
 	@Override

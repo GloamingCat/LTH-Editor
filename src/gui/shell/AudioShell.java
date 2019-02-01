@@ -29,10 +29,10 @@ public class AudioShell extends ObjectShell<Audio> {
 	 * @wbp.parser.constructor
 	 */
 	public AudioShell(Shell parent) {
-		this(parent, "", 1);
+		this(parent, 1);
 	}
 	
-	public AudioShell(Shell parent, String folder, int optional) {
+	public AudioShell(Shell parent, int optional) {
 		super(parent);
 
 		setMinimumSize(400, 400);
@@ -40,16 +40,12 @@ public class AudioShell extends ObjectShell<Audio> {
 		SashForm form = new SashForm(contentEditor, SWT.NONE);
 		selFile = new FileSelector(form, optional) {
 			@Override
-			protected String rootPath() {
-				return Project.current.audioPath();
-			}
-			@Override
 			protected boolean isValidFile(File f) {
 				String name = f.getName();
 				return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
 			}
 		};
-		selFile.setFolder(folder);
+		selFile.setFolder(Project.current.audioPath());
 		
 		Composite composite = new Composite(form, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));

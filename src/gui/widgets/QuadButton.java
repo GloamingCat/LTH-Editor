@@ -17,23 +17,22 @@ import data.subcontent.Quad;
 
 public class QuadButton extends LObjectButton<Quad> {
 	
-	private String folder = "";
 	private LImage image;
-	private TransformEditor transform;
 	private Text text;
+	private TransformEditor transform;
 	
 	public QuadButton(Composite parent, int style) {
 		super(parent, style);
 		setShellFactory(new LShellFactory<Quad>() {
 			@Override
 			public LObjectShell<Quad> createShell(Shell parent) {
-				return new QuadShell(parent, folder, style != 0);
+				return new QuadShell(parent, style);
 			}
 		});
 	}
 	
-	public void setFolder(String f) {
-		this.folder = f;
+	public void setText(Text text) {
+		this.text = text;
 	}
 
 	public void setImage(LImage image) {
@@ -42,10 +41,6 @@ public class QuadButton extends LObjectButton<Quad> {
 	
 	public void setTransform(TransformEditor transform) {
 		this.transform = transform;
-	}
-	
-	public void setText(Text text) {
-		this.text = text;
 	}
 	
 	@Override
@@ -59,6 +54,9 @@ public class QuadButton extends LObjectButton<Quad> {
 				}
 				if (!s.path.isEmpty())
 					image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
+			}
+			if (text != null) {
+				text.setText(s.path);
 			}
 			currentValue = s;
 		} else {

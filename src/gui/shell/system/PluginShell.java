@@ -39,15 +39,11 @@ public class PluginShell extends ObjectShell<Plugin> {
 		SashForm form = new SashForm(contentEditor, SWT.NONE);
 		selFile = new FileSelector(form, optional) {
 			@Override
-			protected String rootPath() {
-				return Project.current.scriptPath();
-			}
-			@Override
 			protected boolean isValidFile(File f) {
 				return f.getName().endsWith(".lua");
 			}
 		};
-		selFile.setFolder(folder);
+		selFile.setFolder(Project.current.scriptPath() + folder);
 		
 		Composite composite = new Composite(form, SWT.NONE);
 		GridLayout gl_composite = new GridLayout(1, false);

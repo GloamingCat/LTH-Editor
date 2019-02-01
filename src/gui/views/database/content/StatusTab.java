@@ -58,7 +58,6 @@ public class StatusTab extends DatabaseTab {
 		
 		LuaButton btnSelectScript = new LuaButton(compositeScript, 1);
 		btnSelectScript.setPathText(txtScript);
-		btnSelectScript.setFolder("status/");
 		addControl(btnSelectScript, "script");
 		
 		// Icon
@@ -142,7 +141,6 @@ public class StatusTab extends DatabaseTab {
 		
 		ScriptButton btnBehavior = new ScriptButton(compBehavior, 1);
 		btnBehavior.setPathText(txtBehavior);
-		btnBehavior.setFolder("ai");
 		addControl(btnBehavior, "behavior");
 		
 		// Graphics
