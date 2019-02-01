@@ -1,6 +1,7 @@
 package gui.shell;
 
 import gui.Vocab;
+import gui.widgets.FileSelector;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,7 +9,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import lwt.dialog.LObjectShell;
+import lwt.event.LSelectionEvent;
+import lwt.event.listener.LSelectionListener;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -26,13 +32,15 @@ import data.subcontent.Quad;
 import project.Project;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
-public class QuadShell extends FileShell<Quad> {
+public class QuadShell extends LObjectShell<Quad> {
 
+	private FileSelector selFile;
 	private Label label;
 	private Spinner spnX;
 	private Spinner spnY;
@@ -40,19 +48,21 @@ public class QuadShell extends FileShell<Quad> {
 	private Spinner spnHeight;
 	private ScrolledComposite scroll;
 	
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public QuadShell(Shell parent) {
-		this(parent, "", true);
-	}
-	
-	public QuadShell(Shell parent, String folder, boolean optional) {
-		super(parent, folder, optional);
-		
+	public QuadShell(Shell parent, int optional) {
+		super(parent);
 		setMinimumSize(600, 400);
+		content.setLayout(new FillLayout());
 		
-		Composite quad = new Composite(sashForm, SWT.NONE);
+		SashForm form = new SashForm(content, SWT.HORIZONTAL);
+		selFile = new FileSelector(form, optional) {
+			@Override
+			protected boolean isValidFile(File f) {
+				return isImage(f);
+			}
+		};
+		selFile.setFolder(Project.current.imagePath());
+		
+		Composite quad = new Composite(form, SWT.NONE);
 		quad.setLayout(new GridLayout(1, false));
 		
 		scroll = new ScrolledComposite(quad, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -60,7 +70,6 @@ public class QuadShell extends FileShell<Quad> {
 		
 		label = new Label(scroll, SWT.NONE);
 		label.setAlignment(SWT.CENTER);
-		label.setImage(SWTResourceManager.getImage(rootPath() + result));
 		scroll.setContent(label);
 		
 		Composite spinners = new Composite(quad, SWT.NONE);
@@ -117,7 +126,6 @@ public class QuadShell extends FileShell<Quad> {
 				e.gc.drawLine(x1, y2, x2, y2);
 				e.gc.drawLine(x1, y1, x1, y2);
 				e.gc.drawLine(x2, y1, x2, y2);
-				System.out.println(label.getBounds());
 			}
 		});
 		
@@ -134,14 +142,10 @@ public class QuadShell extends FileShell<Quad> {
 		});
 		btnFullImage.setText(Vocab.instance.FULLIMAGE);
 
-		list.addSelectionListener(new SelectionAdapter() {
+		selFile.addSelectionListener(new LSelectionListener() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int i = list.getSelectionIndex();
-				if (i >= 0) {
-					label.setText(folder + "/" + list.getItem(i));
-					resetImage();
-				}
+			public void onSelect(LSelectionEvent event) {
+				resetImage();
 			}
 		});
 		
@@ -157,14 +161,14 @@ public class QuadShell extends FileShell<Quad> {
 		spnWidth.addModifyListener(redrawListener);
 		spnHeight.addModifyListener(redrawListener);
 		
-		sashForm.setWeights(new int[] {1, 1});
+		form.setWeights(new int[] {1, 1});
+		
+		layout(false, true);
 	}
 	
 	public void open(Quad initial) {
 		super.open(initial);
-		int i = indexOf(initial.path);
-		list.select(i);
-		label.setText(initial.path);
+		selFile.setSelectedFile(initial.path);
 		spnX.setSelection(initial.x);
 		spnY.setSelection(initial.y);
 		spnWidth.setSelection(initial.width);
@@ -180,11 +184,11 @@ public class QuadShell extends FileShell<Quad> {
 		q.y = Math.min(spnY.getSelection(), rect.height);
 		q.width = Math.min(spnWidth.getSelection(), rect.width);
 		q.height = Math.min(spnHeight.getSelection(), rect.height);
-		q.path = nullSelected() ? "" : label.getText();
+		q.path = selFile.getSelectedFile();
 		return q;
 	}
 
-	protected boolean isValidFile(File entry) {
+	protected boolean isImage(File entry) {
 		try {
 		    BufferedImage image = ImageIO.read(entry);
 		    if (image != null) {
@@ -199,16 +203,12 @@ public class QuadShell extends FileShell<Quad> {
 	}
 	
 	protected void resetImage() {
-		String path = rootPath() + label.getText();
+		String path = selFile.getRootFolder() + selFile.getSelectedFile();
 		Image image = SWTResourceManager.getImage(path);
 		label.setImage(image);
 		label.setBounds(image.getBounds());
 		scroll.setMinSize(label.getSize());
 		label.redraw();
-	}
-	
-	protected String rootPath() {
-		return Project.current.imagePath();
 	}
 
 }
