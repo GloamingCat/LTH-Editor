@@ -95,11 +95,6 @@ public class TroopTab extends DatabaseTab {
 		grpMembers.setLayout(new GridLayout(2, false));
 		grpMembers.setText(Vocab.instance.UNITS);
 		
-		Composite gridEditor = new Composite(grpMembers, SWT.NONE);
-		GridData gd_gridEditor = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_gridEditor.widthHint = 241;
-		gridEditor.setLayoutData(gd_gridEditor);
-		
 		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers, SWT.NONE);
 		lstMembers.getCollectionWidget().setEditEnabled(false);
 		lstMembers.setIncludeID(false);
@@ -108,6 +103,11 @@ public class TroopTab extends DatabaseTab {
 		gd_lstUnits.widthHint = 220;
 		lstMembers.setLayoutData(gd_lstUnits);
 		addChild(lstMembers, "members");
+		
+		Composite gridEditor = new Composite(grpMembers, SWT.NONE);
+		GridData gd_gridEditor = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_gridEditor.widthHint = 241;
+		gridEditor.setLayoutData(gd_gridEditor);
 		
 		UnitEditor unitEditor = new UnitEditor(grpMembers, SWT.NONE);
 		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));

@@ -16,7 +16,7 @@ public class CharTile {
 	public int battlerID = -1;
 	
 	public String animation = "Idle";
-	public int row = 7;
+	public int direction = 315;
 	
 	public Script loadScript = new Script();
 	public Script collideScript = new Script();

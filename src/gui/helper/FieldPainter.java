@@ -205,7 +205,7 @@ public class FieldPainter {
 		}
 		// Characters
 		for (CharTile tile : field.characters) {
-			if (tile.x != x || tile.y != y)
+			if (tile.x - 1 != x || tile.y - 1 != y)
 				continue;
 			paintCharacter(tile, gc, x0, y0 - tile.h * pph);
 		}

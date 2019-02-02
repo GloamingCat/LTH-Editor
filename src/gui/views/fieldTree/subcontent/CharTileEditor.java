@@ -58,10 +58,12 @@ public class CharTileEditor extends LObjectEditor {
 		
 		spnX = new LSpinner(position);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnX.setMinimum(1);
 		addControl(spnX, "x");
 		
 		spnY = new LSpinner(position);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnY.setMinimum(1);
 		addControl(spnY, "y");
 		
 		spnH = new LSpinner(position);
@@ -72,16 +74,16 @@ public class CharTileEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(event.oldValue, spnY.getValue());
-				FieldEditor.instance.canvas.updateTileImage(event.newValue, spnY.getValue());
+				FieldEditor.instance.canvas.updateTileImage(event.oldValue - 1, spnY.getValue() - 1);
+				FieldEditor.instance.canvas.updateTileImage(event.newValue - 1, spnY.getValue() - 1);
 			}
 		});
 		spnY.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.oldValue);
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), event.newValue);
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, event.oldValue - 1);
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, event.newValue - 1);
 			}
 		});
 		spnH.addModifyListener(new LControlListener<Integer>() {
@@ -89,7 +91,7 @@ public class CharTileEditor extends LObjectEditor {
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
 				FieldEditor.instance.canvas.setHeight(spnH.getValue());
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, spnY.getValue() - 1);
 			}
 		});
 		
@@ -129,19 +131,26 @@ public class CharTileEditor extends LObjectEditor {
 		Label lblDir = new Label(this, SWT.NONE);
 		lblDir.setText(Vocab.instance.DIRECTION);
 		
-		LCombo cmbDir = new LCombo(this);
+		LCombo cmbDir = new LCombo(this) {
+			public void setSelectionIndex(int i) {
+				super.setSelectionIndex(i / 45);
+			}
+			public int getSelectionIndex() {
+				return super.getSelectionIndex() * 45;
+			}
+		};
 		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		String[] d = new String[] {"0°", "45°", "90°", "135°", 
 				"180°", "225°", "270°", "315°"};
 		cmbDir.setIncludeID(false);
 		cmbDir.setOptional(false);
 		cmbDir.setItems(d);
-		addControl(cmbDir, "row");
+		addControl(cmbDir, "direction");
 		cmbDir.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue(), spnY.getValue());
+				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, spnY.getValue() - 1);
 			}
 		});
 		
@@ -230,8 +239,8 @@ public class CharTileEditor extends LObjectEditor {
 		if (currentObject == null)
 			return;
 		cmbParty.setItems(FieldEditor.instance.canvas.field.parties);
-		spnX.setMaximum(field.sizeX - 1);
-		spnY.setMaximum(field.sizeY - 1);
+		spnX.setMaximum(field.sizeX);
+		spnY.setMaximum(field.sizeY);
 	}
 
 	public void setPosition(CharTile tile) {

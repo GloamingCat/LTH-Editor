@@ -83,14 +83,14 @@ public class QuadShell extends LObjectShell<Quad> {
 		lblX.setText(Vocab.instance.QUADX);
 		
 		spnX = new Spinner(spinners, SWT.BORDER);
-		spnX.setMaximum(1024);
+		spnX.setMaximum(4095);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblWidth = new Label(spinners, SWT.NONE);
 		lblWidth.setText(Vocab.instance.QUADW);
 		
 		spnWidth = new Spinner(spinners, SWT.BORDER);
-		spnWidth.setMaximum(1024);
+		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
@@ -98,14 +98,14 @@ public class QuadShell extends LObjectShell<Quad> {
 		lblY.setText(Vocab.instance.QUADY);
 		
 		spnY = new Spinner(spinners, SWT.BORDER);
-		spnY.setMaximum(1024);
+		spnY.setMaximum(4095);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblHeight = new Label(spinners, SWT.NONE);
 		lblHeight.setText(Vocab.instance.QUADH);
 		
 		spnHeight = new Spinner(spinners, SWT.BORDER);
-		spnHeight.setMaximum(1024);
+		spnHeight.setMaximum(4096);
 		spnHeight.setMinimum(1);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		

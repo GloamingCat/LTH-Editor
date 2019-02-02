@@ -102,12 +102,14 @@ public class EditableFieldCanvas extends FieldCanvas {
 	}
 	
 	protected void drawParty(GC gc) {
-		int maxx = currentParty.maxX();
-		int maxy = currentParty.maxY();
+		int maxx = currentParty.maxX() - 1;
+		int maxy = currentParty.maxY() - 1;
+		int minx = currentParty.x - 1;
+		int miny = currentParty.y - 1;
 		Point p1 = FieldHelper.math.tile2Pixel(maxx, maxy, currentParty.h);
-		Point p2 = FieldHelper.math.tile2Pixel(maxx, currentParty.y, currentParty.h);
-		Point p3 = FieldHelper.math.tile2Pixel(currentParty.x, currentParty.y, currentParty.h);
-		Point p4 = FieldHelper.math.tile2Pixel(currentParty.x, maxy, currentParty.h);
+		Point p2 = FieldHelper.math.tile2Pixel(maxx, miny, currentParty.h);
+		Point p3 = FieldHelper.math.tile2Pixel(minx, miny, currentParty.h);
+		Point p4 = FieldHelper.math.tile2Pixel(minx, maxy, currentParty.h);
 		int[] poly = new int[] {p1.x + x0, p1.y + y0,
 								p2.x + x0, p2.y + y0,
 								p3.x + x0, p3.y + y0,
@@ -288,10 +290,10 @@ public class EditableFieldCanvas extends FieldCanvas {
 			return null;
 		if (origin.x == tileX && origin.y == tileY)
 			return null;
-		CharTile tile = field.findCharacter(origin.x, origin.y, height);
+		CharTile tile = field.findCharacter(origin.x + 1, origin.y + 1, height);
 		if (tile == null)
 			return null;
-		CharAction action = new CharAction(tile, x, y, height);
+		CharAction action = new CharAction(tile, x + 1, y + 1, height);
 		action.redo();
 		getActionStack().newAction(action);
 		return tile;

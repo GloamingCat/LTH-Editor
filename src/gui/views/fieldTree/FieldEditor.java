@@ -52,7 +52,7 @@ public class FieldEditor extends LObjectEditor {
 			
 			public void onTileEnter(int x, int y) {
 				super.onTileEnter(x, y);
-				tileCoord.setText("(" + x + ", " + y + ")");
+				tileCoord.setText("(" + (x + 1) + ", " + (y + 1) + ")");
 			}
 			
 			public void setField(Field field) {

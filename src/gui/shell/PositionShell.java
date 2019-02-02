@@ -94,8 +94,7 @@ public class PositionShell extends LObjectShell<Position> {
 		});
 		
 		if (fieldID >= 0) {
-			LDataTree<FieldNode> node = Project.current.fieldTree.getData().findNode(fieldID);
-			path = node == null ? null : node.toPath();
+			path = findPath(fieldID);
 			tree.setEnabled(false);
 		}
 		
@@ -103,8 +102,8 @@ public class PositionShell extends LObjectShell<Position> {
 
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
 			public void onTileLeftDown() {
-				spnX.setSelection(tileX);
-				spnY.setSelection(tileY);
+				spnX.setSelection(tileX + 1);
+				spnY.setSelection(tileY + 1);
 				canvas.redraw();
 			}
 			public void onTileRightDown() {}
@@ -114,8 +113,8 @@ public class PositionShell extends LObjectShell<Position> {
 		};
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				int x = spnX.getSelection();
-				int y = spnY.getSelection();
+				int x = spnX.getSelection() - 1;
+				int y = spnY.getSelection() - 1;
 				int h = 0;
 				if (canvas.currentLayer != null) {
 					h = canvas.currentLayer.info.height;
@@ -188,6 +187,9 @@ public class PositionShell extends LObjectShell<Position> {
 				"180°", "225°", "270°", "315°"};
 		cmbDirection.setItems(d);
 		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		if (fieldID >= 0) {
+			cmbDirection.setValue(null);
+		}
 		
 		lblPos = new Label(bottom, SWT.NONE);
 		lblPos.setText("(-99, -99)");
@@ -233,8 +235,8 @@ public class PositionShell extends LObjectShell<Position> {
 			cmbDirection.setValue(initial.direction / 45);
 		}
 		refreshLayerCombo();
-		cmbLayer.select(initial.z);
-		setLayer(initial.z);
+		cmbLayer.select(initial.h);
+		setLayer(initial.h);
 		content.layout();
 	}
 	
@@ -247,7 +249,8 @@ public class PositionShell extends LObjectShell<Position> {
 	}
 	
 	private LPath findPath(int id) {
-		return new LPath(0);
+		LDataTree<FieldNode> node = Project.current.fieldTree.getData().findNode(id);
+		return node == null ? null : node.toPath();
 	}
 
 	@Override
@@ -255,7 +258,7 @@ public class PositionShell extends LObjectShell<Position> {
 		Position pos = new Position();
 		pos.x = spnX.getSelection();
 		pos.y = spnY.getSelection();
-		pos.z = cmbLayer.getSelectionIndex();
+		pos.h = cmbLayer.getSelectionIndex();
 		pos.direction = cmbDirection.getSelectionIndex();
 		if (pos.direction >= 0) {
 			pos.direction *= 45;

@@ -118,7 +118,7 @@ public class TilePainter {
 	}
 	
 	public static Image getCharacterTile(CharTile tile) {
-		String key = tile.charID + "." + tile.animation + "." + tile.row;
+		String key = tile.charID + "." + tile.animation + "." + tile.direction;
 		Image img = characterCache.get(key);
 		if (img != null)
 			return img;
@@ -136,7 +136,7 @@ public class TilePainter {
 		GC gc = new GC(img);
 		gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
 		gc.drawImage(anim.quad.getImage(), 
-				anim.quad.x + w * col, anim.quad.y + h * tile.row, w, h, 
+				anim.quad.x + w * col, anim.quad.y + h * (tile.direction / 45), w, h, 
 				0, 0, w, h);
 		gc.dispose();
 		ImageData data = img.getImageData();
