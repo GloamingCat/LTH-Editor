@@ -9,7 +9,7 @@ public class Position {
 	public int x = 0;
 	public int y = 0;
 	public int h = 0;
-	public int direction = 270;
+	public int direction = -1;
 	
 	public Position() {}
 	

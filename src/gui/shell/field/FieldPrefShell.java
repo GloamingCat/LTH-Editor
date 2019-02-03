@@ -161,7 +161,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		PositionButton btnStart = new PositionButton(transitionEditor, FieldSideEditor.instance.field.id);
 		btnStart.setText(txtStart);
-		transitionEditor.addControl(btnStart, "start");
+		transitionEditor.addControl(btnStart, "tl");
 		
 		// End
 		
@@ -173,7 +173,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		PositionButton btnEnd = new PositionButton(transitionEditor, FieldSideEditor.instance.field.id);
 		btnEnd.setText(txtEnd);
-		transitionEditor.addControl(btnEnd, "end");
+		transitionEditor.addControl(btnEnd, "br");
 		
 		// Fade
 		

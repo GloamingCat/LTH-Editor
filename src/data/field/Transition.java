@@ -7,8 +7,8 @@ public class Transition {
 	public Transition() { }
 
 	public Position destination = new Position();
-	public Position start = new Position();
-	public Position end = new Position();
+	public Position tl = new Position();
+	public Position br = new Position();
 	public int fade = 30;
 	
 	public String toString() {
@@ -18,8 +18,8 @@ public class Transition {
 	public Transition clone() {
 		Transition t = new Transition();
 		t.destination = destination.clone();
-		t.start = start.clone();
-		t.end = end.clone();
+		t.tl = tl.clone();
+		t.br = br.clone();
 		return t;
 	}
 	
