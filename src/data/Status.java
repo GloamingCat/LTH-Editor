@@ -1,5 +1,6 @@
 package data;
 
+import data.Item.Attribute;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
 import data.subcontent.Script;
@@ -14,9 +15,6 @@ public class Status extends Data {
 	public int priority = 100;
 	public boolean visible = true;
 	public boolean cumulative = false;
-	public boolean deactivate = false;
-	public boolean ko = false;
-	public Script behavior = new Script();
 	
 	// Graphics
 	public String charAnim = "";
@@ -29,6 +27,11 @@ public class Status extends Data {
 	public boolean removeOnDamage = true;
 	public boolean battleOnly = true;
 	
+	// Effects
+	public boolean deactivate = false;
+	public boolean ko = false;
+	public Script behavior = new Script();
+	
 	// Drain
 	public String drainAtt = "";
 	public int frequency = 0;
@@ -36,8 +39,10 @@ public class Status extends Data {
 	public boolean percentage = true;
 	
 	// Other
-	public LDataList<Bonus> attributes = new LDataList<>();
-	public LDataList<Bonus> elements = new LDataList<>();
-	public LDataList<Bonus> cancel = new LDataList<>();
+	public LDataList<Attribute> attributes = new LDataList<>();
+	public LDataList<Bonus> elementAtk = new LDataList<>();
+	public LDataList<Bonus> elementDef = new LDataList<>();
+	public LDataList<Integer> statusDef = new LDataList<>();
+	public LDataList<Integer> cancel = new LDataList<>();
 	
 }

@@ -134,14 +134,17 @@ public class Vocab {
 	public String USE = "Use";
 	public String CONSUME = "Consume on use";
 	public String ITEMSKILL = "Item Skill ID";
-	public String STATUSADD = "Status";
-	public String ELEMENTADD = "Elements";
+	public String STATUSADD = "Add Status";
+	public String STATUSREMOVE = "Cure Status";
 	public String EQUIP = "Equip";
 	public String SLOT = "Slot Type";
 	public String ALLSLOTS = "Use all slots of type";
-	public String BLOCKED = "Blocked";
+	public String BLOCKEDSLOTS = "Blocked Slots";
 	public String ATTADD = "By constant";
 	public String ATTMUL = "By percentage";
+	public String ADDONBATTLE = "Add on battle";
+	public String ELEMENTATK = "Attack Elements";
+	public String ELEMENTDEF = "Element Immunity";
 	
 	// Battler
 	public String CLASS = "Class";
@@ -251,6 +254,7 @@ public class Vocab {
 	public String PERCENTAGE = "Percentage";
 	public String FREQUENCY = "Frequency";
 	public String STATUSCANCEL = "Cancel";
+	public String STATUSDEF = "Status Immunity";
 
 	// Terrain
 	public String MOVECOST = "Move Cost";

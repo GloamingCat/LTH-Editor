@@ -6,6 +6,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.EffectList;
+import gui.views.database.subcontent.EquipStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
@@ -125,7 +126,7 @@ public class ItemTab extends DatabaseTab {
 		
 		Label lblBlocked = new Label(grpEquip, SWT.NONE);
 		lblBlocked.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblBlocked.setText(Vocab.instance.BLOCKED);
+		lblBlocked.setText(Vocab.instance.BLOCKEDSLOTS);
 
 		NameList lstBlocked = new NameList(grpEquip, SWT.NONE);
 		GridData gd_lstBlocked = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
@@ -136,35 +137,42 @@ public class ItemTab extends DatabaseTab {
 		TabFolder equipFolder = new TabFolder(grpEquip, SWT.NONE);
 		equipFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
 		
-		TabItem tbtmAttributes = new TabItem(equipFolder, SWT.NONE);
-		tbtmAttributes.setText(Vocab.instance.ATTRIBUTES);
+		TabItem tbtmEquipAtt = new TabItem(equipFolder, SWT.NONE);
+		tbtmEquipAtt.setText(Vocab.instance.ATTRIBUTES);
+		AttributeList lstEquipAtt = new AttributeList(equipFolder, SWT.NONE);
+		tbtmEquipAtt.setControl(lstEquipAtt);
+		addChild(lstEquipAtt, "equipAttributes");
 		
-		AttributeList attributes = new AttributeList(equipFolder, SWT.NONE);
-		tbtmAttributes.setControl(attributes);
-		addChild(attributes, "attributes");
+		TabItem tbtmEquipStatus = new TabItem(equipFolder, SWT.NONE);
+		tbtmEquipStatus.setText(Vocab.instance.STATUS);
+		EquipStatusList lstEquipStatus = new EquipStatusList(equipFolder, SWT.NONE);
+		lstEquipStatus.setIncludeID(false);
+		tbtmEquipStatus.setControl(lstEquipStatus);
+		addChild(lstEquipStatus, "equipStatus");
 		
-		TabItem tbtmBattleStatus = new TabItem(equipFolder, SWT.NONE);
-		tbtmBattleStatus.setText(Vocab.instance.STATUS);
-		BonusList lstBattleStatus = new BonusList(equipFolder, SWT.NONE) {
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		lstBattleStatus.setIncludeID(false);
-		tbtmBattleStatus.setControl(lstBattleStatus);
-		addChild(lstBattleStatus, "status");
-		
-		TabItem tbtmElements = new TabItem(equipFolder, SWT.NONE);
-		tbtmElements.setText(Vocab.instance.ELEMENTS);
-		BonusList lstElements = new BonusList(equipFolder, SWT.NONE) {
+		TabItem tbtmElementAtk = new TabItem(equipFolder, SWT.NONE);
+		tbtmElementAtk.setText(Vocab.instance.ELEMENTATK);
+		BonusList lstElementAtk = new BonusList(equipFolder, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.elements.getList().toTree();
 			}
 		};
-		lstElements.setIncludeID(false);
-		tbtmElements.setControl(lstElements);
-		addChild(lstElements, "elements");
+		lstElementAtk.setIncludeID(false);
+		tbtmElementAtk.setControl(lstElementAtk);
+		addChild(lstElementAtk, "elementAtk");
+		
+		TabItem tbtmElementDef = new TabItem(equipFolder, SWT.NONE);
+		tbtmElementDef.setText(Vocab.instance.ELEMENTDEF);
+		BonusList lstElementDef = new BonusList(equipFolder, SWT.NONE) {
+			@Override
+			protected LDataTree<Object> getDataTree() {
+				return Project.current.elements.getList().toTree();
+			}
+		};
+		lstElementDef.setIncludeID(false);
+		tbtmElementDef.setControl(lstElementDef);
+		addChild(lstElementDef, "elementDef");
 		
 		// Use
 		
@@ -201,28 +209,33 @@ public class ItemTab extends DatabaseTab {
 		tbtmEffects.setControl(lstEffects);
 		addChild(lstEffects, "effects");
 		
-		TabItem tbtmStatus = new TabItem(useFolder, SWT.NONE);
-		tbtmStatus.setText(Vocab.instance.STATUSADD);
-		BonusList lstStatus = new BonusList(useFolder, SWT.NONE) {
+		TabItem tbtmStatusAdd = new TabItem(useFolder, SWT.NONE);
+		tbtmStatusAdd.setText(Vocab.instance.STATUSADD);
+		BonusList lstStatusAdd = new BonusList(useFolder, SWT.NONE) {
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.status.getTree();
 			}
 		};
-		lstStatus.setIncludeID(false);
-		tbtmStatus.setControl(lstStatus);
-		addChild(lstStatus, "statusAdd");
+		lstStatusAdd.setIncludeID(false);
+		tbtmStatusAdd.setControl(lstStatusAdd);
+		addChild(lstStatusAdd, "statusAdd");
 		
-		TabItem tbtmElementsAdd = new TabItem(useFolder, SWT.NONE);
-		tbtmElementsAdd.setText(Vocab.instance.ELEMENTADD);
-		BonusList lstElementsAdd = new BonusList(useFolder, SWT.NONE) {
-			@Override
+		TabItem tbtmStatusRmv = new TabItem(useFolder, SWT.NONE);
+		tbtmStatusRmv.setText(Vocab.instance.STATUSREMOVE);
+		BonusList lstStatusRmv = new BonusList(useFolder, SWT.NONE) {
 			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
+				return Project.current.status.getTree();
 			}
 		};
-		lstElementsAdd.setIncludeID(false);
-		tbtmElementsAdd.setControl(lstElementsAdd);
-		addChild(lstElementsAdd, "elementAdd");
+		lstStatusRmv.setIncludeID(false);
+		tbtmStatusRmv.setControl(lstStatusRmv);
+		addChild(lstStatusRmv, "statusRemove");
+		
+		TabItem tbtmUseAtt = new TabItem(useFolder, SWT.NONE);
+		tbtmUseAtt.setText(Vocab.instance.ATTRIBUTES);
+		AttributeList lstUseAtt = new AttributeList(useFolder, SWT.NONE);
+		tbtmUseAtt.setControl(lstUseAtt);
+		addChild(lstUseAtt, "attributes");
 		
 		// Tags
 		

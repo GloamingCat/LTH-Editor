@@ -3,6 +3,7 @@ package gui.views.database.content;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
+import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
@@ -162,7 +163,7 @@ public class StatusTab extends DatabaseTab {
 		addChild(transformEditor, "transform");
 		
 		LCheckButton btnOverride = new LCheckButton(grpGraphics, SWT.NONE);
-		btnOverride.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 1));
+		btnOverride.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 2, 1));
 		btnOverride.setText(Vocab.instance.OVERRIDE);
 		addControl(btnOverride, "override");
 		
@@ -200,9 +201,16 @@ public class StatusTab extends DatabaseTab {
 		
 		// Durability
 		
-		Group grpDurability = new Group(contentEditor, SWT.NONE);
+		Composite durability = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_durability = new GridLayout(2, false);
+		gl_durability.marginWidth = 0;
+		gl_durability.marginHeight = 0;
+		durability.setLayout(gl_durability);
+		durability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		Group grpDurability = new Group(durability, SWT.NONE);
+		grpDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		grpDurability.setLayout(new GridLayout(2, false));
-		grpDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpDurability.setText(Vocab.instance.DURABILITY);
 		
 		Label lblTurns = new Label(grpDurability, SWT.NONE);
@@ -223,18 +231,9 @@ public class StatusTab extends DatabaseTab {
 		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
 		addControl(btnRemoveOnDamage, "removeOnDamage");
 		
-		// Lists
-		
-		Composite compositeOther = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_compositeOther = new GridLayout(4, true);
-		gl_compositeOther.marginWidth = 0;
-		gl_compositeOther.marginHeight = 0;
-		compositeOther.setLayout(gl_compositeOther);
-		compositeOther.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		Group grpCancel = new Group(compositeOther, SWT.NONE);
+		Group grpCancel = new Group(durability, SWT.NONE);
+		grpCancel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpCancel.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpCancel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpCancel.setText(Vocab.instance.STATUSCANCEL);
 		
 		IDList lstCancel = new IDList(grpCancel, SWT.NONE) {
@@ -245,35 +244,67 @@ public class StatusTab extends DatabaseTab {
 		};
 		addChild(lstCancel, "cancel");
 		
-		Group grpAttributes = new Group(compositeOther, SWT.NONE);
+		// Lists
+		
+		Composite compositeBottom = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_compositeBottom = new GridLayout(5, true);
+		gl_compositeBottom.marginHeight = 0;
+		gl_compositeBottom.marginWidth = 0;
+		compositeBottom.setLayout(gl_compositeBottom);
+		compositeBottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		Group grpAttributes = new Group(compositeBottom, SWT.NONE);
+		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 		
-		BonusList lstAttributes = new BonusList(grpAttributes, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.attributes.getList().toTree();
-			}
-		};
+		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		addChild(lstAttributes, "attributes");
 
-		Group grpElements = new Group(compositeOther, SWT.NONE);
-		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpElements.setText(Vocab.instance.ELEMENTS);
+		Group grpElementAtk = new Group(compositeBottom, SWT.NONE);
+		grpElementAtk.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		grpElementAtk.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpElementAtk.setText(Vocab.instance.ELEMENTATK);
 		
-		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
+		BonusList lstElementAtk = new BonusList(grpElementAtk, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.elements.getList().toTree();
 			}
 		};
-		addChild(lstElements, "elements");
+		addChild(lstElementAtk, "elementAtk");
 		
-		Group grpTags = new Group(compositeOther, SWT.NONE);
+		Group grpElementDef = new Group(compositeBottom, SWT.NONE);
+		grpElementDef.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		grpElementDef.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpElementDef.setText(Vocab.instance.ELEMENTDEF);
+		
+		BonusList lstElementDef = new BonusList(grpElementDef, SWT.NONE) {
+			@Override
+			protected LDataTree<Object> getDataTree() {
+				return Project.current.elements.getList().toTree();
+			}
+		};
+		addChild(lstElementDef, "elementDef");
+		
+		Group grpStatusDef = new Group(compositeBottom, SWT.NONE);
+		grpStatusDef.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		grpStatusDef.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpStatusDef.setText(Vocab.instance.STATUSDEF);
+		
+		IDList lstStatusDef = new IDList(grpStatusDef, SWT.NONE) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.status.getData();
+			}
+		};
+		addChild(lstStatusDef, "statusDef");
+		
+		// Tags
+		
+		Group grpTags = new Group(compositeBottom, SWT.NONE);
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList lstTags = new TagList(grpTags, SWT.NONE);

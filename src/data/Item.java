@@ -1,5 +1,6 @@
 package data;
 
+import project.Project;
 import data.Skill.Effect;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
@@ -18,15 +19,32 @@ public class Item extends Data {
 	public boolean consume = true;
 	public LDataList<Effect> effects = new LDataList<>();
 	public LDataList<Bonus> statusAdd = new LDataList<>();
-	public LDataList<Bonus> elementAdd = new LDataList<>();
+	public LDataList<Bonus> statusRemove = new LDataList<>();
+	public LDataList<Attribute> attributes = new LDataList<>();
 	
 	// Equip
 	public String slot = "";
 	public boolean allSlots = false;
 	public LDataList<String> blocked = new LDataList<>();
-	public LDataList<Bonus> status = new LDataList<>();
-	public LDataList<Bonus> elements = new LDataList<>();
-	public LDataList<Attribute> attributes = new LDataList<>();
+	public LDataList<EquipStatus> equipStatus = new LDataList<>();
+	public LDataList<Bonus> elementAtk = new LDataList<>();
+	public LDataList<Bonus> elementDef = new LDataList<>();
+	public LDataList<Attribute> equipAttributes = new LDataList<>();
+	
+	public static class EquipStatus {
+		
+		public int id = -1;
+		public boolean battle = false;
+		
+		public String toString() {
+			Status s = (Status) Project.current.status.getData().get(id);
+			String name = s == null ? "NULL" : s.name;
+			if (battle)
+				name += " (battle)";
+			return name;
+		}
+		
+	}
 	
 	public static class Attribute {
 		
