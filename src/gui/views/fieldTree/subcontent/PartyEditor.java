@@ -102,7 +102,7 @@ public class PartyEditor extends LObjectEditor {
 		cmbDir.setIncludeID(false);
 		cmbDir.setOptional(false);
 		cmbDir.setItems(d);
-		addControl(cmbDir, "direction");
+		addControl(cmbDir, "rotation");
 		cmbDir.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {

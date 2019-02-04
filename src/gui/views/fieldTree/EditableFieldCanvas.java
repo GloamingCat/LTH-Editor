@@ -116,7 +116,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 								p4.x + x0, p4.y + y0,
 								p1.x + x0, p1.y + y0 };
 		gc.fillPolygon(poly);
-		int direction = (currentParty.direction * 90 + FieldHelper.math.initialDirection) % 360;
+		int direction = (currentParty.rotation * 90 + FieldHelper.math.initialDirection) % 360;
 		Image arrow = SWTResourceManager.getImage(this.getClass(), "/img/falsearrow_" + direction + ".png");
 		gc.setAlpha(255);
 		gc.drawImage(arrow, x0 + (p1.x + p3.x - arrow.getBounds().width) / 2, 

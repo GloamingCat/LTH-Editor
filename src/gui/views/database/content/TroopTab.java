@@ -9,6 +9,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
+import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.UnitEditor;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
@@ -45,6 +46,11 @@ public class TroopTab extends DatabaseTab {
 	 */
 	public TroopTab(Composite parent, int style) {
 		super(parent, style);
+		
+		GridLayout gridLayout = (GridLayout) contentEditor.getLayout();
+		gridLayout.numColumns = 3;
+		
+		// General
 		
 		new Label(grpGeneral, SWT.NONE);
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
@@ -88,10 +94,20 @@ public class TroopTab extends DatabaseTab {
 		DropList lstItems = new DropList(grpItems, SWT.NONE);
 		addChild(lstItems, "items");
 		
+		// Tags
+		
+		Group grpTags = new Group(contentEditor, SWT.NONE);
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");	
+		
 		// Units
 		
 		Group grpMembers = new Group(contentEditor, SWT.NONE);
-		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		grpMembers.setLayout(new GridLayout(2, false));
 		grpMembers.setText(Vocab.instance.UNITS);
 		

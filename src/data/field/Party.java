@@ -19,7 +19,7 @@ public class Party {
 
 	// The initial direction of the characters.
 	// The troop's grid is also rotated to reposition them, in case they are generated from grid.
-	public int direction = 0;
+	public int rotation = 0;
 	
 	// The possible troops to occupate this party spot.
 	public LDataList<Integer> troops = new LDataList<>();
@@ -29,14 +29,14 @@ public class Party {
 	}
 	
 	public int maxX() {
-		if (direction % 2 == 0)
+		if (rotation % 2 == 0)
 			return x + Project.current.config.getData().troop.width - 1;
 		else
 			return x + Project.current.config.getData().troop.height - 1;
 	}
 	
 	public int maxY() {
-		if (direction % 2 == 0)
+		if (rotation % 2 == 0)
 			return y + Project.current.config.getData().troop.height - 1;
 		else
 			return y + Project.current.config.getData().troop.width - 1;
