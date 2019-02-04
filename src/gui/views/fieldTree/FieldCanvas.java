@@ -156,7 +156,7 @@ public class FieldCanvas extends LView {
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
 			int imgW = FieldHelper.config.grid.tileW * 3;
-			int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 6);
+			int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 5);
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
 					tileImages[i][j] = painter.createTileImage(i, j, imgW, imgH, currentLayer, field);
@@ -200,10 +200,10 @@ public class FieldCanvas extends LView {
 	}
 	
 	public void setCurrentLayer(Layer layer) {
+		if (layer != null)
+			setHeight(layer.info.height - 1);
 		if (currentLayer != layer) {
 			currentLayer = layer;
-			if (layer != null)
-				setHeight(layer.info.height);
 			updateAllTileImages();
 		}
 	}
