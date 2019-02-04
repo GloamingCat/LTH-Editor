@@ -48,6 +48,8 @@ public class GameCharacter extends Data {
 		public String name = "New";
 		
 		public String toString() {
+			//Animation anim = (Animation) Project.current.animations.getTree().get(id);
+			//return name + ": " + (anim == null ? "NULL" : anim.toString());
 			return name;
 		}
 		

@@ -1,8 +1,6 @@
 package data.config;
 
-import project.Project;
 import lwt.dataestructure.LDataList;
-import data.Animation;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
 import data.subcontent.Position;
@@ -16,23 +14,9 @@ public class Config {
 	public Troop troop = new Troop();
 	public Grid grid = new Grid();
 	public Screen screen = new Screen();
-	
-	public static class AnimNode extends Node {
-		public String toString() {
-			Animation anim = (Animation) Project.current.animations.getTree().get(id);
-			return name + ": " + (anim == null ? "NULL" : anim.toString());
-		}
-	}
-	
-	public static class IconNode extends Portrait {
-		public String toString() {
-			Animation anim = (Animation) Project.current.animations.getTree().get(id);
-			return name + ": " + (anim == null ? "NULL" : anim.toString());
-		}
-	}
-	
-	public LDataList<AnimNode> animations = new LDataList<>();
-	public LDataList<IconNode> icons = new LDataList<>();
+
+	public LDataList<Node> animations = new LDataList<>();
+	public LDataList<Portrait> icons = new LDataList<>();
 	
 	// System
 	

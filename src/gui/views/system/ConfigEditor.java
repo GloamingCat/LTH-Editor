@@ -23,8 +23,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import data.config.Config.AnimNode;
-import data.config.Config.IconNode;
 import project.Project;
 
 public class ConfigEditor extends LView {
@@ -377,7 +375,6 @@ public class ConfigEditor extends LView {
 				return Project.current.animations.getTree();
 			}
 		};
-		lstAnimations.type = AnimNode.class;
 		lstAnimations.setIncludeID(false);
 		editor.addChild(lstAnimations, "animations");
 		
@@ -388,7 +385,6 @@ public class ConfigEditor extends LView {
 		grpIcons.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		PortraitList lstIcons = new PortraitList(grpIcons, SWT.NONE);
-		lstIcons.type = IconNode.class;
 		editor.addChild(lstIcons, "icons");
 		
 	}
