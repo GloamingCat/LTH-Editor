@@ -16,6 +16,10 @@ public class Skill extends Data {
 	public int restriction = 0; // 0 => Anywhere, 1 => Battle only, 2 => Field only
 	public LDataList<Tag> costs = new LDataList<>();
 	
+	// Elements
+	public LDataList<Bonus> elements = new LDataList<>(); 
+	public boolean userElements = true;
+	
 	// User Animations
 	public String userLoadAnim = "";
 	public String userCastAnim = "";
@@ -37,9 +41,8 @@ public class Skill extends Data {
 	
 	// Effects
 	public LDataList<Effect> effects = new LDataList<>();
-	public LDataList<Bonus> elements = new LDataList<>(); 
-	public LDataList<Bonus> status = new LDataList<>(); 
-	public boolean userElements = true;
+	public LDataList<Bonus> statusAdd = new LDataList<>();
+	public LDataList<Bonus> statusRemove = new LDataList<>();
 	
 	// Range
 	public Range effectRange = new Range();

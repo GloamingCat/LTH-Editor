@@ -374,26 +374,12 @@ public class SkillTab extends DatabaseTab {
 		// Other
 		
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(3, true);
+		GridLayout gl_bottom = new GridLayout(4, true);
 		gl_bottom.verticalSpacing = 0;
 		gl_bottom.marginHeight = 0;
 		gl_bottom.marginWidth = 0;
 		bottom.setLayout(gl_bottom);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		Group grpStatus = new Group(bottom, SWT.NONE);
-		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpStatus.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpStatus.setText(Vocab.instance.STATUS);
-		
-		BonusList lstStatus = new BonusList(grpStatus, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		lstStatus.setIncludeID(false);
-		addChild(lstStatus, "status");
 		
 		Group grpElements = new Group(bottom, SWT.NONE);
 		GridLayout gl_grpElements = new GridLayout(1, false);
@@ -411,6 +397,34 @@ public class SkillTab extends DatabaseTab {
 		};
 		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstElements, "elements");
+		
+		Group grpStatusAdd = new Group(bottom, SWT.NONE);
+		grpStatusAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatusAdd.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpStatusAdd.setText(Vocab.instance.STATUSADD);
+		
+		BonusList lstStatusAdd = new BonusList(grpStatusAdd, SWT.NONE) {
+			@Override
+			protected LDataTree<Object> getDataTree() {
+				return Project.current.status.getTree();
+			}
+		};
+		lstStatusAdd.setIncludeID(false);
+		addChild(lstStatusAdd, "statusAdd");
+		
+		Group grpStatusRemove = new Group(bottom, SWT.NONE);
+		grpStatusRemove.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatusRemove.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpStatusRemove.setText(Vocab.instance.STATUSREMOVE);
+		
+		BonusList lstStatusRemove = new BonusList(grpStatusRemove, SWT.NONE) {
+			@Override
+			protected LDataTree<Object> getDataTree() {
+				return Project.current.status.getTree();
+			}
+		};
+		lstStatusRemove.setIncludeID(false);
+		addChild(lstStatusRemove, "statusRemove");
 		
 		LCheckButton btnUserElements = new LCheckButton(grpElements, SWT.NONE);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
