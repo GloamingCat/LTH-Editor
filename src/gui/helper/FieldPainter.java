@@ -175,10 +175,10 @@ public class FieldPainter {
 			if (!layer.visible)
 				continue;
 			if (layer.grid[x][y] >= 0) {
-				paintTerrain(layer, x, y, gc, x0, y0 - layer.info.height * pph);
+				paintTerrain(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 			if (showGrid && layer == currentLayer) {
-				drawTile(gc, x0, y0 - layer.info.height * pph);
+				drawTile(gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 		}
 		// Region Layers
@@ -186,9 +186,9 @@ public class FieldPainter {
 			if (!layer.visible || layer != currentLayer)
 				continue;
 			paintRegion(layer, x, y, 
-					gc, x0, y0 - layer.info.height * pph);
+					gc, x0, y0 - (layer.info.height - 1) * pph);
 			if (showGrid && layer == currentLayer) {
-				drawTile(gc, x0, y0 - layer.info.height * pph);
+				drawTile(gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 			break;
 		}
@@ -197,17 +197,17 @@ public class FieldPainter {
 			if (!layer.visible)
 				continue;
 			if (showGrid && layer == currentLayer) {
-				drawTile(gc, x0, y0 - layer.info.height * pph);
+				drawTile(gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 			if (layer.grid[x][y] >= 0) {
-				paintObstacle(layer, x, y, gc, x0, y0 - layer.info.height * pph);
+				paintObstacle(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 		}
 		// Characters
 		for (CharTile tile : field.characters) {
 			if (tile.x - 1 != x || tile.y - 1 != y)
 				continue;
-			paintCharacter(tile, gc, x0, y0 - tile.h * pph);
+			paintCharacter(tile, gc, x0, y0 - (tile.h - 1) * pph);
 		}
 		gc.dispose();
 		return ImageHelper.correctTransparency(img);

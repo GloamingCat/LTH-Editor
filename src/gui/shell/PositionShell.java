@@ -4,7 +4,6 @@ import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.EditableFieldCanvas;
 
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -15,8 +14,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -30,7 +27,6 @@ import lwt.widget.LCombo;
 import lwt.widget.LTree;
 
 import data.field.Field;
-import data.field.Layer;
 import data.field.FieldNode;
 import data.subcontent.Position;
 import project.Project;
@@ -39,10 +35,10 @@ public class PositionShell extends LObjectShell<Position> {
 	
 	private LTree<FieldNode, Field> tree;
 	private EditableFieldCanvas canvas;
-	private Combo cmbLayer;
 	private LCombo cmbDirection;
 	private Spinner spnX;
 	private Spinner spnY;
+	private Spinner spnH;
 	private ScrolledComposite scrolledComposite;
 	private Label lblPos;
 	
@@ -115,10 +111,7 @@ public class PositionShell extends LObjectShell<Position> {
 			public void paintControl(PaintEvent e) {
 				int x = spnX.getSelection() - 1;
 				int y = spnY.getSelection() - 1;
-				int h = 0;
-				if (canvas.currentLayer != null) {
-					h = canvas.currentLayer.info.height;
-				}
+				int h = spnH.getSelection() - 1;
 				Point p = FieldHelper.math.tile2Pixel(x, y, h);
 				int[] poly = canvas.painter.getTilePolygon(0, 0);
 				for(int i = 0; i < poly.length; i++) {
@@ -143,18 +136,6 @@ public class PositionShell extends LObjectShell<Position> {
 		bottom.setLayout(gl_bottom);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label lblLayer = new Label(bottom, SWT.NONE);
-		lblLayer.setText(Vocab.instance.LAYER);
-		
-		cmbLayer = new Combo(bottom, SWT.READ_ONLY);
-		cmbLayer.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setLayer(cmbLayer.getSelectionIndex());
-			}
-		});
-		cmbLayer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
 		Composite coordinates = new Composite(bottom, SWT.NONE);
 		coordinates.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		GridLayout gl_coordinates = new GridLayout(4, false);
@@ -175,6 +156,13 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		spnY = new Spinner(coordinates, SWT.BORDER);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblH = new Label(coordinates, SWT.NONE);
+		lblH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblH.setText("H");
+		
+		spnH = new Spinner(coordinates, SWT.BORDER);
+		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblDirection = new Label(bottom, SWT.NONE);
 		lblDirection.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -199,24 +187,13 @@ public class PositionShell extends LObjectShell<Position> {
 		pack();
 	}
 	
-	private void setLayer(int i) {
-		Layer layer = canvas.field.layers.terrain.get(i);
-		canvas.setCurrentLayer(layer);
-	}
-	
 	private void setField(int id, FieldNode node) {
 		if (canvas.field != null && canvas.field.id == id)
 			return;
 		Field field = Project.current.fieldTree.loadField(node);
 		canvas.setField(field);
-		refreshLayerCombo();
-		if (cmbLayer.getSelectionIndex() >= field.layers.terrain.size()
-				|| cmbLayer.getSelectionIndex() < 0) {
-			cmbLayer.select(0);
-		}
 		scrolledComposite.layout();
 		scrolledComposite.setMinSize(canvas.getSize());
-		setLayer(cmbLayer.getSelectionIndex());
 	}
 	
 	public void open(Position initial) {
@@ -229,23 +206,13 @@ public class PositionShell extends LObjectShell<Position> {
 		}
 		spnX.setSelection(initial.x);
 		spnY.setSelection(initial.y);
+		spnH.setSelection(initial.h);
 		if (initial.direction == -1) {
 			cmbDirection.setValue(-1);
 		} else {
 			cmbDirection.setValue(initial.direction / 45);
 		}
-		refreshLayerCombo();
-		cmbLayer.select(initial.h);
-		setLayer(initial.h);
 		content.layout();
-	}
-	
-	private void refreshLayerCombo() {
-		String[] layers = new String[canvas.field.layers.terrain.size()];
-		for(int i = 0; i < layers.length; i++) {
-			layers[i] = canvas.field.layers.terrain.get(i).info.name;
-		}
-		cmbLayer.setItems(layers);
 	}
 	
 	private LPath findPath(int id) {
@@ -258,7 +225,7 @@ public class PositionShell extends LObjectShell<Position> {
 		Position pos = new Position();
 		pos.x = spnX.getSelection();
 		pos.y = spnY.getSelection();
-		pos.h = cmbLayer.getSelectionIndex();
+		pos.h = spnH.getSelection();
 		pos.direction = cmbDirection.getSelectionIndex();
 		if (pos.direction >= 0) {
 			pos.direction *= 45;

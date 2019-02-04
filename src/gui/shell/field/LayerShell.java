@@ -3,6 +3,7 @@ package gui.shell.field;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
+import gui.views.fieldTree.FieldSideEditor;
 
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -54,6 +55,8 @@ public class LayerShell extends ObjectShell<Info> {
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.CENTER);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnHeight.setMinimum(1);
+		spnHeight.setMaximum(FieldSideEditor.instance.field.prefs.maxHeight);
 		addControl(spnHeight, "height");
 		
 		Group grpTags = new Group(contentEditor, SWT.NONE);
