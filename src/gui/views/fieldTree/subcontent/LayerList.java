@@ -3,12 +3,15 @@ package gui.views.fieldTree.subcontent;
 import gui.shell.field.LayerShell;
 import gui.views.fieldTree.FieldEditor;
 import gui.views.fieldTree.FieldSideEditor;
+import gui.views.fieldTree.FieldTreeEditor;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LListEditor;
 import lwt.event.LEditEvent;
+import lwt.event.LInsertEvent;
+import lwt.event.LMoveEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
@@ -41,6 +44,13 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 				return new LayerShell(parent);
 			}
 		});
+		getCollectionWidget().setEditEnabled(true);
+		getCollectionWidget().setInsertNewEnabled(true);
+		getCollectionWidget().setDuplicateEnabled(true);
+		getCollectionWidget().setDeleteEnabled(true);
+		getCollectionWidget().setDragEnabled(true);
+		getCollectionWidget().setCopyEnabled(true);
+		getCollectionWidget().setPasteEnabled(true);
 		getCollectionWidget().addEditListener(new LCollectionListener<Info>() {
 			public void onEdit(LEditEvent<Info> e) {
 				FieldEditor.instance.canvas.updateAllTileImages();
@@ -62,13 +72,20 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 				}
 			}
 		});
-		getCollectionWidget().setEditEnabled(true);
-		getCollectionWidget().setInsertNewEnabled(true);
-		getCollectionWidget().setDuplicateEnabled(true);
-		getCollectionWidget().setDeleteEnabled(true);
-		getCollectionWidget().setDragEnabled(true);
-		getCollectionWidget().setCopyEnabled(true);
-		getCollectionWidget().setPasteEnabled(true);
+		LCollectionListener<Layer> listener = new LCollectionListener<Layer>() {
+			public void onInsert(LInsertEvent<Layer> event) {
+				getCollectionWidget().setChecked(new LPath(event.index), 
+						getLayerList(editor.field).get(event.index).visible);
+			}
+			public void onMove(LMoveEvent<Layer> event) {
+				int index = event.destIndex == -1 ? getLayerList(editor.field).size() - 1 : event.destIndex;
+				getCollectionWidget().setChecked(new LPath(index), 
+						getLayerList(editor.field).get(index).visible);
+			}
+		};
+		getCollectionWidget().addInsertListener(listener);
+		getCollectionWidget().addMoveListener(listener);
+		setActionStack(FieldTreeEditor.instance.getActionStack());
 	}
 	
 	public void setEditor(FieldSideEditor parent) {
