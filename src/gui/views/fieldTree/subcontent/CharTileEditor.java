@@ -90,7 +90,7 @@ public class CharTileEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.setHeight(spnH.getValue());
+				FieldEditor.instance.canvas.setHeight(spnH.getValue() - 1);
 				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, spnY.getValue() - 1);
 			}
 		});

@@ -14,7 +14,10 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.Field;
@@ -41,12 +44,11 @@ public class FieldCanvas extends LView {
 
 	public FieldCanvas(Composite parent, int style) {
 		super(parent, style | SWT.DOUBLE_BUFFERED);
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		setBackground(SWTResourceManager.getColor(new RGB(250, 250, 250)));
 		
 		addPaintListener(new PaintListener() {
 	        public void paintControl(PaintEvent e) {
 	        	if (field != null) {
-	        		e.gc.setBackground(getBackground());
 	        		drawAllTiles(e.gc);
 	        	}
 	        }
@@ -88,7 +90,7 @@ public class FieldCanvas extends LView {
 				FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		Image img = new Image(egc.getDevice(), size.x + w, size.y + h); 
 		GC gc = new GC(img);
-		gc.setBackground(egc.getBackground());
+		gc.setBackground(getBackground());
 		gc.fillRectangle(img.getBounds());
 		painter.paintBackground(field, field.prefs.background, x0, y0, gc);
 		painter.paintBackground(field, field.prefs.parallax, x0, y0, gc);
@@ -123,6 +125,7 @@ public class FieldCanvas extends LView {
 	protected void drawCursor(GC gc) {
 		float scale = painter.scale;
 		painter.scale = scale * 0.75f;
+		gc.setForeground(getForeground());
 		painter.drawTile(gc, mousePoint.x + x0, mousePoint.y + y0);
 		painter.scale = scale;
 	}

@@ -104,7 +104,7 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 			public void onTileRightDown() {}
 			public void onTileEnter(int x, int y) {
-				lblPos.setText("(" + x + "," + y + ")");
+				lblPos.setText("(" + (x + 1) + "," + (y + 1) + ")");
 			}
 		};
 		canvas.addPaintListener(new PaintListener() {
@@ -138,7 +138,7 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		Composite coordinates = new Composite(bottom, SWT.NONE);
 		coordinates.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_coordinates = new GridLayout(4, false);
+		GridLayout gl_coordinates = new GridLayout(6, false);
 		gl_coordinates.marginHeight = 0;
 		gl_coordinates.marginWidth = 0;
 		coordinates.setLayout(gl_coordinates);
@@ -148,6 +148,7 @@ public class PositionShell extends LObjectShell<Position> {
 		lblX.setText("X");
 		
 		spnX = new Spinner(coordinates, SWT.BORDER);
+		spnX.setMinimum(1);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblY = new Label(coordinates, SWT.NONE);
@@ -155,6 +156,7 @@ public class PositionShell extends LObjectShell<Position> {
 		lblY.setText("Y");
 		
 		spnY = new Spinner(coordinates, SWT.BORDER);
+		spnY.setMinimum(1);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblH = new Label(coordinates, SWT.NONE);
@@ -162,6 +164,7 @@ public class PositionShell extends LObjectShell<Position> {
 		lblH.setText("H");
 		
 		spnH = new Spinner(coordinates, SWT.BORDER);
+		spnH.setMinimum(1);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblDirection = new Label(bottom, SWT.NONE);
@@ -181,6 +184,8 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		lblPos = new Label(bottom, SWT.NONE);
 		lblPos.setText("(-99, -99)");
+		new Label(bottom, SWT.NONE);
+		new Label(bottom, SWT.NONE);
 		
 		sashForm.setWeights(new int[] {1, 3});
 		
@@ -191,6 +196,7 @@ public class PositionShell extends LObjectShell<Position> {
 		if (canvas.field != null && canvas.field.id == id)
 			return;
 		Field field = Project.current.fieldTree.loadField(node);
+		spnH.setMaximum(field.prefs.maxHeight);
 		canvas.setField(field);
 		scrolledComposite.layout();
 		scrolledComposite.setMinSize(canvas.getSize());

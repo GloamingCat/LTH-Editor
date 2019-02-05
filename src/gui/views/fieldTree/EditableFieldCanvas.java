@@ -89,10 +89,11 @@ public class EditableFieldCanvas extends FieldCanvas {
 	// -------------------------------------------------------------------------------------
 
 	protected void drawSelection(GC gc) {
-		Point p1 = FieldHelper.math.tile2Pixel(tileX, tileY, currentLayer.info.height);
-		Point p2 = FieldHelper.math.tile2Pixel(tileX, dragOrigin.y, currentLayer.info.height);
-		Point p3 = FieldHelper.math.tile2Pixel(dragOrigin.x, dragOrigin.y, currentLayer.info.height);
-		Point p4 = FieldHelper.math.tile2Pixel(dragOrigin.x, tileY, currentLayer.info.height);
+		int h = currentLayer.info.height - 1;
+		Point p1 = FieldHelper.math.tile2Pixel(tileX, tileY, h);
+		Point p2 = FieldHelper.math.tile2Pixel(tileX, dragOrigin.y, h);
+		Point p3 = FieldHelper.math.tile2Pixel(dragOrigin.x, dragOrigin.y, h);
+		Point p4 = FieldHelper.math.tile2Pixel(dragOrigin.x, tileY, h);
 		int[] poly = new int[] {p1.x + x0, p1.y + y0,
 								p2.x + x0, p2.y + y0,
 								p3.x + x0, p3.y + y0,

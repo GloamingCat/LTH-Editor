@@ -29,7 +29,7 @@ public class Field {
 	
 	public static class Prefs extends Data {
 		
-		public int defaultRegion = 0;
+		public int defaultRegion = -1;
 		public int maxHeight = 4;
 		public Audio bgm = new Audio();
 		public Script loadScript = new Script();

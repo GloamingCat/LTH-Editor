@@ -1,8 +1,10 @@
 package gui.helper;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -18,6 +20,8 @@ import data.subcontent.Quad;
 import project.Project;
 
 public class FieldPainter {
+	
+	public Color gridColor = SWTResourceManager.getColor(new RGB(50, 50, 50));
 	
 	public float scale = 1;
 	public boolean showGrid = false;
@@ -44,11 +48,18 @@ public class FieldPainter {
 	}
 	
 	public void drawTile(GC gc, int x0, int y0) {
+		int[] p = getTilePolygon(x0, y0);
+		gc.drawPolygon(p);
+	}
+	
+	public void drawGrid(GC gc, int x0, int y0) {
 		float scale = this.scale;
 		this.scale *= 0.95f;
-		int[] p = getTilePolygon(x0, y0);
+		gc.setAlpha(127);
+		gc.setForeground(gridColor);
+		drawTile(gc, x0, y0);
+		gc.setAlpha(255);
 		this.scale = scale;
-		gc.drawPolygon(p);
 	}
 	
 	public void fillTile(GC gc, int x0, int y0) {
@@ -170,6 +181,9 @@ public class FieldPainter {
 	    int pph = FieldHelper.config.grid.pixelsPerHeight;
 	    
 		GC gc = new GC(img);
+		gc.setAlpha(0);
+		gc.fillRectangle(0, 0, imgW, imgH);
+		gc.setAlpha(255);
 		// Terrain Layers
 		for (Layer layer : field.layers.terrain) {
 			if (!layer.visible)
@@ -178,7 +192,7 @@ public class FieldPainter {
 				paintTerrain(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 			if (showGrid && layer == currentLayer) {
-				drawTile(gc, x0, y0 - (layer.info.height - 1) * pph);
+				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 		}
 		// Region Layers
@@ -188,7 +202,7 @@ public class FieldPainter {
 			paintRegion(layer, x, y, 
 					gc, x0, y0 - (layer.info.height - 1) * pph);
 			if (showGrid && layer == currentLayer) {
-				drawTile(gc, x0, y0 - (layer.info.height - 1) * pph);
+				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 			break;
 		}
@@ -197,7 +211,7 @@ public class FieldPainter {
 			if (!layer.visible)
 				continue;
 			if (showGrid && layer == currentLayer) {
-				drawTile(gc, x0, y0 - (layer.info.height - 1) * pph);
+				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
 			}
 			if (layer.grid[x][y] >= 0) {
 				paintObstacle(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
