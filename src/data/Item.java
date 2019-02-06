@@ -2,6 +2,7 @@ package data;
 
 import project.Project;
 import data.Skill.Effect;
+import data.Skill.SkillStatus;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
 import lwt.dataestructure.LDataList;
@@ -17,9 +18,10 @@ public class Item extends Data {
 	// Use
 	public int skillID = -1;
 	public boolean consume = true;
+	public boolean needsUser = false;
 	public LDataList<Effect> effects = new LDataList<>();
-	public LDataList<Bonus> statusAdd = new LDataList<>();
-	public LDataList<Bonus> statusRemove = new LDataList<>();
+	public LDataList<SkillStatus> statusAdd = new LDataList<>();
+	public LDataList<SkillStatus> statusRemove = new LDataList<>();
 	public LDataList<Attribute> attributes = new LDataList<>();
 	
 	// Equip

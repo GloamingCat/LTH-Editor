@@ -6,6 +6,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.EffectList;
 import gui.views.database.subcontent.RangeEditor;
+import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
@@ -403,13 +404,7 @@ public class SkillTab extends DatabaseTab {
 		grpStatusAdd.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpStatusAdd.setText(Vocab.instance.STATUSADD);
 		
-		BonusList lstStatusAdd = new BonusList(grpStatusAdd, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		lstStatusAdd.setIncludeID(false);
+		SkillStatusList lstStatusAdd = new SkillStatusList(grpStatusAdd, SWT.NONE);
 		addChild(lstStatusAdd, "statusAdd");
 		
 		Group grpStatusRemove = new Group(bottom, SWT.NONE);
@@ -417,13 +412,7 @@ public class SkillTab extends DatabaseTab {
 		grpStatusRemove.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpStatusRemove.setText(Vocab.instance.STATUSREMOVE);
 		
-		BonusList lstStatusRemove = new BonusList(grpStatusRemove, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		lstStatusRemove.setIncludeID(false);
+		SkillStatusList lstStatusRemove = new SkillStatusList(grpStatusRemove, SWT.NONE);
 		addChild(lstStatusRemove, "statusRemove");
 		
 		LCheckButton btnUserElements = new LCheckButton(grpElements, SWT.NONE);

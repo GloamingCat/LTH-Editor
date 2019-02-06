@@ -7,6 +7,7 @@ import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.EffectList;
 import gui.views.database.subcontent.EquipStatusList;
+import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
@@ -195,10 +196,17 @@ public class ItemTab extends DatabaseTab {
 		btnSkill.setNameText(txtSkill);
 		addControl(btnSkill, "skillID");
 		
-		LCheckButton btnConsume = new LCheckButton(grpUse, SWT.NONE);
-		btnConsume.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
+		Composite checkButtons = new Composite(grpUse, SWT.NONE);
+		checkButtons.setLayout(new FillLayout(SWT.HORIZONTAL));
+		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
+		
+		LCheckButton btnConsume = new LCheckButton(checkButtons, SWT.NONE);
 		btnConsume.setText(Vocab.instance.CONSUME);
 		addControl(btnConsume, "consume");
+		
+		LCheckButton btnNeedsUser = new LCheckButton(checkButtons, SWT.NONE);
+		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
+		addControl(btnNeedsUser, "needsUser");
 		
 		TabFolder useFolder = new TabFolder(grpUse, SWT.NONE);
 		useFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
@@ -211,23 +219,13 @@ public class ItemTab extends DatabaseTab {
 		
 		TabItem tbtmStatusAdd = new TabItem(useFolder, SWT.NONE);
 		tbtmStatusAdd.setText(Vocab.instance.STATUSADD);
-		BonusList lstStatusAdd = new BonusList(useFolder, SWT.NONE) {
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		lstStatusAdd.setIncludeID(false);
+		SkillStatusList lstStatusAdd = new SkillStatusList(useFolder, SWT.NONE);
 		tbtmStatusAdd.setControl(lstStatusAdd);
 		addChild(lstStatusAdd, "statusAdd");
 		
 		TabItem tbtmStatusRmv = new TabItem(useFolder, SWT.NONE);
 		tbtmStatusRmv.setText(Vocab.instance.STATUSREMOVE);
-		BonusList lstStatusRmv = new BonusList(useFolder, SWT.NONE) {
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		lstStatusRmv.setIncludeID(false);
+		SkillStatusList lstStatusRmv = new SkillStatusList(useFolder, SWT.NONE);
 		tbtmStatusRmv.setControl(lstStatusRmv);
 		addChild(lstStatusRmv, "statusRemove");
 		

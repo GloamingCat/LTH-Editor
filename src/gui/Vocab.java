@@ -133,6 +133,7 @@ public class Vocab {
 	public String SELLABLE = "Sellable";
 	public String USE = "Use";
 	public String CONSUME = "Consume on use";
+	public String NEEDSUSER = "Needs user";
 	public String ITEMSKILL = "Item Skill ID";
 	public String STATUSADD = "Add Status";
 	public String STATUSREMOVE = "Cure Status";

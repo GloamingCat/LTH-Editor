@@ -1,5 +1,6 @@
 package data;
 
+import project.Project;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
 import data.subcontent.Tag;
@@ -41,8 +42,8 @@ public class Skill extends Data {
 	
 	// Effects
 	public LDataList<Effect> effects = new LDataList<>();
-	public LDataList<Bonus> statusAdd = new LDataList<>();
-	public LDataList<Bonus> statusRemove = new LDataList<>();
+	public LDataList<SkillStatus> statusAdd = new LDataList<>();
+	public LDataList<SkillStatus> statusRemove = new LDataList<>();
 	
 	// Range
 	public Range effectRange = new Range();
@@ -78,15 +79,18 @@ public class Skill extends Data {
 			return "\"" + key + "\": " + basicResult;
 		}
 		
-		public boolean equals(Effect obj) {
-			if (obj instanceof Effect) {
-				Effect other = (Effect) obj;
-				return other.heal == heal && other.absorb == absorb && other.key.equals(key)
-						&& other.basicResult.equals(basicResult) 
-						&& other.successRate.equals(successRate);
-			} else return false;
-		}
+	}
+	
+	public static class SkillStatus {
 		
+		public int id = 0;
+		public String rate = "100";
+		
+		public String toString() {
+			Status s = (Status) Project.current.status.getData().get(id);
+			return (s == null ? "NULL" : s.name) + " (" + rate + ")";
+		}
+
 	}
 
 }
