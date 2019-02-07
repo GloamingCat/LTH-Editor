@@ -167,9 +167,16 @@ public class StatusTab extends DatabaseTab {
 		btnOverride.setText(Vocab.instance.OVERRIDE);
 		addControl(btnOverride, "override");
 		
+		Composite middle = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_middle = new GridLayout(3, false);
+		gl_middle.marginWidth = 0;
+		gl_middle.marginHeight = 0;
+		middle.setLayout(gl_middle);
+		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		
 		// Drain
 		
-		Group grpDrain = new Group(contentEditor, SWT.NONE);
+		Group grpDrain = new Group(middle, SWT.NONE);
 		grpDrain.setText(Vocab.instance.DRAIN);
 		grpDrain.setLayout(new GridLayout(3, false));
 		grpDrain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -185,6 +192,8 @@ public class StatusTab extends DatabaseTab {
 		lblDrain.setText(Vocab.instance.DRAINVALUE);
 		
 		LSpinner spnDrain = new LSpinner(grpDrain, SWT.NONE);
+		spnDrain.setMaximum(999999);
+		spnDrain.setMinimum(0);
 		spnDrain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnDrain, "drainValue");
 		
@@ -196,20 +205,15 @@ public class StatusTab extends DatabaseTab {
 		lblFrequency.setText(Vocab.instance.FREQUENCY);
 		
 		LSpinner spnFrequency = new LSpinner(grpDrain, SWT.NONE);
+		spnFrequency.setMaximum(999999);
+		spnFrequency.setMinimum(0);
 		spnFrequency.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(spnFrequency, "frequency");
 		
 		// Durability
 		
-		Composite durability = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_durability = new GridLayout(2, false);
-		gl_durability.marginWidth = 0;
-		gl_durability.marginHeight = 0;
-		durability.setLayout(gl_durability);
-		durability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		Group grpDurability = new Group(durability, SWT.NONE);
-		grpDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Group grpDurability = new Group(middle, SWT.NONE);
+		grpDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpDurability.setLayout(new GridLayout(2, false));
 		grpDurability.setText(Vocab.instance.DURABILITY);
 		
@@ -217,6 +221,7 @@ public class StatusTab extends DatabaseTab {
 		lblTurns.setText(Vocab.instance.TURNS);
 		
 		LSpinner spnTurns = new LSpinner(grpDurability, SWT.NONE);
+		spnTurns.setMaximum(999999);
 		spnTurns.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnTurns.setMinimum(-1);
 		addControl(spnTurns, "duration");
@@ -231,7 +236,12 @@ public class StatusTab extends DatabaseTab {
 		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
 		addControl(btnRemoveOnDamage, "removeOnDamage");
 		
-		Group grpCancel = new Group(durability, SWT.NONE);
+		LCheckButton btnBattleOnly = new LCheckButton(grpDurability, SWT.NONE);
+		btnBattleOnly.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnBattleOnly.setText(Vocab.instance.BATTLEONLY);
+		addControl(btnBattleOnly, "battleOnly");
+		
+		Group grpCancel = new Group(middle, SWT.NONE);
 		grpCancel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpCancel.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpCancel.setText(Vocab.instance.STATUSCANCEL);
@@ -246,23 +256,23 @@ public class StatusTab extends DatabaseTab {
 		
 		// Lists
 		
-		Composite compositeBottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_compositeBottom = new GridLayout(5, true);
-		gl_compositeBottom.marginHeight = 0;
-		gl_compositeBottom.marginWidth = 0;
-		compositeBottom.setLayout(gl_compositeBottom);
-		compositeBottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		Composite bottom = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_bottom = new GridLayout(5, true);
+		gl_bottom.marginHeight = 0;
+		gl_bottom.marginWidth = 0;
+		bottom.setLayout(gl_bottom);
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		Group grpAttributes = new Group(compositeBottom, SWT.NONE);
-		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Group grpAttributes = new Group(bottom, SWT.NONE);
+		grpAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAttributes.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpAttributes.setText(Vocab.instance.ATTRIBUTES);
 		
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		addChild(lstAttributes, "attributes");
 
-		Group grpElementAtk = new Group(compositeBottom, SWT.NONE);
-		grpElementAtk.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Group grpElementAtk = new Group(bottom, SWT.NONE);
+		grpElementAtk.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElementAtk.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElementAtk.setText(Vocab.instance.ELEMENTATK);
 		
@@ -274,8 +284,8 @@ public class StatusTab extends DatabaseTab {
 		};
 		addChild(lstElementAtk, "elementAtk");
 		
-		Group grpElementDef = new Group(compositeBottom, SWT.NONE);
-		grpElementDef.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Group grpElementDef = new Group(bottom, SWT.NONE);
+		grpElementDef.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElementDef.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElementDef.setText(Vocab.instance.ELEMENTDEF);
 		
@@ -287,8 +297,8 @@ public class StatusTab extends DatabaseTab {
 		};
 		addChild(lstElementDef, "elementDef");
 		
-		Group grpStatusDef = new Group(compositeBottom, SWT.NONE);
-		grpStatusDef.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Group grpStatusDef = new Group(bottom, SWT.NONE);
+		grpStatusDef.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpStatusDef.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpStatusDef.setText(Vocab.instance.STATUSDEF);
 		
@@ -302,8 +312,8 @@ public class StatusTab extends DatabaseTab {
 		
 		// Tags
 		
-		Group grpTags = new Group(compositeBottom, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Group grpTags = new Group(bottom, SWT.NONE);
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTags.setText(Vocab.instance.TAGS);
 		
