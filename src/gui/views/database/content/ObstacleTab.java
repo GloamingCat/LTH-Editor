@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import data.Animation;
 import data.Obstacle;
-import data.Obstacle.Tile;
+import data.Obstacle.ObstacleTile;
 import data.subcontent.Transform;
 import project.Project;
 
@@ -83,12 +83,12 @@ public class ObstacleTab extends DatabaseTab {
 		grpTiles.setLayout(new FillLayout());
 		grpTiles.setText(Vocab.instance.TILES);
 		
-		SimpleEditableList<Tile> tileList = new SimpleEditableList<Tile>(grpTiles, SWT.NONE);
-		tileList.type = Tile.class;
+		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpTiles, SWT.NONE);
+		tileList.type = ObstacleTile.class;
 		tileList.setIncludeID(false);
-		tileList.setShellFactory(new LShellFactory<Tile>() {
+		tileList.setShellFactory(new LShellFactory<ObstacleTile>() {
 			@Override
-			public LObjectShell<Tile> createShell(Shell parent) {
+			public LObjectShell<ObstacleTile> createShell(Shell parent) {
 				return new ObstacleTileShell(parent);
 			}
 		});

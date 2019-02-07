@@ -229,12 +229,11 @@ public class Vocab {
 	public String MINLEVEL = "Min Level";
 	
 	// Obstacles
-	public String BOTTOM = "Bottom";
-	public String TOP = "Top";
 	public String NEIGHBORS = "Neighbors";
 	public String TILES = "Tiles";
 	public String NONE = "None";
 	public String ALL = "All";
+	public String RAMP = "Ramp";
 
 	// Status
 	public String VISIBLE = "Visible";
@@ -336,8 +335,10 @@ public class Vocab {
 	public String SIZEY = "Height";
 	public String ALIGNX = "Horizontal Anchor";
 	public String ALIGNY = "Vertical Anchor";
-	public String LEFT = "Left";
 	public String CENTER = "Center";
+	public String BOTTOM = "Bottom";
+	public String TOP = "Top";
+	public String LEFT = "Left";
 	public String RIGHT = "Right";
 	
 	// Character

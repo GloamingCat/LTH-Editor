@@ -12,7 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-import data.GameCharacter.Tile;
+import data.subcontent.Tile;
 
 import org.eclipse.swt.graphics.Point;
 

@@ -12,15 +12,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import lwt.dialog.LObjectShell;
+import lwt.widget.LCheckButton;
+import data.Obstacle.ObstacleTile;
 
-import data.Obstacle.Tile;
-
-public class ObstacleTileShell extends LObjectShell<Tile> {
+public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
 	
 	private Spinner spnX;
 	private Spinner spnY;
 	private Spinner spnHeight;
 	private NeighborEditor neighborEditor;
+	private LCheckButton btnRamp;
 	
 	public ObstacleTileShell(Shell parent) {
 		super(parent);
@@ -54,27 +55,34 @@ public class ObstacleTileShell extends LObjectShell<Tile> {
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		spnHeight.setMinimum(0);
 		
+		Label lblRamp = new Label(grpGeneral, SWT.NONE);
+		lblRamp.setText(Vocab.instance.RAMP);
+		
+		btnRamp = new LCheckButton(grpGeneral);
+		
 		neighborEditor = new NeighborEditor(content, SWT.NONE);
 		neighborEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		pack();
 	}
 
-	public void open(Tile initial) {
+	public void open(ObstacleTile initial) {
 		super.open(initial);
 		neighborEditor.setObject(initial.neighbors);
 		spnX.setSelection(initial.dx);
 		spnY.setSelection(initial.dy);
 		spnHeight.setSelection(initial.height);
+		btnRamp.setValue(initial.ramp);
 	}
 
 	@Override
-	protected Tile createResult(Tile initial) {
-		Tile t = new Tile();
+	protected ObstacleTile createResult(ObstacleTile initial) {
+		ObstacleTile t = new ObstacleTile();
 		t.dx = spnX.getSelection();
 		t.dy = spnY.getSelection();
 		t.height = spnHeight.getSelection();
 		t.neighbors = neighborEditor.getValues();
+		t.ramp = btnRamp.getValue();
 		return t;
 	}
 	
