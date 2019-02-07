@@ -291,10 +291,10 @@ public class EditableFieldCanvas extends FieldCanvas {
 			return null;
 		if (origin.x == tileX && origin.y == tileY)
 			return null;
-		CharTile tile = field.findCharacter(origin.x + 1, origin.y + 1, height);
+		CharTile tile = field.findCharacter(origin.x + 1, origin.y + 1, height + 1);
 		if (tile == null)
 			return null;
-		CharAction action = new CharAction(tile, x + 1, y + 1, height);
+		CharAction action = new CharAction(tile, x + 1, y + 1, height + 1);
 		action.redo();
 		getActionStack().newAction(action);
 		return tile;

@@ -8,6 +8,7 @@ public class Layer {
 	public static class Info {
 		public String name = "New Layer";
 		public int height = 1;
+		public boolean noAuto = false;
 		public LDataList<Tag> tags = new LDataList<>();
 	}
 	

@@ -89,11 +89,6 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		});
 		
-		if (fieldID >= 0) {
-			path = findPath(fieldID);
-			tree.setEnabled(false);
-		}
-		
 		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 
 		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
@@ -130,7 +125,7 @@ public class PositionShell extends LObjectShell<Position> {
 		scrolledComposite.setContent(canvas);
 
 		Composite bottom = new Composite(content, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(6, false);
+		GridLayout gl_bottom = new GridLayout(4, false);
 		gl_bottom.marginWidth = 0;
 		gl_bottom.marginHeight = 0;
 		bottom.setLayout(gl_bottom);
@@ -178,14 +173,16 @@ public class PositionShell extends LObjectShell<Position> {
 				"180°", "225°", "270°", "315°"};
 		cmbDirection.setItems(d);
 		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		if (fieldID >= 0) {
-			cmbDirection.setValue(null);
-		}
 		
 		lblPos = new Label(bottom, SWT.NONE);
 		lblPos.setText("(-99, -99)");
-		new Label(bottom, SWT.NONE);
-		new Label(bottom, SWT.NONE);
+		
+		if (fieldID >= 0) {
+			path = findPath(fieldID);
+			tree.setEnabled(false);
+			cmbDirection.setValue(null);
+			cmbDirection.setEnabled(false);
+		}
 		
 		sashForm.setWeights(new int[] {1, 3});
 		

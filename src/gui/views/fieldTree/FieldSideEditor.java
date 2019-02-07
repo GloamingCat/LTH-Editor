@@ -219,7 +219,7 @@ public class FieldSideEditor extends LObjectEditor {
 				if (event == null || event.data == null)
 					return;
 				CharTile tile = (CharTile) event.data;
-				FieldEditor.instance.canvas.setHeight(tile.h);
+				FieldEditor.instance.canvas.setHeight(tile.h - 1);
 			}
 		});
 		

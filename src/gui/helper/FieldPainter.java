@@ -79,7 +79,7 @@ public class FieldPainter {
 				return;
 			Terrain terrain = (Terrain) Project.current.terrains.getTree().get(id);
 			Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
-			int[] rows = FieldHelper.math.autotile(layer.grid, x, y);
+			int[] rows = FieldHelper.math.autotile(layer, x, y);
 			int w = img.getBounds().width / (anim.cols * 2);
 			int h = img.getBounds().height / (anim.rows * 2);
 			int dx = x0 - (anim.transform.offsetX * anim.transform.scaleX) / 10000;

@@ -8,6 +8,7 @@ import gui.views.fieldTree.FieldSideEditor;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
+import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -58,6 +59,11 @@ public class LayerShell extends ObjectShell<Info> {
 		spnHeight.setMinimum(1);
 		spnHeight.setMaximum(FieldSideEditor.instance.field.prefs.maxHeight);
 		addControl(spnHeight, "height");
+		
+		LCheckButton btnNoAuto = new LCheckButton(grpGeneral);
+		btnNoAuto.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnNoAuto.setText(Vocab.instance.NOAUTO);
+		addControl(btnNoAuto, "noAuto");
 		
 		Group grpTags = new Group(contentEditor, SWT.NONE);
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));

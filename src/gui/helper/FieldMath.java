@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.eclipse.swt.graphics.Point;
 
 import data.config.Config.Grid;
+import data.field.Layer;
 
 public abstract class FieldMath {
 
@@ -14,8 +15,9 @@ public abstract class FieldMath {
 	public int initialDirection;
 	protected final Grid conf;
 	
-	public FieldMath(int autoTileRows) {
+	public FieldMath(int autoTileRows, int initialDirection) {
 		this.autoTileRows = autoTileRows;
+		this.initialDirection = initialDirection;
 		this.conf = FieldHelper.config.grid;
 		ArrayList<Point> neighbors = createNeighborShift();
 		neighborShift = new Point[neighbors.size()];
@@ -64,6 +66,15 @@ public abstract class FieldMath {
 	public abstract Point pixel2Tile(float x, float y, float d);
 	public abstract Point tile2Pixel(float x, float y, float h);
 	public abstract int[] autotile(int[][] grid, int x, int y);
+	
+	public int[] autotile(Layer layer, int x, int y) {
+		if (layer.info.noAuto) {
+			int n = autoTileRows - 2;
+			return new int[] {n, n, n, n};
+		} else {
+			return autotile(layer.grid, x, y);
+		}
+	}
 	
 	protected static boolean sameType(int[][] grid, int x1, int y1, int x2, int y2) {
 		if (x1 < 0 || x1 >= grid.length || x2 < 0 || x2 >= grid.length)

@@ -75,12 +75,12 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		LCollectionListener<Layer> listener = new LCollectionListener<Layer>() {
 			public void onInsert(LInsertEvent<Layer> event) {
 				getCollectionWidget().setChecked(new LPath(event.index), 
-						getLayerList(editor.field).get(event.index).visible);
+					event.node.data.visible);
 			}
 			public void onMove(LMoveEvent<Layer> event) {
 				int index = event.destIndex == -1 ? getLayerList(editor.field).size() - 1 : event.destIndex;
 				getCollectionWidget().setChecked(new LPath(index), 
-						getLayerList(editor.field).get(index).visible);
+						event.sourceNode.data.visible);
 			}
 		};
 		getCollectionWidget().addInsertListener(listener);

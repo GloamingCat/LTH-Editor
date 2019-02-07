@@ -328,6 +328,7 @@ public class Vocab {
 	public String PARTY = "Party";
 	public String SHOWGRID = "Show Grid";
 	public String LAYERS = "Layers";
+	public String NOAUTO = "No autotiles";
 	
 	// Resize
 	public String RESIZE = "Resize";

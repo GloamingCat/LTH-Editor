@@ -7,8 +7,7 @@ import org.eclipse.swt.graphics.Point;
 public class OrtField extends FieldMath {
 
 	public OrtField() {
-		super(6);
-		initialDirection = 0;
+		super(6, 270);
 	}
 	
 	protected ArrayList<Point> createNeighborShift() {

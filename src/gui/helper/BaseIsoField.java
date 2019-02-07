@@ -7,7 +7,7 @@ import org.eclipse.swt.graphics.Point;
 public abstract class BaseIsoField extends FieldMath {
 
 	public BaseIsoField(int rows) {
-		super(rows);
+		super(rows, 315);
 	}
 	
 	protected ArrayList<Point> createNeighborShift() {
