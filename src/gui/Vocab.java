@@ -310,6 +310,7 @@ public class Vocab {
 	// Script / Rule
 	public String PARAM = "Parameters";
 	public String GLOBAL = "Global";
+	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
 
 	// ========================================================================
