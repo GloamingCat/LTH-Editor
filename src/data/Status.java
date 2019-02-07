@@ -3,7 +3,7 @@ package data;
 import data.Item.Attribute;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
-import data.subcontent.Script;
+import data.subcontent.Rule;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
 
@@ -30,7 +30,7 @@ public class Status extends Data {
 	// Effects
 	public boolean deactivate = false;
 	public boolean ko = false;
-	public Script behavior = new Script();
+	public LDataList<Rule> behavior = new LDataList<>();
 	
 	// Drain
 	public String drainAtt = "";

@@ -2,13 +2,13 @@ package data;
 
 import project.Project;
 import data.subcontent.Bonus;
-import data.subcontent.Script;
+import data.subcontent.Rule;
 import lwt.dataestructure.LDataList;
 
 public class Battler extends Data {
 
 	public boolean persistent = false;
-	public Script ai = new Script();
+	public LDataList<Rule> ai = new LDataList<>();
 	public int classID = 0;
 	public int attackID = 0;
 	public int level = 0;

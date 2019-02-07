@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.shell.database.RuleShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
@@ -10,8 +11,10 @@ import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
-import gui.widgets.ScriptButton;
+import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
@@ -24,8 +27,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import data.subcontent.Rule;
 import project.Project;
 
 public class StatusTab extends DatabaseTab {
@@ -71,7 +76,7 @@ public class StatusTab extends DatabaseTab {
 		gl_compositeIcon.marginWidth = 0;
 		gl_compositeIcon.marginHeight = 0;
 		compositeIcon.setLayout(gl_compositeIcon);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
@@ -106,43 +111,46 @@ public class StatusTab extends DatabaseTab {
 		LCheckButton btnVisible = new LCheckButton(compositeVisible, SWT.NONE);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		addControl(btnVisible, "visible");
-		
-		new Label(grpGeneral, SWT.NONE);
 		Composite options = new Composite(grpGeneral,  SWT.NONE);
-		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		options.setLayout(new GridLayout(2, false));
+		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		GridLayout gl_options = new GridLayout(3, false);
+		gl_options.marginHeight = 0;
+		options.setLayout(gl_options);
 		
 		LCheckButton btnKO = new LCheckButton(options, SWT.NONE);
+		btnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnKO.setText(Vocab.instance.KO);
 		addControl(btnKO, "ko");
 		
 		LCheckButton btnDeactivate = new LCheckButton(options, SWT.NONE);
+		btnDeactivate.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnDeactivate.setText(Vocab.instance.DEACTIVATE);
 		addControl(btnDeactivate, "deactivate");
 		
 		LCheckButton btnCumulative = new LCheckButton(options, SWT.NONE);
+		btnCumulative.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnCumulative.setText(Vocab.instance.CUMULATIVE);
 		addControl(btnCumulative, "cumulative");
-		new Label(options, SWT.NONE);
 		
 		// Behavior Script
 		
 		Label lblBehavior = new Label(grpGeneral, SWT.NONE);
+		lblBehavior.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblBehavior.setText(Vocab.instance.BEHAVIOR);
 		
-		Composite compBehavior = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compBehavior = new GridLayout(2, false);
-		gl_compBehavior.marginHeight = 0;
-		gl_compBehavior.marginWidth = 0;
-		compBehavior.setLayout(gl_compBehavior);
-		compBehavior.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
-		Text txtBehavior = new Text(compBehavior, SWT.BORDER | SWT.READ_ONLY);
-		txtBehavior.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnBehavior = new ScriptButton(compBehavior, 1);
-		btnBehavior.setPathText(txtBehavior);
-		addControl(btnBehavior, "behavior");
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpGeneral, SWT.NONE);
+		GridData gd_lstRules = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_lstRules.heightHint = 21;
+		lstRules.setLayoutData(gd_lstRules);
+		lstRules.type = Rule.class;
+		lstRules.setIncludeID(false);
+		lstRules.setShellFactory(new LShellFactory<Rule>() {
+			@Override
+			public LObjectShell<Rule> createShell(Shell parent) {
+				return new RuleShell(parent);
+			}
+		});
+		addChild(lstRules, "behavior");
 		
 		// Graphics
 		
@@ -163,7 +171,7 @@ public class StatusTab extends DatabaseTab {
 		addChild(transformEditor, "transform");
 		
 		LCheckButton btnOverride = new LCheckButton(grpGraphics, SWT.NONE);
-		btnOverride.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 2, 1));
+		btnOverride.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 2, 1));
 		btnOverride.setText(Vocab.instance.OVERRIDE);
 		addControl(btnOverride, "override");
 		

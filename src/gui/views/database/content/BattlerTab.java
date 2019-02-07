@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.shell.database.RuleShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.BonusList;
@@ -10,8 +11,10 @@ import gui.views.database.subcontent.EquipList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IDList;
-import gui.widgets.ScriptButton;
+import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 
@@ -22,12 +25,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+
+import data.subcontent.Rule;
 
 public class BattlerTab extends DatabaseTab {
 	
@@ -79,18 +85,6 @@ public class BattlerTab extends DatabaseTab {
 		gl_select.marginHeight = 0;
 		select.setLayout(gl_select);
 		
-		// AI
-		
-		Label lblAI = new Label(select, SWT.NONE);
-		lblAI.setText(Vocab.instance.AI);
-		
-		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
-		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnAI = new ScriptButton(select, 1);
-		btnAI.setPathText(txtAI);
-		addControl(btnAI, "ai");
-		
 		// Class
 		
 		Label lblClass = new Label(select, SWT.NONE);
@@ -127,29 +121,46 @@ public class BattlerTab extends DatabaseTab {
 		btnAttack.setNameText(txtAttack);
 		addControl(btnAttack, "attackID");
 		
-		// Attributes
+		// AI
 		
-		Group grpAtt = new Group(contentEditor, SWT.NONE);
-		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_grpAtt.heightHint = 100;
-		grpAtt.setLayoutData(gd_grpAtt);
-		grpAtt.setText(Vocab.instance.ATTRIBUTES);
+		Composite side = new Composite(contentEditor, SWT.NONE);
+		side.setLayout(new FillLayout(SWT.VERTICAL));
+		side.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		Group grpAI = new Group(side, SWT.NONE);
+		grpAI.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAI.setText(Vocab.instance.AI);
 
-		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
-		attEditor.setColumns(4);
-		addChild(attEditor, "attributes");
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI, SWT.NONE);
+		lstRules.type = Rule.class;
+		lstRules.setIncludeID(false);
+		lstRules.setShellFactory(new LShellFactory<Rule>() {
+			@Override
+			public LObjectShell<Rule> createShell(Shell parent) {
+				return new RuleShell(parent);
+			}
+		});
+		addChild(lstRules, "ai");
+		
+		// Tags
+		
+		Group grpTags = new Group(side, SWT.NONE);
+		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 		// Initial state
 		
-		Composite other = new Composite(contentEditor, SWT.NONE);
+		Composite bottom = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_other = new GridLayout(3, false);
 		gl_other.marginHeight = 0;
 		gl_other.marginWidth = 0;
-		other.setLayout(gl_other);
-		other.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		bottom.setLayout(gl_other);
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		Group grpInitial = new Group(other, SWT.NONE);
+		Group grpInitial = new Group(bottom, SWT.NONE);
 		grpInitial.setLayout(new FillLayout(SWT.HORIZONTAL));
 		GridData gd_grpInitial = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_grpInitial.widthHint = 129;
@@ -201,7 +212,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		// Items
 		
-		Group grpItems = new Group(other, SWT.NONE);
+		Group grpItems = new Group(bottom, SWT.NONE);
 		grpItems.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpItems.setText(Vocab.instance.ITEMS);
@@ -226,15 +237,18 @@ public class BattlerTab extends DatabaseTab {
 		tbtmEquip.setControl(lstEquip);
 		addChild(lstEquip, "equip");
 
-		// Tags
+		// Attributes
 		
-		Group grpTags = new Group(other, SWT.NONE);
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
+		Group grpAtt = new Group(bottom, SWT.NONE);
+		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
+		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_grpAtt.heightHint = 100;
+		grpAtt.setLayoutData(gd_grpAtt);
+		grpAtt.setText(Vocab.instance.ATTRIBUTES);
+
+		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
+		attEditor.setColumns(4);
+		addChild(attEditor, "attributes");
 		
 	}
 

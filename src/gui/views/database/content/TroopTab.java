@@ -11,7 +11,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.UnitEditor;
-import gui.widgets.ScriptButton;
+import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
@@ -80,7 +80,7 @@ public class TroopTab extends DatabaseTab {
 		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnAI = new ScriptButton(select, 1);
+		LuaButton btnAI = new LuaButton(select, 1);
 		btnAI.setPathText(txtAI);
 		addControl(btnAI, "ai");
 		

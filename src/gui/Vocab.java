@@ -307,9 +307,10 @@ public class Vocab {
 	public String COLUMN = "Column";
 	public String ROW = "Row";
 	
-	// Script
+	// Script / Rule
 	public String PARAM = "Parameters";
 	public String GLOBAL = "Global";
+	public String CONDITION = "Condition";
 
 	// ========================================================================
 	// Field
