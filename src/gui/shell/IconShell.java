@@ -34,11 +34,11 @@ public class IconShell extends LObjectShell<Icon> {
 	
 	public IconShell(Shell parent, int style) {
 		super(parent);
-		setSize(600, 400);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(400, 300));
+		setMinimumSize(new Point(600, 400));
+		setSize(new Point(800, 800));
 		
 		content.setLayout(new FillLayout());
 		
@@ -85,6 +85,8 @@ public class IconShell extends LObjectShell<Icon> {
 		scroll.setContent(image);
 		
 		sashForm.setWeights(new int[] {1, 2});
+		
+		pack();
 	}
 	
 	private void setImage(Animation anim) {

@@ -55,7 +55,7 @@ public class Item extends Data {
 		public int mul = 0;
 		
 		public String toString() {
-			return key + " * " + (mul / 100 + 1) + " + " + add;
+			return key + " * " + (mul / 100f + 1) + " + " + add;
 		}
 		
 		public boolean equals(Object obj) {

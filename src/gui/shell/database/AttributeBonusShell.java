@@ -25,7 +25,7 @@ public class AttributeBonusShell extends ObjectShell<Attribute> {
 		Label lblName = new Label(contentEditor, SWT.NONE);
 		lblName.setText(Vocab.instance.KEY);
 		
-		LText txtKey = new LText(contentEditor, SWT.BORDER);
+		LText txtKey = new LText(contentEditor, SWT.NONE);
 		GridData gd_txtKey = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_txtKey.widthHint = 136;
 		txtKey.setLayoutData(gd_txtKey);
@@ -34,7 +34,7 @@ public class AttributeBonusShell extends ObjectShell<Attribute> {
 		Label lblAdd = new Label(contentEditor, SWT.NONE);
 		lblAdd.setText(Vocab.instance.ATTADD);
 		
-		LSpinner spnAdd = new LSpinner(contentEditor, SWT.BORDER);
+		LSpinner spnAdd = new LSpinner(contentEditor, SWT.NONE);
 		spnAdd.setMaximum(999999);
 		spnAdd.setMinimum(-999999);
 		spnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -43,7 +43,7 @@ public class AttributeBonusShell extends ObjectShell<Attribute> {
 		Label lblMul = new Label(contentEditor, SWT.NONE);
 		lblMul.setText(Vocab.instance.ATTMUL);
 		
-		LSpinner spnMul = new LSpinner(contentEditor, SWT.BORDER);
+		LSpinner spnMul = new LSpinner(contentEditor, SWT.NONE);
 		spnMul.setMaximum(999999);
 		spnMul.setMinimum(-999999);
 		spnMul.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

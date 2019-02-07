@@ -19,9 +19,6 @@ public abstract class BonusShell extends ObjectShell<Bonus> {
 
 	public BonusShell(Shell parent) {
 		super(parent);
-		GridData gridData = (GridData) contentEditor.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
 		setMinimumSize(new Point(372, 329));
 		contentEditor.setLayout(new GridLayout(2, false));
 		

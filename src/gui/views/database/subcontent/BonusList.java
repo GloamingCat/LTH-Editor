@@ -64,7 +64,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 				Object obj = getDataTree().get(item.id);
 				String id = includeID ? stringID(item.id) : "";
 				if (obj == null)
-					return id + "    ";
+					return "NULL";
 				return id + obj.toString() + ": " + item.value;
 			}
 		};
