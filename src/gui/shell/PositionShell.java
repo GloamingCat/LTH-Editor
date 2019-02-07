@@ -14,6 +14,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -25,7 +27,6 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LTree;
-
 import data.field.Field;
 import data.field.FieldNode;
 import data.subcontent.Position;
@@ -138,6 +139,13 @@ public class PositionShell extends LObjectShell<Position> {
 		gl_coordinates.marginWidth = 0;
 		coordinates.setLayout(gl_coordinates);
 		
+		ModifyListener redraw = new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				canvas.redraw();
+			}
+		};
+		
 		Label lblX = new Label(coordinates, SWT.NONE);
 		lblX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblX.setText("X");
@@ -145,6 +153,7 @@ public class PositionShell extends LObjectShell<Position> {
 		spnX = new Spinner(coordinates, SWT.BORDER);
 		spnX.setMinimum(1);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnX.addModifyListener(redraw);
 		
 		Label lblY = new Label(coordinates, SWT.NONE);
 		lblY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -153,6 +162,7 @@ public class PositionShell extends LObjectShell<Position> {
 		spnY = new Spinner(coordinates, SWT.BORDER);
 		spnY.setMinimum(1);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnY.addModifyListener(redraw);
 		
 		Label lblH = new Label(coordinates, SWT.NONE);
 		lblH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -161,6 +171,7 @@ public class PositionShell extends LObjectShell<Position> {
 		spnH = new Spinner(coordinates, SWT.BORDER);
 		spnH.setMinimum(1);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnH.addModifyListener(redraw);
 		
 		Label lblDirection = new Label(bottom, SWT.NONE);
 		lblDirection.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -194,6 +205,8 @@ public class PositionShell extends LObjectShell<Position> {
 			return;
 		Field field = Project.current.fieldTree.loadField(node);
 		spnH.setMaximum(field.prefs.maxHeight);
+		spnX.setMaximum(field.sizeX);
+		spnY.setMaximum(field.sizeY);
 		canvas.setField(field);
 		scrolledComposite.layout();
 		scrolledComposite.setMinSize(canvas.getSize());
