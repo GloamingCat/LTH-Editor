@@ -195,6 +195,8 @@ public class Vocab {
 	public String CENTERTIME = "Center Time";
 	public String TARGETTIME = "Target Time";
 	public String FINISHTIME = "Finish Time";
+	public String CASTMASK = "Range Mask";
+	public String EFFECTMASK = "Effect Mask";
 	public String FAR = "Far";
 	public String NEAR = "Near";
 	public String MIN = "Minimum";

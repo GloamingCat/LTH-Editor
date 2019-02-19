@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.EffectList;
-import gui.views.database.subcontent.RangeEditor;
+import gui.views.database.subcontent.MaskEditor;
 import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Text;
 import project.Project;
 
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class SkillTab extends DatabaseTab {
 
@@ -332,30 +333,27 @@ public class SkillTab extends DatabaseTab {
 		
 		// Range
 		
-		Group grpRange = new Group(right, SWT.NONE);
-		GridLayout gl_grpRange = new GridLayout(1, false);
-		gl_grpRange.marginTop = 5;
-		gl_grpRange.marginHeight = 0;
-		gl_grpRange.marginWidth = 0;
-		grpRange.setLayout(gl_grpRange);
-		grpRange.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpRange.setText(Vocab.instance.RANGE);
-		TabFolder tabRange = new TabFolder(grpRange, SWT.NONE);
-		tabRange.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Composite range = new Composite(right, SWT.NONE);
+		range.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_range = new GridLayout(2, false);
+		gl_range.marginWidth = 0;
+		gl_range.marginHeight = 0;
+		range.setLayout(gl_range);
 		
-		TabItem tabEffectRange = new TabItem(tabRange, SWT.NONE);
-		tabEffectRange.setText(Vocab.instance.EFFECT);
-		RangeEditor effectRange = new RangeEditor(tabRange, SWT.NONE);
-		effectRange.attributeName = "effectRange";
-		tabEffectRange.setControl(effectRange);
-		addChild(effectRange);
-
-		TabItem tabCastRange = new TabItem(tabRange, SWT.NONE);
-		tabCastRange.setText(Vocab.instance.CAST);
-		RangeEditor castRange = new RangeEditor(tabRange, SWT.NONE);
-		castRange.attributeName = "castRange";
-		tabCastRange.setControl(castRange);
-		addChild(castRange);
+		Group grpEffect = new Group(range, SWT.NONE);
+		grpEffect.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		grpEffect.setText(Vocab.instance.EFFECTMASK);
+		MaskEditor effectRange = new MaskEditor(grpEffect, SWT.NONE);
+		addChild(effectRange, "effectMask");
+		
+		Group grpCast = new Group(range, SWT.NONE);
+		grpCast.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		grpCast.setText(Vocab.instance.CASTMASK);
+		MaskEditor castRange = new MaskEditor(grpCast, SWT.NONE);
+		castRange.trueColor = SWTResourceManager.getColor(SWT.COLOR_BLUE);
+		addChild(castRange, "castMask");
 		
 		// Effects
 		

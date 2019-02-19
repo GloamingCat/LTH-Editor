@@ -1,5 +1,7 @@
 package data;
 
+import java.util.Arrays;
+
 import project.Project;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
@@ -46,15 +48,15 @@ public class Skill extends Data {
 	public LDataList<SkillStatus> statusRemove = new LDataList<>();
 	
 	// Range
-	public Range effectRange = new Range();
-	public Range castRange = new Range();
+	public Mask effectMask = new Mask();
+	public Mask castMask = new Mask();
 	
 	public Skill() {
 		effects.add(new Effect());
 		costs.add(new Tag("sp", "10"));
 	}
 	
-	public static class Range {
+	public static class Ring {
 		
 		public int minh = 0;
 		public int maxh = 0;
@@ -62,7 +64,7 @@ public class Skill extends Data {
 		public int near = 0;
 		
 		public String toString() {
-			return "Circle [" + near + ", " + far + "], Height [" + minh + ", " + maxh + "]";
+			return "Ring [" + near + ", " + far + "], Height [" + minh + ", " + maxh + "]";
 		}
 		
 	}
@@ -77,6 +79,32 @@ public class Skill extends Data {
 		
 		public String toString() {
 			return "\"" + key + "\": " + basicResult;
+		}
+		
+	}
+	
+	public static class Mask {
+		
+		public int centerX = 1;
+		public int centerY = 1;
+		public int centerH = 0;
+		
+		public boolean[][][] grid = new boolean[][][] {
+			{
+				{false, true, false},
+				{true, true,  true},
+				{false, true, false}
+			}
+		};
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) return true;
+			if (obj == null) return false;
+			if (getClass() != obj.getClass()) return false;
+			Mask other = (Mask) obj;
+			return centerH == other.centerH && centerX == other.centerX && 
+					centerY == other.centerY && Arrays.deepEquals(grid, other.grid);
 		}
 		
 	}
