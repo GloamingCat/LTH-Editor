@@ -97,9 +97,14 @@ public class TilePainter {
 		int h = rect.height * anim.transform.scaleY / 100;
 		img = ImageHelper.newImage(rect.width, rect.height);
 		GC gc = new GC(img);
+		Image texture = obj.image.getImage();
+		Rectangle t = texture.getBounds();
+		rect.x = Math.min(rect.x, t.width - 1);
+		rect.y = Math.min(rect.y, t.height - 1);
 		gc.setAlpha(anim.transform.alpha * obj.transform.alpha / 255);
-		gc.drawImage(obj.image.getImage(), 
-				rect.x, rect.y, rect.width, rect.height,
+		gc.drawImage(texture, rect.x, rect.y, 
+				Math.min(rect.width, t.width - rect.x),
+				Math.min(rect.height, t.height - rect.y),
 				0, 0, w, h);
 		gc.dispose();
 		ImageData data = img.getImageData();

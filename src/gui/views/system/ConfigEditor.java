@@ -155,6 +155,7 @@ public class ConfigEditor extends LView {
 		cmbScale.setIncludeID(false);
 		cmbScale.setItems(new String[] {
 			Vocab.instance.NOSCALE,
+			Vocab.instance.INTEGERONLY,
 			Vocab.instance.KEEPRATIO,
 			Vocab.instance.FREESCALE
 		});
@@ -231,7 +232,7 @@ public class ConfigEditor extends LView {
 		gridEditor.addControl(spnTileB, "tileB");
 		
 		Label lblTileS = new Label(gridEditor, SWT.NONE);
-		lblTileS.setText(Vocab.instance.TILEBASE);
+		lblTileS.setText(Vocab.instance.TILESIDE);
 		
 		LSpinner spnTileS = new LSpinner(gridEditor, SWT.NONE);
 		spnTileS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

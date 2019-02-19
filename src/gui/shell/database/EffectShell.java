@@ -1,78 +1,57 @@
 package gui.shell.database;
 
 import gui.Vocab;
+import gui.shell.ObjectShell;
 
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Skill.Effect;
-import lwt.dialog.LObjectShell;
+import lwt.widget.LCheckButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
-public class EffectShell extends LObjectShell<Effect> {
-	
-	private Text txtKey;
-	private Text txtSuccessRate;
-	private Text txtBasicResult;
-	private Button btnHeal;
-	private Button btnAbsorb;
+public class EffectShell extends ObjectShell<Effect> {
 
 	public EffectShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(455, 193));
-		content.setLayout(new GridLayout(2, false));
+		setMinimumSize(new Point(300, 100));
+		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(content, SWT.NONE);
+		Label lblName = new Label(contentEditor, SWT.NONE);
 		lblName.setText(Vocab.instance.KEY);
 		
-		txtKey = new Text(content, SWT.BORDER);
-		GridData gd_txtKey = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_txtKey.widthHint = 136;
-		txtKey.setLayoutData(gd_txtKey);
+		LText txtKey = new LText(contentEditor);
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtKey, "key");
 		
-		Label lblBasicResult = new Label(content, SWT.NONE);
+		Label lblBasicResult = new Label(contentEditor, SWT.NONE);
 		lblBasicResult.setText(Vocab.instance.BASICRESULT);
 		
-		txtBasicResult = new Text(content, SWT.BORDER);
+		LText txtBasicResult = new LText(contentEditor);
 		txtBasicResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtBasicResult, "basicResult");
 		
-		Label lblSuccessRate = new Label(content, SWT.NONE);
+		Label lblSuccessRate = new Label(contentEditor, SWT.NONE);
 		lblSuccessRate.setText(Vocab.instance.SUCCESSRATE);
 
-		txtSuccessRate = new Text(content, SWT.BORDER);
+		LText txtSuccessRate = new LText(contentEditor);
 		txtSuccessRate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtSuccessRate, "successRate");
 		
-		btnHeal = new Button(content, SWT.CHECK);
+		LCheckButton btnHeal = new LCheckButton(contentEditor);
 		btnHeal.setText(Vocab.instance.HEAL);
+		addControl(btnHeal, "heal");
 		
-		btnAbsorb = new Button(content, SWT.CHECK);
+		LCheckButton btnAbsorb = new LCheckButton(contentEditor);
 		btnAbsorb.setText(Vocab.instance.ABSORB);
+		addControl(btnAbsorb, "absorb");
 		
 		pack();
-	}
-	
-	public void open(Effect initial) {
-		super.open(initial);
-		txtKey.setText(initial.key);
-		txtBasicResult.setText(initial.basicResult);
-		txtSuccessRate.setText(initial.successRate);
-	}
-
-	@Override
-	protected Effect createResult(Effect initial) {
-		Effect effect = new Effect();
-		effect.key = txtKey.getText();
-		effect.successRate = txtSuccessRate.getText();
-		effect.basicResult = txtBasicResult.getText();
-		effect.heal = btnHeal.getSelection();
-		effect.absorb = btnAbsorb.getSelection();
-		return effect;
 	}
 	
 }

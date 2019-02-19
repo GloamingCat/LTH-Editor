@@ -83,10 +83,9 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		mntmSystemEditor.setText(Vocab.instance.SYSTEMEDITOR + "\tF4");
 		mntmSystemEditor.setAccelerator(SWT.F4);
 		
+		defaultView = fieldTreeEditor;
 		applicationName = getText();
-		if (loadDefault()) {
-			setCurrentView(fieldTreeEditor);
-		}
+		loadDefault();
 	}
 	
 	@Override

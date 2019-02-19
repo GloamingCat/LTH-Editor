@@ -101,12 +101,12 @@ public class Project implements LSerializer {
 	
 	@Override
 	public void initialize() {
+		current = this;
 		for (LSerializer data : allData) {
 			data.initialize();
 		}
 		FieldHelper.reloadMath();
 		TilePainter.reload();
-		current = this;
 	}	
 
 	@Override
@@ -120,13 +120,13 @@ public class Project implements LSerializer {
 
 	@Override
 	public boolean load() {
+		current = this;
 		for (LSerializer data : allData) {
 			if (!data.load())
 				return false;
 		}
-		current = this;
-		//FieldHelper.reloadMath();
-		//TilePainter.reloadConfig();
+		FieldHelper.reloadMath();
+		TilePainter.reload();
 		return true;
 	}
 

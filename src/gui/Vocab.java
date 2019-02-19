@@ -91,9 +91,10 @@ public class Vocab {
 	public String WIDTHSCALE = "Width Scale";
 	public String HEIGHTSCALE = "Height Scale";
 	public String SCALETYPE = "Scale Type";
-	public String NOSCALE = "No Scale";
-	public String KEEPRATIO = "Keep Ratio";
-	public String FREESCALE = "Fill Screen";
+	public String NOSCALE = "No scaling";
+	public String INTEGERONLY = "Only by integers";
+	public String KEEPRATIO = "Keep ratio";
+	public String FREESCALE = "Fill screen";
 	
 	// Player
 	public String PLAYER = "Player";
