@@ -1,15 +1,19 @@
 package gui.views.database.subcontent;
 
+import gui.shell.database.MaskShell;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Skill.Mask;
-
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LObjectEditor;
 import lwt.widget.LObjectButton;
 
@@ -62,6 +66,16 @@ public class MaskEditor extends LObjectEditor {
 			}
 		};
 		button.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		button.setShellFactory(new LShellFactory<Mask>() {
+			@Override
+			public LObjectShell<Mask> createShell(Shell parent) {
+				MaskShell shell = new MaskShell(parent);
+				shell.trueColor = trueColor;
+				shell.falseColor = falseColor;
+				shell.centerColor = centerColor;
+				return shell;
+			}
+		});
 		
 		addControl(button, "");
 		
