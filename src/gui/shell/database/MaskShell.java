@@ -71,6 +71,11 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMinX.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				int n = spnMaxX.getSelection() + spnMinX.getSelection() + 1;
+				if (n < grid[0].length)
+					shrink(n, grid[0][0].length, grid.length, grid[0].length - n, 0, 0);
+				else 
+					expand(n, grid[0][0].length, grid.length, n - grid[0].length, 0, 0);
 			}
 		});
 		spnMinX.setMaximum(20);
@@ -83,6 +88,11 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMinY.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				int n = spnMaxY.getSelection() + spnMinY.getSelection() + 1;
+				if (n < grid[0][0].length)
+					shrink(grid[0].length, n, grid.length, 0, grid[0][0].length - n, 0);
+				else 
+					expand(grid[0].length, n, grid.length, 0, n - grid[0][0].length, 0);
 			}
 		});
 		spnMinY.setMaximum(20);
@@ -112,6 +122,11 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxX.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				int n = spnMaxX.getSelection() + spnMinX.getSelection() + 1;
+				if (n < grid[0].length)
+					shrink(n, grid[0][0].length, grid.length, 0, 0, 0);
+				else 
+					expand(n, grid[0][0].length, grid.length, 0, 0, 0);
 			}
 		});
 		spnMaxX.setMaximum(20);
@@ -124,6 +139,11 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxY.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				int n = spnMaxY.getSelection() + spnMinY.getSelection() + 1;
+				if (n < grid[0][0].length)
+					shrink(grid[0].length, n, grid.length, 0, 0, 0);
+				else 
+					expand(grid[0].length, n, grid.length, 0, 0, 0);
 			}
 		});
 		spnMaxY.setMaximum(20);
@@ -151,7 +171,6 @@ public class MaskShell extends LObjectShell<Mask> {
 		int x0 = this.x0 + canvas.getSize().x / 2;
 		int y0 = this.y0 + canvas.getSize().y / 2;
 		int currentH = spnMinH.getSelection() + height;
-		System.out.println(grid.length);
 		for (int h = 0; h < grid.length; h++) {
 			gc.setAlpha(h == currentH ? 255 : 127);
 			for (int x = 0; x < grid[h].length; x++) {
