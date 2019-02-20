@@ -167,8 +167,6 @@ public class Vocab {
 	public String EQUIPITEM = "Item ID";
 	
 	// Skill
-	public String RANGE = "Range";
-	public String EFFECT = "Effect";
 	public String COSTS = "Costs";
 	public String ATTACK = "Attack";
 	public String SUPPORT = "Support";
@@ -181,7 +179,11 @@ public class Vocab {
 	public String ALWAYS = "Always";
 	public String BATTLEONLY = "Battle Only";
 	public String FIELDONLY = "Field Only";
-	public String STEPONCAST = "Step on Cast";
+	public String CASTMASK = "Range Mask";
+	public String EFFECTMASK = "Effect Mask";
+	public String USERELEMENTS = "Include user's elements";
+	public String PROJECTILE = "Projectile";
+	public String ROTATE = "Rotate";
 	public String USERANIMATIONS = "User Animations";
 	public String BATTLEANIMATIONS = "Battle Animations";
 	public String MIRROR = "Mirror";
@@ -195,18 +197,7 @@ public class Vocab {
 	public String CENTERTIME = "Center Time";
 	public String TARGETTIME = "Target Time";
 	public String FINISHTIME = "Finish Time";
-	public String CASTMASK = "Range Mask";
-	public String EFFECTMASK = "Effect Mask";
-	public String FAR = "Far";
-	public String NEAR = "Near";
-	public String MIN = "Minimum";
-	public String MAX = "Maximum";
-	public String EFFECTS = "Effects";
-	public String BASICRESULT = "Basic Result";
-	public String SUCCESSRATE = "Success Rate";
-	public String HEAL = "Heal";
-	public String ABSORB = "Absorb";
-	public String USERELEMENTS = "Include user's elements";
+	public String STEPONCAST = "Step on Cast";
 	
 	// Animation
 	public String COLUMNS = "Columns";
@@ -315,6 +306,13 @@ public class Vocab {
 	public String GLOBAL = "Global";
 	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
+	
+	// Effect
+	public String EFFECTS = "Effects";
+	public String BASICRESULT = "Basic Result";
+	public String SUCCESSRATE = "Success Rate";
+	public String HEAL = "Heal";
+	public String ABSORB = "Absorb";
 
 	// ========================================================================
 	// Field

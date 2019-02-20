@@ -182,7 +182,7 @@ public class SkillTab extends DatabaseTab {
 		gl_right.marginHeight = 0;
 		right.setLayout(gl_right);
 		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_right.widthHint = 300;
+		gd_right.widthHint = 200;
 		right.setLayoutData(gd_right);
 		
 		Group grpAnimations = new Group(right, SWT.NONE);
@@ -282,6 +282,34 @@ public class SkillTab extends DatabaseTab {
 		btnStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 		btnStep.setText(Vocab.instance.STEPONCAST);
 		addControl(btnStep, "stepOnCast");
+		
+		// Projectile
+		
+		TabItem tabProjectileAnim = new TabItem(tabAnim, SWT.NONE);
+		tabProjectileAnim.setText(Vocab.instance.PROJECTILE);
+		Composite projectileAnim = new Composite(tabAnim, SWT.NONE);
+		tabProjectileAnim.setControl(projectileAnim);
+		projectileAnim.setLayout(new GridLayout(3, false));
+		
+		Label lblProjectile = new Label(projectileAnim, SWT.NONE);
+		lblProjectile.setText(Vocab.instance.ANIMATION);
+		
+		Text txtProjectileAnim = new Text(projectileAnim, SWT.BORDER | SWT.READ_ONLY);
+		txtProjectileAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		IDButton btnProjectileAnim = new IDButton(projectileAnim, 1) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		btnProjectileAnim.setNameText(txtProjectileAnim);
+		addControl(btnProjectileAnim, "projectileID");
+		
+		LCheckButton btnRotate = new LCheckButton(projectileAnim, SWT.NONE);
+		btnRotate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
+		btnRotate.setText(Vocab.instance.ROTATE);
+		addControl(btnRotate, "rotate");
 		
 		// Animation Options
 		

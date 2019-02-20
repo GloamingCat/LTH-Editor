@@ -23,6 +23,10 @@ public class Skill extends Data {
 	public LDataList<Bonus> elements = new LDataList<>(); 
 	public boolean userElements = true;
 	
+	// Projectile
+	public int projectileID = -1;
+	public boolean rotate = false;
+	
 	// User Animations
 	public String userLoadAnim = "";
 	public String userCastAnim = "";
@@ -85,17 +89,10 @@ public class Skill extends Data {
 	
 	public static class Mask {
 		
-		public int centerX = 1;
-		public int centerY = 1;
+		public int centerX = 0;
+		public int centerY = 0;
 		public int centerH = 0;
-		
-		public boolean[][][] grid = new boolean[][][] {
-			{
-				{false, true, false},
-				{true, true,  true},
-				{false, true, false}
-			}
-		};
+		public boolean[][][] grid = new boolean[][][] {{{true}}};
 
 		@Override
 		public boolean equals(Object obj) {
