@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -20,7 +21,9 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Combo;
 
 public class MaskShell extends LObjectShell<Mask> {
 
@@ -38,6 +41,7 @@ public class MaskShell extends LObjectShell<Mask> {
 	public Color falseColor;
 	public Color trueColor;
 	public Color centerColor;
+	private Combo cmbHeight;
 	
 	/**
 	 * Create the shell.
@@ -50,15 +54,19 @@ public class MaskShell extends LObjectShell<Mask> {
 		Label lblMinH = new Label(content, SWT.NONE);
 		lblMinH.setText("Min Height");
 		
+		// Minimum Limits
+		
 		spnMinH = new Spinner(content, SWT.BORDER);
 		spnMinH.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				int n = spnMaxH.getSelection() + spnMinH.getSelection() + 1;
-				if (n < grid.length)
+				if (n < grid.length) {
+					height = Math.max(height, -spnMinH.getSelection());
 					shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
-				else 
+				} else 
 					expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
+				updateLayerCombo();
 			}
 		});
 		spnMinH.setMaximum(20);
@@ -101,15 +109,19 @@ public class MaskShell extends LObjectShell<Mask> {
 		Label lblMaxH = new Label(content, SWT.NONE);
 		lblMaxH.setText("Max Height");
 		
+		// Maximum Limits
+		
 		spnMaxH = new Spinner(content, SWT.BORDER);
 		spnMaxH.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				int n = spnMaxH.getSelection() + spnMinH.getSelection() + 1;
-				if (n < grid.length)
+				if (n < grid.length) {
+					height = Math.min(height, spnMaxH.getSelection());
 					shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
-				else 
+				} else 
 					expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);
+				updateLayerCombo();
 			}
 		});
 		spnMaxH.setMaximum(20);
@@ -149,18 +161,55 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxY.setMaximum(20);
 		spnMaxY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
+		Label lblHeight = new Label(content, SWT.NONE);
+		lblHeight.setText("Height");
+		
+		cmbHeight = new Combo(content, SWT.READ_ONLY);
+		cmbHeight.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				height = cmbHeight.getSelectionIndex() - spnMinH.getSelection();
+				canvas.redraw();
+			}
+		});
+		GridData gd_cmbHeight = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_cmbHeight.widthHint = 0;
+		cmbHeight.setLayoutData(gd_cmbHeight);
+		new Label(content, SWT.NONE);
+		new Label(content, SWT.NONE);
+		new Label(content, SWT.NONE);
+		new Label(content, SWT.NONE);
+		
 		canvas = new Composite(content, SWT.NONE);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 6, 1));
 		
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				drawGrid(e.gc);
+				Image buffer = new Image(Display.getCurrent(), getBounds());
+				GC gc = new GC(buffer);
+				gc.setBackground(getBackground());
+				gc.fillRectangle(buffer.getBounds());
+				drawGrid(gc);
+				gc.dispose();
+				e.gc.drawImage(buffer, 0, 0);
+				buffer.dispose();
 			}
 		});
 		
+		// Flip Tile
+		
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseDown(MouseEvent arg0) {
+			public void mouseDown(MouseEvent e) {
+				int h = (height + spnMinH.getSelection());
+				int px = e.x - (x0 + canvas.getSize().x / 2);
+				int py = e.y - (y0 + canvas.getSize().y / 2);
+				int pd = h * FieldHelper.config.grid.pixelsPerHeight;
+				Point tile = FieldHelper.math.pixel2Tile(px, py, pd);
+				try {
+					grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];
+					canvas.redraw();
+				} catch (IndexOutOfBoundsException ex) {}
 			}
 		});
 		
@@ -193,7 +242,6 @@ public class MaskShell extends LObjectShell<Mask> {
 	
 	private void expand(int x, int y, int h, int dx, int dy, int dh) {
 		boolean[][][] newgrid = new boolean[h][x][y];
-		System.out.println(x + " " + y + " " + h);
 		for (int k = 0; k < grid.length; k++)
 		for (int i = 0; i < grid[k].length; i++)
 		for (int j = 0; j < grid[k][i].length; j++)
@@ -217,9 +265,23 @@ public class MaskShell extends LObjectShell<Mask> {
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
 		canvas.redraw();
 	}
+	
+	private void updateLayerCombo() {
+		String[] items = new String[grid.length];
+		for (int i = 0; i < grid.length; i++)
+			items[i] = "" + (i - spnMinH.getSelection());
+		cmbHeight.setItems(items);
+		cmbHeight.select(height + spnMinH.getSelection());
+		canvas.redraw();
+	}
 
 	public void open(Mask initial) {
 		grid = initial.grid.clone();
+		for (int i = 0; i < grid.length; i++) {
+			grid[i] = initial.grid[i].clone();
+			for (int j = 0; j < grid[i].length; j++)
+				grid[i][j] = initial.grid[i][j].clone();
+		}
 		spnMinH.setSelection(initial.centerH);
 		spnMinX.setSelection(initial.centerX);
 		spnMinY.setSelection(initial.centerY);
@@ -229,13 +291,17 @@ public class MaskShell extends LObjectShell<Mask> {
 		Point p = FieldHelper.math.pixelSize(grid[0].length, grid[0][0].length);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(grid[0][0].length) - p.y / 2;
+		updateLayerCombo();
 		super.open(initial);
 	}
 	
 	@Override
 	protected Mask createResult(Mask initial) {
-		// TODO Auto-generated method stub
-		return null;
+		Mask m = new Mask();
+		m.grid = grid;
+		m.centerH = spnMinH.getSelection();
+		m.centerX = spnMinX.getSelection();
+		m.centerY = spnMinY.getSelection();
+		return m;
 	}
-
 }
