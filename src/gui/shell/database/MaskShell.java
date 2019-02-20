@@ -2,7 +2,6 @@ package gui.shell.database;
 
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
-
 import data.Skill.Mask;
 import lwt.dialog.LObjectShell;
 
@@ -20,11 +19,12 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 
 public class MaskShell extends LObjectShell<Mask> {
 
-	boolean[][][] grid;
+	private Composite canvas;
 	private Spinner spnMinH;
 	private Spinner spnMinX;
 	private Spinner spnMinY;
@@ -32,7 +32,8 @@ public class MaskShell extends LObjectShell<Mask> {
 	private Spinner spnMaxX;
 	private Spinner spnMaxY;
 	
-	int x0, y0;
+	boolean[][][] grid;
+	int x0, y0, height;
 	
 	public Color falseColor;
 	public Color trueColor;
@@ -53,6 +54,11 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMinH.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				int n = spnMaxH.getSelection() + spnMinH.getSelection() + 1;
+				if (n < grid.length)
+					shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
+				else 
+					expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
 			}
 		});
 		spnMinH.setMaximum(20);
@@ -89,6 +95,11 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxH.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				int n = spnMaxH.getSelection() + spnMinH.getSelection() + 1;
+				if (n < grid.length)
+					shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
+				else 
+					expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);
 			}
 		});
 		spnMaxH.setMaximum(20);
@@ -118,39 +129,74 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxY.setMaximum(20);
 		spnMaxY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Composite canvas = new Composite(content, SWT.NONE);
+		canvas = new Composite(content, SWT.NONE);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 6, 1));
 		
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				FieldPainter painter = new FieldPainter();
-				int dx = x0 + canvas.getSize().x / 2;
-				int dy = y0 + canvas.getSize().y / 2;
-				for (int h = 0; h < grid.length; h++)
-				for (int x = 0; x < grid[h].length; x++)
-				for (int y = 0; y < grid[h][x].length; y++) {
-					e.gc.setBackground(grid[h][x][y] ? trueColor : falseColor);
-					Point p = FieldHelper.math.tile2Pixel(x, y, h);
-					painter.fillTile(e.gc, p.x + dx, p.y + dy);
-					painter.drawTile(e.gc, p.x + dx, p.y + dy);
-				}
-				int h = spnMinH.getSelection();
-				int x = spnMinX.getSelection();
-				int y = spnMinY.getSelection();
-				Point p = FieldHelper.math.tile2Pixel(x, y, h);
-				e.gc.setForeground(centerColor);
-				painter.scale = 0.8f;
-				painter.drawGrid(e.gc, p.x + dx, p.y + dy);
+				drawGrid(e.gc);
 			}
 		});
 		
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
-
 			}
 		});
 		
+	}
+	
+	private void drawGrid(GC gc) {
+		FieldPainter painter = new FieldPainter();
+		int x0 = this.x0 + canvas.getSize().x / 2;
+		int y0 = this.y0 + canvas.getSize().y / 2;
+		int currentH = spnMinH.getSelection() + height;
+		System.out.println(grid.length);
+		for (int h = 0; h < grid.length; h++) {
+			gc.setAlpha(h == currentH ? 255 : 127);
+			for (int x = 0; x < grid[h].length; x++) {
+				for (int y = 0; y < grid[h][x].length; y++) {
+					gc.setBackground(grid[h][x][y] ? trueColor : falseColor);
+					Point p = FieldHelper.math.tile2Pixel(x, y, h);
+					painter.fillTile(gc, p.x + x0, p.y + y0);
+					painter.drawTile(gc, p.x + x0, p.y + y0);
+				}
+			}
+		}
+		int h = spnMinH.getSelection();
+		int x = spnMinX.getSelection();
+		int y = spnMinY.getSelection();
+		Point p = FieldHelper.math.tile2Pixel(x, y, h);
+		gc.setForeground(centerColor);
+		painter.scale = 0.8f;
+		painter.drawGrid(gc, p.x + x0, p.y + y0);
+	}
+	
+	private void expand(int x, int y, int h, int dx, int dy, int dh) {
+		boolean[][][] newgrid = new boolean[h][x][y];
+		System.out.println(x + " " + y + " " + h);
+		for (int k = 0; k < grid.length; k++)
+		for (int i = 0; i < grid[k].length; i++)
+		for (int j = 0; j < grid[k][i].length; j++)
+			newgrid[k + dh][i + dx][j + dy] = grid[k][i][j];
+		grid = newgrid;
+		Point p = FieldHelper.math.pixelSize(x, y);
+		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
+		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
+		canvas.redraw();
+	}
+	
+	private void shrink(int x, int y, int h, int dx, int dy, int dh) {
+		boolean[][][] newgrid = new boolean[h][x][y];
+		for (int k = 0; k < h; k++)
+		for (int i = 0; i < x; i++)
+		for (int j = 0; j < y; j++)
+			newgrid[k][i][j] = grid[k + dh][i + dx][j + dy];
+		grid = newgrid;
+		Point p = FieldHelper.math.pixelSize(x, y);
+		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
+		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
+		canvas.redraw();
 	}
 
 	public void open(Mask initial) {
