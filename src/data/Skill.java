@@ -26,6 +26,7 @@ public class Skill extends Data {
 	// Projectile
 	public int projectileID = -1;
 	public boolean rotate = false;
+	public boolean applyTransform = false;
 	
 	// User Animations
 	public String userLoadAnim = "";

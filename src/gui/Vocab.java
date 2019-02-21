@@ -184,6 +184,7 @@ public class Vocab {
 	public String USERELEMENTS = "Include user's elements";
 	public String PROJECTILE = "Projectile";
 	public String ROTATE = "Rotate";
+	public String APPLYTRANSFORM = "Apply battle animation transform";
 	public String USERANIMATIONS = "User Animations";
 	public String BATTLEANIMATIONS = "Battle Animations";
 	public String MIRROR = "Mirror";

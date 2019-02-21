@@ -311,6 +311,11 @@ public class SkillTab extends DatabaseTab {
 		btnRotate.setText(Vocab.instance.ROTATE);
 		addControl(btnRotate, "rotate");
 		
+		LCheckButton btnAnimTransform = new LCheckButton(projectileAnim, SWT.NONE);
+		btnAnimTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
+		btnAnimTransform.setText(Vocab.instance.APPLYTRANSFORM);
+		addControl(btnAnimTransform, "applyTransform");
+		
 		// Animation Options
 		
 		TabItem tabAnimOptions = new TabItem(tabAnim, SWT.NONE);
@@ -354,8 +359,10 @@ public class SkillTab extends DatabaseTab {
 		txtFinishTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtFinishTime, "finishTime");
 		
+		Label label = new Label(animOptions, SWT.NONE);
+		label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		LCheckButton btnDamageAnim = new LCheckButton(animOptions, SWT.NONE);
-		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
 		addControl(btnDamageAnim, "damageAnim");
 		
