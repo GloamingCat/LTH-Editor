@@ -40,7 +40,7 @@ public class MaskEditor extends LObjectEditor {
 			public void paintControl(PaintEvent e) {
 				if (currentObject == null) return;
 				Mask m = (Mask) currentObject;
-				boolean[][] middle = m.grid[m.centerH];
+				boolean[][] middle = m.grid[m.centerH - 1];
 				e.gc.drawRectangle(new Rectangle(0, 0, 
 						middle.length * cellSize, 
 						middle[0].length * cellSize));
@@ -54,8 +54,10 @@ public class MaskEditor extends LObjectEditor {
 					}
 				}
 				e.gc.setForeground(centerColor);
-				e.gc.drawRectangle(border + m.centerX * cellSize, border + m.centerY * cellSize,
-						cellSize - border - 2, cellSize - border - 2);
+				e.gc.drawRectangle(border + (m.centerX - 1) * cellSize, 
+						border + (m.centerY - 1)* cellSize,
+						cellSize - border - 2, 
+						cellSize - border - 2);
 			}
 		});
 		LObjectButton<Mask> button = new LObjectButton<Mask>(this, SWT.NONE) {

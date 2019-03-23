@@ -24,13 +24,15 @@ public class GameCharacter extends Data {
 	public Animation defaultAnimation() {
 		if (animations.isEmpty())
 			return null;
-		int id = 0;
+		int id = -1;
 		for (Node n : animations) {
 			if (n.name.contains("Battle:Idle")) {
 				id = n.id;
 				break;
 			}
 		}
+		if (id == -1 && animations.size() > 0)
+			id = animations.get(0).id;
 		return (Animation) Project.current.animations.getData().get(id);
 	}
 	

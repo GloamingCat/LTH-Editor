@@ -18,5 +18,9 @@ public class Bonus {
 			return bonus.id == id && bonus.value == value;
 		} else return false;
 	}
+	
+	public String toString() {
+		return id + ": " + value;
+	}
 
 }

@@ -282,12 +282,12 @@ public class MaskShell extends LObjectShell<Mask> {
 			for (int j = 0; j < grid[i].length; j++)
 				grid[i][j] = initial.grid[i][j].clone();
 		}
-		spnMinH.setSelection(initial.centerH);
-		spnMinX.setSelection(initial.centerX);
-		spnMinY.setSelection(initial.centerY);
-		spnMaxH.setSelection(grid.length - initial.centerH - 1);
-		spnMaxX.setSelection(grid[0].length - initial.centerX - 1);
-		spnMaxY.setSelection(grid[0][0].length - initial.centerY - 1);
+		spnMinH.setSelection(initial.centerH - 1);
+		spnMinX.setSelection(initial.centerX - 1);
+		spnMinY.setSelection(initial.centerY - 1);
+		spnMaxH.setSelection(grid.length - initial.centerH);
+		spnMaxX.setSelection(grid[0].length - initial.centerX);
+		spnMaxY.setSelection(grid[0][0].length - initial.centerY);
 		Point p = FieldHelper.math.pixelSize(grid[0].length, grid[0][0].length);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(grid[0][0].length) - p.y / 2;
@@ -299,9 +299,9 @@ public class MaskShell extends LObjectShell<Mask> {
 	protected Mask createResult(Mask initial) {
 		Mask m = new Mask();
 		m.grid = grid;
-		m.centerH = spnMinH.getSelection();
-		m.centerX = spnMinX.getSelection();
-		m.centerY = spnMinY.getSelection();
+		m.centerH = spnMinH.getSelection() + 1;
+		m.centerX = spnMinX.getSelection() + 1;
+		m.centerY = spnMinY.getSelection() + 1;
 		return m;
 	}
 }

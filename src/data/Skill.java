@@ -61,19 +61,6 @@ public class Skill extends Data {
 		costs.add(new Tag("sp", "10"));
 	}
 	
-	public static class Ring {
-		
-		public int minh = 0;
-		public int maxh = 0;
-		public int far = 1;
-		public int near = 0;
-		
-		public String toString() {
-			return "Ring [" + near + ", " + far + "], Height [" + minh + ", " + maxh + "]";
-		}
-		
-	}
-	
 	public static class Effect {
 		
 		public String key = "hp";
@@ -90,9 +77,9 @@ public class Skill extends Data {
 	
 	public static class Mask {
 		
-		public int centerX = 0;
-		public int centerY = 0;
-		public int centerH = 0;
+		public int centerX = 1;
+		public int centerY = 1;
+		public int centerH = 1;
 		public boolean[][][] grid = new boolean[][][] {{{true}}};
 
 		@Override

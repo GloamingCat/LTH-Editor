@@ -26,6 +26,8 @@ public abstract class BonusShell extends ObjectShell<Bonus> {
 		lblValue.setText(Vocab.instance.VALUE);
 		
 		LSpinner spnValue = new LSpinner(contentEditor, SWT.NONE);
+		spnValue.setMinimum(-100000);
+		spnValue.setMaximum(100000);
 		spnValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnValue, "value");
 		
