@@ -1,7 +1,7 @@
 package data;
 
 import data.Item.Attribute;
-import data.subcontent.Bonus;
+import data.subcontent.Element;
 import data.subcontent.Icon;
 import data.subcontent.Rule;
 import data.subcontent.Transform;
@@ -34,14 +34,12 @@ public class Status extends Data {
 	
 	// Drain
 	public String drainAtt = "";
-	public int frequency = 0;
 	public int drainValue = 0;
 	public boolean percentage = true;
 	
 	// Other
 	public LDataList<Attribute> attributes = new LDataList<>();
-	public LDataList<Bonus> elementAtk = new LDataList<>();
-	public LDataList<Bonus> elementDef = new LDataList<>();
+	public LDataList<Element> elements = new LDataList<>();
 	public LDataList<Integer> statusDef = new LDataList<>();
 	public LDataList<Integer> cancel = new LDataList<>();
 	

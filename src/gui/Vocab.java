@@ -49,6 +49,7 @@ public class Vocab {
 	public String TYPE = "Type";
 	public String DEFAULT = "Default";
 	public String OPTIONS = "Options";
+	public String ELEMENT = "Element";
 	
 	// ========================================================================
 	// Config
@@ -145,8 +146,9 @@ public class Vocab {
 	public String ATTADD = "By constant";
 	public String ATTMUL = "By percentage";
 	public String ADDONBATTLE = "Add on battle";
-	public String ELEMENTATK = "Attack Elements";
-	public String ELEMENTDEF = "Element Immunity";
+	public String ELEMENTATK = "Attack Property";
+	public String ELEMENTDEF = "Immunity";
+	public String ELEMENTBUFF = "Damage Multipler";
 	
 	// Battler
 	public String CLASS = "Class";

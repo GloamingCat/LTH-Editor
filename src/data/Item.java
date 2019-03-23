@@ -3,7 +3,7 @@ package data;
 import project.Project;
 import data.Skill.Effect;
 import data.Skill.SkillStatus;
-import data.subcontent.Bonus;
+import data.subcontent.Element;
 import data.subcontent.Icon;
 import lwt.dataestructure.LDataList;
 
@@ -29,8 +29,7 @@ public class Item extends Data {
 	public boolean allSlots = false;
 	public LDataList<String> blocked = new LDataList<>();
 	public LDataList<EquipStatus> equipStatus = new LDataList<>();
-	public LDataList<Bonus> elementAtk = new LDataList<>();
-	public LDataList<Bonus> elementDef = new LDataList<>();
+	public LDataList<Element> elements = new LDataList<>();
 	public LDataList<Attribute> equipAttributes = new LDataList<>();
 	
 	public static class EquipStatus {

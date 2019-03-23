@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.database.RuleShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
-import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.ElementList;
 import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDList;
@@ -209,15 +209,6 @@ public class StatusTab extends DatabaseTab {
 		btnPercentage.setText(Vocab.instance.PERCENTAGE);
 		addControl(btnPercentage, "percentage");
 		
-		Label lblFrequency = new Label(grpDrain, SWT.NONE);
-		lblFrequency.setText(Vocab.instance.FREQUENCY);
-		
-		LSpinner spnFrequency = new LSpinner(grpDrain, SWT.NONE);
-		spnFrequency.setMaximum(999999);
-		spnFrequency.setMinimum(0);
-		spnFrequency.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		addControl(spnFrequency, "frequency");
-		
 		// Durability
 		
 		Group grpDurability = new Group(middle, SWT.NONE);
@@ -265,7 +256,7 @@ public class StatusTab extends DatabaseTab {
 		// Lists
 		
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(5, true);
+		GridLayout gl_bottom = new GridLayout(4, true);
 		gl_bottom.marginHeight = 0;
 		gl_bottom.marginWidth = 0;
 		bottom.setLayout(gl_bottom);
@@ -279,31 +270,13 @@ public class StatusTab extends DatabaseTab {
 		AttributeList lstAttributes = new AttributeList(grpAttributes, SWT.NONE);
 		addChild(lstAttributes, "attributes");
 
-		Group grpElementAtk = new Group(bottom, SWT.NONE);
-		grpElementAtk.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpElementAtk.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpElementAtk.setText(Vocab.instance.ELEMENTATK);
+		Group grpElement = new Group(bottom, SWT.NONE);
+		grpElement.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpElement.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpElement.setText(Vocab.instance.ELEMENTS);
 		
-		BonusList lstElementAtk = new BonusList(grpElementAtk, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
-			}
-		};
-		addChild(lstElementAtk, "elementAtk");
-		
-		Group grpElementDef = new Group(bottom, SWT.NONE);
-		grpElementDef.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpElementDef.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpElementDef.setText(Vocab.instance.ELEMENTDEF);
-		
-		BonusList lstElementDef = new BonusList(grpElementDef, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
-			}
-		};
-		addChild(lstElementDef, "elementDef");
+		ElementList lstElements = new ElementList(grpElement, SWT.NONE);
+		addChild(lstElements, "elements");
 		
 		Group grpStatusDef = new Group(bottom, SWT.NONE);
 		grpStatusDef.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

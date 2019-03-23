@@ -4,7 +4,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
-import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.ElementList;
 import gui.views.database.subcontent.EffectList;
 import gui.views.database.subcontent.EquipStatusList;
 import gui.views.database.subcontent.SkillStatusList;
@@ -151,29 +151,11 @@ public class ItemTab extends DatabaseTab {
 		tbtmEquipStatus.setControl(lstEquipStatus);
 		addChild(lstEquipStatus, "equipStatus");
 		
-		TabItem tbtmElementAtk = new TabItem(equipFolder, SWT.NONE);
-		tbtmElementAtk.setText(Vocab.instance.ELEMENTATK);
-		BonusList lstElementAtk = new BonusList(equipFolder, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
-			}
-		};
-		lstElementAtk.setIncludeID(false);
-		tbtmElementAtk.setControl(lstElementAtk);
-		addChild(lstElementAtk, "elementAtk");
-		
-		TabItem tbtmElementDef = new TabItem(equipFolder, SWT.NONE);
-		tbtmElementDef.setText(Vocab.instance.ELEMENTDEF);
-		BonusList lstElementDef = new BonusList(equipFolder, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
-			}
-		};
-		lstElementDef.setIncludeID(false);
-		tbtmElementDef.setControl(lstElementDef);
-		addChild(lstElementDef, "elementDef");
+		TabItem tbtmElement = new TabItem(equipFolder, SWT.NONE);
+		tbtmElement.setText(Vocab.instance.ELEMENTS);
+		ElementList lstElement = new ElementList(equipFolder, SWT.NONE);
+		tbtmElement.setControl(lstElement);
+		addChild(lstElement, "elements");
 		
 		// Use
 		
