@@ -2,12 +2,14 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.shell.AudioShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.AudioEditor;
-import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
+import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
@@ -19,8 +21,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import data.subcontent.Audio;
 import project.Project;
 
 public class TerrainTab extends DatabaseTab {
@@ -34,8 +38,12 @@ public class TerrainTab extends DatabaseTab {
 		super(parent, style);
 
 		Composite right = new Composite(contentEditor,  SWT.NONE);
-		right.setLayout(new FillLayout(SWT.VERTICAL));
-		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
+		GridLayout gl_right = new GridLayout(1, false);
+		gl_right.verticalSpacing = 0;
+		gl_right.marginHeight = 0;
+		gl_right.marginWidth = 0;
+		right.setLayout(gl_right);
+		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
 		gd_right.widthHint = 224;
 		right.setLayoutData(gd_right);
 		
@@ -61,65 +69,6 @@ public class TerrainTab extends DatabaseTab {
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
-		Label lblStatus = new Label(grpGeneral, SWT.NONE);
-		lblStatus.setText(Vocab.instance.STATUS);
-		
-		// Status
-		
-		Composite status = new Composite(grpGeneral, SWT.NONE);
-		status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_status = new GridLayout(2, false);
-		gl_status.marginHeight = 0;
-		gl_status.marginWidth = 0;
-		status.setLayout(gl_status);
-	
-		Text txtStatus = new Text(status, SWT.BORDER | SWT.READ_ONLY);
-		txtStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnStatus = new IDButton(status, 1) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		btnStatus.setNameText(txtStatus);
-		addControl(btnStatus, "statusID");
-		
-		new Label(grpGeneral, SWT.NONE);
-		LCheckButton btnRemoveOnExit = new LCheckButton(grpGeneral, SWT.NONE);
-		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
-		addControl(btnRemoveOnExit, "removeOnExit");
-		
-		Label lblLifeTime = new Label(grpGeneral, SWT.NONE);
-		lblLifeTime.setText(Vocab.instance.LIFETIME);
-		
-		LSpinner spnLifeTime = new LSpinner(grpGeneral, SWT.NONE);
-		spnLifeTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnLifeTime, "lifeTime");
-
-		// Step Audio
-		
-		Label lblAudio = new Label(grpGeneral, SWT.NONE);
-		lblAudio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblAudio.setText(Vocab.instance.SOUND);
-		
-		AudioEditor audioEditor = new AudioEditor(grpGeneral, SWT.NONE);
-		audioEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		addChild(audioEditor);
-		
-		// Attributes
-		
-		Group grpAtt = new Group(right, SWT.NONE);
-		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpAtt.setText(Vocab.instance.ATTRIBUTES);
-		
-		BonusList lstAttributes = new BonusList(grpAtt, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.attributes.getList().toTree();
-			}
-		};
-		addChild(lstAttributes, "attributes");
-		
 		// Graphics
 		
 		Group grpGraphics = new Group(contentEditor, SWT.NONE);
@@ -141,23 +90,63 @@ public class TerrainTab extends DatabaseTab {
 		addControl(btnAnim, "animID");
 		btnAnim.setImage(imgGraphics);
 		
-		// Elements
+		// Status
 		
-		Group grpElements = new Group(right, SWT.NONE);
-		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpElements.setText(Vocab.instance.ELEMENTS);
+		Group grpStatus = new Group(right, SWT.NONE);
+		grpStatus.setLayout(new GridLayout(1, false));
+		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpStatus.setText(Vocab.instance.STATUS);
+			
+		Composite status = new Composite(grpStatus, SWT.NONE);
+		status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_status = new GridLayout(2, false);
+		gl_status.marginHeight = 0;
+		gl_status.marginWidth = 0;
+		status.setLayout(gl_status);
+			
+		Text txtStatus = new Text(status, SWT.BORDER | SWT.READ_ONLY);
+		txtStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
+		IDButton btnStatus = new IDButton(status, 1) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.status.getTree();
 			}
 		};
-		addChild(lstElements, "elements");
+		btnStatus.setNameText(txtStatus);
+		addControl(btnStatus, "statusID");
+		
+		LCheckButton btnRemoveOnExit = new LCheckButton(grpStatus, SWT.NONE);
+		btnRemoveOnExit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
+		addControl(btnRemoveOnExit, "removeOnExit");
+		
+		LCheckButton btnAllMembers = new LCheckButton(grpStatus, SWT.NONE);
+		btnAllMembers.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnAllMembers.setText(Vocab.instance.ALLMEMBERS);
+		addControl(btnAllMembers, "allMembers");
+		
+		// Audio
+		
+		Group grpAudio = new Group(right, SWT.NONE);
+		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAudio.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAudio.setText(Vocab.instance.SOUND);
+		
+		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio, SWT.NONE);
+		lstAudio.type = Audio.class;
+		lstAudio.setIncludeID(false);
+		lstAudio.setShellFactory(new LShellFactory<Audio>() {
+			@Override
+			public LObjectShell<Audio> createShell(Shell parent) {
+				return new AudioShell(parent, 0);
+			}
+		});
+		addChild(lstAudio, "sounds");
 		
 		// Tags
 		
 		Group grpTags = new Group(right, SWT.NONE);
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTags.setText(Vocab.instance.TAGS);
 		

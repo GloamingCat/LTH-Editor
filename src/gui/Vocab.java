@@ -253,11 +253,9 @@ public class Vocab {
 
 	// Terrain
 	public String MOVECOST = "Move Cost";
-	public String FRAMECOUNT = "N\u00BA of frames";
 	public String PASSABLE = "Passable";
-	public String LIFETIME = "Life time";
 	public String REMOVEONEXIT = "Remove on Exit";
-	public String RESETTIME = "Reset time";
+	public String ALLMEMBERS = "Affect All Members";
 	
 	// Troops
 	public String UNITS = "Units";
@@ -305,6 +303,7 @@ public class Vocab {
 	// Script / Rule
 	public String PARAM = "Parameters";
 	public String GLOBAL = "Global";
+	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
 	
