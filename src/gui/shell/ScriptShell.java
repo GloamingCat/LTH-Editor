@@ -52,12 +52,16 @@ public class ScriptShell extends ObjectShell<Script> {
 		addChild(lstParam, "tags");
 		
 		Composite options = new Composite(composite, SWT.NONE);
-		options.setLayout(new GridLayout(2, false));
+		options.setLayout(new GridLayout(3, false));
 		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		LCheckButton btnGlobal = new LCheckButton(options, SWT.NONE);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
 		addControl(btnGlobal, "global");
+		
+		LCheckButton btnWait = new LCheckButton(options, SWT.NONE);
+		btnWait.setText(Vocab.instance.WAIT);
+		addControl(btnWait, "wait");
 		
 		LCheckButton btnBlock = new LCheckButton(options, SWT.NONE);
 		btnBlock.setText(Vocab.instance.BLOCKPLAYER);
