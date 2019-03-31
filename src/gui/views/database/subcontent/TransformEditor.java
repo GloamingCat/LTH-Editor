@@ -1,7 +1,6 @@
 package gui.views.database.subcontent;
 
 import gui.Vocab;
-import gui.helper.ImageHelper;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -228,7 +227,7 @@ public class TransformEditor extends LObjectEditor {
 			Transform t2 = secondaryTransform();
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
-			ImageHelper.setColorTransform(image, t);
+			t.setColorTransform(image);
 			image.setImage(image.getOriginalImage(), image.getRectangle());
 			image.redraw();
 		}
@@ -249,9 +248,9 @@ public class TransformEditor extends LObjectEditor {
 		if (t1 != null) {
 			Transform t2 = secondaryTransform();
 			if (t2 != null) {
-				ImageHelper.setColorTransform(img, t1, t2);
+				t1.setColorTransform(img, t2);
 			} else {
-				ImageHelper.setColorTransform(img, t1);
+				t1.setColorTransform(img);
 			}
 		}
 	}

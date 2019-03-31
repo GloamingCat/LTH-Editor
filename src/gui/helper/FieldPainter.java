@@ -17,6 +17,7 @@ import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Quad;
+import lwt.LImageHelper;
 import project.Project;
 
 public class FieldPainter {
@@ -173,7 +174,7 @@ public class FieldPainter {
 	}
 	
 	public Image createTileImage(int x, int y, int imgW, int imgH, Layer currentLayer, Field field) {
-		Image img = ImageHelper.newImage(imgW, imgH);
+		Image img = LImageHelper.newImage(imgW, imgH);
 	    
 	    int x0 = imgW / 2;
 	    int y0 = imgH - FieldHelper.config.grid.tileH;
@@ -224,7 +225,7 @@ public class FieldPainter {
 			paintCharacter(tile, gc, x0, y0 - (tile.h - 1) * pph);
 		}
 		gc.dispose();
-		return ImageHelper.correctTransparency(img);
+		return img;//LImageHelper.correctTransparency(img);
 	}
 
 }

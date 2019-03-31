@@ -2,7 +2,6 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
-import gui.helper.ImageHelper;
 import gui.shell.database.CharTileShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
@@ -147,7 +146,7 @@ public class CharacterTab extends DatabaseTab {
 					if (anim != null) {
 						GameCharacter c = (GameCharacter) contentEditor.getObject();
 						Rectangle rect = anim.quad.getRectangle();
-						ImageHelper.setColorTransform(imgAnim, anim.transform, c.transform);
+						anim.transform.setColorTransform(imgAnim, c.transform);
 						imgAnim.setImage(SWTResourceManager.getImage(
 								Project.current.imagePath() + anim.quad.path), rect);
 					} else {
@@ -185,7 +184,7 @@ public class CharacterTab extends DatabaseTab {
 					}
 					GameCharacter c = (GameCharacter) contentEditor.getObject();
 					Animation anim = (Animation) obj;
-					ImageHelper.setColorTransform(imgPotrait, anim.transform, c.transform);
+					anim.transform.setColorTransform(imgPotrait, c.transform);
 					if (anim.quad.path.isEmpty()) {
 						imgPotrait.setImage((Image) null);
 						return;

@@ -16,6 +16,7 @@ import data.Terrain;
 import data.config.Config;
 import data.config.Region;
 import data.field.CharTile;
+import lwt.LImageHelper;
 import project.Project;
 
 public class TilePainter {
@@ -62,14 +63,13 @@ public class TilePainter {
 		}
 		int dw = (w * anim.transform.scaleX) / 100;
 		int dh = (h * anim.transform.scaleY) / 100;
-		img = ImageHelper.newImage(dw, dh);
+		img = LImageHelper.newImage(dw, dh);
 		GC gc = new GC(img);
 		gc.setAlpha(anim.transform.alpha);
 		gc.drawImage(terrainImg, anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
 		gc.dispose();
 		ImageData data = img.getImageData();
-		ImageHelper.correctTransparency(data);
-		ImageHelper.colorTransform(data,
+		LImageHelper.colorTransform(data,
 				anim.transform.red / 255f,
 				anim.transform.green / 255f,
 				anim.transform.blue / 255f,
@@ -95,7 +95,7 @@ public class TilePainter {
 		Rectangle rect = obj.image.getRectangle();
 		int w = rect.width * anim.transform.scaleX / 100;
 		int h = rect.height * anim.transform.scaleY / 100;
-		img = ImageHelper.newImage(rect.width, rect.height);
+		img = LImageHelper.newImage(rect.width, rect.height);
 		GC gc = new GC(img);
 		Image texture = obj.image.getImage();
 		Rectangle t = texture.getBounds();
@@ -108,8 +108,7 @@ public class TilePainter {
 				0, 0, w, h);
 		gc.dispose();
 		ImageData data = img.getImageData();
-		ImageHelper.correctTransparency(data);
-		ImageHelper.colorTransform(img, 
+		LImageHelper.colorTransform(img, 
 			anim.transform.red / 255f * obj.transform.red / 255f,
 			anim.transform.green / 255f * obj.transform.green / 255f,
 			anim.transform.blue / 255f * obj.transform.blue / 255f,
@@ -137,7 +136,7 @@ public class TilePainter {
 		int w = anim.quad.width / anim.cols;
 		int h = anim.quad.height / anim.rows;
 		int col = anim.getFirstFrame();
-		img = ImageHelper.newImage(w, h);
+		img = LImageHelper.newImage(w, h);
 		GC gc = new GC(img);
 		gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
 		gc.drawImage(anim.quad.getImage(), 
@@ -145,7 +144,7 @@ public class TilePainter {
 				0, 0, w, h);
 		gc.dispose();
 		ImageData data = img.getImageData();
-		ImageHelper.colorTransform(data, 
+		LImageHelper.colorTransform(data, 
 				anim.transform.red / 255f * c.transform.red / 255f,
 				anim.transform.green / 255f * c.transform.green / 255f,
 				anim.transform.blue / 255f * c.transform.blue / 255f,
@@ -167,10 +166,10 @@ public class TilePainter {
 			return null;
 		Region r = (Region) Project.current.regions.getData().get(id);
 		if (rect)
-			img = ImageHelper.getStringImage(id + "", conf.grid.tileW + 1, conf.grid.tileH + 1, 
+			img = LImageHelper.getStringImage(id + "", conf.grid.tileW + 1, conf.grid.tileH + 1, 
 				SWTResourceManager.getColor(r.rgb), true);
 		else
-			img = ImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, false);
+			img = LImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, false);
 		regionCache.put(key, img);
 		return img;
 	}

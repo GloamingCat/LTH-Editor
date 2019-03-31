@@ -1,5 +1,7 @@
 package data.subcontent;
 
+import lwt.widget.LImage;
+
 public class Transform {
 
 	// Space transformation
@@ -34,6 +36,21 @@ public class Transform {
 		saturation = (saturation * t.saturation) / 100;
 		brightness = (brightness * t.brightness) / 100;
 		return this;
+	}
+	
+	public void setColorTransform(LImage img, Transform other) {
+		img.setRGBA(red / 255f * other.red / 255f,
+				green / 255f * other.green / 255f,
+				blue / 255f * other.blue / 255f,
+				alpha / 255f * other.alpha / 255f);
+		img.setHSV(hue + other.hue,
+				saturation / 100f * other.saturation / 100f,
+				brightness / 100f * other.brightness / 100f);
+	}
+	
+	public void setColorTransform(LImage img) {
+		img.setRGBA(red / 255f, green / 255f, blue / 255f, alpha / 255f);
+		img.setHSV(hue, saturation / 100f, brightness / 100f);
 	}
 	
 }
