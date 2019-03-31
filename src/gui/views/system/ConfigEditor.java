@@ -316,6 +316,11 @@ public class ConfigEditor extends LView {
 		LText txtAttJump = new LText(battleEditor, SWT.NONE);
 		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttJump, "attJump");
+		
+		LCheckButton btnRevive = new LCheckButton(battleEditor);
+		btnRevive.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnRevive.setText(Vocab.instance.BATTLEENDREVIVE);
+		battleEditor.addControl(btnRevive, "battleEndRevive");
 
 		// Troop
 		

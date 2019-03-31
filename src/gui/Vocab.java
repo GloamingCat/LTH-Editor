@@ -111,6 +111,7 @@ public class Vocab {
 	public String ATTSP = "SP Attribute";
 	public String ATTSTEP = "Step Attribute";
 	public String ATTJUMP = "Jump Attribute";
+	public String BATTLEENDREVIVE = "Revive when battle ends";
 	
 	// Troop
 	public String TROOP = "Troop";

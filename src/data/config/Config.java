@@ -33,6 +33,7 @@ public class Config {
 		public String attStep = "mov";
 		public String attJump = "jmp";
 		public int itemSkillID = 0;
+		public boolean battleEndRevive = true;
 	}
 	
 	public static class Troop {

@@ -13,7 +13,9 @@ import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
+import lwt.event.LEditEvent;
 import lwt.event.LSelectionEvent;
+import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LImage;
 
@@ -137,24 +139,17 @@ public class CharacterTab extends DatabaseTab {
 		
 		LImage imgAnim = new LImage(grpAnimations, SWT.NONE);
 		imgAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
 		lstAnim.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				if (event.data != null) {
-					Node node = (Node) event.data;
-					Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
-					if (anim != null) {
-						GameCharacter c = (GameCharacter) contentEditor.getObject();
-						Rectangle rect = anim.quad.getRectangle();
-						anim.transform.setColorTransform(imgAnim, c.transform);
-						imgAnim.setImage(SWTResourceManager.getImage(
-								Project.current.imagePath() + anim.quad.path), rect);
-					} else {
-						imgAnim.setImage((Image) null); 
-					}
-				} else {
-					imgAnim.setImage((Image) null); 
-				}
+				updateAnim(imgAnim, (Node) event.data); 
+			}
+		});
+		lstAnim.getCollectionWidget().addEditListener(new LCollectionListener<Node>() {
+			@Override
+			public void onEdit(LEditEvent<Node> e) {
+				updateAnim(imgAnim, e.newData);
 			}
 		});
 		
@@ -175,24 +170,13 @@ public class CharacterTab extends DatabaseTab {
 		lstPortraits.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				if (event.data != null) {
-					Portrait p = (Portrait) event.data;
-					Object obj = Project.current.animations.getTree().get(p.id);
-					if (obj == null) {
-						imgPotrait.setImage((Image) null);
-						return;
-					}
-					GameCharacter c = (GameCharacter) contentEditor.getObject();
-					Animation anim = (Animation) obj;
-					anim.transform.setColorTransform(imgPotrait, c.transform);
-					if (anim.quad.path.isEmpty()) {
-						imgPotrait.setImage((Image) null);
-						return;
-					}
-					imgPotrait.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
-				} else {
-					imgPotrait.setImage((Image) null);
-				}
+				updatePortrait(imgPotrait, (Portrait) event.data);
+			}
+		});
+		lstPortraits.getCollectionWidget().addEditListener(new LCollectionListener<Portrait>() {
+			@Override
+			public void onEdit(LEditEvent<Portrait> e) {
+				updatePortrait(imgPotrait, e.newData);
 			}
 		});
 		
@@ -212,6 +196,43 @@ public class CharacterTab extends DatabaseTab {
 		TagList lstTags = new TagList(grpTags, SWT.NONE);
 		addChild(lstTags, "tags");
 		
+	}
+	
+	private void updateAnim(LImage img, Node node) {
+		if (node != null) {
+			Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
+			if (anim != null) {
+				GameCharacter c = (GameCharacter) contentEditor.getObject();
+				Rectangle rect = anim.quad.getRectangle();
+				anim.transform.setColorTransform(img, c.transform);
+				img.setImage(SWTResourceManager.getImage(
+						Project.current.imagePath() + anim.quad.path), rect);
+			} else {
+				img.setImage((Image) null); 
+			}
+		} else {
+			img.setImage((Image) null); 
+		}
+	}
+	
+	private void updatePortrait(LImage img, Portrait p) {
+		if (p != null) {
+			Object obj = Project.current.animations.getTree().get(p.id);
+			if (obj == null) {
+				img.setImage((Image) null);
+				return;
+			}
+			GameCharacter c = (GameCharacter) contentEditor.getObject();
+			Animation anim = (Animation) obj;
+			anim.transform.setColorTransform(img, c.transform);
+			if (anim.quad.path.isEmpty()) {
+				img.setImage((Image) null);
+				return;
+			}
+			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
+		} else {
+			img.setImage((Image) null);
+		}
 	}
 
 	@Override

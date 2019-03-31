@@ -5,7 +5,7 @@ import gui.shell.ObjectShell;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.subcontent.Bonus;
+import data.subcontent.Element;
 import lwt.widget.LCombo;
 import lwt.widget.LSpinner;
 
@@ -17,7 +17,7 @@ import org.eclipse.swt.graphics.Point;
 
 import project.Project;
 
-public class ElementShell extends ObjectShell<Bonus> {
+public class ElementShell extends ObjectShell<Element> {
 
 	public ElementShell(Shell parent) {
 		super(parent);

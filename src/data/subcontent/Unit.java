@@ -20,7 +20,7 @@ public class Unit {
 		int id = battlerID;
 		if (id < 0) {
 			GameCharacter gc = (GameCharacter) Project.current.characters.getData().get(charID);
-			id = gc.battlerID;
+			id = gc == null ? -1 : gc.battlerID;
 		}
 		Battler b = (Battler) Project.current.battlers.getData().get(id);
 		String name = " (" + (b == null ? "NULL" : b.name) + ")";

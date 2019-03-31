@@ -5,19 +5,19 @@ import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
 
-import data.subcontent.Bonus;
+import data.subcontent.Element;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 
-public class ElementList extends SimpleEditableList<Bonus> {
+public class ElementList extends SimpleEditableList<Element> {
 
 	public ElementList(Composite parent, int style) {
 		super(parent, style);
-		type = Bonus.class;
+		type = Element.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Bonus>() {
+		setShellFactory(new LShellFactory<Element>() {
 			@Override
-			public LObjectShell<Bonus> createShell(
+			public LObjectShell<Element> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
 				return new ElementShell(parent);
 			}
