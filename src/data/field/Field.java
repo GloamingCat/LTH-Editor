@@ -2,7 +2,6 @@ package data.field;
 
 import data.Data;
 import data.subcontent.Audio;
-import data.subcontent.Quad;
 import data.subcontent.Script;
 import lwt.dataestructure.LDataList;
 
@@ -33,8 +32,7 @@ public class Field {
 		public int maxHeight = 4;
 		public Audio bgm = new Audio();
 		public Script loadScript = new Script();
-		public Quad background = new Quad();
-		public Quad parallax = new Quad();
+		public LDataList<FieldImage> images = new LDataList<>();
 		public LDataList<Transition> transitions = new LDataList<>(); 
 		
 	}

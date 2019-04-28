@@ -325,14 +325,17 @@ public class Vocab {
 	public String DEFAULTREGION = "Default Region";
 	public String MAXHEIGHT = "Max Height";
 	public String BGM = "BGM";
-	public String BACKGROUND = "Background";
-	public String PARALLAX = "Parallax";
+	public String IMAGES = "Images";
+	public String FOREGROUND = "Foreground";
+	public String GLUED = "Glued to Camera";
+	
+	// Layers
+	public String LAYERS = "Layers";
 	public String TERRAIN = "Terrain";
 	public String OBSTACLE = "Obstacle";
 	public String REGION = "Region";
 	public String PARTY = "Party";
 	public String SHOWGRID = "Show Grid";
-	public String LAYERS = "Layers";
 	public String NOAUTO = "No autotiles";
 	
 	// Resize

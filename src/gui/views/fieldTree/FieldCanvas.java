@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.Field;
+import data.field.FieldImage;
 import data.field.Layer;
 import data.field.Party;
 
@@ -90,9 +91,12 @@ public class FieldCanvas extends LView {
 		GC gc = new GC(img);
 		gc.setBackground(getBackground());
 		gc.fillRectangle(img.getBounds());
-		painter.paintBackground(field, field.prefs.background, x0, y0, gc);
-		painter.paintBackground(field, field.prefs.parallax, x0, y0, gc);
 		
+		for (FieldImage bg : field.prefs.images) {
+			if (bg.visible && !bg.foreground)
+				painter.paintBackground(field, bg, x0, y0, gc);
+		}
+
 		for(int k = field.sizeX - 1; k >= 0; k--) {
 			for(int i = k, j = 0; i < field.sizeX && j < field.sizeY; i++, j++) {
 				drawTile(gc, i, j);
@@ -103,6 +107,12 @@ public class FieldCanvas extends LView {
 				drawTile(gc, i, j);
 			}
 		}
+		
+		for (FieldImage bg : field.prefs.images) {
+			if (bg.visible && bg.foreground)
+				painter.paintBackground(field, bg, x0, y0, gc);
+		}
+		
 		drawCursor(gc);
 		egc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
 				0, 0, Math.round(img.getBounds().width * scale), Math.round(img.getBounds().height * scale));

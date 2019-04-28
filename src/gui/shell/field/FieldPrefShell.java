@@ -1,6 +1,10 @@
 package gui.shell.field;
 
 import lwt.editor.LObjectEditor;
+import lwt.event.LEditEvent;
+import lwt.event.LSelectionEvent;
+import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
@@ -8,18 +12,21 @@ import lwt.widget.LText;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.fieldTree.FieldSideEditor;
+import gui.views.fieldTree.subcontent.FieldImageList;
 import gui.widgets.AudioButton;
 import gui.widgets.PositionButton;
-import gui.widgets.QuadButton;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import data.Animation;
 import data.field.Field;
+import data.field.FieldImage;
 import data.field.Transition;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
@@ -27,8 +34,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
-
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FillLayout;
 
 public class FieldPrefShell extends ObjectShell<Field.Prefs> {
@@ -91,33 +96,28 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");
 		
-		Composite right = new Composite(contentEditor, SWT.NONE);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
-		right.setLayout(new FillLayout(SWT.VERTICAL));
+		Group grpImages = new Group(contentEditor, SWT.NONE);
+		grpImages.setLayout(new FillLayout(SWT.VERTICAL));
+		grpImages.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
+		grpImages.setText(Vocab.instance.IMAGES);
 		
-		Group grpBG = new Group(right, SWT.NONE);
-		grpBG.setLayout(new GridLayout(2, false));
-		grpBG.setText(Vocab.instance.BACKGROUND);
+		FieldImageList lstImages = new FieldImageList(grpImages, SWT.NONE);
+		addChild(lstImages, "images");
+
+		LImage img = new LImage(grpImages, SWT.NONE);
 		
-		QuadButton btnBG = new QuadButton(grpBG, 1);
-		btnBG.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		addControl(btnBG, "background");
-		
-		LImage imgBG = new LImage(grpBG, SWT.NONE);
-		imgBG.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		btnBG.setImage(imgBG);
-		
-		Group grpPL = new Group(right, SWT.NONE);
-		grpPL.setLayout(new GridLayout(2, false));
-		grpPL.setText(Vocab.instance.PARALLAX);
-		
-		QuadButton btnPL = new QuadButton(grpPL, 1);
-		btnPL.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		addControl(btnPL, "parallax");
-		
-		LImage imgPL = new LImage(grpPL, SWT.NONE);
-		imgPL.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		btnPL.setImage(imgPL);
+		lstImages.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				updateImage(img, (FieldImage) event.data);
+			}
+		});
+		lstImages.getCollectionWidget().addEditListener(new LCollectionListener<FieldImage>() {
+			@Override
+			public void onEdit(LEditEvent<FieldImage> e) {
+				updateImage(img, e.newData);
+			}
+		});
 		
 		Group grpTransitions = new Group(contentEditor, SWT.NONE);
 		grpTransitions.setLayout(new GridLayout(1, false));
@@ -190,4 +190,23 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		pack();
 		
 	}
+
+	private void updateImage(LImage img, FieldImage p) {
+		if (p != null) {
+			Object obj = Project.current.animations.getTree().get(p.id);
+			if (obj == null) {
+				img.setImage((Image) null);
+				return;
+			}
+			Animation anim = (Animation) obj;
+			if (anim.quad.path.isEmpty()) {
+				img.setImage((Image) null);
+				return;
+			}
+			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
+		} else {
+			img.setImage((Image) null);
+		}
+	}
+	
 }

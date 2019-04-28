@@ -15,6 +15,7 @@ import data.config.Region;
 import data.config.Config.Grid;
 import data.field.CharTile;
 import data.field.Field;
+import data.field.FieldImage;
 import data.field.Layer;
 import data.subcontent.Quad;
 import lwt.LImageHelper;
@@ -161,7 +162,11 @@ public class FieldPainter {
 	// Field
 	// -------------------------------------------------------------------------------------
 	
-	public void paintBackground(Field field, Quad quad, int x0, int y0, GC gc) {
+	public void paintBackground(Field field, FieldImage img, int x0, int y0, GC gc) {
+		Animation anim = (Animation) Project.current.animations.getTree().get(img.id);
+		if (anim == null)
+			return;
+		Quad quad = anim.quad;
 		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
 			return;
 		Image bg = quad.getImage();
