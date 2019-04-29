@@ -70,6 +70,10 @@ public class Vocab {
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
 	public String SCRIPT = "Script";
+	public String VISIBILITY = "Visibility";
+	public String PRIMARY = "Primary";
+	public String SECONDARY = "Secondary";
+	public String NOTVISIBLE = "Not visible";
 	
 	// Grid
 	public String GRID = "Grid";

@@ -22,7 +22,7 @@ public class PluginList extends SimpleEditableList<Plugin> {
 			@Override
 			public LObjectShell<Plugin> createShell(
 					org.eclipse.swt.widgets.Shell parent) {
-				return new PluginShell(parent, "plugins/", 0);
+				return new PluginShell(parent, 0);
 			}
 		});
 	}
