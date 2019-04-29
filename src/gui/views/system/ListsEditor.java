@@ -1,7 +1,6 @@
 package gui.views.system;
 
 import gui.Vocab;
-import gui.widgets.NameList;
 import lwt.action.LActionStack;
 import lwt.editor.LObjectEditor;
 
@@ -14,7 +13,7 @@ import project.Project;
 
 public class ListsEditor extends LObjectEditor {
 	
-	private NameList lstElements;
+	private ElementList lstElements;
 	private EquipTypeList lstEquipTypes;
 	private ConstantList lstConstants;
 	private AttributeList lstAttributes;
@@ -42,7 +41,7 @@ public class ListsEditor extends LObjectEditor {
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		lstElements = new NameList(grpElements, SWT.NONE);
+		lstElements = new ElementList(grpElements, SWT.NONE);
 		lstElements.setIncludeID(true);
 		addChild(lstElements, "elements");
 		

@@ -59,7 +59,7 @@ public class Project implements LSerializer {
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		attributes = new GObjectListSerializer(systemPath() + "attributes", Attribute.class);
 		constants = new GObjectListSerializer(systemPath() + "constants", Constant.class);
-		elements = new GObjectListSerializer(systemPath() + "elements", Data.class);
+		elements = new GObjectListSerializer(systemPath() + "elements", Element.class);
 		equipTypes = new GObjectListSerializer(systemPath() + "equipTypes", EquipType.class);
 		plugins = new GObjectListSerializer(systemPath() + "plugins", Plugin.class);
 		regions = new GObjectListSerializer(systemPath() + "regions", Region.class);
