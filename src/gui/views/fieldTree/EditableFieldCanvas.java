@@ -107,10 +107,10 @@ public class EditableFieldCanvas extends FieldCanvas {
 		int maxy = currentParty.maxY() - 1;
 		int minx = currentParty.x - 1;
 		int miny = currentParty.y - 1;
-		Point p1 = FieldHelper.math.tile2Pixel(maxx, maxy, currentParty.h);
-		Point p2 = FieldHelper.math.tile2Pixel(maxx, miny, currentParty.h);
-		Point p3 = FieldHelper.math.tile2Pixel(minx, miny, currentParty.h);
-		Point p4 = FieldHelper.math.tile2Pixel(minx, maxy, currentParty.h);
+		Point p1 = FieldHelper.math.tile2Pixel(maxx, maxy, currentParty.h - 1);
+		Point p2 = FieldHelper.math.tile2Pixel(maxx, miny, currentParty.h - 1);
+		Point p3 = FieldHelper.math.tile2Pixel(minx, miny, currentParty.h - 1);
+		Point p4 = FieldHelper.math.tile2Pixel(minx, maxy, currentParty.h - 1);
 		int[] poly = new int[] {p1.x + x0, p1.y + y0,
 								p2.x + x0, p2.y + y0,
 								p3.x + x0, p3.y + y0,

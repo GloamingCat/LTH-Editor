@@ -170,11 +170,14 @@ public class FieldPainter {
 		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
 			return;
 		Image bg = quad.getImage();
+		if (bg == null)
+			return;
 		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
 		x0 += center.x - quad.width / 2;
 		y0 += center.y - quad.height / 2;
-		gc.drawImage(bg, 
-			quad.x, quad.y, quad.width, quad.height,
+		int w = Math.min(quad.width - quad.x, bg.getBounds().width);
+		int y = Math.min(quad.height - quad.y, bg.getBounds().height);
+		gc.drawImage(bg, quad.x, quad.y, w, y,
 			x0, y0, quad.width, quad.height);
 	}
 	

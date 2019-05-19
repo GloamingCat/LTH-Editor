@@ -68,6 +68,7 @@ public class CharTileEditor extends LObjectEditor {
 		
 		spnH = new LSpinner(position);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnH.setMinimum(1);
 		addControl(spnH, "h");
 		
 		spnX.addModifyListener(new LControlListener<Integer>() {
@@ -119,7 +120,7 @@ public class CharTileEditor extends LObjectEditor {
 		Text txtChar = new Text(this, SWT.BORDER | SWT.READ_ONLY);
 		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnChar = new IDButton(this, SWT.NONE) {
+		IDButton btnChar = new IDButton(this, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.characters.getTree();

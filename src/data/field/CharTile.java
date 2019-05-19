@@ -7,12 +7,12 @@ public class CharTile {
 	public String key = "charKey";
 	public boolean persistent = false;
 	
-	public int x = 0;
-	public int y = 0;
-	public int h = 0;
+	public int x = 1;
+	public int y = 1;
+	public int h = 1;
 	
 	public int party = -1;
-	public int charID = 11;
+	public int charID = -1;
 	public int battlerID = -1;
 	
 	public String animation = "Idle";

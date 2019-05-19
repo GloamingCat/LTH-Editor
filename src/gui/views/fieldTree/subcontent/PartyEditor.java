@@ -56,6 +56,7 @@ public class PartyEditor extends LObjectEditor {
 		
 		LSpinner spnH = new LSpinner(position);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnH.setMinimum(1);
 		addControl(spnH, "h");
 		
 		spnX.addModifyListener(new LControlListener<Integer>() {

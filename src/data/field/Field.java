@@ -28,6 +28,7 @@ public class Field {
 	
 	public static class Prefs extends Data {
 		
+		public boolean persistent = false;
 		public int defaultRegion = -1;
 		public int maxHeight = 4;
 		public Audio bgm = new Audio();

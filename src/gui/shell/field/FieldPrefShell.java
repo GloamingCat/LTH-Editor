@@ -5,6 +5,7 @@ import lwt.event.LEditEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LCheckButton;
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
@@ -34,6 +35,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
+
 import org.eclipse.swt.layout.FillLayout;
 
 public class FieldPrefShell extends ObjectShell<Field.Prefs> {
@@ -54,9 +56,16 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		Label lblName = new Label(grpGeneral, SWT.NONE);
 		lblName.setText(Vocab.instance.NAME);
 		
-		LText text = new LText(grpGeneral, SWT.NONE);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		addControl(text, "name");
+		LText txtName = new LText(grpGeneral, SWT.NONE);
+		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(txtName, "name");
+		
+		Label lblPersistent = new Label(grpGeneral, SWT.NONE);
+		lblPersistent.setText(Vocab.instance.PERSISTENT);
+		
+		LCheckButton btnPersistent = new LCheckButton(grpGeneral);
+		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		addControl(btnPersistent, "persistent");
 		
 		Label lblDefaultRegions = new Label(grpGeneral, SWT.NONE);
 		lblDefaultRegions.setText(Vocab.instance.DEFAULTREGION);
