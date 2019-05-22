@@ -6,6 +6,7 @@ public class CharTile {
 	
 	public String key = "charKey";
 	public boolean persistent = false;
+	public boolean passable = false;
 	
 	public int x = 1;
 	public int y = 1;

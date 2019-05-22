@@ -170,6 +170,13 @@ public class CharTileEditor extends LObjectEditor {
 			}
 		});
 		
+		Label lblPassable = new Label(this, SWT.NONE);
+		lblPassable.setText(Vocab.instance.PASSABLE);
+		
+		LCheckButton btnPassable = new LCheckButton(this, SWT.NONE);
+		btnPassable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		addControl(btnPassable, "passable");
+		
 		// Battle
 		
 		Label lblParty = new Label(this, SWT.NONE);
