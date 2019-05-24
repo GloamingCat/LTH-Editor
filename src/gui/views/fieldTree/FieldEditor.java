@@ -52,7 +52,8 @@ public class FieldEditor extends LObjectEditor {
 			
 			public void onTileEnter(int x, int y) {
 				super.onTileEnter(x, y);
-				tileCoord.setText("(" + (x + 1) + ", " + (y + 1) + ")");
+				int h = canvas.height + 1;
+				tileCoord.setText("(" + (x + 1) + ", " + (y + 1) + ", " + h + ")");
 			}
 			
 			public void setField(Field field) {
@@ -80,7 +81,7 @@ public class FieldEditor extends LObjectEditor {
 		bottom.setLayout(new GridLayout(2, false));
 		
 		tileCoord = new Label(bottom, SWT.NONE);
-		tileCoord.setText("(-99, -99)");
+		tileCoord.setText("(-99, -99, -99)");
 		
 		Composite scale = new Composite(bottom, SWT.NONE);
 		GridLayout gl_scale = new GridLayout(3, true);

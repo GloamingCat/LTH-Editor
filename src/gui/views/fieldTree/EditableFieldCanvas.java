@@ -94,11 +94,11 @@ public class EditableFieldCanvas extends FieldCanvas {
 		Point p2 = FieldHelper.math.tile2Pixel(tileX, dragOrigin.y, h);
 		Point p3 = FieldHelper.math.tile2Pixel(dragOrigin.x, dragOrigin.y, h);
 		Point p4 = FieldHelper.math.tile2Pixel(dragOrigin.x, tileY, h);
-		int[] poly = new int[] {p1.x + x0, p1.y + y0,
-								p2.x + x0, p2.y + y0,
-								p3.x + x0, p3.y + y0,
-								p4.x + x0, p4.y + y0,
-								p1.x + x0, p1.y + y0 };
+		int[] poly = new int[] {(int) ((p1.x + x0) * scale), (int) ((p1.y + y0) * scale),
+								(int) ((p2.x + x0) * scale), (int) ((p2.y + y0) * scale),
+								(int) ((p3.x + x0) * scale), (int) ((p3.y + y0) * scale),
+								(int) ((p4.x + x0) * scale), (int) ((p4.y + y0) * scale),
+								(int) ((p1.x + x0) * scale), (int) ((p1.y + y0) * scale) };
 		gc.fillPolygon(poly);
 	}
 	
@@ -111,17 +111,18 @@ public class EditableFieldCanvas extends FieldCanvas {
 		Point p2 = FieldHelper.math.tile2Pixel(maxx, miny, currentParty.h - 1);
 		Point p3 = FieldHelper.math.tile2Pixel(minx, miny, currentParty.h - 1);
 		Point p4 = FieldHelper.math.tile2Pixel(minx, maxy, currentParty.h - 1);
-		int[] poly = new int[] {p1.x + x0, p1.y + y0,
-								p2.x + x0, p2.y + y0,
-								p3.x + x0, p3.y + y0,
-								p4.x + x0, p4.y + y0,
-								p1.x + x0, p1.y + y0 };
+		int[] poly = new int[] {(int) ((p1.x + x0) * scale), (int) ((p1.y + y0) * scale),
+								(int) ((p2.x + x0) * scale), (int) ((p2.y + y0) * scale),
+								(int) ((p3.x + x0) * scale), (int) ((p3.y + y0) * scale),
+								(int) ((p4.x + x0) * scale), (int) ((p4.y + y0) * scale),
+								(int) ((p1.x + x0) * scale), (int) ((p1.y + y0) * scale) };
 		gc.fillPolygon(poly);
 		int direction = (currentParty.rotation * 90 + FieldHelper.math.initialDirection) % 360;
-		Image arrow = SWTResourceManager.getImage(this.getClass(), "/img/falsearrow_" + direction + ".png");
+		String dirName = "/img/falsearrow_" + direction;
+		Image arrow = SWTResourceManager.getImage(this.getClass(), dirName + ".png");
 		gc.setAlpha(255);
-		gc.drawImage(arrow, x0 + (p1.x + p3.x - arrow.getBounds().width) / 2, 
-				y0 + (p1.y + p3.y - arrow.getBounds().height) / 2);
+		gc.drawImage(arrow, (int) ((x0 + (p1.x + p3.x - arrow.getBounds().width) / 2) * scale), 
+				(int) ((y0 + (p1.y + p3.y - arrow.getBounds().height) / 2) * scale));
 	}
 	
 	// -------------------------------------------------------------------------------------

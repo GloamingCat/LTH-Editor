@@ -129,7 +129,7 @@ public class FieldCanvas extends LView {
 	// Draw Buffer
 	// -------------------------------------------------------------------------------------
 	
-	protected void redrawBuffer() {
+	public void redrawBuffer() {
 		if (buffer != null)
 			buffer.dispose();
 		
@@ -296,12 +296,13 @@ public class FieldCanvas extends LView {
 		if (field == null) {
 			this.field = null;
 			this.currentLayer = null;
-			clearTileImages(0, 0);
 			rescale(1);
+			clearTileImages(0, 0);
 		} else {
 			this.field = field;
-			updateAllTileImages();
+			this.currentLayer = null;
 			rescale(scale);
+			updateAllTileImages();
 		}
 	}
 	

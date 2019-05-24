@@ -322,6 +322,7 @@ public class FieldSideEditor extends LObjectEditor {
 			} else { 					// Party
 				lstParties.onVisible();
 				FieldEditor.instance.canvas.setMode(2);
+				FieldEditor.instance.canvas.setHeight(0);
 			}
 		}
 		lblTitle.setText(titles[i]);
