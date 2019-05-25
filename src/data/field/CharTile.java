@@ -1,10 +1,11 @@
 package data.field;
 
+import lwt.dataestructure.LDataList;
 import data.subcontent.Script;
 
 public class CharTile {
 	
-	public String key = "charKey";
+	public String key = "CharKey";
 	public boolean persistent = false;
 	public boolean passable = false;
 	
@@ -19,9 +20,7 @@ public class CharTile {
 	public String animation = "Idle";
 	public int direction = 315;
 	
-	public Script loadScript = new Script();
-	public Script collideScript = new Script();
-	public Script interactScript = new Script();
+	public LDataList<Script> scripts = new LDataList<>();
 	
 	public CharTile() {}
 

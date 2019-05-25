@@ -188,12 +188,8 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		// Characters
 		
-		Composite character = new Composite(editors, SWT.NONE);
+		SashForm character = new SashForm(editors, SWT.VERTICAL);
 		character.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_character = new GridLayout(1, false);
-		gl_character.marginHeight = 0;
-		gl_character.marginWidth = 0;
-		character.setLayout(gl_character);
 		
 		LCollectionListener<CharTile> charListener = new LCollectionListener<CharTile>() {
 			public void onInsert(LInsertEvent<CharTile> event) {
@@ -229,12 +225,8 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		// Party
 		
-		Composite party = new Composite(editors, SWT.NONE);
+		SashForm party = new SashForm(editors, SWT.NONE);
 		party.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_party = new GridLayout(2, false);
-		gl_party.marginWidth = 0;
-		gl_party.marginHeight = 0;
-		party.setLayout(gl_party);
 		
 		Label lblPlayerParty = new Label(party, SWT.NONE);
 		lblPlayerParty.setText(Vocab.instance.PLAYERPARTY);

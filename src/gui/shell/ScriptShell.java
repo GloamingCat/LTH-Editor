@@ -25,11 +25,11 @@ public class ScriptShell extends ObjectShell<Script> {
 	
 	private FileSelector selFile;
 	
-	public ScriptShell(Shell parent, int optional) {
+	public ScriptShell(Shell parent, int style) {
 		super(parent);
 		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
 		SashForm form = new SashForm(contentEditor, SWT.NONE);
-		selFile = new FileSelector(form, optional) {
+		selFile = new FileSelector(form, style) {
 			@Override
 			protected boolean isValidFile(File f) {
 				return f.getName().endsWith(".lua");
@@ -55,17 +55,32 @@ public class ScriptShell extends ObjectShell<Script> {
 		options.setLayout(new GridLayout(3, false));
 		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		LCheckButton btnGlobal = new LCheckButton(options, SWT.NONE);
+		LCheckButton btnGlobal = new LCheckButton(options);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
 		addControl(btnGlobal, "global");
 		
-		LCheckButton btnWait = new LCheckButton(options, SWT.NONE);
+		LCheckButton btnWait = new LCheckButton(options);
 		btnWait.setText(Vocab.instance.WAIT);
 		addControl(btnWait, "wait");
 		
-		LCheckButton btnBlock = new LCheckButton(options, SWT.NONE);
+		LCheckButton btnBlock = new LCheckButton(options);
 		btnBlock.setText(Vocab.instance.BLOCKPLAYER);
 		addControl(btnBlock, "block");
+		
+		LCheckButton btnLoad = new LCheckButton(options);
+		btnLoad.setText(Vocab.instance.ONLOAD);
+		addControl(btnLoad, "onLoad");
+		btnLoad.setEnabled((style & 2) != 0);
+	
+		LCheckButton btnCollide = new LCheckButton(options);
+		btnCollide.setText(Vocab.instance.ONCOLLIDE);
+		addControl(btnCollide, "onCollide");
+		btnCollide.setEnabled((style & 4) != 0);
+		
+		LCheckButton btnInteract = new LCheckButton(options);
+		btnInteract.setText(Vocab.instance.ONINTERACT);
+		addControl(btnInteract, "onInteract");
+		btnInteract.setEnabled((style & 8) != 0);
 		
 		form.setWeights(new int[] {1, 1});
 	}

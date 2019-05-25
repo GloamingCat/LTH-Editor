@@ -356,9 +356,9 @@ public class Vocab {
 	
 	// Character
 	public String ANIMATION = "Animation";
-	public String LOADSCRIPT = "Load";
-	public String COLLIDESCRIPT = "Collide";
-	public String INTERACTSCRIPT = "Interact";
+	public String ONLOAD = "On Load";
+	public String ONCOLLIDE = "On Collide";
+	public String ONINTERACT = "On Interact";
 	
 	// Party
 	public String PLAYERPARTY = "Player Party";

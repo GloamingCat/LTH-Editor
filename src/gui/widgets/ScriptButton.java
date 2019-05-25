@@ -21,12 +21,12 @@ public class ScriptButton extends LObjectButton<Script> {
 	 * @param parent
 	 * @param style
 	 */
-	public ScriptButton(Composite parent, int optional) {
+	public ScriptButton(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		setShellFactory(new LShellFactory<Script>() {
 			@Override
 			public LObjectShell<Script> createShell(Shell parent) {
-				return new ScriptShell(parent, optional);
+				return new ScriptShell(parent, style);
 			}
 		});
 	}

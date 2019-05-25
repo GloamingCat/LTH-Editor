@@ -95,12 +95,12 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		addControl(btnBGM, "bgm");
 		
 		Label lblScript = new Label(grpGeneral, SWT.NONE);
-		lblScript.setText(Vocab.instance.LOADSCRIPT);
+		lblScript.setText(Vocab.instance.ONLOAD);
 		
 		Text txtScript = new Text(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnScript = new ScriptButton(grpGeneral, SWT.NONE);
+		ScriptButton btnScript = new ScriptButton(grpGeneral, 3);
 		btnScript.setPathText(txtScript);
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");

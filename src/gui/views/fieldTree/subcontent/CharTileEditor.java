@@ -3,7 +3,6 @@ package gui.views.fieldTree.subcontent;
 import gui.Vocab;
 import gui.views.fieldTree.FieldEditor;
 import gui.widgets.IDButton;
-import gui.widgets.ScriptButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -18,6 +17,7 @@ import lwt.widget.LCombo;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -204,42 +204,12 @@ public class CharTileEditor extends LObjectEditor {
 		addControl(btnBattler, "battlerID");
 		
 		Group grpScripts = new Group(this, SWT.NONE);
-		grpScripts.setLayout(new GridLayout(3, false));
+		grpScripts.setLayout(new FillLayout());
 		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
 		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
-		Label lblLoad = new Label(grpScripts, SWT.NONE);
-		lblLoad.setText(Vocab.instance.LOADSCRIPT);
-		
-		Text txtLoad = new Text(grpScripts, SWT.BORDER | SWT.READ_ONLY);
-		txtLoad.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnLoad = new ScriptButton(grpScripts, 1);
-		btnLoad.setPathText(txtLoad);
-		btnLoad.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		addControl(btnLoad, "loadScript");
-		
-		Label lblCollide = new Label(grpScripts, SWT.NONE);
-		lblCollide.setText(Vocab.instance.COLLIDESCRIPT);
-		
-		Text txtCollide = new Text(grpScripts, SWT.BORDER | SWT.READ_ONLY);
-		txtCollide.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnCollide = new ScriptButton(grpScripts, 1);
-		btnCollide.setPathText(txtCollide);
-		btnCollide.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		addControl(btnCollide, "collideScript");
-		
-		Label lblInteract = new Label(grpScripts, SWT.NONE);
-		lblInteract.setText(Vocab.instance.INTERACTSCRIPT);
-		
-		Text txtInteract = new Text(grpScripts, SWT.BORDER | SWT.READ_ONLY);
-		txtInteract.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		ScriptButton btnInteract = new ScriptButton(grpScripts, 1);
-		btnInteract.setPathText(txtInteract);
-		btnInteract.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		addControl(btnInteract, "interactScript");
+		ScriptList lstScripts = new ScriptList(grpScripts, 1 | 2 | 4 | 8);
+		addChild(lstScripts, "scripts");
 
 	}
 
