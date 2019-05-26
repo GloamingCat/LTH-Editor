@@ -57,8 +57,9 @@ public class FieldCanvas extends LView {
 		}
 
 		public void run() {
+			int tileCount = Math.max(field.sizeX, field.sizeY) - 1;
 			Image img = LImageHelper.newImage(size.x + (FieldHelper.config.grid.tileW + 
-					FieldHelper.config.grid.tileB) * field.sizeX, size.y);
+					FieldHelper.config.grid.tileB) * tileCount, size.y);
 			GC gc = new GC(img);
 			liney = y0 + FieldHelper.math.tile2Pixel(ki, kj, 0).y - size.y + FieldHelper.config.grid.tileH;
 			for(int i = ki, j = kj; i < field.sizeX && j < field.sizeY; i++, j++) {

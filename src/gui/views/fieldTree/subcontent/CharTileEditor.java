@@ -205,7 +205,7 @@ public class CharTileEditor extends LObjectEditor {
 		
 		Group grpScripts = new Group(this, SWT.NONE);
 		grpScripts.setLayout(new FillLayout());
-		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
+		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
 		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
 		ScriptList lstScripts = new ScriptList(grpScripts, 1 | 2 | 4 | 8);

@@ -222,6 +222,7 @@ public class FieldSideEditor extends LObjectEditor {
 		charEditor = new CharTileEditor(character, SWT.NONE);
 		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		lstChars.addChild(charEditor);
+		character.setWeights(new int[] {1, 2});
 		
 		// Party
 		
