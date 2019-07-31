@@ -269,6 +269,7 @@ public class EditableFieldCanvas extends FieldCanvas {
 					}
 				}
 			}
+			redrawBuffer();
 			redraw();
 			BucketAction action = new BucketAction(grid, newID, id, modified, this);
 			getActionStack().newAction(action);

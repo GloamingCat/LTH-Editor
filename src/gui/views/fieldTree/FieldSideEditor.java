@@ -193,12 +193,16 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		LCollectionListener<CharTile> charListener = new LCollectionListener<CharTile>() {
 			public void onInsert(LInsertEvent<CharTile> event) {
-				if (event != null && event.node != null)
-					FieldEditor.instance.canvas.updateTileImage(event.node.data.x, event.node.data.y);
+				if (event == null || event.node == null) return;
+				FieldEditor.instance.canvas.updateTileImage(event.node.data.x - 1, event.node.data.y - 1);
+				FieldEditor.instance.canvas.redrawBuffer();
+				FieldEditor.instance.canvas.redraw();
 			}
 			public void onDelete(LDeleteEvent<CharTile> event) {
-				if (event != null && event.node != null)
-					FieldEditor.instance.canvas.updateTileImage(event.node.data.x, event.node.data.y);
+				if (event == null || event.node == null) return;
+				FieldEditor.instance.canvas.updateTileImage(event.node.data.x - 1, event.node.data.y - 1);
+				FieldEditor.instance.canvas.redrawBuffer();
+				FieldEditor.instance.canvas.redraw();
 			}
 		};
 		
@@ -208,7 +212,12 @@ public class FieldSideEditor extends LObjectEditor {
 		lstChars.setIncludeID(false);
 		lstChars.type = CharTile.class;
 		addChild(lstChars, "characters");
+		
+		charEditor = new CharTileEditor(character, SWT.NONE);
+		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		lstChars.addChild(charEditor);
 		lstChars.getCollectionWidget().addInsertListener(charListener);
+		lstChars.getCollectionWidget().addDeleteListener(charListener);
 		lstChars.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -218,10 +227,6 @@ public class FieldSideEditor extends LObjectEditor {
 				FieldEditor.instance.canvas.setHeight(tile.h - 1);
 			}
 		});
-		
-		charEditor = new CharTileEditor(character, SWT.NONE);
-		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		lstChars.addChild(charEditor);
 		character.setWeights(new int[] {1, 2});
 		
 		// Party

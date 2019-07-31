@@ -29,6 +29,7 @@ public class BucketAction implements LAction {
 			grid[p.x][p.y] = oldID;
 			canvas.updateTileImage(p.x, p.y);
 		}
+		canvas.redrawBuffer();
 		canvas.redraw();
 	}
 
@@ -38,6 +39,7 @@ public class BucketAction implements LAction {
 			grid[p.x][p.y] = newID;
 			canvas.updateTileImage(p.x, p.y);
 		}
+		canvas.redrawBuffer();
 		canvas.redraw();
 	}
 

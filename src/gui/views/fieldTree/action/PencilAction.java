@@ -43,6 +43,7 @@ public class PencilAction implements LAction {
 			}
 		}
 		if (needsRedraw) {
+			FieldEditor.instance.canvas.redrawBuffer();
 			FieldEditor.instance.canvas.redraw();
 		}
 		return needsRedraw;

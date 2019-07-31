@@ -207,8 +207,6 @@ public class FieldCanvas extends LView {
 				tileImages[_x][_y] = painter.createTileImage(_x, _y, size.x, size.y, currentLayer, field);
 			}
 		}
-		redrawBuffer();
-		redraw();
 	}
 	
 	public void updateAllTileImages() {

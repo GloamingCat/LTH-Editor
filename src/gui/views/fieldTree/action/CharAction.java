@@ -31,6 +31,8 @@ public class CharAction implements LAction {
 		FieldEditor.instance.canvas.updateTileImage(x0 - 1, y0 - 1);
 		FieldEditor.instance.canvas.updateTileImage(x - 1, y - 1);
 		FieldSideEditor.instance.onMoveCharacter(tile);
+		FieldEditor.instance.canvas.redrawBuffer();
+		FieldEditor.instance.canvas.redraw();
 	}
 
 	@Override
@@ -41,6 +43,8 @@ public class CharAction implements LAction {
 		FieldEditor.instance.canvas.updateTileImage(x0 - 1, y0 - 1);
 		FieldEditor.instance.canvas.updateTileImage(x - 1, y - 1);
 		FieldSideEditor.instance.onMoveCharacter(tile);
+		FieldEditor.instance.canvas.redrawBuffer();
+		FieldEditor.instance.canvas.redraw();
 	}
 
 }
