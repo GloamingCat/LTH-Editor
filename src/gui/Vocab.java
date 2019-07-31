@@ -83,6 +83,7 @@ public class Vocab {
 	public String TILESIDE = "Tile Side";
 	public String PIXELHEIGHT = "Pixels/Height";
 	public String DEPTHHEIGHT = "Depth/Height";
+	public String DEPTHY = "Depth/Y";
 	public String ALLNEIGHBORS = "8 neighbors";
 	public String OVERPASSALLIES = "Overpass Allies";
 	public String OVERPASSDEADS = "Overpass Deads";
@@ -91,8 +92,10 @@ public class Vocab {
 	public String SCREEN = "Screen";
 	public String COVER = "Cover";
 	public String FPSLIMIT = "FPS Limit";
+	public String NATIVESIZE = "Native Size";
 	public String NATIVEWIDTH = "Native Width";
 	public String NATIVEHEIGHT = "Native Height";
+	public String SCALEFACTOR = "Scale Factor";
 	public String WIDTHSCALE = "Width Scale";
 	public String HEIGHTSCALE = "Height Scale";
 	public String SCALETYPE = "Scale Type";
@@ -121,6 +124,7 @@ public class Vocab {
 	public String TROOP = "Troop";
 	public String INITIALTROOP = "Initial Troop";
 	public String MAXMEMBERS = "Max Members";
+	public String TROOPSIZE = "Grid Size";
 	public String WIDTH = "Width";
 	public String HEIGHT = "Height";
 	

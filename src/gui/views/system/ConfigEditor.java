@@ -110,38 +110,52 @@ public class ConfigEditor extends LView {
 		spnFps.setMinimum(1);
 		spnFps.setMaximum(9999);
 		
-		Label lblNativeWidth = new Label(screenEditor, SWT.NONE);
-		lblNativeWidth.setText(Vocab.instance.NATIVEWIDTH);
+		Label lblNativeSize = new Label(screenEditor, SWT.NONE);
+		lblNativeSize.setText(Vocab.instance.NATIVESIZE);
 		
-		LSpinner spnNativeWidth = new LSpinner(screenEditor, SWT.NONE);
-		spnNativeWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		Composite nativeSize = new Composite(screenEditor, SWT.NONE);
+		GridLayout gl_nativeSize = new GridLayout(3, false);
+		gl_nativeSize.marginHeight = 0;
+		gl_nativeSize.marginWidth = 0;
+		nativeSize.setLayout(gl_nativeSize);
+		nativeSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
+		LSpinner spnNativeWidth = new LSpinner(nativeSize, SWT.NONE);
+		spnNativeWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		screenEditor.addControl(spnNativeWidth, "nativeWidth");
 		spnNativeWidth.setMinimum(1);
 		spnNativeWidth.setMaximum(9999);
 		
-		Label lblNativeHeight = new Label(screenEditor, SWT.NONE);
-		lblNativeHeight.setText(Vocab.instance.NATIVEHEIGHT);
+		Label lblX = new Label(nativeSize, SWT.NONE);
+		lblX.setText("x");
 		
-		LSpinner spnNativeHeight = new LSpinner(screenEditor, SWT.NONE);
-		spnNativeHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		LSpinner spnNativeHeight = new LSpinner(nativeSize, SWT.NONE);
+		spnNativeHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		screenEditor.addControl(spnNativeHeight, "nativeHeight");
 		spnNativeHeight.setMinimum(1);
 		spnNativeHeight.setMaximum(9999);
 		
-		Label lblWidthScale = new Label(screenEditor, SWT.NONE);
-		lblWidthScale.setText(Vocab.instance.WIDTHSCALE);
+		Label lblScaleFactor = new Label(screenEditor, SWT.NONE);
+		lblScaleFactor.setText(Vocab.instance.SCALEFACTOR);
 		
-		LSpinner spnWidthScale = new LSpinner(screenEditor, SWT.NONE);
-		spnWidthScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		Composite scaleFactor = new Composite(screenEditor, SWT.NONE);
+		GridLayout gl_scaleFactor = new GridLayout(3, false);
+		gl_scaleFactor.marginHeight = 0;
+		gl_scaleFactor.marginWidth = 0;
+		scaleFactor.setLayout(gl_scaleFactor);
+		scaleFactor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
+		LSpinner spnWidthScale = new LSpinner(scaleFactor, SWT.NONE);
+		spnWidthScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		screenEditor.addControl(spnWidthScale, "widthScale");
 		spnWidthScale.setMinimum(1);
 		spnWidthScale.setMaximum(9999);
 		
-		Label lblHeightScale = new Label(screenEditor, SWT.NONE);
-		lblHeightScale.setText(Vocab.instance.HEIGHTSCALE);
+		Label lblX2 = new Label(scaleFactor, SWT.NONE);
+		lblX2.setText("x");
 		
-		LSpinner spnHeightScale = new LSpinner(screenEditor, SWT.NONE);
-		spnHeightScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		LSpinner spnHeightScale = new LSpinner(scaleFactor, SWT.NONE);
+		spnHeightScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		screenEditor.addControl(spnHeightScale, "heightScale");
 		spnHeightScale.setMinimum(1);
 		spnHeightScale.setMaximum(9999);
@@ -252,22 +266,28 @@ public class ConfigEditor extends LView {
 		spnDepthPerHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		gridEditor.addControl(spnDepthPerHeight, "depthPerHeight");
 		
-		Label lblAllNeighbors = new Label(gridEditor, SWT.NONE);
-		lblAllNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
+		Label lblDepthPerY = new Label(gridEditor, SWT.NONE);
+		lblDepthPerY.setText(Vocab.instance.DEPTHY);
 		
-		LCheckButton btnAllNeighbors = new LCheckButton(gridEditor, SWT.NONE);
+		LSpinner spnDepthPerY = new LSpinner(gridEditor, SWT.NONE);
+		spnDepthPerY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		gridEditor.addControl(spnDepthPerY, "depthPerY");
+		
+		Composite gridOptions = new Composite(gridEditor, SWT.NONE);
+		gridOptions.setLayout(new GridLayout(2, false));
+		gridOptions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
+		LCheckButton btnAllNeighbors = new LCheckButton(gridOptions, SWT.NONE);
+		btnAllNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
 		gridEditor.addControl(btnAllNeighbors, "allNeighbors");
-		
-		Label lblOverpassAllies = new Label(gridEditor, SWT.NONE);
-		lblOverpassAllies.setText(Vocab.instance.OVERPASSALLIES);
-		
-		LCheckButton btnOverpassAllies = new LCheckButton(gridEditor, SWT.NONE);
+
+		LCheckButton btnOverpassAllies = new LCheckButton(gridOptions, SWT.NONE);
+		btnOverpassAllies.setText(Vocab.instance.OVERPASSALLIES);
 		gridEditor.addControl(btnOverpassAllies, "overpassAllies");
-		
-		Label lblOverpassDeads = new Label(gridEditor, SWT.NONE);
-		lblOverpassDeads.setText(Vocab.instance.OVERPASSDEADS);
-		
-		LCheckButton btnOverpassDeads = new LCheckButton(gridEditor, SWT.NONE);
+
+		LCheckButton btnOverpassDeads = new LCheckButton(gridOptions, SWT.NONE);
+		btnOverpassDeads.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnOverpassDeads.setText(Vocab.instance.OVERPASSDEADS);
 		gridEditor.addControl(btnOverpassDeads, "overpassDeads");
 		
 		// Battle
@@ -355,19 +375,26 @@ public class ConfigEditor extends LView {
 		spnMaxMembers.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		troopEditor.addControl(spnMaxMembers, "maxMembers");
 		
-		Label lblHeight = new Label(troopEditor, SWT.NONE);
-		lblHeight.setText(Vocab.instance.WIDTH);
+		Label lblSize = new Label(troopEditor, SWT.NONE);
+		lblSize.setText(Vocab.instance.TROOPSIZE);
 		
-		LSpinner spnHeight = new LSpinner(troopEditor, SWT.NONE);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		troopEditor.addControl(spnHeight, "height");
+		Composite troopSize = new Composite(troopEditor, SWT.NONE);
+		GridLayout gl_troopSize = new GridLayout(3, false);
+		gl_troopSize.marginHeight = 0;
+		gl_troopSize.marginWidth = 0;
+		troopSize.setLayout(gl_troopSize);
+		troopSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		
-		Label lblWidth = new Label(troopEditor, SWT.NONE);
-		lblWidth.setText(Vocab.instance.HEIGHT);
-		
-		LSpinner spnWidth = new LSpinner(troopEditor, SWT.NONE);
-		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		LSpinner spnWidth = new LSpinner(troopSize, SWT.NONE);
+		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		troopEditor.addControl(spnWidth, "width");
+		
+		Label lblX3 = new Label(troopSize, SWT.NONE);
+		lblX3.setText("x");
+		
+		LSpinner spnHeight = new LSpinner(troopSize, SWT.NONE);
+		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		troopEditor.addControl(spnHeight, "height");
 		
 		// Animations
 		
@@ -399,5 +426,4 @@ public class ConfigEditor extends LView {
 		onChildVisible();
 		editor.setObject(Project.current.config.getData());
 	}
-	
 }

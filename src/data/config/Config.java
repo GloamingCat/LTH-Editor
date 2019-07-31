@@ -49,7 +49,8 @@ public class Config {
 		public int tileB = 16;
 		public int tileS = 0;
 		public int pixelsPerHeight = 8;
-		public int depthPerHeight = 24;
+		public int depthPerHeight = 18;
+		public int depthPerY = 11;
 		public boolean allNeighbors = false;
 		public boolean overpassAllies = false;
 		public boolean overpassDeads = true;
