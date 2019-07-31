@@ -124,15 +124,22 @@ public class TilePainter {
 	}
 	
 	public static Image getCharacterTile(CharTile tile) {
-		String key = tile.charID + "." + tile.animation + "." + tile.direction;
-		Image img = characterCache.get(key);
-		if (img != null)
-			return img;
 		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
 		if (c == null)
 			return null;
-		Animation anim = (Animation) Project.current.animations.getTree().
-				get(c.findAnimation(tile.animation));
+		int animID = c.findAnimation(tile.animation);
+		return getCharacterTile(tile.charID, tile.direction, animID);
+	}
+	
+	public static Image getCharacterTile(int charID, int direction, int animID) {
+		String key = charID + "." + animID + "." + direction;
+		Image img = characterCache.get(key);
+		if (img != null)
+			return img;
+		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(charID);
+		if (c == null)
+			return null;
+		Animation anim = (Animation) Project.current.animations.getTree().get(animID);
 		if (anim == null)
 			return null;
 		int w = anim.quad.width / anim.cols;
@@ -142,7 +149,7 @@ public class TilePainter {
 		GC gc = new GC(img);
 		gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
 		gc.drawImage(anim.quad.getImage(), 
-				anim.quad.x + w * col, anim.quad.y + h * (tile.direction / 45), w, h, 
+				anim.quad.x + w * col, anim.quad.y + h * (direction / 45), w, h, 
 				0, 0, w, h);
 		gc.dispose();
 		ImageData data = img.getImageData();

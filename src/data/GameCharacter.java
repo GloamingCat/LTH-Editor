@@ -21,9 +21,9 @@ public class GameCharacter extends Data {
 		tiles.add(new Tile());
 	}
 	
-	public Animation defaultAnimation() {
+	public int defaultAnimationID() {
 		if (animations.isEmpty())
-			return null;
+			return -1;
 		int id = -1;
 		for (Node n : animations) {
 			if (n.name.contains("Battle:Idle")) {
@@ -33,7 +33,16 @@ public class GameCharacter extends Data {
 		}
 		if (id == -1 && animations.size() > 0)
 			id = animations.get(0).id;
-		return (Animation) Project.current.animations.getData().get(id);
+		return id;
+	}
+	
+	public Animation defaultAnimation() {
+		int id = defaultAnimationID();
+		if (id == -1) {
+			return null;
+		} else {
+			return (Animation) Project.current.animations.getData().get(id);
+		}
 	}
 	
 	public int findAnimation(String key) {

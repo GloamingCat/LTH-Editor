@@ -7,6 +7,7 @@ import lwt.widget.LCheckButton;
 import lwt.widget.LSpinner;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.helper.TilePainter;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.TagList;
@@ -18,12 +19,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
-import data.Animation;
 import data.GameCharacter;
 import data.Troop;
 import data.config.Config;
@@ -141,20 +142,22 @@ public class TroopTab extends DatabaseTab {
 						if (u.backup)
 							continue;
 						GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
-						Animation anim = c == null ? null : c.defaultAnimation();
-						if (anim == null || anim.cols == 0 || anim.rows == 0)
+						int animID = c.defaultAnimationID();
+						if (animID == -1)
 							continue;
-						Image img = anim.quad.getImage();
-						if (img == null) 
+						Image img = TilePainter.getCharacterTile(u.charID, 270, animID);
+						if (img == null)
 							continue;
-						int w = anim.quad.width / anim.cols;
-						int h = anim.quad.height / anim.rows;
-						int x = anim.quad.x + w;
-						int y = anim.quad.y + 6 * h;
-						w = Math.min(tWidth, w);
-						h = Math.min(tHeight, h);
+						Rectangle bounds = img.getBounds();
+						int sw = bounds.width;
+						int sh = bounds.height;
+						sw = Math.min(tWidth, sw);
+						sh = Math.min(tHeight, sh);
+						int dx = tWidth / 2 - sw / 2;
+						int dy = tHeight / 2 - sh / 2;
 						e.gc.drawImage(img, 
-								x, y, w, h, tWidth * (u.x - 1), tHeight * (u.y - 1), w, h);
+								0, 0, sw, sh, 
+								tWidth * (u.x - 1) + dx, tHeight * (u.y - 1) + dy, sw, sh);
 					}
 					Unit u = lstMembers.getCollectionWidget().getSelectedObject();
 					if (u == null) return;
