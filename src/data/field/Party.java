@@ -13,9 +13,9 @@ public class Party {
 	public int memberGen = 1;
 
 	// Position of the top-left corner of the party (or left corner, in isometric/hexagonal grid).
-	public int x = 0;
-	public int y = 0;
-	public int h = 0;
+	public int x = 1;
+	public int y = 1;
+	public int h = 1;
 
 	// The initial direction of the characters.
 	// The troop's grid is also rotated to reposition them, in case they are generated from grid.

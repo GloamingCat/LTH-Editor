@@ -226,8 +226,9 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		// Party
 		
-		SashForm party = new SashForm(editors, SWT.NONE);
+		Composite party = new Composite(editors, SWT.NONE);
 		party.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		party.setLayout(new GridLayout(2, false));
 		
 		Label lblPlayerParty = new Label(party, SWT.NONE);
 		lblPlayerParty.setText(Vocab.instance.PLAYERPARTY);
@@ -238,9 +239,8 @@ public class FieldSideEditor extends LObjectEditor {
 		cmbPlayerParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(cmbPlayerParty, "playerParty");
 		
-		Composite partylist = new Composite(party, SWT.NONE);
+		SashForm partylist = new SashForm(party, SWT.VERTICAL);
 		partylist.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		partylist.setLayout(new FillLayout(SWT.VERTICAL));
 		
 		LCollectionListener<Party> partyListener = new LCollectionListener<Party>() {
 			public void onInsert(LInsertEvent<Party> event) {
