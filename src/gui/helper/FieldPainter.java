@@ -1,5 +1,6 @@
 package gui.helper;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -24,9 +25,11 @@ import project.Project;
 public class FieldPainter {
 	
 	public Color gridColor = SWTResourceManager.getColor(new RGB(50, 50, 50));
+	public Color cursorColor = SWTResourceManager.getColor(SWT.COLOR_RED);
 	
 	public float scale = 1;
 	public boolean showGrid = false;
+	public int imgW, imgH;
 	
 	public FieldPainter() {	}
 	
@@ -55,10 +58,14 @@ public class FieldPainter {
 	}
 	
 	public void drawGrid(GC gc, int x0, int y0) {
+		drawGrid(gc, x0, y0, gridColor);
+	}
+	
+	public void drawGrid(GC gc, int x0, int y0, Color color) {
 		float scale = this.scale;
 		this.scale *= 0.95f;
 		gc.setAlpha(127);
-		gc.setForeground(gridColor);
+		gc.setForeground(color);
 		drawTile(gc, x0, y0);
 		gc.setAlpha(255);
 		this.scale = scale;
@@ -181,7 +188,7 @@ public class FieldPainter {
 			x0, y0, quad.width, quad.height);
 	}
 	
-	public Image createTileImage(int x, int y, int imgW, int imgH, Layer currentLayer, Field field) {
+	public Image createTileImage(Field field, int x, int y, Layer currentLayer, CharTile currentChar) {
 		Image img = LImageHelper.newImage(imgW, imgH);
 	    
 	    int x0 = imgW / 2;
@@ -197,12 +204,10 @@ public class FieldPainter {
 		for (Layer layer : field.layers.terrain) {
 			if (!layer.visible)
 				continue;
-			if (layer.grid[x][y] >= 0) {
+			if (layer.grid[x][y] >= 0)
 				paintTerrain(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
-			}
-			if (showGrid && layer == currentLayer) {
+			if (showGrid && layer == currentLayer)
 				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
-			}
 		}
 		// Region Layers
 		for (Layer layer : field.layers.region) {
@@ -210,26 +215,26 @@ public class FieldPainter {
 				continue;
 			paintRegion(layer, x, y, 
 					gc, x0, y0 - (layer.info.height - 1) * pph);
-			if (showGrid && layer == currentLayer) {
+			if (showGrid && layer == currentLayer)
 				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
-			}
 			break;
 		}
 		// Obstacle Layers
 		for (Layer layer : field.layers.obstacle) {
 			if (!layer.visible)
 				continue;
-			if (showGrid && layer == currentLayer) {
+			if (showGrid && layer == currentLayer)
 				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
-			}
-			if (layer.grid[x][y] >= 0) {
+			if (layer.grid[x][y] >= 0)
 				paintObstacle(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
-			}
 		}
 		// Characters
 		for (CharTile tile : field.characters) {
 			if (tile.x - 1 != x || tile.y - 1 != y)
 				continue;
+			if (tile == currentChar) {
+				drawGrid(gc, x0, y0 - (tile.h - 1) * pph);
+			}
 			paintCharacter(tile, gc, x0, y0 - (tile.h - 1) * pph);
 		}
 		gc.dispose();

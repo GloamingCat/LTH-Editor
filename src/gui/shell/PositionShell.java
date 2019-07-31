@@ -1,7 +1,6 @@
 package gui.shell;
 
 import gui.Vocab;
-import gui.helper.FieldHelper;
 import gui.views.fieldTree.EditableFieldCanvas;
 
 import org.eclipse.swt.widgets.Composite;
@@ -16,9 +15,6 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
@@ -96,6 +92,7 @@ public class PositionShell extends LObjectShell<Position> {
 			public void onTileLeftDown() {
 				spnX.setSelection(tileX + 1);
 				spnY.setSelection(tileY + 1);
+				updateClickPoint();
 				canvas.redraw();
 			}
 			public void onTileRightDown() {}
@@ -103,25 +100,6 @@ public class PositionShell extends LObjectShell<Position> {
 				lblPos.setText("(" + (x + 1) + "," + (y + 1) + ")");
 			}
 		};
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				int x = spnX.getSelection() - 1;
-				int y = spnY.getSelection() - 1;
-				int h = spnH.getSelection() - 1;
-				Point p = FieldHelper.math.tile2Pixel(x, y, h);
-				int[] poly = canvas.painter.getTilePolygon(0, 0);
-				for(int i = 0; i < poly.length; i++) {
-					poly[i] *= 3;
-					poly[i] /= 4;
-				}
-				for(int i = 0; i < poly.length; i += 2) {
-					poly[i] += p.x + canvas.x0;
-					poly[i + 1] += p.y + canvas.y0;
-				}
-				e.gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-				e.gc.drawPolygon(poly);
-			}
-		});
 		
 		scrolledComposite.setContent(canvas);
 
@@ -142,6 +120,7 @@ public class PositionShell extends LObjectShell<Position> {
 		ModifyListener redraw = new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent arg0) {
+				updateClickPoint();
 				canvas.redraw();
 			}
 		};
@@ -208,8 +187,16 @@ public class PositionShell extends LObjectShell<Position> {
 		spnX.setMaximum(field.sizeX);
 		spnY.setMaximum(field.sizeY);
 		canvas.setField(field);
+		updateClickPoint();
 		scrolledComposite.layout();
 		scrolledComposite.setMinSize(canvas.getSize());
+	}
+	
+	private void updateClickPoint() {
+		int x = spnX.getSelection() - 1;
+		int y = spnY.getSelection() - 1;
+		int h = spnH.getSelection() - 1;
+		canvas.setClickedTile(new Point(x, y), h);
 	}
 	
 	public void open(Position initial) {
@@ -228,6 +215,7 @@ public class PositionShell extends LObjectShell<Position> {
 		} else {
 			cmbDirection.setValue(initial.direction / 45);
 		}
+		updateClickPoint();
 		content.layout();
 	}
 	

@@ -224,11 +224,11 @@ public class FieldSideEditor extends LObjectEditor {
 				if (event == null || event.data == null)
 					return;
 				CharTile tile = (CharTile) event.data;
-				FieldEditor.instance.canvas.setHeight(tile.h - 1);
+				FieldEditor.instance.canvas.setCharacter(tile);
 			}
 		});
 		character.setWeights(new int[] {1, 2});
-		
+
 		// Party
 		
 		Composite party = new Composite(editors, SWT.NONE);
@@ -310,6 +310,7 @@ public class FieldSideEditor extends LObjectEditor {
 			lists[i].onVisible();
 			selectLayer(lists[i].getLayer());
 			FieldEditor.instance.canvas.setParty(null);
+			FieldEditor.instance.canvas.setCharacter(null);
 			FieldEditor.instance.canvas.setMode(0);
 		} else {
 			selectLayer(null);
@@ -319,8 +320,8 @@ public class FieldSideEditor extends LObjectEditor {
 				FieldEditor.instance.canvas.setMode(1);
 			} else { 					// Party
 				lstParties.onVisible();
+				FieldEditor.instance.canvas.setCharacter(null);
 				FieldEditor.instance.canvas.setMode(2);
-				FieldEditor.instance.canvas.setHeight(0);
 			}
 		}
 		lblTitle.setText(titles[i]);

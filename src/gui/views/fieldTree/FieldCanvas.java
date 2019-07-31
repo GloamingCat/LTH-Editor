@@ -12,6 +12,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -20,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import data.field.CharTile;
 import data.field.Field;
 import data.field.FieldImage;
 import data.field.Layer;
@@ -30,6 +32,7 @@ public class FieldCanvas extends LView {
 	public Field field;
 	public Layer currentLayer;
 	public Party currentParty;
+	public CharTile currentChar;
 	public float scale = 1;
 	public int x0;
 	public int y0;
@@ -38,6 +41,8 @@ public class FieldCanvas extends LView {
 	protected int tileX = 0;
 	protected int tileY = 0;
 	protected int height = 0;
+	protected Point clickedTile = null;
+	protected int clickedHeight = 0;
 	
 	protected Image buffer;
 
@@ -89,10 +94,15 @@ public class FieldCanvas extends LView {
 	        			0, 0, 
 	        			buffer.getBounds().width, 
 	        			buffer.getBounds().height, 
-	        				0, 0, 
-	        				Math.round(buffer.getBounds().width * scale), 
-	        				Math.round(buffer.getBounds().height * scale));
+        				0, 0, 
+        				Math.round(buffer.getBounds().width * scale), 
+        				Math.round(buffer.getBounds().height * scale));
 	        		drawCursor(e.gc);
+	        		if (clickedTile != null) {
+	        			Point clickPoint = FieldHelper.math.tile2Pixel(clickedTile.x, 
+	        					clickedTile.y, clickedHeight);
+	        			drawCursor(e.gc, painter.cursorColor, clickPoint);
+	        		}
 	        	}
 	        }
 	    });
@@ -179,11 +189,15 @@ public class FieldCanvas extends LView {
 		
 		gc.dispose();
 	}
+	
+	public void drawCursor(GC gc) {
+		drawCursor(gc, getForeground(), mousePoint);
+	}
 
-	protected void drawCursor(GC gc) {
+	public void drawCursor(GC gc, Color color, Point mousePoint) {
 		float scale = painter.scale;
 		painter.scale = scale * 0.75f;
-		gc.setForeground(getForeground());
+		gc.setForeground(color);
 		painter.drawTile(gc, mousePoint.x + x0, mousePoint.y + y0);
 		painter.scale = scale;
 	}
@@ -193,18 +207,28 @@ public class FieldCanvas extends LView {
 	// -------------------------------------------------------------------------------------
 	
 	public void updateTileImage(int x, int y) {
+		updateTileImage(x, y, true);
+	}
+	
+	public void updateTileImage(int x, int y, boolean updateNeighbors) {
 		if (tileImages[x][y] != null)
 			tileImages[x][y].dispose();
 		Point size = tileImageSize();
+		painter.imgW = size.x;
+		painter.imgH = size.y;
 		Point[] shift = FieldHelper.math.neighborShift;
-		tileImages[x][y] = painter.createTileImage(x, y, size.x, size.y, currentLayer, field);
+		tileImages[x][y] = painter.createTileImage(field, x, y, 
+				currentLayer, currentChar);
+		if (!updateNeighbors)
+			return;
 		for(int k = 0; k < shift.length; k++) {
 			int _x = x + shift[k].x;
 			int _y = y + shift[k].y;
 			if (_x >= 0 && _x < field.sizeX && _y >= 0 && _y < field.sizeY) {
 				if (tileImages[_x][_y] != null)
 					tileImages[_x][_y].dispose();
-				tileImages[_x][_y] = painter.createTileImage(_x, _y, size.x, size.y, currentLayer, field);
+				tileImages[_x][_y] = painter.createTileImage(field, _x, _y,
+						currentLayer, currentChar);
 			}
 		}
 	}
@@ -215,9 +239,12 @@ public class FieldCanvas extends LView {
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
 			Point size = tileImageSize();
+			painter.imgW = size.x;
+			painter.imgH = size.y;
 			for(int i = 0; i < field.sizeX; i++) {
 				for(int j = 0; j < field.sizeY; j++) {
-					tileImages[i][j] = painter.createTileImage(i, j, size.x, size.y, currentLayer, field);
+					tileImages[i][j] = painter.createTileImage(field, i, j, 
+							currentLayer, currentChar);
 				}
 			}
 		}
@@ -280,6 +307,26 @@ public class FieldCanvas extends LView {
 	public void setParty(Party party) {
 		if (party != currentParty) {
 			currentParty = party;
+			if (party != null)
+				height = party.h - 1;
+			redraw();
+		}
+	}
+	
+	public void setCharacter(CharTile tile) {
+		if (tile != currentChar) {
+			if (currentChar != null) {
+				int oldx = currentChar.x;
+				int oldy = currentChar.y;
+				currentChar = tile;
+				updateTileImage(oldx - 1, oldy - 1, false);
+			}
+			currentChar = tile;
+			if (tile != null) {
+				height = tile.h - 1;
+				updateTileImage(tile.x - 1, tile.y - 1, false);
+			}
+			redrawBuffer();
 			redraw();
 		}
 	}
@@ -303,6 +350,12 @@ public class FieldCanvas extends LView {
 			rescale(scale);
 			updateAllTileImages();
 		}
+	}
+	
+	public void setClickedTile(Point point, int h) {
+		clickedTile = point;
+		clickedHeight = h;
+		redraw();
 	}
 	
 }

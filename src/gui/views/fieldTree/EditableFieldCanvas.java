@@ -23,7 +23,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import data.field.CharTile;
 
 public class EditableFieldCanvas extends FieldCanvas {
-
+	
 	private int tool = 0;
 	private int mode = 0;
 	private Point selectionPoint;
@@ -130,8 +130,15 @@ public class EditableFieldCanvas extends FieldCanvas {
 	// -------------------------------------------------------------------------------------
 
 	public void onTileLeftDown() {
-		if (mode == 0)	 // Layers
-			useTool(tileX, tileY); 
+		if (mode == 0)	// Layers
+			useTool(tileX, tileY);
+		else { 			// Characters and Parties
+			clickedTile = new Point(tileX, tileY);
+			clickedHeight = height;
+			updateTileImage(tileX, tileY);
+			redrawBuffer();
+		}
+		redraw();
 	}
 	
 	public void onTileLeftUp() {
@@ -200,6 +207,8 @@ public class EditableFieldCanvas extends FieldCanvas {
 	
 	public void setMode(int m) {
 		mode = m;
+		if (m == 0)
+			clickedTile = null;
 	}
 	
 	// -------------------------------------------------------------------------------------
