@@ -100,7 +100,6 @@ public class IconShell extends LObjectShell<Icon> {
 	
 	public void open(Icon initial) {
 		super.open(initial);
-		tree.setValue(-1);
 		if (initial.id >= 0) {
 			col = initial.col;
 			row = initial.row;
@@ -108,10 +107,12 @@ public class IconShell extends LObjectShell<Icon> {
 			if (node != null) {
 				tree.setValue(node.id);
 				setImage((Animation) node.data);
+				return;
 			}
 		} else {
 			col = row = 0;
 		}
+		tree.setValue(-1);
 	}
 	
 	@Override

@@ -45,7 +45,8 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(400, 300));
+		setMinimumSize(new Point(600, 400));
+		setSize(new Point(800, 800));
 
 		content.setLayout(new GridLayout(2, false));
 		
@@ -114,7 +115,6 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	public void open(Portrait initial) {
 		super.open(initial);
 		txtName.setText(initial.name);
-		tree.setValue(-1);
 		if (initial.id >= 0) {
 			col = initial.col;
 			row = initial.row;
@@ -122,10 +122,12 @@ public class PortraitShell extends LObjectShell<Portrait> {
 			if (node != null) {
 				tree.setValue(node.id);
 				setImage((Animation) node.data);
+				return;
 			}
 		} else {
 			col = row = 0;
 		}
+		tree.setValue(-1);
 	}
 	
 	@Override
