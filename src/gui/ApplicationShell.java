@@ -26,8 +26,11 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 */
 	public static void main(String args[]) {
 		try {
+			String folder = args.length > 0 ? args[0] : null;
+			if (folder != null)
+				System.out.println(folder);
 			Display display = Display.getDefault();
-			ApplicationShell shell = new ApplicationShell(display);
+			ApplicationShell shell = new ApplicationShell(display, folder);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -45,7 +48,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public ApplicationShell(Display display) {
+	public ApplicationShell(Display display, String folder) {
 		super(display);
 		setImage(SWTResourceManager.getImage(ApplicationShell.class, "/img/icon.png"));
 		setSize(new Point(900, 600));
@@ -87,7 +90,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 		
 		defaultView = fieldTreeEditor;
 		applicationName = getText();
-		loadDefault();
+		loadDefault(folder);
 	}
 	
 	@Override
