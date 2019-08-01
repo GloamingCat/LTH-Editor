@@ -101,7 +101,7 @@ public class AnimationTab extends DatabaseTab {
 		gl_right.marginHeight = 0;
 		gl_right.verticalSpacing = 0;
 		right.setLayout(gl_right);
-		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 4);
+		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 4);
 		gd_right.widthHint = 300;
 		right.setLayoutData(gd_right);
 		

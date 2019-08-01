@@ -16,6 +16,7 @@ import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
 
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ApplicationShell extends LDefaultApplicationShell {
 	
@@ -46,6 +47,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 */
 	public ApplicationShell(Display display) {
 		super(display);
+		setImage(SWTResourceManager.getImage(ApplicationShell.class, "/img/icon.png"));
 		setSize(new Point(900, 600));
 		setText("LTH Editor");
 		

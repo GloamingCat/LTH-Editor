@@ -211,8 +211,13 @@ public class FieldCanvas extends LView {
 	}
 	
 	public void updateTileImage(int x, int y, boolean updateNeighbors) {
+		try {
 		if (tileImages[x][y] != null)
 			tileImages[x][y].dispose();
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			return;
+		}
 		Point size = tileImageSize();
 		painter.imgW = size.x;
 		painter.imgH = size.y;
