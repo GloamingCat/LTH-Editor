@@ -250,14 +250,14 @@ public class Vocab {
 	public String DURABILITY = "Durability";
 	public String BEHAVIOR = "Behavior";
 	public String CHARANIM = "Character Animation Set";
-	public String OVERRIDE = "Override";
+	public String OVERRIDETRANSFORM = "Override Transform";
 	public String TURNS = "Turns";
 	public String REMOVEONKO = "Remove on KO";
 	public String REMOVEONDAMAGE = "Remove on Damage";
 	public String DRAIN = "Drain";
 	public String DRAINATT = "Attribute";
 	public String DRAINVALUE = "Value";
-	public String PERCENTAGE = "Percentage";
+	public String PERCENTAGE = "Percent";
 	public String FREQUENCY = "Frequency";
 	public String STATUSCANCEL = "Cancel";
 	public String STATUSDEF = "Status Immunity";

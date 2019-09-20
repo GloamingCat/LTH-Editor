@@ -172,7 +172,7 @@ public class StatusTab extends DatabaseTab {
 		
 		LCheckButton btnOverride = new LCheckButton(grpGraphics, SWT.NONE);
 		btnOverride.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 2, 1));
-		btnOverride.setText(Vocab.instance.OVERRIDE);
+		btnOverride.setText(Vocab.instance.OVERRIDETRANSFORM);
 		addControl(btnOverride, "override");
 		
 		Composite middle = new Composite(contentEditor, SWT.NONE);
@@ -187,7 +187,9 @@ public class StatusTab extends DatabaseTab {
 		Group grpDrain = new Group(middle, SWT.NONE);
 		grpDrain.setText(Vocab.instance.DRAIN);
 		grpDrain.setLayout(new GridLayout(3, false));
-		grpDrain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridData gd_grpDrain = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_grpDrain.widthHint = 215;
+		grpDrain.setLayoutData(gd_grpDrain);
 		
 		Label lblDrainAtt = new Label(grpDrain, SWT.NONE);
 		lblDrainAtt.setText(Vocab.instance.DRAINATT);
@@ -212,8 +214,10 @@ public class StatusTab extends DatabaseTab {
 		// Durability
 		
 		Group grpDurability = new Group(middle, SWT.NONE);
-		grpDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpDurability.setLayout(new GridLayout(2, false));
+		GridData gd_grpDurability = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_grpDurability.widthHint = 212;
+		grpDurability.setLayoutData(gd_grpDurability);
+		grpDurability.setLayout(new GridLayout(3, false));
 		grpDurability.setText(Vocab.instance.DURABILITY);
 		
 		Label lblTurns = new Label(grpDurability, SWT.NONE);
@@ -225,23 +229,26 @@ public class StatusTab extends DatabaseTab {
 		spnTurns.setMinimum(-1);
 		addControl(spnTurns, "duration");
 		
+		LCheckButton btnBattleOnly = new LCheckButton(grpDurability, SWT.NONE);
+		btnBattleOnly.setText(Vocab.instance.BATTLEONLY);
+		addControl(btnBattleOnly, "battleOnly");
+		
 		LCheckButton btnRemoveOnKO = new LCheckButton(grpDurability, SWT.NONE);
-		btnRemoveOnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnRemoveOnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
 		addControl(btnRemoveOnKO, "removeOnKO");
 		
 		LCheckButton btnRemoveOnDamage = new LCheckButton(grpDurability, SWT.NONE);
-		btnRemoveOnDamage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnRemoveOnDamage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
 		addControl(btnRemoveOnDamage, "removeOnDamage");
 		
-		LCheckButton btnBattleOnly = new LCheckButton(grpDurability, SWT.NONE);
-		btnBattleOnly.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnBattleOnly.setText(Vocab.instance.BATTLEONLY);
-		addControl(btnBattleOnly, "battleOnly");
 		
 		Group grpCancel = new Group(middle, SWT.NONE);
-		grpCancel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridData gd_grpCancel = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_grpCancel.widthHint = 129;
+		gd_grpCancel.heightHint = 26;
+		grpCancel.setLayoutData(gd_grpCancel);
 		grpCancel.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpCancel.setText(Vocab.instance.STATUSCANCEL);
 		
