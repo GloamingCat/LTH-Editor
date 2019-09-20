@@ -2,10 +2,10 @@ package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.shell.database.MaskShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.EffectList;
-import gui.views.database.subcontent.MaskEditor;
 import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
@@ -15,19 +15,29 @@ import gui.widgets.LuaButton;
 import java.util.ArrayList;
 
 import lwt.dataestructure.LDataTree;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LComboView;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
+import lwt.widget.LObjectButton;
 import lwt.widget.LTextBox;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
 
@@ -35,6 +45,8 @@ import project.Project;
 
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import data.Skill.Mask;
 
 public class SkillTab extends DatabaseTab {
 
@@ -369,26 +381,38 @@ public class SkillTab extends DatabaseTab {
 		// Range
 		
 		Composite range = new Composite(right, SWT.NONE);
-		range.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		range.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_range = new GridLayout(2, false);
 		gl_range.marginWidth = 0;
 		gl_range.marginHeight = 0;
 		range.setLayout(gl_range);
 		
 		Group grpEffect = new Group(range, SWT.NONE);
-		grpEffect.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		grpEffect.setLayout(new GridLayout(2, false));
+		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpEffect.setText(Vocab.instance.EFFECTMASK);
-		MaskEditor effectRange = new MaskEditor(grpEffect, SWT.NONE);
-		addChild(effectRange, "effectMask");
+		
+		LObjectButton<Mask> btnEffectMask = new LObjectButton<Mask>(grpEffect, SWT.NONE);
+		btnEffectMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		addControl(btnEffectMask, "effectMask");
+		
+		Label effectMask = new Label(grpEffect, SWT.NONE);
+		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
 		Group grpCast = new Group(range, SWT.NONE);
-		grpCast.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		grpCast.setLayout(new GridLayout(2, false));
+		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpCast.setText(Vocab.instance.CASTMASK);
-		MaskEditor castRange = new MaskEditor(grpCast, SWT.NONE);
-		castRange.trueColor = SWTResourceManager.getColor(SWT.COLOR_BLUE);
-		addChild(castRange, "castMask");
+		
+		LObjectButton<Mask> btnCastMask = new LObjectButton<Mask>(grpCast, SWT.NONE);
+		btnCastMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		addControl(btnCastMask, "castMask");
+		
+		Label castMask = new Label(grpCast, SWT.NONE);
+		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addMaskButton(btnCastMask, castMask, castColor);
+		
 		
 		// Effects
 		
@@ -461,10 +485,66 @@ public class SkillTab extends DatabaseTab {
 		addChild(lstTags, "tags");
 
 	}
-
+	
 	@Override
 	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.skills;
+	}
+	
+	//-------------------------------------------------------------------------------------
+	// Mask Drawing
+	//-------------------------------------------------------------------------------------
+	
+	protected static final int cellSize = 8;
+	protected static final int border = 2;
+	
+	public Color effectColor = SWTResourceManager.getColor(SWT.COLOR_GREEN);
+	public Color castColor = SWTResourceManager.getColor(SWT.COLOR_BLUE);
+	public Color falseColor = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+	public Color centerColor = SWTResourceManager.getColor(SWT.COLOR_RED);
+	
+	private void addMaskButton(LObjectButton<Mask> button, Label mask, Color trueColor) {
+		button.setShellFactory(new LShellFactory<Mask>() {
+			@Override
+			public LObjectShell<Mask> createShell(Shell parent) {
+				MaskShell shell = new MaskShell(parent);
+				shell.trueColor = trueColor;
+				shell.falseColor = falseColor;
+				shell.centerColor = centerColor;
+				return shell;
+			}
+		});
+		button.addModifyListener(new LControlListener<Mask>() {
+			@Override
+			public void onModify(LControlEvent<Mask> event) {
+				mask.redraw();
+			}
+		});
+		mask.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				Mask m = button.getValue();
+				if (m == null) return;
+				boolean[][] middle = m.grid[m.centerH - 1];
+				e.gc.drawRectangle(new Rectangle(0, 0, 
+						middle.length * cellSize, 
+						middle[0].length * cellSize));
+				for (int i = 0; i < middle.length; i++) {
+					for (int j = 0; j < middle[i].length; j++) {
+						e.gc.setBackground(middle[i][j] ? trueColor : falseColor);
+						e.gc.fillRectangle(border + i * cellSize, border + j * cellSize,
+									cellSize - border, cellSize - border);
+						e.gc.drawRectangle(i * cellSize, j * cellSize,
+									cellSize, cellSize);
+					}
+				}
+				e.gc.setForeground(centerColor);
+				e.gc.drawRectangle(border + (m.centerX - 1) * cellSize, 
+						border + (m.centerY - 1)* cellSize,
+						cellSize - border - 2, 
+						cellSize - border - 2);
+			}
+		});
 	}
 
 }
