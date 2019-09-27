@@ -283,6 +283,8 @@ public class Vocab {
 	public String VOLUME = "Volume";
 	public String PITCH = "Pitch";
 	public String TIME = "Time";
+	public String PLAY = "Play";
+	public String STOP = "Stop";
 	
 	// Transform
 	public String TRANSFORM = "Transform";

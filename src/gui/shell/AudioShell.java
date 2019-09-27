@@ -5,6 +5,7 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.LSoundPlayer;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -20,10 +21,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import data.subcontent.Audio;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class AudioShell extends ObjectShell<Audio> {
 	
 	protected FileSelector selFile;
+	protected boolean isBGM = false;
+	
+	public static final int BGM = 0x01;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -32,13 +39,13 @@ public class AudioShell extends ObjectShell<Audio> {
 		this(parent, 1);
 	}
 	
-	public AudioShell(Shell parent, int optional) {
+	public AudioShell(Shell parent, int style) {
 		super(parent);
 
 		setMinimumSize(400, 400);
 		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
 		SashForm form = new SashForm(contentEditor, SWT.NONE);
-		selFile = new FileSelector(form, optional) {
+		selFile = new FileSelector(form, style) {
 			@Override
 			protected boolean isValidFile(File f) {
 				String name = f.getName();
@@ -46,6 +53,8 @@ public class AudioShell extends ObjectShell<Audio> {
 			}
 		};
 		selFile.setFolder(Project.current.audioPath());
+		
+		isBGM = style / 2 == 1;
 		
 		Composite composite = new Composite(form, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
@@ -76,6 +85,40 @@ public class AudioShell extends ObjectShell<Audio> {
 		spnTime.setMinimum(0);
 		spnTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnTime, "time");
+		
+		Composite reproduction = new Composite(composite, SWT.NONE);
+		GridLayout gl_reproduction = new GridLayout(2, false);
+		gl_reproduction.marginWidth = 0;
+		gl_reproduction.marginHeight = 0;
+		reproduction.setLayout(gl_reproduction);
+		reproduction.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 2, 1));
+		
+		Button btnPlay = new Button(reproduction, SWT.NONE);
+		btnPlay.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String name = selFile.getSelectedFile();
+				if (name == null || name.isEmpty())
+					return;
+				String path = Project.current.audioPath() + name;
+				float volume = spnVolume.getValue() * 0.1f;
+				float pitch = spnPitch.getValue() * 0.1f;
+				if (isBGM)
+					LSoundPlayer.playBGM(path, volume, pitch);
+				else
+					LSoundPlayer.playSFX(path, volume, pitch);
+			}
+		});
+		btnPlay.setText(Vocab.instance.PLAY);
+		
+		Button btnStop = new Button(reproduction, SWT.NONE);
+		btnStop.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				LSoundPlayer.stop();
+			}
+		});
+		btnStop.setText(Vocab.instance.STOP);
 		
 		form.setWeights(new int[] { 1, 1 });
 		
