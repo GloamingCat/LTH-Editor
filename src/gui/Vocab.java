@@ -270,9 +270,12 @@ public class Vocab {
 	
 	// Troops
 	public String UNITS = "Units";
-	public String BACKUP = "Backup";
 	public String POSITIONX = "Grid X";
 	public String POSITIONY = "Grid Y";
+	public String LIST = "List";
+	public String CURRENT = "Current";
+	public String BACKUP = "Backup";
+	public String HIDDEN = "Hidden";
 	
 	// ========================================================================
 	// Sub-content

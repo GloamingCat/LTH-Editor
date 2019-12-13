@@ -21,7 +21,7 @@ public class Troop extends Data {
 		int x = conf.width;
 		int y = conf.height;
 		for (Unit u : members) {
-			if (!u.backup) {
+			if (u.list == 0) {
 				x = Math.max(x, u.x);
 				y = Math.max(y, u.y);
 			}

@@ -139,7 +139,7 @@ public class TroopTab extends DatabaseTab {
 				if (contentEditor.getObject() != null) {
 					Troop troop = (Troop) contentEditor.getObject();
 					for (Unit u : troop.members) {
-						if (u.backup)
+						if (u.list != 0)
 							continue;
 						GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
 						int animID = c.defaultAnimationID();

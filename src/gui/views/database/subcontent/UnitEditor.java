@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Text;
 import project.Project;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCombo;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -60,11 +60,19 @@ public class UnitEditor extends LObjectEditor {
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnY, "y");
 		
-		new Label(this, SWT.NONE);
-		LCheckButton btnBackup = new LCheckButton(this, SWT.NONE);
-		btnBackup.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
-		btnBackup.setText(Vocab.instance.BACKUP);
-		addControl(btnBackup, "backup");
+		Label lblList = new Label(this, SWT.NONE);
+		lblList.setText(Vocab.instance.LIST);
+		
+		LCombo cmbList = new LCombo(this, SWT.NONE);
+		cmbList.setOptional(false);
+		cmbList.setIncludeID(false);
+		cmbList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		cmbList.setItems(new String[] {
+				Vocab.instance.CURRENT,
+				Vocab.instance.BACKUP,
+				Vocab.instance.HIDDEN
+		});
+		addControl(cmbList, "list");
 		
 		Composite compIDs = new Composite(this, SWT.NONE);
 		compIDs.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 4, 1));

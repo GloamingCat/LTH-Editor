@@ -14,7 +14,7 @@ public class Unit {
 	public int x = 1;
 	public int y = 1;
 	public LDataList<Equip> equip = new LDataList<>();
-	public boolean backup = false;
+	public int list;
 	
 	public String toString() {
 		int id = battlerID;
