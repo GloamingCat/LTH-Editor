@@ -23,11 +23,6 @@ public class Skill extends Data {
 	public LDataList<Bonus> elements = new LDataList<>(); 
 	public boolean userElements = true;
 	
-	// Projectile
-	public int projectileID = -1;
-	public boolean rotate = false;
-	public boolean applyTransform = false;
-	
 	// User Animations
 	public String userLoadAnim = "";
 	public String userCastAnim = "";

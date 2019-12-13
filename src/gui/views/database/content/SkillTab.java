@@ -295,39 +295,6 @@ public class SkillTab extends DatabaseTab {
 		btnStep.setText(Vocab.instance.STEPONCAST);
 		addControl(btnStep, "stepOnCast");
 		
-		// Projectile
-		
-		TabItem tabProjectileAnim = new TabItem(tabAnim, SWT.NONE);
-		tabProjectileAnim.setText(Vocab.instance.PROJECTILE);
-		Composite projectileAnim = new Composite(tabAnim, SWT.NONE);
-		tabProjectileAnim.setControl(projectileAnim);
-		projectileAnim.setLayout(new GridLayout(3, false));
-		
-		Label lblProjectile = new Label(projectileAnim, SWT.NONE);
-		lblProjectile.setText(Vocab.instance.ANIMATION);
-		
-		Text txtProjectileAnim = new Text(projectileAnim, SWT.BORDER | SWT.READ_ONLY);
-		txtProjectileAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		IDButton btnProjectileAnim = new IDButton(projectileAnim, 1) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
-		btnProjectileAnim.setNameText(txtProjectileAnim);
-		addControl(btnProjectileAnim, "projectileID");
-		
-		LCheckButton btnRotate = new LCheckButton(projectileAnim, SWT.NONE);
-		btnRotate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
-		btnRotate.setText(Vocab.instance.ROTATE);
-		addControl(btnRotate, "rotate");
-		
-		LCheckButton btnAnimTransform = new LCheckButton(projectileAnim, SWT.NONE);
-		btnAnimTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
-		btnAnimTransform.setText(Vocab.instance.APPLYTRANSFORM);
-		addControl(btnAnimTransform, "applyTransform");
-		
 		// Animation Options
 		
 		TabItem tabAnimOptions = new TabItem(tabAnim, SWT.NONE);
