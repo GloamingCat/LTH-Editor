@@ -3,6 +3,7 @@ package gui.shell.database;
 import gui.Vocab;
 import gui.views.database.subcontent.NeighborEditor;
 
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -12,7 +13,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import lwt.dialog.LObjectShell;
-import lwt.widget.LCheckButton;
 import data.Obstacle.ObstacleTile;
 
 public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
@@ -21,7 +21,7 @@ public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
 	private Spinner spnY;
 	private Spinner spnHeight;
 	private NeighborEditor neighborEditor;
-	private LCheckButton btnRamp;
+	private Combo cmbMode;
 	
 	public ObstacleTileShell(Shell parent) {
 		super(parent);
@@ -55,10 +55,15 @@ public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		spnHeight.setMinimum(0);
 		
-		Label lblRamp = new Label(grpGeneral, SWT.NONE);
-		lblRamp.setText(Vocab.instance.RAMP);
+		Label lblMode = new Label(grpGeneral, SWT.NONE);
+		lblMode.setText(Vocab.instance.MODE);
 		
-		btnRamp = new LCheckButton(grpGeneral);
+		cmbMode = new Combo(grpGeneral, SWT.NONE | SWT.READ_ONLY);
+		cmbMode.setItems(new String[] {
+			Vocab.instance.BLOCK,
+			Vocab.instance.RAMP,
+			Vocab.instance.BRIDGE
+		});
 		
 		neighborEditor = new NeighborEditor(content, SWT.NONE);
 		neighborEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -72,7 +77,7 @@ public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
 		spnX.setSelection(initial.dx);
 		spnY.setSelection(initial.dy);
 		spnHeight.setSelection(initial.height);
-		btnRamp.setValue(initial.ramp);
+		cmbMode.select(initial.mode);
 	}
 
 	@Override
@@ -82,7 +87,7 @@ public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
 		t.dy = spnY.getSelection();
 		t.height = spnHeight.getSelection();
 		t.neighbors = neighborEditor.getValues();
-		t.ramp = btnRamp.getValue();
+		t.mode = cmbMode.getSelectionIndex();
 		return t;
 	}
 	

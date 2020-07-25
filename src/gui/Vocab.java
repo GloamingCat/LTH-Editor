@@ -239,7 +239,10 @@ public class Vocab {
 	public String TILES = "Tiles";
 	public String NONE = "None";
 	public String ALL = "All";
+	public String MODE = "Mode";
+	public String BLOCK = "Block";
 	public String RAMP = "Ramp";
+	public String BRIDGE = "Bridge";
 
 	// Status
 	public String VISIBLE = "Visible";
