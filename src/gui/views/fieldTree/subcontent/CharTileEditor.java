@@ -180,12 +180,19 @@ public class CharTileEditor extends LObjectEditor {
 			}
 		});
 		
-		Label lblPassable = new Label(this, SWT.NONE);
-		lblPassable.setText(Vocab.instance.PASSABLE);
-		
-		LCheckButton btnPassable = new LCheckButton(this, SWT.NONE);
-		btnPassable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		Composite compOptions = new Composite(this, SWT.NONE);
+		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		compOptions.setLayout(new GridLayout(2, true));
+
+		LCheckButton btnPassable = new LCheckButton(compOptions, SWT.NONE);
+		btnPassable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
+		
+		LCheckButton btnVisible = new LCheckButton(compOptions, SWT.NONE);
+		btnVisible.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		btnVisible.setText(Vocab.instance.VISIBLE);
+		addControl(btnVisible, "visible");
 		
 		// Battle
 		
@@ -224,7 +231,7 @@ public class CharTileEditor extends LObjectEditor {
 	}
 
 	public void setField(Field field) {
-		if (currentObject == null)
+		if (field == null)
 			return;
 		cmbParty.setItems(FieldEditor.instance.canvas.field.parties);
 		spnX.setMaximum(field.sizeX);

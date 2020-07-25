@@ -8,6 +8,7 @@ public class CharTile {
 	public String key = "CharKey";
 	public boolean persistent = false;
 	public boolean passable = false;
+	public boolean visible = true;
 	
 	public int x = 1;
 	public int y = 1;
