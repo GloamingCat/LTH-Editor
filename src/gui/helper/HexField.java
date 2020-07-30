@@ -12,15 +12,17 @@ public class HexField extends BaseIsoField {
 	
 	protected void removePoints(ArrayList<Point> p) {
 		if (!conf.allNeighbors) {
-			Point p0 = p.get(1);
-			Point p1 = p.get(5);
-			Point p2 = p.get(3);
-			Point p3 = p.get(7);
+			Point p0 = p.get(0);
+			Point p1 = p.get(4);
+			Point p2 = p.get(2);
+			Point p3 = p.get(6);
 			if (conf.tileS == 0) {
+				// Vertically connected
 				p.remove(p0);
 				p.remove(p1);
 			}
 			if (conf.tileB == 0) {
+				// Horizontally connected
 				p.remove(p2);
 				p.remove(p3);
 			}
@@ -30,28 +32,33 @@ public class HexField extends BaseIsoField {
 	@Override
 	public int[] autotile(int[][] grid, int x, int y) {
 		int[] rows = new int[] {0, 0, 0, 0};
-		int step1 = conf.tileS > 0 ? 2 : 1;
-		int step2 = conf.tileB > 0 ? 2 : 1;
-		int shiftCount = neighborShift.length;
 		Point p = new Point(x, y);
-		int n;
-		for(int i = -1; i <= 1; i++) {
-			n = (i + shiftCount) % shiftCount;
-			if (sameType(grid, p, neighborShift[n])) {
-				rows[1] += Math.pow(2, 1 + i);
-			}
-			n = (step1 + (i + 3) % 3 - 1) % shiftCount;
-			if (sameType(grid, p, neighborShift[n])) {
-				rows[3] += Math.pow(2, 1 + i);
-			}
-			n = (i + step1 + step2) % shiftCount;
-			if (sameType(grid, p, neighborShift[n])) {
-				rows[2] += Math.pow(2, 1 + i);
-			}
-			n = (step1 + step2 + step1 + (i + 3) % 3 - 1) % shiftCount;
-			if (sameType(grid, p, neighborShift[n])) {
-				rows[0] += Math.pow(2, 1 + i);
-			}
+		// TODO: horizontally connected
+		if (sameType(grid, p, 1, -1)) {
+			rows[0] = rows[0] + 1;
+			rows[1] = rows[1] + 1;		  
+		}
+		if (sameType(grid, p, -1, 1)) {
+			rows[2] = rows[2] + 1;
+			rows[3] = rows[3] + 1;		  
+		}
+		
+		if (sameType(grid, p, 1, 0)) {
+			rows[1] = rows[1] + 2;
+			rows[3] = rows[3] + 2;		  
+		}
+		if (sameType(grid, p, -1, 0)) {
+			rows[0] = rows[0] + 2;
+			rows[2] = rows[2] + 2;		  
+		}
+		
+		if (sameType(grid, p, 0, 1)) {
+			rows[1] = rows[1] + 4;
+			rows[3] = rows[3] + 4;		  
+		}
+		if (sameType(grid, p, 0, -1)) {
+			rows[0] = rows[0] + 4;
+			rows[2] = rows[2] + 4;		  
 		}
 		if (rows[0] == 0 && rows[1] == 0 && rows[2] == 0 && rows[3] == 0) {
 			rows[0] = rows[1] = rows[2] = rows[3] = 8;

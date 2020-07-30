@@ -33,27 +33,27 @@ public abstract class FieldMath {
 	
 	public ArrayList<Point> fullNeighborShift() {
 		ArrayList<Point> p = new ArrayList<>();
-		p.add(new Point(1, 0));
 		p.add(new Point(1, 1));
-		p.add(new Point(0, 1));
-		p.add(new Point(-1, 1));
-		p.add(new Point(-1, 0));
-		p.add(new Point(-1, -1));
-		p.add(new Point(0, -1));
+		p.add(new Point(1, 0));
 		p.add(new Point(1, -1));
+		p.add(new Point(0, -1));
+		p.add(new Point(-1, -1));
+		p.add(new Point(-1, 0));
+		p.add(new Point(-1, 1));
+		p.add(new Point(0, 1));
 		return p;
 	}
 	
 	public ArrayList<Point> fullVertexShift() {
 		ArrayList<Point> p = new ArrayList<>();
+		p.add(new Point(-conf.tileW / 2, -conf.tileS / 2));
+		p.add(new Point(-conf.tileB / 2, -conf.tileH / 2));
 		p.add(new Point(conf.tileB / 2, -conf.tileH / 2));
 		p.add(new Point(conf.tileW / 2, -conf.tileS / 2));
 		p.add(new Point(conf.tileW / 2, conf.tileS / 2));
 		p.add(new Point(conf.tileB / 2, conf.tileH / 2));
 		p.add(new Point(-conf.tileB / 2, conf.tileH / 2));
 		p.add(new Point(-conf.tileW / 2, conf.tileS / 2));
-		p.add(new Point(-conf.tileW / 2, -conf.tileS / 2));
-		p.add(new Point(-conf.tileB / 2, -conf.tileH / 2));
 		return p;
 	}
 	
@@ -86,8 +86,8 @@ public abstract class FieldMath {
 		return t1 == t2;
 	}
 	
-	protected static boolean sameType(int[][] grid, Point p, Point shift) {
-		return sameType(grid, p.x, p.y, p.x + shift.x, p.y + shift.y);
+	protected static boolean sameType(int[][] grid, Point p, int dx, int dy) {
+		return sameType(grid, p.x, p.y, p.x + dx, p.y + dy);
 	}
 	
 }
