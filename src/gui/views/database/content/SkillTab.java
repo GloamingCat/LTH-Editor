@@ -380,6 +380,10 @@ public class SkillTab extends DatabaseTab {
 		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addMaskButton(btnCastMask, castMask, castColor);
 		
+		LCheckButton btnAutoPath = new LCheckButton(grpCast);
+		btnAutoPath.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		btnAutoPath.setText(Vocab.instance.AUTOPATH);
+		addControl(btnAutoPath, "autoPath");		
 		
 		// Effects
 		

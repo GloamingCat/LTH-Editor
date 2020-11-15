@@ -192,6 +192,7 @@ public class Vocab {
 	public String FIELDONLY = "Field Only";
 	public String CASTMASK = "Range Mask";
 	public String EFFECTMASK = "Effect Mask";
+	public String AUTOPATH = "Auto Path";
 	public String USERELEMENTS = "Include user's elements";
 	public String PROJECTILE = "Projectile";
 	public String ROTATE = "Rotate";

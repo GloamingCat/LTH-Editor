@@ -50,6 +50,7 @@ public class Skill extends Data {
 	// Range
 	public Mask effectMask = new Mask();
 	public Mask castMask = new Mask();
+	public boolean autoPath = true;
 	
 	public Skill() {
 		effects.add(new Effect());
