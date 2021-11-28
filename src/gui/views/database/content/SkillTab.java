@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.database.MaskShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
-import gui.views.database.subcontent.EffectList;
+import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
@@ -57,7 +57,25 @@ public class SkillTab extends DatabaseTab {
 	 */
 	public SkillTab(Composite parent, int style) {
 		super(parent, style);
+		
+		Composite right = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_right = new GridLayout(1, false);
+		gl_right.verticalSpacing = 0;
+		gl_right.marginWidth = 0;
+		gl_right.marginHeight = 0;
+		right.setLayout(gl_right);
+		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_right.widthHint = 200;
+		right.setLayoutData(gd_right);
 
+		Composite bottom = new Composite(contentEditor, SWT.NONE);
+		GridLayout gl_bottom = new GridLayout(4, true);
+		gl_bottom.verticalSpacing = 0;
+		gl_bottom.marginHeight = 0;
+		gl_bottom.marginWidth = 0;
+		bottom.setLayout(gl_bottom);
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
 		// Script
 		
 		Label lblScript = new Label(grpGeneral,  SWT.NONE);
@@ -172,30 +190,8 @@ public class SkillTab extends DatabaseTab {
 		cmbRestrictions.setIncludeID(false);
 		cmbRestrictions.setOptional(false);
 		addControl(cmbRestrictions, "restriction");
-		
-		// Costs
-		
-		Label lblCosts = new Label(grpGeneral, SWT.NONE);
-		lblCosts.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblCosts.setText(Vocab.instance.COSTS);
-		
-		TagList lstCost = new TagList(grpGeneral, SWT.NONE);
-		GridData gd_lstCost = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_lstCost.heightHint = 60;
-		lstCost.setLayoutData(gd_lstCost);
-		addChild(lstCost, "costs");
-		
+
 		// Animations
-		
-		Composite right = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.verticalSpacing = 0;
-		gl_right.marginWidth = 0;
-		gl_right.marginHeight = 0;
-		right.setLayout(gl_right);
-		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_right.widthHint = 200;
-		right.setLayoutData(gd_right);
 		
 		Group grpAnimations = new Group(right, SWT.NONE);
 		GridLayout gl_grpAnimations = new GridLayout(1, false);
@@ -367,6 +363,11 @@ public class SkillTab extends DatabaseTab {
 		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
+		LCheckButton btnWholeField = new LCheckButton(grpEffect);
+		btnWholeField.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		btnWholeField.setText(Vocab.instance.WHOLEFIELD);
+		addControl(btnWholeField, "wholeField");
+		
 		Group grpCast = new Group(range, SWT.NONE);
 		grpCast.setLayout(new GridLayout(2, false));
 		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -385,30 +386,57 @@ public class SkillTab extends DatabaseTab {
 		btnAutoPath.setText(Vocab.instance.AUTOPATH);
 		addControl(btnAutoPath, "autoPath");		
 		
+		// Costs
+		
+		Group grpCosts = new Group(right, SWT.NONE);
+		GridData gd_grpCosts = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_grpCosts.heightHint = 70;
+		grpCosts.setLayoutData(gd_grpCosts);
+		FillLayout fl_grpCosts = new FillLayout(SWT.HORIZONTAL);
+		fl_grpCosts.marginHeight = 5;
+		fl_grpCosts.marginWidth = 5;
+		grpCosts.setLayout(fl_grpCosts);
+		grpCosts.setText(Vocab.instance.COSTS);
+		
+		TagList lstCosts = new TagList(grpCosts, SWT.NONE);
+		addChild(lstCosts, "costs");
+		
 		// Effects
 		
-		Group grpEffects = new Group(right, SWT.NONE);
-		GridData gd_grpEffects = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_grpEffects.heightHint = 70;
-		grpEffects.setLayoutData(gd_grpEffects);
-		FillLayout fl_grpEffects = new FillLayout(SWT.HORIZONTAL);
-		fl_grpEffects.marginHeight = 5;
-		fl_grpEffects.marginWidth = 5;
-		grpEffects.setLayout(fl_grpEffects);
+		Group grpEffects = new Group(bottom, SWT.NONE);
+		grpEffects.setLayout(new FillLayout());
+		grpEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		grpEffects.setText(Vocab.instance.EFFECTS);
+		TabFolder tabEffects = new TabFolder(grpEffects, SWT.NONE);
 		
-		EffectList lstEffects = new EffectList(grpEffects, SWT.NONE);
+		TabItem tabGeneralEffects = new TabItem(tabEffects, SWT.NONE);
+		tabGeneralEffects.setText(Vocab.instance.GENERAL);
+		Composite effects = new Composite(tabEffects, SWT.NONE);
+		tabGeneralEffects.setControl(effects);
+		effects.setLayout(new FillLayout());
+		
+		SkillEffectList lstEffects = new SkillEffectList(effects, SWT.NONE);
 		addChild(lstEffects, "effects");
 		
-		// Other
+		TabItem tabStatusAdd = new TabItem(tabEffects, SWT.NONE);
+		tabStatusAdd.setText(Vocab.instance.STATUSADD);
+		Composite statusAdd = new Composite(tabEffects, SWT.NONE);
+		tabStatusAdd.setControl(statusAdd);
+		statusAdd.setLayout(new FillLayout());
 		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(4, true);
-		gl_bottom.verticalSpacing = 0;
-		gl_bottom.marginHeight = 0;
-		gl_bottom.marginWidth = 0;
-		bottom.setLayout(gl_bottom);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		SkillStatusList lstStatusAdd = new SkillStatusList(statusAdd, SWT.NONE);
+		addChild(lstStatusAdd, "statusAdd");
+		
+		TabItem tabStatusRmv = new TabItem(tabEffects, SWT.NONE);
+		tabStatusRmv.setText(Vocab.instance.STATUSREMOVE);
+		Composite statusRmv = new Composite(tabEffects, SWT.NONE);
+		tabStatusRmv.setControl(statusRmv);
+		statusRmv.setLayout(new FillLayout());
+		
+		SkillStatusList lstStatusRemove = new SkillStatusList(statusRmv, SWT.NONE);
+		addChild(lstStatusRemove, "statusRemove");
+		
+		// Elements
 		
 		Group grpElements = new Group(bottom, SWT.NONE);
 		GridLayout gl_grpElements = new GridLayout(1, false);
@@ -427,25 +455,11 @@ public class SkillTab extends DatabaseTab {
 		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstElements, "elements");
 		
-		Group grpStatusAdd = new Group(bottom, SWT.NONE);
-		grpStatusAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpStatusAdd.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpStatusAdd.setText(Vocab.instance.STATUSADD);
-		
-		SkillStatusList lstStatusAdd = new SkillStatusList(grpStatusAdd, SWT.NONE);
-		addChild(lstStatusAdd, "statusAdd");
-		
-		Group grpStatusRemove = new Group(bottom, SWT.NONE);
-		grpStatusRemove.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpStatusRemove.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpStatusRemove.setText(Vocab.instance.STATUSREMOVE);
-		
-		SkillStatusList lstStatusRemove = new SkillStatusList(grpStatusRemove, SWT.NONE);
-		addChild(lstStatusRemove, "statusRemove");
-		
 		LCheckButton btnUserElements = new LCheckButton(grpElements, SWT.NONE);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
 		addControl(btnUserElements, "userElements");
+		
+		// Tags
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));

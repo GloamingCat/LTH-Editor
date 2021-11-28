@@ -51,6 +51,7 @@ public class Skill extends Data {
 	public Mask effectMask = new Mask();
 	public Mask castMask = new Mask();
 	public boolean autoPath = true;
+	public boolean wholeField = false;
 	
 	public Skill() {
 		effects.add(new Effect());

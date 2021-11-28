@@ -15,9 +15,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
-public class EffectShell extends ObjectShell<Effect> {
+public class SkillEffectShell extends ObjectShell<Effect> {
 
-	public EffectShell(Shell parent) {
+	public SkillEffectShell(Shell parent) {
 		super(parent);
 		setMinimumSize(new Point(300, 100));
 		contentEditor.setLayout(new GridLayout(2, false));

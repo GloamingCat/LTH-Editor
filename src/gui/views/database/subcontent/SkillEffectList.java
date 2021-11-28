@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import gui.shell.database.EffectShell;
+import gui.shell.database.SkillEffectShell;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.widgets.Composite;
@@ -10,16 +10,16 @@ import data.Skill.Effect;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 
-public class EffectList extends SimpleEditableList<Effect> {
+public class SkillEffectList extends SimpleEditableList<Effect> {
 	
-	public EffectList(Composite parent, int style) {
+	public SkillEffectList(Composite parent, int style) {
 		super(parent, style);
 		type = Effect.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Effect>() {
 			@Override
 			public LObjectShell<Effect> createShell(Shell parent) {
-				return new EffectShell(parent);
+				return new SkillEffectShell(parent);
 			}
 		});
 	}

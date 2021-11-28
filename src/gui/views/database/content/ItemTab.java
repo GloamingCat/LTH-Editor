@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.ElementList;
-import gui.views.database.subcontent.EffectList;
+import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.EquipStatusList;
 import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
@@ -195,7 +195,7 @@ public class ItemTab extends DatabaseTab {
 		
 		TabItem tbtmEffects = new TabItem(useFolder, SWT.NONE);
 		tbtmEffects.setText(Vocab.instance.EFFECTS);
-		EffectList lstEffects = new EffectList(useFolder, SWT.NONE);
+		SkillEffectList lstEffects = new SkillEffectList(useFolder, SWT.NONE);
 		tbtmEffects.setControl(lstEffects);
 		addChild(lstEffects, "effects");
 		
