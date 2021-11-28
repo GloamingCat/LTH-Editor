@@ -41,10 +41,9 @@ public class AnimationTab extends DatabaseTab {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public AnimationTab(Composite parent, int style) {
-		super(parent, style);
+	public AnimationTab(Composite parent) {
+		super(parent);
 		
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gridData.widthHint = 240;

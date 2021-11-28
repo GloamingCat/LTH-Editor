@@ -37,8 +37,8 @@ import data.subcontent.Rule;
 
 public class BattlerTab extends DatabaseTab {
 	
-	public BattlerTab(Composite parent, int style) {
-		super(parent, style);
+	public BattlerTab(Composite parent) {
+		super(parent);
 		
 		new Label(grpGeneral, SWT.NONE);
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);

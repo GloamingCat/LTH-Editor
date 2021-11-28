@@ -38,10 +38,9 @@ public class StatusTab extends DatabaseTab {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public StatusTab(Composite parent, int style) {
-		super(parent, style);
+	public StatusTab(Composite parent) {
+		super(parent);
 		
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.verticalSpacing = 0;

@@ -5,6 +5,7 @@ import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Bonus;
 import lwt.dataestructure.LDataTree;
@@ -22,8 +23,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Bonus>() {
 			@Override
-			public LObjectShell<Bonus> createShell(
-					org.eclipse.swt.widgets.Shell parent) {
+			public LObjectShell<Bonus> createShell(Shell parent) {
 				return new BonusShell(parent) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();

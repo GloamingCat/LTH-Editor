@@ -38,10 +38,9 @@ public class ItemTab extends DatabaseTab {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public ItemTab(Composite parent, int style) {
-		super(parent, style);
+	public ItemTab(Composite parent) {
+		super(parent);
 		
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));

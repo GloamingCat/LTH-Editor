@@ -40,8 +40,8 @@ public class FieldTreeEditor extends LView {
 	
 	public LTree<FieldNode, Field.Prefs> fieldTree;
 	
-	public FieldTreeEditor(Composite parent, int style) {
-		super(parent, style);
+	public FieldTreeEditor(Composite parent) {
+		super(parent);
 		instance = this;
 		
 		setLayout(new FillLayout());

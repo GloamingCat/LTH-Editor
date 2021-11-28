@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
 
 import com.google.gson.Gson;
 
@@ -32,8 +33,6 @@ import lwt.widget.LControl;
 import lwt.widget.LImage;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Label;
-
 public abstract class DatabaseTab extends LView {
 
 	protected static Gson gson = new Gson();
@@ -45,8 +44,8 @@ public abstract class DatabaseTab extends LView {
 	protected LText txtName;
 	protected Label lblID;
 	
-	public DatabaseTab(Composite parent, int style) {
-		super(parent, style);
+	public DatabaseTab(Composite parent) {
+		super(parent);
 		
 		setLayout(new FillLayout());
 		

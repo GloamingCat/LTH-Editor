@@ -32,10 +32,9 @@ public class ConfigEditor extends LView {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public ConfigEditor(Composite parent, int style) {
-		super(parent, style);
+	public ConfigEditor(Composite parent) {
+		super(parent);
 
 		actionStack = new LActionStack(this);
 		

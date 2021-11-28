@@ -4,19 +4,10 @@ import gui.views.database.DatabaseEditor;
 import gui.views.fieldTree.FieldTreeEditor;
 import gui.views.system.SystemEditor;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MenuItem;
-
 import project.Project;
 import lwt.LDefaultApplicationShell;
 import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
-
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ApplicationShell extends LDefaultApplicationShell {
 	
@@ -29,15 +20,8 @@ public class ApplicationShell extends LDefaultApplicationShell {
 			String folder = args.length > 0 ? args[0] : null;
 			if (folder != null)
 				System.out.println(folder);
-			Display display = Display.getDefault();
-			ApplicationShell shell = new ApplicationShell(display, folder);
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
+			ApplicationShell shell = new ApplicationShell(folder);
+			shell.run();
 		} catch (Exception e) {
 			LFileManager.log(e);
 			e.printStackTrace();
@@ -48,48 +32,14 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public ApplicationShell(Display display, String folder) {
-		super(display);
-		setImage(SWTResourceManager.getImage(ApplicationShell.class, "/img/icon.png"));
-		setSize(new Point(900, 600));
-		setText("LTH Editor");
+	public ApplicationShell(String folder) {
+		super(900, 600, "LTH Editor", "/img/icon.png");
 		
-		final FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this, SWT.NONE); 
+		defaultView = new FieldTreeEditor(this);
+		addView(defaultView, Vocab.instance.FIELDEDITOR, "F2");
+		addView(new DatabaseEditor(this), Vocab.instance.DATABASEEDITOR, "F3");
+		addView(new SystemEditor(this), Vocab.instance.SYSTEMEDITOR, "F4");
 		
-		MenuItem mntmFieldEditor = new MenuItem(menuView, SWT.NONE);
-		mntmFieldEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(fieldTreeEditor);
-			}
-		});
-		mntmFieldEditor.setText(Vocab.instance.FIELDEDITOR + "\tF2");
-		mntmFieldEditor.setAccelerator(SWT.F2);
-		
-		final DatabaseEditor databaseEditor = new DatabaseEditor(this, SWT.NONE);
-		MenuItem mntmDatabaseEditor = new MenuItem(menuView, SWT.NONE);
-		mntmDatabaseEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(databaseEditor);
-			}
-		});
-		mntmDatabaseEditor.setText(Vocab.instance.DATABASEEDITOR + "\tF3");
-		mntmDatabaseEditor.setAccelerator(SWT.F3);
-
-		final SystemEditor systemEditor = new SystemEditor(this, SWT.NONE);
-		MenuItem mntmSystemEditor = new MenuItem(menuView, SWT.NONE);
-		mntmSystemEditor.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				setCurrentView(systemEditor);
-			}
-		});
-		mntmSystemEditor.setText(Vocab.instance.SYSTEMEDITOR + "\tF4");
-		mntmSystemEditor.setAccelerator(SWT.F4);
-		
-		defaultView = fieldTreeEditor;
-		applicationName = getText();
 		loadDefault(folder);
 	}
 	

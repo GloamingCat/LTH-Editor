@@ -53,10 +53,9 @@ public class SkillTab extends DatabaseTab {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public SkillTab(Composite parent, int style) {
-		super(parent, style);
+	public SkillTab(Composite parent) {
+		super(parent);
 		
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_right = new GridLayout(1, false);

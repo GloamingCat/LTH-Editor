@@ -4,7 +4,6 @@ import gui.Vocab;
 import gui.views.database.content.*;
 import lwt.editor.LViewFolder;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 public class DatabaseEditor extends LViewFolder {
@@ -14,37 +13,37 @@ public class DatabaseEditor extends LViewFolder {
 	 * @param parent
 	 * @param style
 	 */
-	public DatabaseEditor(Composite parent, int style) {
-		super(parent, style);
+	public DatabaseEditor(Composite parent) {
+		super(parent);
 
-		AnimationTab animationTab = new AnimationTab(tabFolder, SWT.NONE);
+		AnimationTab animationTab = new AnimationTab(tabFolder);
 		addTab(Vocab.instance.ANIMATIONS, animationTab);
 		
-		ObstacleTab obstacleTab = new ObstacleTab(tabFolder, SWT.NONE);
+		ObstacleTab obstacleTab = new ObstacleTab(tabFolder);
 		addTab(Vocab.instance.OBSTACLES, obstacleTab);
 		
-		StatusTab statusTab = new StatusTab(tabFolder, SWT.NONE);
+		StatusTab statusTab = new StatusTab(tabFolder);
 		addTab(Vocab.instance.STATUS, statusTab);
 		
-		SkillTab skillTab = new SkillTab(tabFolder, SWT.NONE);
+		SkillTab skillTab = new SkillTab(tabFolder);
 		addTab(Vocab.instance.SKILLS, skillTab);
 		
-		ItemTab itemTab = new ItemTab(tabFolder, SWT.NONE);
+		ItemTab itemTab = new ItemTab(tabFolder);
 		addTab(Vocab.instance.ITEMS, itemTab);
 		
-		BattlerTab battlerTab = new BattlerTab(tabFolder, SWT.NONE);
+		BattlerTab battlerTab = new BattlerTab(tabFolder);
 		addTab(Vocab.instance.BATTLERS, battlerTab);
 		
-		TroopTab troopTab = new TroopTab(tabFolder, SWT.NONE);
+		TroopTab troopTab = new TroopTab(tabFolder);
 		addTab(Vocab.instance.TROOPS, troopTab);
 		
-		ClassTab classesTab = new ClassTab(tabFolder, SWT.NONE);
+		ClassTab classesTab = new ClassTab(tabFolder);
 		addTab(Vocab.instance.CLASSES, classesTab);
 		
-		CharacterTab characterTab = new CharacterTab(tabFolder, SWT.NONE);
+		CharacterTab characterTab = new CharacterTab(tabFolder);
 		addTab(Vocab.instance.CHARACTERS, characterTab);
 		
-		TerrainTab terrainTab = new TerrainTab(tabFolder, SWT.NONE);
+		TerrainTab terrainTab = new TerrainTab(tabFolder);
 		addTab(Vocab.instance.TERRAINS, terrainTab);
 
 	}

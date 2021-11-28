@@ -43,10 +43,9 @@ public class TroopTab extends DatabaseTab {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public TroopTab(Composite parent, int style) {
-		super(parent, style);
+	public TroopTab(Composite parent) {
+		super(parent);
 		
 		GridLayout gridLayout = (GridLayout) contentEditor.getLayout();
 		gridLayout.numColumns = 3;

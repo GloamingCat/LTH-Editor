@@ -3,7 +3,6 @@ package gui.views.system;
 import gui.Vocab;
 import lwt.editor.LViewFolder;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 
@@ -14,13 +13,13 @@ public class SystemEditor extends LViewFolder {
 	 * @param parent
 	 * @param style
 	 */
-	public SystemEditor(Composite parent, int style) {
-		super(parent, style);
+	public SystemEditor(Composite parent) {
+		super(parent);
 		
-		ConfigEditor systemEditor = new ConfigEditor(tabFolder, SWT.NONE);
+		ConfigEditor systemEditor = new ConfigEditor(tabFolder);
 		addTab(Vocab.instance.GENERAL, systemEditor);
 
-		ListsEditor listsEditor = new ListsEditor(tabFolder, SWT.NONE);
+		ListsEditor listsEditor = new ListsEditor(tabFolder);
 		addTab(Vocab.instance.LISTS, listsEditor);
 		
 	}

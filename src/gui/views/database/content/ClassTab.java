@@ -27,8 +27,8 @@ import project.Project;
 
 public class ClassTab extends DatabaseTab {
 
-	public ClassTab(Composite parent, int style) {
-		super(parent, style);
+	public ClassTab(Composite parent) {
+		super(parent);
 
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		right.setLayout(new FillLayout(SWT.VERTICAL));

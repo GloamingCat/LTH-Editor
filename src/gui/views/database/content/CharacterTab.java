@@ -41,8 +41,8 @@ import project.Project;
 
 public class CharacterTab extends DatabaseTab {
 
-	public CharacterTab(Composite parent, int style) {
-		super(parent, style);
+	public CharacterTab(Composite parent) {
+		super(parent);
 		
 		Label lblBattler = new Label(grpGeneral, SWT.NONE);
 		lblBattler.setText(Vocab.instance.CHARBATTLER);

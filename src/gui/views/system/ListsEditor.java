@@ -23,10 +23,9 @@ public class ListsEditor extends LObjectEditor {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public ListsEditor(Composite parent, int style) {
-		super(parent, style);
+	public ListsEditor(Composite parent) {
+		super(parent);
 
 		actionStack = new LActionStack(this);
 		setLayout(new FillLayout(SWT.VERTICAL));

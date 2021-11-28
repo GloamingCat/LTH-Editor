@@ -32,10 +32,9 @@ public class TerrainTab extends DatabaseTab {
 	/**
 	 * Create the composite.
 	 * @param parent
-	 * @param style
 	 */
-	public TerrainTab(Composite parent, int style) {
-		super(parent, style);
+	public TerrainTab(Composite parent) {
+		super(parent);
 
 		Composite right = new Composite(contentEditor,  SWT.NONE);
 		GridLayout gl_right = new GridLayout(1, false);

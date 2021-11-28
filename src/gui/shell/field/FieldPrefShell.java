@@ -7,6 +7,7 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCheckButton;
 import lwt.widget.LCombo;
+import lwt.widget.LDescriptor;
 import lwt.widget.LImage;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -87,11 +88,11 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		Label lblBGM = new Label(grpGeneral, SWT.NONE);
 		lblBGM.setText(Vocab.instance.BGM);
 		
-		Text txtBGM = new Text(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
+		LDescriptor txtBGM = new LDescriptor(grpGeneral);
 		txtBGM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		AudioButton btnBGM = new AudioButton(grpGeneral, 1);
-		btnBGM.setText(txtBGM);
+		btnBGM.setDescriptor(txtBGM);
 		addControl(btnBGM, "bgm");
 		
 		Label lblScript = new Label(grpGeneral, SWT.NONE);
