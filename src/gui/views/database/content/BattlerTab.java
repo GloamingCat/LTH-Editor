@@ -16,6 +16,7 @@ import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckButton;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -24,7 +25,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -40,7 +40,8 @@ public class BattlerTab extends DatabaseTab {
 	public BattlerTab(Composite parent) {
 		super(parent);
 		
-		new Label(grpGeneral, SWT.NONE);
+		new LLabel(grpGeneral, 1);
+		
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
@@ -48,17 +49,15 @@ public class BattlerTab extends DatabaseTab {
 		
 		// Level
 		
-		Label lblLevel = new Label(grpGeneral, SWT.NONE);
-		lblLevel.setText(Vocab.instance.LEVEL);
-		
+		new LLabel(grpGeneral, Vocab.instance.LEVEL);
+
 		LSpinner spnLevel = new LSpinner(grpGeneral, SWT.NONE);
 		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnLevel, "level");
 		
 		// Rewards
 		
-		Label lblMoney = new Label(grpGeneral, SWT.NONE);
-		lblMoney.setText(Vocab.instance.MONEY);
+		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
 		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeReward = new GridLayout(3, false);
@@ -71,8 +70,7 @@ public class BattlerTab extends DatabaseTab {
 		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMoney, "money");
 		
-		Label lblExp = new Label(compositeReward, SWT.NONE);
-		lblExp.setText(Vocab.instance.EXP);
+		new LLabel(compositeReward, Vocab.instance.EXP);
 		
 		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
 		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -87,9 +85,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		// Class
 		
-		Label lblClass = new Label(select, SWT.NONE);
-		lblClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblClass.setText(Vocab.instance.CLASS);
+		new LLabel(select, Vocab.instance.CLASS);
 		
 		Text txtClass = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -105,9 +101,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		// Attack Skill
 		
-		Label lblAttackSkill = new Label(select, SWT.NONE);
-		lblAttackSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblAttackSkill.setText(Vocab.instance.ATTACKSKILL);
+		new LLabel(select, Vocab.instance.ATTACKSKILL);
 		
 		Text txtAttack = new Text(select, SWT.BORDER | SWT.READ_ONLY);
 		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

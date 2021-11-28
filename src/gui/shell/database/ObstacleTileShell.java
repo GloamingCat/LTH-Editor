@@ -7,12 +7,12 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import lwt.dialog.LObjectShell;
+import lwt.widget.LLabel;
 import data.Obstacle.ObstacleTile;
 
 public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
@@ -36,27 +36,28 @@ public class ObstacleTileShell extends LObjectShell<ObstacleTile> {
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		grpGeneral.setLayout(new GridLayout(2, false));
 
-		Label lblX = new Label(grpGeneral, SWT.NONE);
-		lblX.setText(Vocab.instance.OFFSETX);
+		new LLabel(grpGeneral, Vocab.instance.OFFSETX);
 		
 		spnX = new Spinner(grpGeneral, SWT.BORDER);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnX.setMaximum(100);
+		spnX.setMinimum(-100);
 		
-		Label lblY = new Label(grpGeneral, SWT.NONE);
-		lblY.setText(Vocab.instance.OFFSETY);
+		new LLabel(grpGeneral, Vocab.instance.OFFSETY);
 		
 		spnY = new Spinner(grpGeneral, SWT.BORDER);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnY.setMaximum(100);
+		spnY.setMinimum(-100);
 		
-		Label lblHeight = new Label(grpGeneral, SWT.NONE);
-		lblHeight.setText(Vocab.instance.HEIGHT);
+		new LLabel(grpGeneral, Vocab.instance.HEIGHT);
 		
 		spnHeight = new Spinner(grpGeneral, SWT.BORDER);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		spnHeight.setMaximum(100);
 		spnHeight.setMinimum(0);
 		
-		Label lblMode = new Label(grpGeneral, SWT.NONE);
-		lblMode.setText(Vocab.instance.MODE);
+		new LLabel(grpGeneral, Vocab.instance.MODE);
 		
 		cmbMode = new Combo(grpGeneral, SWT.NONE | SWT.READ_ONLY);
 		cmbMode.setItems(new String[] {

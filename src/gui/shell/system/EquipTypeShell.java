@@ -7,12 +7,12 @@ import org.eclipse.swt.widgets.Shell;
 
 import data.config.EquipType;
 import lwt.widget.LCombo;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 
 public class EquipTypeShell extends ObjectShell<EquipType> {
@@ -23,22 +23,19 @@ public class EquipTypeShell extends ObjectShell<EquipType> {
 		setText(Vocab.instance.EQUIP);
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(contentEditor, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME);
 
 		LText txtName = new LText(contentEditor, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtName, "name");
 		
-		Label lblKey = new Label(contentEditor, SWT.NONE);
-		lblKey.setText(Vocab.instance.KEY);
+		new LLabel(contentEditor, Vocab.instance.KEY);
 
 		LText txtKey = new LText(contentEditor, SWT.NONE);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtKey, "key");
 		
-		Label lblState = new Label(contentEditor, SWT.NONE);
-		lblState.setText(Vocab.instance.STATE);
+		new LLabel(contentEditor, Vocab.instance.STATE);
 		
 		LCombo cmbState = new LCombo(contentEditor, SWT.NONE);
 		cmbState.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -51,8 +48,7 @@ public class EquipTypeShell extends ObjectShell<EquipType> {
 		});
 		addControl(cmbState, "state");
 		
-		Label lblCount = new Label(contentEditor, SWT.NONE);
-		lblCount.setText(Vocab.instance.COUNT);
+		new LLabel(contentEditor, Vocab.instance.COUNT);
 		
 		LSpinner spnCount = new LSpinner(contentEditor);
 		spnCount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

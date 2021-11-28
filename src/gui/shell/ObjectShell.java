@@ -20,6 +20,11 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	public LObjectEditor contentEditor;
 	private static Gson gson = new Gson();
 
+	public ObjectShell(Shell parent, int width, int height) {
+		this(parent);
+		setMinimumSize(width, height);
+	}
+	
 	public ObjectShell(Shell parent) {
 		super(parent);
 		content.setLayout(new FillLayout());

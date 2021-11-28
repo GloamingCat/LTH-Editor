@@ -7,7 +7,6 @@ import gui.widgets.IDList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
@@ -18,6 +17,7 @@ import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCombo;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -43,8 +43,7 @@ public class PartyEditor extends LObjectEditor {
 		
 		// Position
 		
-		Label lblPos = new Label(position, SWT.NONE);
-		lblPos.setText(Vocab.instance.POSITION);
+		new LLabel(position, Vocab.instance.POSITION);
 		
 		LSpinner spnX = new LSpinner(position);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -83,8 +82,7 @@ public class PartyEditor extends LObjectEditor {
 			}
 		});
 		
-		Label lblName = new Label(this, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(this, Vocab.instance.NAME);
 		
 		LText txtName = new LText(this);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -96,8 +94,7 @@ public class PartyEditor extends LObjectEditor {
 			}
 		});
 		
-		Label lblDir = new Label(this, SWT.NONE);
-		lblDir.setText(Vocab.instance.DIRECTION);
+		new LLabel(this, Vocab.instance.DIRECTION);
 		
 		LCombo cmbDir = new LCombo(this);
 		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -116,8 +113,7 @@ public class PartyEditor extends LObjectEditor {
 		
 		// Members
 		
-		Label lblGen = new Label(this, SWT.NONE);
-		lblGen.setText(Vocab.instance.PARTYGEN);
+		new LLabel(this, Vocab.instance.PARTYGEN);
 		
 		LCombo cmbGen = new LCombo(this);
 		cmbGen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

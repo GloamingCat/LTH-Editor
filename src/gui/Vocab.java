@@ -65,6 +65,8 @@ public class Vocab {
 	public String PLUGINON = "ON";
 	public String CONSTANTS = "Constants";
 	public String COLOR = "Color";
+	public String SIZE = "Size";
+	public String FORMAT = "Format";
 	
 	// Attributes
 	public String SHORTNAME = "Short Name";

@@ -6,6 +6,7 @@ import lwt.dialog.LObjectShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 
 import org.eclipse.swt.SWT;
@@ -17,7 +18,6 @@ import data.field.FieldImage;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 
@@ -54,8 +54,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 
 		content.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(content, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(content, Vocab.instance.NAME);
 		
 		txtName = new Text(content, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

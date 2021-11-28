@@ -6,6 +6,7 @@ import gui.widgets.FileSelector;
 import java.io.File;
 
 import lwt.LSoundPlayer;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -18,7 +19,6 @@ import project.Project;
 
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 import data.subcontent.Audio;
 import org.eclipse.swt.widgets.Button;
@@ -60,16 +60,14 @@ public class AudioShell extends ObjectShell<Audio> {
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Label lblVolume = new Label(composite, SWT.NONE);
-		lblVolume.setText(Vocab.instance.VOLUME);
+		new LLabel(composite, Vocab.instance.VOLUME);
 		
 		LSpinner spnVolume = new LSpinner(composite, SWT.NONE);
 		spnVolume.setMaximum(1000);
 		spnVolume.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnVolume, "volume");
 		
-		Label lblPitch = new Label(composite, SWT.NONE);
-		lblPitch.setText(Vocab.instance.PITCH);
+		new LLabel(composite, Vocab.instance.PITCH);
 		
 		LSpinner spnPitch = new LSpinner(composite, SWT.NONE);
 		spnPitch.setMaximum(1000);
@@ -77,8 +75,7 @@ public class AudioShell extends ObjectShell<Audio> {
 		spnPitch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnPitch, "pitch");
 		
-		Label lblDelay = new Label(composite, SWT.NONE);
-		lblDelay.setText(Vocab.instance.TIME);
+		new LLabel(composite, Vocab.instance.TIME);
 		
 		LSpinner spnTime = new LSpinner(composite, SWT.NONE);
 		spnTime.setMaximum(10000);

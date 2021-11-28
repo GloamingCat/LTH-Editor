@@ -9,13 +9,13 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
 import lwt.widget.LCombo;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -29,8 +29,7 @@ public class UnitEditor extends LObjectEditor {
 		gridLayout.marginWidth = 0;
 		setLayout(gridLayout);
 		
-		Label lblKey = new Label(this, SWT.NONE);
-		lblKey.setText(Vocab.instance.KEY);
+		new LLabel(this, Vocab.instance.KEY);
 		
 		LText txtKey = new LText(this, SWT.NONE);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
@@ -46,22 +45,19 @@ public class UnitEditor extends LObjectEditor {
 		EquipList lstEquip = new EquipList(grpEquip, SWT.NONE);
 		addChild(lstEquip, "equip");
 		
-		Label lblPositionX = new Label(this, SWT.NONE);
-		lblPositionX.setText(Vocab.instance.POSITIONX);
+		new LLabel(this, Vocab.instance.POSITIONX);
 		
 		LSpinner spnX = new LSpinner(this, SWT.NONE);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnX, "x");
 		
-		Label lblPositionY = new Label(this, SWT.NONE);
-		lblPositionY.setText(Vocab.instance.POSITIONY);
+		new LLabel(this, Vocab.instance.POSITIONY);
 		
 		LSpinner spnY = new LSpinner(this, SWT.NONE);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnY, "y");
 		
-		Label lblList = new Label(this, SWT.NONE);
-		lblList.setText(Vocab.instance.LIST);
+		new LLabel(this, Vocab.instance.LIST);
 		
 		LCombo cmbList = new LCombo(this, SWT.NONE);
 		cmbList.setOptional(false);
@@ -81,8 +77,7 @@ public class UnitEditor extends LObjectEditor {
 		gl_compIDs.marginHeight = 0;
 		compIDs.setLayout(gl_compIDs);
 		
-		Label lblChar = new Label(compIDs, SWT.NONE);
-		lblChar.setText(Vocab.instance.CHARACTER);
+		new LLabel(compIDs, Vocab.instance.CHARACTER);
 		
 		Text txtChar = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
 		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -96,8 +91,7 @@ public class UnitEditor extends LObjectEditor {
 		btnChar.setNameText(txtChar);
 		addControl(btnChar, "charID");
 		
-		Label lblBattler = new Label(compIDs, SWT.NONE);
-		lblBattler.setText(Vocab.instance.CHARBATTLER);
+		new LLabel(compIDs, Vocab.instance.CHARBATTLER);
 		
 		Text txtBattler = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

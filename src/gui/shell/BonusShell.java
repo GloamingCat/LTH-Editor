@@ -6,10 +6,10 @@ import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Bonus;
 import lwt.dataestructure.LDataTree;
+import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
@@ -22,8 +22,7 @@ public abstract class BonusShell extends ObjectShell<Bonus> {
 		setMinimumSize(new Point(372, 329));
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblValue = new Label(contentEditor, SWT.NONE);
-		lblValue.setText(Vocab.instance.VALUE);
+		new LLabel(contentEditor, Vocab.instance.VALUE);
 		
 		LSpinner spnValue = new LSpinner(contentEditor, SWT.NONE);
 		spnValue.setMinimum(-100000);

@@ -9,12 +9,11 @@ import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
 import lwt.editor.LDefaultTreeEditor;
+import lwt.widget.LLabel;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.graphics.Point;
 
 import project.Project;
 import data.Battler.Drop;
@@ -27,20 +26,18 @@ public class DropShell extends LObjectShell<Drop> {
 
 	public DropShell(Shell parent) {
 		super(parent);
+		setMinimumSize(400, 200);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(372, 329));
 		content.setLayout(new GridLayout(2, false));
 		
-		Label lblValue = new Label(content, SWT.NONE);
-		lblValue.setText(Vocab.instance.CHANCE);
+		new LLabel(content, Vocab.instance.CHANCE);
 		
 		spnChance = new Spinner(content, SWT.BORDER);
 		spnChance.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblCount = new Label(content, SWT.NONE);
-		lblCount.setText(Vocab.instance.COUNT);
+		new LLabel(content, Vocab.instance.COUNT);
 		
 		spnCount = new Spinner(content, SWT.BORDER);
 		spnCount.setMaximum(999999999);

@@ -10,9 +10,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -27,15 +27,13 @@ public class ElementShell extends ObjectShell<Element> {
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(contentEditor, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME);
 		
 		LText txtName = new LText(contentEditor, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		
-		Label lblIcon = new Label(contentEditor, SWT.NONE);
-		lblIcon.setText(Vocab.instance.ICON);
+		new LLabel(contentEditor, Vocab.instance.ICON);
 		
 		Composite icon = new Composite(contentEditor, SWT.NONE);
 		icon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

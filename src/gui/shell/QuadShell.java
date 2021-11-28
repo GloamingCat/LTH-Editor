@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 import lwt.dialog.LObjectShell;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LImage;
+import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -24,7 +26,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -41,7 +42,7 @@ import org.eclipse.swt.widgets.Button;
 public class QuadShell extends LObjectShell<Quad> {
 
 	private FileSelector selFile;
-	private Label label;
+	private LImage imgQuad;
 	private Spinner spnX;
 	private Spinner spnY;
 	private Spinner spnWidth;
@@ -68,9 +69,10 @@ public class QuadShell extends LObjectShell<Quad> {
 		scroll = new ScrolledComposite(quad, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		label = new Label(scroll, SWT.NONE);
-		label.setAlignment(SWT.CENTER);
-		scroll.setContent(label);
+		imgQuad = new LImage(scroll);
+		imgQuad.setHorizontalAlign(SWT.CENTER);
+		imgQuad.setVerticalAlign(SWT.CENTER);
+		scroll.setContent(imgQuad);
 		
 		Composite spinners = new Composite(quad, SWT.NONE);
 		spinners.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -79,30 +81,26 @@ public class QuadShell extends LObjectShell<Quad> {
 		gl_spinners.marginWidth = 0;
 		spinners.setLayout(gl_spinners);
 		
-		Label lblX = new Label(spinners, SWT.NONE);
-		lblX.setText(Vocab.instance.QUADX);
+		new LLabel(spinners, Vocab.instance.QUADX);
 		
 		spnX = new Spinner(spinners, SWT.BORDER);
 		spnX.setMaximum(4095);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblWidth = new Label(spinners, SWT.NONE);
-		lblWidth.setText(Vocab.instance.QUADW);
+		new LLabel(spinners, Vocab.instance.QUADW);
 		
 		spnWidth = new Spinner(spinners, SWT.BORDER);
 		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
 		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblY = new Label(spinners, SWT.NONE);
-		lblY.setText(Vocab.instance.QUADY);
+		new LLabel(spinners, Vocab.instance.QUADY);
 		
 		spnY = new Spinner(spinners, SWT.BORDER);
 		spnY.setMaximum(4095);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblHeight = new Label(spinners, SWT.NONE);
-		lblHeight.setText(Vocab.instance.QUADH);
+		new LLabel(spinners, Vocab.instance.QUADH);
 		
 		spnHeight = new Spinner(spinners, SWT.BORDER);
 		spnHeight.setMaximum(4096);
@@ -115,7 +113,7 @@ public class QuadShell extends LObjectShell<Quad> {
 		gl_composite_2.marginHeight = 0;
 		btnFullImage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		label.addPaintListener(new PaintListener() {
+		imgQuad.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
 				int x1 = spnX.getSelection();
@@ -132,12 +130,12 @@ public class QuadShell extends LObjectShell<Quad> {
 		btnFullImage.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				Rectangle rect = label.getImage().getBounds();
+				Rectangle rect = imgQuad.getImage().getBounds();
 				spnX.setSelection(0);
 				spnY.setSelection(0);
 				spnWidth.setSelection(rect.width);
 				spnHeight.setSelection(rect.height);
-				label.redraw();
+				imgQuad.redraw();
 			}
 		});
 		btnFullImage.setText(Vocab.instance.FULLIMAGE);
@@ -152,7 +150,7 @@ public class QuadShell extends LObjectShell<Quad> {
 		ModifyListener redrawListener = new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent arg0) {
-				label.redraw();
+				imgQuad.redraw();
 			}
 		};
 		
@@ -179,7 +177,7 @@ public class QuadShell extends LObjectShell<Quad> {
 	@Override
 	protected Quad createResult(Quad initial) {
 		Quad q = new Quad();
-		Rectangle rect = label.getImage().getBounds();
+		Rectangle rect = imgQuad.getImage().getBounds();
 		q.x = Math.min(spnX.getSelection(), rect.width);
 		q.y = Math.min(spnY.getSelection(), rect.height);
 		q.width = Math.min(spnWidth.getSelection(), rect.width);
@@ -205,10 +203,10 @@ public class QuadShell extends LObjectShell<Quad> {
 	protected void resetImage() {
 		String path = selFile.getRootFolder() + selFile.getSelectedFile();
 		Image image = SWTResourceManager.getImage(path);
-		label.setImage(image);
-		label.setBounds(image.getBounds());
-		scroll.setMinSize(label.getSize());
-		label.redraw();
+		imgQuad.setImage(image);
+		imgQuad.setBounds(image.getBounds());
+		scroll.setMinSize(imgQuad.getSize());
+		imgQuad.redraw();
 	}
 
 }

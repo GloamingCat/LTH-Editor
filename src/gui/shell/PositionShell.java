@@ -6,7 +6,6 @@ import gui.views.fieldTree.EditableFieldCanvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -22,6 +21,7 @@ import lwt.dialog.LObjectShell;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
+import lwt.widget.LLabel;
 import lwt.widget.LTree;
 import data.field.Field;
 import data.field.FieldNode;
@@ -37,7 +37,7 @@ public class PositionShell extends LObjectShell<Position> {
 	private Spinner spnY;
 	private Spinner spnH;
 	private ScrolledComposite scrolledComposite;
-	private Label lblPos;
+	private LLabel lblPos;
 	
 	private LPath path = null;
 
@@ -125,36 +125,28 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		};
 		
-		Label lblX = new Label(coordinates, SWT.NONE);
-		lblX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblX.setText("X");
+		new LLabel(coordinates, "X").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		spnX = new Spinner(coordinates, SWT.BORDER);
 		spnX.setMinimum(1);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnX.addModifyListener(redraw);
 		
-		Label lblY = new Label(coordinates, SWT.NONE);
-		lblY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblY.setText("Y");
+		new LLabel(coordinates, "Y").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		spnY = new Spinner(coordinates, SWT.BORDER);
 		spnY.setMinimum(1);
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnY.addModifyListener(redraw);
 		
-		Label lblH = new Label(coordinates, SWT.NONE);
-		lblH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblH.setText("H");
+		new LLabel(coordinates, "H").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		spnH = new Spinner(coordinates, SWT.BORDER);
 		spnH.setMinimum(1);
 		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnH.addModifyListener(redraw);
 		
-		Label lblDirection = new Label(bottom, SWT.NONE);
-		lblDirection.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblDirection.setText(Vocab.instance.DIRECTION);
+		new LLabel(bottom, Vocab.instance.DIRECTION).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		cmbDirection = new LCombo(bottom, SWT.READ_ONLY);
 		cmbDirection.setOptional(true);
@@ -164,8 +156,7 @@ public class PositionShell extends LObjectShell<Position> {
 		cmbDirection.setItems(d);
 		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		lblPos = new Label(bottom, SWT.NONE);
-		lblPos.setText("(-99, -99)");
+		lblPos = new LLabel(bottom, "(-99, -99)");
 		
 		if (fieldID >= 0) {
 			path = findPath(fieldID);

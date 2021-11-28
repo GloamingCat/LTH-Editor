@@ -4,6 +4,7 @@ import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCheckButton;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
@@ -32,7 +33,6 @@ import data.subcontent.Unit;
 import project.Project;
 
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridLayout;
 
 public class TroopTab extends DatabaseTab {
@@ -52,14 +52,13 @@ public class TroopTab extends DatabaseTab {
 		
 		// General
 		
-		new Label(grpGeneral, SWT.NONE);
+		new LLabel(grpGeneral, "");
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
-		Label lblMoney = new Label(grpGeneral, SWT.NONE);
-		lblMoney.setText(Vocab.instance.MONEY);
+		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
 		LSpinner spnMoney = new LSpinner(grpGeneral, SWT.NONE);
 		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -67,8 +66,7 @@ public class TroopTab extends DatabaseTab {
 		
 		// AI
 		
-		Label lblAI = new Label(grpGeneral, SWT.NONE);
-		lblAI.setText(Vocab.instance.AI);
+		new LLabel(grpGeneral, Vocab.instance.AI);
 		
 		Composite select = new Composite(grpGeneral, SWT.NONE);
 		select.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

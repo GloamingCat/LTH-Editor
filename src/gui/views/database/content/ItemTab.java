@@ -15,6 +15,7 @@ import gui.widgets.NameList;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
@@ -25,7 +26,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import project.Project;
@@ -45,9 +45,7 @@ public class ItemTab extends DatabaseTab {
 		Composite right = new Composite(contentEditor, SWT.NONE);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
-		Label lblDescription = new Label(grpGeneral, SWT.NONE);
-		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		lblDescription.setText(Vocab.instance.DESCRIPTION);
+		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
 		LTextBox txtDescription = new LTextBox(grpGeneral, SWT.NONE);
 		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -57,8 +55,7 @@ public class ItemTab extends DatabaseTab {
 		
 		// Icon
 		
-		Label lblIcon = new Label(grpGeneral, SWT.NONE);
-		lblIcon.setText(Vocab.instance.ICON);
+		new LLabel(grpGeneral, Vocab.instance.ICON);
 		
 		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeIcon = new GridLayout(2, false);
@@ -81,8 +78,7 @@ public class ItemTab extends DatabaseTab {
 		
 		// Price
 		
-		Label lblPrice = new Label(grpGeneral, SWT.NONE);
-		lblPrice.setText(Vocab.instance.PRICE);
+		new LLabel(grpGeneral, Vocab.instance.PRICE);
 		
 		Composite price = new Composite(grpGeneral, SWT.NONE);
 		price.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -112,8 +108,7 @@ public class ItemTab extends DatabaseTab {
 		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grpEquip.setText(Vocab.instance.EQUIP);
 		
-		Label lblSlot = new Label(grpEquip, SWT.NONE);
-		lblSlot.setText(Vocab.instance.SLOT);
+		new LLabel(grpEquip, Vocab.instance.SLOT);
 		
 		LText txtSlot = new LText(grpEquip, SWT.NONE);
 		txtSlot.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -124,9 +119,7 @@ public class ItemTab extends DatabaseTab {
 		btnAllSlots.setText(Vocab.instance.ALLSLOTS);
 		addControl(btnAllSlots, "allSlots");
 		
-		Label lblBlocked = new Label(grpEquip, SWT.NONE);
-		lblBlocked.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblBlocked.setText(Vocab.instance.BLOCKEDSLOTS);
+		new LLabel(grpEquip, Vocab.instance.BLOCKEDSLOTS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 
 		NameList lstBlocked = new NameList(grpEquip, SWT.NONE);
 		GridData gd_lstBlocked = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
@@ -163,8 +156,7 @@ public class ItemTab extends DatabaseTab {
 		grpUse.setText(Vocab.instance.USE);
 		grpUse.setLayout(new GridLayout(3, false));
 		
-		Label lblSkill = new Label(grpUse, SWT.NONE);
-		lblSkill.setText(Vocab.instance.ITEMSKILL);
+		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
 	
 		Text txtSkill = new Text(grpUse, SWT.BORDER | SWT.READ_ONLY);
 		txtSkill.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

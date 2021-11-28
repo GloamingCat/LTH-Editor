@@ -7,8 +7,8 @@ import org.eclipse.swt.widgets.Text;
 
 import lwt.LVocab;
 import lwt.dialog.LObjectShell;
+import lwt.widget.LLabel;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -59,21 +59,18 @@ public class ConstantShell extends LObjectShell<Constant> {
 		
 		content.setLayout(new GridLayout(3, false));
 		
-		Label lblName = new Label(content, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(content, Vocab.instance.NAME);
 		
 		txtName = new Text(content, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
-		Label lblType = new Label(content, SWT.NONE);
-		lblType.setText(Vocab.instance.TYPE);
+		new LLabel(content, Vocab.instance.TYPE);
 		
 		cmbType = new Combo(content, SWT.READ_ONLY);
 		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		cmbType.setItems(items);
 		
-		Label lblValue = new Label(content, SWT.NONE);
-		lblValue.setText(Vocab.instance.VALUE);
+		new LLabel(content, Vocab.instance.VALUE);
 		
 		txtValue = new Text(content, SWT.BORDER);
 		txtValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

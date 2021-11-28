@@ -12,6 +12,7 @@ import gui.widgets.SimpleEditableList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -21,7 +22,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.FillLayout;
@@ -51,8 +51,7 @@ public class AnimationTab extends DatabaseTab {
 		
 		// Script
 		
-		Label lblScript = new Label(grpGeneral,  SWT.NONE);
-		lblScript.setText(Vocab.instance.SCRIPT);
+		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		
 		Composite script = new Composite(grpGeneral,  SWT.NONE);
 		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -78,15 +77,13 @@ public class AnimationTab extends DatabaseTab {
 		gl_size.marginHeight = 0;
 		size.setLayout(gl_size);
 		
-		Label lblColumns = new Label(size, SWT.NONE);
-		lblColumns.setText(Vocab.instance.COLUMNS);
+		new LLabel(size, Vocab.instance.COLUMNS);
 		
 		spnCols = new LSpinner(size, SWT.NONE);
 		spnCols.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnCols, "cols");
 		
-		Label lblRows = new Label(size, SWT.NONE);
-		lblRows.setText(Vocab.instance.ROWS);
+		new LLabel(size, Vocab.instance.ROWS);
 		
 		spnRows = new LSpinner(size, SWT.NONE);
 		spnRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -142,8 +139,7 @@ public class AnimationTab extends DatabaseTab {
 		grpIntro.setLayout(new GridLayout(3, false));
 		grpIntro.setText(Vocab.instance.INTRO);
 		
-		Label lblIntroPattern = new Label(grpIntro, SWT.NONE);
-		lblIntroPattern.setText(Vocab.instance.PATTERN);
+		new LLabel(grpIntro, Vocab.instance.PATTERN);
 		
 		LText txtIntroPattern = new LText(grpIntro, SWT.NONE);
 		txtIntroPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -152,8 +148,7 @@ public class AnimationTab extends DatabaseTab {
 		Button btnIntroPattern = new Button(grpIntro, SWT.NONE);
 		btnIntroPattern.setText(Vocab.instance.DEFAULT);
 		
-		Label lblIntroDuration = new Label(grpIntro, SWT.NONE);
-		lblIntroDuration.setText(Vocab.instance.DURATION);
+		new LLabel(grpIntro, Vocab.instance.DURATION);
 
 		LText txtIntroDuration = new LText(grpIntro, SWT.NONE);
 		txtIntroDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -169,8 +164,7 @@ public class AnimationTab extends DatabaseTab {
 		grpLoop.setLayout(new GridLayout(3, false));
 		grpLoop.setText(Vocab.instance.LOOP);
 		
-		Label lblLoopPattern = new Label(grpLoop, SWT.NONE);
-		lblLoopPattern.setText(Vocab.instance.PATTERN);
+		new LLabel(grpLoop, Vocab.instance.PATTERN);
 		
 		LText txtLoopPattern = new LText(grpLoop, SWT.NONE);
 		txtLoopPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -179,8 +173,7 @@ public class AnimationTab extends DatabaseTab {
 		Button btnLoopPattern = new Button(grpLoop, SWT.NONE);
 		btnLoopPattern.setText(Vocab.instance.DEFAULT);
 		
-		Label lblLoopDuration = new Label(grpLoop, SWT.NONE);
-		lblLoopDuration.setText(Vocab.instance.DURATION);
+		new LLabel(grpLoop, Vocab.instance.DURATION);
 
 		LText txtLoopDuration = new LText(grpLoop, SWT.NONE);
 		txtLoopDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

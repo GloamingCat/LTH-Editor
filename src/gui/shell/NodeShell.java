@@ -7,10 +7,10 @@ import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Node;
 import lwt.dataestructure.LDataTree;
+import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,8 +34,7 @@ public abstract class NodeShell extends ObjectShell<Node> {
 		gl_name.marginHeight = 0;
 		name.setLayout(gl_name);
 		
-		Label lblName = new Label(name, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(name, Vocab.instance.NAME);
 		
 		LText txtName = new LText(name, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

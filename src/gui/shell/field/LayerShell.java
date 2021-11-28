@@ -9,10 +9,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import lwt.widget.LCheckButton;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -42,17 +42,13 @@ public class LayerShell extends ObjectShell<Info> {
 		gl_grpGeneral.marginHeight = 0;
 		grpGeneral.setLayout(gl_grpGeneral);
 		
-		Label lblName = new Label(grpGeneral, SWT.NONE);
-		lblName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
 		LText txtName = new LText(grpGeneral, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		
-		Label lblHeight = new Label(grpGeneral, SWT.NONE);
-		lblHeight.setText(Vocab.instance.HEIGHT);
-		lblHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		new LLabel(grpGeneral, Vocab.instance.HEIGHT);
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.CENTER);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

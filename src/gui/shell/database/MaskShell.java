@@ -1,12 +1,13 @@
 package gui.shell.database;
 
+import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
 import data.Skill.Mask;
 import lwt.dialog.LObjectShell;
+import lwt.widget.LLabel;
 
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
@@ -51,8 +52,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		super(parent);
 		content.setLayout(new GridLayout(6, false));
 		
-		Label lblMinH = new Label(content, SWT.NONE);
-		lblMinH.setText("Min Height");
+		new LLabel(content, "Min Height");
 		
 		// Minimum Limits
 		
@@ -72,8 +72,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMinH.setMaximum(20);
 		spnMinH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblMinX = new Label(content, SWT.NONE);
-		lblMinX.setText("Min X");
+		new LLabel(content, "Min X");
 		
 		spnMinX = new Spinner(content, SWT.BORDER);
 		spnMinX.addSelectionListener(new SelectionAdapter() {
@@ -89,8 +88,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMinX.setMaximum(20);
 		spnMinX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblMinY = new Label(content, SWT.NONE);
-		lblMinY.setText("Min Y");
+		new LLabel(content, "Min Y");
 		
 		spnMinY = new Spinner(content, SWT.BORDER);
 		spnMinY.addSelectionListener(new SelectionAdapter() {
@@ -106,8 +104,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMinY.setMaximum(20);
 		spnMinY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblMaxH = new Label(content, SWT.NONE);
-		lblMaxH.setText("Max Height");
+		new LLabel(content, "Max Height");
 		
 		// Maximum Limits
 		
@@ -127,8 +124,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxH.setMaximum(20);
 		spnMaxH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblMaxX = new Label(content, SWT.NONE);
-		lblMaxX.setText("Max X");
+		new LLabel(content, "Max X");
 		
 		spnMaxX = new Spinner(content, SWT.BORDER);
 		spnMaxX.addSelectionListener(new SelectionAdapter() {
@@ -144,8 +140,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxX.setMaximum(20);
 		spnMaxX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblMaxY = new Label(content, SWT.NONE);
-		lblMaxY.setText("Max Y");
+		new LLabel(content, "Max Y");
 		
 		spnMaxY = new Spinner(content, SWT.BORDER);
 		spnMaxY.addSelectionListener(new SelectionAdapter() {
@@ -161,8 +156,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxY.setMaximum(20);
 		spnMaxY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblHeight = new Label(content, SWT.NONE);
-		lblHeight.setText("Height");
+		new LLabel(content, Vocab.instance.HEIGHT);
 		
 		cmbHeight = new Combo(content, SWT.READ_ONLY);
 		cmbHeight.addSelectionListener(new SelectionAdapter() {
@@ -175,10 +169,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		GridData gd_cmbHeight = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_cmbHeight.widthHint = 0;
 		cmbHeight.setLayoutData(gd_cmbHeight);
-		new Label(content, SWT.NONE);
-		new Label(content, SWT.NONE);
-		new Label(content, SWT.NONE);
-		new Label(content, SWT.NONE);
+		new LLabel(content, 4);
 		
 		canvas = new Composite(content, SWT.NONE);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 6, 1));

@@ -17,13 +17,13 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 
 import project.Project;
 import data.field.CharTile;
@@ -53,7 +53,7 @@ public class FieldSideEditor extends LObjectEditor {
 	private CharTileEditor charEditor;
 	private PartyEditor partyEditor;
 	private LCombo cmbPlayerParty;
-	private Label lblTitle;
+	private LLabel lblTitle;
 	
 	private static String[] titles = new String[] { 
 		Vocab.instance.TERRAIN,
@@ -74,10 +74,9 @@ public class FieldSideEditor extends LObjectEditor {
 		
 		setLayout(new GridLayout());
 		
-		lblTitle = new Label(this, SWT.NONE);
+		lblTitle = new LLabel(this, Vocab.instance.TERRAIN);
 		lblTitle.setAlignment(SWT.CENTER);
 		lblTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblTitle.setText(Vocab.instance.TERRAIN);
 		
 		editors = new Composite(this, SWT.NONE);
 		editors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -235,8 +234,7 @@ public class FieldSideEditor extends LObjectEditor {
 		party.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		party.setLayout(new GridLayout(2, false));
 		
-		Label lblPlayerParty = new Label(party, SWT.NONE);
-		lblPlayerParty.setText(Vocab.instance.PLAYERPARTY);
+		new LLabel(party, Vocab.instance.PLAYERPARTY);
 		
 		cmbPlayerParty = new LCombo(party, SWT.NONE);
 		cmbPlayerParty.setIncludeID(false);

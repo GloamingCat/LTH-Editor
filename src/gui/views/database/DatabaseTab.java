@@ -16,7 +16,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Label;
 
 import com.google.gson.Gson;
 
@@ -31,6 +30,7 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LControl;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 public abstract class DatabaseTab extends LView {
@@ -40,9 +40,9 @@ public abstract class DatabaseTab extends LView {
 	protected GDefaultTreeEditor<Object> listEditor;
 	protected LObjectEditor contentEditor;
 	protected Group grpGeneral;
-	protected Label lblName;
+	protected LLabel lblName;
 	protected LText txtName;
-	protected Label lblID;
+	protected LLabel lblID;
 	
 	public DatabaseTab(Composite parent) {
 		super(parent);
@@ -85,11 +85,10 @@ public abstract class DatabaseTab extends LView {
 		grpGeneral.setLayout(new GridLayout(2, false));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		
-		lblID = new Label(grpGeneral, SWT.NONE);
+		lblID = new LLabel(grpGeneral, "");
 		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
-		lblName = new Label(grpGeneral, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);
 		
 		txtName = new LText(grpGeneral, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

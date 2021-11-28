@@ -8,7 +8,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -17,7 +16,7 @@ public class ColorButton extends LControl<RGB> {
 	
 	public String name = "";
 	protected Button button;
-	protected Label imgColor;
+	protected Composite imgColor;
 	
 	/**
 	 * Create the composite.
@@ -44,8 +43,8 @@ public class ColorButton extends LControl<RGB> {
 		button.setText(LVocab.instance.SELECT);
 	}
 	
-	public void setLabel(Label lbl) {
-		imgColor = lbl;
+	public void setColorWidget(Composite img) {
+		imgColor = img;
 	}
 	
 	public void setText(String text) {

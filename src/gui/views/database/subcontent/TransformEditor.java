@@ -15,6 +15,7 @@ import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 public class TransformEditor extends LObjectEditor {
@@ -53,8 +54,7 @@ public class TransformEditor extends LObjectEditor {
 			}
 		};
 		
-		Label lblOffsetX = new Label(this, SWT.NONE);
-		lblOffsetX.setText(Vocab.instance.OFFSETX);
+		new LLabel(this, Vocab.instance.OFFSETX);
 		
 		spnOffsetX = new LSpinner(this, SWT.NONE);
 		spnOffsetX.setMaximum(1024);
@@ -63,8 +63,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnOffsetX, "offsetX");
 		spnOffsetX.addModifyListener(updateOffset);
 		
-		Label lblRed = new Label(this, SWT.NONE);
-		lblRed.setText(Vocab.instance.RED);
+		new LLabel(this, Vocab.instance.RED);
 		
 		LSpinner spnRed = new LSpinner(this, SWT.NONE);
 		spnRed.setMaximum(10000);
@@ -73,8 +72,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnRed, "red");
 		spnRed.addModifyListener(updateColor);
 		
-		Label lblOffsetY = new Label(this, SWT.NONE);
-		lblOffsetY.setText(Vocab.instance.OFFSETY);
+		new LLabel(this, Vocab.instance.OFFSETY);
 		
 		spnOffsetY = new LSpinner(this, SWT.NONE);
 		spnOffsetY.setMaximum(1024);
@@ -83,8 +81,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnOffsetY, "offsetY");
 		spnOffsetY.addModifyListener(updateOffset);
 		
-		Label lblGreen = new Label(this, SWT.NONE);
-		lblGreen.setText(Vocab.instance.GREEN);
+		new LLabel(this, Vocab.instance.GREEN);
 		
 		LSpinner spnGreen = new LSpinner(this, SWT.NONE);
 		spnGreen.setMaximum(10000);
@@ -93,8 +90,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnGreen, "green");
 		spnGreen.addModifyListener(updateColor);
 		
-		Label lblOffsetDepth = new Label(this, SWT.NONE);
-		lblOffsetDepth.setText(Vocab.instance.OFFSETDEPTH);
+		new LLabel(this, Vocab.instance.OFFSETDEPTH);
 		
 		LSpinner spnOffsetDepth = new LSpinner(this, SWT.NONE);
 		spnOffsetDepth.setMinimum(-1024);
@@ -102,8 +98,7 @@ public class TransformEditor extends LObjectEditor {
 		spnOffsetDepth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetDepth, "offsetDepth");
 		
-		Label lblBlue = new Label(this, SWT.NONE);
-		lblBlue.setText(Vocab.instance.BLUE);
+		new LLabel(this, Vocab.instance.BLUE);
 		
 		LSpinner spnBlue = new LSpinner(this, SWT.NONE);
 		spnBlue.setMaximum(10000);
@@ -112,8 +107,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnBlue, "blue");
 		spnBlue.addModifyListener(updateColor);
 		
-		Label lblScaleX = new Label(this, SWT.NONE);
-		lblScaleX.setText(Vocab.instance.SCALEX);
+		new LLabel(this, Vocab.instance.SCALEX);
 		
 		spnScaleX = new LSpinner(this, SWT.NONE);
 		spnScaleX.setMaximum(10000);
@@ -122,8 +116,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnScaleX, "scaleX");
 		spnScaleX.addModifyListener(updateScale);
 		
-		Label lblAlpha = new Label(this, SWT.NONE);
-		lblAlpha.setText(Vocab.instance.ALPHA);
+		new LLabel(this, Vocab.instance.ALPHA);
 		
 		LSpinner spnAlpha = new LSpinner(this, SWT.NONE);
 		spnAlpha.setMaximum(10000);
@@ -132,8 +125,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnAlpha, "alpha");
 		spnAlpha.addModifyListener(updateColor);
 		
-		Label lblScaleY = new Label(this, SWT.NONE);
-		lblScaleY.setText(Vocab.instance.SCALEY);
+		new LLabel(this, Vocab.instance.SCALEY);
 		
 		spnScaleY = new LSpinner(this, SWT.NONE);
 		spnScaleY.setMaximum(10000);
@@ -142,8 +134,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnScaleY, "scaleY");
 		spnScaleY.addModifyListener(updateScale);
 		
-		Label lblHue = new Label(this, SWT.NONE);
-		lblHue.setText(Vocab.instance.HUE);
+		new LLabel(this, Vocab.instance.HUE);
 		
 		LSpinner spnHue = new LSpinner(this, SWT.NONE);
 		spnHue.setMaximum(360);
@@ -152,8 +143,7 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnHue, "hue");
 		spnHue.addModifyListener(updateColor);
 		
-		Label lblRotation = new Label(this, SWT.NONE);
-		lblRotation.setText(Vocab.instance.ROTATION);
+		new LLabel(this, Vocab.instance.ROTATION);
 		
 		spnRotation = new LSpinner(this, SWT.NONE);
 		spnRotation.setMaximum(360);
@@ -161,8 +151,7 @@ public class TransformEditor extends LObjectEditor {
 		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRotation, "rotation");
 		
-		Label lblSaturation = new Label(this, SWT.NONE);
-		lblSaturation.setText(Vocab.instance.SATURATION);
+		new LLabel(this, Vocab.instance.SATURATION);
 		
 		LSpinner spnSaturation = new LSpinner(this, SWT.NONE);
 		spnSaturation.setMaximum(10000);
@@ -171,11 +160,9 @@ public class TransformEditor extends LObjectEditor {
 		addControl(spnSaturation, "saturation");
 		spnSaturation.addModifyListener(updateColor);
 		
-		Label placeholder = new Label(this, SWT.NONE);
-		placeholder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		new LLabel(this, "").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
-		Label lblBrightness = new Label(this, SWT.NONE);
-		lblBrightness.setText(Vocab.instance.BRIGHTNESS);
+		new LLabel(this, Vocab.instance.BRIGHTNESS);
 		
 		LSpinner spnBrightness = new LSpinner(this, SWT.NONE);
 		spnBrightness.setMaximum(10000);

@@ -7,11 +7,11 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Rule;
@@ -53,8 +53,7 @@ public class RuleShell extends ObjectShell<Rule> {
 		TagList lstParam = new TagList(grpParameters, SWT.NONE);
 		addChild(lstParam, "tags");
 		
-		Label lblCondition = new Label(composite, SWT.NONE);
-		lblCondition.setText(Vocab.instance.CONDITION);
+		new LLabel(composite, Vocab.instance.CONDITION);
 		
 		LText txtCondition = new LText(composite);
 		txtCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

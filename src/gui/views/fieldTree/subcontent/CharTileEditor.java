@@ -6,7 +6,6 @@ import gui.widgets.IDButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
@@ -14,6 +13,7 @@ import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckButton;
 import lwt.widget.LCombo;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -53,8 +53,7 @@ public class CharTileEditor extends LObjectEditor {
 		position.setLayout(gl_position);
 		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		Label lblPos = new Label(position, SWT.NONE);
-		lblPos.setText(Vocab.instance.POSITION);
+		new LLabel(position, Vocab.instance.POSITION);
 		
 		spnX = new LSpinner(position);
 		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -104,15 +103,13 @@ public class CharTileEditor extends LObjectEditor {
 		
 		// General
 		
-		Label lblKey = new Label(this, SWT.NONE);
-		lblKey.setText(Vocab.instance.KEY);
+		new LLabel(this, Vocab.instance.KEY);
 		
 		LText txtKey = new LText(this, SWT.NONE);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtKey, "key");
 		
-		Label lblPersistent = new Label(this, SWT.NONE);
-		lblPersistent.setText(Vocab.instance.PERSISTENT);
+		new LLabel(this, Vocab.instance.PERSISTENT);
 		
 		LCheckButton btnPersistent = new LCheckButton(this, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -120,8 +117,7 @@ public class CharTileEditor extends LObjectEditor {
 		
 		// Char
 		
-		Label lblChar = new Label(this, SWT.NONE);
-		lblChar.setText(Vocab.instance.CHARACTER);
+		new LLabel(this, Vocab.instance.CHARACTER);
 		
 		Text txtChar = new Text(this, SWT.BORDER | SWT.READ_ONLY);
 		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -135,8 +131,7 @@ public class CharTileEditor extends LObjectEditor {
 		btnChar.setNameText(txtChar);
 		addControl(btnChar, "charID");
 		
-		Label lblDir = new Label(this, SWT.NONE);
-		lblDir.setText(Vocab.instance.DIRECTION);
+		new LLabel(this, Vocab.instance.DIRECTION);
 		
 		LCombo cmbDir = new LCombo(this) {
 			public void setSelectionIndex(int i) {
@@ -163,8 +158,7 @@ public class CharTileEditor extends LObjectEditor {
 			}
 		});
 		
-		Label lblAnim = new Label(this, SWT.NONE);
-		lblAnim.setText(Vocab.instance.ANIMATION);
+		new LLabel(this, Vocab.instance.ANIMATION);
 		
 		LText txtAnim = new LText(this);
 		txtAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
@@ -196,8 +190,7 @@ public class CharTileEditor extends LObjectEditor {
 		
 		// Battle
 		
-		Label lblParty = new Label(this, SWT.NONE);
-		lblParty.setText(Vocab.instance.PARTY);
+		new LLabel(this, Vocab.instance.PARTY);
 		
 		cmbParty = new LCombo(this);
 		cmbParty.setIncludeID(false);
@@ -205,8 +198,7 @@ public class CharTileEditor extends LObjectEditor {
 		cmbParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(cmbParty, "party");
 		
-		Label lblBattler = new Label(this, SWT.NONE);
-		lblBattler.setText(Vocab.instance.CHARBATTLER);
+		new LLabel(this, Vocab.instance.CHARBATTLER);
 		
 		Text txtBattler = new Text(this, SWT.BORDER | SWT.READ_ONLY);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

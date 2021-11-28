@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import gson.project.GObjectTreeSerializer;
@@ -19,7 +20,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import data.BattleClass.Node;
@@ -50,8 +50,7 @@ public class ClassTab extends DatabaseTab {
 		TagList tagEditor = new TagList(grpTags, SWT.NONE);
 		addChild(tagEditor, "tags");
 		
-		Label lblCurve = new Label(grpGeneral, SWT.NONE);
-		lblCurve.setText(Vocab.instance.EXPCURVE);
+		new LLabel(grpGeneral, Vocab.instance.EXPCURVE);
 		
 		LText txtCurve = new LText(grpGeneral, SWT.NONE);
 		txtCurve.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -89,8 +88,7 @@ public class ClassTab extends DatabaseTab {
 		gl_id.marginHeight = 0;
 		id.setLayout(gl_id);
 		
-		Label lblSkill = new Label(id, SWT.NONE);
-		lblSkill.setText(Vocab.instance.SKILL);
+		new LLabel(id, Vocab.instance.SKILL);
 		
 		Text txtID = new Text(id, SWT.BORDER | SWT.READ_ONLY);
 		txtID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -104,8 +102,7 @@ public class ClassTab extends DatabaseTab {
 		btnID.setNameText(txtID);
 		nodeEditor.addControl(btnID, "id");
 		
-		Label lblLevel = new Label(nodeEditor, SWT.NONE);
-		lblLevel.setText(Vocab.instance.MINLEVEL);
+		new LLabel(nodeEditor, Vocab.instance.MINLEVEL);
 		
 		LSpinner spnLevel = new LSpinner(nodeEditor, SWT.NONE);
 		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

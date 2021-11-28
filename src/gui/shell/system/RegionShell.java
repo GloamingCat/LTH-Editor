@@ -10,9 +10,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import lwt.dataestructure.LDataTree;
+import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -31,15 +31,13 @@ public class RegionShell extends ObjectShell<Region> {
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(contentEditor, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME);
 		
 		LText txtName = new LText(contentEditor, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		
-		Label lblColor = new Label(contentEditor, SWT.NONE);
-		lblColor.setText(Vocab.instance.COLOR);
+		new LLabel(contentEditor, Vocab.instance.COLOR);
 		
 		Composite color = new Composite(contentEditor, SWT.NONE);
 		color.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -48,12 +46,12 @@ public class RegionShell extends ObjectShell<Region> {
 		gl_color.marginWidth = 0;
 		color.setLayout(gl_color);
 		
-		Label imgColor = new Label(color, SWT.NONE);
+		Composite imgColor = new Composite(color, SWT.NONE);
 		imgColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		imgColor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ColorButton btnColor = new ColorButton(color, SWT.NONE);
-		btnColor.setLabel(imgColor);
+		btnColor.setColorWidget(imgColor);
 		addControl(btnColor, "rgb");
 		
 		Group grpTroops = new Group(contentEditor, SWT.NONE);

@@ -6,10 +6,10 @@ import gui.shell.ObjectShell;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Skill.SkillStatus;
+import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,8 +28,7 @@ public class SkillStatusShell extends ObjectShell<SkillStatus> {
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		Label lblRate = new Label(contentEditor, SWT.NONE);
-		lblRate.setText(Vocab.instance.SUCCESSRATE);
+		new LLabel(contentEditor, Vocab.instance.SUCCESSRATE);
 		
 		LText txtRate = new LText(contentEditor, SWT.NONE);
 		txtRate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

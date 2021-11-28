@@ -9,6 +9,7 @@ import lwt.widget.LCheckButton;
 import lwt.widget.LCombo;
 import lwt.widget.LDescriptor;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import gui.Vocab;
@@ -30,7 +31,6 @@ import data.field.Transition;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Group;
@@ -54,30 +54,26 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		grpGeneral.setText("General");
 		grpGeneral.setLayout(new GridLayout(3, false));
 		
-		Label lblName = new Label(grpGeneral, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
 		LText txtName = new LText(grpGeneral, SWT.NONE);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtName, "name");
 		
-		Label lblPersistent = new Label(grpGeneral, SWT.NONE);
-		lblPersistent.setText(Vocab.instance.PERSISTENT);
+		new LLabel(grpGeneral, Vocab.instance.PERSISTENT);
 		
 		LCheckButton btnPersistent = new LCheckButton(grpGeneral);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(btnPersistent, "persistent");
 		
-		Label lblDefaultRegions = new Label(grpGeneral, SWT.NONE);
-		lblDefaultRegions.setText(Vocab.instance.DEFAULTREGION);
+		new LLabel(grpGeneral, Vocab.instance.DEFAULTREGION);
 		
 		LCombo cmbRegion = new LCombo(grpGeneral);
 		cmbRegion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		cmbRegion.setItems(Project.current.regions.getData());
 		addControl(cmbRegion, "defaultRegion");
 		
-		Label lblMaxHeight = new Label(grpGeneral, SWT.NONE);
-		lblMaxHeight.setText(Vocab.instance.MAXHEIGHT);
+		new LLabel(grpGeneral, Vocab.instance.MAXHEIGHT);
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.NONE);
 		spnHeight.setMinimum(0);
@@ -85,8 +81,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(spnHeight, "maxHeight");
 		
-		Label lblBGM = new Label(grpGeneral, SWT.NONE);
-		lblBGM.setText(Vocab.instance.BGM);
+		new LLabel(grpGeneral, Vocab.instance.BGM);
 		
 		LDescriptor txtBGM = new LDescriptor(grpGeneral);
 		txtBGM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -95,8 +90,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		btnBGM.setDescriptor(txtBGM);
 		addControl(btnBGM, "bgm");
 		
-		Label lblScript = new Label(grpGeneral, SWT.NONE);
-		lblScript.setText(Vocab.instance.ONLOAD);
+		new LLabel(grpGeneral, Vocab.instance.ONLOAD);
 		
 		Text txtScript = new Text(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -151,8 +145,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Destination
 		
-		Label lblDest = new Label(transitionEditor, SWT.NONE);
-		lblDest.setText(Vocab.instance.DESTINATION);
+		new LLabel(transitionEditor, Vocab.instance.DESTINATION);
 		
 		Text txtDest = new Text(transitionEditor, SWT.BORDER | SWT.READ_ONLY);
 		txtDest.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -163,8 +156,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Start
 		
-		Label lblStart = new Label(transitionEditor, SWT.NONE);
-		lblStart.setText(Vocab.instance.ORIGSTART);
+		new LLabel(transitionEditor, Vocab.instance.ORIGSTART);
 		
 		Text txtStart = new Text(transitionEditor, SWT.BORDER | SWT.READ_ONLY);
 		txtStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -175,8 +167,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// End
 		
-		Label lblEnd = new Label(transitionEditor, SWT.NONE);
-		lblEnd.setText(Vocab.instance.ORIGEND);
+		new LLabel(transitionEditor, Vocab.instance.ORIGEND);
 		
 		Text txtEnd = new Text(transitionEditor, SWT.BORDER | SWT.READ_ONLY);
 		txtEnd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -187,15 +178,14 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Fade
 		
-		Label lblFade = new Label(transitionEditor, SWT.NONE);
-		lblFade.setText(Vocab.instance.FADEOUT);
+		new LLabel(transitionEditor, Vocab.instance.FADEOUT);
 		
 		LSpinner spnFade = new LSpinner(transitionEditor);
 		spnFade.setMinimum(-1);
 		spnFade.setMaximum(99999);
 		spnFade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		transitionEditor.addControl(spnFade, "fade");
-		new Label(transitionEditor, SWT.NONE);
+		new LLabel(transitionEditor, 1);
 		
 		pack();
 		

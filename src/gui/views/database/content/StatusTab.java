@@ -17,6 +17,7 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
@@ -26,7 +27,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -48,8 +48,7 @@ public class StatusTab extends DatabaseTab {
 		
 		// Script
 		
-		Label lblScript = new Label(grpGeneral, SWT.NONE);
-		lblScript.setText(Vocab.instance.SCRIPT);
+		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		
 		Composite compositeScript = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeScript = new GridLayout(2, false);
@@ -67,8 +66,7 @@ public class StatusTab extends DatabaseTab {
 		
 		// Icon
 		
-		Label lblIcon = new Label(grpGeneral, SWT.NONE);
-		lblIcon.setText(Vocab.instance.ICON);
+		new LLabel(grpGeneral, Vocab.instance.ICON);
 		
 		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeIcon = new GridLayout(2, false);
@@ -91,8 +89,7 @@ public class StatusTab extends DatabaseTab {
 		
 		// General
 		
-		Label lblPrioriy = new Label(grpGeneral, SWT.NONE);
-		lblPrioriy.setText(Vocab.instance.PRIORITY);
+		new LLabel(grpGeneral, Vocab.instance.PRIORITY);
 		
 		Composite compositeVisible = new Composite(grpGeneral, SWT.NONE);
 		GridLayout gl_compositeVisible = new GridLayout(2, false);
@@ -133,9 +130,7 @@ public class StatusTab extends DatabaseTab {
 		
 		// Behavior Script
 		
-		Label lblBehavior = new Label(grpGeneral, SWT.NONE);
-		lblBehavior.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblBehavior.setText(Vocab.instance.BEHAVIOR);
+		new LLabel(grpGeneral, Vocab.instance.BEHAVIOR).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpGeneral, SWT.NONE);
 		GridData gd_lstRules = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -158,8 +153,7 @@ public class StatusTab extends DatabaseTab {
 		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpGraphics.setText(Vocab.instance.GRAPHICS);
 		
-		Label lblCharAnim = new Label(grpGraphics, SWT.NONE);
-		lblCharAnim.setText(Vocab.instance.CHARANIM);
+		new LLabel(grpGraphics, Vocab.instance.CHARANIM);
 		
 		LText txtCharAnim = new LText(grpGraphics, SWT.NONE);
 		txtCharAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -190,15 +184,13 @@ public class StatusTab extends DatabaseTab {
 		gd_grpDrain.widthHint = 215;
 		grpDrain.setLayoutData(gd_grpDrain);
 		
-		Label lblDrainAtt = new Label(grpDrain, SWT.NONE);
-		lblDrainAtt.setText(Vocab.instance.DRAINATT);
+		new LLabel(grpDrain, Vocab.instance.DRAINATT);
 		
 		LText txtDrainAtt = new LText(grpDrain, SWT.NONE);
 		txtDrainAtt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtDrainAtt, "drainAtt");
 		
-		Label lblDrain = new Label(grpDrain, SWT.NONE);
-		lblDrain.setText(Vocab.instance.DRAINVALUE);
+		new LLabel(grpDrain, Vocab.instance.DRAINVALUE);
 		
 		LSpinner spnDrain = new LSpinner(grpDrain, SWT.NONE);
 		spnDrain.setMaximum(999999);
@@ -219,8 +211,7 @@ public class StatusTab extends DatabaseTab {
 		grpDurability.setLayout(new GridLayout(3, false));
 		grpDurability.setText(Vocab.instance.DURABILITY);
 		
-		Label lblTurns = new Label(grpDurability, SWT.NONE);
-		lblTurns.setText(Vocab.instance.TURNS);
+		new LLabel(grpDurability, Vocab.instance.TURNS);
 		
 		LSpinner spnTurns = new LSpinner(grpDurability, SWT.NONE);
 		spnTurns.setMaximum(999999);

@@ -1,6 +1,8 @@
 package gui.shell.system;
 
+import gui.Vocab;
 import gui.shell.FileShell;
+import lwt.widget.LLabel;
 
 import java.io.File;
 
@@ -14,7 +16,6 @@ import project.Project;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
 import data.subcontent.FontData;
@@ -33,15 +34,13 @@ public class FontShell extends FileShell<FontData> {
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Label lblSize = new Label(composite, SWT.NONE);
-		lblSize.setText("Size");
+		new LLabel(composite, Vocab.instance.SIZE);
 		
 		spnSize = new Spinner(composite, SWT.BORDER);
 		spnSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblFormat = new Label(composite, SWT.NONE);
-		lblFormat.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblFormat.setText("Format");
+		new LLabel(composite, Vocab.instance.FORMAT);
+		//lblFormat.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		txtFormat = new Text(composite, SWT.BORDER);
 		txtFormat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

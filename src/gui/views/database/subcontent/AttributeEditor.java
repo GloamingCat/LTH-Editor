@@ -9,7 +9,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 
 import data.config.Attribute;
 import project.Project;
@@ -17,6 +16,7 @@ import lwt.dataestructure.LDataList;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 public class AttributeEditor extends LObjectEditor {
@@ -79,7 +79,7 @@ public class AttributeEditor extends LObjectEditor {
 		ArrayList<Object> attributes = Project.current.attributes.getList();
 		// Add spinners for exceeding attributes
 		for(int i = controls.length / 2; i < attributes.size(); i ++) {
-			Label label = new Label(content, SWT.NONE);
+			LLabel label = new LLabel(content, "");
 			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 			createSpinner(i);
 		}
@@ -92,7 +92,7 @@ public class AttributeEditor extends LObjectEditor {
 		spinners.clear();
 		for (int i = 0; i < attributes.size(); i++)	{
 			Attribute att = (Attribute) attributes.get(i);
-			Label label = (Label) controls[i * 2];
+			LLabel label = (LLabel) controls[i * 2];
 			label.setText(att.shortName);
 			LSpinner spinner = (LSpinner) controls[i * 2 + 1];
 			spinners.add(spinner);

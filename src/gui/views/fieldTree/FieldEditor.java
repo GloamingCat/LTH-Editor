@@ -2,6 +2,7 @@ package gui.views.fieldTree;
 
 import gui.helper.TilePainter;
 import lwt.editor.LObjectEditor;
+import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -11,7 +12,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 import project.Project;
 import data.field.CharTile;
@@ -26,7 +26,8 @@ public class FieldEditor extends LObjectEditor {
 	public static FieldEditor instance;
 	public EditableFieldCanvas canvas;
 	
-	private Label tileCoord;
+	private LLabel tileCoord;
+	private LLabel lblID;
 	private ScrolledComposite scrolledComposite;
 		
 	/**
@@ -42,8 +43,7 @@ public class FieldEditor extends LObjectEditor {
 		FieldToolBar toolBar = new FieldToolBar(this, SWT.NONE);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblID = new Label(this, SWT.NONE);
-		lblID.setText("ID: 9999");
+		lblID = new LLabel(this, "ID: 9999");
 		
 		scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -80,8 +80,7 @@ public class FieldEditor extends LObjectEditor {
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		bottom.setLayout(new GridLayout(2, false));
 		
-		tileCoord = new Label(bottom, SWT.NONE);
-		tileCoord.setText("(-99, -99, -99)");
+		tileCoord = new LLabel(bottom, "(-99, -99, -99)");
 		
 		Composite scale = new Composite(bottom, SWT.NONE);
 		GridLayout gl_scale = new GridLayout(3, true);

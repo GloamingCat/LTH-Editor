@@ -12,6 +12,7 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckButton;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
@@ -20,7 +21,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -48,8 +48,7 @@ public class TerrainTab extends DatabaseTab {
 		
 		// General
 		
-		Label lblMoveCost = new Label(grpGeneral, SWT.NONE);
-		lblMoveCost.setText(Vocab.instance.MOVECOST);
+		new LLabel(grpGeneral, Vocab.instance.MOVECOST);
 		
 		Composite moveCost = new Composite(grpGeneral, SWT.NONE);
 		moveCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

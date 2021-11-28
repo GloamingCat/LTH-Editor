@@ -6,8 +6,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import lwt.dialog.LObjectShell;
+import lwt.widget.LLabel;
 
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -23,8 +23,7 @@ public class NameShell extends LObjectShell<String> {
 		
 		content.setLayout(new GridLayout(2, false));
 		
-		Label lblName = new Label(content, SWT.NONE);
-		lblName.setText(Vocab.instance.NAME);
+		new LLabel(content, Vocab.instance.NAME);
 		
 		txtName = new Text(content, SWT.BORDER);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

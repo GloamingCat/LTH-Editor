@@ -18,6 +18,7 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -27,7 +28,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -44,8 +44,7 @@ public class CharacterTab extends DatabaseTab {
 	public CharacterTab(Composite parent) {
 		super(parent);
 		
-		Label lblBattler = new Label(grpGeneral, SWT.NONE);
-		lblBattler.setText(Vocab.instance.CHARBATTLER);
+		new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
 		
 		Composite battler = new Composite(grpGeneral, SWT.NONE);
 		battler.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -66,8 +65,7 @@ public class CharacterTab extends DatabaseTab {
 		btnBattler.setNameText(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
-		Label lblShadow = new Label(grpGeneral, SWT.NONE);
-		lblShadow.setText(Vocab.instance.SHADOW);
+		new LLabel(grpGeneral, Vocab.instance.SHADOW);
 		
 		Composite shadow = new Composite(grpGeneral, SWT.NONE);
 		shadow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
