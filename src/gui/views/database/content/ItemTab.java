@@ -13,7 +13,7 @@ import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
 import lwt.dataestructure.LDataTree;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -93,7 +93,7 @@ public class ItemTab extends DatabaseTab {
 		spnPrice.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnPrice, "price");
 		
-		LCheckButton btnSellable = new LCheckButton(price, SWT.NONE);
+		LCheckBox btnSellable = new LCheckBox(price, SWT.NONE);
 		btnSellable.setText(Vocab.instance.SELLABLE);
 		GridLayout gl_right = new GridLayout(1, false);
 		gl_right.marginWidth = 0;
@@ -114,7 +114,7 @@ public class ItemTab extends DatabaseTab {
 		txtSlot.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtSlot, "slot");
 		
-		LCheckButton btnAllSlots = new LCheckButton(grpEquip, SWT.NONE);
+		LCheckBox btnAllSlots = new LCheckBox(grpEquip, SWT.NONE);
 		btnAllSlots.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnAllSlots.setText(Vocab.instance.ALLSLOTS);
 		addControl(btnAllSlots, "allSlots");
@@ -173,11 +173,11 @@ public class ItemTab extends DatabaseTab {
 		checkButtons.setLayout(new FillLayout(SWT.HORIZONTAL));
 		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
 		
-		LCheckButton btnConsume = new LCheckButton(checkButtons, SWT.NONE);
+		LCheckBox btnConsume = new LCheckBox(checkButtons, SWT.NONE);
 		btnConsume.setText(Vocab.instance.CONSUME);
 		addControl(btnConsume, "consume");
 		
-		LCheckButton btnNeedsUser = new LCheckButton(checkButtons, SWT.NONE);
+		LCheckBox btnNeedsUser = new LCheckBox(checkButtons, SWT.NONE);
 		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
 		addControl(btnNeedsUser, "needsUser");
 		

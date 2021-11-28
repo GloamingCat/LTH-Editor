@@ -6,7 +6,7 @@ import gui.shell.ObjectShell;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Item.EquipStatus;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LNodeSelector;
 
 import org.eclipse.swt.SWT;
@@ -29,7 +29,7 @@ public class EquipStatusShell extends ObjectShell<EquipStatus> {
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "id");
 		
-		LCheckButton btnBattle = new LCheckButton(contentEditor);
+		LCheckBox btnBattle = new LCheckBox(contentEditor);
 		btnBattle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnBattle.setText(Vocab.instance.ADDONBATTLE);
 		addControl(btnBattle, "battle");

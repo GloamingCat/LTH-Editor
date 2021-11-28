@@ -6,7 +6,7 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -55,29 +55,29 @@ public class ScriptShell extends ObjectShell<Script> {
 		options.setLayout(new GridLayout(3, false));
 		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		LCheckButton btnGlobal = new LCheckButton(options);
+		LCheckBox btnGlobal = new LCheckBox(options);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
 		addControl(btnGlobal, "global");
 		
-		LCheckButton btnWait = new LCheckButton(options);
+		LCheckBox btnWait = new LCheckBox(options);
 		btnWait.setText(Vocab.instance.WAIT);
 		addControl(btnWait, "wait");
 		
-		LCheckButton btnBlock = new LCheckButton(options);
+		LCheckBox btnBlock = new LCheckBox(options);
 		btnBlock.setText(Vocab.instance.BLOCKPLAYER);
 		addControl(btnBlock, "block");
 		
-		LCheckButton btnLoad = new LCheckButton(options);
+		LCheckBox btnLoad = new LCheckBox(options);
 		btnLoad.setText(Vocab.instance.ONLOAD);
 		addControl(btnLoad, "onLoad");
 		btnLoad.setEnabled((style & 2) != 0);
 	
-		LCheckButton btnCollide = new LCheckButton(options);
+		LCheckBox btnCollide = new LCheckBox(options);
 		btnCollide.setText(Vocab.instance.ONCOLLIDE);
 		addControl(btnCollide, "onCollide");
 		btnCollide.setEnabled((style & 4) != 0);
 		
-		LCheckButton btnInteract = new LCheckButton(options);
+		LCheckBox btnInteract = new LCheckBox(options);
 		btnInteract.setText(Vocab.instance.ONINTERACT);
 		addControl(btnInteract, "onInteract");
 		btnInteract.setEnabled((style & 8) != 0);

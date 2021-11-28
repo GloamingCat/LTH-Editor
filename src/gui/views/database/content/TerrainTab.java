@@ -10,7 +10,7 @@ import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -63,7 +63,7 @@ public class TerrainTab extends DatabaseTab {
 		spnCost.setMaximum(1000);
 		addControl(spnCost, "moveCost");
 		
-		LCheckButton btnPassable = new LCheckButton(moveCost, SWT.CHECK);
+		LCheckBox btnPassable = new LCheckBox(moveCost, SWT.CHECK);
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
@@ -113,12 +113,12 @@ public class TerrainTab extends DatabaseTab {
 		btnStatus.setNameText(txtStatus);
 		addControl(btnStatus, "statusID");
 		
-		LCheckButton btnRemoveOnExit = new LCheckButton(grpStatus, SWT.NONE);
+		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus, SWT.NONE);
 		btnRemoveOnExit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
 		
-		LCheckButton btnAllMembers = new LCheckButton(grpStatus, SWT.NONE);
+		LCheckBox btnAllMembers = new LCheckBox(grpStatus, SWT.NONE);
 		btnAllMembers.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnAllMembers.setText(Vocab.instance.ALLMEMBERS);
 		addControl(btnAllMembers, "allMembers");

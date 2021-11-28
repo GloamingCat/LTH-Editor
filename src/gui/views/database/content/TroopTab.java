@@ -3,7 +3,7 @@ package gui.views.database.content;
 import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import gson.project.GObjectTreeSerializer;
@@ -53,7 +53,7 @@ public class TroopTab extends DatabaseTab {
 		// General
 		
 		new LLabel(grpGeneral, "");
-		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
+		LCheckBox btnPersistent = new LCheckBox(grpGeneral, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");

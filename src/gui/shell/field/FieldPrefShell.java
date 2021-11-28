@@ -5,7 +5,7 @@ import lwt.event.LEditEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
 import lwt.widget.LDescriptor;
 import lwt.widget.LImage;
@@ -62,7 +62,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(grpGeneral, Vocab.instance.PERSISTENT);
 		
-		LCheckButton btnPersistent = new LCheckButton(grpGeneral);
+		LCheckBox btnPersistent = new LCheckBox(grpGeneral);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(btnPersistent, "persistent");
 		

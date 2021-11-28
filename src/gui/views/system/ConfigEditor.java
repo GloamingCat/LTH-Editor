@@ -9,7 +9,7 @@ import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -258,15 +258,15 @@ public class ConfigEditor extends LView {
 		gridOptions.setLayout(new GridLayout(2, false));
 		gridOptions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
-		LCheckButton btnAllNeighbors = new LCheckButton(gridOptions, SWT.NONE);
+		LCheckBox btnAllNeighbors = new LCheckBox(gridOptions, SWT.NONE);
 		btnAllNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
 		gridEditor.addControl(btnAllNeighbors, "allNeighbors");
 
-		LCheckButton btnOverpassAllies = new LCheckButton(gridOptions, SWT.NONE);
+		LCheckBox btnOverpassAllies = new LCheckBox(gridOptions, SWT.NONE);
 		btnOverpassAllies.setText(Vocab.instance.OVERPASSALLIES);
 		gridEditor.addControl(btnOverpassAllies, "overpassAllies");
 
-		LCheckButton btnOverpassDeads = new LCheckButton(gridOptions, SWT.NONE);
+		LCheckBox btnOverpassDeads = new LCheckBox(gridOptions, SWT.NONE);
 		btnOverpassDeads.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnOverpassDeads.setText(Vocab.instance.OVERPASSDEADS);
 		gridEditor.addControl(btnOverpassDeads, "overpassDeads");
@@ -313,7 +313,7 @@ public class ConfigEditor extends LView {
 		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttJump, "attJump");
 		
-		LCheckButton btnRevive = new LCheckButton(battleEditor);
+		LCheckBox btnRevive = new LCheckBox(battleEditor);
 		btnRevive.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnRevive.setText(Vocab.instance.BATTLEENDREVIVE);
 		battleEditor.addControl(btnRevive, "battleEndRevive");

@@ -6,7 +6,7 @@ import gui.shell.ObjectShell;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Skill.Effect;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
@@ -40,11 +40,11 @@ public class SkillEffectShell extends ObjectShell<Effect> {
 		txtSuccessRate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtSuccessRate, "successRate");
 		
-		LCheckButton btnHeal = new LCheckButton(contentEditor);
+		LCheckBox btnHeal = new LCheckBox(contentEditor);
 		btnHeal.setText(Vocab.instance.HEAL);
 		addControl(btnHeal, "heal");
 		
-		LCheckButton btnAbsorb = new LCheckButton(contentEditor);
+		LCheckBox btnAbsorb = new LCheckBox(contentEditor);
 		btnAbsorb.setText(Vocab.instance.ABSORB);
 		addControl(btnAbsorb, "absorb");
 		

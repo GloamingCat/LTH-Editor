@@ -15,7 +15,7 @@ import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -104,7 +104,7 @@ public class StatusTab extends DatabaseTab {
 		spnPriority.setMaximum(200);
 		addControl(spnPriority, "priority");
 		
-		LCheckButton btnVisible = new LCheckButton(compositeVisible, SWT.NONE);
+		LCheckBox btnVisible = new LCheckBox(compositeVisible, SWT.NONE);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		addControl(btnVisible, "visible");
 		Composite options = new Composite(grpGeneral,  SWT.NONE);
@@ -113,17 +113,17 @@ public class StatusTab extends DatabaseTab {
 		gl_options.marginHeight = 0;
 		options.setLayout(gl_options);
 		
-		LCheckButton btnKO = new LCheckButton(options, SWT.NONE);
+		LCheckBox btnKO = new LCheckBox(options, SWT.NONE);
 		btnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnKO.setText(Vocab.instance.KO);
 		addControl(btnKO, "ko");
 		
-		LCheckButton btnDeactivate = new LCheckButton(options, SWT.NONE);
+		LCheckBox btnDeactivate = new LCheckBox(options, SWT.NONE);
 		btnDeactivate.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnDeactivate.setText(Vocab.instance.DEACTIVATE);
 		addControl(btnDeactivate, "deactivate");
 		
-		LCheckButton btnCumulative = new LCheckButton(options, SWT.NONE);
+		LCheckBox btnCumulative = new LCheckBox(options, SWT.NONE);
 		btnCumulative.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnCumulative.setText(Vocab.instance.CUMULATIVE);
 		addControl(btnCumulative, "cumulative");
@@ -163,7 +163,7 @@ public class StatusTab extends DatabaseTab {
 		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		addChild(transformEditor, "transform");
 		
-		LCheckButton btnOverride = new LCheckButton(grpGraphics, SWT.NONE);
+		LCheckBox btnOverride = new LCheckBox(grpGraphics, SWT.NONE);
 		btnOverride.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 2, 1));
 		btnOverride.setText(Vocab.instance.OVERRIDETRANSFORM);
 		addControl(btnOverride, "override");
@@ -198,7 +198,7 @@ public class StatusTab extends DatabaseTab {
 		spnDrain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnDrain, "drainValue");
 		
-		LCheckButton btnPercentage = new LCheckButton(grpDrain, SWT.NONE);
+		LCheckBox btnPercentage = new LCheckBox(grpDrain, SWT.NONE);
 		btnPercentage.setText(Vocab.instance.PERCENTAGE);
 		addControl(btnPercentage, "percentage");
 		
@@ -219,16 +219,16 @@ public class StatusTab extends DatabaseTab {
 		spnTurns.setMinimum(-1);
 		addControl(spnTurns, "duration");
 		
-		LCheckButton btnBattleOnly = new LCheckButton(grpDurability, SWT.NONE);
+		LCheckBox btnBattleOnly = new LCheckBox(grpDurability, SWT.NONE);
 		btnBattleOnly.setText(Vocab.instance.BATTLEONLY);
 		addControl(btnBattleOnly, "battleOnly");
 		
-		LCheckButton btnRemoveOnKO = new LCheckButton(grpDurability, SWT.NONE);
+		LCheckBox btnRemoveOnKO = new LCheckBox(grpDurability, SWT.NONE);
 		btnRemoveOnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
 		addControl(btnRemoveOnKO, "removeOnKO");
 		
-		LCheckButton btnRemoveOnDamage = new LCheckButton(grpDurability, SWT.NONE);
+		LCheckBox btnRemoveOnDamage = new LCheckBox(grpDurability, SWT.NONE);
 		btnRemoveOnDamage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
 		addControl(btnRemoveOnDamage, "removeOnDamage");

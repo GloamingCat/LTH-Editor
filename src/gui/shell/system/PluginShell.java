@@ -7,7 +7,7 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -59,7 +59,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 		TagList lstParam = new TagList(grpParameters, SWT.NONE);
 		addChild(lstParam, "tags");
 		
-		LCheckButton btnON = new LCheckButton(composite, SWT.NONE);
+		LCheckBox btnON = new LCheckBox(composite, SWT.NONE);
 		btnON.setText(Vocab.instance.PLUGINON);
 		addControl(btnON, "on");
 		

@@ -20,7 +20,7 @@ import lwt.dialog.LShellFactory;
 import lwt.editor.LComboView;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LObjectButton;
@@ -246,7 +246,7 @@ public class SkillTab extends DatabaseTab {
 		btnIndAnim.setNameText(txtIndAnim);
 		addControl(btnIndAnim, "individualAnimID");
 		
-		LCheckButton btnMirror = new LCheckButton(battleAnim, SWT.NONE);
+		LCheckBox btnMirror = new LCheckBox(battleAnim, SWT.NONE);
 		btnMirror.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
 		btnMirror.setText(Vocab.instance.MIRROR);
 		addControl(btnMirror, "mirror");
@@ -271,7 +271,7 @@ public class SkillTab extends DatabaseTab {
 		txtUserCastAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtUserCastAnim, "userCastAnim");
 		
-		LCheckButton btnStep = new LCheckButton(userAnim, SWT.NONE);
+		LCheckBox btnStep = new LCheckBox(userAnim, SWT.NONE);
 		btnStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 		btnStep.setText(Vocab.instance.STEPONCAST);
 		addControl(btnStep, "stepOnCast");
@@ -315,7 +315,7 @@ public class SkillTab extends DatabaseTab {
 		addControl(txtFinishTime, "finishTime");
 		
 		new Composite(animOptions, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		LCheckButton btnDamageAnim = new LCheckButton(animOptions, SWT.NONE);
+		LCheckBox btnDamageAnim = new LCheckBox(animOptions, SWT.NONE);
 		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
 		addControl(btnDamageAnim, "damageAnim");
@@ -342,7 +342,7 @@ public class SkillTab extends DatabaseTab {
 		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
-		LCheckButton btnWholeField = new LCheckButton(grpEffect);
+		LCheckBox btnWholeField = new LCheckBox(grpEffect);
 		btnWholeField.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		btnWholeField.setText(Vocab.instance.WHOLEFIELD);
 		addControl(btnWholeField, "wholeField");
@@ -360,7 +360,7 @@ public class SkillTab extends DatabaseTab {
 		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addMaskButton(btnCastMask, castMask, castColor);
 		
-		LCheckButton btnAutoPath = new LCheckButton(grpCast);
+		LCheckBox btnAutoPath = new LCheckBox(grpCast);
 		btnAutoPath.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		btnAutoPath.setText(Vocab.instance.AUTOPATH);
 		addControl(btnAutoPath, "autoPath");		
@@ -434,7 +434,7 @@ public class SkillTab extends DatabaseTab {
 		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstElements, "elements");
 		
-		LCheckButton btnUserElements = new LCheckButton(grpElements, SWT.NONE);
+		LCheckBox btnUserElements = new LCheckBox(grpElements, SWT.NONE);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
 		addControl(btnUserElements, "userElements");
 		

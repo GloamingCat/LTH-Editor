@@ -15,7 +15,7 @@ import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
@@ -41,8 +41,7 @@ public class BattlerTab extends DatabaseTab {
 		super(parent);
 		
 		new LLabel(grpGeneral, 1);
-		
-		LCheckButton btnPersistent = new LCheckButton(grpGeneral, SWT.NONE);
+		LCheckBox btnPersistent = new LCheckBox(grpGeneral, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");

@@ -11,7 +11,7 @@ import lwt.dataestructure.LDataTree;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
-import lwt.widget.LCheckButton;
+import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -111,7 +111,7 @@ public class CharTileEditor extends LObjectEditor {
 		
 		new LLabel(this, Vocab.instance.PERSISTENT);
 		
-		LCheckButton btnPersistent = new LCheckButton(this, SWT.NONE);
+		LCheckBox btnPersistent = new LCheckBox(this, SWT.NONE);
 		btnPersistent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		addControl(btnPersistent, "persistent");
 		
@@ -178,12 +178,12 @@ public class CharTileEditor extends LObjectEditor {
 		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		compOptions.setLayout(new GridLayout(2, true));
 
-		LCheckButton btnPassable = new LCheckButton(compOptions, SWT.NONE);
+		LCheckBox btnPassable = new LCheckBox(compOptions, SWT.NONE);
 		btnPassable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
-		LCheckButton btnVisible = new LCheckButton(compOptions, SWT.NONE);
+		LCheckBox btnVisible = new LCheckBox(compOptions, SWT.NONE);
 		btnVisible.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		addControl(btnVisible, "visible");
