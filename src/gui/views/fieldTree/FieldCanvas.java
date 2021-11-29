@@ -212,8 +212,8 @@ public class FieldCanvas extends LView {
 	
 	public void updateTileImage(int x, int y, boolean updateNeighbors) {
 		try {
-		if (tileImages[x][y] != null)
-			tileImages[x][y].dispose();
+			if (tileImages[x][y] != null)
+				tileImages[x][y].dispose();
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			return;
@@ -324,7 +324,8 @@ public class FieldCanvas extends LView {
 				int oldx = currentChar.x;
 				int oldy = currentChar.y;
 				currentChar = tile;
-				updateTileImage(oldx - 1, oldy - 1, false);
+				if (oldx <= field.sizeX && oldy <= field.sizeY)
+					updateTileImage(oldx - 1, oldy - 1, false);
 			}
 			currentChar = tile;
 			if (tile != null) {

@@ -14,7 +14,7 @@ public class Unit {
 	public int x = 1;
 	public int y = 1;
 	public LDataList<Equip> equip = new LDataList<>();
-	public int list;
+	public int list; // 0 => Current party, 1 => Backup, 2 => Hidden
 	
 	public String toString() {
 		int id = battlerID;

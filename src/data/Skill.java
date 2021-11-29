@@ -61,8 +61,8 @@ public class Skill extends Data {
 	public static class Effect {
 		
 		public String key = "hp";
-		public String basicResult = "100";
-		public String successRate = "100";
+		public String basicResult = "action:defaultPhysicalDamage(user, target, a, b)";
+		public String successRate = "action:defaultSuccessRate(user, target, a, b)";
 		public boolean heal = false;
 		public boolean absorb = false;
 		
