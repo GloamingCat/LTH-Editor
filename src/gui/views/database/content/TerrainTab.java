@@ -118,11 +118,6 @@ public class TerrainTab extends DatabaseTab {
 		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
 		
-		LCheckBox btnAllMembers = new LCheckBox(grpStatus, SWT.NONE);
-		btnAllMembers.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnAllMembers.setText(Vocab.instance.ALLMEMBERS);
-		addControl(btnAllMembers, "allMembers");
-		
 		// Audio
 		
 		Group grpAudio = new Group(right, SWT.NONE);

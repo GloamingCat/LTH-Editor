@@ -16,6 +16,5 @@ public class Terrain extends Data {
 	// Status
 	public int statusID = -1;
 	public boolean removeOnExit;
-	public boolean allMembers = false;
 	
 }
