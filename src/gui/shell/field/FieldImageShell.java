@@ -8,9 +8,7 @@ import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
+import lwt.widget.LText;
 
 import data.Animation;
 import data.field.FieldImage;
@@ -18,11 +16,12 @@ import data.field.FieldImage;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
@@ -40,7 +39,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	protected LImage image;
 	protected int col, row;
 	private ScrolledComposite scroll;
-	private Text txtName;
+	private LText txtName;
 	private Button btnVisible;
 	private Button btnForeground;
 	private Button btnGlued;
@@ -56,7 +55,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		
 		new LLabel(content, Vocab.instance.NAME);
 		
-		txtName = new Text(content, SWT.BORDER);
+		txtName = new LText(content);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		SashForm sashForm = new SashForm(content, SWT.HORIZONTAL);
@@ -132,7 +131,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	
 	public void open(FieldImage initial) {
 		super.open(initial);
-		txtName.setText(initial.name);
+		txtName.setValue(initial.name);
 		btnVisible.setSelection(initial.visible);
 		btnForeground.setSelection(initial.foreground);
 		btnGlued.setSelection(initial.glued);
@@ -153,7 +152,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	@Override
 	protected FieldImage createResult(FieldImage initial) {
 		FieldImage icon = new FieldImage();
-		icon.name = txtName.getText();
+		icon.name = txtName.getValue();
 		icon.id = tree.getValue();
 		icon.col = col;
 		icon.row = row;

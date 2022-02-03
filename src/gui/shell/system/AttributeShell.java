@@ -24,19 +24,19 @@ public class AttributeShell extends ObjectShell<Attribute> {
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);
 		
-		LText txtName = new LText(contentEditor, SWT.NONE);
+		LText txtName = new LText(contentEditor);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		addControl(txtName, "name");
 		
 		new LLabel(contentEditor, Vocab.instance.SHORTNAME);
 		
-		LText txtShortName = new LText(contentEditor, SWT.NONE);
+		LText txtShortName = new LText(contentEditor);
 		txtShortName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addControl(txtShortName, "shortName");
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 		
-		LText txtKey = new LText(contentEditor, SWT.NONE);
+		LText txtKey = new LText(contentEditor);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addControl(txtKey, "key");
 		
@@ -56,7 +56,7 @@ public class AttributeShell extends ObjectShell<Attribute> {
 		new LLabel(contentEditor, Vocab.instance.SCRIPT);
 		//lblScript.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		LTextBox txtScript = new LTextBox(contentEditor, SWT.NONE);
+		LTextBox txtScript = new LTextBox(contentEditor);
 		GridData gd_txtScript = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_txtScript.widthHint = 266;
 		gd_txtScript.minimumWidth = 192;

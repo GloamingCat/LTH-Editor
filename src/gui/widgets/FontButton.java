@@ -4,16 +4,16 @@ import gui.shell.system.FontShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import data.subcontent.FontData;
 
 public class FontButton extends LObjectButton<FontData> {
 	
-	private Text text;
+	private LText text;
 	
 	/**
 	 * Create the composite.
@@ -30,7 +30,7 @@ public class FontButton extends LObjectButton<FontData> {
 		});
 	}
 	
-	public void setPathText(Text text) {
+	public void setPathWidget(LText text) {
 		this.text = text;
 	}
 
@@ -40,13 +40,13 @@ public class FontButton extends LObjectButton<FontData> {
 			button.setEnabled(true);
 			FontData s = (FontData) value;
 			if (text != null) {
-				text.setText(s.toString());
+				text.setValue(s.toString());
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (text != null) {
-				text.setText("");
+				text.setValue("");
 			}
 			currentValue = null;
 		}

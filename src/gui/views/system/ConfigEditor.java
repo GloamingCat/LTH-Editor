@@ -21,7 +21,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
@@ -69,7 +68,7 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(editor, Vocab.instance.PROJECTNAME);
 		
-		LText txtName = new LText(editor, SWT.NONE);
+		LText txtName = new LText(editor);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		editor.addControl(txtName, "name");
 		
@@ -86,7 +85,7 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(screenEditor, Vocab.instance.COVER);
 		
-		Text txtCover = new Text(screenEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtCover = new LText(screenEditor, true);
 		txtCover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnCover = new IDButton(screenEditor, 0) {
@@ -95,7 +94,7 @@ public class ConfigEditor extends LView {
 				return Project.current.animations.getTree();
 			}
 		};
-		btnCover.setNameText(txtCover);
+		btnCover.setNameWidget(txtCover);
 		screenEditor.addControl(btnCover, "coverID");
 		
 		new LLabel(screenEditor, Vocab.instance.FPSLIMIT);
@@ -193,12 +192,12 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(playerEditor, Vocab.instance.STARTPOS);
 		
-		Text txtPos = new Text(playerEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtPos = new LText(playerEditor, true);
 		txtPos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		PositionButton btnStartPos = new PositionButton(playerEditor);
 		btnStartPos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnStartPos.setText(txtPos);
+		btnStartPos.setTextWidget(txtPos);
 		playerEditor.addControl(btnStartPos, "startPos");
 		
 		// Grid
@@ -291,25 +290,25 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(battleEditor, Vocab.instance.ATTHP);
 		
-		LText txtAttHP = new LText(battleEditor, SWT.NONE);
+		LText txtAttHP = new LText(battleEditor);
 		txtAttHP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttHP, "attHP");
 		
 		new LLabel(battleEditor, Vocab.instance.ATTSP);
 		
-		LText txtAttSP = new LText(battleEditor, SWT.NONE);
+		LText txtAttSP = new LText(battleEditor);
 		txtAttSP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttSP, "attSP");
 		
 		new LLabel(battleEditor, Vocab.instance.ATTSTEP);
 		
-		LText txtAttStep = new LText(battleEditor, SWT.NONE);
+		LText txtAttStep = new LText(battleEditor);
 		txtAttStep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttStep, "attStep");
 		
 		new LLabel(battleEditor, Vocab.instance.ATTSTEP);
 		
-		LText txtAttJump = new LText(battleEditor, SWT.NONE);
+		LText txtAttJump = new LText(battleEditor);
 		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttJump, "attJump");
 		
@@ -331,7 +330,7 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(troopEditor, Vocab.instance.INITIALTROOP);
 		
-		Text txtInitialTroop = new Text(troopEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtInitialTroop = new LText(troopEditor, true);
 		txtInitialTroop.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnInitialTroop = new IDButton(troopEditor, 0) {
@@ -340,7 +339,7 @@ public class ConfigEditor extends LView {
 				return Project.current.troops.getTree();
 			}
 		};
-		btnInitialTroop.setNameText(txtInitialTroop);
+		btnInitialTroop.setNameWidget(txtInitialTroop);
 		troopEditor.addControl(btnInitialTroop, "initialTroopID");		
 		
 		new LLabel(troopEditor, Vocab.instance.MAXMEMBERS);

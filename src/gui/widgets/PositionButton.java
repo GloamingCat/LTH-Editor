@@ -4,17 +4,17 @@ import gui.shell.PositionShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import data.subcontent.Position;
 
 public class PositionButton extends LObjectButton<Position> {
 
-	private Text text;
+	private LText text;
 	
 	/**
 	 * Create the composite.
@@ -35,7 +35,7 @@ public class PositionButton extends LObjectButton<Position> {
 		this(parent, -1);
 	}
 	
-	public void setText(Text text) {
+	public void setTextWidget(LText text) {
 		this.text = text;
 	}
 
@@ -45,13 +45,13 @@ public class PositionButton extends LObjectButton<Position> {
 			button.setEnabled(true);
 			Position s = (Position) value;
 			if (text != null) {
-				text.setText(s.toString());
+				text.setValue(s.toString());
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (text != null) {
-				text.setText("");
+				text.setValue("");
 			}
 			currentValue = null;
 		}

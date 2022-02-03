@@ -24,13 +24,13 @@ public class TagShell extends ObjectShell<Tag> {
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);
 		
-		txtKey = new LText(contentEditor, SWT.NONE);
+		txtKey = new LText(contentEditor);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, Vocab.instance.VALUE).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		txtValue = new LTextBox(contentEditor, SWT.NONE);
+		txtValue = new LTextBox(contentEditor);
 		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_txtValue.widthHint = 170;
 		gd_txtValue.heightHint = 75;

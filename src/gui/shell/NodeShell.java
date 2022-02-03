@@ -36,7 +36,7 @@ public abstract class NodeShell extends ObjectShell<Node> {
 		
 		new LLabel(name, Vocab.instance.NAME);
 		
-		LText txtName = new LText(name, SWT.NONE);
+		LText txtName = new LText(name);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addControl(txtName, "name");
 		

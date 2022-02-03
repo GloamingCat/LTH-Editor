@@ -44,7 +44,7 @@ public class LayerShell extends ObjectShell<Info> {
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
-		LText txtName = new LText(grpGeneral, SWT.NONE);
+		LText txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		

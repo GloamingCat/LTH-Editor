@@ -19,6 +19,7 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -29,7 +30,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -53,7 +53,7 @@ public class CharacterTab extends DatabaseTab {
 		gl_battler.marginWidth = 0;
 		battler.setLayout(gl_battler);
 		
-		Text txtBattler = new Text(battler, SWT.BORDER | SWT.READ_ONLY);
+		LText txtBattler = new LText(battler, true);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		IDButton btnBattler = new IDButton(battler, 1) {
@@ -62,7 +62,7 @@ public class CharacterTab extends DatabaseTab {
 				return Project.current.battlers.getTree();
 			}
 		};
-		btnBattler.setNameText(txtBattler);
+		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
 		new LLabel(grpGeneral, Vocab.instance.SHADOW);
@@ -74,7 +74,7 @@ public class CharacterTab extends DatabaseTab {
 		gl_shadow.marginWidth = 0;
 		shadow.setLayout(gl_shadow);
 		
-		Text txtShadow = new Text(shadow, SWT.BORDER | SWT.READ_ONLY);
+		LText txtShadow = new LText(shadow, true);
 		txtShadow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		IDButton btnShadow = new IDButton(shadow, 1) {
@@ -83,7 +83,7 @@ public class CharacterTab extends DatabaseTab {
 				return Project.current.animations.getTree();
 			}
 		};
-		btnShadow.setNameText(txtShadow);
+		btnShadow.setNameWidget(txtShadow);
 		addControl(btnShadow, "shadowID");
 		
 		Group grpTiles = new Group(contentEditor, SWT.NONE);

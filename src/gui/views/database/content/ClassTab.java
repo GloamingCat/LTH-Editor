@@ -20,7 +20,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 
 import data.BattleClass.Node;
 import project.Project;
@@ -52,7 +51,7 @@ public class ClassTab extends DatabaseTab {
 		
 		new LLabel(grpGeneral, Vocab.instance.EXPCURVE);
 		
-		LText txtCurve = new LText(grpGeneral, SWT.NONE);
+		LText txtCurve = new LText(grpGeneral);
 		txtCurve.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtCurve, "expCurve");
 		
@@ -90,7 +89,7 @@ public class ClassTab extends DatabaseTab {
 		
 		new LLabel(id, Vocab.instance.SKILL);
 		
-		Text txtID = new Text(id, SWT.BORDER | SWT.READ_ONLY);
+		LText txtID = new LText(id, true);
 		txtID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnID = new IDButton(id, 0) {
@@ -99,7 +98,7 @@ public class ClassTab extends DatabaseTab {
 			}
 		};
 		btnID.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnID.setNameText(txtID);
+		btnID.setNameWidget(txtID);
 		nodeEditor.addControl(btnID, "id");
 		
 		new LLabel(nodeEditor, Vocab.instance.MINLEVEL);

@@ -21,14 +21,12 @@ import gui.widgets.PositionButton;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-
 import data.Animation;
 import data.field.Field;
 import data.field.FieldImage;
 import data.field.Transition;
 
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
@@ -56,7 +54,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
-		LText txtName = new LText(grpGeneral, SWT.NONE);
+		LText txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtName, "name");
 		
@@ -92,11 +90,11 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(grpGeneral, Vocab.instance.ONLOAD);
 		
-		Text txtScript = new Text(grpGeneral, SWT.BORDER | SWT.READ_ONLY);
+		LText txtScript = new LText(grpGeneral, true);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnScript = new ScriptButton(grpGeneral, 3);
-		btnScript.setPathText(txtScript);
+		btnScript.setPathWidget(txtScript);
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");
 		
@@ -147,33 +145,33 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(transitionEditor, Vocab.instance.DESTINATION);
 		
-		Text txtDest = new Text(transitionEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtDest = new LText(transitionEditor, true);
 		txtDest.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		PositionButton btnDest = new PositionButton(transitionEditor);
-		btnDest.setText(txtDest);
+		btnDest.setTextWidget(txtDest);
 		transitionEditor.addControl(btnDest, "destination");
 		
 		// Start
 		
 		new LLabel(transitionEditor, Vocab.instance.ORIGSTART);
 		
-		Text txtStart = new Text(transitionEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtStart = new LText(transitionEditor, true);
 		txtStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		PositionButton btnStart = new PositionButton(transitionEditor, FieldSideEditor.instance.field.id);
-		btnStart.setText(txtStart);
+		btnStart.setTextWidget(txtStart);
 		transitionEditor.addControl(btnStart, "tl");
 		
 		// End
 		
 		new LLabel(transitionEditor, Vocab.instance.ORIGEND);
 		
-		Text txtEnd = new Text(transitionEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtEnd = new LText(transitionEditor, true);
 		txtEnd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		PositionButton btnEnd = new PositionButton(transitionEditor, FieldSideEditor.instance.field.id);
-		btnEnd.setText(txtEnd);
+		btnEnd.setTextWidget(txtEnd);
 		transitionEditor.addControl(btnEnd, "br");
 		
 		// Fade

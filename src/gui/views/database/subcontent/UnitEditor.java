@@ -9,7 +9,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import lwt.dataestructure.LDataTree;
@@ -31,7 +30,7 @@ public class UnitEditor extends LObjectEditor {
 		
 		new LLabel(this, Vocab.instance.KEY);
 		
-		LText txtKey = new LText(this, SWT.NONE);
+		LText txtKey = new LText(this);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
 		addControl(txtKey, "key");
 		
@@ -79,7 +78,7 @@ public class UnitEditor extends LObjectEditor {
 		
 		new LLabel(compIDs, Vocab.instance.CHARACTER);
 		
-		Text txtChar = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
+		LText txtChar = new LText(compIDs, true);
 		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnChar = new IDButton(compIDs, 0) {
@@ -88,12 +87,12 @@ public class UnitEditor extends LObjectEditor {
 				return Project.current.characters.getTree();
 			}
 		};
-		btnChar.setNameText(txtChar);
+		btnChar.setNameWidget(txtChar);
 		addControl(btnChar, "charID");
 		
 		new LLabel(compIDs, Vocab.instance.CHARBATTLER);
 		
-		Text txtBattler = new Text(compIDs, SWT.BORDER | SWT.READ_ONLY);
+		LText txtBattler = new LText(compIDs, true);
 		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnBattler = new IDButton(compIDs, 1) {
@@ -102,7 +101,7 @@ public class UnitEditor extends LObjectEditor {
 				return Project.current.battlers.getTree();
 			}
 		};
-		btnBattler.setNameText(txtBattler);
+		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
 	}

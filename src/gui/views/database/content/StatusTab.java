@@ -28,7 +28,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import data.subcontent.Rule;
 import project.Project;
@@ -57,11 +56,11 @@ public class StatusTab extends DatabaseTab {
 		compositeScript.setLayout(gl_compositeScript);
 		compositeScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Text txtScript = new Text(compositeScript, SWT.BORDER | SWT.READ_ONLY);
+		LText txtScript = new LText(compositeScript, true);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LuaButton btnSelectScript = new LuaButton(compositeScript, 1);
-		btnSelectScript.setPathText(txtScript);
+		btnSelectScript.setPathWidget(txtScript);
 		addControl(btnSelectScript, "script");
 		
 		// Icon
@@ -84,7 +83,7 @@ public class StatusTab extends DatabaseTab {
 		imgIcon.setLayoutData(gd_imgIcon);
 		
 		IconButton btnSelectIcon = new IconButton(compositeIcon, 1);
-		btnSelectIcon.setImage(imgIcon);
+		btnSelectIcon.setImageWidget(imgIcon);
 		addControl(btnSelectIcon, "icon");
 		
 		// General
@@ -155,7 +154,7 @@ public class StatusTab extends DatabaseTab {
 		
 		new LLabel(grpGraphics, Vocab.instance.CHARANIM);
 		
-		LText txtCharAnim = new LText(grpGraphics, SWT.NONE);
+		LText txtCharAnim = new LText(grpGraphics);
 		txtCharAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCharAnim, "charAnim");
 		
@@ -186,7 +185,7 @@ public class StatusTab extends DatabaseTab {
 		
 		new LLabel(grpDrain, Vocab.instance.DRAINATT);
 		
-		LText txtDrainAtt = new LText(grpDrain, SWT.NONE);
+		LText txtDrainAtt = new LText(grpDrain);
 		txtDrainAtt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtDrainAtt, "drainAtt");
 		

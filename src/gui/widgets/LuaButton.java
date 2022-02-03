@@ -4,15 +4,15 @@ import gui.shell.LuaShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 public class LuaButton extends LObjectButton<String> {
 	
-	private Text pathText;
+	private LText pathText;
 	
 	/**
 	 * Create the composite.
@@ -29,7 +29,7 @@ public class LuaButton extends LObjectButton<String> {
 		});
 	}
 	
-	public void setPathText(Text text) {
+	public void setPathWidget(LText text) {
 		pathText = text;
 	}
 
@@ -39,13 +39,13 @@ public class LuaButton extends LObjectButton<String> {
 			button.setEnabled(true);
 			String s = (String) value;
 			if (pathText != null) {
-				pathText.setText(s);
+				pathText.setValue(s);
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (pathText != null) {
-				pathText.setText("");
+				pathText.setValue("");
 			}
 			currentValue = null;
 		}

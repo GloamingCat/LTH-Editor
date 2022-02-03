@@ -74,7 +74,7 @@ public class ObstacleTab extends DatabaseTab {
 		};
 		addChild(transformEditor, "transform");
 		
-		btnGraphics.setImage(imgGraphics);
+		btnGraphics.setImageWidget(imgGraphics);
 		btnGraphics.setTransform(transformEditor);
 		transformEditor.setImage(imgGraphics);
 	

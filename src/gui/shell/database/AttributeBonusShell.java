@@ -22,7 +22,7 @@ public class AttributeBonusShell extends ObjectShell<Attribute> {
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 		
-		LText txtKey = new LText(contentEditor, SWT.NONE);
+		LText txtKey = new LText(contentEditor);
 		GridData gd_txtKey = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_txtKey.widthHint = 136;
 		txtKey.setLayoutData(gd_txtKey);

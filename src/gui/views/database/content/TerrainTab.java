@@ -14,6 +14,7 @@ import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -22,7 +23,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import data.subcontent.Audio;
 import project.Project;
@@ -102,7 +102,7 @@ public class TerrainTab extends DatabaseTab {
 		gl_status.marginWidth = 0;
 		status.setLayout(gl_status);
 			
-		Text txtStatus = new Text(status, SWT.BORDER | SWT.READ_ONLY);
+		LText txtStatus = new LText(status, true);
 		txtStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnStatus = new IDButton(status, 1) {
@@ -110,7 +110,7 @@ public class TerrainTab extends DatabaseTab {
 				return Project.current.status.getTree();
 			}
 		};
-		btnStatus.setNameText(txtStatus);
+		btnStatus.setNameWidget(txtStatus);
 		addControl(btnStatus, "statusID");
 		
 		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus, SWT.NONE);

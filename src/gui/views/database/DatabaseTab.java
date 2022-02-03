@@ -15,7 +15,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 
 import com.google.gson.Gson;
 
@@ -90,7 +89,7 @@ public abstract class DatabaseTab extends LView {
 		
 		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);
 		
-		txtName = new LText(grpGeneral, SWT.NONE);
+		txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		contentEditor.addControl(txtName, "name");
@@ -142,9 +141,9 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.addControl(view, attName);
 	}
 	
-	protected void addImageButton(ImageButton button, LImage label, Text text, String attName) {
+	protected void addImageButton(ImageButton button, LImage label, LText text, String attName) {
 		button.setLabel(label);
-		button.setNameText(text);
+		button.setNameWidget(text);
 		addControl(button, attName);
 	}
 

@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
@@ -86,19 +85,19 @@ public class SkillTab extends DatabaseTab {
 		gl_script.marginHeight = 0;
 		script.setLayout(gl_script);
 		
-		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
+		LText txtScript = new LText(script, true);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LuaButton btnScript = new LuaButton(script, 1);
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setPathText(txtScript);
+		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "script");
 		
 		// Description
 		
 		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		LTextBox txtDescription = new LTextBox(grpGeneral, SWT.NONE);
+		LTextBox txtDescription = new LTextBox(grpGeneral);
 		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addControl(txtDescription, "description");
 		
@@ -122,7 +121,7 @@ public class SkillTab extends DatabaseTab {
 		imgIcon.setLayoutData(gd_imgIcon);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, 1);
-		btnGraphics.setImage(imgIcon);
+		btnGraphics.setImageWidget(imgIcon);
 		addControl(btnGraphics, "icon");
 		
 		// Type
@@ -206,7 +205,7 @@ public class SkillTab extends DatabaseTab {
 		
 		new LLabel(battleAnim, Vocab.instance.LOAD);
 		
-		Text txtLoadAnim = new Text(battleAnim, SWT.BORDER | SWT.READ_ONLY);
+		LText txtLoadAnim = new LText(battleAnim, true);
 		txtLoadAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		IDButton btnLoadAnim = new IDButton(battleAnim, 1) {
@@ -215,12 +214,12 @@ public class SkillTab extends DatabaseTab {
 				return Project.current.animations.getTree();
 			}
 		};
-		btnLoadAnim.setNameText(txtLoadAnim);
+		btnLoadAnim.setNameWidget(txtLoadAnim);
 		addControl(btnLoadAnim, "loadAnimID");
 		
 		new LLabel(battleAnim, Vocab.instance.CAST);
 		
-		Text txtCastAnim = new Text(battleAnim, SWT.BORDER | SWT.READ_ONLY);
+		LText txtCastAnim = new LText(battleAnim, true);
 		txtCastAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		IDButton btnCastAnim = new IDButton(battleAnim, 1) {
@@ -229,12 +228,12 @@ public class SkillTab extends DatabaseTab {
 				return Project.current.animations.getTree();
 			}
 		};
-		btnCastAnim.setNameText(txtCastAnim);
+		btnCastAnim.setNameWidget(txtCastAnim);
 		addControl(btnCastAnim, "castAnimID");
 		
 		new LLabel(battleAnim, Vocab.instance.INDIVIDUAL);
 
-		Text txtIndAnim = new Text(battleAnim, SWT.BORDER | SWT.READ_ONLY);
+		LText txtIndAnim = new LText(battleAnim, true);
 		txtIndAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		IDButton btnIndAnim = new IDButton(battleAnim, 1) {
@@ -243,7 +242,7 @@ public class SkillTab extends DatabaseTab {
 				return Project.current.animations.getTree();
 			}
 		};
-		btnIndAnim.setNameText(txtIndAnim);
+		btnIndAnim.setNameWidget(txtIndAnim);
 		addControl(btnIndAnim, "individualAnimID");
 		
 		LCheckBox btnMirror = new LCheckBox(battleAnim, SWT.NONE);
@@ -261,13 +260,13 @@ public class SkillTab extends DatabaseTab {
 		
 		new LLabel(userAnim, Vocab.instance.LOAD).setBounds(0, 0, 55, 15);
 		
-		LText txtUserLoadAnim = new LText(userAnim, SWT.NONE);
+		LText txtUserLoadAnim = new LText(userAnim);
 		txtUserLoadAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtUserLoadAnim, "userLoadAnim");
 		
 		new LLabel(userAnim, Vocab.instance.CAST).setBounds(0, 0, 55, 15);
 		
-		LText txtUserCastAnim = new LText(userAnim, SWT.NONE);
+		LText txtUserCastAnim = new LText(userAnim);
 		txtUserCastAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtUserCastAnim, "userCastAnim");
 		
@@ -286,31 +285,31 @@ public class SkillTab extends DatabaseTab {
 		
 		new LLabel(animOptions, Vocab.instance.INTROTIME);
 		
-		LText txtIntroTime = new LText(animOptions, SWT.NONE);
+		LText txtIntroTime = new LText(animOptions);
 		txtIntroTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroTime, "introTime");
 		
 		new LLabel(animOptions, Vocab.instance.CASTTIME);
 		
-		LText txtCastTime = new LText(animOptions, SWT.NONE);
+		LText txtCastTime = new LText(animOptions);
 		txtCastTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCastTime, "castTime");
 		
 		new LLabel(animOptions, Vocab.instance.CENTERTIME);
 		
-		LText txtCenterTime = new LText(animOptions, SWT.NONE);
+		LText txtCenterTime = new LText(animOptions);
 		txtCenterTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCenterTime, "centerTime");
 		
 		new LLabel(animOptions, Vocab.instance.TARGETTIME);
 		
-		LText txtTargetTime = new LText(animOptions, SWT.NONE);
+		LText txtTargetTime = new LText(animOptions);
 		txtTargetTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtTargetTime, "targetTime");
 		
 		new LLabel(animOptions, Vocab.instance.FINISHTIME);
 		
-		LText txtFinishTime = new LText(animOptions, SWT.NONE);
+		LText txtFinishTime = new LText(animOptions);
 		txtFinishTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtFinishTime, "finishTime");
 		

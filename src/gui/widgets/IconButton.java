@@ -5,12 +5,12 @@ import gui.views.database.subcontent.TransformEditor;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import data.Animation;
@@ -19,7 +19,7 @@ import data.subcontent.Icon;
 public class IconButton extends LObjectButton<Icon> {
 	
 	private LImage image;
-	private Text text;
+	private LText text;
 	private TransformEditor transform;
 	
 	public IconButton(Composite parent, int style) {
@@ -32,18 +32,14 @@ public class IconButton extends LObjectButton<Icon> {
 		});
 	}
 
-	public void setImage(LImage image) {
+	public void setImageWidget(LImage image) {
 		this.image = image;
 	}
 	
 	public void setTransform(TransformEditor transform) {
 		this.transform = transform;
 	}
-	
-	public void setText(Text text) {
-		this.text = text;
-	}
-	
+
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
@@ -66,7 +62,7 @@ public class IconButton extends LObjectButton<Icon> {
 				image.setImage((Image) null);
 			}
 			if (text != null) {
-				text.setText("");
+				text.setValue("");
 			}
 			currentValue = null;
 		}

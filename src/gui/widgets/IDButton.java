@@ -6,19 +6,19 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import data.Animation;
 
 public abstract class IDButton extends LObjectButton<Integer> {
 	
-	protected Text txtName;
+	protected LText txtName;
 	protected LImage image;
 
 	/**
@@ -43,7 +43,7 @@ public abstract class IDButton extends LObjectButton<Integer> {
 	
 	public abstract LDataTree<Object> getDataTree();
 	
-	public void setNameText(Text text) {
+	public void setNameWidget(LText text) {
 		txtName = text;
 	}
 	
@@ -58,13 +58,13 @@ public abstract class IDButton extends LObjectButton<Integer> {
 			Integer id = (Integer) value;
 			if (txtName != null) {
 				if (id < 0)
-					txtName.setText("");
+					txtName.setValue("");
 				else {
 					Object obj = getDataTree().get(id);
 					if (obj != null)
-						txtName.setText(obj.toString());
+						txtName.setValue(obj.toString());
 					else 
-						txtName.setText("");
+						txtName.setValue("");
 				}
 			}
 			if (image != null) {
@@ -79,7 +79,7 @@ public abstract class IDButton extends LObjectButton<Integer> {
 		} else {
 			button.setEnabled(false);
 			if (txtName != null) {
-				txtName.setText("");
+				txtName.setValue("");
 			}
 			currentValue = null;
 		}

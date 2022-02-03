@@ -25,13 +25,13 @@ public class EquipTypeShell extends ObjectShell<EquipType> {
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);
 
-		LText txtName = new LText(contentEditor, SWT.NONE);
+		LText txtName = new LText(contentEditor);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtName, "name");
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 
-		LText txtKey = new LText(contentEditor, SWT.NONE);
+		LText txtKey = new LText(contentEditor);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtKey, "key");
 		

@@ -30,7 +30,7 @@ public class SkillStatusShell extends ObjectShell<SkillStatus> {
 		
 		new LLabel(contentEditor, Vocab.instance.SUCCESSRATE);
 		
-		LText txtRate = new LText(contentEditor, SWT.NONE);
+		LText txtRate = new LText(contentEditor);
 		txtRate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		addControl(txtRate, "rate");
 		

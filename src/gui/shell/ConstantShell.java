@@ -2,12 +2,10 @@ package gui.shell;
 
 import gui.Vocab;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-
 import lwt.LVocab;
 import lwt.dialog.LObjectShell;
 import lwt.widget.LLabel;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -16,6 +14,7 @@ import org.eclipse.swt.layout.GridLayout;
 
 import data.subcontent.Constant;
 
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,8 +26,8 @@ public class ConstantShell extends LObjectShell<Constant> {
 	
 	private JsonParser parser = new JsonParser();
 	
-	private Text txtName;
-	private Text txtValue;
+	private LText txtName;
+	private LText txtValue;
 	private Combo cmbType;
 
 	public ConstantShell(Shell parent) {
@@ -61,7 +60,7 @@ public class ConstantShell extends LObjectShell<Constant> {
 		
 		new LLabel(content, Vocab.instance.NAME);
 		
-		txtName = new Text(content, SWT.BORDER);
+		txtName = new LText(content);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		new LLabel(content, Vocab.instance.TYPE);
@@ -72,7 +71,7 @@ public class ConstantShell extends LObjectShell<Constant> {
 		
 		new LLabel(content, Vocab.instance.VALUE);
 		
-		txtValue = new Text(content, SWT.BORDER);
+		txtValue = new LText(content);
 		txtValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Button btnSelect = new Button(content, SWT.NONE);
@@ -90,17 +89,17 @@ public class ConstantShell extends LObjectShell<Constant> {
 	
 	public void open(Constant initial) {
 		super.open(initial);
-		txtName.setText(initial.name);
+		txtName.setValue(initial.name);
 		cmbType.select(initial.type);
-		txtValue.setText(initial.value.toString());
+		txtValue.setValue(initial.value.toString());
 	}
 
 	@Override
 	protected Constant createResult(Constant initial) {
 		Constant c = new Constant();
-		c.name = txtName.getText();
+		c.name = txtName.getValue();
 		c.type = cmbType.getSelectionIndex();
-		c.value = parser.parse(txtValue.getText()).getAsJsonObject();
+		c.value = parser.parse(txtValue.getValue()).getAsJsonObject();
 		return c;
 	}
 

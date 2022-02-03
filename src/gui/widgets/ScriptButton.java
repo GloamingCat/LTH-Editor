@@ -4,17 +4,17 @@ import gui.shell.ScriptShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import data.subcontent.Script;
 
 public class ScriptButton extends LObjectButton<Script> {
 	
-	private Text pathText;
+	private LText pathText;
 	
 	/**
 	 * Create the composite.
@@ -31,7 +31,7 @@ public class ScriptButton extends LObjectButton<Script> {
 		});
 	}
 	
-	public void setPathText(Text text) {
+	public void setPathWidget(LText text) {
 		pathText = text;
 	}
 
@@ -41,13 +41,13 @@ public class ScriptButton extends LObjectButton<Script> {
 			button.setEnabled(true);
 			Script s = (Script) value;
 			if (pathText != null) {
-				pathText.setText(s.name);
+				pathText.setValue(s.name);
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (pathText != null) {
-				pathText.setText("");
+				pathText.setValue("");
 			}
 			currentValue = null;
 		}

@@ -33,7 +33,7 @@ public class RegionShell extends ObjectShell<Region> {
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);
 		
-		LText txtName = new LText(contentEditor, SWT.NONE);
+		LText txtName = new LText(contentEditor);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		

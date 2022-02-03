@@ -26,7 +26,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
@@ -47,7 +46,7 @@ public class ItemTab extends DatabaseTab {
 		
 		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		LTextBox txtDescription = new LTextBox(grpGeneral, SWT.NONE);
+		LTextBox txtDescription = new LTextBox(grpGeneral);
 		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_txtDescription.minimumHeight = 48;
 		txtDescription.setLayoutData(gd_txtDescription);
@@ -73,7 +72,7 @@ public class ItemTab extends DatabaseTab {
 		imgIcon.setLayoutData(gd_imgIcon);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, 0);
-		btnGraphics.setImage(imgIcon);
+		btnGraphics.setImageWidget(imgIcon);
 		addControl(btnGraphics, "icon");
 		
 		// Price
@@ -110,7 +109,7 @@ public class ItemTab extends DatabaseTab {
 		
 		new LLabel(grpEquip, Vocab.instance.SLOT);
 		
-		LText txtSlot = new LText(grpEquip, SWT.NONE);
+		LText txtSlot = new LText(grpEquip);
 		txtSlot.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtSlot, "slot");
 		
@@ -158,7 +157,7 @@ public class ItemTab extends DatabaseTab {
 		
 		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
 	
-		Text txtSkill = new Text(grpUse, SWT.BORDER | SWT.READ_ONLY);
+		LText txtSkill = new LText(grpUse, true);
 		txtSkill.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		IDButton btnSkill = new IDButton(grpUse, 1) {
@@ -166,7 +165,7 @@ public class ItemTab extends DatabaseTab {
 				return Project.current.skills.getTree();
 			}
 		};
-		btnSkill.setNameText(txtSkill);
+		btnSkill.setNameWidget(txtSkill);
 		addControl(btnSkill, "skillID");
 		
 		Composite checkButtons = new Composite(grpUse, SWT.NONE);

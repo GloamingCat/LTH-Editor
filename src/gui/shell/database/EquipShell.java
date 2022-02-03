@@ -15,7 +15,6 @@ import lwt.widget.LText;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
@@ -29,7 +28,7 @@ public class EquipShell extends ObjectShell<Equip> {
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 
-		LText txtKey = new LText(contentEditor, SWT.NONE);
+		LText txtKey = new LText(contentEditor);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		addControl(txtKey, "key");
 		
@@ -48,7 +47,7 @@ public class EquipShell extends ObjectShell<Equip> {
 		
 		new LLabel(contentEditor, Vocab.instance.EQUIPITEM);
 		
-		Text txtItem = new Text(contentEditor, SWT.BORDER | SWT.READ_ONLY);
+		LText txtItem = new LText(contentEditor, true);
 		txtItem.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnItem = new IDButton(contentEditor, 1) {
@@ -56,7 +55,7 @@ public class EquipShell extends ObjectShell<Equip> {
 				return Project.current.items.getTree();
 			}
 		};
-		btnItem.setNameText(txtItem);
+		btnItem.setNameWidget(txtItem);
 		addControl(btnItem, "id");
 		
 		pack();

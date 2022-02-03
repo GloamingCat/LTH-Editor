@@ -104,7 +104,7 @@ public class BuildEditor extends LObjectEditor {
 	}
 	
 	private LText createText(final int i) {
-		LText text = new LText(content, SWT.NONE);
+		LText text = new LText(content);
 		text.setActionStack(getActionStack());
 		text.addModifyListener(new LControlListener<String>() {
 			@Override

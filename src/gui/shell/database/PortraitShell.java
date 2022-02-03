@@ -8,20 +8,15 @@ import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
+import lwt.widget.LText;
 
 import data.Animation;
 import data.GameCharacter.Portrait;
 
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-
 import project.Project;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
@@ -31,6 +26,9 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
 
 public class PortraitShell extends LObjectShell<Portrait> {
 	
@@ -38,7 +36,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	protected LImage image;
 	protected int col, row;
 	private ScrolledComposite scroll;
-	private Text txtName;
+	private LText txtName;
 	
 	public PortraitShell(Shell parent, int style) {
 		super(parent);
@@ -52,7 +50,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		
 		new LLabel(content, Vocab.instance.NAME);
 		
-		txtName = new Text(content, SWT.BORDER);
+		txtName = new LText(content);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		SashForm sashForm = new SashForm(content, SWT.HORIZONTAL);
@@ -113,7 +111,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	
 	public void open(Portrait initial) {
 		super.open(initial);
-		txtName.setText(initial.name);
+		txtName.setValue(initial.name);
 		if (initial.id >= 0) {
 			col = initial.col;
 			row = initial.row;
@@ -132,7 +130,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	@Override
 	protected Portrait createResult(Portrait initial) {
 		Portrait icon = new Portrait();
-		icon.name = txtName.getText();
+		icon.name = txtName.getValue();
 		icon.id = tree.getValue();
 		icon.col = col;
 		icon.row = row;

@@ -18,6 +18,7 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -26,7 +27,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 
@@ -86,7 +86,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		new LLabel(select, Vocab.instance.CLASS);
 		
-		Text txtClass = new Text(select, SWT.BORDER | SWT.READ_ONLY);
+		LText txtClass = new LText(select, true);
 		txtClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnClass = new IDButton(select, 0) {
@@ -95,14 +95,14 @@ public class BattlerTab extends DatabaseTab {
 				return Project.current.classes.getTree();
 			}
 		};
-		btnClass.setNameText(txtClass);
+		btnClass.setNameWidget(txtClass);
 		addControl(btnClass, "classID");
 		
 		// Attack Skill
 		
 		new LLabel(select, Vocab.instance.ATTACKSKILL);
 		
-		Text txtAttack = new Text(select, SWT.BORDER | SWT.READ_ONLY);
+		LText txtAttack = new LText(select, true);
 		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		IDButton btnAttack = new IDButton(select, 0) {
@@ -111,7 +111,7 @@ public class BattlerTab extends DatabaseTab {
 				return Project.current.skills.getTree();
 			}
 		};
-		btnAttack.setNameText(txtAttack);
+		btnAttack.setNameWidget(txtAttack);
 		addControl(btnAttack, "attackID");
 		
 		// AI

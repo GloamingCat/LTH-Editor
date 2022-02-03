@@ -6,6 +6,7 @@ import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.helper.TilePainter;
@@ -24,7 +25,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 
 import data.GameCharacter;
 import data.Troop;
@@ -75,11 +75,11 @@ public class TroopTab extends DatabaseTab {
 		gl_select.marginWidth = 0;
 		select.setLayout(gl_select);
 		
-		Text txtAI = new Text(select, SWT.BORDER | SWT.READ_ONLY);
+		LText txtAI = new LText(select, true);
 		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LuaButton btnAI = new LuaButton(select, 1);
-		btnAI.setPathText(txtAI);
+		btnAI.setPathWidget(txtAI);
 		addControl(btnAI, "ai");
 		
 		// Items

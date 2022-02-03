@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
@@ -60,12 +59,12 @@ public class AnimationTab extends DatabaseTab {
 		gl_script.marginHeight = 0;
 		script.setLayout(gl_script);
 		
-		Text txtScript = new Text(script, SWT.BORDER | SWT.READ_ONLY);
+		LText txtScript = new LText(script, true);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LuaButton btnScript = new LuaButton(script, 1);
 		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setPathText(txtScript);
+		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "script");
 
 		// Size
@@ -141,7 +140,7 @@ public class AnimationTab extends DatabaseTab {
 		
 		new LLabel(grpIntro, Vocab.instance.PATTERN);
 		
-		LText txtIntroPattern = new LText(grpIntro, SWT.NONE);
+		LText txtIntroPattern = new LText(grpIntro);
 		txtIntroPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroPattern, "introPattern");
 		
@@ -150,7 +149,7 @@ public class AnimationTab extends DatabaseTab {
 		
 		new LLabel(grpIntro, Vocab.instance.DURATION);
 
-		LText txtIntroDuration = new LText(grpIntro, SWT.NONE);
+		LText txtIntroDuration = new LText(grpIntro);
 		txtIntroDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroDuration, "introDuration");
 		
@@ -166,7 +165,7 @@ public class AnimationTab extends DatabaseTab {
 		
 		new LLabel(grpLoop, Vocab.instance.PATTERN);
 		
-		LText txtLoopPattern = new LText(grpLoop, SWT.NONE);
+		LText txtLoopPattern = new LText(grpLoop);
 		txtLoopPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtLoopPattern, "loopPattern");
 		
@@ -175,7 +174,7 @@ public class AnimationTab extends DatabaseTab {
 		
 		new LLabel(grpLoop, Vocab.instance.DURATION);
 
-		LText txtLoopDuration = new LText(grpLoop, SWT.NONE);
+		LText txtLoopDuration = new LText(grpLoop);
 		txtLoopDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtLoopDuration, "loopDuration");
 		

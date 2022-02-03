@@ -10,7 +10,6 @@ import lwt.widget.LObjectButton;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import project.Project;
 import data.subcontent.Quad;
@@ -18,7 +17,6 @@ import data.subcontent.Quad;
 public class QuadButton extends LObjectButton<Quad> {
 	
 	private LImage image;
-	private Text text;
 	private TransformEditor transform;
 	
 	public QuadButton(Composite parent, int style) {
@@ -29,10 +27,6 @@ public class QuadButton extends LObjectButton<Quad> {
 				return new QuadShell(parent, style);
 			}
 		});
-	}
-	
-	public void setText(Text text) {
-		this.text = text;
 	}
 
 	public void setImage(LImage image) {
@@ -58,17 +52,11 @@ public class QuadButton extends LObjectButton<Quad> {
 					image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
 				}
 			}
-			if (text != null) {
-				text.setText(s.path);
-			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (image != null) {
 				image.setImage((Image) null);
-			}
-			if (text != null) {
-				text.setText("");
 			}
 			currentValue = null;
 		}
