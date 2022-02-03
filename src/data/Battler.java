@@ -9,7 +9,7 @@ public class Battler extends Data {
 
 	public boolean persistent = false;
 	public LDataList<Rule> ai = new LDataList<>();
-	public int classID = 0;
+	public int jobID = 0;
 	public int attackID = 0;
 	public int level = 0;
 	public int money = 0;

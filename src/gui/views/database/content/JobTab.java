@@ -21,12 +21,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-import data.BattleClass.Node;
+import data.Job.Node;
 import project.Project;
 
-public class ClassTab extends DatabaseTab {
+public class JobTab extends DatabaseTab {
 
-	public ClassTab(Composite parent) {
+	public JobTab(Composite parent) {
 		super(parent);
 
 		Composite right = new Composite(contentEditor, SWT.NONE);
@@ -134,7 +134,7 @@ public class ClassTab extends DatabaseTab {
 
 	@Override
 	protected GObjectTreeSerializer getSerializer() {
-		return Project.current.classes;
+		return Project.current.jobs;
 	}
 
 

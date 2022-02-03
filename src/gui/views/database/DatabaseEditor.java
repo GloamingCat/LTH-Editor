@@ -37,8 +37,8 @@ public class DatabaseEditor extends LViewFolder {
 		TroopTab troopTab = new TroopTab(tabFolder);
 		addTab(Vocab.instance.TROOPS, troopTab);
 		
-		ClassTab classesTab = new ClassTab(tabFolder);
-		addTab(Vocab.instance.CLASSES, classesTab);
+		JobTab jobTab = new JobTab(tabFolder);
+		addTab(Vocab.instance.JOBS, jobTab);
 		
 		CharacterTab characterTab = new CharacterTab(tabFolder);
 		addTab(Vocab.instance.CHARACTERS, characterTab);

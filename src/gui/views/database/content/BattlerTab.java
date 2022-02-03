@@ -82,21 +82,21 @@ public class BattlerTab extends DatabaseTab {
 		gl_select.marginHeight = 0;
 		select.setLayout(gl_select);
 		
-		// Class
+		// Job
 		
-		new LLabel(select, Vocab.instance.CLASS);
+		new LLabel(select, Vocab.instance.JOB);
 		
-		LText txtClass = new LText(select, true);
-		txtClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		LText txtJob = new LText(select, true);
+		txtJob.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnClass = new IDButton(select, 0) {
+		IDButton btnJob = new IDButton(select, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
-				return Project.current.classes.getTree();
+				return Project.current.jobs.getTree();
 			}
 		};
-		btnClass.setNameWidget(txtClass);
-		addControl(btnClass, "classID");
+		btnJob.setNameWidget(txtJob);
+		addControl(btnJob, "jobID");
 		
 		// Attack Skill
 		

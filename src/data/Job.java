@@ -4,7 +4,7 @@ import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
 import project.Project;
 
-public class BattleClass extends Data {
+public class Job extends Data {
 
 	public LDataList<String> build = new LDataList<>();
 	public String expCurve = "(100 + math.round(lvl / 5)) * lvl";

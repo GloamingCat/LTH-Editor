@@ -14,7 +14,7 @@ public class Vocab {
 	public String ANIMATIONS = "Animations";
 	public String BATTLERS = "Battlers";
 	public String CHARACTERS = "Characters";
-	public String CLASSES = "Classes";
+	public String JOBS = "Classes";
 	public String ITEMS = "Items";
 	public String SCRIPTS = "Scripts";
 	public String SKILLS = "Skills";
@@ -162,7 +162,7 @@ public class Vocab {
 	public String ELEMENTBUFF = "Damage Multipler";
 	
 	// Battler
-	public String CLASS = "Class";
+	public String JOB = "Job";
 	public String ATTACKSKILL = "Attack Skill";
 	public String PERSISTENT = "Persistent";
 	public String AI = "AI";
