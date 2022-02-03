@@ -11,6 +11,9 @@ import gui.widgets.QuadButton;
 import gui.widgets.SimpleEditableList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
+import lwt.widget.LActionButton;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -19,16 +22,12 @@ import lwt.widget.LText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
-
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
 import data.subcontent.Audio;
 
@@ -144,8 +143,7 @@ public class AnimationTab extends DatabaseTab {
 		txtIntroPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroPattern, "introPattern");
 		
-		Button btnIntroPattern = new Button(grpIntro, SWT.NONE);
-		btnIntroPattern.setText(Vocab.instance.DEFAULT);
+		LActionButton btnIntroPattern = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
 		
 		new LLabel(grpIntro, Vocab.instance.DURATION);
 
@@ -153,8 +151,7 @@ public class AnimationTab extends DatabaseTab {
 		txtIntroDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroDuration, "introDuration");
 		
-		Button btnIntroDuration = new Button(grpIntro, SWT.NONE);
-		btnIntroDuration.setText(Vocab.instance.DEFAULT);
+		LActionButton btnIntroDuration = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
 		
 		// Loop
 		
@@ -169,8 +166,7 @@ public class AnimationTab extends DatabaseTab {
 		txtLoopPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtLoopPattern, "loopPattern");
 		
-		Button btnLoopPattern = new Button(grpLoop, SWT.NONE);
-		btnLoopPattern.setText(Vocab.instance.DEFAULT);
+		LActionButton btnLoopPattern = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
 		new LLabel(grpLoop, Vocab.instance.DURATION);
 
@@ -178,8 +174,7 @@ public class AnimationTab extends DatabaseTab {
 		txtLoopDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtLoopDuration, "loopDuration");
 		
-		Button btnLoopDuration = new Button(grpLoop, SWT.NONE);
-		btnLoopDuration.setText(Vocab.instance.DEFAULT);
+		LActionButton btnLoopDuration = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
 		// Audio
 		
@@ -220,10 +215,10 @@ public class AnimationTab extends DatabaseTab {
 		
 	}
 	
-	private void addPatternListener(Button button, LText text) {
-		button.addSelectionListener(new SelectionAdapter() {
+	private void addPatternListener(LActionButton button, LText text) {
+		button.addModifyListener(new LControlListener<Object>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void onModify(LControlEvent<Object> e) {
 				int cols = spnCols.getValue();
 				String s = "1";
 				for (int i = 2; i <= cols; i++) {
@@ -234,10 +229,10 @@ public class AnimationTab extends DatabaseTab {
 		});
 	}
 	
-	private void addDurationListener(Button button, LText text) {
-		button.addSelectionListener(new SelectionAdapter() {
+	private void addDurationListener(LActionButton button, LText text) {
+		button.addModifyListener(new LControlListener<Object>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void onModify(LControlEvent<Object> e) {
 				if (text.getValue().isEmpty())
 					return;
 				String[] times = text.getValue().split("\\s+");

@@ -10,8 +10,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import lwt.dialog.LObjectShell;
+import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
+import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LActionButton;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 
@@ -22,8 +25,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Shell;
@@ -37,7 +38,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 
 public class QuadShell extends LObjectShell<Quad> {
 
@@ -107,11 +107,22 @@ public class QuadShell extends LObjectShell<Quad> {
 		spnHeight.setMinimum(1);
 		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Button btnFullImage = new Button(quad, SWT.NONE);
+		LActionButton btnFullImage = new LActionButton(quad, Vocab.instance.FULLIMAGE);
 		GridLayout gl_composite_2 = new GridLayout(2, false);
 		gl_composite_2.marginWidth = 0;
 		gl_composite_2.marginHeight = 0;
 		btnFullImage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		btnFullImage.addModifyListener(new LControlListener<Object>() {
+			@Override
+			public void onModify(LControlEvent<Object> e) {
+				Rectangle rect = imgQuad.getImage().getBounds();
+				spnX.setSelection(0);
+				spnY.setSelection(0);
+				spnWidth.setSelection(rect.width);
+				spnHeight.setSelection(rect.height);
+				imgQuad.redraw();
+			}
+		});
 		
 		imgQuad.addPaintListener(new PaintListener() {
 			@Override
@@ -126,19 +137,6 @@ public class QuadShell extends LObjectShell<Quad> {
 				e.gc.drawLine(x2, y1, x2, y2);
 			}
 		});
-		
-		btnFullImage.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				Rectangle rect = imgQuad.getImage().getBounds();
-				spnX.setSelection(0);
-				spnY.setSelection(0);
-				spnWidth.setSelection(rect.width);
-				spnHeight.setSelection(rect.height);
-				imgQuad.redraw();
-			}
-		});
-		btnFullImage.setText(Vocab.instance.FULLIMAGE);
 
 		selFile.addSelectionListener(new LSelectionListener() {
 			@Override

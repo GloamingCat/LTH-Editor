@@ -2,15 +2,15 @@ package gui.views.fieldTree;
 
 import gui.helper.TilePainter;
 import lwt.editor.LObjectEditor;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
+import lwt.widget.LActionButton;
 import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import project.Project;
@@ -89,38 +89,35 @@ public class FieldEditor extends LObjectEditor {
 		scale.setLayout(gl_scale);
 		scale.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		
-		Button btn50 = new Button(scale, SWT.NONE);
+		LActionButton btn50 = new LActionButton(scale, "1:2");
 		btn50.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btn50.addSelectionListener(new SelectionAdapter() {
+		btn50.addModifyListener(new LControlListener<Object>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void onModify(LControlEvent<Object> event) {
 				canvas.rescale(0.5f);
 				scrolledComposite.setMinSize(canvas.getSize());
 			}
 		});
-		btn50.setText("1:2");
-		
-		Button btn100 = new Button(scale, SWT.NONE);
+
+		LActionButton btn100 = new LActionButton(scale, "1:1");
 		btn100.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btn100.addSelectionListener(new SelectionAdapter() {
+		btn100.addModifyListener(new LControlListener<Object>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void onModify(LControlEvent<Object> event) {
 				canvas.rescale(1);
 				scrolledComposite.setMinSize(canvas.getSize());
 			}
 		});
-		btn100.setText("1:1");
 		
-		Button btn200 = new Button(scale, SWT.NONE);
+		LActionButton btn200 = new LActionButton(scale, "2:1");
 		btn200.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btn200.addSelectionListener(new SelectionAdapter() {
+		btn200.addModifyListener(new LControlListener<Object>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void onModify(LControlEvent<Object> event) {
 				canvas.rescale(2);
 				scrolledComposite.setMinSize(canvas.getSize());
 			}
 		});
-		btn200.setText("2:1");
 		
 	}
 	

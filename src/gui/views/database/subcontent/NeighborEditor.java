@@ -3,19 +3,18 @@ package gui.views.database.subcontent;
 import gui.Vocab;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import lwt.editor.LObjectEditor;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
+import lwt.widget.LActionButton;
 import lwt.widget.LLabel;
 import lwt.widget.LToggleButton;
-
-import org.eclipse.swt.events.SelectionEvent;
 
 public class NeighborEditor extends LObjectEditor {
 
@@ -30,15 +29,13 @@ public class NeighborEditor extends LObjectEditor {
 		group.setText(Vocab.instance.NEIGHBORS);
 		group.setLayout(new GridLayout(2, false));
 		
-		Button btnNone = new Button(group, SWT.NONE);
+		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
 		btnNone.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnNone.setText(Vocab.instance.NONE);
-		btnNone.addSelectionListener(allAction(false));
+		btnNone.addModifyListener(allAction(false));
 		
-		Button btnAll = new Button(group, SWT.NONE);
+		LActionButton btnAll = new LActionButton(group, Vocab.instance.ALL);
 		btnAll.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnAll.setText(Vocab.instance.ALL);
-		btnAll.addSelectionListener(allAction(true));
+		btnAll.addModifyListener(allAction(true));
 		
 		Composite composite = new Composite(group, SWT.NONE);
 		composite.setLayout(new GridLayout(3, true));
@@ -66,9 +63,10 @@ public class NeighborEditor extends LObjectEditor {
 
 	}
 	
-	private SelectionAdapter allAction(final boolean newValue) {
-		return new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
+	private LControlListener<Object> allAction(final boolean newValue) {
+		return new LControlListener<Object>() {
+			@Override
+			public void onModify(LControlEvent<Object> event) {
 				for(int i = 0; i < 8; i++) {
 					labels[i].setValue(newValue);
 				}

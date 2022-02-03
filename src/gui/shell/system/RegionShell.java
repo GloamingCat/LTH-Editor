@@ -2,7 +2,6 @@ package gui.shell.system;
 
 import gui.Vocab;
 import gui.shell.ObjectShell;
-import gui.widgets.ColorButton;
 import gui.widgets.IDList;
 
 import org.eclipse.swt.widgets.Composite;
@@ -50,9 +49,10 @@ public class RegionShell extends ObjectShell<Region> {
 		imgColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		imgColor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		ColorButton btnColor = new ColorButton(color, SWT.NONE);
-		btnColor.setColorWidget(imgColor);
-		addControl(btnColor, "rgb");
+		// TODO
+		//ColorButton btnColor = new ColorButton(color, SWT.NONE);
+		//btnColor.setColorWidget(imgColor);
+		//addControl(btnColor, "rgb");
 		
 		Group grpTroops = new Group(contentEditor, SWT.NONE);
 		grpTroops.setLayout(new FillLayout(SWT.HORIZONTAL));

@@ -5,6 +5,7 @@ import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
+import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
@@ -31,7 +32,6 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Button;
 
 public class FieldImageShell extends LObjectShell<FieldImage> {
 	
@@ -40,9 +40,9 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	protected int col, row;
 	private ScrolledComposite scroll;
 	private LText txtName;
-	private Button btnVisible;
-	private Button btnForeground;
-	private Button btnGlued;
+	private LCheckBox btnVisible;
+	private LCheckBox btnForeground;
+	private LCheckBox btnGlued;
 	
 	public FieldImageShell(Shell parent, int style) {
 		super(parent);
@@ -108,13 +108,13 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		options.setLayout(gl_options);
 		options.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		
-		btnVisible = new Button(options, SWT.CHECK);
+		btnVisible = new LCheckBox(options, SWT.CHECK);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		
-		btnForeground = new Button(options, SWT.CHECK);
+		btnForeground = new LCheckBox(options, SWT.CHECK);
 		btnForeground.setText(Vocab.instance.FOREGROUND);
 		
-		btnGlued = new Button(options, SWT.CHECK);
+		btnGlued = new LCheckBox(options, SWT.CHECK);
 		btnGlued.setText(Vocab.instance.GLUED);
 		
 		pack();
@@ -132,9 +132,9 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	public void open(FieldImage initial) {
 		super.open(initial);
 		txtName.setValue(initial.name);
-		btnVisible.setSelection(initial.visible);
-		btnForeground.setSelection(initial.foreground);
-		btnGlued.setSelection(initial.glued);
+		btnVisible.setValue(initial.visible);
+		btnForeground.setValue(initial.foreground);
+		btnGlued.setValue(initial.glued);
 		tree.setValue(-1);
 		if (initial.id >= 0) {
 			col = initial.col;
@@ -156,9 +156,9 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		icon.id = tree.getValue();
 		icon.col = col;
 		icon.row = row;
-		icon.visible = btnVisible.getSelection();
-		icon.foreground = btnForeground.getSelection();
-		icon.glued = btnGlued.getSelection();
+		icon.visible = btnVisible.getValue();
+		icon.foreground = btnForeground.getValue();
+		icon.glued = btnGlued.getValue();
 		return icon;
 	}
 	
