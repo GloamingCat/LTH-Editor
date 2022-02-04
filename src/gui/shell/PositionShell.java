@@ -41,14 +41,7 @@ public class PositionShell extends LObjectShell<Position> {
 	
 	private LPath path = null;
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public PositionShell(Shell parent) {
-		this(parent, -1);
-	}
-	
-	public PositionShell(Shell parent, int fieldID) {
 		super(parent);
 		setMinimumSize(new Point(640, 480));
 		GridData gridData = (GridData) content.getLayoutData();
@@ -157,13 +150,6 @@ public class PositionShell extends LObjectShell<Position> {
 		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		lblPos = new LLabel(bottom, "(-99, -99)");
-		
-		if (fieldID >= 0) {
-			path = findPath(fieldID);
-			tree.setEnabled(false);
-			cmbDirection.setValue(null);
-			cmbDirection.setEnabled(false);
-		}
 		
 		sashForm.setWeights(new int[] {1, 3});
 		

@@ -42,6 +42,11 @@ public class FieldTreeSerializer extends
 		}
 		return field;
 	}
+	
+	public Field loadField(int fieldID) {
+		FieldNode node = data.getFieldNode(fieldID);
+		return loadField(node);
+	}
 
 	public Field loadField(LPath path) {
 		return loadField(data.getNode(path).data);

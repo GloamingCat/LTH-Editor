@@ -17,6 +17,7 @@ import gui.shell.ObjectShell;
 import gui.views.fieldTree.FieldSideEditor;
 import gui.views.fieldTree.subcontent.FieldImageList;
 import gui.widgets.AudioButton;
+import gui.widgets.PortalButton;
 import gui.widgets.PositionButton;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
@@ -152,27 +153,16 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		btnDest.setTextWidget(txtDest);
 		transitionEditor.addControl(btnDest, "destination");
 		
-		// Start
+		// Origin Tiles
 		
-		new LLabel(transitionEditor, Vocab.instance.ORIGSTART);
+		new LLabel(transitionEditor, Vocab.instance.ORIGTILES);
 		
-		LText txtStart = new LText(transitionEditor, true);
-		txtStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		LText txtOrigin = new LText(transitionEditor, true);
+		txtOrigin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		PositionButton btnStart = new PositionButton(transitionEditor, FieldSideEditor.instance.field.id);
-		btnStart.setTextWidget(txtStart);
-		transitionEditor.addControl(btnStart, "tl");
-		
-		// End
-		
-		new LLabel(transitionEditor, Vocab.instance.ORIGEND);
-		
-		LText txtEnd = new LText(transitionEditor, true);
-		txtEnd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		PositionButton btnEnd = new PositionButton(transitionEditor, FieldSideEditor.instance.field.id);
-		btnEnd.setTextWidget(txtEnd);
-		transitionEditor.addControl(btnEnd, "br");
+		PortalButton btnOrigin = new PortalButton(transitionEditor, FieldSideEditor.instance.field.id);
+		btnOrigin.setTextWidget(txtOrigin);
+		transitionEditor.addControl(btnOrigin, "origin");
 		
 		// Fade
 		
@@ -205,6 +195,14 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		} else {
 			img.setImage((Image) null);
 		}
+	}
+	
+	public void open(Field.Prefs initial) {
+		for (Transition t : initial.transitions) {
+			if (t.br != null)
+				t.convert();
+		}
+		super.open(initial);
 	}
 	
 }

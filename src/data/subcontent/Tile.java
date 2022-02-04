@@ -12,6 +12,12 @@ public class Tile {
 		dy = i.dy;
 	}
 	
+	public Tile(int x, int y, int h) {
+		dx = x;
+		dy = y;
+		height = h;
+	}
+	
 	public String toString() {
 		return "(" + dx + "," + dy + "," + height + ")";
 	}
@@ -22,4 +28,9 @@ public class Tile {
 			return t.dx == dx && t.dy == dy && t.height == height;
 		} else return false;
 	}
+	
+	public Tile clone() {
+		return new Tile(dx, dy, height);
+	}
+	
 }

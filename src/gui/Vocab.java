@@ -390,8 +390,7 @@ public class Vocab {
 	// Transition
 	public String TRANSITIONS = "Transitions";
 	public String DESTINATION = "Destination";
-	public String ORIGSTART = "Start";
-	public String ORIGEND = "End";
+	public String ORIGTILES = "Origin Tiles";
 	public String FADEOUT = "Fade out";
 
 }
