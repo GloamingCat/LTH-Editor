@@ -8,7 +8,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import lwt.editor.LObjectEditor;
-import lwt.widget.LDescriptor;
+import lwt.widget.LText;
 
 public class AudioEditor extends LObjectEditor {
 
@@ -22,11 +22,11 @@ public class AudioEditor extends LObjectEditor {
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 
-		LDescriptor txtSource = new LDescriptor(this);
+		LText txtSource = new LText(this, true);
 		txtSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		btnSelectSound = new AudioButton(this, SWT.NONE);
-		btnSelectSound.setDescriptor(txtSource);
+		btnSelectSound.setTextWidget(txtSource);
 		addControl(btnSelectSound, "audio");
 		
 	}

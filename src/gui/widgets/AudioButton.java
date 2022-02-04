@@ -3,8 +3,8 @@ package gui.widgets;
 import gui.shell.AudioShell;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LDescriptor;
 import lwt.widget.LObjectButton;
+import lwt.widget.LText;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -14,7 +14,7 @@ import data.subcontent.Audio;
 
 public class AudioButton extends LObjectButton<Audio> {
 	
-	private LDescriptor descriptor;
+	private LText text;
 	
 	/**
 	 * Create the composite.
@@ -31,8 +31,8 @@ public class AudioButton extends LObjectButton<Audio> {
 		});
 	}
 	
-	public void setDescriptor(LDescriptor descriptor) {
-		this.descriptor = descriptor;
+	public void setTextWidget(LText text) {
+		this.text = text;
 	}
 	
 	@Override
@@ -40,14 +40,14 @@ public class AudioButton extends LObjectButton<Audio> {
 		if (value != null) {
 			button.setEnabled(true);
 			Audio s = (Audio) value;
-			if (descriptor != null) {
-				descriptor.setText(s.toString());
+			if (text != null) {
+				text.setValue(s.toString());
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
-			if (descriptor != null) {
-				descriptor.setText("");
+			if (text != null) {
+				text.setValue("");
 			}
 			currentValue = null;
 		}
