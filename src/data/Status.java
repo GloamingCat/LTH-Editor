@@ -4,7 +4,7 @@ import data.Item.Attribute;
 import data.subcontent.Element;
 import data.subcontent.Icon;
 import data.subcontent.Rule;
-import data.subcontent.Transform;
+import data.subcontent.Transformation;
 import lwt.dataestructure.LDataList;
 
 public class Status extends Data {
@@ -18,8 +18,7 @@ public class Status extends Data {
 	
 	// Graphics
 	public String charAnim = "";
-	public Transform transform = new Transform();
-	public boolean override = false;
+	public LDataList<Transformation> transformations = new LDataList<>();
 	
 	// Durability
 	public int duration = -1; // <= -1 for infinite

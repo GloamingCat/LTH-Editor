@@ -3,11 +3,11 @@ package gui.views.database.content;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.database.RuleShell;
+import gui.shell.database.TransformationShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.ElementList;
 import gui.views.database.subcontent.TagList;
-import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Rule;
+import data.subcontent.Transformation;
 import project.Project;
 
 public class StatusTab extends DatabaseTab {
@@ -158,15 +159,21 @@ public class StatusTab extends DatabaseTab {
 		txtCharAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtCharAnim, "charAnim");
 		
-		TransformEditor transformEditor = new TransformEditor(grpGraphics, SWT.NONE);
-		transformEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		addChild(transformEditor, "transform");
+		new LLabel(grpGraphics, Vocab.instance.TRANSFORMATIONS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
-		LCheckBox btnOverride = new LCheckBox(grpGraphics, SWT.NONE);
-		btnOverride.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 2, 1));
-		btnOverride.setText(Vocab.instance.OVERRIDETRANSFORM);
-		addControl(btnOverride, "override");
-		
+		SimpleEditableList<Transformation> lstTransformations = new SimpleEditableList<>(grpGraphics, SWT.NONE);
+		lstTransformations.type = Transformation.class;
+		lstTransformations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstTransformations.setShellFactory(new LShellFactory<Transformation>() {
+			@Override
+			public LObjectShell<Transformation> createShell(
+					org.eclipse.swt.widgets.Shell parent) {
+				return new TransformationShell(parent);
+			}
+		});
+		lstTransformations.setIncludeID(false);
+		addChild(lstTransformations, "transformations");
+
 		Composite middle = new Composite(contentEditor, SWT.NONE);
 		GridLayout gl_middle = new GridLayout(3, false);
 		gl_middle.marginWidth = 0;

@@ -257,7 +257,8 @@ public class Vocab {
 	public String DURABILITY = "Durability";
 	public String BEHAVIOR = "Behavior";
 	public String CHARANIM = "Character Animation Set";
-	public String OVERRIDETRANSFORM = "Override Transform";
+	public String OVERRIDETRANSFORM = "Override Value";
+	public String TRANSFORMATIONS = "Transformations";
 	public String TURNS = "Turns";
 	public String REMOVEONKO = "Remove on KO";
 	public String REMOVEONDAMAGE = "Remove on Damage";
@@ -392,5 +393,6 @@ public class Vocab {
 	public String DESTINATION = "Destination";
 	public String ORIGTILES = "Origin Tiles";
 	public String FADEOUT = "Fade out";
+
 
 }
