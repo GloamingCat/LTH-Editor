@@ -30,7 +30,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class FieldImageShell extends LObjectShell<FieldImage> {
@@ -49,7 +48,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(400, 300));
+		setMinimumSize(400, 300);
 
 		content.setLayout(new GridLayout(2, false));
 		
@@ -125,7 +124,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 			return;
 		Image img = anim.quad.getImage();
 		image.setImage(img);
-		scroll.setMinSize(anim.quad.getSize());
+		scroll.setMinSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}
 	

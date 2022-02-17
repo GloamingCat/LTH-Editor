@@ -7,7 +7,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.SashForm;
@@ -43,7 +42,7 @@ public class PositionShell extends LObjectShell<Position> {
 
 	public PositionShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(640, 480));
+		setMinimumSize(640, 480);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
@@ -173,7 +172,7 @@ public class PositionShell extends LObjectShell<Position> {
 		int x = spnX.getSelection() - 1;
 		int y = spnY.getSelection() - 1;
 		int h = spnH.getSelection() - 1;
-		canvas.setClickedTile(new Point(x, y), h);
+		canvas.setClickedTile(x, y, h);
 	}
 	
 	public void open(Position initial) {

@@ -9,7 +9,6 @@ import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
@@ -18,6 +17,7 @@ import data.field.CharTile;
 import data.field.Field;
 import data.field.FieldNode;
 import data.field.Layer;
+import data.subcontent.Point;
 
 import org.eclipse.swt.layout.GridLayout;
 
@@ -40,7 +40,7 @@ public class FieldEditor extends LObjectEditor {
 		instance = this;
 		setLayout(new GridLayout(2, false));
 		
-		FieldToolBar toolBar = new FieldToolBar(this, SWT.NONE);
+		FieldToolBar toolBar = new FieldToolBar(this);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		lblID = new LLabel(this, "ID: 9999");

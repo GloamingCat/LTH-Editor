@@ -13,13 +13,12 @@ import lwt.widget.LSpinner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.graphics.Point;
 
 public abstract class BonusShell extends ObjectShell<Bonus> {
 
 	public BonusShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(372, 329));
+		setMinimumSize(372, 329);
 		contentEditor.setLayout(new GridLayout(2, false));
 		
 		new LLabel(contentEditor, Vocab.instance.VALUE);

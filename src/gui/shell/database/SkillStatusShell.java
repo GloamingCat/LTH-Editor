@@ -11,7 +11,6 @@ import lwt.widget.LNodeSelector;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -24,7 +23,7 @@ public class SkillStatusShell extends ObjectShell<SkillStatus> {
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(400, 300));
+		setMinimumSize(400, 300);
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		

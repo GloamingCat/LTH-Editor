@@ -4,7 +4,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -19,6 +18,7 @@ import data.field.Field;
 import data.field.FieldImage;
 import data.field.Layer;
 import data.subcontent.Quad;
+import data.subcontent.Point;
 import lwt.LImageHelper;
 import project.Project;
 

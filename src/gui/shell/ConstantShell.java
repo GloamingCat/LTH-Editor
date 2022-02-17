@@ -8,7 +8,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -54,7 +53,7 @@ public class ConstantShell extends LObjectShell<Constant> {
 			"Troop"
 		};
 		
-		setMinimumSize(new Point(300, 120));
+		setMinimumSize(300, 120);
 		
 		content.setLayout(new GridLayout(3, false));
 		

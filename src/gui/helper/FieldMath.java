@@ -2,7 +2,7 @@ package gui.helper;
 
 import java.util.ArrayList;
 
-import org.eclipse.swt.graphics.Point;
+import data.subcontent.Point;
 
 import data.config.Config.Grid;
 import data.field.Layer;

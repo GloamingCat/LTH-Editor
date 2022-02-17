@@ -14,13 +14,12 @@ import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.graphics.Point;
 
 public class EquipStatusShell extends ObjectShell<EquipStatus> {
 
 	public EquipStatusShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(300, 250));
+		setMinimumSize(300, 250);
 		setSize(310, 246);
 		contentEditor.setLayout(new GridLayout(1, false));
 		

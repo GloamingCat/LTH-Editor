@@ -15,7 +15,6 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -26,6 +25,7 @@ import data.field.Field;
 import data.field.FieldImage;
 import data.field.Layer;
 import data.field.Party;
+import data.subcontent.Point;
 
 public class FieldCanvas extends LView {
 
@@ -358,8 +358,8 @@ public class FieldCanvas extends LView {
 		}
 	}
 	
-	public void setClickedTile(Point point, int h) {
-		clickedTile = point;
+	public void setClickedTile(int x, int y, int h) {
+		clickedTile = new Point(x, y);
 		clickedHeight = h;
 		redraw();
 	}

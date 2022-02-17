@@ -4,6 +4,7 @@ import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
 import data.Skill.Mask;
+import data.subcontent.Point;
 import lwt.dialog.LObjectShell;
 import lwt.widget.LLabel;
 
@@ -23,7 +24,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 
 public class MaskShell extends LObjectShell<Mask> {

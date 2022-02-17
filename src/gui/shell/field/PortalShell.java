@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -23,6 +22,7 @@ import lwt.widget.LLabel;
 import project.Project;
 import data.field.Field;
 import data.field.Transition.Portal;
+import data.subcontent.Point;
 
 public class PortalShell extends LObjectShell<Portal> {
 	
@@ -39,7 +39,7 @@ public class PortalShell extends LObjectShell<Portal> {
 	public PortalShell(Shell parent, int fieldID) {
 		super(parent);
 		this.fieldID = fieldID;
-		setMinimumSize(new Point(640, 480));
+		setMinimumSize(640, 480);
 		content.setLayout(new GridLayout(3, false));
 		
 		scrolledComposite = new ScrolledComposite(content, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);

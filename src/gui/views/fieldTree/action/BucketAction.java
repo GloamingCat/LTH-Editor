@@ -2,7 +2,7 @@ package gui.views.fieldTree.action;
 
 import java.util.ArrayList;
 
-import org.eclipse.swt.graphics.Point;
+import data.subcontent.Point;
 
 import gui.views.fieldTree.FieldCanvas;
 import lwt.action.LAction;
@@ -15,9 +15,9 @@ public class BucketAction implements LAction {
 	private int newID;
 	private int oldID;
 	
-	public BucketAction(int[][] grid, int newID, int oldID, ArrayList<Point> tiles, FieldCanvas canvas) {
+	public BucketAction(int[][] grid, int newID, int oldID, ArrayList<Point> modified, FieldCanvas canvas) {
 		this.grid = grid;
-		this.tiles = tiles;
+		this.tiles = modified;
 		this.canvas = canvas;
 		this.newID = newID;
 		this.oldID = oldID;

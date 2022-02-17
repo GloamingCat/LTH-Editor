@@ -10,7 +10,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -19,7 +18,7 @@ public class ResizeShell extends ObjectShell<Rectangle> {
 
 	public ResizeShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(240, 0));
+		setMinimumSize(240, 0);
 		
 		contentEditor.setLayout(new GridLayout(2, false));
 		

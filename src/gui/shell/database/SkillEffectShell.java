@@ -11,7 +11,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -19,7 +18,7 @@ public class SkillEffectShell extends ObjectShell<Effect> {
 
 	public SkillEffectShell(Shell parent) {
 		super(parent);
-		setMinimumSize(new Point(300, 100));
+		setMinimumSize(300, 100);
 		contentEditor.setLayout(new GridLayout(2, false));
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);

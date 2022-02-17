@@ -7,7 +7,6 @@ import gui.views.fieldTree.action.ResizeAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -25,10 +24,10 @@ public class FieldToolBar extends Composite {
 	// External
 	public static FieldToolBar instance;
 	
-	public FieldToolBar(Composite parent, int style) {
-		super(parent, style);
+	public FieldToolBar(Composite parent) {
+		super(parent, 0);
 		instance = this;
-		setSize(new Point(440, 0));
+		setSize(440, 0);
 		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
 		setLayout(fillLayout);
 

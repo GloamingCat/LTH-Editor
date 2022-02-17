@@ -2,7 +2,7 @@ package gui.helper;
 
 import java.util.ArrayList;
 
-import org.eclipse.swt.graphics.Point;
+import data.subcontent.Point;
 
 public class HexField extends BaseIsoField {
 

@@ -9,7 +9,6 @@ import lwt.widget.LNodeSelector;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.graphics.Point;
 
 public abstract class IDShell extends LObjectShell<Integer> {
 	
@@ -20,7 +19,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(350, 500));
+		setMinimumSize(350, 500);
 		
 		content.setLayout(new FillLayout());
 		tree = new LNodeSelector<>(content, style);

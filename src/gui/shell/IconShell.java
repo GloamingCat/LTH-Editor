@@ -4,7 +4,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Shell;
@@ -37,8 +36,8 @@ public class IconShell extends LObjectShell<Icon> {
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
 		gridData.grabExcessVerticalSpace = true;
-		setMinimumSize(new Point(600, 400));
-		setSize(new Point(800, 800));
+		setMinimumSize(600, 400);
+		setSize(800, 800);
 		
 		content.setLayout(new FillLayout());
 		
@@ -94,7 +93,7 @@ public class IconShell extends LObjectShell<Icon> {
 			return;
 		Image img = anim.quad.getImage();
 		image.setImage(img);
-		scroll.setMinSize(anim.quad.getSize());
+		scroll.setMinSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}
 	
