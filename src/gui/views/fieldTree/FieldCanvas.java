@@ -194,12 +194,12 @@ public class FieldCanvas extends LView {
 		drawCursor(gc, getForeground(), mousePoint);
 	}
 
-	public void drawCursor(GC gc, Color color, Point mousePoint) {
-		float scale = painter.scale;
+	public void drawCursor(GC gc, Color color, Point point) {
+		float previousScale = painter.scale;
 		painter.scale = scale * 0.75f;
 		gc.setForeground(color);
-		painter.drawTile(gc, mousePoint.x + x0, mousePoint.y + y0);
-		painter.scale = scale;
+		painter.drawTile(gc, Math.round(scale * (point.x + x0)), Math.round(scale * (point.y + y0)));
+		painter.scale = previousScale;
 	}
 	
 	// -------------------------------------------------------------------------------------
@@ -292,7 +292,7 @@ public class FieldCanvas extends LView {
 			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
 					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
-		setSize(Math.round((pixelSize.x + x0*2 - FieldHelper.config.grid.tileW) * scale), 
+		setSize(Math.round((pixelSize.x + x0*2 - FieldHelper.config.grid.tileB) * scale), 
 				Math.round((pixelSize.y + y0) * scale));
 	}
 	
