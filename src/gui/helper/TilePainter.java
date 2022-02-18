@@ -94,9 +94,9 @@ public class TilePainter {
 		if (anim == null)
 			return null;
 		Rectangle rect = obj.image.getRectangle();
-		int w = rect.width * anim.transform.scaleX / 100;
-		int h = rect.height * anim.transform.scaleY / 100;
-		img = LImageHelper.newImage(rect.width, rect.height);
+		int w = Math.round(rect.width * anim.transform.scaleX / 100f * obj.transform.scaleX / 100f);
+		int h = Math.round(rect.height * anim.transform.scaleY / 100f * obj.transform.scaleY / 100f);
+		img = LImageHelper.newImage(w, h);
 		GC gc = new GC(img);
 		Image texture = obj.image.getImage();
 		Rectangle t = texture.getBounds();

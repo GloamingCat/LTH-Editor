@@ -5,6 +5,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -117,8 +118,12 @@ public class FieldPainter {
 				return;
 			Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(layer.grid[x][y]);
 			Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
-			gc.drawImage(img, x0 - obj.transform.offsetX - anim.transform.offsetX, 
-					y0 - obj.transform.offsetY - anim.transform.offsetY);
+			Rectangle rect = obj.image.getRectangle();
+			float scaleX = img.getBounds().width * 1f / rect.width;
+			float scaleY = img.getBounds().height * 1f / rect.height;
+			float offsetX = (obj.transform.offsetX + anim.transform.offsetX) * scaleX;
+			float offsetY = (obj.transform.offsetY + anim.transform.offsetY) * scaleY;
+			gc.drawImage(img, x0 - Math.round(offsetX), y0 - Math.round(offsetY));
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
