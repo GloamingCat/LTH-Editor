@@ -45,6 +45,9 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	
 	@Override
 	protected LSerializer createProject(String path) {
+		int i = path.lastIndexOf(".");
+		if (i >= 0)
+			path = path.substring(0, i);
 		return new Project(path);
 	}
 

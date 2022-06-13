@@ -8,9 +8,19 @@ import gui.helper.TilePainter;
 import data.*;
 import data.config.*;
 import data.subcontent.Constant;
+import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
 
 public class Project implements LSerializer {
+	
+	private static class ProjectSettings {
+		public String dataPath = "data/";
+		public String imagePath = "images/";
+		public String audioPath = "audio/";
+		public String language = "us";
+	}
+	
+	private ProjectSettings settings;
 	
 	// Database
 	public GObjectTreeSerializer animations;
@@ -41,7 +51,14 @@ public class Project implements LSerializer {
 	public String path;
 	
 	public Project(String path) {
-		this.path = path;
+		GObjectSerializer<ProjectSettings> settings = new GObjectSerializer<>(path, ProjectSettings.class);
+		if (settings.load()) {
+			this.path = LFileManager.getDirectory(path);
+			this.settings = settings.getData();
+		} else {
+			this.path = path;
+			this.settings = new ProjectSettings();
+		}
 		
 		// Database
 		animations = new GObjectTreeSerializer(dataPath() + "animations", Animation.class);
@@ -72,7 +89,7 @@ public class Project implements LSerializer {
 	}
 	
 	public String dataPath() {
-		return path + "data/";
+		return path + settings.dataPath;
 	}
 	
 	public String systemPath() {
@@ -84,7 +101,7 @@ public class Project implements LSerializer {
 	}
 	
 	public String imagePath() {
-		return path + "images/";
+		return path + settings.imagePath;
 	}
 	
 	public String scriptPath() {
@@ -92,11 +109,15 @@ public class Project implements LSerializer {
 	}
 	
 	public String audioPath() {
-		return path + "audio/";
+		return path + settings.audioPath;
 	}
 
 	public String fontPath() {
 		return path + "fonts/";
+	}
+	
+	public String getLanguage() {
+		return settings.language;
 	}
 	
 	@Override
