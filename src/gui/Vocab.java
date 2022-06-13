@@ -14,8 +14,8 @@ public class Vocab {
 	public String ANIMATIONS = "Animations";
 	public String BATTLERS = "Battlers";
 	public String CHARACTERS = "Characters";
-	public String JOBS = "Classes";
 	public String ITEMS = "Items";
+	public String JOBS = "Jobs";
 	public String SCRIPTS = "Scripts";
 	public String SKILLS = "Skills";
 	public String STATUS = "Status";

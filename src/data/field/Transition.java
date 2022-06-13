@@ -61,7 +61,8 @@ public class Transition {
 		public boolean[][][] getMask(int width, int height, int layers) {
 			boolean[][][] mask = new boolean[layers][width][height];
 			for (Tile tile : this) {
-				mask[tile.height - 1][tile.dx - 1][tile.dy - 1] = true;
+				if (tile.height <= layers && tile.dx <= width && tile.dy <= height) 
+					mask[tile.height - 1][tile.dx - 1][tile.dy - 1] = true;
 			}
 			return mask;
 		}

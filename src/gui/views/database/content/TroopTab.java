@@ -139,6 +139,8 @@ public class TroopTab extends DatabaseTab {
 						if (u.list != 0)
 							continue;
 						GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
+						if (c == null)
+							continue;
 						int animID = c.defaultAnimationID();
 						if (animID == -1)
 							continue;

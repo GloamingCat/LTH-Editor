@@ -54,7 +54,6 @@ public class TilePainter {
 		if (anim == null) return null;
 		Image terrainImg = anim.quad.getImage();
 		if (terrainImg == null) return null;
-		
 		int w = anim.quad.width;
 		int h = anim.quad.height;
 		if (!full) {
@@ -64,22 +63,26 @@ public class TilePainter {
 		int dw = (w * anim.transform.scaleX) / 100;
 		int dh = (h * anim.transform.scaleY) / 100;
 		img = LImageHelper.newImage(dw, dh);
-		GC gc = new GC(img);
-		gc.setAlpha(anim.transform.alpha);
-		gc.drawImage(terrainImg, anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
-		gc.dispose();
-		ImageData data = img.getImageData();
-		LImageHelper.correctTransparency(data);
-		LImageHelper.colorTransform(data,
-				anim.transform.red / 255f,
-				anim.transform.green / 255f,
-				anim.transform.blue / 255f,
-				anim.transform.hue, 
-				anim.transform.saturation / 100f, 
-				anim.transform.brightness / 100f);
-		img.dispose();
-		img = new Image(Display.getCurrent(), data);
-		terrainCache.put(key, img);
+		try {
+			GC gc = new GC(img);
+			gc.setAlpha(anim.transform.alpha);
+			gc.drawImage(terrainImg, anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
+			gc.dispose();
+			ImageData data = img.getImageData();
+			LImageHelper.correctTransparency(data);
+			LImageHelper.colorTransform(data,
+					anim.transform.red / 255f,
+					anim.transform.green / 255f,
+					anim.transform.blue / 255f,
+					anim.transform.hue, 
+					anim.transform.saturation / 100f, 
+					anim.transform.brightness / 100f);
+			img.dispose();
+			img = new Image(Display.getCurrent(), data);
+			terrainCache.put(key, img);
+		} catch (IllegalArgumentException e) {
+			System.out.print("Couldn't draw terrain image.");
+		}
 		return img;
 	}
 	
@@ -97,29 +100,33 @@ public class TilePainter {
 		int w = Math.round(rect.width * anim.transform.scaleX / 100f * obj.transform.scaleX / 100f);
 		int h = Math.round(rect.height * anim.transform.scaleY / 100f * obj.transform.scaleY / 100f);
 		img = LImageHelper.newImage(w, h);
-		GC gc = new GC(img);
-		Image texture = obj.image.getImage();
-		Rectangle t = texture.getBounds();
-		rect.x = Math.min(rect.x, t.width - 1);
-		rect.y = Math.min(rect.y, t.height - 1);
-		gc.setAlpha(anim.transform.alpha * obj.transform.alpha / 255);
-		gc.drawImage(texture, rect.x, rect.y, 
-				Math.min(rect.width, t.width - rect.x),
-				Math.min(rect.height, t.height - rect.y),
-				0, 0, w, h);
-		gc.dispose();
-		ImageData data = img.getImageData();
-		LImageHelper.correctTransparency(data);
-		LImageHelper.colorTransform(img, 
-			anim.transform.red / 255f * obj.transform.red / 255f,
-			anim.transform.green / 255f * obj.transform.green / 255f,
-			anim.transform.blue / 255f * obj.transform.blue / 255f,
-			anim.transform.hue + obj.transform.hue, 
-			anim.transform.saturation / 100f * obj.transform.saturation / 100f, 
-			anim.transform.brightness / 100f * obj.transform.brightness / 100f);
-		img.dispose();
-		img = new Image(Display.getCurrent(), data);
-		obstacleCache.put(id, img);
+		try {
+			GC gc = new GC(img);
+			Image texture = obj.image.getImage();
+			Rectangle t = texture.getBounds();
+			rect.x = Math.min(rect.x, t.width - 1);
+			rect.y = Math.min(rect.y, t.height - 1);
+			gc.setAlpha(anim.transform.alpha * obj.transform.alpha / 255);
+			gc.drawImage(texture, rect.x, rect.y, 
+					Math.min(rect.width, t.width - rect.x),
+					Math.min(rect.height, t.height - rect.y),
+					0, 0, w, h);
+			gc.dispose();
+			ImageData data = img.getImageData();
+			LImageHelper.correctTransparency(data);
+			LImageHelper.colorTransform(img, 
+				anim.transform.red / 255f * obj.transform.red / 255f,
+				anim.transform.green / 255f * obj.transform.green / 255f,
+				anim.transform.blue / 255f * obj.transform.blue / 255f,
+				anim.transform.hue + obj.transform.hue, 
+				anim.transform.saturation / 100f * obj.transform.saturation / 100f, 
+				anim.transform.brightness / 100f * obj.transform.brightness / 100f);
+			img.dispose();
+			img = new Image(Display.getCurrent(), data);
+			obstacleCache.put(id, img);
+		} catch (IllegalArgumentException e) {
+			System.out.print("Couldn't draw obstacle image.");
+		}
 		return img;
 	}
 	
@@ -146,24 +153,30 @@ public class TilePainter {
 		int h = anim.quad.height / anim.rows;
 		int col = anim.getFirstFrame();
 		img = LImageHelper.newImage(w, h);
-		GC gc = new GC(img);
-		gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
-		gc.drawImage(anim.quad.getImage(), 
-				anim.quad.x + w * col, anim.quad.y + h * (direction / 45), w, h, 
-				0, 0, w, h);
-		gc.dispose();
-		ImageData data = img.getImageData();
-		LImageHelper.correctTransparency(data);
-		LImageHelper.colorTransform(data, 
-				anim.transform.red / 255f * c.transform.red / 255f,
-				anim.transform.green / 255f * c.transform.green / 255f,
-				anim.transform.blue / 255f * c.transform.blue / 255f,
-				anim.transform.hue + c.transform.hue, 
-				anim.transform.saturation / 100f * c.transform.saturation / 100f, 
-				anim.transform.brightness / 100f * c.transform.brightness / 100f);
-		img.dispose();
-		img = new Image(Display.getCurrent(), data);
-		characterCache.put(key, img);
+		Image quadImg = anim.quad.getImage();
+		try {
+			GC gc = new GC(img);
+			gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
+			gc.drawImage(quadImg, // Image
+					anim.quad.x + w * col, anim.quad.y + h * (direction / 45), w, h, // Position/scale
+					0, 0, w, h); // Source quad
+			
+			gc.dispose();
+			ImageData data = img.getImageData();
+			LImageHelper.correctTransparency(data);
+			LImageHelper.colorTransform(data, 
+					anim.transform.red / 255f * c.transform.red / 255f,
+					anim.transform.green / 255f * c.transform.green / 255f,
+					anim.transform.blue / 255f * c.transform.blue / 255f,
+					anim.transform.hue + c.transform.hue, 
+					anim.transform.saturation / 100f * c.transform.saturation / 100f, 
+					anim.transform.brightness / 100f * c.transform.brightness / 100f);
+			img.dispose();
+			img = new Image(Display.getCurrent(), data);
+			characterCache.put(key, img);
+		} catch (IllegalArgumentException e) {
+			System.out.print("Couldn't draw character image.");
+		}
 		return img;
 	}
 	
