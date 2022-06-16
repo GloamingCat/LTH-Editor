@@ -13,10 +13,10 @@ public class IsoField extends BaseIsoField {
 
 	protected void removePoints(ArrayList<Point> p) {
 		if (!conf.allNeighbors) {
-			Point p0 = p.get(1);
-			Point p1 = p.get(5);
-			Point p2 = p.get(3);
-			Point p3 = p.get(7);
+			Point p0 = p.get(0);
+			Point p1 = p.get(2);
+			Point p2 = p.get(4);
+			Point p3 = p.get(6);
 			p.remove(p0);
 			p.remove(p1);
 			p.remove(p2);

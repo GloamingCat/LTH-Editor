@@ -1,6 +1,5 @@
 package gui.views.fieldTree;
 
-import lwt.LImageHelper;
 import lwt.editor.LView;
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
@@ -46,41 +45,13 @@ public class FieldCanvas extends LView {
 	
 	protected Image buffer;
 
-	public class PainterThread extends Thread {
-		
-		private int ki, kj;
-		private Point size;
-		
+	public static abstract class PainterThread extends Thread {
 		public int liney;
 		public Image line;
-		
-		public PainterThread(Point size, int ki, int kj) {
-			super();
-			this.ki = ki;
-			this.kj = kj;
-			this.size = size;
-		}
-
-		public void run() {
-			int tileCount = Math.max(field.sizeX, field.sizeY) - 1;
-			Image img = LImageHelper.newImage(size.x + (FieldHelper.config.grid.tileW + 
-					FieldHelper.config.grid.tileB) * tileCount, size.y);
-			GC gc = new GC(img);
-			liney = y0 + FieldHelper.math.tile2Pixel(ki, kj, 0).y - size.y + FieldHelper.config.grid.tileH;
-			for(int i = ki, j = kj; i < field.sizeX && j < field.sizeY; i++, j++) {
-				Point pos = FieldHelper.math.tile2Pixel(i, j, 0);
-				int x = x0 + pos.x - size.x / 2;
-				gc.drawImage(tileImages[i][j], 0, 0, size.x, size.y, x, 0, size.x, size.y);
-			}
-			gc.dispose();
-			line = LImageHelper.correctTransparency(img);
-		}
-		
 	}
 	
-	
 	// Image cache
-	private Image[][] tileImages;
+	public Image[][] tileImages;
 	public FieldPainter painter = new FieldPainter(1, true);
 
 	public FieldCanvas(Composite parent, int style) {
@@ -143,7 +114,6 @@ public class FieldCanvas extends LView {
 	public void redrawBuffer() {
 		if (buffer != null)
 			buffer.dispose();
-		
 		Point size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
 		int w = x0 * 2;
 		int h = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
@@ -152,26 +122,11 @@ public class FieldCanvas extends LView {
 		GC gc = new GC(buffer);
 		gc.setBackground(getBackground());
 		gc.fillRectangle(buffer.getBounds());
-		
 		for (FieldImage bg : field.prefs.images) {
 			if (bg.visible && !bg.foreground)
 				painter.paintBackground(field, bg, x0, y0, gc);
 		}
-
-		final PainterThread[] threads = new PainterThread[field.sizeX + field.sizeY - 1];
-		final Point tsize = tileImageSize();
-		
-		for(int k = field.sizeX - 1; k >= 0; k--) {
-			int p = field.sizeX - k - 1;
-			threads[p] = new PainterThread(tsize, k, 0);
-			threads[p].start();
-		}
-		for(int k = 1; k < field.sizeY; k++) {
-			int p = k + field.sizeX - 1;
-			threads[p] = new PainterThread(tsize, 0, k);
-			threads[p].start();
-		}
-		
+		final PainterThread[] threads = FieldHelper.math.getPainterThreads(this);
 		try {
 			for (int i = 0; i < threads.length; i++) {
 				threads[i].join();
@@ -181,12 +136,10 @@ public class FieldCanvas extends LView {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		for (FieldImage bg : field.prefs.images) {
 			if (bg.visible && bg.foreground)
 				painter.paintBackground(field, bg, x0, y0, gc);
 		}
-		
 		gc.dispose();
 	}
 	
@@ -270,7 +223,7 @@ public class FieldCanvas extends LView {
 		System.gc();
 	}
 	
-	private Point tileImageSize() {
+	public Point tileImageSize() {
 		int imgW = FieldHelper.config.grid.tileW * 3;
 		int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 5);
 		return new Point(imgW, imgH);
@@ -289,7 +242,7 @@ public class FieldCanvas extends LView {
 			y0 = 0;
 		} else {
 			pixelSize = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
-			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
+			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + x0 +
 					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
 		setSize(Math.round((pixelSize.x + x0*2 - FieldHelper.config.grid.tileB) * scale), 

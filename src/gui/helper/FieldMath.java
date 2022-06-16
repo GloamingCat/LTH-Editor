@@ -3,7 +3,8 @@ package gui.helper;
 import java.util.ArrayList;
 
 import data.subcontent.Point;
-
+import gui.views.fieldTree.FieldCanvas;
+import gui.views.fieldTree.FieldCanvas.PainterThread;
 import data.config.Config.Grid;
 import data.field.Layer;
 
@@ -57,8 +58,19 @@ public abstract class FieldMath {
 		return p;
 	}
 	
-	protected abstract ArrayList<Point> createNeighborShift();
-	protected abstract ArrayList<Point> createVertexShift();
+	protected abstract void removePoints(ArrayList<Point> p);
+	
+	protected ArrayList<Point> createNeighborShift() {
+		ArrayList<Point> p = fullNeighborShift();
+		removePoints(p);
+		return p;
+	}
+
+	protected ArrayList<Point> createVertexShift() {
+		ArrayList<Point> p = fullVertexShift();
+		removePoints(p);
+		return p;
+	}
 	
 	public abstract Point pixelSize(int sizeX, int sizeY);
 	public abstract Point pixelCenter(int sizeX, int sizeY, int height);
@@ -89,5 +101,7 @@ public abstract class FieldMath {
 	protected static boolean sameType(int[][] grid, Point p, int dx, int dy) {
 		return sameType(grid, p.x, p.y, p.x + dx, p.y + dy);
 	}
+	
+	public abstract PainterThread[] getPainterThreads(FieldCanvas canvas);
 	
 }
