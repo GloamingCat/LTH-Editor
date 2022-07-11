@@ -1,17 +1,15 @@
-package gui.shell;
+package gui.shell.system;
 
 import gui.Vocab;
+import gui.shell.ObjectShell;
 import gui.widgets.FileSelector;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import lwt.LSoundPlayer;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
-import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -30,9 +28,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class AudioShell extends ObjectShell<Audio> {
+public class AudioNodeShell extends ObjectShell<Audio.Node> {
 	
-	protected LCombo cmbSound;
 	protected FileSelector selFile;
 	protected boolean isBGM = false;
 	
@@ -41,11 +38,11 @@ public class AudioShell extends ObjectShell<Audio> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public AudioShell(Shell parent) {
+	public AudioNodeShell(Shell parent) {
 		this(parent, 1);
 	}
 	
-	public AudioShell(Shell parent, int style) {
+	public AudioNodeShell(Shell parent, int style) {
 		super(parent);
 
 		setMinimumSize(400, 400);
@@ -59,29 +56,18 @@ public class AudioShell extends ObjectShell<Audio> {
 			}
 		};
 		selFile.setFolder(Project.current.audioPath());
-		selFile.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				cmbSound.setValue(-1);
-			}
-		});
-		
-		cmbSound = new LCombo(selFile);
-		cmbSound.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cmbSound.setOptional(true);
-		cmbSound.setIncludeID(false);
-		cmbSound.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				selFile.setValue(-1);
-			}
-		});
 		
 		isBGM = style / 2 == 1;
 		
 		Composite composite = new Composite(form, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		new LLabel(composite, Vocab.instance.KEY);
+		
+		LText txtKey = new LText(composite);;
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtKey, "key");
 		
 		new LLabel(composite, Vocab.instance.VOLUME);
 		
@@ -145,32 +131,17 @@ public class AudioShell extends ObjectShell<Audio> {
 		pack();
 	}
 	
-	public void open(Audio initial) {
+	public void open(Audio.Node initial) {
 		super.open(initial);
-		ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
-		cmbSound.setItems(list);
 		selFile.setSelectedFile(initial.name);
-		if (selFile.getValue() == null) {
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).key.equals(initial.name)) {
-					cmbSound.setSelectionIndex(i);
-					return;
-				}
-			}
-		}
-		cmbSound.setValue(-1);
 	}
 
 	@Override
-	protected Audio createResult(Audio initial) {
+	protected Audio.Node createResult(Audio.Node initial) {
 		Audio audio = (Audio) contentEditor.getObject();
 		audio.name = selFile.getSelectedFile();
-		if (audio.name == null)
+		if (audio.name == null) {
 			audio.name = "";
-		int i = cmbSound.getSelectionIndex();
-		if (i >= 0) {
-			Audio.Node node = (Audio.Node) Project.current.config.getData().sounds.get(i);
-			audio.name = node.key;
 		}
 		return super.createResult(initial);
 	}

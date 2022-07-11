@@ -37,10 +37,10 @@ public class ConfigEditor extends LView {
 
 		actionStack = new LActionStack(this);
 		
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(4, false));
 		
 		editor = new LObjectEditor(this, SWT.NONE);
-		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		editor.setLayout(new GridLayout(2, false));
 		addChild(editor);
 		
@@ -59,10 +59,6 @@ public class ConfigEditor extends LView {
 		gl_middle.marginHeight = 0;
 		gl_middle.marginWidth = 0;
 		middle.setLayout(gl_middle);
-		
-		Composite right = new Composite(this, SWT.NONE);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		right.setLayout(new FillLayout(SWT.VERTICAL));
 		
 		// Name
 		
@@ -369,6 +365,10 @@ public class ConfigEditor extends LView {
 		
 		// Animations
 		
+		Composite right = new Composite(this, SWT.NONE);
+		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		right.setLayout(new FillLayout(SWT.VERTICAL));
+		
 		Group grpAnimations = new Group(right, SWT.NONE);
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		grpAnimations.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -390,6 +390,17 @@ public class ConfigEditor extends LView {
 		
 		PortraitList lstIcons = new PortraitList(grpIcons, SWT.NONE);
 		editor.addChild(lstIcons, "icons");
+		
+		// Sounds
+		
+		Group grpSounds = new Group(this, SWT.NONE);
+		grpSounds.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpSounds.setText(Vocab.instance.SOUNDS);
+		grpSounds.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		SoundList lstSounds = new SoundList(grpSounds, SWT.NONE);
+		editor.addChild(lstSounds, "sounds");
+		
 		
 	}
 	

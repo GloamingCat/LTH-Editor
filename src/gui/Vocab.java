@@ -58,6 +58,7 @@ public class Vocab {
 	// Config
 	public String PROJECTNAME = "Project Name";
 	public String ICONS = "Icons";
+	public String SOUNDS = "Sounds";
 	public String LISTS = "Lists";
 	public String REGIONS = "Regions";
 	public String EQUIPTYPES = "Equip Types";
@@ -291,6 +292,7 @@ public class Vocab {
 	// ========================================================================
 	
 	// Audio
+	public String FILE = "File";
 	public String SOUND = "Sound";
 	public String VOLUME = "Volume";
 	public String PITCH = "Pitch";

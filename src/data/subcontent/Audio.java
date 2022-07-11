@@ -32,4 +32,22 @@ public class Audio {
 			return false;
 	}
 	
+	public static class Node extends Audio {
+		public String key = "soundKey";
+		
+		public Node() {}
+		
+		public String toString() {
+			return key;// + ": " + super.toString();
+		}
+		
+		public boolean equals(Node node) {
+			if (node instanceof Node) {
+				Node n = (Node) node;
+				return key.equals(n.key) && super.equals(node);
+			}
+			return false;
+		}
+	}
+	
 }

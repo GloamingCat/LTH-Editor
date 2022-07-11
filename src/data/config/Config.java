@@ -2,6 +2,7 @@ package data.config;
 
 import lwt.dataestructure.LDataList;
 import data.GameCharacter.Portrait;
+import data.subcontent.Audio;
 import data.subcontent.Node;
 import data.subcontent.Position;
 
@@ -17,6 +18,7 @@ public class Config {
 
 	public LDataList<Node> animations = new LDataList<>();
 	public LDataList<Portrait> icons = new LDataList<>();
+	public LDataList<Audio.Node> sounds = new LDataList<>();
 	
 	// System
 	
