@@ -1,6 +1,7 @@
 package gui.views.system;
 
 import gui.Vocab;
+import gui.views.database.subcontent.TagList;
 import lwt.action.LActionStack;
 import lwt.editor.LObjectEditor;
 
@@ -15,7 +16,7 @@ public class ListsEditor extends LObjectEditor {
 	
 	private ElementList lstElements;
 	private EquipTypeList lstEquipTypes;
-	private ConstantList lstConstants;
+	private TagList lstVariables;
 	private AttributeList lstAttributes;
 	private RegionList lstRegions;
 	private PluginList lstPlugins;
@@ -63,14 +64,15 @@ public class ListsEditor extends LObjectEditor {
 		addChild(lstAttributes, "attributes");
 		bottom.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		// Constants
+		// Variables
 		
-		Group grpConstants = new Group(bottom, SWT.NONE);
-		grpConstants.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpConstants.setText(Vocab.instance.CONSTANTS);
+		Group grpVariables = new Group(bottom, SWT.NONE);
+		grpVariables.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpVariables.setText(Vocab.instance.VARIABLES);
 
-		lstConstants = new ConstantList(grpConstants, SWT.NONE);
-		addChild(lstConstants, "constants");
+		lstVariables = new TagList(grpVariables, SWT.NONE);
+		lstVariables.setIncludeID(true);
+		addChild(lstVariables, "variables");
 		
 		Group grpEquipTypes = new Group(bottom, SWT.NONE);
 		grpEquipTypes.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -95,7 +97,7 @@ public class ListsEditor extends LObjectEditor {
 		lstAttributes.setObject(Project.current.attributes.getList());
 		lstElements.setObject(Project.current.elements.getList());
 		lstEquipTypes.setObject(Project.current.equipTypes.getList());
-		lstConstants.setObject(Project.current.constants.getList());
+		lstVariables.setObject(Project.current.variables.getList());
 		lstRegions.setObject(Project.current.regions.getList());
 		lstPlugins.setObject(Project.current.plugins.getList());
 	}

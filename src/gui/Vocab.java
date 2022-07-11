@@ -64,6 +64,7 @@ public class Vocab {
 	public String PLUGINS = "Plugins";
 	public String PLUGINON = "ON";
 	public String CONSTANTS = "Constants";
+	public String VARIABLES = "Variables";
 	public String COLOR = "Color";
 	public String SIZE = "Size";
 	public String FORMAT = "Format";

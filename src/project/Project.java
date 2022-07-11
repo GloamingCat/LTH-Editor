@@ -7,7 +7,7 @@ import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import data.*;
 import data.config.*;
-import data.subcontent.Constant;
+import data.subcontent.Tag;
 import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
 
@@ -37,7 +37,7 @@ public class Project implements LSerializer {
 	// System
 	public GObjectSerializer<Config> config;
 	public GObjectListSerializer attributes;
-	public GObjectListSerializer constants;
+	public GObjectListSerializer variables;
 	public GObjectListSerializer elements;
 	public GObjectListSerializer equipTypes;
 	public GObjectListSerializer plugins;
@@ -75,7 +75,7 @@ public class Project implements LSerializer {
 		// System
 		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
 		attributes = new GObjectListSerializer(systemPath() + "attributes", Attribute.class);
-		constants = new GObjectListSerializer(systemPath() + "constants", Constant.class);
+		variables = new GObjectListSerializer(systemPath() + "variables", Tag.class);
 		elements = new GObjectListSerializer(systemPath() + "elements", Element.class);
 		equipTypes = new GObjectListSerializer(systemPath() + "equipTypes", EquipType.class);
 		plugins = new GObjectListSerializer(systemPath() + "plugins", Plugin.class);
@@ -85,7 +85,7 @@ public class Project implements LSerializer {
 		
 		allData = new LSerializer[] { fieldTree, animations, battlers, characters, 
 				jobs, items, obstacles, skills, status, terrains, troops, 
-				config, attributes, constants, elements, equipTypes, plugins, regions };
+				config, attributes, variables, elements, equipTypes, plugins, regions };
 	}
 	
 	public String dataPath() {
