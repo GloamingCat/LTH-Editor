@@ -202,7 +202,8 @@ public class QuadShell extends LObjectShell<Quad> {
 		String path = selFile.getRootFolder() + selFile.getSelectedFile();
 		Image image = SWTResourceManager.getImage(path);
 		imgQuad.setImage(image);
-		imgQuad.setBounds(image.getBounds());
+		if (image != null)
+			imgQuad.setBounds(image.getBounds());
 		scroll.setMinSize(imgQuad.getSize());
 		imgQuad.redraw();
 	}

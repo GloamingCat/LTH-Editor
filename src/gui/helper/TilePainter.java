@@ -100,9 +100,11 @@ public class TilePainter {
 		int w = Math.round(rect.width * anim.transform.scaleX / 100f * obj.transform.scaleX / 100f);
 		int h = Math.round(rect.height * anim.transform.scaleY / 100f * obj.transform.scaleY / 100f);
 		img = LImageHelper.newImage(w, h);
+		Image texture = obj.image.getImage();
+		if (texture == null)
+			return null;
 		try {
 			GC gc = new GC(img);
-			Image texture = obj.image.getImage();
 			Rectangle t = texture.getBounds();
 			rect.x = Math.min(rect.x, t.width - 1);
 			rect.y = Math.min(rect.y, t.height - 1);

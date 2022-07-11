@@ -92,7 +92,6 @@ public class OrtField extends FieldMath {
 		if (rows[2] >= 3 && sameType(grid, x, y, x - 1, y + 1)) {
 			rows[2] = 4;
 		}
-		
 		if (rows[0] == 0 && rows[1] == 0 && rows[2] == 0 && rows[3] == 0) {
 			rows[0] = rows[1] = rows[2] = rows[3] = 5;
 		}

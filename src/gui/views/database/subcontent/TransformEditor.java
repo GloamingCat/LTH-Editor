@@ -196,8 +196,8 @@ public class TransformEditor extends LObjectEditor {
 			Transform t2 = secondaryTransform();
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
-			image.setRGBA(t.red, t.green, t.blue, t.alpha);
-			image.setHSV(t.hue, t.saturation, t.brightness);
+			image.setRGBA(t.red / 255f, t.green / 255f, t.blue / 255f, t.alpha / 255f);
+			image.setHSV(t.hue, t.saturation / 100f, t.brightness / 100f);
 			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
 		}
 		super.setObject(obj);
