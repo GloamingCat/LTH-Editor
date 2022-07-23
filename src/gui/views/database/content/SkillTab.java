@@ -6,21 +6,18 @@ import gui.shell.database.MaskShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.SkillEffectList;
-import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 
-import java.util.ArrayList;
-
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.editor.LComboView;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckBox;
+import lwt.widget.LCombo;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LObjectButton;
@@ -46,6 +43,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Skill.Mask;
+import org.eclipse.swt.widgets.Label;
 
 public class SkillTab extends DatabaseTab {
 
@@ -67,7 +65,7 @@ public class SkillTab extends DatabaseTab {
 		right.setLayoutData(gd_right);
 
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(4, true);
+		GridLayout gl_bottom = new GridLayout(3, true);
 		gl_bottom.verticalSpacing = 0;
 		gl_bottom.marginHeight = 0;
 		gl_bottom.marginWidth = 0;
@@ -127,59 +125,82 @@ public class SkillTab extends DatabaseTab {
 		// Type
 		
 		new LLabel(grpGeneral, Vocab.instance.TYPE);
+
+		Composite type = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_type = new GridLayout(2, false);
+		gl_type.marginWidth = 0;
+		gl_type.marginHeight = 0;
+		type.setLayout(gl_type);
+		type.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ArrayList<String> types = new ArrayList<String>();
-		types.add(Vocab.instance.GENERAL);
-		types.add(Vocab.instance.ATTACK);
-		types.add(Vocab.instance.SUPPORT);
-		
-		LComboView cmbType = new LComboView(grpGeneral, SWT.NONE) {
-			public ArrayList<?> getArray() {
-				return types;
-			}
-		};
+		LCombo cmbType = new LCombo(type, SWT.NONE);
 		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbType.setIncludeID(false);
 		cmbType.setOptional(false);
+		cmbType.setItems(new String[] {	
+			Vocab.instance.GENERAL,
+			Vocab.instance.ATTACK,
+			Vocab.instance.SUPPORT
+		});
 		addControl(cmbType, "type");
 		
-		// Target Type
+		LCheckBox btnAllParties = new LCheckBox(type);
+		btnAllParties.setText(Vocab.instance.ALLPARTIES);
+		addControl(btnAllParties, "allParties");
 		
-		new LLabel(grpGeneral, Vocab.instance.TARGETTYPE);
+		// Effect condition
 		
-		ArrayList<String> targets = new ArrayList<String>();
-		targets.add(Vocab.instance.ANYTILE);
-		targets.add(Vocab.instance.ANYCHARACTER);
-		targets.add(Vocab.instance.LIVINGONLY);
-		targets.add(Vocab.instance.DEADONLY);
+		new LLabel(grpGeneral, Vocab.instance.EFFECTCONDITION);
 		
-		LComboView cmbTargets = new LComboView(grpGeneral, SWT.NONE) {
-			public ArrayList<?> getArray() {
-				return targets;
-			}
-		};
-		cmbTargets.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		cmbTargets.setIncludeID(false);
-		cmbTargets.setOptional(false);
-		addControl(cmbTargets, "targetType");
+		LText txtEffectCondition = new LText(grpGeneral);
+		txtEffectCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtEffectCondition, "effectCondition");
+		
+		// Target Selection
+		
+		new LLabel(grpGeneral, Vocab.instance.TARGETSELECTION);
+		
+		Composite selection = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_selection = new GridLayout(2, false);
+		gl_selection.marginHeight = 0;
+		gl_selection.marginWidth = 0;
+		selection.setLayout(gl_selection);
+		selection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		LCombo cmbSelection = new LCombo(selection);
+		cmbSelection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbSelection.setIncludeID(false);
+		cmbSelection.setOptional(false);
+		cmbSelection.setItems(new String[] {
+				Vocab.instance.ANYTILE,
+				Vocab.instance.EFFECTONLY,
+				Vocab.instance.RANGEONLY,
+				Vocab.instance.EFFECTRANGE});
+		addControl(cmbSelection, "selection");
+		
+		LCheckBox btnAutopath = new LCheckBox(selection);
+		btnAutopath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		btnAutopath.setText(Vocab.instance.AUTOPATH);
+		addControl(btnAutopath, "autoPath");
+		
+		new LLabel(grpGeneral, "");
+		
+		LCheckBox btnFreeNavigation = new LCheckBox(grpGeneral);
+		btnFreeNavigation.setText(Vocab.instance.FREENAVIGATION);
+		addControl(btnFreeNavigation, "freeNavigation");
 		
 		// Restrictions
 		
-		ArrayList<String> restrictions = new ArrayList<String>();
-		restrictions.add(Vocab.instance.ALWAYS);
-		restrictions.add(Vocab.instance.BATTLEONLY);
-		restrictions.add(Vocab.instance.FIELDONLY);
-		
 		new LLabel(grpGeneral, Vocab.instance.RESTRICTIONS);
 		
-		LComboView cmbRestrictions = new LComboView(grpGeneral, SWT.NONE) {
-			public ArrayList<?> getArray() {
-				return restrictions;
-			}
-		};
+		LCombo cmbRestrictions = new LCombo(grpGeneral, SWT.NONE);
 		cmbRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbRestrictions.setIncludeID(false);
 		cmbRestrictions.setOptional(false);
+		cmbRestrictions.setItems(new String[] {
+				Vocab.instance.ALWAYS,
+				Vocab.instance.BATTLEONLY,
+				Vocab.instance.FIELDONLY});
 		addControl(cmbRestrictions, "restriction");
 
 		// Animations
@@ -190,7 +211,7 @@ public class SkillTab extends DatabaseTab {
 		gl_grpAnimations.marginHeight = 0;
 		gl_grpAnimations.marginWidth = 0;
 		grpAnimations.setLayout(gl_grpAnimations);
-		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		TabFolder tabAnim = new TabFolder(grpAnimations, SWT.NONE);
 		tabAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -313,9 +334,8 @@ public class SkillTab extends DatabaseTab {
 		txtFinishTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtFinishTime, "finishTime");
 		
-		new Composite(animOptions, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		LCheckBox btnDamageAnim = new LCheckBox(animOptions, SWT.NONE);
-		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
 		addControl(btnDamageAnim, "damageAnim");
 		
@@ -341,11 +361,6 @@ public class SkillTab extends DatabaseTab {
 		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
-		LCheckBox btnWholeField = new LCheckBox(grpEffect);
-		btnWholeField.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		btnWholeField.setText(Vocab.instance.WHOLEFIELD);
-		addControl(btnWholeField, "wholeField");
-		
 		Group grpCast = new Group(range, SWT.NONE);
 		grpCast.setLayout(new GridLayout(2, false));
 		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -357,12 +372,7 @@ public class SkillTab extends DatabaseTab {
 		
 		Composite castMask = new Composite(grpCast, SWT.NONE);
 		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		addMaskButton(btnCastMask, castMask, castColor);
-		
-		LCheckBox btnAutoPath = new LCheckBox(grpCast);
-		btnAutoPath.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		btnAutoPath.setText(Vocab.instance.AUTOPATH);
-		addControl(btnAutoPath, "autoPath");		
+		addMaskButton(btnCastMask, castMask, castColor);	
 		
 		// Costs
 		
@@ -383,36 +393,11 @@ public class SkillTab extends DatabaseTab {
 		
 		Group grpEffects = new Group(bottom, SWT.NONE);
 		grpEffects.setLayout(new FillLayout());
-		grpEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpEffects.setText(Vocab.instance.EFFECTS);
-		TabFolder tabEffects = new TabFolder(grpEffects, SWT.NONE);
-		
-		TabItem tabGeneralEffects = new TabItem(tabEffects, SWT.NONE);
-		tabGeneralEffects.setText(Vocab.instance.GENERAL);
-		Composite effects = new Composite(tabEffects, SWT.NONE);
-		tabGeneralEffects.setControl(effects);
-		effects.setLayout(new FillLayout());
-		
-		SkillEffectList lstEffects = new SkillEffectList(effects, SWT.NONE);
+
+		SkillEffectList lstEffects = new SkillEffectList(grpEffects, SWT.NONE);
 		addChild(lstEffects, "effects");
-		
-		TabItem tabStatusAdd = new TabItem(tabEffects, SWT.NONE);
-		tabStatusAdd.setText(Vocab.instance.STATUSADD);
-		Composite statusAdd = new Composite(tabEffects, SWT.NONE);
-		tabStatusAdd.setControl(statusAdd);
-		statusAdd.setLayout(new FillLayout());
-		
-		SkillStatusList lstStatusAdd = new SkillStatusList(statusAdd, SWT.NONE);
-		addChild(lstStatusAdd, "statusAdd");
-		
-		TabItem tabStatusRmv = new TabItem(tabEffects, SWT.NONE);
-		tabStatusRmv.setText(Vocab.instance.STATUSREMOVE);
-		Composite statusRmv = new Composite(tabEffects, SWT.NONE);
-		tabStatusRmv.setControl(statusRmv);
-		statusRmv.setLayout(new FillLayout());
-		
-		SkillStatusList lstStatusRemove = new SkillStatusList(statusRmv, SWT.NONE);
-		addChild(lstStatusRemove, "statusRemove");
 		
 		// Elements
 		
@@ -440,12 +425,15 @@ public class SkillTab extends DatabaseTab {
 		// Tags
 		
 		Group grpTags = new Group(bottom, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList lstTags = new TagList(grpTags, SWT.NONE);
 		addChild(lstTags, "tags");
+		new Label(bottom, SWT.NONE);
+		new Label(bottom, SWT.NONE);
+		new Label(bottom, SWT.NONE);
 
 	}
 	

@@ -14,8 +14,17 @@ public class Skill extends Data {
 	public String description = "";
 	public Icon icon = new Icon();
 	public String script = "";
-	public int type = 1; // 0 => Offensive, 1 => Supportive, 2 => General
-	public int targetType = 0; // 0 => Any tile, 1 => Any character, 2 => Living only, 3 => Dead only
+	
+	// Affected characters
+	public int type = 0; // 0 => Offensive; 1 => Supportive; 2 => General
+	public boolean allParties = false; // Affects any character regardless of type
+	public String effectCondition = "target.battler:isAlive()"; // Required state to be affected by skill
+	
+	// Selection and navigation
+	public int selection = 1; // 0 => Any tile, 1 => affected only; 2 => reachable only; 3 => affected and reachable only
+	public boolean autoPath = true;
+	public boolean freeNavigation = true;
+	
 	public int restriction = 0; // 0 => Anywhere, 1 => Battle only, 2 => Field only
 	public LDataList<Tag> costs = new LDataList<>();
 	
@@ -44,14 +53,10 @@ public class Skill extends Data {
 	
 	// Effects
 	public LDataList<Effect> effects = new LDataList<>();
-	public LDataList<SkillStatus> statusAdd = new LDataList<>();
-	public LDataList<SkillStatus> statusRemove = new LDataList<>();
 	
 	// Range
 	public Mask effectMask = new Mask();
 	public Mask castMask = new Mask();
-	public boolean autoPath = true;
-	public boolean wholeField = false;
 	
 	public Skill() {
 		effects.add(new Effect());
@@ -65,9 +70,27 @@ public class Skill extends Data {
 		public String successRate = "action:defaultSuccessRate(user, target, a, b)";
 		public boolean heal = false;
 		public boolean absorb = false;
+		public int statusID = -1;
 		
 		public String toString() {
-			return "\"" + key + "\": " + basicResult;
+			Status s = (Status) Project.current.status.getData().get(statusID);
+			String op = heal ? " += " : " -= ";
+			String points = key + op + basicResult + " (" + successRate + ")";
+			if (s == null) {
+				if (key.isEmpty()) {
+					return "No effect";
+				} else {
+					return points;
+				}
+			} else {
+				op = heal ? "-" : "+";
+				if (key.isEmpty()) {
+					return op + s.name + " (" + successRate + ")";
+				} else {
+					
+					return op + s.name + ", " + points;
+				}
+			}
 		}
 		
 	}
@@ -89,18 +112,6 @@ public class Skill extends Data {
 					centerY == other.centerY && Arrays.deepEquals(grid, other.grid);
 		}
 		
-	}
-	
-	public static class SkillStatus {
-		
-		public int id = 0;
-		public String rate = "100";
-		
-		public String toString() {
-			Status s = (Status) Project.current.status.getData().get(id);
-			return (s == null ? "NULL" : s.name) + " (" + rate + ")";
-		}
-
 	}
 
 }

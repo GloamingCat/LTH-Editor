@@ -7,7 +7,6 @@ import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.ElementList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.EquipStatusList;
-import gui.views.database.subcontent.SkillStatusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
@@ -188,18 +187,6 @@ public class ItemTab extends DatabaseTab {
 		SkillEffectList lstEffects = new SkillEffectList(useFolder, SWT.NONE);
 		tbtmEffects.setControl(lstEffects);
 		addChild(lstEffects, "effects");
-		
-		TabItem tbtmStatusAdd = new TabItem(useFolder, SWT.NONE);
-		tbtmStatusAdd.setText(Vocab.instance.STATUSADD);
-		SkillStatusList lstStatusAdd = new SkillStatusList(useFolder, SWT.NONE);
-		tbtmStatusAdd.setControl(lstStatusAdd);
-		addChild(lstStatusAdd, "statusAdd");
-		
-		TabItem tbtmStatusRmv = new TabItem(useFolder, SWT.NONE);
-		tbtmStatusRmv.setText(Vocab.instance.STATUSREMOVE);
-		SkillStatusList lstStatusRmv = new SkillStatusList(useFolder, SWT.NONE);
-		tbtmStatusRmv.setControl(lstStatusRmv);
-		addChild(lstStatusRmv, "statusRemove");
 		
 		TabItem tbtmUseAtt = new TabItem(useFolder, SWT.NONE);
 		tbtmUseAtt.setText(Vocab.instance.ATTRIBUTES);
