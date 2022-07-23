@@ -73,7 +73,7 @@ public class Skill extends Data {
 		public int statusID = -1;
 		
 		public String toString() {
-			Status s = (Status) Project.current.status.getData().get(statusID);
+			Status s = (Status) (statusID == -1 ? null : Project.current.status.getData().get(statusID));
 			String op = heal ? " += " : " -= ";
 			String points = key + op + basicResult + " (" + successRate + ")";
 			if (s == null) {

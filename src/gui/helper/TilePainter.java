@@ -149,7 +149,7 @@ public class TilePainter {
 		if (c == null)
 			return null;
 		Animation anim = (Animation) Project.current.animations.getTree().get(animID);
-		if (anim == null)
+		if (anim == null || anim.cols == 0 || anim.rows == 0)
 			return null;
 		int w = anim.quad.width / anim.cols;
 		int h = anim.quad.height / anim.rows;

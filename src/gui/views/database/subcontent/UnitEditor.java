@@ -4,11 +4,9 @@ import gui.Vocab;
 import gui.widgets.IDButton;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
 import project.Project;
 import lwt.dataestructure.LDataTree;
@@ -17,13 +15,14 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
+import org.eclipse.swt.widgets.Label;
 
 public class UnitEditor extends LObjectEditor {
 
 	public UnitEditor(Composite parent, int style) {
 		super(parent, style);
 		
-		GridLayout gridLayout = new GridLayout(5, false);
+		GridLayout gridLayout = new GridLayout(7, false);
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
 		setLayout(gridLayout);
@@ -34,15 +33,19 @@ public class UnitEditor extends LObjectEditor {
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
 		addControl(txtKey, "key");
 		
-		Group grpEquip = new Group(this, SWT.NONE);
-		grpEquip.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpEquip = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 4);
-		gd_grpEquip.widthHint = 200;
-		grpEquip.setLayoutData(gd_grpEquip);
-		grpEquip.setText(Vocab.instance.EQUIP);
+		new LLabel(this, Vocab.instance.CHARACTER);
 		
-		EquipList lstEquip = new EquipList(grpEquip, SWT.NONE);
-		addChild(lstEquip, "equip");
+		LText txtChar = new LText(this, true);
+		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnChar = new IDButton(this, 0) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.characters.getTree();
+			}
+		};
+		btnChar.setNameWidget(txtChar);
+		addControl(btnChar, "charID");
 		
 		new LLabel(this, Vocab.instance.POSITIONX);
 		
@@ -56,53 +59,33 @@ public class UnitEditor extends LObjectEditor {
 		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnY, "y");
 		
+		new LLabel(this, Vocab.instance.CHARBATTLER);
+		
+		LText txtBattler = new LText(this, true);
+		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnBattler = new IDButton(this, 1) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.battlers.getTree();
+			}
+		};
+		addControl(btnBattler, "battlerID");
+		btnBattler.setNameWidget(txtBattler);
+
 		new LLabel(this, Vocab.instance.LIST);
 		
 		LCombo cmbList = new LCombo(this, SWT.NONE);
 		cmbList.setOptional(false);
 		cmbList.setIncludeID(false);
-		cmbList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		cmbList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbList.setItems(new String[] {
 				Vocab.instance.CURRENT,
 				Vocab.instance.BACKUP,
 				Vocab.instance.HIDDEN
 		});
 		addControl(cmbList, "list");
-		
-		Composite compIDs = new Composite(this, SWT.NONE);
-		compIDs.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 4, 1));
-		GridLayout gl_compIDs = new GridLayout(3, false);
-		gl_compIDs.marginWidth = 0;
-		gl_compIDs.marginHeight = 0;
-		compIDs.setLayout(gl_compIDs);
-		
-		new LLabel(compIDs, Vocab.instance.CHARACTER);
-		
-		LText txtChar = new LText(compIDs, true);
-		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnChar = new IDButton(compIDs, 0) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.characters.getTree();
-			}
-		};
-		btnChar.setNameWidget(txtChar);
-		addControl(btnChar, "charID");
-		
-		new LLabel(compIDs, Vocab.instance.CHARBATTLER);
-		
-		LText txtBattler = new LText(compIDs, true);
-		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnBattler = new IDButton(compIDs, 1) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.battlers.getTree();
-			}
-		};
-		btnBattler.setNameWidget(txtBattler);
-		addControl(btnBattler, "battlerID");
+		new Label(this, SWT.NONE);
 		
 	}
 
