@@ -64,6 +64,8 @@ public class Config {
 		public int widthScale = 200;
 		public int heightScale = 200;
 		public int scaleType = 1;
+		public int mobileScaleType = 2;
+		public boolean pixelPerfect = true;
 		public int fpsLimit = 120;
 		public int coverID = 211;
 	}

@@ -147,23 +147,39 @@ public class ConfigEditor extends LView {
 		spnHeightScale.setMinimum(1);
 		spnHeightScale.setMaximum(9999);
 		
+		String[] scaleTypes = new String[] {
+			Vocab.instance.NOSCALE,
+			Vocab.instance.INTEGERONLY,
+			Vocab.instance.KEEPRATIO,
+			Vocab.instance.FREESCALE
+		};
+		
 		new LLabel(screenEditor, Vocab.instance.SCALETYPE);
 		
 		LCombo cmbScale = new LCombo(screenEditor, SWT.NONE);
 		cmbScale.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		cmbScale.setOptional(false);
 		cmbScale.setIncludeID(false);
-		cmbScale.setItems(new String[] {
-			Vocab.instance.NOSCALE,
-			Vocab.instance.INTEGERONLY,
-			Vocab.instance.KEEPRATIO,
-			Vocab.instance.FREESCALE
-		});
+		cmbScale.setItems(scaleTypes);
 		screenEditor.addControl(cmbScale, "scaleType");
+		
+		new LLabel(screenEditor, Vocab.instance.MOBILESCALETYPE);
+		
+		LCombo cmbScaleMobile = new LCombo(screenEditor, SWT.NONE);
+		cmbScaleMobile.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		cmbScaleMobile.setOptional(false);
+		cmbScaleMobile.setIncludeID(false);
+		cmbScaleMobile.setItems(scaleTypes);
+		screenEditor.addControl(cmbScaleMobile, "mobileScaleType");
+		
+		LCheckBox btnPixelPerfect = new LCheckBox(screenEditor, SWT.NONE);
+		btnPixelPerfect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		btnPixelPerfect.setText(Vocab.instance.PIXELPERFECT);
+		screenEditor.addControl(btnPixelPerfect, "pixelPerfect");
 		
 		// Player
 		
-		Group grpPlayer = new Group(middle, SWT.NONE);
+		Group grpPlayer = new Group(left, SWT.NONE);
 		grpPlayer.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpPlayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPlayer.setText(Vocab.instance.PLAYER);
@@ -198,7 +214,7 @@ public class ConfigEditor extends LView {
 		
 		// Grid
 		
-		Group grpGrid = new Group(left, SWT.NONE);
+		Group grpGrid = new Group(middle, SWT.NONE);
 		grpGrid.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGrid.setText(Vocab.instance.GRID);
@@ -315,7 +331,7 @@ public class ConfigEditor extends LView {
 
 		// Troop
 		
-		Group grpTroop = new Group(middle, SWT.NONE);
+		Group grpTroop = new Group(left, SWT.NONE);
 		grpTroop.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTroop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTroop.setText(Vocab.instance.TROOP);

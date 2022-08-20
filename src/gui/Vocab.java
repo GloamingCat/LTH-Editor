@@ -90,7 +90,7 @@ public class Vocab {
 	public String DEPTHY = "Depth/Y";
 	public String ALLNEIGHBORS = "8 neighbors";
 	public String OVERPASSALLIES = "Overpass Allies";
-	public String OVERPASSDEADS = "Overpass Deads";
+	public String OVERPASSDEADS = "Overpass Dead";
 	
 	// Screen
 	public String SCREEN = "Screen";
@@ -103,10 +103,12 @@ public class Vocab {
 	public String WIDTHSCALE = "Width Scale";
 	public String HEIGHTSCALE = "Height Scale";
 	public String SCALETYPE = "Scale Type";
+	public String MOBILESCALETYPE = "Scale Type (Mobile)";
 	public String NOSCALE = "No scaling";
 	public String INTEGERONLY = "Only by integers";
 	public String KEEPRATIO = "Keep ratio";
 	public String FREESCALE = "Fill screen";
+	public String PIXELPERFECT = "Pixel Perfect";
 	
 	// Player
 	public String PLAYER = "Player";
