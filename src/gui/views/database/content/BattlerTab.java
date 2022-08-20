@@ -30,9 +30,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-
 import data.subcontent.Rule;
 
 public class BattlerTab extends DatabaseTab {
@@ -144,97 +141,80 @@ public class BattlerTab extends DatabaseTab {
 		TagList lstTags = new TagList(grpTags, SWT.NONE);
 		addChild(lstTags, "tags");
 		
-		// Initial state
+		// Elements
 		
 		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_other = new GridLayout(3, false);
+		GridLayout gl_other = new GridLayout(3, true);
+		gl_other.verticalSpacing = 0;
 		gl_other.marginHeight = 0;
 		gl_other.marginWidth = 0;
 		bottom.setLayout(gl_other);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		Group grpInitial = new Group(bottom, SWT.NONE);
-		grpInitial.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpInitial = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_grpInitial.widthHint = 129;
-		grpInitial.setLayoutData(gd_grpInitial);
-		grpInitial.setText(Vocab.instance.INITIAL);
+		Group grpElements = new Group(bottom, SWT.NONE);
+		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		TabFolder tabInitial = new TabFolder(grpInitial, SWT.NONE);
-		
-		// Skills
-		
-		TabItem tbtmSkills = new TabItem(tabInitial, SWT.NONE);
-		tbtmSkills.setText(Vocab.instance.SKILLS);
-		
-		IDList lstSkills = new IDList(tabInitial, SWT.NONE) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
-		tbtmSkills.setControl(lstSkills);
-		addChild(lstSkills, "skills");
-		
-		// Status
-		
-		TabItem tbtmStatus = new TabItem(tabInitial, SWT.NONE);
-		tbtmStatus.setText(Vocab.instance.STATUS);
-		
-		BonusList lstStatus = new BonusList(tabInitial, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		tbtmStatus.setControl(lstStatus);
-		addChild(lstStatus, "status");
-		
-		// Elements
-		
-		TabItem tbtmElements = new TabItem(tabInitial, SWT.NONE);
-		tbtmElements.setText(Vocab.instance.ELEMENTS);
-		
-		BonusList lstElements = new BonusList(tabInitial, SWT.NONE) {
+		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.elements.getList().toTree();
 			}
 		};
-		tbtmElements.setControl(lstElements);
 		addChild(lstElements, "elements");
 		
-		// Items
+		// Initial state
 		
-		Group grpItems = new Group(bottom, SWT.NONE);
-		grpItems.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpItems.setText(Vocab.instance.ITEMS);
+		Composite compInitial = new Composite(bottom, SWT.NONE);
+		GridLayout gl_compInitial = new GridLayout(1, false);
+		gl_compInitial.verticalSpacing = 0;
+		compInitial.setLayout(gl_compInitial);
+		compInitial.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
-		TabFolder tabItems = new TabFolder(grpItems, SWT.NONE);
+		// Skills
 		
-		// Drop
+		Group grpSkills = new Group(compInitial, SWT.NONE);
+		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpSkills.setText(Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")");
+		grpSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		TabItem tbtmDrop = new TabItem(tabItems, SWT.NONE);
-		tbtmDrop.setText(Vocab.instance.DROP);
+		IDList lstSkills = new IDList(grpSkills, SWT.NONE) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.skills.getTree();
+			}
+		};
+		addChild(lstSkills, "skills");
 		
-		DropList lstDrop = new DropList(tabItems, SWT.NONE);
-		tbtmDrop.setControl(lstDrop);
-		addChild(lstDrop, "items");
+		// Status
+		
+		Group grpStatus = new Group(compInitial, SWT.NONE);
+		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatus.setText(Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")");
+		grpStatus.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		IDList lstStatus = new IDList(grpStatus, SWT.NONE) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.status.getTree();
+			}
+		};
+		addChild(lstStatus, "status");
 		
 		// Equip
 		
-		TabItem tbtmEquip = new TabItem(tabItems, SWT.NONE);
-		tbtmEquip.setText(Vocab.instance.EQUIP);
+		Group grpEquip = new Group(compInitial, SWT.NONE);
+		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpEquip.setText(Vocab.instance.EQUIP + " (" + Vocab.instance.INITIAL + ")");
+		grpEquip.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		EquipList lstEquip = new EquipList(tabItems, SWT.NONE);
-		tbtmEquip.setControl(lstEquip);
+		EquipList lstEquip = new EquipList(grpEquip, SWT.NONE);
 		addChild(lstEquip, "equip");
 
 		// Attributes
 		
 		Group grpAtt = new Group(bottom, SWT.NONE);
 		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
 		gd_grpAtt.heightHint = 100;
 		grpAtt.setLayoutData(gd_grpAtt);
 		grpAtt.setText(Vocab.instance.ATTRIBUTES);
@@ -242,6 +222,16 @@ public class BattlerTab extends DatabaseTab {
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
 		attEditor.setColumns(4);
 		addChild(attEditor, "attributes");
+		
+		// Drop
+		
+		Group grpDrop = new Group(bottom, SWT.NONE);
+		grpDrop.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpDrop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpDrop.setText(Vocab.instance.DROP);
+		
+		DropList lstDrop = new DropList(grpDrop, SWT.NONE);
+		addChild(lstDrop, "items");
 		
 	}
 

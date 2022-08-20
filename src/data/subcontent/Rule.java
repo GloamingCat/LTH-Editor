@@ -10,9 +10,9 @@ public class Rule extends Data {
 		if (name.isEmpty())
 			return "Wait";
 		else if (condition.isEmpty())
-			return name;
+			return name + " " + tags.toString();
 		else
-			return name + " if " + condition;
+			return name + " if " + condition + " " + tags.toString();
 	}
 	
 }
