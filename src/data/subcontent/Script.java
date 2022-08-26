@@ -14,6 +14,8 @@ public class Script extends Data {
 	public boolean onInteract = false;
 	public boolean onCollide = false;
 	
+	public String description = "";
+	
 	public String toString() {
 		String s = "(";
 		if (onLoad) {
@@ -28,7 +30,10 @@ public class Script extends Data {
 				s += ", Interact";
 		} else if (onInteract)
 			s += "Interact";
-		return name + " " + s + ")";
+		if (description.isEmpty())
+			return name + " " + s + ")";
+		else
+			return description + " " + s + ")";
 	}
 	
 }

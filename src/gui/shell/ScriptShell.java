@@ -7,6 +7,8 @@ import gui.widgets.FileSelector;
 import java.io.File;
 
 import lwt.widget.LCheckBox;
+import lwt.widget.LLabel;
+import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -27,8 +29,17 @@ public class ScriptShell extends ObjectShell<Script> {
 	
 	public ScriptShell(Shell parent, int style) {
 		super(parent);
-		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
+		contentEditor.setLayout(new GridLayout(2, false));
+		
+		LLabel label = new LLabel(contentEditor, Vocab.instance.DESCRIPTION);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		LText txtDescription = new LText(contentEditor);
+		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		addControl(txtDescription, "description");
+		
 		SashForm form = new SashForm(contentEditor, SWT.NONE);
+		form.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		selFile = new FileSelector(form, style) {
 			@Override
 			protected boolean isValidFile(File f) {
