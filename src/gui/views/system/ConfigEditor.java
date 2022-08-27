@@ -41,7 +41,7 @@ public class ConfigEditor extends LView {
 		
 		editor = new LObjectEditor(this, SWT.NONE);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		editor.setLayout(new GridLayout(2, false));
+		editor.setLayout(new GridLayout(6, false));
 		addChild(editor);
 		
 		Composite left = new Composite(this, SWT.NONE);
@@ -65,8 +65,49 @@ public class ConfigEditor extends LView {
 		new LLabel(editor, Vocab.instance.PROJECTNAME);
 		
 		LText txtName = new LText(editor);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridData gd_txtName = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		gd_txtName.widthHint = 240;
+		txtName.setLayoutData(gd_txtName);
 		editor.addControl(txtName, "name");
+		
+		String[] platforms = new String[] {
+			Vocab.instance.DESKTOP,
+			Vocab.instance.MOBILE,
+			Vocab.instance.BROWSER
+		};
+			
+		new LLabel(editor, Vocab.instance.PLATFORM);
+		
+		LCombo cmbPlatform = new LCombo(editor, SWT.NONE);
+		cmbPlatform.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		cmbPlatform.setOptional(false);
+		cmbPlatform.setIncludeID(false);
+		cmbPlatform.setItems(platforms);
+		editor.addControl(cmbPlatform, "platform");
+		
+		// TODO: export button
+		
+		new LLabel(editor, Vocab.instance.COVER);
+		
+		LText txtCover = new LText(editor, true);
+		txtCover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnCover = new IDButton(editor, 1) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		btnCover.setNameWidget(txtCover);
+		editor.addControl(btnCover, "coverID");
+		
+		new LLabel(editor, Vocab.instance.FPSLIMIT);
+		
+		LSpinner spnFps = new LSpinner(editor, SWT.NONE);
+		spnFps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		editor.addControl(spnFps, "fpsLimit");
+		spnFps.setMinimum(1);
+		spnFps.setMaximum(9999);
 		
 		// Screen
 		
@@ -78,28 +119,6 @@ public class ConfigEditor extends LView {
 		LObjectEditor screenEditor = new LObjectEditor(grpScreen, SWT.NONE);
 		editor.addChild(screenEditor, "screen");
 		screenEditor.setLayout(new GridLayout(3, false));
-		
-		new LLabel(screenEditor, Vocab.instance.COVER);
-		
-		LText txtCover = new LText(screenEditor, true);
-		txtCover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnCover = new IDButton(screenEditor, 0) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
-		btnCover.setNameWidget(txtCover);
-		screenEditor.addControl(btnCover, "coverID");
-		
-		new LLabel(screenEditor, Vocab.instance.FPSLIMIT);
-		
-		LSpinner spnFps = new LSpinner(screenEditor, SWT.NONE);
-		spnFps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		screenEditor.addControl(spnFps, "fpsLimit");
-		spnFps.setMinimum(1);
-		spnFps.setMaximum(9999);
 		
 		new LLabel(screenEditor, Vocab.instance.NATIVESIZE);
 		
@@ -179,7 +198,7 @@ public class ConfigEditor extends LView {
 		
 		// Player
 		
-		Group grpPlayer = new Group(left, SWT.NONE);
+		Group grpPlayer = new Group(middle, SWT.NONE);
 		grpPlayer.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpPlayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPlayer.setText(Vocab.instance.PLAYER);
@@ -214,7 +233,7 @@ public class ConfigEditor extends LView {
 		
 		// Grid
 		
-		Group grpGrid = new Group(middle, SWT.NONE);
+		Group grpGrid = new Group(left, SWT.NONE);
 		grpGrid.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGrid.setText(Vocab.instance.GRID);
@@ -331,7 +350,7 @@ public class ConfigEditor extends LView {
 
 		// Troop
 		
-		Group grpTroop = new Group(left, SWT.NONE);
+		Group grpTroop = new Group(middle, SWT.NONE);
 		grpTroop.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpTroop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTroop.setText(Vocab.instance.TROOP);

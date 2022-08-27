@@ -10,6 +10,10 @@ public class Config {
 	
 	// General
 	public String name = "New Project";
+	public int fpsLimit = 120;
+	public int coverID = 211;
+	public int platform = 0;
+	
 	public Player player = new Player();
 	public Battle battle = new Battle();
 	public Troop troop = new Troop();
@@ -66,8 +70,6 @@ public class Config {
 		public int scaleType = 1;
 		public int mobileScaleType = 2;
 		public boolean pixelPerfect = true;
-		public int fpsLimit = 120;
-		public int coverID = 211;
 	}
 	
 }

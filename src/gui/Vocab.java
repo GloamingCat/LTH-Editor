@@ -69,6 +69,10 @@ public class Vocab {
 	public String COLOR = "Color";
 	public String SIZE = "Size";
 	public String FORMAT = "Format";
+	public String PLATFORM = "Platform";
+	public String DESKTOP = "Desktop";
+	public String MOBILE = "Mobile";
+	public String BROWSER = "Web Browser";
 	
 	// Attributes
 	public String SHORTNAME = "Short Name";
