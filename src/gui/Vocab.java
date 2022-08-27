@@ -341,6 +341,7 @@ public class Vocab {
 	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
+	public String REPEATCOLLISIONS = "Repeat collisions";
 	
 	// Effect
 	public String EFFECTS = "Effects";
@@ -404,6 +405,5 @@ public class Vocab {
 	public String DESTINATION = "Destination";
 	public String ORIGTILES = "Origin Tiles";
 	public String FADEOUT = "Fade out";
-
 
 }

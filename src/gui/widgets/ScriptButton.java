@@ -6,7 +6,6 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -22,7 +21,7 @@ public class ScriptButton extends LObjectButton<Script> {
 	 * @param style
 	 */
 	public ScriptButton(Composite parent, int style) {
-		super(parent, SWT.NONE);
+		super(parent);
 		setShellFactory(new LShellFactory<Script>() {
 			@Override
 			public LObjectShell<Script> createShell(Shell parent) {

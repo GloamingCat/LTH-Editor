@@ -32,7 +32,7 @@ public class Field {
 		public int defaultRegion = -1;
 		public int maxHeight = 4;
 		public Audio bgm = new Audio();
-		public Script loadScript = new Script();
+		public Script loadScript = new Script(true, false, false);
 		public LDataList<FieldImage> images = new LDataList<>();
 		public LDataList<Transition> transitions = new LDataList<>(); 
 		

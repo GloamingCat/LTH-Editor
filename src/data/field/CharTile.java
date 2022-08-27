@@ -23,6 +23,8 @@ public class CharTile {
 	
 	public LDataList<Script> scripts = new LDataList<>();
 	
+	public boolean repeatCollisions = false;
+	
 	public CharTile() {}
 
 	public String toString() {

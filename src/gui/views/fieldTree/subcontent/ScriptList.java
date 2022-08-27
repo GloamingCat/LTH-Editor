@@ -13,7 +13,7 @@ import lwt.dialog.LShellFactory;
 public class ScriptList extends SimpleEditableList<Script> {
 	
 	public ScriptList(Composite parent, int style) {
-		super(parent, style);
+		super(parent);
 		type = Script.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Script>() {

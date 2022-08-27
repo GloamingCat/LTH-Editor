@@ -2,6 +2,7 @@ package gui.widgets;
 
 import java.lang.reflect.Type;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import gson.editor.GDefaultListEditor;
@@ -12,6 +13,10 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 
 	public Type type;
 	protected LDataList<T> currentList;
+	
+	public SimpleEditableList(Composite parent) {
+		this(parent, SWT.NONE);
+	}
 	
 	public SimpleEditableList(Composite parent, int style) {
 		super(parent, style);

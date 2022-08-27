@@ -107,11 +107,21 @@ public class CharTileEditor extends LObjectEditor {
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtKey, "key");
 		
-		new LLabel(this, Vocab.instance.PERSISTENT);
-		
-		LCheckBox btnPersistent = new LCheckBox(this, SWT.NONE);
-		btnPersistent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		Composite compOptions = new Composite(this, SWT.NONE);
+		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		compOptions.setLayout(new FillLayout());
+
+		LCheckBox btnPersistent = new LCheckBox(compOptions, SWT.NONE);
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
+		
+		LCheckBox btnPassable = new LCheckBox(compOptions, SWT.NONE);
+		btnPassable.setText(Vocab.instance.PASSABLE);
+		addControl(btnPassable, "passable");
+		
+		LCheckBox btnVisible = new LCheckBox(compOptions, SWT.NONE);
+		btnVisible.setText(Vocab.instance.VISIBLE);
+		addControl(btnVisible, "visible");
 		
 		// Char
 		
@@ -140,8 +150,8 @@ public class CharTileEditor extends LObjectEditor {
 			}
 		};
 		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		String[] d = new String[] {"0°", "45°", "90°", "135°", 
-				"180°", "225°", "270°", "315°"};
+		String[] d = new String[] {"0Â°", "45Â°", "90Â°", "135Â°", 
+				"180Â°", "225Â°", "270Â°", "315Â°"};
 		cmbDir.setIncludeID(false);
 		cmbDir.setOptional(false);
 		cmbDir.setItems(d);
@@ -172,20 +182,6 @@ public class CharTileEditor extends LObjectEditor {
 			}
 		});
 		
-		Composite compOptions = new Composite(this, SWT.NONE);
-		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
-		compOptions.setLayout(new GridLayout(2, true));
-
-		LCheckBox btnPassable = new LCheckBox(compOptions, SWT.NONE);
-		btnPassable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		btnPassable.setText(Vocab.instance.PASSABLE);
-		addControl(btnPassable, "passable");
-		
-		LCheckBox btnVisible = new LCheckBox(compOptions, SWT.NONE);
-		btnVisible.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		btnVisible.setText(Vocab.instance.VISIBLE);
-		addControl(btnVisible, "visible");
-		
 		// Battle
 		
 		new LLabel(this, Vocab.instance.PARTY);
@@ -211,12 +207,18 @@ public class CharTileEditor extends LObjectEditor {
 		addControl(btnBattler, "battlerID");
 		
 		Group grpScripts = new Group(this, SWT.NONE);
-		grpScripts.setLayout(new FillLayout());
+		grpScripts.setLayout(new GridLayout(1, true));
 		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
 		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
-		ScriptList lstScripts = new ScriptList(grpScripts, 1 | 2 | 4 | 8);
+		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
+		lstScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstScripts, "scripts");
+		
+		LCheckBox btnRepeat = new LCheckBox(grpScripts, SWT.NONE);
+		btnRepeat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
+		addControl(btnRepeat, "repeatCollisions");
 
 	}
 

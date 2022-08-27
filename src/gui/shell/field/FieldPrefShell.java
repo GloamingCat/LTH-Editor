@@ -93,7 +93,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		LText txtScript = new LText(grpGeneral, true);
 		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		ScriptButton btnScript = new ScriptButton(grpGeneral, 3);
+		ScriptButton btnScript = new ScriptButton(grpGeneral, 1);
 		btnScript.setPathWidget(txtScript);
 		btnScript.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addControl(btnScript, "loadScript");

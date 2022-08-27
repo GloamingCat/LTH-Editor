@@ -226,7 +226,7 @@ public class FieldSideEditor extends LObjectEditor {
 				FieldEditor.instance.canvas.setCharacter(tile);
 			}
 		});
-		character.setWeights(new int[] {1, 2});
+		character.setWeights(new int[] {1, 3});
 
 		// Party
 		
