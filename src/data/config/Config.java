@@ -10,7 +10,8 @@ public class Config {
 	
 	// General
 	public String name = "New Project";
-	public int fpsLimit = 120;
+	public int fpsMax = 120;
+	public int fpsMin = 15;
 	public int coverID = 211;
 	public int platform = 0;
 	

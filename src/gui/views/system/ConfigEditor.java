@@ -41,7 +41,7 @@ public class ConfigEditor extends LView {
 		
 		editor = new LObjectEditor(this, SWT.NONE);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		editor.setLayout(new GridLayout(6, false));
+		editor.setLayout(new GridLayout(7, false));
 		addChild(editor);
 		
 		Composite left = new Composite(this, SWT.NONE);
@@ -77,10 +77,11 @@ public class ConfigEditor extends LView {
 			Vocab.instance.MOBILEBROWSER
 		};
 			
-		new LLabel(editor, Vocab.instance.PLATFORM);
+		LLabel label = new LLabel(editor, Vocab.instance.PLATFORM);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		LCombo cmbPlatform = new LCombo(editor, SWT.NONE);
-		cmbPlatform.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		cmbPlatform.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		cmbPlatform.setOptional(false);
 		cmbPlatform.setIncludeID(false);
 		cmbPlatform.setItems(platforms);
@@ -102,13 +103,22 @@ public class ConfigEditor extends LView {
 		btnCover.setNameWidget(txtCover);
 		editor.addControl(btnCover, "coverID");
 		
-		new LLabel(editor, Vocab.instance.FPSLIMIT);
+		LLabel label_1 = new LLabel(editor, Vocab.instance.FPSLIMIT);
+		label_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		LSpinner spnFps = new LSpinner(editor, SWT.NONE);
-		spnFps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		editor.addControl(spnFps, "fpsLimit");
-		spnFps.setMinimum(1);
-		spnFps.setMaximum(9999);
+		LSpinner spnFpsMin = new LSpinner(editor, SWT.NONE);
+		spnFpsMin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		editor.addControl(spnFpsMin, "fpsMin");
+		spnFpsMin.setMinimum(1);
+		spnFpsMin.setMaximum(9999);
+		
+		new LLabel(editor, " ~ ");
+		
+		LSpinner spnFpsMax = new LSpinner(editor, SWT.NONE);
+		spnFpsMax.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		editor.addControl(spnFpsMax, "fpsMax");
+		spnFpsMax.setMinimum(1);
+		spnFpsMax.setMaximum(9999);
 		
 		// Screen
 		
