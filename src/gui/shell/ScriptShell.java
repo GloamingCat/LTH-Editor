@@ -93,7 +93,7 @@ public class ScriptShell extends ObjectShell<Script> {
 		addControl(btnInteract, "onInteract");
 		btnInteract.setEnabled((style & 8) != 0);
 		
-		form.setWeights(new int[] {1, 1});
+		form.setWeights(new int[] {1, 2});
 	}
 	
 	public void open(Script initial) {

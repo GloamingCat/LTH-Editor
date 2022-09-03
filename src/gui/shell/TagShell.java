@@ -20,6 +20,7 @@ public class TagShell extends ObjectShell<Tag> {
 
 	public TagShell(Shell parent) {
 		super(parent);
+		setMinimumSize(400, 300);
 		contentEditor.setLayout(new GridLayout(2, false));
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);

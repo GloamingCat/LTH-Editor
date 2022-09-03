@@ -18,7 +18,7 @@ public class Tag {
 	}
 	
 	public String toString() {
-		return "\"" + key + "\": " + value;
+		return "\"" + key + "\": " + value.replace("\n", "").replace("\r", "");
 	}
 	
 	public boolean equals(Object obj) {

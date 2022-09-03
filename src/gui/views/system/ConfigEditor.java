@@ -73,7 +73,8 @@ public class ConfigEditor extends LView {
 		String[] platforms = new String[] {
 			Vocab.instance.DESKTOP,
 			Vocab.instance.MOBILE,
-			Vocab.instance.BROWSER
+			Vocab.instance.BROWSER,
+			Vocab.instance.MOBILEBROWSER
 		};
 			
 		new LLabel(editor, Vocab.instance.PLATFORM);

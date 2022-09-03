@@ -71,8 +71,9 @@ public class Vocab {
 	public String FORMAT = "Format";
 	public String PLATFORM = "Platform";
 	public String DESKTOP = "Desktop";
-	public String MOBILE = "Mobile";
+	public String MOBILE = "Mobile App";
 	public String BROWSER = "Web Browser";
+	public String MOBILEBROWSER = "Mobile Web Browser";
 	
 	// Attributes
 	public String SHORTNAME = "Short Name";
