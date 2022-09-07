@@ -189,10 +189,10 @@ public class Vocab {
 	public String EQUIPITEM = "Item ID";
 	
 	// Skill
-	public String COSTS = "Costs";
 	public String ATTACK = "Attack";
 	public String SUPPORT = "Support";
 	public String ALLPARTIES = "All parties";
+	public String TARGET = "Target";
 	public String EFFECTCONDITION = "Condition";
 	public String TARGETSELECTION = "Selection";
 	public String AUTOPATH = "Auto Path";
@@ -202,9 +202,12 @@ public class Vocab {
 	public String EFFECTRANGE = "Affected & Reachable";
 	public String FREENAVIGATION = "Free Navigation";
 	public String RESTRICTIONS = "Restrictions";
+	public String CONTEXT = "Context";
 	public String ALWAYS = "Always";
 	public String BATTLEONLY = "Battle Only";
 	public String FIELDONLY = "Field Only";
+	public String COSTS = "Costs";
+	public String USECONDITION = "Use Condition";
 	public String CASTMASK = "Range Mask";
 	public String EFFECTMASK = "Effect Mask";
 	public String USERELEMENTS = "Include user's elements";

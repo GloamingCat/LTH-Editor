@@ -25,6 +25,8 @@ public class Skill extends Data {
 	public boolean autoPath = true;
 	public boolean freeNavigation = true;
 	
+	// Use conditions
+	public String condition = ""; // Required state to use the skill
 	public int restriction = 0; // 0 => Anywhere, 1 => Battle only, 2 => Field only
 	public LDataList<Tag> costs = new LDataList<>();
 	
