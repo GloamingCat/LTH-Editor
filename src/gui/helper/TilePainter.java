@@ -137,11 +137,11 @@ public class TilePainter {
 		if (c == null)
 			return null;
 		int animID = c.findAnimation(tile.animation);
-		return getCharacterTile(tile.charID, tile.direction, animID);
+		return getCharacterTile(tile.charID, animID, tile.direction, tile.frame - 1);
 	}
 	
-	public static Image getCharacterTile(int charID, int direction, int animID) {
-		String key = charID + "." + animID + "." + direction;
+	public static Image getCharacterTile(int charID, int animID, int direction, int frame) {
+		String key = charID + "." + animID + "." + direction + "." + frame;
 		Image img = characterCache.get(key);
 		if (img != null)
 			return img;
@@ -153,16 +153,16 @@ public class TilePainter {
 			return null;
 		int w = anim.quad.width / anim.cols;
 		int h = anim.quad.height / anim.rows;
-		int col = anim.getFirstFrame();
+		int col = anim.getFrame(frame);
+		int row = (direction / 45);
 		img = LImageHelper.newImage(w, h);
 		Image quadImg = anim.quad.getImage();
 		try {
 			GC gc = new GC(img);
 			gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
 			gc.drawImage(quadImg, // Image
-					anim.quad.x + w * col, anim.quad.y + h * (direction / 45), w, h, // Position/scale
-					0, 0, w, h); // Source quad
-			
+					anim.quad.x + w * col, anim.quad.y + h * row, w, h, // Source
+					0, 0, w, h); // Destination
 			gc.dispose();
 			ImageData data = img.getImageData();
 			LImageHelper.correctTransparency(data);
@@ -176,8 +176,9 @@ public class TilePainter {
 			img.dispose();
 			img = new Image(Display.getCurrent(), data);
 			characterCache.put(key, img);
+			System.out.println(key);
 		} catch (IllegalArgumentException e) {
-			System.out.print("Couldn't draw character image.");
+			e.printStackTrace();
 		}
 		return img;
 	}

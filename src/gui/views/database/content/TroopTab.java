@@ -144,7 +144,7 @@ public class TroopTab extends DatabaseTab {
 						int animID = c.defaultAnimationID();
 						if (animID == -1)
 							continue;
-						Image img = TilePainter.getCharacterTile(u.charID, 270, animID);
+						Image img = TilePainter.getCharacterTile(u.charID, animID, 270, 0);
 						if (img == null)
 							continue;
 						Rectangle bounds = img.getBounds();

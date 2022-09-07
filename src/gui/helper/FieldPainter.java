@@ -154,17 +154,32 @@ public class FieldPainter {
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
 			Animation anim = (Animation) Project.current.animations.getTree().
 					get(c.findAnimation(tile.animation));
-			if (c.shadowID >= 0) {
-				Animation shadow = (Animation) Project.current.animations.getTree().get(c.shadowID);
+			float sxc = c.transform.scaleX / 100f;
+			float syc = c.transform.scaleY / 100f;
+			int oxc = (int)(c.transform.offsetX * sxc);
+			int oyc = (int)(c.transform.offsetY * syc);
+			Animation shadow = (Animation) Project.current.animations.getTree().get(c.shadowID);
+			if (shadow != null) {
 				int sw = shadow.quad.width / shadow.cols;
 				int sh = shadow.quad.height / shadow.rows;
-				int scol = shadow.getFirstFrame();
-				gc.drawImage(shadow.quad.getImage(), 
-						shadow.quad.x + sw * scol, shadow.quad.y, sw, sh, 
-						x0 - shadow.transform.offsetX, y0 - shadow.transform.offsetY, sw, sh);
+				float sx = shadow.transform.scaleX / 100f;
+				float sy = shadow.transform.scaleY / 100f;
+				Image simg = shadow.quad.getImage();
+				gc.drawImage(simg, shadow.quad.x, shadow.quad.y, sw, sh, 
+						x0 - (int)(shadow.transform.offsetX * sx),
+						y0 - (int)(shadow.transform.offsetY * sy), 
+						(int)(sw * sx), (int)(sh * sy));
 			}
-			gc.drawImage(img, x0 - c.transform.offsetX - anim.transform.offsetX, 
-					y0 - c.transform.offsetY - anim.transform.offsetY);
+			int w = img.getBounds().width;
+			int h = img.getBounds().height;
+			float sxa = anim.transform.scaleX / 100f;
+			float sya = anim.transform.scaleY / 100f;
+			System.out.println(w + " " + h + " " + (sxc * sxa * w) + " " + (syc * sya * h));
+			gc.drawImage(img, 0, 0, w, h,
+					x0 - (int)(anim.transform.offsetX * sxa) - oxc, 
+					y0 - (int)(anim.transform.offsetY * sya) - oyc,
+					(int)(sxc * sxa * w),
+					(int)(syc * sya * h));
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}

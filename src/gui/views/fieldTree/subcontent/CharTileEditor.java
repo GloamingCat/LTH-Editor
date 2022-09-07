@@ -2,6 +2,7 @@ package gui.views.fieldTree.subcontent;
 
 import gui.Vocab;
 import gui.views.fieldTree.FieldEditor;
+import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
 
 import org.eclipse.swt.SWT;
@@ -42,14 +43,14 @@ public class CharTileEditor extends LObjectEditor {
 	 */
 	public CharTileEditor(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(4, false));
 		
 		Composite position = new Composite(this, SWT.NONE);
 		GridLayout gl_position = new GridLayout(4, false);
 		gl_position.marginWidth = 0;
 		gl_position.marginHeight = 0;
 		position.setLayout(gl_position);
-		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		
 		new LLabel(position, Vocab.instance.POSITION);
 		
@@ -104,11 +105,11 @@ public class CharTileEditor extends LObjectEditor {
 		new LLabel(this, Vocab.instance.KEY);
 		
 		LText txtKey = new LText(this);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(txtKey, "key");
 		
 		Composite compOptions = new Composite(this, SWT.NONE);
-		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
 		compOptions.setLayout(new FillLayout());
 
 		LCheckBox btnPersistent = new LCheckBox(compOptions, SWT.NONE);
@@ -128,7 +129,7 @@ public class CharTileEditor extends LObjectEditor {
 		new LLabel(this, Vocab.instance.CHARACTER);
 		
 		LText txtChar = new LText(this, true);
-		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		IDButton btnChar = new IDButton(this, 1) {
 			@Override
@@ -139,24 +140,9 @@ public class CharTileEditor extends LObjectEditor {
 		btnChar.setNameWidget(txtChar);
 		addControl(btnChar, "charID");
 		
-		new LLabel(this, Vocab.instance.DIRECTION);
+		// Animation
 		
-		LCombo cmbDir = new LCombo(this) {
-			public void setSelectionIndex(int i) {
-				super.setSelectionIndex(i / 45);
-			}
-			public int getSelectionIndex() {
-				return super.getSelectionIndex() * 45;
-			}
-		};
-		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		String[] d = new String[] {"0°", "45°", "90°", "135°", 
-				"180°", "225°", "270°", "315°"};
-		cmbDir.setIncludeID(false);
-		cmbDir.setOptional(false);
-		cmbDir.setItems(d);
-		addControl(cmbDir, "direction");
-		cmbDir.addModifyListener(new LControlListener<Integer>() {
+		LControlListener<Integer> listener = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
@@ -164,23 +150,32 @@ public class CharTileEditor extends LObjectEditor {
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}
-		});
+		};
+		
+		new LLabel(this, Vocab.instance.DIRECTION);
+		
+		DirectionCombo cmbDir = new DirectionCombo(this);
+		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(cmbDir, "direction");
+		cmbDir.addModifyListener(listener);
+		
+		LLabel label = new LLabel(this, Vocab.instance.FRAME);
+		label.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false, 1, 1));
+		new LLabel(this, "");
 		
 		new LLabel(this, Vocab.instance.ANIMATION);
 		
 		LText txtAnim = new LText(this);
-		txtAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		txtAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		addControl(txtAnim, "animation");
 		
-		btnChar.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, spnY.getValue() - 1);
-				FieldEditor.instance.canvas.redrawBuffer();
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
+		btnChar.addModifyListener(listener);
+		
+		LSpinner spnFrame = new LSpinner(this);
+		GridData gd_spnFrame = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		gd_spnFrame.widthHint = 84;
+		spnFrame.setLayoutData(gd_spnFrame);
+		addControl(spnFrame, "frame");
 		
 		// Battle
 		
@@ -189,13 +184,13 @@ public class CharTileEditor extends LObjectEditor {
 		cmbParty = new LCombo(this);
 		cmbParty.setIncludeID(false);
 		cmbParty.setOptional(true);
-		cmbParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		cmbParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(cmbParty, "party");
 		
 		new LLabel(this, Vocab.instance.CHARBATTLER);
 		
 		LText txtBattler = new LText(this, true);
-		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		IDButton btnBattler = new IDButton(this, SWT.NONE) {
 			@Override
@@ -208,7 +203,7 @@ public class CharTileEditor extends LObjectEditor {
 		
 		Group grpScripts = new Group(this, SWT.NONE);
 		grpScripts.setLayout(new GridLayout(1, true));
-		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
 		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);

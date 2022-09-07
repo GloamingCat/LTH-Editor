@@ -23,17 +23,18 @@ public class Animation extends Data {
 	public String loopDuration = "";
 	public LDataList<Audio> audio = new LDataList<>();
 	
-	public int getFirstFrame() {
+	public int getFrame(int i) {
 		try {
-		if (introPattern.isEmpty()) {
-			if (loopPattern.isEmpty())
-				return 0;
-			else
-				return Integer.parseInt(loopPattern.split(" ")[0]);
-		} else
-			return Integer.parseInt(introPattern.split(" ")[0]);
+			if (introPattern.isEmpty()) {
+				if (loopPattern.isEmpty())
+					return i;
+				else
+					return Integer.parseInt(loopPattern.split(" ")[i]);
+			} else
+				return Integer.parseInt(introPattern.split(" ")[i]);
 		} catch (Exception e) {
-			return 0;
+			e.printStackTrace();
+			return i;
 		}
 	}
 

@@ -389,6 +389,7 @@ public class Vocab {
 	
 	// Character
 	public String ANIMATION = "Animation";
+	public String FRAME = "Frame";
 	public String ONLOAD = "On Load";
 	public String ONCOLLIDE = "On Collide";
 	public String ONINTERACT = "On Interact";

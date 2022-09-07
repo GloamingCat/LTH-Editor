@@ -19,6 +19,7 @@ public class CharTile {
 	public int battlerID = -1;
 	
 	public String animation = "Idle";
+	public int frame = 1;
 	public int direction = 315;
 	
 	public LDataList<Script> scripts = new LDataList<>();
