@@ -7,6 +7,7 @@ public class Data {
 
 	public String name = "Empty";
 	public LDataList<Tag> tags = new LDataList<>();
+	public String key = "";
 	
 	@Override
 	public String toString() {

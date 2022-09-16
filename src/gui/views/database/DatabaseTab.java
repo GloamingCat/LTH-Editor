@@ -39,9 +39,11 @@ public abstract class DatabaseTab extends LView {
 	protected GDefaultTreeEditor<Object> listEditor;
 	protected LObjectEditor contentEditor;
 	protected Group grpGeneral;
+	protected LLabel lblID;
+	protected LLabel lblKey;
+	protected LText txtKey;
 	protected LLabel lblName;
 	protected LText txtName;
-	protected LLabel lblID;
 	
 	public DatabaseTab(Composite parent) {
 		super(parent);
@@ -84,14 +86,26 @@ public abstract class DatabaseTab extends LView {
 		grpGeneral.setLayout(new GridLayout(2, false));
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		
-		lblID = new LLabel(grpGeneral, "");
-		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		Composite compID = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compID = new GridLayout(3, false);
+		gl_compID.marginWidth = 0;
+		gl_compID.marginHeight = 0;
+		compID.setLayout(gl_compID);
+		compID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
+		lblID = new LLabel(compID, "");
+		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		lblKey = new LLabel(compID, Vocab.instance.KEY);
+		
+		txtKey = new LText(compID);
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		contentEditor.addControl(txtKey, "key");
 		
 		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);
 		
 		txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
 		contentEditor.addControl(txtName, "name");
 		
 		listEditor.addChild(contentEditor);

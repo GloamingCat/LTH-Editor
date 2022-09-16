@@ -4,7 +4,6 @@ import data.Data;
 
 public class EquipType extends Data {
 			
-	public String key = "";
 	public int count = 1;
 	// 0 => free
 	// 1 => at least one equipped
