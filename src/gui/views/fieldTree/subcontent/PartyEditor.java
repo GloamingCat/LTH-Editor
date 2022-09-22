@@ -1,18 +1,23 @@
 package gui.views.fieldTree.subcontent;
 
 import gui.Vocab;
+import gui.shell.field.TroopSpawnShell;
 import gui.views.fieldTree.FieldEditor;
 import gui.views.fieldTree.FieldSideEditor;
-import gui.widgets.IDList;
+import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Shell;
+
+import data.field.Party.TroopSpawn;
+
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
-import project.Project;
-import lwt.dataestructure.LDataTree;
+import lwt.dialog.LObjectShell;
+import lwt.dialog.LShellFactory;
 import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
@@ -98,7 +103,7 @@ public class PartyEditor extends LObjectEditor {
 		
 		LCombo cmbDir = new LCombo(this);
 		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		String[] d = new String[] {"0°", "90°", "180°", "270°"};
+		String[] d = new String[] {"0Â°", "90Â°", "180Â°", "270Â°"};
 		cmbDir.setIncludeID(false);
 		cmbDir.setOptional(false);
 		cmbDir.setItems(d);
@@ -128,13 +133,16 @@ public class PartyEditor extends LObjectEditor {
 		grpTroops.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		grpTroops.setText(Vocab.instance.TROOPS);
 
-		IDList lstTroops = new IDList(grpTroops, SWT.NONE) {
+		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops, SWT.NONE);
+		lstTroops.type = TroopSpawn.class;
+		lstTroops.setIncludeID(false);
+		lstTroops.setShellFactory(new LShellFactory<TroopSpawn>() {
 			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.troops.getTree();
+			public LObjectShell<TroopSpawn> createShell(Shell parent) {
+				return new TroopSpawnShell(parent);
 			}
-		};
-		addChild(lstTroops, "troops");
+		});
+		addChild(lstTroops, "troopSpawn");
 		
 	}
 	

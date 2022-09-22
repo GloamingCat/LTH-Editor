@@ -1,6 +1,7 @@
 package data.field;
 
 import project.Project;
+import data.Troop;
 import lwt.dataestructure.LDataList;
 
 public class Party {
@@ -21,8 +22,8 @@ public class Party {
 	// The troop's grid is also rotated to reposition them, in case they are generated from grid.
 	public int rotation = 0;
 	
-	// The possible troops to occupate this party spot.
-	public LDataList<Integer> troops = new LDataList<>();
+	// The possible troops to occupy this party spot.
+	public LDataList<TroopSpawn> troopSpawn = new LDataList<>();
 	
 	public String toString() {
 		return name;
@@ -40,6 +41,20 @@ public class Party {
 			return y + Project.current.config.getData().troop.height - 1;
 		else
 			return y + Project.current.config.getData().troop.width - 1;
+	}
+	
+	public class TroopSpawn {
+		
+		public int id = 0;
+		public int maxLevel = 99;
+		public int minLevel = 1;
+		
+		public String toString() {
+			Troop troop = (Troop) Project.current.troops.getData().get(id);
+			if (troop == null)
+				return "NULL";
+			return troop.name + " [" + minLevel + "-" + maxLevel + "]";
+		}
 	}
 
 }
