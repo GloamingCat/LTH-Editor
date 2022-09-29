@@ -95,6 +95,8 @@ public class AttributeEditor extends LObjectEditor {
 			LLabel label = (LLabel) controls[i * 2];
 			label.setText(att.shortName);
 			LSpinner spinner = (LSpinner) controls[i * 2 + 1];
+			spinner.setMaximum(999999);
+			spinner.setMinimum(-999999);
 			spinners.add(spinner);
 		}
 		scrollComp.setContent(content);

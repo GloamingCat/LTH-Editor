@@ -28,6 +28,7 @@ public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 		LSpinner spnMin = new LSpinner(contentEditor, SWT.NONE);
 		spnMin.setMinimum(0);
 		spnMin.setMaximum(100000);
+		spnMin.setValue(1);
 		spnMin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMin, "minLevel");
 		
@@ -36,6 +37,7 @@ public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 		LSpinner spnMax = new LSpinner(contentEditor, SWT.NONE);
 		spnMax.setMinimum(0);
 		spnMax.setMaximum(100000);
+		spnMax.setValue(100);
 		spnMax.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMax, "maxLevel");
 		

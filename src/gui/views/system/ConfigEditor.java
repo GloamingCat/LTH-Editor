@@ -348,7 +348,7 @@ public class ConfigEditor extends LView {
 		txtAttStep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		battleEditor.addControl(txtAttStep, "attStep");
 		
-		new LLabel(battleEditor, Vocab.instance.ATTSTEP);
+		new LLabel(battleEditor, Vocab.instance.ATTJUMP);
 		
 		LText txtAttJump = new LText(battleEditor);
 		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

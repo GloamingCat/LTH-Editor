@@ -55,6 +55,7 @@ public class Party {
 				return "NULL";
 			return troop.name + " [" + minLevel + "-" + maxLevel + "]";
 		}
+
 	}
 
 }

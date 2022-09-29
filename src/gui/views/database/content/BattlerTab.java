@@ -63,6 +63,7 @@ public class BattlerTab extends DatabaseTab {
 		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		LSpinner spnMoney = new LSpinner(compositeReward, SWT.NONE);
+		spnMoney.setMaximum(99999999);
 		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMoney, "money");
 		
@@ -70,6 +71,7 @@ public class BattlerTab extends DatabaseTab {
 		
 		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
 		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnEXP.setMaximum(99999999);
 		addControl(spnEXP, "exp");
 		
 		Composite select = new Composite(grpGeneral, SWT.NONE);

@@ -150,7 +150,7 @@ public class StatusTab extends DatabaseTab {
 		
 		Group grpGraphics = new Group(contentEditor, SWT.NONE);
 		grpGraphics.setLayout(new GridLayout(2, false));
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGraphics.setText(Vocab.instance.GRAPHICS);
 		
 		new LLabel(grpGraphics, Vocab.instance.CHARANIM);
