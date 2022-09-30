@@ -100,6 +100,7 @@ public class Vocab {
 	// Screen
 	public String SCREEN = "Screen";
 	public String COVER = "Cover";
+	public String LOGO = "Logo";
 	public String FPSLIMIT = "FPS Limits";
 	public String NATIVESIZE = "Native Size";
 	public String NATIVEWIDTH = "Native Width";

@@ -12,7 +12,8 @@ public class Config {
 	public String name = "New Project";
 	public int fpsMax = 120;
 	public int fpsMin = 15;
-	public int coverID = 211;
+	public int coverID = -1;
+	public int logoID = -1;
 	public int platform = 0;
 	
 	public Player player = new Player();

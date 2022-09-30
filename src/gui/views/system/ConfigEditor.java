@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
+import org.eclipse.swt.widgets.Label;
 
 public class ConfigEditor extends LView {
 
@@ -41,7 +42,7 @@ public class ConfigEditor extends LView {
 		
 		editor = new LObjectEditor(this, SWT.NONE);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		editor.setLayout(new GridLayout(7, false));
+		editor.setLayout(new GridLayout(4, false));
 		addChild(editor);
 		
 		Composite left = new Composite(this, SWT.NONE);
@@ -65,36 +66,45 @@ public class ConfigEditor extends LView {
 		new LLabel(editor, Vocab.instance.PROJECTNAME);
 		
 		LText txtName = new LText(editor);
-		GridData gd_txtName = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		GridData gd_txtName = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_txtName.widthHint = 240;
 		txtName.setLayoutData(gd_txtName);
 		editor.addControl(txtName, "name");
 		
+		// Platform
+		
 		String[] platforms = new String[] {
-			Vocab.instance.DESKTOP,
-			Vocab.instance.MOBILE,
-			Vocab.instance.BROWSER,
-			Vocab.instance.MOBILEBROWSER
-		};
-			
-		LLabel label = new LLabel(editor, Vocab.instance.PLATFORM);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+				Vocab.instance.DESKTOP,
+				Vocab.instance.MOBILE,
+				Vocab.instance.BROWSER,
+				Vocab.instance.MOBILEBROWSER
+			};
+		
+		new LLabel(editor, Vocab.instance.PLATFORM);
 		
 		LCombo cmbPlatform = new LCombo(editor, SWT.NONE);
-		cmbPlatform.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		cmbPlatform.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbPlatform.setOptional(false);
 		cmbPlatform.setIncludeID(false);
 		cmbPlatform.setItems(platforms);
 		editor.addControl(cmbPlatform, "platform");
-		
 		// TODO: export button
 		
-		new LLabel(editor, Vocab.instance.COVER);
+		// Cover / Logo
 		
-		LText txtCover = new LText(editor, true);
+		Composite cover = new Composite(editor, SWT.NONE);
+		cover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		GridLayout gl_cover = new GridLayout(6, false);
+		gl_cover.marginWidth = 0;
+		gl_cover.marginHeight = 0;
+		cover.setLayout(gl_cover);
+		
+		new LLabel(cover, Vocab.instance.COVER);
+		
+		LText txtCover = new LText(cover, true);
 		txtCover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnCover = new IDButton(editor, 1) {
+		IDButton btnCover = new IDButton(cover, 1) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
@@ -103,22 +113,47 @@ public class ConfigEditor extends LView {
 		btnCover.setNameWidget(txtCover);
 		editor.addControl(btnCover, "coverID");
 		
-		LLabel label_1 = new LLabel(editor, Vocab.instance.FPSLIMIT);
-		label_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		new LLabel(cover, Vocab.instance.LOGO);
 		
-		LSpinner spnFpsMin = new LSpinner(editor, SWT.NONE);
+		LText txtLogo = new LText(cover, true);
+		txtLogo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnLogo = new IDButton(cover, 1) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		btnLogo.setNameWidget(txtLogo);
+		editor.addControl(btnLogo, "logoID");
+
+		// FPS
+
+		Composite fpsLimits = new Composite(editor, SWT.NONE);
+		fpsLimits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		GridLayout gl_fpsLimits = new GridLayout(4, false);
+		gl_fpsLimits.marginWidth = 0;
+		gl_fpsLimits.marginHeight = 0;
+		fpsLimits.setLayout(gl_fpsLimits);
+		
+		LLabel lblFPS = new LLabel(fpsLimits, Vocab.instance.FPSLIMIT);
+		lblFPS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+	
+		
+		LSpinner spnFpsMin = new LSpinner(fpsLimits, SWT.NONE);
 		spnFpsMin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		editor.addControl(spnFpsMin, "fpsMin");
 		spnFpsMin.setMinimum(1);
 		spnFpsMin.setMaximum(9999);
 		
-		new LLabel(editor, " ~ ");
+		new LLabel(fpsLimits, " ~ ");
 		
-		LSpinner spnFpsMax = new LSpinner(editor, SWT.NONE);
+		LSpinner spnFpsMax = new LSpinner(fpsLimits, SWT.NONE);
 		spnFpsMax.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		editor.addControl(spnFpsMax, "fpsMax");
 		spnFpsMax.setMinimum(1);
 		spnFpsMax.setMaximum(9999);
+		new Label(editor, SWT.NONE);
 		
 		// Screen
 		

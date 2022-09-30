@@ -56,8 +56,8 @@ public class TransformEditor extends LObjectEditor {
 		new LLabel(this, Vocab.instance.OFFSETX);
 		
 		spnOffsetX = new LSpinner(this, SWT.NONE);
-		spnOffsetX.setMaximum(1024);
-		spnOffsetX.setMinimum(-1024);
+		spnOffsetX.setMaximum(1024 * 4);
+		spnOffsetX.setMinimum(-1024 * 4);
 		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
 		spnOffsetX.addModifyListener(updateOffset);
