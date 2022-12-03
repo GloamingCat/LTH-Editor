@@ -131,6 +131,7 @@ public class Vocab {
 	public String ATTSTEP = "Step Attribute";
 	public String ATTJUMP = "Jump Attribute";
 	public String BATTLEENDREVIVE = "Revive when battle ends";
+	public String KEEPPARTIES = "Keep chosen parties on Retry";
 	
 	// Troop
 	public String TROOP = "Troop";

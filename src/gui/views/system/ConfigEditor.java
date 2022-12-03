@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
-import org.eclipse.swt.widgets.Label;
 
 public class ConfigEditor extends LView {
 
@@ -153,7 +152,6 @@ public class ConfigEditor extends LView {
 		editor.addControl(spnFpsMax, "fpsMax");
 		spnFpsMax.setMinimum(1);
 		spnFpsMax.setMaximum(9999);
-		new Label(editor, SWT.NONE);
 		
 		// Screen
 		
@@ -394,6 +392,11 @@ public class ConfigEditor extends LView {
 		btnRevive.setText(Vocab.instance.BATTLEENDREVIVE);
 		battleEditor.addControl(btnRevive, "battleEndRevive");
 
+		LCheckBox btnKeepParties = new LCheckBox(battleEditor);
+		btnKeepParties.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnKeepParties.setText(Vocab.instance.KEEPPARTIES);
+		battleEditor.addControl(btnKeepParties, "keepParties");	
+	
 		// Troop
 		
 		Group grpTroop = new Group(middle, SWT.NONE);

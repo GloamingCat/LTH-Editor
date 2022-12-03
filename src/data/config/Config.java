@@ -42,6 +42,7 @@ public class Config {
 		public String attJump = "jmp";
 		public int itemSkillID = 0;
 		public boolean battleEndRevive = true;
+		public boolean keepParties = true;
 	}
 	
 	public static class Troop {
