@@ -13,6 +13,7 @@ import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import gui.Vocab;
 import gui.shell.ObjectShell;
+import gui.views.database.subcontent.TagList;
 import gui.views.fieldTree.FieldSideEditor;
 import gui.views.fieldTree.subcontent.FieldImageList;
 import gui.widgets.AudioButton;
@@ -43,7 +44,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		super(parent);
 
 		setMinimumSize(600, 400);
-		GridLayout gridLayout = new GridLayout(2, true);
+		GridLayout gridLayout = new GridLayout(3, true);
 		gridLayout.verticalSpacing = 0;
 		contentEditor.setLayout(gridLayout);
 		
@@ -57,6 +58,13 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		LText txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtName, "name");
+		
+		new LLabel(grpGeneral, "");
+		new LLabel(grpGeneral, Vocab.instance.KEY);
+		
+		LText txtKey = new LText(grpGeneral);
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtKey, "key");
 		
 		new LLabel(grpGeneral, Vocab.instance.PERSISTENT);
 		
@@ -120,6 +128,14 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 				updateImage(img, e.newData);
 			}
 		});
+		
+		Group grpTags = new Group(contentEditor, SWT.NONE);
+		grpTags.setLayout(new FillLayout(SWT.VERTICAL));
+		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 		Group grpTransitions = new Group(contentEditor, SWT.NONE);
 		grpTransitions.setLayout(new GridLayout(1, false));
