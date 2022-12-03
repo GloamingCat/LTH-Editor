@@ -123,7 +123,11 @@ public class TroopTab extends DatabaseTab {
 		gd_gridEditor.widthHint = 241;
 		gridEditor.setLayoutData(gd_gridEditor);
 		
-		UnitEditor unitEditor = new UnitEditor(grpMembers, SWT.NONE);
+		UnitEditor unitEditor = new UnitEditor(grpMembers, SWT.NONE) {
+			public void refresh() {
+				gridEditor.redraw();
+			}
+		};
 		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		lstMembers.addChild(unitEditor);
 		
@@ -190,12 +194,15 @@ public class TroopTab extends DatabaseTab {
 			}
 		});
 		
-		listEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+		LSelectionListener listener2 = new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				gridEditor.redraw();
 			}
-		});
+		};
+		
+		listEditor.getCollectionWidget().addSelectionListener(listener2);
+		unitEditor.addSelectionListener(listener2);
 	}
 
 	@Override
