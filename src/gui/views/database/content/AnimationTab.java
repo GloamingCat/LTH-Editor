@@ -122,7 +122,7 @@ public class AnimationTab extends DatabaseTab {
 		gd_image.widthHint = 150;
 		image.setLayoutData(gd_image);
 		
-		QuadButton btnImage = new QuadButton(grpImg, 0);
+		QuadButton btnImage = new QuadButton(grpImg, 1);
 		btnImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		addControl(btnImage, "quad");
 		

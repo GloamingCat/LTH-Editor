@@ -175,12 +175,15 @@ public class QuadShell extends LObjectShell<Quad> {
 	@Override
 	protected Quad createResult(Quad initial) {
 		Quad q = new Quad();
-		Rectangle rect = imgQuad.getImage().getBounds();
-		q.x = Math.min(spnX.getSelection(), rect.width);
-		q.y = Math.min(spnY.getSelection(), rect.height);
-		q.width = Math.min(spnWidth.getSelection(), rect.width);
-		q.height = Math.min(spnHeight.getSelection(), rect.height);
-		q.path = selFile.getSelectedFile();
+		Image img = imgQuad.getImage();
+		if (img != null) {
+			Rectangle rect = imgQuad.getImage().getBounds();
+			q.x = Math.min(spnX.getSelection(), rect.width);
+			q.y = Math.min(spnY.getSelection(), rect.height);
+			q.width = Math.min(spnWidth.getSelection(), rect.width);
+			q.height = Math.min(spnHeight.getSelection(), rect.height);
+			q.path = selFile.getSelectedFile();
+		}
 		return q;
 	}
 
