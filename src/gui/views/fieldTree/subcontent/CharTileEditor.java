@@ -140,6 +140,13 @@ public class CharTileEditor extends LObjectEditor {
 		btnChar.setNameWidget(txtChar);
 		addControl(btnChar, "charID");
 		
+		new LLabel(this, Vocab.instance.SPEED);
+		
+		LSpinner spnSpeed = new LSpinner(this);
+		spnSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		spnSpeed.setMaximum(9999);
+		addControl(spnSpeed, "defaultSpeed");
+		
 		// Animation
 		
 		LControlListener<Integer> listener = new LControlListener<Integer>() {

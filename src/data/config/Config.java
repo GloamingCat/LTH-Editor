@@ -30,7 +30,7 @@ public class Config {
 	
 	public static class Player {
 		public int walkSpeed = 104;
-		public int dashSpeed = 208;
+		public int dashSpeed = 200;
 		public Position startPos = new Position();
 	}
 
@@ -43,6 +43,7 @@ public class Config {
 		public int itemSkillID = 0;
 		public boolean battleEndRevive = true;
 		public boolean keepParties = true;
+		public int charSpeed = 150;
 	}
 	
 	public static class Troop {

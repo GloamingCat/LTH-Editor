@@ -121,7 +121,7 @@ public class Vocab {
 	public String STARTPOS = "Start Position";
 	public String PIXELMOV = "Pixel Movement";
 	public String STOPCOLL = "Stop On Collision";
-	public String WALKSPEED = "Walk Speed";
+	public String WALKSPEED = "Base Speed";
 	public String DASHSPEED = "Dash Speed";
 	
 	// Battle
@@ -132,6 +132,7 @@ public class Vocab {
 	public String ATTJUMP = "Jump Attribute";
 	public String BATTLEENDREVIVE = "Revive when battle ends";
 	public String KEEPPARTIES = "Keep chosen parties on Retry";
+	public String CHARSPEED = "Char Speed";
 	
 	// Troop
 	public String TROOP = "Troop";
@@ -395,6 +396,7 @@ public class Vocab {
 	public String ONLOAD = "On Load";
 	public String ONCOLLIDE = "On Collide";
 	public String ONINTERACT = "On Interact";
+	public String SPEED = "Speed";
 	
 	// Party
 	public String PLAYERPARTY = "Player Party";

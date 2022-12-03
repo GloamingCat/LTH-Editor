@@ -137,7 +137,6 @@ public class ConfigEditor extends LView {
 		
 		LLabel lblFPS = new LLabel(fpsLimits, Vocab.instance.FPSLIMIT);
 		lblFPS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-	
 		
 		LSpinner spnFpsMin = new LSpinner(fpsLimits, SWT.NONE);
 		spnFpsMin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -261,9 +260,11 @@ public class ConfigEditor extends LView {
 		new LLabel(playerEditor, Vocab.instance.DASHSPEED);
 		
 		LSpinner spnDashSpeed = new LSpinner(playerEditor, SWT.NONE);
-		spnDashSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		spnDashSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		playerEditor.addControl(spnDashSpeed, "dashSpeed");
 		spnDashSpeed.setMaximum(9999);
+		
+		new LLabel(playerEditor, "%");
 		
 		new LLabel(playerEditor, Vocab.instance.STARTPOS);
 		
@@ -354,49 +355,58 @@ public class ConfigEditor extends LView {
 		
 		LObjectEditor battleEditor = new LObjectEditor(grpBattle, SWT.NONE);
 		editor.addChild(battleEditor, "battle");
-		battleEditor.setLayout(new GridLayout(2, false));
+		battleEditor.setLayout(new GridLayout(3, false));
 		
 		new LLabel(battleEditor, Vocab.instance.MAXLEVEL);
 		
 		LSpinner spnMaxLevel = new LSpinner(battleEditor, SWT.NONE);
-		spnMaxLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnMaxLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		battleEditor.addControl(spnMaxLevel, "maxLevel");
 		spnMaxLevel.setMaximum(9999);
 		
 		new LLabel(battleEditor, Vocab.instance.ATTHP);
 		
 		LText txtAttHP = new LText(battleEditor);
-		txtAttHP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		txtAttHP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		battleEditor.addControl(txtAttHP, "attHP");
 		
 		new LLabel(battleEditor, Vocab.instance.ATTSP);
 		
 		LText txtAttSP = new LText(battleEditor);
-		txtAttSP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		txtAttSP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		battleEditor.addControl(txtAttSP, "attSP");
 		
 		new LLabel(battleEditor, Vocab.instance.ATTSTEP);
 		
 		LText txtAttStep = new LText(battleEditor);
-		txtAttStep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		txtAttStep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		battleEditor.addControl(txtAttStep, "attStep");
 		
 		new LLabel(battleEditor, Vocab.instance.ATTJUMP);
 		
 		LText txtAttJump = new LText(battleEditor);
-		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		txtAttJump.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		battleEditor.addControl(txtAttJump, "attJump");
 		
+		new LLabel(battleEditor, Vocab.instance.CHARSPEED);
+		
+		LSpinner spnCharSpeed = new LSpinner(battleEditor, SWT.NONE);
+		spnCharSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		battleEditor.addControl(spnCharSpeed, "charSpeed");
+		spnCharSpeed.setMaximum(9999);
+		
+		new LLabel(battleEditor, "%");
+		
 		LCheckBox btnRevive = new LCheckBox(battleEditor);
-		btnRevive.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnRevive.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnRevive.setText(Vocab.instance.BATTLEENDREVIVE);
 		battleEditor.addControl(btnRevive, "battleEndRevive");
 
 		LCheckBox btnKeepParties = new LCheckBox(battleEditor);
-		btnKeepParties.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnKeepParties.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnKeepParties.setText(Vocab.instance.KEEPPARTIES);
 		battleEditor.addControl(btnKeepParties, "keepParties");	
-	
+		
 		// Troop
 		
 		Group grpTroop = new Group(middle, SWT.NONE);
