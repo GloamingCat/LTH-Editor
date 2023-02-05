@@ -4,6 +4,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.AudioShell;
 import gui.views.database.DatabaseTab;
+import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
@@ -26,6 +27,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Audio;
 import project.Project;
+import org.eclipse.swt.widgets.Label;
 
 public class TerrainTab extends DatabaseTab {
 
@@ -48,7 +50,8 @@ public class TerrainTab extends DatabaseTab {
 		
 		// General
 		
-		new LLabel(grpGeneral, Vocab.instance.MOVECOST);
+		LLabel label = new LLabel(grpGeneral, Vocab.instance.MOVECOST);
+		label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		Composite moveCost = new Composite(grpGeneral, SWT.NONE);
 		moveCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -66,6 +69,15 @@ public class TerrainTab extends DatabaseTab {
 		LCheckBox btnPassable = new LCheckBox(moveCost, SWT.CHECK);
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
+		
+		BonusList lstJobMoveCost = new BonusList(moveCost, SWT.NONE) {
+			@Override
+			protected LDataTree<Object> getDataTree() {
+				return Project.current.jobs.getTree();
+			}
+		};
+		lstJobMoveCost.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		addChild(lstJobMoveCost, "jobMoveCost");
 		
 		// Graphics
 		
