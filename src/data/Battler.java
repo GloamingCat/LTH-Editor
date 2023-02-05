@@ -2,6 +2,7 @@ package data;
 
 import project.Project;
 import data.subcontent.Bonus;
+import data.subcontent.Icon;
 import data.subcontent.Rule;
 import lwt.dataestructure.LDataList;
 
@@ -24,6 +25,11 @@ public class Battler extends Data {
 	// Items
 	public LDataList<Drop> items = new LDataList<>();
 	public LDataList<Equip> equip = new LDataList<>();
+	
+	// Recruit
+	public boolean recruit = false;
+	public Icon icon = new Icon();
+	public String description = "";
 	
 	public static class Equip {
 		

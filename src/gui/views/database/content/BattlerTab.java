@@ -11,14 +11,17 @@ import gui.views.database.subcontent.EquipList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IDList;
+import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckBox;
+import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
+import lwt.widget.LTextBox;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -38,18 +41,18 @@ public class BattlerTab extends DatabaseTab {
 		super(parent);
 		
 		new LLabel(grpGeneral, 1);
-		LCheckBox btnPersistent = new LCheckBox(grpGeneral, SWT.NONE);
-		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Composite check = new Composite(grpGeneral, SWT.NONE);
+		check.setLayout(new FillLayout(SWT.HORIZONTAL));
+		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		LCheckBox btnPersistent = new LCheckBox(check, SWT.NONE);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
-		// Level
-		
-		new LLabel(grpGeneral, Vocab.instance.LEVEL);
-
-		LSpinner spnLevel = new LSpinner(grpGeneral, SWT.NONE);
-		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		addControl(spnLevel, "level");
+		LCheckBox btnRecruit = new LCheckBox(check, SWT.NONE);
+		btnRecruit.setText(Vocab.instance.RECRUIT);
+		addControl(btnRecruit, "persistent");
 		
 		// Rewards
 		
@@ -74,21 +77,54 @@ public class BattlerTab extends DatabaseTab {
 		spnEXP.setMaximum(99999999);
 		addControl(spnEXP, "exp");
 		
-		Composite select = new Composite(grpGeneral, SWT.NONE);
-		select.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		GridLayout gl_select = new GridLayout(3, false);
-		gl_select.marginWidth = 0;
-		gl_select.marginHeight = 0;
-		select.setLayout(gl_select);
+		// Description
+		
+		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		LTextBox txtDescription = new LTextBox(grpGeneral);
+		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtDescription.minimumHeight = 48;
+		txtDescription.setLayoutData(gd_txtDescription);
+		addControl(txtDescription, "description");
+		
+		// Icon
+		
+		new LLabel(grpGeneral, Vocab.instance.ICON);
+		
+		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeIcon = new GridLayout(2, false);
+		gl_compositeIcon.marginWidth = 0;
+		gl_compositeIcon.marginHeight = 0;
+		compositeIcon.setLayout(gl_compositeIcon);
+		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
+		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_imgIcon.widthHint = 48;
+		gd_imgIcon.heightHint = 48;
+		imgIcon.setVerticalAlign(SWT.CENTER);
+		imgIcon.setLayoutData(gd_imgIcon);
+		
+		IconButton btnGraphics = new IconButton(compositeIcon, 0);
+		btnGraphics.setImageWidget(imgIcon);
+		addControl(btnGraphics, "icon");
 		
 		// Job
 		
-		new LLabel(select, Vocab.instance.JOB);
+		new LLabel(grpGeneral, Vocab.instance.JOB);
 		
-		LText txtJob = new LText(select, true);
+		Composite job = new Composite(grpGeneral, SWT.NONE);
+		job.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_job = new GridLayout(4, false);
+		gl_job.marginHeight = 0;
+		gl_job.marginWidth = 0;
+		job.setLayout(gl_job);
+		
+		LText txtJob = new LText(job, true);
 		txtJob.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		IDButton btnJob = new IDButton(select, 0) {
+		IDButton btnJob = new IDButton(job, 0) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.jobs.getTree();
@@ -97,21 +133,12 @@ public class BattlerTab extends DatabaseTab {
 		btnJob.setNameWidget(txtJob);
 		addControl(btnJob, "jobID");
 		
-		// Attack Skill
+		new LLabel(job, Vocab.instance.LEVEL);
+
+		LSpinner spnLevel = new LSpinner(job, SWT.NONE);
+		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnLevel, "level");
 		
-		new LLabel(select, Vocab.instance.ATTACKSKILL);
-		
-		LText txtAttack = new LText(select, true);
-		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnAttack = new IDButton(select, 0) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
-		btnAttack.setNameWidget(txtAttack);
-		addControl(btnAttack, "attackID");
 		
 		// AI
 		
@@ -179,7 +206,7 @@ public class BattlerTab extends DatabaseTab {
 		Group grpSkills = new Group(compInitial, SWT.NONE);
 		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpSkills.setText(Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")");
-		grpSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpSkills.setLayout(new GridLayout(3, false));
 		
 		IDList lstSkills = new IDList(grpSkills, SWT.NONE) {
 			public LDataTree<Object> getDataTree() {
@@ -187,6 +214,23 @@ public class BattlerTab extends DatabaseTab {
 			}
 		};
 		addChild(lstSkills, "skills");
+		lstSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		
+		// Attack Skill
+		
+		new LLabel(grpSkills, Vocab.instance.ATTACKSKILL);
+		
+		LText txtAttack = new LText(grpSkills, true);
+		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnAttack = new IDButton(grpSkills, 0) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.skills.getTree();
+			}
+		};
+		btnAttack.setNameWidget(txtAttack);
+		addControl(btnAttack, "attackID");
 		
 		// Status
 		

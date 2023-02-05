@@ -174,8 +174,9 @@ public class Vocab {
 	public String ELEMENTBUFF = "Damage Multipler";
 	
 	// Battler
+	public String RECRUIT = "Recruitable";
 	public String JOB = "Job";
-	public String ATTACKSKILL = "Attack Skill";
+	public String ATTACKSKILL = "Attack";
 	public String PERSISTENT = "Persistent";
 	public String AI = "AI";
 	public String MONEY = "Money";
