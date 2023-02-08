@@ -64,6 +64,12 @@ public class TroopTab extends DatabaseTab {
 		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMoney, "money");
 		
+		new LLabel(grpGeneral, Vocab.instance.EXP);
+		
+		LSpinner spnExp = new LSpinner(grpGeneral, SWT.NONE);
+		spnExp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnExp, "exp");
+		
 		// AI
 		
 		new LLabel(grpGeneral, Vocab.instance.AI);

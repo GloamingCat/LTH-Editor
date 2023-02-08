@@ -9,7 +9,8 @@ public class Troop extends Data {
 
 	public String ai = "";
 	public boolean persistent = false;
-	public int money = 100;
+	public int money = 0;
+	public int exp = 0;
 	public LDataList<Drop> items = new LDataList<>();
 	public LDataList<Unit> members = new LDataList<>();
 	
