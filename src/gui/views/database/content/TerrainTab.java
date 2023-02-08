@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Audio;
 import project.Project;
-import org.eclipse.swt.widgets.Label;
 
 public class TerrainTab extends DatabaseTab {
 

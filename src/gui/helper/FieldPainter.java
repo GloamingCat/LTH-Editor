@@ -108,6 +108,8 @@ public class FieldPainter {
 					dx, dy, w, h);
 		} catch(IndexOutOfBoundsException e) {
 			e.printStackTrace();
+		} catch (java.lang.IllegalArgumentException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -126,6 +128,8 @@ public class FieldPainter {
 			gc.drawImage(img, x0 - Math.round(offsetX), y0 - Math.round(offsetY));
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
+		} catch (java.lang.IllegalArgumentException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -142,6 +146,8 @@ public class FieldPainter {
 			Grid conf = FieldHelper.config.grid;
 			gc.drawImage(img, x0 - conf.tileW / 2, y0 - conf.tileH / 2);
 		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+		} catch (java.lang.IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
@@ -174,13 +180,14 @@ public class FieldPainter {
 			int h = img.getBounds().height;
 			float sxa = anim.transform.scaleX / 100f;
 			float sya = anim.transform.scaleY / 100f;
-			System.out.println(w + " " + h + " " + (sxc * sxa * w) + " " + (syc * sya * h));
 			gc.drawImage(img, 0, 0, w, h,
 					x0 - (int)(anim.transform.offsetX * sxa) - oxc, 
 					y0 - (int)(anim.transform.offsetY * sya) - oyc,
 					(int)(sxc * sxa * w),
 					(int)(syc * sya * h));
 		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+		} catch (java.lang.IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
