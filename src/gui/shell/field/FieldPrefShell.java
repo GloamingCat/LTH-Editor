@@ -32,6 +32,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
@@ -53,18 +54,27 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		grpGeneral.setText("General");
 		grpGeneral.setLayout(new GridLayout(3, false));
 		
+		new LLabel(grpGeneral, "");
+		
+		Composite key = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_key = new GridLayout(2, false);
+		gl_key.marginWidth = 0;
+		gl_key.marginHeight = 0;
+		gl_key.verticalSpacing = 0;
+		key.setLayout(gl_key);
+		key.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
+		new LLabel(key, Vocab.instance.KEY);
+		
+		LText txtKey = new LText(key);
+		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtKey, "key");
+		
 		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
 		LText txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		addControl(txtName, "name");
-		
-		new LLabel(grpGeneral, "");
-		new LLabel(grpGeneral, Vocab.instance.KEY);
-		
-		LText txtKey = new LText(grpGeneral);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(txtKey, "key");
 		
 		new LLabel(grpGeneral, Vocab.instance.PERSISTENT);
 		
