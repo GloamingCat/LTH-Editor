@@ -23,6 +23,7 @@ public class Vocab {
 	public String TERRAINS = "Terrains";
 	public String TILESETS = "Tilesets";
 	public String TROOPS = "Troops";
+	public String EVENTSHEETS = "Event Sheets";
 	
 	// Groups
 	public String GENERAL = "General";
@@ -302,6 +303,10 @@ public class Vocab {
 	public String CURRENT = "Current";
 	public String BACKUP = "Backup";
 	public String HIDDEN = "Hidden";
+	
+	// Event Sheet
+	public String EVENTS = "Events";
+	public String COMMAND = "Command";
 	
 	// ========================================================================
 	// Sub-content

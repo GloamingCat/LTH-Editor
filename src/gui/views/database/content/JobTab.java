@@ -21,9 +21,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import data.Job;
-import data.Job.Skill;
 import project.Project;
-import org.eclipse.swt.widgets.Label;
 
 public class JobTab extends DatabaseTab {
 
@@ -61,23 +59,19 @@ public class JobTab extends DatabaseTab {
 		Group grpSkillNodes = new Group(contentEditor, SWT.NONE);
 		grpSkillNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grpSkillNodes.setText(Vocab.instance.SKILLNODES);
-		grpSkillNodes.setLayout(new GridLayout(2, false));
+		grpSkillNodes.setLayout(new FillLayout());
 		
 		SimpleEditableList<Job.Skill> lstNodes = new SimpleEditableList<>(grpSkillNodes, SWT.NONE);
 		lstNodes.getCollectionWidget().setEditEnabled(false);
 		lstNodes.setIncludeID(false);
 		lstNodes.type = Job.Skill.class;
-		GridData gd_lstNodes = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_lstNodes.widthHint = 60;
-		lstNodes.setLayoutData(gd_lstNodes);
 		addChild(lstNodes, "skills");
 		lstNodes.setShellFactory(new LShellFactory<Job.Skill>() {
 			@Override
-			public LObjectShell<Skill> createShell(Shell parent) {
+			public LObjectShell<Job.Skill> createShell(Shell parent) {
 				return new JobSkillShell(parent);
 			}
 		});
-		new Label(grpSkillNodes, SWT.NONE);
 
 	}
 

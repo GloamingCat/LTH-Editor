@@ -37,15 +37,18 @@ public class DatabaseEditor extends LViewFolder {
 		BattlerTab battlerTab = new BattlerTab(tabFolder);
 		addTab(Vocab.instance.BATTLERS, battlerTab);
 		
-		TroopTab troopTab = new TroopTab(tabFolder);
-		addTab(Vocab.instance.TROOPS, troopTab);
-		
 		CharacterTab characterTab = new CharacterTab(tabFolder);
 		addTab(Vocab.instance.CHARACTERS, characterTab);
+		
+		TroopTab troopTab = new TroopTab(tabFolder);
+		addTab(Vocab.instance.TROOPS, troopTab);
 		
 		TerrainTab terrainTab = new TerrainTab(tabFolder);
 		addTab(Vocab.instance.TERRAINS, terrainTab);
 
+		EventTab eventTab = new EventTab(tabFolder);
+		addTab(Vocab.instance.EVENTSHEETS, eventTab);
+		
 	}
 
 }
