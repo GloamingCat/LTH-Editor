@@ -355,6 +355,7 @@ public class Vocab {
 	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
 	public String REPEATCOLLISIONS = "Repeat collisions";
+	public String EVENTSHEET = "Event Sheet";
 	
 	// Effect
 	public String EFFECTS = "Effects";

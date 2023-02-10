@@ -21,6 +21,8 @@ public class Script extends Data {
 	public boolean onInteract = false;
 	public boolean onCollide = false;
 	
+	public int sheetID = -1;
+	
 	public String description = "";
 	
 	public String toString() {
