@@ -11,6 +11,8 @@ public class GameCharacter extends Data {
 
 	public int battlerID = -1;
 	public int shadowID = -1;
+	public int koAnimID = -1;
+	public int koFadeout = -1;
 	public LDataList<Tile> tiles = new LDataList<>();
 	public Transform transform = new Transform();
 	public LDataList<Portrait> portraits = new LDataList<>();

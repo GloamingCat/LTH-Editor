@@ -33,7 +33,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 	 * @param display
 	 */
 	public ApplicationShell(String folder) {
-		super(900, 600, "LTH Editor", "/img/icon.png");
+		super(1200, 700, "LTH Editor", "/img/icon.png");
 		
 		defaultView = new FieldTreeEditor(this);
 		addView(defaultView, Vocab.instance.FIELDEDITOR, "F2");

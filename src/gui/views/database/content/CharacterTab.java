@@ -19,6 +19,7 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
+import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
@@ -117,7 +118,7 @@ public class CharacterTab extends DatabaseTab {
 		gl_lists.verticalSpacing = 0;
 		gl_lists.marginHeight = 0;
 		lists.setLayout(gl_lists);
-		lists.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+		lists.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 		
 		Group grpAnimations = new Group(lists, SWT.NONE);
 		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -185,6 +186,34 @@ public class CharacterTab extends DatabaseTab {
 		
 		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformTab, "transform");
+		
+		
+		Group grpKO = new Group(middle, SWT.NONE);
+		grpKO.setText(Vocab.instance.KO);
+		grpKO.setLayout(new GridLayout(3, false));
+		grpKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		new LLabel(grpKO, Vocab.instance.ANIMATION);
+		
+		LText txtKO = new LText(grpKO, true);
+		txtKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		IDButton btnKO = new IDButton(grpKO, 1) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		btnKO.setNameWidget(txtKO);
+		addControl(btnKO, "koAnimID");
+		
+		new LLabel(grpKO, Vocab.instance.FADEOUT);
+		
+		LSpinner spnFade = new LSpinner(grpKO);
+		spnFade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		spnFade.setMinimum(-1);
+		spnFade.setMaximum(999);
+		addControl(spnFade, "koFadeout");
 		
 		Group grpTags = new Group(middle, SWT.NONE);
 		grpTags.setLayout(new FillLayout());
