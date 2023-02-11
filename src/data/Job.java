@@ -8,6 +8,7 @@ public class Job extends Data {
 	public LDataList<String> build = new LDataList<>();
 	public String expCurve = "(100 + math.round(lvl / 5)) * lvl";
 	public LDataList<Skill> skills = new LDataList<>();
+	public int attackID = 0;
 	
 	public static class Skill {
 	

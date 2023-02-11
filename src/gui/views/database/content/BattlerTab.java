@@ -206,7 +206,7 @@ public class BattlerTab extends DatabaseTab {
 		Group grpSkills = new Group(compInitial, SWT.NONE);
 		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpSkills.setText(Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")");
-		grpSkills.setLayout(new GridLayout(3, false));
+		grpSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		IDList lstSkills = new IDList(grpSkills, SWT.NONE) {
 			public LDataTree<Object> getDataTree() {
@@ -214,24 +214,7 @@ public class BattlerTab extends DatabaseTab {
 			}
 		};
 		addChild(lstSkills, "skills");
-		lstSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		
-		// Attack Skill
-		
-		new LLabel(grpSkills, Vocab.instance.ATTACKSKILL);
-		
-		LText txtAttack = new LText(grpSkills, true);
-		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnAttack = new IDButton(grpSkills, 0) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
-		btnAttack.setNameWidget(txtAttack);
-		addControl(btnAttack, "attackID");
-		
+
 		// Status
 		
 		Group grpStatus = new Group(compInitial, SWT.NONE);

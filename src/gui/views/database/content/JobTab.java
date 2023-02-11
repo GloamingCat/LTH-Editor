@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LLabel;
@@ -10,6 +11,7 @@ import gui.shell.database.JobSkillShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
 import gui.views.database.subcontent.TagList;
+import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
@@ -72,6 +74,29 @@ public class JobTab extends DatabaseTab {
 				return new JobSkillShell(parent);
 			}
 		});
+		
+		// Attack Skill
+		
+		new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL);
+		
+		Composite attackSkill = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_attackSkill = new GridLayout(2, false);
+		gl_attackSkill.marginWidth = 0;
+		gl_attackSkill.marginHeight = 0;
+		attackSkill.setLayout(gl_attackSkill);
+		attackSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		LText txtAttack = new LText(attackSkill, true);
+		txtAttack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnAttack = new IDButton(attackSkill, 0) {
+			@Override
+			public LDataTree<Object> getDataTree() {
+				return Project.current.skills.getTree();
+			}
+		};
+		btnAttack.setNameWidget(txtAttack);
+		addControl(btnAttack, "attackID");
 
 	}
 
