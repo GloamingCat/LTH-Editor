@@ -58,6 +58,7 @@ public class Skill extends Data {
 	
 	// Range
 	public Mask effectMask = new Mask();
+	public boolean rotateEffect = false;
 	public Mask castMask = new Mask();
 	
 	public Skill() {

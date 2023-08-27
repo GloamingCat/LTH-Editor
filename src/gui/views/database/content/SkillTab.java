@@ -162,6 +162,11 @@ public class SkillTab extends DatabaseTab {
 		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
+		LCheckBox btnRotate = new LCheckBox(grpEffect);
+		btnRotate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		btnRotate.setText(Vocab.instance.ROTATE);
+		addControl(btnRotate, "rotateEffect");
+		
 		LObjectButton<Mask> btnCastMask = new LObjectButton<Mask>(grpCast, SWT.NONE);
 		btnCastMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
 		addControl(btnCastMask, "castMask");
