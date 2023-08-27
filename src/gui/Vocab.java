@@ -124,6 +124,7 @@ public class Vocab {
 	public String STOPCOLL = "Stop On Collision";
 	public String WALKSPEED = "Base Speed";
 	public String DASHSPEED = "Dash Speed";
+	public String DIAGTHRESHOLD = "Diag Threshold";
 	
 	// Battle
 	public String MAXLEVEL = "Max Level";

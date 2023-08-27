@@ -31,6 +31,7 @@ public class Config {
 	public static class Player {
 		public int walkSpeed = 104;
 		public int dashSpeed = 200;
+		public int diagThreshold = 15;
 		public Position startPos = new Position();
 	}
 

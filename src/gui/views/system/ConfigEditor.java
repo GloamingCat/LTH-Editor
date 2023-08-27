@@ -266,6 +266,14 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(playerEditor, "%");
 		
+		new LLabel(playerEditor, Vocab.instance.DIAGTHRESHOLD);
+		
+		LSpinner spnDiagThreshold = new LSpinner(playerEditor, SWT.NONE);
+		spnDiagThreshold.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		playerEditor.addControl(spnDiagThreshold, "diagThreshold");
+		
+		new LLabel(playerEditor, "%");
+		
 		new LLabel(playerEditor, Vocab.instance.STARTPOS);
 		
 		LText txtPos = new LText(playerEditor, true);
@@ -285,53 +293,53 @@ public class ConfigEditor extends LView {
 		
 		LObjectEditor gridEditor = new LObjectEditor(grpGrid, SWT.NONE);
 		editor.addChild(gridEditor, "grid");
-		gridEditor.setLayout(new GridLayout(2, false));
+		gridEditor.setLayout(new GridLayout(3, false));
 		
 		new LLabel(gridEditor, Vocab.instance.TILEWIDTH);
 		
 		LSpinner spnTileW = new LSpinner(gridEditor, SWT.NONE);
-		spnTileW.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnTileW.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnTileW, "tileW");
 		
 		new LLabel(gridEditor, Vocab.instance.TILEHEIGHT);
 		
 		LSpinner spnTileH = new LSpinner(gridEditor, SWT.NONE);
-		spnTileH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnTileH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnTileH, "tileH");
 		
 		new LLabel(gridEditor, Vocab.instance.TILEBASE);
 		
 		LSpinner spnTileB = new LSpinner(gridEditor, SWT.NONE);
-		spnTileB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnTileB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnTileB, "tileB");
 		
 		new LLabel(gridEditor, Vocab.instance.TILESIDE);
 		
 		LSpinner spnTileS = new LSpinner(gridEditor, SWT.NONE);
-		spnTileS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnTileS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnTileS, "tileS");
 		
 		new LLabel(gridEditor, Vocab.instance.PIXELHEIGHT);
 		
 		LSpinner spnPixelsPerHeight = new LSpinner(gridEditor, SWT.NONE);
-		spnPixelsPerHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnPixelsPerHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnPixelsPerHeight, "pixelsPerHeight");
 		
 		new LLabel(gridEditor, Vocab.instance.DEPTHHEIGHT);
 		
 		LSpinner spnDepthPerHeight = new LSpinner(gridEditor, SWT.NONE);
-		spnDepthPerHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnDepthPerHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnDepthPerHeight, "depthPerHeight");
 		
 		new LLabel(gridEditor, Vocab.instance.DEPTHY);
 		
 		LSpinner spnDepthPerY = new LSpinner(gridEditor, SWT.NONE);
-		spnDepthPerY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnDepthPerY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		gridEditor.addControl(spnDepthPerY, "depthPerY");
 		
 		Composite gridOptions = new Composite(gridEditor, SWT.NONE);
 		gridOptions.setLayout(new GridLayout(2, false));
-		gridOptions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		gridOptions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		LCheckBox btnAllNeighbors = new LCheckBox(gridOptions, SWT.NONE);
 		btnAllNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
