@@ -116,6 +116,7 @@ public class Vocab {
 	public String KEEPRATIO = "Keep ratio";
 	public String FREESCALE = "Fill screen";
 	public String PIXELPERFECT = "Pixel Perfect";
+	public String VSYNC = "V Sync";
 	
 	// Player
 	public String PLAYER = "Player";

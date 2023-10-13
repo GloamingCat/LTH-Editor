@@ -239,6 +239,11 @@ public class ConfigEditor extends LView {
 		btnPixelPerfect.setText(Vocab.instance.PIXELPERFECT);
 		screenEditor.addControl(btnPixelPerfect, "pixelPerfect");
 		
+		LCheckBox btnVSync = new LCheckBox(screenEditor, SWT.NONE);
+		btnVSync.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		btnVSync.setText(Vocab.instance.VSYNC);
+		screenEditor.addControl(btnVSync, "vsync");
+		
 		// Player
 		
 		Group grpPlayer = new Group(middle, SWT.NONE);

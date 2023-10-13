@@ -75,6 +75,7 @@ public class Config {
 		public int scaleType = 1;
 		public int mobileScaleType = 2;
 		public boolean pixelPerfect = true;
+		public boolean vsync = false;
 	}
 	
 }
