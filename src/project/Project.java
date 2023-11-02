@@ -5,9 +5,13 @@ import gson.project.GObjectSerializer;
 import gson.project.GObjectTreeSerializer;
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
+
+import java.util.Arrays;
+
 import data.*;
 import data.config.*;
 import data.subcontent.Tag;
+import lwt.dataestructure.LDataTree;
 import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
 
@@ -47,6 +51,7 @@ public class Project implements LSerializer {
 	public FieldTreeSerializer fieldTree;
 	
 	private LSerializer[] allData;
+	private GObjectTreeSerializer[] database;
 	
 	public static Project current = null;
 	public String path;
@@ -85,9 +90,12 @@ public class Project implements LSerializer {
 		
 		fieldTree = new FieldTreeSerializer(fieldPath());
 		
-		allData = new LSerializer[] { fieldTree, animations, battlers, characters, 
-				events, jobs, items, obstacles, skills, status, terrains, troops, 
-				config, attributes, variables, elements, equipTypes, plugins, regions };
+		database = new GObjectTreeSerializer[] { animations, battlers, characters, 
+				events, jobs, items, obstacles, skills, status, terrains, troops };
+		
+		allData = new LSerializer[] { fieldTree, config, attributes, variables, elements, equipTypes, plugins, regions };
+		allData = Arrays.copyOf(allData, allData.length + database.length);
+		System.arraycopy(database, 0, allData, allData.length - database.length, database.length);
 	}
 	
 	public String dataPath() {
@@ -148,6 +156,9 @@ public class Project implements LSerializer {
 			if (!data.load())
 				return false;
 		}
+		for (GObjectTreeSerializer s : database) {
+			startData(s.getTree(), s.getTree());
+		}
 		FieldHelper.reloadMath();
 		TilePainter.reload();
 		return true;
@@ -161,6 +172,14 @@ public class Project implements LSerializer {
 			}
 		}
 		return false;
+	}
+	
+	private static void startData(LDataTree<Object> root, LDataTree<Object> node) {
+		for (LDataTree<Object> child : node.children) {
+			Data data = (Data) child.data;
+			data.onStart(root, child);
+			startData(root, child);
+		}
 	}
 
 }

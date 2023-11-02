@@ -16,6 +16,7 @@ import data.Terrain;
 import data.config.Config;
 import data.config.Region;
 import data.field.CharTile;
+import data.subcontent.Transform;
 import lwt.LImageHelper;
 import project.Project;
 
@@ -127,27 +128,30 @@ public class TilePainter {
 			img = new Image(Display.getCurrent(), data);
 			obstacleCache.put(id, img);
 		} catch (IllegalArgumentException e) {
-			System.out.print("Couldn't draw obstacle image.");
+			System.out.println("Couldn't draw obstacle image: " + id);
 		}
 		return img;
 	}
 	
 	public static Image getCharacterTile(CharTile tile) {
 		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
-		if (c == null)
-			return null;
-		int animID = c.findAnimation(tile.animation);
-		return getCharacterTile(tile.charID, animID, tile.direction, tile.frame - 1);
+		if (c != null) {
+			int animID = c.findAnimation(tile.animation);
+			return getAnimationTile(tile.charID, animID, tile.direction, tile.frame - 1, c.transform);
+		} else if (!tile.animation.isEmpty()) {
+			int animID = Project.current.animations.getData().get(tile.animation);
+			if (animID == -1)
+				return null;
+			return getAnimationTile(-1, animID, tile.direction, tile.frame - 1, Transform.neutral);
+		}
+		return null;
 	}
 	
-	public static Image getCharacterTile(int charID, int animID, int direction, int frame) {
+	public static Image getAnimationTile(int charID, int animID, int direction, int frame, Transform transform) {
 		String key = charID + "." + animID + "." + direction + "." + frame;
 		Image img = characterCache.get(key);
 		if (img != null)
 			return img;
-		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(charID);
-		if (c == null)
-			return null;
 		Animation anim = (Animation) Project.current.animations.getTree().get(animID);
 		if (anim == null || anim.cols == 0 || anim.rows == 0)
 			return null;
@@ -159,7 +163,8 @@ public class TilePainter {
 		Image quadImg = anim.quad.getImage();
 		try {
 			GC gc = new GC(img);
-			gc.setAlpha(anim.transform.alpha * c.transform.alpha / 255);
+			gc.setAlpha(anim.transform.alpha * transform.alpha / 255);
+			System.out.println(gc.getAlpha());
 			gc.drawImage(quadImg, // Image
 					anim.quad.x + w * col, anim.quad.y + h * row, w, h, // Source
 					0, 0, w, h); // Destination
@@ -167,16 +172,15 @@ public class TilePainter {
 			ImageData data = img.getImageData();
 			LImageHelper.correctTransparency(data);
 			LImageHelper.colorTransform(data, 
-					anim.transform.red / 255f * c.transform.red / 255f,
-					anim.transform.green / 255f * c.transform.green / 255f,
-					anim.transform.blue / 255f * c.transform.blue / 255f,
-					anim.transform.hue + c.transform.hue, 
-					anim.transform.saturation / 100f * c.transform.saturation / 100f, 
-					anim.transform.brightness / 100f * c.transform.brightness / 100f);
+					anim.transform.red / 255f * transform.red / 255f,
+					anim.transform.green / 255f * transform.green / 255f,
+					anim.transform.blue / 255f * transform.blue / 255f,
+					anim.transform.hue + transform.hue, 
+					anim.transform.saturation / 100f * transform.saturation / 100f, 
+					anim.transform.brightness / 100f * transform.brightness / 100f);
 			img.dispose();
 			img = new Image(Display.getCurrent(), data);
 			characterCache.put(key, img);
-			System.out.println(key);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}

@@ -4,6 +4,8 @@ import lwt.widget.LImage;
 
 public class Transform {
 
+	public static final Transform neutral = new Transform();
+	
 	// Space transformation
 	public int offsetX = 0;
 	public int offsetY = 0;

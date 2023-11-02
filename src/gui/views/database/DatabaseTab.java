@@ -23,9 +23,11 @@ import lwt.editor.LControlView;
 import lwt.editor.LEditor;
 import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
+import lwt.event.LControlEvent;
 import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LControl;
 import lwt.widget.LImage;
@@ -100,6 +102,14 @@ public abstract class DatabaseTab extends LView {
 		
 		txtKey = new LText(compID);
 		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtKey.addModifyListener(new LControlListener<String>() {
+			@Override
+			public void onModify(LControlEvent<String> event) {
+				LDataTree<Object> node = listEditor.getDataCollection().getNode(listEditor.getCollectionWidget().getSelectedPath());
+				listEditor.getDataCollection().setKeyID(event.newValue, node.id);
+			}
+			
+		});
 		contentEditor.addControl(txtKey, "key");
 		
 		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);

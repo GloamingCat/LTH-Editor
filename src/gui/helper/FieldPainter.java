@@ -157,24 +157,32 @@ public class FieldPainter {
 			Image img = TilePainter.getCharacterTile(tile);
 			if (img == null)
 				return;
+			float sxc = 1, syc = 1;
+			int oxc = 0, oyc = 0;
+			Animation anim;
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
-			Animation anim = (Animation) Project.current.animations.getTree().
-					get(c.findAnimation(tile.animation));
-			float sxc = c.transform.scaleX / 100f;
-			float syc = c.transform.scaleY / 100f;
-			int oxc = (int)(c.transform.offsetX * sxc);
-			int oyc = (int)(c.transform.offsetY * syc);
-			Animation shadow = (Animation) Project.current.animations.getTree().get(c.shadowID);
-			if (shadow != null) {
-				int sw = shadow.quad.width / shadow.cols;
-				int sh = shadow.quad.height / shadow.rows;
-				float sx = shadow.transform.scaleX / 100f;
-				float sy = shadow.transform.scaleY / 100f;
-				Image simg = shadow.quad.getImage();
-				gc.drawImage(simg, shadow.quad.x, shadow.quad.y, sw, sh, 
-						x0 - (int)(shadow.transform.offsetX * sx),
-						y0 - (int)(shadow.transform.offsetY * sy), 
-						(int)(sw * sx), (int)(sh * sy));
+			if (c != null) {
+				anim = (Animation) Project.current.animations.getTree().
+						get(c.findAnimation(tile.animation));
+				sxc = c.transform.scaleX / 100f;
+				syc = c.transform.scaleY / 100f;
+				oxc = (int)(c.transform.offsetX * sxc);
+				oyc = (int)(c.transform.offsetY * syc);
+				Animation shadow = (Animation) Project.current.animations.getTree().get(c.shadowID);
+				if (shadow != null) {
+					int sw = shadow.quad.width / shadow.cols;
+					int sh = shadow.quad.height / shadow.rows;
+					float sx = shadow.transform.scaleX / 100f;
+					float sy = shadow.transform.scaleY / 100f;
+					Image simg = shadow.quad.getImage();
+					gc.drawImage(simg, shadow.quad.x, shadow.quad.y, sw, sh, 
+							x0 - (int)(shadow.transform.offsetX * sx),
+							y0 - (int)(shadow.transform.offsetY * sy), 
+							(int)(sw * sx), (int)(sh * sy));
+				}
+			} else {
+				int animID = Project.current.animations.getData().get(tile.animation);
+				anim = (Animation) Project.current.animations.getTree().get(animID);
 			}
 			int w = img.getBounds().width;
 			int h = img.getBounds().height;
