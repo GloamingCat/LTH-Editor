@@ -28,6 +28,7 @@ import data.subcontent.Icon;
 import data.subcontent.Point;
 import lwt.LImageHelper;
 import project.Project;
+import rendering.Context;
 import rendering.Renderer;
 import rendering.Screen;
 import rendering.ShaderProgram;
@@ -36,10 +37,19 @@ import rendering.VertexArray;
 
 public class SceneHelper {
 	
+	public static final Context context = new Context(1, 1) {public void render() {	}};
 	private static HashMap<String, Texture> loadedTextures = new HashMap<String, Texture>();
 	private static Config conf;
-	private static Renderer renderer = new Renderer();
-	private static Texture whiteTexture = Texture.white(255);
+	private static Renderer renderer;
+	private static Texture whiteTexture;
+
+	public static void initContext() {
+		if (renderer == null) {
+			context.init();
+			renderer = new Renderer();
+			whiteTexture = Texture.white(255);
+		}
+	}
 
 	public static void reload() {
 		conf = (Config) Project.current.config.getData();
@@ -49,6 +59,8 @@ public class SceneHelper {
 	}
 	
 	public static void createTileTextures(Renderer renderer, ShaderProgram shader) {
+		if (loadedTextures.containsKey("?g"))
+			return;
 		var regions = Project.current.regions.getList();
 		for (int i = 0; i < regions.size(); i++) {
 			String key = "?" + i;
@@ -266,7 +278,7 @@ public class SceneHelper {
 			buffer.get(bytes);
 		}
 		ImageData data = new ImageData(
-				texture.width, texture.height, 32,
+				texture.width, texture.height, texture.channels * 8,
 				new PaletteData(0xff000000, 0xff0000, 0xff00), 1,
 				bytes);
 		LImageHelper.correctTransparency(data);
@@ -275,11 +287,12 @@ public class SceneHelper {
 	
 	public static Texture toTexture(Image image) {
 		ImageData data = image.getImageData();
+		int channels = data.depth / 8;
 		ByteBuffer buffer = ByteBuffer.allocateDirect(data.width * data.height * 4);
 		for (int i = 0; i < data.width * data.height; i++) {
-			buffer.put(i*4, data.data[i*3+2]);
-			buffer.put(i*4+1, data.data[i*3+1]);
-			buffer.put(i*4+2, data.data[i*3]);
+			buffer.put(i*4, data.data[i*channels+2]);
+			buffer.put(i*4+1, data.data[i*channels+1]);
+			buffer.put(i*4+2, data.data[i*channels]);
 			buffer.put(i*4+3, data.alphaData[i]);
 		}
 		return new Texture(data.width, data.height, 4, buffer);

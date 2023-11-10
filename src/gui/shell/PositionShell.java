@@ -1,7 +1,7 @@
 package gui.shell;
 
 import gui.Vocab;
-import gui.views.fieldTree.FieldCanvasGC;
+import gui.views.fieldTree.*;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -30,7 +30,7 @@ import project.Project;
 public class PositionShell extends LObjectShell<Position> {
 	
 	private LTree<FieldNode, Field> tree;
-	private FieldCanvasGC canvas;
+	private FieldCanvas canvas;
 	private LCombo cmbDirection;
 	private Spinner spnX;
 	private Spinner spnY;
@@ -80,7 +80,7 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 
-		canvas = new FieldCanvasGC(scrolledComposite, SWT.NONE) {
+		canvas = new FieldCanvasOpenGL(scrolledComposite, SWT.NONE) {
 			public void onTileLeftDown() {
 				spnX.setSelection(tileX + 1);
 				spnY.setSelection(tileY + 1);

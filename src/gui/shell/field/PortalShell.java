@@ -2,7 +2,7 @@ package gui.shell.field;
 
 import gui.Vocab;
 import gui.helper.FieldHelper;
-import gui.views.fieldTree.FieldCanvasGC;
+import gui.views.fieldTree.*;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -26,7 +26,7 @@ import data.subcontent.Point;
 
 public class PortalShell extends LObjectShell<Portal> {
 	
-	protected FieldCanvasGC canvas;
+	protected FieldCanvas canvas;
 	protected Spinner spnH;
 	protected ScrolledComposite scrolledComposite;
 	protected LLabel lblPos;
@@ -45,7 +45,7 @@ public class PortalShell extends LObjectShell<Portal> {
 		scrolledComposite = new ScrolledComposite(content, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
-		canvas = new FieldCanvasGC(scrolledComposite, SWT.NONE) {
+		canvas = new FieldCanvasOpenGL(scrolledComposite, SWT.NONE) {
 			public void onTileLeftDown() {
 				selectedTiles[height][tileX][tileY] = !selectedTiles[height][tileX][tileY];
 				canvas.redraw();
