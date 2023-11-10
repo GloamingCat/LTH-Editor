@@ -16,6 +16,7 @@ import batching.Quad;
 import batching.Scene;
 import batching.Transform;
 import data.Animation;
+import data.GameCharacter;
 import data.Obstacle;
 import data.Terrain;
 import data.config.Config;
@@ -23,6 +24,7 @@ import data.config.Region;
 import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
+import data.subcontent.Icon;
 import data.subcontent.Point;
 import lwt.LImageHelper;
 import project.Project;
@@ -84,7 +86,7 @@ public class SceneHelper {
 					}
 				}
 				for (Layer layer : field.layers.region) {
-					if (!layer.visible)
+					if (!layer.visible || layer != currentLayer)
 						continue;
 					addRegion(layer, tile, scene, x0, y0, depth + 1 + layer.info.height - 1);
 					if (showGrid && currentLayer == layer) {
@@ -191,16 +193,50 @@ public class SceneHelper {
 		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
 		if (obj == null)
 			return;
-		Animation anim = (Animation) Project.current.animations.getTree().get(obj.image.id);
-		if (anim == null)
-			return;
-		//Rectangle rect = obj.image.getRectangle();
-		//int w = Math.round(rect.width * anim.transform.scaleX / 100f * obj.transform.scaleX / 100f);
-		//int h = Math.round(rect.height * anim.transform.scaleY / 100f * obj.transform.scaleY / 100f);
+		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
+		addIcon(obj.image, obj.transform, pos, scene, x0, y0, depth);
 	}
 	
 	public static void addCharacter(CharTile info, Point tile, Scene scene, int x0, int y0, int depth) {
-		
+		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(info.charID);
+		Icon icon = new Icon();
+		if (c != null) {
+			icon.id = c.findAnimation(info.animation);
+		} else if (!info.animation.isEmpty()) {
+			icon.id = Project.current.animations.getData().get(info.animation);
+		}
+		if (icon.id == -1)
+			return;
+		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
+		icon.col = anim.getFrame(info.frame - 1);
+		icon.row = info.direction / 45;
+		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, info.h - 1);
+		if (c != null) {
+			addIcon(icon, c.transform, pos, scene, x0, y0, depth);
+			if (c.shadowID >= 0) {
+				icon.id = c.shadowID;
+				icon.col = 0;
+				icon.row = 0;
+				addIcon(icon, null, pos, scene, x0, y0, depth - 1);
+			}
+		} else {
+			addIcon(icon, null, pos, scene, x0, y0, depth - 1);			
+		}
+	}
+	
+	public static void addIcon(Icon icon, data.subcontent.Transform transform, Point pos, Scene scene, int x0, int y0, int depth) {
+		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
+		if (anim == null)
+			return;
+		int w = anim.quad.width / anim.cols;
+		int h = anim.quad.height / anim.rows;
+		Quad quad = new Quad(anim.quad.path, anim.quad.x + w * icon.col, anim.quad.y + h * icon.row, w, h);
+		if (transform != null) {
+			transform = transform.clone().combine(anim.transform);
+		} else {
+			transform = anim.transform;
+		}
+		scene.add(quad, transform.convert(), pos.x + x0, pos.y + y0, w, h, depth);
 	}
 	
 	// }}
@@ -269,7 +305,7 @@ public class SceneHelper {
 		VertexArray array = VertexArray.octagon(w / 2, h / 2, 
 				conf.grid.tileW * scale, conf.grid.tileH * scale,
 				conf.grid.tileB * scale, conf.grid.tileS * scale,
-				0, 0, 0, 127);
+				0, 0, 0, 100);
 		array.initVAO(shader.attributes, shader.vertexSize);
 		cellBuffer.bind(shader);
 		whiteTexture.bind();

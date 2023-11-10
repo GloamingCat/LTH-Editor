@@ -453,7 +453,6 @@ public abstract class FieldCanvas extends LView {
 					if (grid[p.x][p.y] == id) {
 						modified.add(p);
 						grid[p.x][p.y] = newID;
-						onTileChange(p.x,  p.y);
 						Point[] shift = FieldHelper.math.neighborShift;
 						for(int k = 0; k < shift.length; k++) {
 							stack.push(new Point(p.x + shift[k].x, p.y + shift[k].y));
@@ -461,6 +460,7 @@ public abstract class FieldCanvas extends LView {
 					}
 				}
 			}
+			onTileChange(modified);
 			redrawBuffer();
 			redraw();
 			BucketAction action = new BucketAction(grid, newID, id, modified, this);
