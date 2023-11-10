@@ -1,10 +1,9 @@
 package gui.helper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import data.subcontent.Point;
-import gui.views.fieldTree.FieldCanvas;
-import gui.views.fieldTree.FieldCanvas.PainterThread;
 import data.config.Config.Grid;
 import data.field.Layer;
 
@@ -75,9 +74,12 @@ public abstract class FieldMath {
 	public abstract Point pixelSize(int sizeX, int sizeY);
 	public abstract Point pixelCenter(int sizeX, int sizeY, int height);
 	public abstract int pixelDisplacement(int height);
+	public abstract int fieldDepth(int sizeX, int sizeY);
+	public abstract int lineWidth(int sizeX, int sizeY);
 	public abstract Point pixel2Tile(float x, float y, float d);
 	public abstract Point tile2Pixel(float x, float y, float h);
 	public abstract int[] autotile(int[][] grid, int x, int y);
+	public abstract Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY);
 	
 	public int[] autotile(Layer layer, int x, int y) {
 		if (layer.info.noAuto) {
@@ -101,7 +103,6 @@ public abstract class FieldMath {
 	protected static boolean sameType(int[][] grid, Point p, int dx, int dy) {
 		return sameType(grid, p.x, p.y, p.x + dx, p.y + dy);
 	}
-	
-	public abstract PainterThread[] getPainterThreads(FieldCanvas canvas);
+
 	
 }

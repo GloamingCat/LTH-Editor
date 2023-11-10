@@ -1,6 +1,5 @@
 package gui.helper;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -19,49 +18,38 @@ import data.field.Field;
 import data.field.FieldImage;
 import data.field.Layer;
 import data.subcontent.Quad;
+import data.subcontent.Transform;
+import data.subcontent.Icon;
 import data.subcontent.Point;
 import lwt.LImageHelper;
 import project.Project;
 
 public class FieldPainter {
-	
+
 	public Color gridColor = SWTResourceManager.getColor(new RGB(50, 50, 50));
-	public Color cursorColor = SWTResourceManager.getColor(SWT.COLOR_RED);
-	
+
 	public float scale = 1;
-	public boolean showGrid = false;
 	public int imgW, imgH;
-	
+
 	public FieldPainter() {	}
-	
-	public FieldPainter(float scale, boolean showGrid) {
+
+	public FieldPainter(float scale) {
 		this.scale = scale;
-		this.showGrid = showGrid;
 	}
-	
+
 	// -------------------------------------------------------------------------------------
 	// Grid
 	// -------------------------------------------------------------------------------------
-	
-	public int[] getTilePolygon(int x0, int y0) {
-		Point[] shift = FieldHelper.math.vertexShift;
-		int[] p = new int[shift.length * 2];
-		for(int i = 0; i < shift.length; i++) {
-			p[i * 2] = Math.round((shift[i].x * scale + x0));
-			p[i * 2 + 1] = Math.round((shift[i].y * scale + y0));
-		}
-		return p;
-	}
-	
+
 	public void drawTile(GC gc, int x0, int y0) {
-		int[] p = getTilePolygon(x0, y0);
+		int[] p = FieldHelper.getTilePolygon(x0, y0, scale);
 		gc.drawPolygon(p);
 	}
-	
+
 	public void drawGrid(GC gc, int x0, int y0) {
 		drawGrid(gc, x0, y0, gridColor);
 	}
-	
+
 	public void drawGrid(GC gc, int x0, int y0, Color color) {
 		float scale = this.scale;
 		this.scale *= 0.95f;
@@ -71,12 +59,12 @@ public class FieldPainter {
 		gc.setAlpha(255);
 		this.scale = scale;
 	}
-	
+
 	public void fillTile(GC gc, int x0, int y0) {
-		int[] p = getTilePolygon(x0, y0);
+		int[] p = FieldHelper.getTilePolygon(x0, y0, scale);
 		gc.fillPolygon(p);
 	}
-	
+
 	// -------------------------------------------------------------------------------------
 	// Tiles
 	// -------------------------------------------------------------------------------------
@@ -92,27 +80,27 @@ public class FieldPainter {
 			int[] rows = FieldHelper.math.autotile(layer, x, y);
 			int w = img.getBounds().width / (anim.cols * 2);
 			int h = img.getBounds().height / (anim.rows * 2);
-			int dx = x0 - (anim.transform.offsetX * anim.transform.scaleX) / 10000;
-			int dy = y0 - (anim.transform.offsetY * anim.transform.scaleY) / 10000;
+			int dx = x0 - (anim.transform.offsetX * anim.transform.scaleX) / 100;
+			int dy = y0 - (anim.transform.offsetY * anim.transform.scaleY) / 100;
 			gc.drawImage(img, 
 					0, h * 2 * rows[0], w, h, 
-					dx - w, dy - h, w, h);
+					dx, dy, w, h);
 			gc.drawImage(img, 
 					w, h * 2 * rows[1], w, h, 
-					dx, dy - h, w, h);
+					dx + w, dy, w, h);
 			gc.drawImage(img, 
 					0, h + h * 2 * rows[2], w, h, 
-					dx - w, dy, w, h);
+					dx, dy + h, w, h);
 			gc.drawImage(img, 
 					w, h + h * 2 * rows[3], w, h, 
-					dx, dy, w, h);
+					dx + w, dy + h, w, h);
 		} catch(IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		} catch (java.lang.IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void paintObstacle(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
 			Image img = TilePainter.getObstacleTile(layer.grid[x][y]);
@@ -132,7 +120,7 @@ public class FieldPainter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void paintRegion(Layer layer, int x, int y, GC gc, int x0, int y0) {
 		try {
 			Image img = TilePainter.getRegionTile(layer.grid[x][y], false);
@@ -151,7 +139,7 @@ public class FieldPainter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void paintCharacter(CharTile tile, GC gc, int x0, int y0) {
 		try {
 			Image img = TilePainter.getCharacterTile(tile);
@@ -199,38 +187,67 @@ public class FieldPainter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// -------------------------------------------------------------------------------------
 	// Field
 	// -------------------------------------------------------------------------------------
-	
+
 	public void paintBackground(Field field, FieldImage img, int x0, int y0, GC gc) {
-		Animation anim = (Animation) Project.current.animations.getTree().get(img.id);
+		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
+		paintIcon(img, x0 + center.x, y0 + center.y, gc);
+	}
+	
+	public void paintIcon(Icon icon, int x0, int y0, GC gc) {
+		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
 		if (anim == null)
 			return;
 		Quad quad = anim.quad;
 		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
 			return;
+		int width = quad.width / anim.cols;
+		int height = quad.height / anim.rows;
+		int x = quad.x + width * icon.col;
+		int y = quad.y + height * icon.row;
 		Image bg = quad.getImage();
 		if (bg == null)
 			return;
-		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
-		x0 += center.x - quad.width / 2;
-		y0 += center.y - quad.height / 2;
-		int w = Math.min(quad.width - quad.x, bg.getBounds().width);
-		int y = Math.min(quad.height - quad.y, bg.getBounds().height);
-		gc.drawImage(bg, quad.x, quad.y, w, y,
-			x0, y0, quad.width, quad.height);
+		int w = Math.min(width - x, bg.getBounds().width);
+		int h = Math.min(height - y, bg.getBounds().height);
+		width = (int)(w * anim.transform.scaleX / 100f);
+		height = (int)( h  * anim.transform.scaleX / 100f);
+		x0 -= anim.transform.offsetX * anim.transform.scaleX / 100f;
+		y0 -= anim.transform.offsetY * anim.transform.scaleY / 100f;
+		gc.drawImage(bg, x, y, w, h, x0, y0, width, height);
 	}
 	
-	public Image createTileImage(Field field, int x, int y, Layer currentLayer, CharTile currentChar) {
-		Image img = LImageHelper.newImage(imgW, imgH);
-	    
-	    int x0 = imgW / 2;
-	    int y0 = imgH - FieldHelper.config.grid.tileH;
+	public void paintQuad(Quad quad, int x0, int y0, GC gc) {
+		Image bg = quad.getImage();
+		if (bg == null)
+			return;
+		int w = Math.min(quad.width - quad.x, bg.getBounds().width);
+		int h = Math.min(quad.height - quad.y, bg.getBounds().height);
+		gc.drawImage(bg, quad.x, quad.y, w, h, x0, y0, w, h);
+	}
+	
+	public void paintQuad(Quad quad, int x0, int y0, Transform transform, GC gc) {
+		Image bg = quad.getImage();
+		if (bg == null)
+			return;
+		x0 -= (transform.offsetX * transform.scaleX) / 100;
+		y0 -= (transform.offsetY * transform.scaleY) / 100;
+		int width = (quad.width * transform.scaleX) / 100;
+		int height = (quad.height  * transform.scaleY) / 100;
+		gc.drawImage(bg, quad.x, quad.y, quad.width, quad.height, x0, y0, width, height);
+	}
 
-	    int pph = FieldHelper.config.grid.pixelsPerHeight;
-	    
+	public Image createTileImage(Field field, int x, int y, boolean showGrid, Layer currentLayer, CharTile currentChar) {
+		Image img = LImageHelper.newImage(imgW, imgH);
+
+		int x0 = imgW / 2;
+		int y0 = imgH - FieldHelper.config.grid.tileH;
+
+		int pph = FieldHelper.config.grid.pixelsPerHeight;
+
 		GC gc = new GC(img);
 		gc.setAlpha(0);
 		gc.fillRectangle(0, 0, imgW, imgH);

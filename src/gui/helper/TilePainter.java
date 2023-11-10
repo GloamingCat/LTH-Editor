@@ -186,7 +186,7 @@ public class TilePainter {
 		}
 		return img;
 	}
-	
+
 	public static Image getRegionTile(int id, boolean rect) {
 		String key = id + " " + rect;
 		Image img = regionCache.get(key);

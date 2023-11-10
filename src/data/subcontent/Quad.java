@@ -17,14 +17,18 @@ public class Quad {
 	public int width = 0;
 	public int height = 0;
 	
+	public Quad() {}
+	
+	public Quad(String path, int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.path = path;
+	}
+
 	public Quad clone() {
-		Quad q = new Quad();
-		q.x = x;
-		q.y = y;
-		q.width = width;
-		q.height = height;
-		q.path = path;
-		return q;
+		return new Quad(path, x, y, width, height);
 	}
 	
 	public boolean equals(Object other) {

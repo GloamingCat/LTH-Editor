@@ -73,8 +73,8 @@ public class CharTileEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(event.oldValue - 1, spnY.getValue() - 1);
-				FieldEditor.instance.canvas.updateTileImage(event.newValue - 1, spnY.getValue() - 1);
+				FieldEditor.instance.canvas.onTileChange(event.oldValue - 1, spnY.getValue() - 1);
+				FieldEditor.instance.canvas.onTileChange(event.newValue - 1, spnY.getValue() - 1);
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}
@@ -83,8 +83,8 @@ public class CharTileEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, event.oldValue - 1);
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, event.newValue - 1);
+				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, event.oldValue - 1);
+				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, event.newValue - 1);
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}
@@ -94,7 +94,7 @@ public class CharTileEditor extends LObjectEditor {
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
 				FieldEditor.instance.canvas.setHeight(spnH.getValue() - 1);
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, spnY.getValue() - 1);
+				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, spnY.getValue() - 1);
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}
@@ -153,7 +153,7 @@ public class CharTileEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.updateTileImage(spnX.getValue() - 1, spnY.getValue() - 1);
+				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, spnY.getValue() - 1);
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}

@@ -28,8 +28,8 @@ public class CharAction implements LAction {
 		tile.x = x0;
 		tile.y = y0;
 		tile.h = h0;
-		FieldEditor.instance.canvas.updateTileImage(x0 - 1, y0 - 1);
-		FieldEditor.instance.canvas.updateTileImage(x - 1, y - 1);
+		FieldEditor.instance.canvas.onTileChange(x0 - 1, y0 - 1);
+		FieldEditor.instance.canvas.onTileChange(x - 1, y - 1);
 		FieldSideEditor.instance.onMoveCharacter(tile);
 		FieldEditor.instance.canvas.redrawBuffer();
 		FieldEditor.instance.canvas.redraw();
@@ -40,8 +40,8 @@ public class CharAction implements LAction {
 		tile.x = x;
 		tile.y = y;
 		tile.h = h;
-		FieldEditor.instance.canvas.updateTileImage(x0 - 1, y0 - 1);
-		FieldEditor.instance.canvas.updateTileImage(x - 1, y - 1);
+		FieldEditor.instance.canvas.onTileChange(x0 - 1, y0 - 1);
+		FieldEditor.instance.canvas.onTileChange(x - 1, y - 1);
 		FieldSideEditor.instance.onMoveCharacter(tile);
 		FieldEditor.instance.canvas.redrawBuffer();
 		FieldEditor.instance.canvas.redraw();

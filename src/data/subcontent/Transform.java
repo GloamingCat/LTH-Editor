@@ -23,6 +23,39 @@ public class Transform {
 	public int saturation = 100;
 	public int brightness = 100;
 	
+	public Transform clone() {
+		Transform t = new Transform();
+		t.offsetDepth = offsetDepth;
+		t.offsetX = offsetX;
+		t.offsetY = offsetY;
+		t.scaleX = scaleX;
+		t.scaleY = scaleY;
+		t.rotation = rotation;
+		t.red = red;
+		t.green = green;
+		t.blue = blue;
+		t.hue = hue;
+		t.saturation = saturation;
+		t.brightness = brightness;
+		return t;
+	}
+	
+	public batching.Transform convert() {
+		batching.Transform t = new batching.Transform();
+		t.offsetX = offsetX;
+		t.offsetY = offsetY;
+		t.scaleX = scaleX;
+		t.scaleY = scaleY;
+		t.rotation = rotation;
+		t.red = red;
+		t.green = green;
+		t.blue = blue;
+		t.hue = hue;
+		t.saturation = saturation;
+		t.brightness = brightness;
+		return t;
+	}
+	
 	public Transform combine(Transform t) {
 		offsetX += t.offsetX;
 		offsetY += t.offsetY;

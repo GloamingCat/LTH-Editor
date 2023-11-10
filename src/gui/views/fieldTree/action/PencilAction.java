@@ -37,7 +37,7 @@ public class PencilAction implements LAction {
 					continue;
 				if (selection[i][j] != grid[x + i][y + j]) {
 					grid[x + i][y + j] = selection[i][j];
-					FieldEditor.instance.canvas.updateTileImage(x + i,  y + j);
+					FieldEditor.instance.canvas.onTileChange(x + i,  y + j);
 					needsRedraw = true;
 				}
 			}

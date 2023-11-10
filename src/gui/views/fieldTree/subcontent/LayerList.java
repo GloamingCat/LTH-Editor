@@ -53,7 +53,7 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		getCollectionWidget().setPasteEnabled(true);
 		getCollectionWidget().addEditListener(new LCollectionListener<Info>() {
 			public void onEdit(LEditEvent<Info> e) {
-				FieldEditor.instance.canvas.updateAllTileImages();
+				FieldEditor.instance.canvas.refresh();
 			}
 		});
 		getCollectionWidget().addSelectionListener(new LSelectionListener() {
@@ -62,7 +62,7 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 				Layer l = (Layer) event.data;
 				if (event.detail == SWT.CHECK) { 
 					l.visible = !l.visible;
-					FieldEditor.instance.canvas.updateAllTileImages();
+					FieldEditor.instance.canvas.refresh();
 				} else {
 					editor.selectLayer(l);
 					if (editor.field == null || event.path == null)

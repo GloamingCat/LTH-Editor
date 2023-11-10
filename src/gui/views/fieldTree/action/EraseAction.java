@@ -22,7 +22,7 @@ public class EraseAction implements LAction {
 	@Override
 	public void undo() {
 		grid[x][y] = id;
-		canvas.updateTileImage(x, y);
+		canvas.onTileChange(x, y);
 		canvas.redrawBuffer();
 		canvas.redraw();
 	}
@@ -30,7 +30,7 @@ public class EraseAction implements LAction {
 	@Override
 	public void redo() {
 		grid[x][y] = -1;
-		canvas.updateTileImage(x, y);
+		canvas.onTileChange(x, y);
 		canvas.redrawBuffer();
 		canvas.redraw();
 	}

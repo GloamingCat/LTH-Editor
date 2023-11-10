@@ -24,7 +24,7 @@ import org.eclipse.swt.layout.GridLayout;
 public class FieldEditor extends LObjectEditor {
 
 	public static FieldEditor instance;
-	public EditableFieldCanvas canvas;
+	public FieldCanvas canvas;
 	
 	private LLabel tileCoord;
 	private LLabel lblID;
@@ -48,7 +48,7 @@ public class FieldEditor extends LObjectEditor {
 		scrolledComposite = new ScrolledComposite(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		canvas = new EditableFieldCanvas(scrolledComposite, SWT.NONE) {
+		canvas = new FieldCanvasOpenGL(scrolledComposite, SWT.NONE) {
 			
 			public void onTileEnter(int x, int y) {
 				super.onTileEnter(x, y);

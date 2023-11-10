@@ -193,13 +193,13 @@ public class FieldSideEditor extends LObjectEditor {
 		LCollectionListener<CharTile> charListener = new LCollectionListener<CharTile>() {
 			public void onInsert(LInsertEvent<CharTile> event) {
 				if (event == null || event.node == null) return;
-				FieldEditor.instance.canvas.updateTileImage(event.node.data.x - 1, event.node.data.y - 1);
+				FieldEditor.instance.canvas.onTileChange(event.node.data.x - 1, event.node.data.y - 1);
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}
 			public void onDelete(LDeleteEvent<CharTile> event) {
 				if (event == null || event.node == null) return;
-				FieldEditor.instance.canvas.updateTileImage(event.node.data.x - 1, event.node.data.y - 1);
+				FieldEditor.instance.canvas.onTileChange(event.node.data.x - 1, event.node.data.y - 1);
 				FieldEditor.instance.canvas.redrawBuffer();
 				FieldEditor.instance.canvas.redraw();
 			}

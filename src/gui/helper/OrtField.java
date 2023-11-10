@@ -1,14 +1,9 @@
 package gui.helper;
 
 import java.util.ArrayList;
-
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
+import java.util.Iterator;
 
 import data.subcontent.Point;
-import gui.views.fieldTree.FieldCanvas;
-import gui.views.fieldTree.FieldCanvas.PainterThread;
-import lwt.LImageHelper;
 
 public class OrtField extends FieldMath {
 
@@ -44,7 +39,17 @@ public class OrtField extends FieldMath {
 	public int pixelDisplacement(int height) {
 		return 0;
 	}
+	
+	@Override
+	public int fieldDepth(int sizeX, int sizeY) {
+		return sizeY;
+	}
 
+	@Override
+	public int lineWidth(int sizeX, int sizeY) {
+		return FieldHelper.config.grid.tileW * sizeX;
+	}
+	
 	@Override
 	public Point pixel2Tile(float x, float y, float d) {
 		float newH = d / conf.pixelsPerHeight;
@@ -98,46 +103,23 @@ public class OrtField extends FieldMath {
 		return rows;
 	}
 	
-	// -------------------------------------------------------------------------------------
-	// Field Canvas
-	// -------------------------------------------------------------------------------------
-	
-	private class OrtPainterThread extends PainterThread {
-		
-		private FieldCanvas canvas;
-		private int j;
-		private Point size;
-		
-		public OrtPainterThread(FieldCanvas canvas, Point size, int j) {
-			super();
-			this.j = j;
-			this.size = size;
-			this.canvas = canvas;
-		}
-
-		public void run() {
-			Image img = LImageHelper.newImage(size.x + (FieldHelper.config.grid.tileW) * canvas.field.sizeX, size.y);
-			GC gc = new GC(img);
-			liney = canvas.y0 + tile2Pixel(0, j, 0).y - size.y + FieldHelper.config.grid.tileH;
-			for(int i = 0; i < canvas.field.sizeX ; i++) {
-				Point pos = FieldHelper.math.tile2Pixel(i, j, 0);
-				int x = canvas.x0 + pos.x - size.x / 2;
-				gc.drawImage(canvas.tileImages[i][j], 0, 0, size.x, size.y, x, 0, size.x, size.y);
+	public Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY) {
+		return new Iterator<ArrayList<Point>>() {
+			int j = 0;
+			@Override
+			public ArrayList<Point> next() {
+				ArrayList<Point> list = new ArrayList<>();
+				for(int i = 0; i < sizeX; i++) {
+					list.add(new Point(i, j));
+				}
+				j++;
+				return list;
 			}
-			gc.dispose();
-			line = LImageHelper.correctTransparency(img);
-		}
-		
-	}
-	
-	public PainterThread[] getPainterThreads(FieldCanvas canvas) {
-		final PainterThread[] threads = new PainterThread[canvas.field.sizeY];
-		final Point tsize = canvas.tileImageSize();
-		for(int j = 0; j < canvas.field.sizeY; j++) {
-			threads[j] = new OrtPainterThread(canvas, tsize, j);
-			threads[j].start();
-		}
-		return threads;
+			@Override
+			public boolean hasNext() {
+				return j < sizeY;
+			}
+		};
 	}
 
 }

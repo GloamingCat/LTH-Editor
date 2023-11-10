@@ -1,6 +1,7 @@
 package gui.helper;
 
 import data.config.Config;
+import data.subcontent.Point;
 import project.Project;
 
 public class FieldHelper {
@@ -17,6 +18,16 @@ public class FieldHelper {
 		} else {
 			math = new HexField();
 		}
+	}
+	
+	public static int[] getTilePolygon(int x0, int y0, float scale) {
+		Point[] shift = math.vertexShift;
+		int[] p = new int[shift.length * 2];
+		for(int i = 0; i < shift.length; i++) {
+			p[i * 2] = Math.round((shift[i].x * scale + x0));
+			p[i * 2 + 1] = Math.round((shift[i].y * scale + y0));
+		}
+		return p;
 	}
 	
 }

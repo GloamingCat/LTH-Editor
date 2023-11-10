@@ -27,8 +27,8 @@ public class BucketAction implements LAction {
 	public void undo() {
 		for(Point p : tiles) {
 			grid[p.x][p.y] = oldID;
-			canvas.updateTileImage(p.x, p.y);
 		}
+		canvas.onTileChange(tiles);
 		canvas.redrawBuffer();
 		canvas.redraw();
 	}
@@ -37,8 +37,8 @@ public class BucketAction implements LAction {
 	public void redo() {
 		for(Point p : tiles) {
 			grid[p.x][p.y] = newID;
-			canvas.updateTileImage(p.x, p.y);
 		}
+		canvas.onTileChange(tiles);
 		canvas.redrawBuffer();
 		canvas.redraw();
 	}

@@ -1,12 +1,9 @@
 package gui.helper;
 
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import data.subcontent.Point;
-import gui.views.fieldTree.FieldCanvas;
-import lwt.LImageHelper;
-import gui.views.fieldTree.FieldCanvas.PainterThread;
 
 public abstract class BaseIsoField extends FieldMath {
 	
@@ -31,6 +28,18 @@ public abstract class BaseIsoField extends FieldMath {
 	public int pixelDisplacement(int height) {
 		return (height + 1) * (conf.tileH + conf.tileS) / 2;
 	}
+	
+	@Override
+	public int fieldDepth(int sizeX, int sizeY) {
+		return sizeX + sizeY - 1;
+	}
+	
+	@Override
+	public int lineWidth(int sizeX, int sizeY) {
+		int tileCount = Math.max(sizeX, sizeY);
+		int imgW = (FieldHelper.config.grid.tileW + FieldHelper.config.grid.tileB) * tileCount;
+		return imgW;
+	}
 
 	@Override
 	public Point pixel2Tile(float x, float y, float d) {
@@ -54,52 +63,33 @@ public abstract class BaseIsoField extends FieldMath {
 	// Field Canvas
 	// -------------------------------------------------------------------------------------
 	
-	private class IsoPainterThread extends PainterThread {
-		
-		private FieldCanvas canvas;
-		private int ki, kj;
-		private Point size;
-		
-		public IsoPainterThread(FieldCanvas canvas, Point size, int ki, int kj) {
-			super();
-			this.ki = ki;
-			this.kj = kj;
-			this.size = size;
-			this.canvas = canvas;
-		}
-
-		public void run() {
-			int tileCount = Math.max(canvas.field.sizeX, canvas.field.sizeY) - 1;
-			Image img = LImageHelper.newImage(size.x + (FieldHelper.config.grid.tileW + 
-					FieldHelper.config.grid.tileB) * tileCount, size.y);
-			GC gc = new GC(img);
-			liney = canvas.y0 + tile2Pixel(ki, kj, 0).y - size.y + FieldHelper.config.grid.tileH;
-			for(int i = ki, j = kj; i < canvas.field.sizeX && j < canvas.field.sizeY; i++, j++) {
-				Point pos = FieldHelper.math.tile2Pixel(i, j, 0);
-				int x = canvas.x0 + pos.x - size.x / 2;
-				gc.drawImage(canvas.tileImages[i][j], 0, 0, size.x, size.y, x, 0, size.x, size.y);
+	public Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY) {
+		return new Iterator<ArrayList<Point>>() {
+			int k = sizeX - 1;
+			int l = 1;
+			@Override
+			public ArrayList<Point> next() {
+				if (k >= 0) {
+					ArrayList<Point> list = new ArrayList<>();
+					for(int i = k, j = 0; i < sizeX && j < sizeY; i++, j++) {
+						list.add(new Point(i, j));
+					}
+					k--;
+					return list;
+				} else {
+					ArrayList<Point> list = new ArrayList<>();
+					for(int i = 0, j = l; i < sizeX && j < sizeY; i++, j++) {
+						list.add(new Point(i, j));
+					}
+					l++;
+					return list;
+				}
 			}
-			gc.dispose();
-			line = LImageHelper.correctTransparency(img);
-		}
-		
-	}
-	
-	public PainterThread[] getPainterThreads(FieldCanvas canvas) {
-		final PainterThread[] threads = new PainterThread[canvas.field.sizeX + canvas.field.sizeY - 1];
-		final Point tsize = canvas.tileImageSize();
-		
-		for(int k = canvas.field.sizeX - 1; k >= 0; k--) {
-			int p = canvas.field.sizeX - k - 1;
-			threads[p] = new IsoPainterThread(canvas, tsize, k, 0);
-			threads[p].start();
-		}
-		for(int k = 1; k < canvas.field.sizeY; k++) {
-			int p = k + canvas.field.sizeX - 1;
-			threads[p] = new IsoPainterThread(canvas, tsize, 0, k);
-			threads[p].start();
-		}
-		return threads;
+			@Override
+			public boolean hasNext() {
+				return k >= 0 || l < sizeY;
+			}
+		};
 	}
 	
 }
