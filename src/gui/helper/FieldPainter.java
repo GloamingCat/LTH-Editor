@@ -290,7 +290,7 @@ public class FieldPainter {
 			paintCharacter(tile, gc, x0, y0 - (tile.h - 1) * pph);
 		}
 		gc.dispose();
-		return LImageHelper.correctTransparency(img);
+		return img;//LImageHelper.correctTransparency(img);
 	}
 
 }

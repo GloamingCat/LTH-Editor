@@ -70,7 +70,7 @@ public class TilePainter {
 			gc.drawImage(terrainImg, anim.quad.x, anim.quad.y, w, h, 0, 0, dw, dh);
 			gc.dispose();
 			ImageData data = img.getImageData();
-			LImageHelper.correctTransparency(data);
+			//LImageHelper.correctTransparency(data);
 			LImageHelper.colorTransform(data,
 					anim.transform.red / 255f,
 					anim.transform.green / 255f,
@@ -116,7 +116,7 @@ public class TilePainter {
 					0, 0, w, h);
 			gc.dispose();
 			ImageData data = img.getImageData();
-			LImageHelper.correctTransparency(data);
+			//LImageHelper.correctTransparency(data);
 			LImageHelper.colorTransform(img, 
 				anim.transform.red / 255f * obj.transform.red / 255f,
 				anim.transform.green / 255f * obj.transform.green / 255f,
@@ -170,7 +170,7 @@ public class TilePainter {
 					0, 0, w, h); // Destination
 			gc.dispose();
 			ImageData data = img.getImageData();
-			LImageHelper.correctTransparency(data);
+			//LImageHelper.correctTransparency(data);
 			LImageHelper.colorTransform(data, 
 					anim.transform.red / 255f * transform.red / 255f,
 					anim.transform.green / 255f * transform.green / 255f,

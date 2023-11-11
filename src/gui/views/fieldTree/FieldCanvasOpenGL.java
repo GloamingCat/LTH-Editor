@@ -31,7 +31,8 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		super(parent, style);
 		SceneHelper.initContext();
 		renderer = new Renderer();
-		renderer.setBackgroundColor(128, 128, 255, 255);
+		renderer.setBackgroundColor(192, 192, 192, 255);
+		renderer.setPencilSize(1);
 		shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");
 	}
 	

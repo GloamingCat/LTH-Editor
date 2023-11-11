@@ -26,7 +26,6 @@ import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Icon;
 import data.subcontent.Point;
-import lwt.LImageHelper;
 import project.Project;
 import rendering.Context;
 import rendering.Renderer;
@@ -40,13 +39,11 @@ public class SceneHelper {
 	public static final Context context = new Context(1, 1) {public void render() {	}};
 	private static HashMap<String, Texture> loadedTextures = new HashMap<String, Texture>();
 	private static Config conf;
-	private static Renderer renderer;
 	private static Texture whiteTexture;
 
 	public static void initContext() {
-		if (renderer == null) {
+		if (!context.isInitialized()) {
 			context.init();
-			renderer = new Renderer();
 			whiteTexture = Texture.white(255);
 		}
 	}
@@ -64,13 +61,13 @@ public class SceneHelper {
 		var regions = Project.current.regions.getList();
 		for (int i = 0; i < regions.size(); i++) {
 			String key = "?" + i;
-			Texture texture = createRegionTexture(i, 1, shader);
+			Texture texture = createRegionTexture(renderer, i, 1, shader);
 			Texture old = loadedTextures.get(key);
 			if (old != null)
 				old.dispose();
 			loadedTextures.put(key, texture);
 		}
-		Texture cell = createTileTexture(renderer, 0.95f, shader);
+		Texture cell = createTileTexture(renderer, 0.95f, 64, shader);
 		Texture old = loadedTextures.get("?g");
 		if (old != null)
 			old.dispose();
@@ -281,7 +278,7 @@ public class SceneHelper {
 				texture.width, texture.height, texture.channels * 8,
 				new PaletteData(0xff000000, 0xff0000, 0xff00), 1,
 				bytes);
-		LImageHelper.correctTransparency(data);
+		//LImageHelper.correctTransparency(data);
 		return new Image(Display.getCurrent(), data);
 	}
 	
@@ -305,20 +302,20 @@ public class SceneHelper {
 	
 	public static Image createTileImage(Renderer renderer, float scale, Color color, ShaderProgram shader) {
 		renderer.setPencilColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		Texture texture = createTileTexture(renderer, scale, shader);
+		Texture texture = createTileTexture(renderer, scale, 255, shader);
 		Image img = toImage(texture);
 		texture.dispose();
 		return img;
 	}
 	
-	private static Texture createTileTexture(Renderer renderer, float scale, ShaderProgram shader) {
+	private static Texture createTileTexture(Renderer renderer, float scale, int alpha, ShaderProgram shader) {
 		int w = (int)Math.ceil(conf.grid.tileW * scale) + 6;
 		int h = (int)Math.ceil(conf.grid.tileH * scale) + 6;
 		Screen cellBuffer = new Screen(w, h, false);
 		VertexArray array = VertexArray.octagon(w / 2, h / 2, 
 				conf.grid.tileW * scale, conf.grid.tileH * scale,
 				conf.grid.tileB * scale, conf.grid.tileS * scale,
-				0, 0, 0, 100);
+				0, 0, 0, alpha);
 		array.initVAO(shader.attributes, shader.vertexSize);
 		cellBuffer.bind(shader);
 		whiteTexture.bind();
@@ -328,7 +325,7 @@ public class SceneHelper {
 		return cellBuffer.texture;
 	}
 	
-	private static Texture createRegionTexture(int id, float scale, ShaderProgram shader) {
+	private static Texture createRegionTexture(Renderer renderer, int id, float scale, ShaderProgram shader) {
 		Region r = (Region) Project.current.regions.getData().get(id);
 		Color color = SWTResourceManager.getColor(r.rgb);
 		int w = (int)Math.ceil(conf.grid.tileW * scale) + 6;
