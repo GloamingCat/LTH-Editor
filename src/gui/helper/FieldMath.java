@@ -83,9 +83,8 @@ public abstract class FieldMath {
 	public abstract Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY);
 	
 	public int pixelDepth(int x, int y, int height) {
-		height++;
 		int ty = y + height * conf.pixelsPerHeight;
-		int d = -conf.depthPerY * ty;
+		int d = -ty * conf.depthPerY / conf.tileH;
 		return d - height * conf.depthPerHeight;
 	}
 	

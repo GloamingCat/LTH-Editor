@@ -47,7 +47,7 @@ public class OrtField extends FieldMath {
 	
 	@Override
 	public Point depthLimits(int sizeX, int sizeY, int height) {
-		int dpy = conf.tileH * conf.depthPerY;
+		int dpy = conf.depthPerY;
 		int pph = conf.pixelsPerHeight;
 		int dph = conf.depthPerHeight;
 		return new Point(

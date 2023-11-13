@@ -36,7 +36,7 @@ public abstract class BaseIsoField extends FieldMath {
 	
 	@Override
 	public Point depthLimits(int sizeX, int sizeY, int height) {
-		int dpy = conf.tileH / 2 * conf.depthPerY;
+		int dpy = conf.depthPerY / 2;
 		int pph = conf.pixelsPerHeight;
 		int dph = conf.depthPerHeight;
 		return new Point(
