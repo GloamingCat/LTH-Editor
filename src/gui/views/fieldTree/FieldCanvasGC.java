@@ -57,7 +57,7 @@ public class FieldCanvasGC extends FieldCanvas {
 				gc.drawImage(tileImages[p.x][p.y], 0, 0, size.x, size.y, x, 0, size.x, size.y);
 			}
 			gc.dispose();
-			line = img;//LImageHelper.correctTransparency(img);
+			line = LImageHelper.correctTransparency(img);
 		}
 		
 	}

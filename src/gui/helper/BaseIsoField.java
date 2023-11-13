@@ -35,6 +35,16 @@ public abstract class BaseIsoField extends FieldMath {
 	}
 	
 	@Override
+	public Point depthLimits(int sizeX, int sizeY, int height) {
+		int dpy = conf.tileH / 2 * conf.depthPerY;
+		int pph = conf.pixelsPerHeight;
+		int dph = conf.depthPerHeight;
+		return new Point(
+				(int)-Math.ceil(sizeY * dpy + pph + dph * (height - 1)),
+				(int) Math.ceil(sizeX * dpy + pph * 2 + dph * (height + 1)));
+	}
+	
+	@Override
 	public int lineWidth(int sizeX, int sizeY) {
 		int tileCount = Math.max(sizeX, sizeY);
 		int imgW = (FieldHelper.config.grid.tileW + FieldHelper.config.grid.tileB) * tileCount;

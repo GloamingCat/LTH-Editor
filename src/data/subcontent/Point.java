@@ -18,6 +18,14 @@ public class Point {
 		//this.z = 0;
 	}
 	
+	public int first() {
+		return x;
+	}
+	
+	public int second() {
+		return y;
+	}
+	
 	public String toString() {
 		return "(" + x + "," + y + ")";
 	}

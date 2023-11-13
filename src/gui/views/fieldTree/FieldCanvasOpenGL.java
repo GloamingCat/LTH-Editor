@@ -51,7 +51,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	}
 	
 	protected void drawScene() {
-		BatchIterator batches = scene.getBatchIterator();
+		BatchIterator batches = scene.getBatchIterator(true);
 		while(!batches.done()) {
 			Batch batch = batches.next();
 			Texture texture = SceneHelper.getTexture(batch.texturePath);

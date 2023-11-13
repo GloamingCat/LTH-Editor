@@ -75,11 +75,19 @@ public abstract class FieldMath {
 	public abstract Point pixelCenter(int sizeX, int sizeY, int height);
 	public abstract int pixelDisplacement(int height);
 	public abstract int fieldDepth(int sizeX, int sizeY);
+	public abstract Point depthLimits(int sizeX, int sizeY, int height);
 	public abstract int lineWidth(int sizeX, int sizeY);
 	public abstract Point pixel2Tile(float x, float y, float d);
 	public abstract Point tile2Pixel(float x, float y, float h);
 	public abstract int[] autotile(int[][] grid, int x, int y);
 	public abstract Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY);
+	
+	public int pixelDepth(int x, int y, int height) {
+		height++;
+		int ty = y + height * conf.pixelsPerHeight;
+		int d = -conf.depthPerY * ty;
+		return d - height * conf.depthPerHeight;
+	}
 	
 	public int[] autotile(Layer layer, int x, int y) {
 		if (layer.info.noAuto) {

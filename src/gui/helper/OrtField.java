@@ -44,6 +44,16 @@ public class OrtField extends FieldMath {
 	public int fieldDepth(int sizeX, int sizeY) {
 		return sizeY;
 	}
+	
+	@Override
+	public Point depthLimits(int sizeX, int sizeY, int height) {
+		int dpy = conf.tileH * conf.depthPerY;
+		int pph = conf.pixelsPerHeight;
+		int dph = conf.depthPerHeight;
+		return new Point(
+				(int)-Math.ceil(sizeY * dpy + pph* 2 + dph * (height - 1)),
+				(int) Math.ceil(pph + dph * (height + 1)));
+	}
 
 	@Override
 	public int lineWidth(int sizeX, int sizeY) {

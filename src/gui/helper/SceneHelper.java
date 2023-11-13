@@ -26,6 +26,7 @@ import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Icon;
 import data.subcontent.Point;
+import lwt.LImageHelper;
 import project.Project;
 import rendering.Context;
 import rendering.Renderer;
@@ -79,55 +80,50 @@ public class SceneHelper {
 	
 	public static Scene createScene(Field field, int x0, int y0, boolean showGrid,
 			Layer currentLayer, CharTile currentChar) {
-		Scene scene = new Scene(FieldHelper.math.fieldDepth(field.sizeX, field.sizeY) * (4 + field.prefs.maxHeight));
+		Point depthLimits = FieldHelper.math.depthLimits(field.sizeX, field.sizeY, field.prefs.maxHeight);
+		Scene scene = new Scene(depthLimits.first(), depthLimits.second());
 		Iterator<ArrayList<Point>> it = FieldHelper.math.lineIterator(field.sizeX, field.sizeY);
-		int depth = 0;
 		while (it.hasNext()) {
 			ArrayList<Point> tiles = it.next();
 			for (Point tile : tiles) {
 				for (Layer layer : field.layers.terrain) {
 					if (!layer.visible)
 						continue;
-					addTerrain(layer, tile, scene, x0, y0, depth + layer.info.height - 1);
+					addTerrain(layer, tile, scene, x0, y0);
 					if (showGrid && currentLayer == layer) {
-						Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
-						addTile(pos, scene, x0, y0, depth + layer.info.height - 1, "?g");
+						addTile(tile, layer.info.height, scene, x0, y0, "?g");
 					}
 				}
 				for (Layer layer : field.layers.region) {
 					if (!layer.visible || layer != currentLayer)
 						continue;
-					addRegion(layer, tile, scene, x0, y0, depth + 1 + layer.info.height - 1);
+					addRegion(layer, tile, scene, x0, y0);
 					if (showGrid && currentLayer == layer) {
-						Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
-						addTile(pos, scene, x0, y0, depth + 1 + layer.info.height - 1, "?g");
+						addTile(tile, layer.info.height, scene, x0, y0, "?g");
 					}
 				}
 				for (Layer layer : field.layers.obstacle) {
 					if (!layer.visible)
 						continue;
-					addObstacle(layer, tile, scene, x0, y0, depth + 2 + layer.info.height - 1);
+					addObstacle(layer, tile, scene, x0, y0);
 					if (showGrid && currentLayer == layer) {
-						Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
-						addTile(pos, scene, x0, y0, depth + 2 + layer.info.height - 1, "?g");
+						addTile(tile, layer.info.height, scene, x0, y0, "?g");
 					}
 				}
 				for (CharTile ctile : field.characters) {
 					if (ctile.x - 1 != tile.x || ctile.y - 1 != tile.y)
 						continue;
-					addCharacter(ctile, tile, scene, x0, y0, depth + 3 + ctile.h - 1);
+					addCharacter(ctile, tile, scene, x0, y0);
 					if (showGrid && currentChar == ctile) {
-						Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, ctile.h - 1);
-						addTile(pos, scene, x0, y0, depth + 3 + ctile.h - 1, "?g");
+						addTile(tile, ctile.h, scene, x0, y0, "?g");
 					}
 				}
 			}
-			depth += 4 + field.prefs.maxHeight;
 		}
 		return scene;
 	}
 	
-	public static void addTerrain(Layer layer, Point tile, Scene scene, int x0, int y0, int depth) {
+	public static void addTerrain(Layer layer, Point tile, Scene scene, int x0, int y0) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
@@ -145,6 +141,10 @@ public class SceneHelper {
 		int dh = anim.quad.height / anim.rows;
 		
 		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
+		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, layer.info.height - 1);
+		int dTop = depth + anim.transform.offsetDepth;
+		int dBottom = dTop + conf.grid.depthPerY * conf.grid.tileH / 2;
+		
 		int w = dw / 2;
 		int h = dh / 2;
 		
@@ -153,21 +153,21 @@ public class SceneHelper {
 		
 		tl.x = anim.quad.x;
 		tl.y = anim.quad.y + dh*rows[0];
-		scene.add(tl, ttl, pos.x + x0, pos.y + y0, w, h, depth);
+		scene.add(tl, ttl, pos.x + x0, pos.y + y0, w, h, dTop);
 		
 		Quad tr = tl.clone();
 		tr.x = anim.quad.x + w;
 		tr.y = anim.quad.y + dh*rows[1];
 		var ttr = ttl.clone();
 		ttr.offsetX -= w;
-		scene.add(tr, ttr, pos.x + x0, pos.y + y0, w, h, depth);
+		scene.add(tr, ttr, pos.x + x0, pos.y + y0, w, h, dTop);
 		
 		Quad bl = tl.clone();
 		bl.x = anim.quad.x;
 		bl.y = anim.quad.y + h + dh*rows[2];
 		var tbl = ttl.clone();
 		tbl.offsetY -= h;
-		scene.add(bl, tbl, pos.x + x0, pos.y + y0, w, h, depth);
+		scene.add(bl, tbl, pos.x + x0, pos.y + y0, w, h, dBottom);
 		
 		Quad br = tl.clone();
 		br.x = anim.quad.x + w;
@@ -175,18 +175,19 @@ public class SceneHelper {
 		var tbr = ttl.clone();
 		tbr.offsetX -= w;
 		tbr.offsetY -= h;
-		scene.add(br, tbr, pos.x + x0, pos.y + y0, w, h, depth);
+		scene.add(br, tbr, pos.x + x0, pos.y + y0, w, h, dBottom);
 	}
 	
-	public static void addRegion(Layer layer, Point tile, Scene scene, int x0, int y0, int depth) {
+	public static void addRegion(Layer layer, Point tile, Scene scene, int x0, int y0) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
-		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
-		addTile(pos, scene, x0, y0, depth, "?" + id);
+		addTile(tile, layer.info.height, scene, x0, y0, "?" + id);
 	}
 	
-	public static void addTile(Point pos, Scene scene, int x0, int y0, int depth, String tex) {
+	public static void addTile(Point tile, int height, Scene scene, int x0, int y0, String tex) {
+		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, height - 1);
+		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, height - 1);
 		Texture texture = loadedTextures.get(tex);
 		Quad quad = new Quad(tex, 0, 0, texture.width, texture.height);
 		Transform transform = new Transform();
@@ -195,7 +196,7 @@ public class SceneHelper {
 		scene.add(quad, transform, pos.x + x0, pos.y + y0, quad.width, quad.height, depth);
 	}
 	
-	public static void addObstacle(Layer layer, Point tile, Scene scene, int x0, int y0, int depth) {
+	public static void addObstacle(Layer layer, Point tile, Scene scene, int x0, int y0) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
@@ -203,10 +204,11 @@ public class SceneHelper {
 		if (obj == null)
 			return;
 		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
+		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, layer.info.height - 1);
 		addIcon(obj.image, obj.transform, pos, scene, x0, y0, depth);
 	}
 	
-	public static void addCharacter(CharTile info, Point tile, Scene scene, int x0, int y0, int depth) {
+	public static void addCharacter(CharTile info, Point tile, Scene scene, int x0, int y0) {
 		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(info.charID);
 		Icon icon = new Icon();
 		if (c != null) {
@@ -220,16 +222,17 @@ public class SceneHelper {
 		icon.col = anim.getFrame(info.frame - 1);
 		icon.row = info.direction / 45;
 		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, info.h - 1);
+		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, info.h - 1);
 		if (c != null) {
-			addIcon(icon, c.transform, pos, scene, x0, y0, depth);
+			addIcon(icon, c.transform, pos, scene, x0, y0, depth - 1);
 			if (c.shadowID >= 0) {
 				icon.id = c.shadowID;
 				icon.col = 0;
 				icon.row = 0;
-				addIcon(icon, null, pos, scene, x0, y0, depth - 1);
+				addIcon(icon, null, pos, scene, x0, y0, depth);
 			}
 		} else {
-			addIcon(icon, null, pos, scene, x0, y0, depth - 1);			
+			addIcon(icon, null, pos, scene, x0, y0, depth);			
 		}
 	}
 	
@@ -245,7 +248,8 @@ public class SceneHelper {
 		} else {
 			transform = anim.transform;
 		}
-		scene.add(quad, transform.convert(), pos.x + x0, pos.y + y0, w, h, depth);
+		depth += transform.offsetDepth;
+		scene.add(quad, transform.convert(), pos.x + x0, pos.y + y0, w, h, depth - 200);
 	}
 	
 	// }}
@@ -278,7 +282,7 @@ public class SceneHelper {
 				texture.width, texture.height, texture.channels * 8,
 				new PaletteData(0xff000000, 0xff0000, 0xff00), 1,
 				bytes);
-		//LImageHelper.correctTransparency(data);
+		LImageHelper.correctTransparency(data);
 		return new Image(Display.getCurrent(), data);
 	}
 	
