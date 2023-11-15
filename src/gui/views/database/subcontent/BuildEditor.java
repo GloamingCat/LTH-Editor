@@ -11,15 +11,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import data.config.Attribute;
+import gson.editor.GDefaultObjectEditor;
 import project.Project;
 import lwt.dataestructure.LDataList;
-import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-public class BuildEditor extends LObjectEditor {
+public class BuildEditor extends GDefaultObjectEditor<LDataList<String>> {
 
 	protected LDataList<String> values;
 	protected ArrayList<LText> texts;
@@ -27,15 +27,16 @@ public class BuildEditor extends LObjectEditor {
 	protected Composite content;
 	protected int columns = 2;
 	
-	protected LDataList<String> list;
-	
 	public BuildEditor(Composite parent, int style) {
 		super(parent, style);
 		
-		setLayout(new FillLayout());
+		setLayout(new GridLayout());
+		//addHeader().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
 		texts = new ArrayList<>();
 		
 		scrollComp = new ScrolledComposite(this, SWT.V_SCROLL);
+		scrollComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		scrollComp.setExpandVertical(true);
 		scrollComp.setExpandHorizontal(true);
 		scrollComp.setLayout(new FillLayout());
@@ -45,21 +46,15 @@ public class BuildEditor extends LObjectEditor {
 
 	}
 	
-	@SuppressWarnings("unchecked")
-	private LDataList<String> getList() {
-		return (LDataList<String>) currentObject;
-	}
-	
 	public void setObject(Object obj) {
 		super.setObject(obj);
 		if (obj != null) {
-			list = getList();
 			for(int i = 0; i < texts.size(); i++) {
-				if (i < list.size()) {
-					texts.get(i).setValue(list.get(i));
+				if (i < currentObject.size()) {
+					texts.get(i).setValue(currentObject.get(i));
 				} else {
 					String value = "0";
-					list.add(value);
+					currentObject.add(value);
 					texts.get(i).setValue(value);
 				}
 			}
@@ -103,14 +98,27 @@ public class BuildEditor extends LObjectEditor {
 		scrollComp.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 	
+	public void saveObjectValues() {
+		super.saveObjectValues();
+		for(int i = 0; i < texts.size(); i++) {
+			if (i < currentObject.size()) {
+				currentObject.set(i, texts.get(i).getValue());
+			} else {
+				String value = "0";
+				currentObject.add(value);
+				texts.get(i).setValue(value);
+			}
+		}
+	}
+	
 	private LText createText(final int i) {
 		LText text = new LText(content);
 		text.setActionStack(getActionStack());
 		text.addModifyListener(new LControlListener<String>() {
 			@Override
 			public void onModify(LControlEvent<String> event) {
-				if (list != null) {
-					list.set(i, event.newValue);
+				if (currentObject != null) {
+					currentObject.set(i, event.newValue);
 				}
 			}
 		});

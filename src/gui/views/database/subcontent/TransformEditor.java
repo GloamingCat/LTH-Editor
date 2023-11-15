@@ -10,14 +10,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import data.subcontent.Transform;
-import lwt.editor.LObjectEditor;
+import gson.editor.GDefaultObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-public class TransformEditor extends LObjectEditor {
+public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	
 	public LImage image = null;
 	private LSpinner spnOffsetX;
@@ -35,21 +35,21 @@ public class TransformEditor extends LObjectEditor {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event.oldValue == null) return;
-				onChangeColor((Transform) currentObject);
+				onChangeColor((Transform) getObject());
 			}
 		};
 		LControlListener<Integer> updateOffset = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event.oldValue == null) return;
-				onChangeOffset((Transform) currentObject);
+				onChangeOffset((Transform) getObject());
 			}
 		};
 		LControlListener<Integer> updateScale = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				if (event.oldValue == null) return;
-				onChangeScale((Transform) currentObject);
+				onChangeScale((Transform) getObject());
 			}
 		};
 		
@@ -175,9 +175,10 @@ public class TransformEditor extends LObjectEditor {
 		img.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				if (currentObject == null)
+				Object obj = getObject();
+				if (obj == null)
 					return;
-				Transform t = (Transform) currentObject;
+				Transform t = (Transform) obj;
 				float sw = t.scaleX / 100f;
 				float sh = t.scaleY / 100f;
 				int x = Math.round(t.offsetX * sw) + e.x;
@@ -209,7 +210,7 @@ public class TransformEditor extends LObjectEditor {
 	}
 	
 	public void onChangeColor(Transform t) {
-		if (image != null && currentObject != null) {
+		if (image != null && getObject() != null) {
 			Transform t2 = secondaryTransform();
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
@@ -230,7 +231,7 @@ public class TransformEditor extends LObjectEditor {
 	}
 
 	public void updateColorTransform(LImage img) {
-		Transform t1 = (Transform) currentObject;
+		Transform t1 = (Transform) getObject();
 		if (t1 != null) {
 			Transform t2 = secondaryTransform();
 			if (t2 != null) {

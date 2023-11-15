@@ -3,9 +3,11 @@ package gui.views.database;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
+import gson.editor.GDefaultObjectEditor;
 import gson.editor.GDefaultTreeEditor;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
+import gui.views.database.subcontent.TagList;
 import gui.widgets.ImageButton;
 
 import org.eclipse.swt.SWT;
@@ -21,7 +23,6 @@ import com.google.gson.Gson;
 import lwt.dataestructure.LDataTree;
 import lwt.editor.LControlView;
 import lwt.editor.LEditor;
-import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
 import lwt.event.LControlEvent;
 import lwt.event.LInsertEvent;
@@ -29,23 +30,24 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
-import lwt.widget.LControl;
+import lwt.widget.LControlWidget;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-public abstract class DatabaseTab extends LView {
+public abstract class DatabaseTab<T> extends LView {
 
 	protected static Gson gson = new Gson();
 	
 	protected GDefaultTreeEditor<Object> listEditor;
-	protected LObjectEditor contentEditor;
-	protected Group grpGeneral;
+	protected GDefaultObjectEditor<T> contentEditor;
+	protected Group grpGeneral, grpTags;
 	protected LLabel lblID;
 	protected LLabel lblKey;
 	protected LText txtKey;
 	protected LLabel lblName;
 	protected LText txtName;
+	protected Composite left, right;
 	
 	public DatabaseTab(Composite parent) {
 		super(parent);
@@ -77,13 +79,23 @@ public abstract class DatabaseTab extends LView {
 		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.verticalSpacing = 0;
-		contentEditor = new LObjectEditor(sashForm, SWT.NONE);
-		contentEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		contentEditor.setLayout(gridLayout);
+		contentEditor = new GDefaultObjectEditor<T>(sashForm, SWT.NONE);
+		contentEditor.setLayout(new GridLayout(2, true));
 		
-		grpGeneral = new Group(contentEditor, SWT.NONE);
+		left = new Composite(contentEditor, SWT.NONE);
+		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout gl_left = new GridLayout();
+		gl_left.marginWidth = 0;
+		gl_left.marginHeight = 0;
+		left.setLayout(gl_left);
+		right = new Composite(contentEditor, SWT.NONE);
+		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout gl_right = new GridLayout();
+		gl_right.marginWidth = 0;
+		gl_right.marginHeight = 0;
+		right.setLayout(gl_right);
+		
+		grpGeneral = new Group(left, SWT.NONE);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpGeneral.setLayout(new GridLayout(2, false));
 		grpGeneral.setText(Vocab.instance.GENERAL);
@@ -113,10 +125,27 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.addControl(txtKey, "key");
 		
 		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);
+		GridData gd_name = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+		gd_name.minimumWidth = 72;
+		gd_name.widthHint = 72;
+		lblName.setLayoutData(gd_name);
 		
 		txtName = new LText(grpGeneral);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		contentEditor.addControl(txtName, "name");
+		
+		// Tags
+		
+		grpTags = new Group(right, SWT.NONE);
+		GridData gd_tags = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_tags.minimumHeight = 140;
+		gd_tags.heightHint = 140;
+		grpTags.setLayoutData(gd_tags);
+		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpTags.setText(Vocab.instance.TAGS);
+		
+		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		addChild(lstTags, "tags");
 		
 		listEditor.addChild(contentEditor);
 		listEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
@@ -157,7 +186,7 @@ public abstract class DatabaseTab extends LView {
 		contentEditor.addChild(editor, key);
 	}
 	
-	protected void addControl(LControl<?> control, String attName) {
+	protected void addControl(LControlWidget<?> control, String attName) {
 		contentEditor.addControl(control, attName);
 	}
 	

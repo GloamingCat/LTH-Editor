@@ -29,9 +29,9 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -42,10 +42,10 @@ import project.Project;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import data.Skill;
 import data.Skill.Mask;
-import org.eclipse.swt.widgets.Label;
 
-public class SkillTab extends DatabaseTab {
+public class SkillTab extends DatabaseTab<Skill> {
 
 	/**
 	 * Create the composite.
@@ -53,72 +53,7 @@ public class SkillTab extends DatabaseTab {
 	 */
 	public SkillTab(Composite parent) {
 		super(parent);
-		GridLayout gridLayout = (GridLayout) contentEditor.getLayout();
-		gridLayout.makeColumnsEqualWidth = true;
-		
-		Composite right = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.verticalSpacing = 0;
-		gl_right.marginWidth = 0;
-		gl_right.marginHeight = 0;
-		right.setLayout(gl_right);
-		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-		gd_right.widthHint = 200;
-		right.setLayoutData(gd_right);
-		
-		Group grpAnimations = new Group(right, SWT.NONE);
-		GridLayout gl_grpAnimations = new GridLayout(1, false);
-		gl_grpAnimations.marginTop = 5;
-		gl_grpAnimations.marginHeight = 0;
-		gl_grpAnimations.marginWidth = 0;
-		grpAnimations.setLayout(gl_grpAnimations);
-		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 
-		Composite range = new Composite(contentEditor, SWT.NONE);
-		range.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_range = new GridLayout(2, false);
-		gl_range.marginWidth = 0;
-		gl_range.marginHeight = 0;
-		range.setLayout(gl_range);
-		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(3, true);
-		gl_bottom.verticalSpacing = 0;
-		gl_bottom.marginHeight = 0;
-		gl_bottom.marginWidth = 0;
-		bottom.setLayout(gl_bottom);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		// Script
-		
-		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
-		
-		Composite script = new Composite(grpGeneral,  SWT.NONE);
-		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridLayout gl_script = new GridLayout(2, false);
-		gl_script.marginWidth = 0;
-		gl_script.marginHeight = 0;
-		script.setLayout(gl_script);
-		
-		LText txtScript = new LText(script, true);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		LuaButton btnScript = new LuaButton(script, 1);
-		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnScript.setPathWidget(txtScript);
-		addControl(btnScript, "script");
-		
-		// Description
-		
-		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
-		LTextBox txtDescription = new LTextBox(grpGeneral);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtDescription.heightHint = 84;
-		txtDescription.setLayoutData(gd_txtDescription);
-		addControl(txtDescription, "description");
-		
 		// Icon
 		
 		new LLabel(grpGeneral, Vocab.instance.ICON);
@@ -142,57 +77,98 @@ public class SkillTab extends DatabaseTab {
 		btnGraphics.setImageWidget(imgIcon);
 		addControl(btnGraphics, "icon");
 		
-		// Range
+		// Description
 		
-		Group grpEffect = new Group(range, SWT.NONE);
-		grpEffect.setLayout(new GridLayout(2, false));
-		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpEffect.setText(Vocab.instance.EFFECTMASK);
+		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		Group grpCast = new Group(range, SWT.NONE);
-		grpCast.setLayout(new GridLayout(2, false));
-		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpCast.setText(Vocab.instance.CASTMASK);
+		LTextBox txtDescription = new LTextBox(grpGeneral);
+		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtDescription.minimumHeight = 60;
+		gd_txtDescription.heightHint = 60;
+		txtDescription.setLayoutData(gd_txtDescription);
+		addControl(txtDescription, "description");
 		
-		LObjectButton<Mask> btnEffectMask = new LObjectButton<Mask>(grpEffect, SWT.NONE);
-		btnEffectMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
-		addControl(btnEffectMask, "effectMask");
+		// Script
 		
-		Composite effectMask = new Composite(grpEffect, SWT.NONE);
-		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		addMaskButton(btnEffectMask, effectMask, effectColor);
+		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		
-		LCheckBox btnRotate = new LCheckBox(grpEffect);
-		btnRotate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		btnRotate.setText(Vocab.instance.ROTATE);
-		addControl(btnRotate, "rotateEffect");
+		Composite script = new Composite(grpGeneral,  SWT.NONE);
+		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridLayout gl_script = new GridLayout(2, false);
+		gl_script.marginWidth = 0;
+		gl_script.marginHeight = 0;
+		script.setLayout(gl_script);
 		
-		LObjectButton<Mask> btnCastMask = new LObjectButton<Mask>(grpCast, SWT.NONE);
-		btnCastMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
-		addControl(btnCastMask, "castMask");
+		LText txtScript = new LText(script, true);
+		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Composite castMask = new Composite(grpCast, SWT.NONE);
-		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		addMaskButton(btnCastMask, castMask, castColor);	
+		LuaButton btnScript = new LuaButton(script, 1);
+		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		btnScript.setPathWidget(txtScript);
+		addControl(btnScript, "script");
+		
+		// Restrictions
+		
+		Group grpRestrictions = new Group(left, SWT.NONE);
+		grpRestrictions.setLayout(new GridLayout(2, false));
+		grpRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpRestrictions.setText(Vocab.instance.RESTRICTIONS);
+		
+		new LLabel(grpRestrictions, Vocab.instance.COSTS);
+		
+		TagList lstCosts = new TagList(grpRestrictions, SWT.NONE);
+		GridData gd_lstCosts = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
+		gd_lstCosts.heightHint = 61;
+		lstCosts.setLayoutData(gd_lstCosts);
+		addChild(lstCosts, "costs");
+		
+		new LLabel(grpRestrictions, Vocab.instance.CONTEXT);
+		
+		LCombo cmbRestrictions = new LCombo(grpRestrictions, SWT.NONE);
+		cmbRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		cmbRestrictions.setIncludeID(false);
+		cmbRestrictions.setOptional(false);
+		cmbRestrictions.setItems(new String[] {
+				Vocab.instance.ALWAYS,
+				Vocab.instance.BATTLEONLY,
+				Vocab.instance.FIELDONLY});
+		addControl(cmbRestrictions, "restriction");
+		
+		new LLabel(grpRestrictions, Vocab.instance.USECONDITION);
+		
+		LText txtCondition = new LText(grpRestrictions);
+		txtCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(txtCondition, "condition");
+		
+		// Effects
+		
+		Group grpEffects = new Group(left, SWT.NONE);
+		grpEffects.setLayout(new GridLayout(2, false));
+		grpEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpEffects.setText(Vocab.instance.EFFECTS);
+
+		SkillEffectList lstEffects = new SkillEffectList(grpEffects, SWT.NONE);
+		lstEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		addChild(lstEffects, "effects");
+		
+		new LLabel(grpEffects, Vocab.instance.EFFECTCONDITION);
+		
+		LText txtEffectCondition = new LText(grpEffects);
+		txtEffectCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtEffectCondition.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		addControl(txtEffectCondition, "effectCondition");
 		
 		// Target Selection
 		
-		Group grpTarget = new Group(right, SWT.NONE);
+		Group grpTarget = new Group(left, SWT.NONE);
 		GridLayout gl_grpTarget = new GridLayout(2, false);
 		grpTarget.setLayout(gl_grpTarget);
 		grpTarget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTarget.setText(Vocab.instance.TARGET);
 		
 		new LLabel(grpTarget, Vocab.instance.TYPE);
-
-		Composite type = new Composite(grpTarget, SWT.NONE);
-		GridLayout gl_type = new GridLayout(2, false);
-		gl_type.marginWidth = 0;
-		gl_type.marginHeight = 0;
-		type.setLayout(gl_type);
-		type.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		LCombo cmbType = new LCombo(type, SWT.NONE);
+		LCombo cmbType = new LCombo(grpTarget, SWT.NONE);
 		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbType.setIncludeID(false);
 		cmbType.setOptional(false);
@@ -202,10 +178,6 @@ public class SkillTab extends DatabaseTab {
 			Vocab.instance.SUPPORT
 		});
 		addControl(cmbType, "type");
-		
-		LCheckBox btnAllParties = new LCheckBox(type);
-		btnAllParties.setText(Vocab.instance.ALLPARTIES);
-		addControl(btnAllParties, "allParties");
 		
 		new LLabel(grpTarget, Vocab.instance.TARGETSELECTION);
 		
@@ -227,18 +199,32 @@ public class SkillTab extends DatabaseTab {
 				Vocab.instance.EFFECTRANGE});
 		addControl(cmbSelection, "selection");
 		
-		LCheckBox btnAutopath = new LCheckBox(selection);
-		btnAutopath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Composite check = new Composite(grpTarget, SWT.NONE);
+		check.setLayout(new RowLayout());
+		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
+		LCheckBox btnAllParties = new LCheckBox(check);
+		btnAllParties.setText(Vocab.instance.ALLPARTIES);
+		addControl(btnAllParties, "allParties");
+		
+		LCheckBox btnAutopath = new LCheckBox(check);
 		btnAutopath.setText(Vocab.instance.AUTOPATH);
 		addControl(btnAutopath, "autoPath");
 		
-		new Label(grpTarget, SWT.NONE);
-		
-		LCheckBox btnFreeNavigation = new LCheckBox(grpTarget);
+		LCheckBox btnFreeNavigation = new LCheckBox(check);
 		btnFreeNavigation.setText(Vocab.instance.FREENAVIGATION);
 		addControl(btnFreeNavigation, "freeNavigation");
-		
+
 		// Animations
+		
+		Group grpAnimations = new Group(right, SWT.NONE);
+		GridLayout gl_grpAnimations = new GridLayout(1, false);
+		gl_grpAnimations.marginTop = 5;
+		gl_grpAnimations.marginHeight = 0;
+		gl_grpAnimations.marginWidth = 0;
+		grpAnimations.setLayout(gl_grpAnimations);
+		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		
 		TabFolder tabAnim = new TabFolder(grpAnimations, SWT.NONE);
 		tabAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -366,61 +352,10 @@ public class SkillTab extends DatabaseTab {
 		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
 		addControl(btnDamageAnim, "damageAnim");
 		
-		// Restrictions
-		
-		Group grpRestrictions = new Group(right, SWT.NONE);
-		grpRestrictions.setLayout(new GridLayout(2, false));
-		grpRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpRestrictions.setText(Vocab.instance.RESTRICTIONS);
-		
-		new LLabel(grpRestrictions, Vocab.instance.COSTS);
-		
-		TagList lstCosts = new TagList(grpRestrictions, SWT.NONE);
-		GridData gd_lstCosts = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
-		gd_lstCosts.heightHint = 61;
-		lstCosts.setLayoutData(gd_lstCosts);
-		addChild(lstCosts, "costs");
-		
-		new LLabel(grpRestrictions, Vocab.instance.CONTEXT);
-		
-		LCombo cmbRestrictions = new LCombo(grpRestrictions, SWT.NONE);
-		cmbRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		cmbRestrictions.setIncludeID(false);
-		cmbRestrictions.setOptional(false);
-		cmbRestrictions.setItems(new String[] {
-				Vocab.instance.ALWAYS,
-				Vocab.instance.BATTLEONLY,
-				Vocab.instance.FIELDONLY});
-		addControl(cmbRestrictions, "restriction");
-		
-		new LLabel(grpRestrictions, Vocab.instance.USECONDITION);
-		
-		LText txtCondition = new LText(grpRestrictions);
-		txtCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(txtCondition, "condition");
-		
-		// Effects
-		
-		Group grpEffects = new Group(bottom, SWT.NONE);
-		grpEffects.setLayout(new GridLayout(2, false));
-		grpEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpEffects.setText(Vocab.instance.EFFECTS);
-
-		SkillEffectList lstEffects = new SkillEffectList(grpEffects, SWT.NONE);
-		lstEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		addChild(lstEffects, "effects");
-		
-		new LLabel(grpEffects, Vocab.instance.EFFECTCONDITION);
-		
-		LText txtEffectCondition = new LText(grpEffects);
-		txtEffectCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		txtEffectCondition.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		addControl(txtEffectCondition, "effectCondition");
-		
 		// Elements
 		
-		Group grpElements = new Group(bottom, SWT.NONE);
-		GridLayout gl_grpElements = new GridLayout(1, false);
+		Group grpElements = new Group(right, SWT.NONE);
+		GridLayout gl_grpElements = new GridLayout(2, false);
 		gl_grpElements.marginWidth = 0;
 		gl_grpElements.marginHeight = 0;
 		grpElements.setLayout(gl_grpElements);
@@ -438,18 +373,49 @@ public class SkillTab extends DatabaseTab {
 		
 		LCheckBox btnUserElements = new LCheckBox(grpElements, SWT.NONE);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
+		btnUserElements.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		addControl(btnUserElements, "userElements");
 		
-		// Tags
+		// Range
 		
-		Group grpTags = new Group(bottom, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setText(Vocab.instance.TAGS);
+		Composite range = new Composite(right, SWT.NONE);
+		range.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout gl_range = new GridLayout(2, false);
+		gl_range.marginWidth = 0;
+		gl_range.marginHeight = 0;
+		range.setLayout(gl_range);
 		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
-
+		Group grpEffect = new Group(range, SWT.NONE);
+		grpEffect.setLayout(new GridLayout(2, false));
+		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpEffect.setText(Vocab.instance.EFFECTMASK);
+		
+		Group grpCast = new Group(range, SWT.NONE);
+		grpCast.setLayout(new GridLayout(2, false));
+		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpCast.setText(Vocab.instance.CASTMASK);
+		
+		LObjectButton<Mask> btnEffectMask = new LObjectButton<Mask>(grpEffect, SWT.NONE);
+		btnEffectMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		addControl(btnEffectMask, "effectMask");
+		
+		Composite effectMask = new Composite(grpEffect, SWT.NONE);
+		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addMaskButton(btnEffectMask, effectMask, effectColor);
+		
+		LCheckBox btnRotate = new LCheckBox(grpEffect);
+		btnRotate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		btnRotate.setText(Vocab.instance.ROTATE);
+		addControl(btnRotate, "rotateEffect");
+		
+		LObjectButton<Mask> btnCastMask = new LObjectButton<Mask>(grpCast, SWT.NONE);
+		btnCastMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		addControl(btnCastMask, "castMask");
+		
+		Composite castMask = new Composite(grpCast, SWT.NONE);
+		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addMaskButton(btnCastMask, castMask, castColor);	
+		
 	}
 	
 	@Override

@@ -7,10 +7,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import lwt.editor.LObjectEditor;
+import data.subcontent.Audio;
+import gson.editor.GDefaultObjectEditor;
 import lwt.widget.LText;
 
-public class AudioEditor extends LObjectEditor {
+public class AudioEditor extends GDefaultObjectEditor<Audio> {
 
 	AudioButton btnSelectSound;
 	

@@ -12,7 +12,6 @@ import gui.Vocab;
 import gui.helper.TilePainter;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
-import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.UnitEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
@@ -35,7 +34,7 @@ import project.Project;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
-public class TroopTab extends DatabaseTab {
+public class TroopTab extends DatabaseTab<Troop> {
 	
 	public static final int tWidth = 32;
 	public static final int tHeight = 48;
@@ -46,9 +45,6 @@ public class TroopTab extends DatabaseTab {
 	 */
 	public TroopTab(Composite parent) {
 		super(parent);
-		
-		GridLayout gridLayout = (GridLayout) contentEditor.getLayout();
-		gridLayout.numColumns = 3;
 		
 		// General
 		
@@ -88,30 +84,32 @@ public class TroopTab extends DatabaseTab {
 		btnAI.setPathWidget(txtAI);
 		addControl(btnAI, "ai");
 		
+		// Grid
+		
+		Group grpGrid = new Group(left, SWT.NONE);
+		grpGrid.setText(Vocab.instance.GRID);
+		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGrid.setLayout(new FillLayout());
+		
+		Composite gridEditor = new Composite(grpGrid, SWT.NONE);
+		gridEditor.setLayout(new FillLayout());
+
 		// Items
 		
-		Group grpItems = new Group(contentEditor, SWT.NONE);
+		Group grpItems = new Group(right, SWT.NONE);
 		grpItems.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpItems.setText(Vocab.instance.ITEMS);
 		
 		DropList lstItems = new DropList(grpItems, SWT.NONE);
 		addChild(lstItems, "items");
 		
-		// Tags
-		
-		Group grpTags = new Group(contentEditor, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");	
-		
+		new LLabel(right, "").setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
 		// Units
 		
 		Group grpMembers = new Group(contentEditor, SWT.NONE);
-		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		grpMembers.setLayout(new GridLayout(2, false));
 		grpMembers.setText(Vocab.instance.UNITS);
 		
@@ -119,22 +117,17 @@ public class TroopTab extends DatabaseTab {
 		lstMembers.getCollectionWidget().setEditEnabled(false);
 		lstMembers.setIncludeID(false);
 		lstMembers.type = Unit.class;
-		GridData gd_lstUnits = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData gd_lstUnits = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_lstUnits.widthHint = 220;
 		lstMembers.setLayoutData(gd_lstUnits);
 		addChild(lstMembers, "members");
-		
-		Composite gridEditor = new Composite(grpMembers, SWT.NONE);
-		GridData gd_gridEditor = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_gridEditor.widthHint = 241;
-		gridEditor.setLayoutData(gd_gridEditor);
 		
 		UnitEditor unitEditor = new UnitEditor(grpMembers, SWT.NONE) {
 			public void refresh() {
 				gridEditor.redraw();
 			}
 		};
-		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		lstMembers.addChild(unitEditor);
 		
 		gridEditor.addPaintListener(new PaintListener() {
@@ -209,6 +202,7 @@ public class TroopTab extends DatabaseTab {
 		
 		listEditor.getCollectionWidget().addSelectionListener(listener2);
 		unitEditor.addSelectionListener(listener2);
+		
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package gui.views.fieldTree;
 
 import gui.helper.TilePainter;
-import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LActionButton;
@@ -18,10 +17,11 @@ import data.field.Field;
 import data.field.FieldNode;
 import data.field.Layer;
 import data.subcontent.Point;
+import gson.editor.GDefaultObjectEditor;
 
 import org.eclipse.swt.layout.GridLayout;
 
-public class FieldEditor extends LObjectEditor {
+public class FieldEditor extends GDefaultObjectEditor<Field> {
 
 	public static FieldEditor instance;
 	public FieldCanvas canvas;

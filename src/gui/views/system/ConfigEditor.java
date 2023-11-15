@@ -7,7 +7,6 @@ import gui.widgets.IDButton;
 import gui.widgets.PositionButton;
 import lwt.action.LActionStack;
 import lwt.dataestructure.LDataTree;
-import lwt.editor.LObjectEditor;
 import lwt.editor.LView;
 import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
@@ -22,11 +21,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
+import data.config.Config;
+import gson.editor.GDefaultObjectEditor;
 import project.Project;
 
 public class ConfigEditor extends LView {
 
-	private LObjectEditor editor;
+	private GDefaultObjectEditor<Config> editor;
 	
 	/**
 	 * Create the composite.
@@ -39,7 +40,7 @@ public class ConfigEditor extends LView {
 		
 		setLayout(new GridLayout(4, false));
 		
-		editor = new LObjectEditor(this, SWT.NONE);
+		editor = new GDefaultObjectEditor<Config>(this, SWT.NONE);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		editor.setLayout(new GridLayout(4, false));
 		addChild(editor);
@@ -159,7 +160,7 @@ public class ConfigEditor extends LView {
 		grpScreen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpScreen.setText(Vocab.instance.SCREEN);
 		
-		LObjectEditor screenEditor = new LObjectEditor(grpScreen, SWT.NONE);
+		GDefaultObjectEditor<Config.Screen> screenEditor = new GDefaultObjectEditor<Config.Screen>(grpScreen, SWT.NONE);
 		editor.addChild(screenEditor, "screen");
 		screenEditor.setLayout(new GridLayout(3, false));
 		
@@ -251,7 +252,7 @@ public class ConfigEditor extends LView {
 		grpPlayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPlayer.setText(Vocab.instance.PLAYER);
 		
-		LObjectEditor playerEditor = new LObjectEditor(grpPlayer, SWT.NONE);
+		GDefaultObjectEditor<Config.Player> playerEditor = new GDefaultObjectEditor<Config.Player>(grpPlayer, SWT.NONE);
 		editor.addChild(playerEditor, "player");
 		playerEditor.setLayout(new GridLayout(3, false));
 		
@@ -296,7 +297,7 @@ public class ConfigEditor extends LView {
 		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGrid.setText(Vocab.instance.GRID);
 		
-		LObjectEditor gridEditor = new LObjectEditor(grpGrid, SWT.NONE);
+		GDefaultObjectEditor<Config.Grid> gridEditor = new GDefaultObjectEditor<Config.Grid>(grpGrid, SWT.NONE);
 		editor.addChild(gridEditor, "grid");
 		gridEditor.setLayout(new GridLayout(3, false));
 		
@@ -366,7 +367,7 @@ public class ConfigEditor extends LView {
 		grpBattle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpBattle.setText(Vocab.instance.BATTLE);
 		
-		LObjectEditor battleEditor = new LObjectEditor(grpBattle, SWT.NONE);
+		GDefaultObjectEditor<Config.Battle> battleEditor = new GDefaultObjectEditor<Config.Battle>(grpBattle, SWT.NONE);
 		editor.addChild(battleEditor, "battle");
 		battleEditor.setLayout(new GridLayout(3, false));
 		
@@ -427,7 +428,7 @@ public class ConfigEditor extends LView {
 		grpTroop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpTroop.setText(Vocab.instance.TROOP);
 		
-		LObjectEditor troopEditor = new LObjectEditor(grpTroop, SWT.NONE);
+		GDefaultObjectEditor<Config.Troop> troopEditor = new GDefaultObjectEditor<Config.Troop>(grpTroop, SWT.NONE);
 		editor.addChild(troopEditor, "troop");
 		troopEditor.setLayout(new GridLayout(3, false));
 		

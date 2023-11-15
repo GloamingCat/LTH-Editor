@@ -7,7 +7,6 @@ import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.ElementList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.EquipStatusList;
-import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
@@ -31,7 +30,9 @@ import project.Project;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
-public class ItemTab extends DatabaseTab {
+import data.Item;
+
+public class ItemTab extends DatabaseTab<Item> {
 
 	/**
 	 * Create the composite.
@@ -39,18 +40,7 @@ public class ItemTab extends DatabaseTab {
 	 */
 	public ItemTab(Composite parent) {
 		super(parent);
-		
-		Composite right = new Composite(contentEditor, SWT.NONE);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-		
-		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
-		LTextBox txtDescription = new LTextBox(grpGeneral);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtDescription.minimumHeight = 48;
-		txtDescription.setLayoutData(gd_txtDescription);
-		addControl(txtDescription, "description");
-		
+
 		// Icon
 		
 		new LLabel(grpGeneral, Vocab.instance.ICON);
@@ -73,6 +63,17 @@ public class ItemTab extends DatabaseTab {
 		IconButton btnGraphics = new IconButton(compositeIcon, 0);
 		btnGraphics.setImageWidget(imgIcon);
 		addControl(btnGraphics, "icon");
+		
+		// Description
+		
+		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		LTextBox txtDescription = new LTextBox(grpGeneral);
+		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtDescription.minimumHeight = 60;
+		gd_txtDescription.heightHint = 60;
+		txtDescription.setLayoutData(gd_txtDescription);
+		addControl(txtDescription, "description");
 		
 		// Price
 		
@@ -98,6 +99,53 @@ public class ItemTab extends DatabaseTab {
 		gl_right.marginHeight = 0;
 		right.setLayout(gl_right);
 		addControl(btnSellable, "sellable");
+
+		// Use
+		
+		Group grpUse = new Group(left, SWT.NONE);
+		grpUse.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpUse.setText(Vocab.instance.USE);
+		grpUse.setLayout(new GridLayout(3, false));
+		
+		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
+	
+		LText txtSkill = new LText(grpUse, true);
+		txtSkill.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		IDButton btnSkill = new IDButton(grpUse, 1) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.skills.getTree();
+			}
+		};
+		btnSkill.setNameWidget(txtSkill);
+		addControl(btnSkill, "skillID");
+		
+		Composite checkButtons = new Composite(grpUse, SWT.NONE);
+		checkButtons.setLayout(new FillLayout(SWT.HORIZONTAL));
+		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
+		
+		LCheckBox btnConsume = new LCheckBox(checkButtons, SWT.NONE);
+		btnConsume.setText(Vocab.instance.CONSUME);
+		addControl(btnConsume, "consume");
+		
+		LCheckBox btnNeedsUser = new LCheckBox(checkButtons, SWT.NONE);
+		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
+		addControl(btnNeedsUser, "needsUser");
+		
+		TabFolder useFolder = new TabFolder(grpUse, SWT.NONE);
+		useFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		
+		TabItem tbtmEffects = new TabItem(useFolder, SWT.NONE);
+		tbtmEffects.setText(Vocab.instance.EFFECTS);
+		SkillEffectList lstEffects = new SkillEffectList(useFolder, SWT.NONE);
+		tbtmEffects.setControl(lstEffects);
+		addChild(lstEffects, "effects");
+		
+		TabItem tbtmUseAtt = new TabItem(useFolder, SWT.NONE);
+		tbtmUseAtt.setText(Vocab.instance.ATTRIBUTES);
+		AttributeList lstUseAtt = new AttributeList(useFolder, SWT.NONE);
+		tbtmUseAtt.setControl(lstUseAtt);
+		addChild(lstUseAtt, "attributes");
 		
 		// Equip
 		
@@ -147,62 +195,6 @@ public class ItemTab extends DatabaseTab {
 		tbtmElement.setControl(lstElement);
 		addChild(lstElement, "elements");
 		
-		// Use
-		
-		Group grpUse = new Group(contentEditor, SWT.NONE);
-		grpUse.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpUse.setText(Vocab.instance.USE);
-		grpUse.setLayout(new GridLayout(3, false));
-		
-		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
-	
-		LText txtSkill = new LText(grpUse, true);
-		txtSkill.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		IDButton btnSkill = new IDButton(grpUse, 1) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
-		btnSkill.setNameWidget(txtSkill);
-		addControl(btnSkill, "skillID");
-		
-		Composite checkButtons = new Composite(grpUse, SWT.NONE);
-		checkButtons.setLayout(new FillLayout(SWT.HORIZONTAL));
-		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
-		
-		LCheckBox btnConsume = new LCheckBox(checkButtons, SWT.NONE);
-		btnConsume.setText(Vocab.instance.CONSUME);
-		addControl(btnConsume, "consume");
-		
-		LCheckBox btnNeedsUser = new LCheckBox(checkButtons, SWT.NONE);
-		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
-		addControl(btnNeedsUser, "needsUser");
-		
-		TabFolder useFolder = new TabFolder(grpUse, SWT.NONE);
-		useFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
-		
-		TabItem tbtmEffects = new TabItem(useFolder, SWT.NONE);
-		tbtmEffects.setText(Vocab.instance.EFFECTS);
-		SkillEffectList lstEffects = new SkillEffectList(useFolder, SWT.NONE);
-		tbtmEffects.setControl(lstEffects);
-		addChild(lstEffects, "effects");
-		
-		TabItem tbtmUseAtt = new TabItem(useFolder, SWT.NONE);
-		tbtmUseAtt.setText(Vocab.instance.ATTRIBUTES);
-		AttributeList lstUseAtt = new AttributeList(useFolder, SWT.NONE);
-		tbtmUseAtt.setControl(lstUseAtt);
-		addChild(lstUseAtt, "attributes");
-		
-		// Tags
-		
-		Group grpTags = new Group(right, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setLayout(new FillLayout());
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
 	}
 
 	@Override

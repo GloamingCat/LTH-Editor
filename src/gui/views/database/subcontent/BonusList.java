@@ -34,6 +34,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 	}
 	
 	protected LList<Bonus, Bonus> createList() {
+		BonusList self = this;
 		return new LList<Bonus, Bonus>(this, SWT.NONE) {
 			@Override
 			public LEditEvent<Bonus> edit(LPath path) {
@@ -43,7 +44,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 			public Bonus toObject(LPath path) {
 				if (path == null)
 					return null;
-				return getDataCollection().get(path.index);
+				return self.getDataCollection().get(path.index);
 			}
 			@Override
 			public LDataTree<Bonus> toNode(LPath path) {
@@ -61,7 +62,7 @@ public abstract class BonusList extends SimpleEditableList<Bonus> {
 			}
 			@Override
 			protected String dataToString(Bonus item) {
-				Object obj = getDataTree().get(item.id);
+				Object obj = self.getDataTree().get(item.id);
 				String id = includeID ? stringID(item.id) : "";
 				if (obj == null)
 					return "NULL";

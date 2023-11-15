@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Group;
 
 import project.Project;
 
-public class ListsEditor extends LObjectEditor {
+public class ListsEditor extends LObjectEditor<Object> {
 	
 	private ElementList lstElements;
 	private EquipTypeList lstEquipTypes;
@@ -100,6 +100,11 @@ public class ListsEditor extends LObjectEditor {
 		lstVariables.setObject(Project.current.variables.getList());
 		lstRegions.setObject(Project.current.regions.getList());
 		lstPlugins.setObject(Project.current.plugins.getList());
+	}
+
+	@Override
+	public Object duplicateData(Object obj) {
+		return null;
 	}
 	
 }

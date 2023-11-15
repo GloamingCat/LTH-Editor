@@ -9,7 +9,6 @@ import gui.views.fieldTree.subcontent.TileTree;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
-import lwt.editor.LObjectEditor;
 import lwt.event.LDeleteEvent;
 import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
@@ -30,12 +29,13 @@ import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
 import data.field.Party;
+import gson.editor.GDefaultObjectEditor;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
-public class FieldSideEditor extends LObjectEditor {
+public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 	public static FieldSideEditor instance;
 	

@@ -6,7 +6,6 @@ import gui.shell.database.CharTileShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
-import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
@@ -40,10 +39,13 @@ import data.subcontent.Node;
 import data.subcontent.Tile;
 import project.Project;
 
-public class CharacterTab extends DatabaseTab {
+public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 	public CharacterTab(Composite parent) {
 		super(parent);
+		
+		GridData gd_General = (GridData) grpGeneral.getLayoutData();
+		gd_General.grabExcessVerticalSpace = true;
 		
 		new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
 		
@@ -66,6 +68,23 @@ public class CharacterTab extends DatabaseTab {
 		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
+		// Tiles
+		
+		new LLabel(grpGeneral, Vocab.instance.COLLIDERTILES)
+			.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		
+		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpGeneral, SWT.NONE);
+		lstTiles.type = Tile.class;
+		lstTiles.setIncludeID(false);
+		lstTiles.setShellFactory(new LShellFactory<Tile>() {
+			@Override
+			public LObjectShell<Tile> createShell(Shell parent) {
+				return new CharTileShell(parent);
+			}
+		});
+		lstTiles.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addChild(lstTiles, "tiles");
+		
 		new LLabel(grpGeneral, Vocab.instance.SHADOW);
 		
 		Composite shadow = new Composite(grpGeneral, SWT.NONE);
@@ -74,6 +93,8 @@ public class CharacterTab extends DatabaseTab {
 		gl_shadow.marginHeight = 0;
 		gl_shadow.marginWidth = 0;
 		shadow.setLayout(gl_shadow);
+		
+		// Shadow
 		
 		LText txtShadow = new LText(shadow, true);
 		txtShadow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -87,43 +108,54 @@ public class CharacterTab extends DatabaseTab {
 		btnShadow.setNameWidget(txtShadow);
 		addControl(btnShadow, "shadowID");
 		
-		Group grpTiles = new Group(contentEditor, SWT.NONE);
-		grpTiles.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpTiles.setText(Vocab.instance.COLLIDERTILES);
-		grpTiles.setLayout(new FillLayout());
+		// Transform
 		
-		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles, SWT.NONE);
-		lstTiles.type = Tile.class;
-		lstTiles.setIncludeID(false);
-		lstTiles.setShellFactory(new LShellFactory<Tile>() {
+		Group grpTransform = new Group(left, SWT.NONE);
+		grpTransform.setText(Vocab.instance.TRANSFORM);
+		grpTransform.setLayout(new FillLayout());
+		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
+		addChild(transformTab, "transform");
+		
+		// KO
+		
+		Group grpKO = new Group(left, SWT.NONE);
+		grpKO.setText(Vocab.instance.KO);
+		grpKO.setLayout(new GridLayout(3, false));
+		grpKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		new LLabel(grpKO, Vocab.instance.ANIMATION);
+		
+		LText txtKO = new LText(grpKO, true);
+		txtKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		IDButton btnKO = new IDButton(grpKO, 1) {
 			@Override
-			public LObjectShell<Tile> createShell(Shell parent) {
-				return new CharTileShell(parent);
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
 			}
-		});
-		addChild(lstTiles, "tiles");
+		};
+		btnKO.setNameWidget(txtKO);
+		addControl(btnKO, "koAnimID");
 		
-		Composite middle = new Composite(contentEditor, SWT.NONE);
-		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		GridLayout gl_middle = new GridLayout(2, false);
-		gl_middle.marginHeight = 0;
-		gl_middle.marginWidth = 0;
-		gl_middle.verticalSpacing = 0;
-		middle.setLayout(gl_middle);
+		new LLabel(grpKO, Vocab.instance.FADEOUT);
 		
-		Composite lists = new Composite(middle, SWT.NONE);
-		GridLayout gl_lists = new GridLayout(1, false);
-		gl_lists.marginWidth = 0;
-		gl_lists.horizontalSpacing = 0;
-		gl_lists.verticalSpacing = 0;
-		gl_lists.marginHeight = 0;
-		lists.setLayout(gl_lists);
-		lists.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
+		LSpinner spnFade = new LSpinner(grpKO);
+		spnFade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		spnFade.setMinimum(-1);
+		spnFade.setMaximum(999);
+		addControl(spnFade, "koFadeout");
 		
-		Group grpAnimations = new Group(lists, SWT.NONE);
+		// Animations
+		
+		Group grpAnimations = new Group(right, SWT.NONE);
 		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
-		grpAnimations.setLayout(new GridLayout(2, false));
+		GridLayout gl_anim = new GridLayout(2, false);
+		gl_anim.marginWidth = 0;
+		gl_anim.marginHeight = 0;
+		grpAnimations.setLayout(gl_anim);
 		
 		NodeList lstAnim = new NodeList(grpAnimations, SWT.NONE) {
 			protected LDataTree<Object> getDataTree() { 
@@ -152,10 +184,13 @@ public class CharacterTab extends DatabaseTab {
 			}
 		});
 		
-		Group grpPortraits = new Group(lists, SWT.NONE);
+		Group grpPortraits = new Group(right, SWT.NONE);
 		grpPortraits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPortraits.setText(Vocab.instance.PORTRAITS);
-		grpPortraits.setLayout(new GridLayout(2, false));
+		GridLayout gl_portraits = new GridLayout(2, false);
+		gl_portraits.marginWidth = 0;
+		gl_portraits.marginHeight = 0;
+		grpPortraits.setLayout(gl_portraits);
 		
 		PortraitList lstPortraits = new PortraitList(grpPortraits, SWT.NONE);
 		GridData gd_portraits = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
@@ -178,50 +213,6 @@ public class CharacterTab extends DatabaseTab {
 				updatePortrait(imgPotrait, e.newData);
 			}
 		});
-		
-		Group grpTransform = new Group(middle, SWT.NONE);
-		grpTransform.setText(Vocab.instance.TRANSFORM);
-		grpTransform.setLayout(new FillLayout());
-		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
-		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
-		addChild(transformTab, "transform");
-		
-		
-		Group grpKO = new Group(middle, SWT.NONE);
-		grpKO.setText(Vocab.instance.KO);
-		grpKO.setLayout(new GridLayout(3, false));
-		grpKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
-		new LLabel(grpKO, Vocab.instance.ANIMATION);
-		
-		LText txtKO = new LText(grpKO, true);
-		txtKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		IDButton btnKO = new IDButton(grpKO, 1) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
-		btnKO.setNameWidget(txtKO);
-		addControl(btnKO, "koAnimID");
-		
-		new LLabel(grpKO, Vocab.instance.FADEOUT);
-		
-		LSpinner spnFade = new LSpinner(grpKO);
-		spnFade.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		spnFade.setMinimum(-1);
-		spnFade.setMaximum(999);
-		addControl(spnFade, "koFadeout");
-		
-		Group grpTags = new Group(middle, SWT.NONE);
-		grpTags.setLayout(new FillLayout());
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
 		
 	}
 	

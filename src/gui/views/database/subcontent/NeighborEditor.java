@@ -9,14 +9,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-import lwt.editor.LObjectEditor;
+import gson.editor.GDefaultObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LActionButton;
 import lwt.widget.LLabel;
 import lwt.widget.LToggleButton;
 
-public class NeighborEditor extends LObjectEditor {
+public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 
 	private LToggleButton[] labels;
 	

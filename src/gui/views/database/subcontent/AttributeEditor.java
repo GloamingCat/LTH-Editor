@@ -11,15 +11,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import data.config.Attribute;
+import gson.editor.GDefaultObjectEditor;
 import project.Project;
 import lwt.dataestructure.LDataList;
-import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-public class AttributeEditor extends LObjectEditor {
+public class AttributeEditor extends GDefaultObjectEditor<LDataList<Integer>> {
 
 	protected LDataList<Integer> values;
 	protected ArrayList<LSpinner> spinners;
@@ -45,15 +45,10 @@ public class AttributeEditor extends LObjectEditor {
 
 	}
 	
-	@SuppressWarnings("unchecked")
-	private LDataList<Integer> getList() {
-		return (LDataList<Integer>) currentObject;
-	}
-	
 	public void setObject(Object obj) {
 		super.setObject(obj);
 		if (obj != null) {
-			list = getList();
+			list = getObject();
 			for(int i = 0; i < spinners.size(); i++) {
 				if (i < list.size()) {
 					spinners.get(i).setValue(list.get(i));

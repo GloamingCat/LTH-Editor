@@ -5,7 +5,6 @@ import gui.Vocab;
 import gui.shell.AudioShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BonusList;
-import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
@@ -25,27 +24,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
+import data.Terrain;
 import data.subcontent.Audio;
 import project.Project;
 
-public class TerrainTab extends DatabaseTab {
+public class TerrainTab extends DatabaseTab<Terrain> {
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 */
 	public TerrainTab(Composite parent) {
-		super(parent);
-
-		Composite right = new Composite(contentEditor,  SWT.NONE);
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.verticalSpacing = 0;
-		gl_right.marginHeight = 0;
-		gl_right.marginWidth = 0;
-		right.setLayout(gl_right);
-		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-		gd_right.widthHint = 224;
-		right.setLayoutData(gd_right);
+		super(parent);;
 		
 		// General
 		
@@ -78,30 +68,9 @@ public class TerrainTab extends DatabaseTab {
 		lstJobMoveCost.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		addChild(lstJobMoveCost, "jobMoveCost");
 		
-		// Graphics
-		
-		Group grpGraphics = new Group(contentEditor, SWT.NONE);
-		grpGraphics.setLayout(new GridLayout(1, false));
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpGraphics.setText(Vocab.instance.GRAPHICS);
-		
-		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
-		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		imgGraphics.setHorizontalAlign(SWT.CENTER);
-		imgGraphics.setVerticalAlign(SWT.CENTER);
-		
-		IDButton btnAnim = new IDButton(grpGraphics, 1) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
-		addControl(btnAnim, "animID");
-		btnAnim.setImage(imgGraphics);
-		
 		// Status
 		
-		Group grpStatus = new Group(right, SWT.NONE);
+		Group grpStatus = new Group(left, SWT.NONE);
 		grpStatus.setLayout(new GridLayout(1, false));
 		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpStatus.setText(Vocab.instance.STATUS);
@@ -129,6 +98,27 @@ public class TerrainTab extends DatabaseTab {
 		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
 		
+		// Graphics
+		
+		Group grpGraphics = new Group(left, SWT.NONE);
+		grpGraphics.setLayout(new GridLayout(1, false));
+		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGraphics.setText(Vocab.instance.GRAPHICS);
+		
+		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
+		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
+		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		imgGraphics.setHorizontalAlign(SWT.CENTER);
+		imgGraphics.setVerticalAlign(SWT.CENTER);
+		
+		IDButton btnAnim = new IDButton(grpGraphics, 1) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.animations.getTree();
+			}
+		};
+		addControl(btnAnim, "animID");
+		btnAnim.setImage(imgGraphics);
+		
 		// Audio
 		
 		Group grpAudio = new Group(right, SWT.NONE);
@@ -147,15 +137,7 @@ public class TerrainTab extends DatabaseTab {
 		});
 		addChild(lstAudio, "sounds");
 		
-		// Tags
-		
-		Group grpTags = new Group(right, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
+		new LLabel(right, "").setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 	}
 

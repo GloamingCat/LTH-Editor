@@ -9,7 +9,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import lwt.dataestructure.LDataTree;
-import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckBox;
@@ -26,10 +25,11 @@ import project.Project;
 
 import data.field.CharTile;
 import data.field.Field;
+import gson.editor.GDefaultObjectEditor;
 
 import org.eclipse.swt.widgets.Group;
 
-public class CharTileEditor extends LObjectEditor {
+public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 	private LCombo cmbParty;
 	private LSpinner spnX;

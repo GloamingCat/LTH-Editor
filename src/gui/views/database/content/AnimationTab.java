@@ -4,7 +4,6 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.AudioShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.QuadButton;
@@ -28,10 +27,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
-
+import data.Animation;
 import data.subcontent.Audio;
 
-public class AnimationTab extends DatabaseTab {
+public class AnimationTab extends DatabaseTab<Animation> {
 
 	private LSpinner spnCols;
 	private LSpinner spnRows;
@@ -86,18 +85,8 @@ public class AnimationTab extends DatabaseTab {
 		spnRows = new LSpinner(size, SWT.NONE);
 		spnRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRows, "rows");
-
-		// Transform
 		
-		Composite right = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.marginWidth = 0;
-		gl_right.marginHeight = 0;
-		gl_right.verticalSpacing = 0;
-		right.setLayout(gl_right);
-		GridData gd_right = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 4);
-		gd_right.widthHint = 300;
-		right.setLayoutData(gd_right);
+		// Transform
 		
 		Group grpTransform = new Group(right, SWT.NONE);
 		grpTransform.setText(Vocab.instance.TRANSFORM);
@@ -107,32 +96,27 @@ public class AnimationTab extends DatabaseTab {
 		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE);
 		addChild(transformEditor, "transform");
 		
-		// Graphics
+		// Audio
 		
-		Group grpImg = new Group(right, SWT.NONE);
-		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_grpImg = new GridLayout(1, false);
-		gl_grpImg.marginWidth = 0;
-		gl_grpImg.marginHeight = 0;
-		grpImg.setLayout(gl_grpImg);
-		grpImg.setText(Vocab.instance.GRAPHICS);
+		Group grpAudio = new Group(right, SWT.NONE);
+		grpAudio.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAudio.setText(Vocab.instance.SOUND);
 		
-		LImage image = new LImage(grpImg, SWT.NONE);
-		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_image.widthHint = 150;
-		image.setLayoutData(gd_image);
-		
-		QuadButton btnImage = new QuadButton(grpImg, 1);
-		btnImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		addControl(btnImage, "quad");
-		
-		transformEditor.setImage(image);
-		btnImage.setImage(image);
-		btnImage.setTransform(transformEditor);
+		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio, SWT.NONE);
+		lstAudio.type = Audio.class;
+		lstAudio.setIncludeID(false);
+		lstAudio.setShellFactory(new LShellFactory<Audio>() {
+			@Override
+			public LObjectShell<Audio> createShell(Shell parent) {
+				return new AudioShell(parent, 0);
+			}
+		});
+		addChild(lstAudio, "audio");
 		
 		// Intro
 		
-		Group grpIntro = new Group(contentEditor, SWT.NONE);
+		Group grpIntro = new Group(left, SWT.NONE);
 		grpIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		grpIntro.setLayout(new GridLayout(3, false));
 		grpIntro.setText(Vocab.instance.INTRO);
@@ -155,7 +139,7 @@ public class AnimationTab extends DatabaseTab {
 		
 		// Loop
 		
-		Group grpLoop = new Group(contentEditor, SWT.NONE);
+		Group grpLoop = new Group(left, SWT.NONE);
 		grpLoop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		grpLoop.setLayout(new GridLayout(3, false));
 		grpLoop.setText(Vocab.instance.LOOP);
@@ -176,37 +160,28 @@ public class AnimationTab extends DatabaseTab {
 		
 		LActionButton btnLoopDuration = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
-		// Audio
+		// Graphics
 		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		bottom.setLayout(new GridLayout(2, true));
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Group grpImg = new Group(left, SWT.NONE);
+		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout gl_grpImg = new GridLayout(1, false);
+		gl_grpImg.marginWidth = 0;
+		gl_grpImg.marginHeight = 0;
+		grpImg.setLayout(gl_grpImg);
+		grpImg.setText(Vocab.instance.GRAPHICS);
 		
-		Group grpAudio = new Group(bottom, SWT.NONE);
-		grpAudio.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpAudio.setText(Vocab.instance.SOUND);
+		LImage image = new LImage(grpImg, SWT.NONE);
+		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_image.widthHint = 150;
+		image.setLayoutData(gd_image);
 		
-		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio, SWT.NONE);
-		lstAudio.type = Audio.class;
-		lstAudio.setIncludeID(false);
-		lstAudio.setShellFactory(new LShellFactory<Audio>() {
-			@Override
-			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, 0);
-			}
-		});
-		addChild(lstAudio, "audio");
+		QuadButton btnImage = new QuadButton(grpImg, 1);
+		btnImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		addControl(btnImage, "quad");
 		
-		// Tags
-		
-		Group grpTags = new Group(bottom, SWT.NONE);
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTag = new TagList(grpTags, SWT.NONE);
-		addChild(lstTag, "tags");
+		transformEditor.setImage(image);
+		btnImage.setImage(image);
+		btnImage.setTransform(transformEditor);
 		
 		addDurationListener(btnIntroDuration, txtIntroDuration);
 		addDurationListener(btnLoopDuration, txtLoopDuration);

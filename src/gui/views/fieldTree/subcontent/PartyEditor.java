@@ -11,14 +11,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
+import data.field.Party;
 import data.field.Party.TroopSpawn;
+import gson.editor.GDefaultObjectEditor;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
-import lwt.editor.LObjectEditor;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCombo;
@@ -28,7 +29,7 @@ import lwt.widget.LText;
 
 import org.eclipse.swt.layout.FillLayout;
 
-public class PartyEditor extends LObjectEditor {
+public class PartyEditor extends GDefaultObjectEditor<Party> {
 
 	/**
 	 * Create the composite.

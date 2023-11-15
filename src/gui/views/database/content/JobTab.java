@@ -10,7 +10,6 @@ import gui.Vocab;
 import gui.shell.database.JobSkillShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
-import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
 
@@ -25,55 +24,16 @@ import org.eclipse.swt.widgets.Shell;
 import data.Job;
 import project.Project;
 
-public class JobTab extends DatabaseTab {
+public class JobTab extends DatabaseTab<Job> {
 
 	public JobTab(Composite parent) {
 		super(parent);
-		
-		GridLayout gridLayout = new GridLayout(3, false);
-		gridLayout.verticalSpacing = 0;
-		contentEditor.setLayout(gridLayout);
 		
 		new LLabel(grpGeneral, Vocab.instance.EXPCURVE);
 		
 		LText txtCurve = new LText(grpGeneral);
 		txtCurve.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtCurve, "expCurve");
-				
-		//grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		Group grpBuild = new Group(contentEditor, SWT.NONE);
-		grpBuild.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
-		grpBuild.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpBuild.setText(Vocab.instance.BUILD);
-		
-		BuildEditor buildEditor = new BuildEditor(grpBuild, SWT.NONE);
-		addChild(buildEditor, "build");
-		
-		Group grpTags = new Group(contentEditor, SWT.NONE);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList tagEditor = new TagList(grpTags, SWT.NONE);
-		addChild(tagEditor, "tags");
-
-		Group grpSkillNodes = new Group(contentEditor, SWT.NONE);
-		grpSkillNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		grpSkillNodes.setText(Vocab.instance.SKILLNODES);
-		grpSkillNodes.setLayout(new FillLayout());
-		
-		SimpleEditableList<Job.Skill> lstNodes = new SimpleEditableList<>(grpSkillNodes, SWT.NONE);
-		lstNodes.getCollectionWidget().setEditEnabled(false);
-		lstNodes.setIncludeID(false);
-		lstNodes.type = Job.Skill.class;
-		addChild(lstNodes, "skills");
-		lstNodes.setShellFactory(new LShellFactory<Job.Skill>() {
-			@Override
-			public LObjectShell<Job.Skill> createShell(Shell parent) {
-				return new JobSkillShell(parent);
-			}
-		});
 		
 		// Attack Skill
 		
@@ -97,6 +57,36 @@ public class JobTab extends DatabaseTab {
 		};
 		btnAttack.setNameWidget(txtAttack);
 		addControl(btnAttack, "attackID");
+		
+		Group grpBuild = new Group(left, SWT.NONE);
+		grpBuild.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpBuild.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpBuild.setText(Vocab.instance.BUILD);
+		
+		BuildEditor buildEditor = new BuildEditor(grpBuild, SWT.NONE);
+		addChild(buildEditor, "build");
+
+		Group grpSkillNodes = new Group(right, SWT.NONE);
+		grpSkillNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpSkillNodes.setText(Vocab.instance.SKILLNODES);
+		grpSkillNodes.setLayout(new FillLayout());
+		
+		SimpleEditableList<Job.Skill> lstNodes = new SimpleEditableList<>(grpSkillNodes, SWT.NONE);
+		lstNodes.getCollectionWidget().setEditEnabled(false);
+		lstNodes.setIncludeID(false);
+		lstNodes.type = Job.Skill.class;
+		addChild(lstNodes, "skills");
+		lstNodes.setShellFactory(new LShellFactory<Job.Skill>() {
+			@Override
+			public LObjectShell<Job.Skill> createShell(Shell parent) {
+				return new JobSkillShell(parent);
+			}
+		});
+
+		Group grpStatusNodes = new Group(right, SWT.NONE);
+		grpStatusNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatusNodes.setText(Vocab.instance.STATUSNODES);
+		grpStatusNodes.setLayout(new FillLayout());
 
 	}
 

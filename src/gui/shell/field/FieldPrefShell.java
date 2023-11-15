@@ -1,6 +1,5 @@
 package gui.shell.field;
 
-import lwt.editor.LObjectEditor;
 import lwt.event.LEditEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
@@ -26,10 +25,12 @@ import data.Animation;
 import data.field.Field;
 import data.field.FieldImage;
 import data.field.Transition;
+import gson.editor.GDefaultObjectEditor;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -158,7 +159,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		lstTransitions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstTransitions, "transitions");
 		
-		LObjectEditor transitionEditor = new LObjectEditor(grpTransitions, SWT.NONE);
+		GDefaultObjectEditor<Transition> transitionEditor = new GDefaultObjectEditor<Transition>(grpTransitions, SWT.NONE);
 		GridLayout gl_transitionEditor = new GridLayout(3, false);
 		gl_transitionEditor.marginWidth = 0;
 		gl_transitionEditor.marginHeight = 0;

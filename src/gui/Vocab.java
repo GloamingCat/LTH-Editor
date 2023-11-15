@@ -250,10 +250,11 @@ public class Vocab {
 	public String COLLIDERTILES = "Collision Tiles";
 	public String PORTRAITS = "Portraits";
 	
-	// Class
+	// Job
 	public String BUILD = "Build";
 	public String EXPCURVE = "EXP Curve";;
 	public String SKILLNODES = "Skill Nodes";
+	public String STATUSNODES = "Status Nodes";
 	public String SKILL = "Skill";
 	public String REQUIREDSKILLS = "Required Skills";
 	public String EXPCOST = "EXP Cost";

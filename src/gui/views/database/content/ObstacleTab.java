@@ -4,13 +4,13 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.database.ObstacleTileShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.TagList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
+import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -26,7 +26,7 @@ import data.Obstacle.ObstacleTile;
 import data.subcontent.Transform;
 import project.Project;
 
-public class ObstacleTab extends DatabaseTab {
+public class ObstacleTab extends DatabaseTab<Obstacle> {
 
 	/**
 	 * Create the composite.
@@ -35,18 +35,24 @@ public class ObstacleTab extends DatabaseTab {
 	public ObstacleTab(Composite parent) {
 		super(parent);
 
-		Composite lateral = new Composite(contentEditor, SWT.NONE);
-		lateral.setLayout(new FillLayout(SWT.VERTICAL));
-		lateral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-
-		Composite other = new Composite(contentEditor, SWT.NONE);
-		other.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_other = new GridLayout(1, false);
-		gl_other.marginWidth = 0;
-		gl_other.marginHeight = 0;
-		other.setLayout(gl_other);
+		new LLabel(grpGeneral, Vocab.instance.COLLIDERTILES).
+			setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
-		Group grpGraphics = new Group(other, SWT.NONE);
+		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpGeneral, SWT.NONE);
+		tileList.type = ObstacleTile.class;
+		tileList.setIncludeID(false);
+		tileList.setShellFactory(new LShellFactory<ObstacleTile>() {
+			@Override
+			public LObjectShell<ObstacleTile> createShell(Shell parent) {
+				return new ObstacleTileShell(parent);
+			}
+		});
+		tileList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addChild(tileList, "tiles");
+		
+		// Graphics
+		
+		Group grpGraphics = new Group(left, SWT.NONE);
 		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpGraphics.setText(Vocab.instance.GRAPHICS);
 		grpGraphics.setLayout(new GridLayout());
@@ -58,10 +64,12 @@ public class ObstacleTab extends DatabaseTab {
 		btnGraphics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		addControl(btnGraphics, "image");
 		
-		Group grpTransform = new Group(other, SWT.NONE);
+		// Transform
+		
+		Group grpTransform = new Group(right, SWT.NONE);
 		grpTransform.setText(Vocab.instance.TRANSFORM);
 		grpTransform.setLayout(new FillLayout());
-		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 		
 		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE) {
 			public Transform secondaryTransform() {
@@ -77,28 +85,8 @@ public class ObstacleTab extends DatabaseTab {
 		btnGraphics.setImageWidget(imgGraphics);
 		btnGraphics.setTransform(transformEditor);
 		transformEditor.setImage(imgGraphics);
-	
-		Group grpTiles = new Group(lateral, SWT.NONE);
-		grpTiles.setLayout(new FillLayout());
-		grpTiles.setText(Vocab.instance.TILES);
 		
-		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpTiles, SWT.NONE);
-		tileList.type = ObstacleTile.class;
-		tileList.setIncludeID(false);
-		tileList.setShellFactory(new LShellFactory<ObstacleTile>() {
-			@Override
-			public LObjectShell<ObstacleTile> createShell(Shell parent) {
-				return new ObstacleTileShell(parent);
-			}
-		});
-		addChild(tileList, "tiles");
-		
-		Group grpTags = new Group(lateral, SWT.NONE);
-		grpTags.setLayout(new FillLayout());
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
+		new LLabel(right, "").setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 	}
 

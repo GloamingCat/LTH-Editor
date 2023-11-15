@@ -8,7 +8,6 @@ import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.EquipList;
-import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
@@ -32,13 +31,49 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
-
+import data.Battler;
 import data.subcontent.Rule;
 
-public class BattlerTab extends DatabaseTab {
+public class BattlerTab extends DatabaseTab<Battler> {
 	
 	public BattlerTab(Composite parent) {
 		super(parent);
+
+		// Icon
+		
+		new LLabel(grpGeneral, Vocab.instance.ICON);
+		
+		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeIcon = new GridLayout(2, false);
+		gl_compositeIcon.marginWidth = 0;
+		gl_compositeIcon.marginHeight = 0;
+		compositeIcon.setLayout(gl_compositeIcon);
+		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		
+		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
+		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_imgIcon.widthHint = 48;
+		gd_imgIcon.heightHint = 48;
+		imgIcon.setVerticalAlign(SWT.CENTER);
+		imgIcon.setLayoutData(gd_imgIcon);
+		
+		IconButton btnGraphics = new IconButton(compositeIcon, 0);
+		btnGraphics.setImageWidget(imgIcon);
+		addControl(btnGraphics, "icon");
+		
+		// Description
+		
+		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		LTextBox txtDescription = new LTextBox(grpGeneral);
+		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtDescription.heightHint = 60;
+		gd_txtDescription.minimumHeight = 60;
+		txtDescription.setLayoutData(gd_txtDescription);
+		addControl(txtDescription, "description");
+		
+		// Properties
 		
 		new LLabel(grpGeneral, 1);
 		
@@ -77,39 +112,6 @@ public class BattlerTab extends DatabaseTab {
 		spnEXP.setMaximum(99999999);
 		addControl(spnEXP, "exp");
 		
-		// Description
-		
-		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
-		LTextBox txtDescription = new LTextBox(grpGeneral);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtDescription.minimumHeight = 48;
-		txtDescription.setLayoutData(gd_txtDescription);
-		addControl(txtDescription, "description");
-		
-		// Icon
-		
-		new LLabel(grpGeneral, Vocab.instance.ICON);
-		
-		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeIcon = new GridLayout(2, false);
-		gl_compositeIcon.marginWidth = 0;
-		gl_compositeIcon.marginHeight = 0;
-		compositeIcon.setLayout(gl_compositeIcon);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
-		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
-		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_imgIcon.widthHint = 48;
-		gd_imgIcon.heightHint = 48;
-		imgIcon.setVerticalAlign(SWT.CENTER);
-		imgIcon.setLayoutData(gd_imgIcon);
-		
-		IconButton btnGraphics = new IconButton(compositeIcon, 0);
-		btnGraphics.setImageWidget(imgIcon);
-		addControl(btnGraphics, "icon");
-		
 		// Job
 		
 		new LLabel(grpGeneral, Vocab.instance.JOB);
@@ -139,48 +141,31 @@ public class BattlerTab extends DatabaseTab {
 		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnLevel, "level");
 		
+		// Attributes
 		
-		// AI
+		Composite middle = new Composite(left, SWT.NONE);
+		GridLayout gl_middle = new GridLayout(2, false);
+		gl_middle.marginHeight = 0;
+		gl_middle.marginWidth = 0;
+		middle.setLayout(gl_middle);
+		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Composite side = new Composite(contentEditor, SWT.NONE);
-		side.setLayout(new FillLayout(SWT.VERTICAL));
-		side.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		Group grpAtt = new Group(middle, SWT.NONE);
+		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
+		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3);
+		gd_grpAtt.heightHint = 100;
+		gd_grpAtt.widthHint = 240;
 		
-		Group grpAI = new Group(side, SWT.NONE);
-		grpAI.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpAI.setText(Vocab.instance.AI);
+		grpAtt.setLayoutData(gd_grpAtt);
+		grpAtt.setText(Vocab.instance.ATTRIBUTES);
 
-		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI, SWT.NONE);
-		lstRules.type = Rule.class;
-		lstRules.setIncludeID(false);
-		lstRules.setShellFactory(new LShellFactory<Rule>() {
-			@Override
-			public LObjectShell<Rule> createShell(Shell parent) {
-				return new RuleShell(parent);
-			}
-		});
-		addChild(lstRules, "ai");
-		
-		// Tags
-		
-		Group grpTags = new Group(side, SWT.NONE);
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
-		addChild(lstTags, "tags");
-		
+		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
+		attEditor.setColumns(4);
+		addChild(attEditor, "attributes");
+
 		// Elements
 		
-		Composite bottom = new Composite(contentEditor, SWT.NONE);
-		GridLayout gl_other = new GridLayout(3, true);
-		gl_other.verticalSpacing = 0;
-		gl_other.marginHeight = 0;
-		gl_other.marginWidth = 0;
-		bottom.setLayout(gl_other);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-		Group grpElements = new Group(bottom, SWT.NONE);
+		Group grpElements = new Group(middle, SWT.NONE);
 		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setText(Vocab.instance.ELEMENTS);
@@ -193,17 +178,9 @@ public class BattlerTab extends DatabaseTab {
 		};
 		addChild(lstElements, "elements");
 		
-		// Initial state
-		
-		Composite compInitial = new Composite(bottom, SWT.NONE);
-		GridLayout gl_compInitial = new GridLayout(1, false);
-		gl_compInitial.verticalSpacing = 0;
-		compInitial.setLayout(gl_compInitial);
-		compInitial.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-		
 		// Skills
 		
-		Group grpSkills = new Group(compInitial, SWT.NONE);
+		Group grpSkills = new Group(middle, SWT.NONE);
 		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpSkills.setText(Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")");
 		grpSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -217,7 +194,7 @@ public class BattlerTab extends DatabaseTab {
 
 		// Status
 		
-		Group grpStatus = new Group(compInitial, SWT.NONE);
+		Group grpStatus = new Group(middle, SWT.NONE);
 		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpStatus.setText(Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")");
 		grpStatus.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -229,32 +206,37 @@ public class BattlerTab extends DatabaseTab {
 		};
 		addChild(lstStatus, "status");
 		
+		// AI
+
+		Group grpAI = new Group(right, SWT.NONE);
+		grpAI.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAI.setText(Vocab.instance.AI);
+		grpAI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI, SWT.NONE);
+		lstRules.type = Rule.class;
+		lstRules.setIncludeID(false);
+		lstRules.setShellFactory(new LShellFactory<Rule>() {
+			@Override
+			public LObjectShell<Rule> createShell(Shell parent) {
+				return new RuleShell(parent);
+			}
+		});
+		addChild(lstRules, "ai");
+		
 		// Equip
 		
-		Group grpEquip = new Group(compInitial, SWT.NONE);
+		Group grpEquip = new Group(right, SWT.NONE);
 		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpEquip.setText(Vocab.instance.EQUIP + " (" + Vocab.instance.INITIAL + ")");
 		grpEquip.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		EquipList lstEquip = new EquipList(grpEquip, SWT.NONE);
 		addChild(lstEquip, "equip");
-
-		// Attributes
-		
-		Group grpAtt = new Group(bottom, SWT.NONE);
-		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-		gd_grpAtt.heightHint = 100;
-		grpAtt.setLayoutData(gd_grpAtt);
-		grpAtt.setText(Vocab.instance.ATTRIBUTES);
-
-		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
-		attEditor.setColumns(4);
-		addChild(attEditor, "attributes");
 		
 		// Drop
 		
-		Group grpDrop = new Group(bottom, SWT.NONE);
+		Group grpDrop = new Group(right, SWT.NONE);
 		grpDrop.setLayout(new FillLayout(SWT.HORIZONTAL));
 		grpDrop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpDrop.setText(Vocab.instance.DROP);

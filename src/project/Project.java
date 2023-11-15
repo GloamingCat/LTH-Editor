@@ -22,6 +22,7 @@ public class Project implements LSerializer {
 		public String imagePath = "images/";
 		public String audioPath = "audio/";
 		public String language = "us";
+		public int dataVersion = 0;
 	}
 	
 	private ProjectSettings settings;
@@ -93,7 +94,7 @@ public class Project implements LSerializer {
 		database = new GObjectTreeSerializer[] { animations, battlers, characters, 
 				events, jobs, items, obstacles, skills, status, terrains, troops };
 		
-		allData = new LSerializer[] { fieldTree, config, attributes, variables, elements, equipTypes, plugins, regions };
+		allData = new LSerializer[] { config, fieldTree, attributes, variables, elements, equipTypes, plugins, regions };
 		allData = Arrays.copyOf(allData, allData.length + database.length);
 		System.arraycopy(database, 0, allData, allData.length - database.length, database.length);
 	}
@@ -128,6 +129,10 @@ public class Project implements LSerializer {
 	
 	public String getLanguage() {
 		return settings.language;
+	}
+	
+	public int dataVersion() {
+		return settings.dataVersion;
 	}
 	
 	@Override
