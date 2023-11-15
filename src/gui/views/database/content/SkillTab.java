@@ -181,14 +181,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		new LLabel(grpTarget, Vocab.instance.TARGETSELECTION);
 		
-		Composite selection = new Composite(grpTarget, SWT.NONE);
-		GridLayout gl_selection = new GridLayout(2, false);
-		gl_selection.marginHeight = 0;
-		gl_selection.marginWidth = 0;
-		selection.setLayout(gl_selection);
-		selection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		LCombo cmbSelection = new LCombo(selection);
+		LCombo cmbSelection = new LCombo(grpTarget);
 		cmbSelection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbSelection.setIncludeID(false);
 		cmbSelection.setOptional(false);
@@ -379,7 +372,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Range
 		
 		Composite range = new Composite(right, SWT.NONE);
-		range.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		range.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_range = new GridLayout(2, false);
 		gl_range.marginWidth = 0;
 		gl_range.marginHeight = 0;

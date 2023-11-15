@@ -132,19 +132,21 @@ public class ItemTab extends DatabaseTab<Item> {
 		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
 		addControl(btnNeedsUser, "needsUser");
 		
-		TabFolder useFolder = new TabFolder(grpUse, SWT.NONE);
-		useFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		new LLabel(grpUse, Vocab.instance.EFFECTS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
-		TabItem tbtmEffects = new TabItem(useFolder, SWT.NONE);
-		tbtmEffects.setText(Vocab.instance.EFFECTS);
-		SkillEffectList lstEffects = new SkillEffectList(useFolder, SWT.NONE);
-		tbtmEffects.setControl(lstEffects);
+		SkillEffectList lstEffects = new SkillEffectList(grpUse, SWT.NONE);
+		GridData gd_effect = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_effect.heightHint = 60;
+		gd_effect.minimumHeight = 60;
+		lstEffects.setLayoutData(gd_effect);
 		addChild(lstEffects, "effects");
 		
-		TabItem tbtmUseAtt = new TabItem(useFolder, SWT.NONE);
-		tbtmUseAtt.setText(Vocab.instance.ATTRIBUTES);
-		AttributeList lstUseAtt = new AttributeList(useFolder, SWT.NONE);
-		tbtmUseAtt.setControl(lstUseAtt);
+		new LLabel(grpUse, Vocab.instance.ATTRIBUTES).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		AttributeList lstUseAtt = new AttributeList(grpUse, SWT.NONE);
+		GridData gd_att = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_att.heightHint = 60;
+		gd_att.minimumHeight = 60;
+		lstUseAtt.setLayoutData(gd_att);
 		addChild(lstUseAtt, "attributes");
 		
 		// Equip
@@ -173,26 +175,29 @@ public class ItemTab extends DatabaseTab<Item> {
 		lstBlocked.setLayoutData(gd_lstBlocked);
 		addChild(lstBlocked, "blocked");
 		
-		TabFolder equipFolder = new TabFolder(grpEquip, SWT.NONE);
-		equipFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
-		
-		TabItem tbtmEquipAtt = new TabItem(equipFolder, SWT.NONE);
-		tbtmEquipAtt.setText(Vocab.instance.ATTRIBUTES);
-		AttributeList lstEquipAtt = new AttributeList(equipFolder, SWT.NONE);
-		tbtmEquipAtt.setControl(lstEquipAtt);
+		new LLabel(grpEquip, Vocab.instance.ATTRIBUTES).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		AttributeList lstEquipAtt = new AttributeList(grpEquip, SWT.NONE);
+		GridData gd_EquipAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_EquipAtt.heightHint = 60;
+		gd_EquipAtt.minimumHeight = 60;
+		lstEquipAtt.setLayoutData(gd_EquipAtt);
 		addChild(lstEquipAtt, "equipAttributes");
 		
-		TabItem tbtmEquipStatus = new TabItem(equipFolder, SWT.NONE);
-		tbtmEquipStatus.setText(Vocab.instance.STATUS);
-		EquipStatusList lstEquipStatus = new EquipStatusList(equipFolder, SWT.NONE);
+		new LLabel(grpEquip, Vocab.instance.STATUS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip, SWT.NONE);
 		lstEquipStatus.setIncludeID(false);
-		tbtmEquipStatus.setControl(lstEquipStatus);
+		GridData gd_status = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_status.heightHint = 60;
+		gd_status.minimumHeight = 60;
+		lstEquipStatus.setLayoutData(gd_status);
 		addChild(lstEquipStatus, "equipStatus");
 		
-		TabItem tbtmElement = new TabItem(equipFolder, SWT.NONE);
-		tbtmElement.setText(Vocab.instance.ELEMENTS);
-		ElementList lstElement = new ElementList(equipFolder, SWT.NONE);
-		tbtmElement.setControl(lstElement);
+		new LLabel(grpEquip, Vocab.instance.ELEMENTS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		ElementList lstElement = new ElementList(grpEquip, SWT.NONE);
+		GridData gd_equipElements = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_equipElements.heightHint = 60;
+		gd_equipElements.minimumHeight = 60;
+		lstElement.setLayoutData(gd_equipElements);
 		addChild(lstElement, "elements");
 		
 	}

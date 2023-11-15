@@ -24,6 +24,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -69,7 +70,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Cancel
 		
-		new LLabel(grpGeneral, Vocab.instance.STATUSCANCEL);
+		new LLabel(grpGeneral, Vocab.instance.STATUSCANCEL).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		IDList lstCancel = new IDList(grpGeneral, SWT.NONE) {
 			@Override
@@ -78,8 +79,8 @@ public class StatusTab extends DatabaseTab<Status> {
 			}
 		};
 		GridData gd_cancel = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_cancel.widthHint = 40;
-		gd_cancel.heightHint = 40;
+		gd_cancel.heightHint = 60;
+		gd_cancel.minimumHeight = 60;
 		lstCancel.setLayoutData(gd_cancel);
 		addChild(lstCancel, "cancel");
 		
@@ -89,8 +90,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpGeneral, SWT.NONE);
 		GridData gd_rules = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_rules.heightHint = 40;
-		gd_rules.minimumHeight = 40;
+		gd_rules.heightHint = 60;
+		gd_rules.minimumHeight = 60;
 		lstRules.setLayoutData(gd_rules);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
@@ -182,13 +183,15 @@ public class StatusTab extends DatabaseTab<Status> {
 		btnBattleOnly.setText(Vocab.instance.BATTLEONLY);
 		addControl(btnBattleOnly, "battleOnly");
 		
-		LCheckBox btnRemoveOnKO = new LCheckBox(grpDurability, SWT.NONE);
-		btnRemoveOnKO.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		Composite check = new Composite(grpDurability, SWT.NONE);
+		check.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		check.setLayout(new RowLayout());
+		
+		LCheckBox btnRemoveOnKO = new LCheckBox(check, SWT.NONE);
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
 		addControl(btnRemoveOnKO, "removeOnKO");
 		
-		LCheckBox btnRemoveOnDamage = new LCheckBox(grpDurability, SWT.NONE);
-		btnRemoveOnDamage.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		LCheckBox btnRemoveOnDamage = new LCheckBox(check, SWT.NONE);
 		btnRemoveOnDamage.setText(Vocab.instance.REMOVEONDAMAGE);
 		addControl(btnRemoveOnDamage, "removeOnDamage");
 		

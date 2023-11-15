@@ -68,36 +68,6 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		lstJobMoveCost.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		addChild(lstJobMoveCost, "jobMoveCost");
 		
-		// Status
-		
-		Group grpStatus = new Group(left, SWT.NONE);
-		grpStatus.setLayout(new GridLayout(1, false));
-		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpStatus.setText(Vocab.instance.STATUS);
-			
-		Composite status = new Composite(grpStatus, SWT.NONE);
-		status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_status = new GridLayout(2, false);
-		gl_status.marginHeight = 0;
-		gl_status.marginWidth = 0;
-		status.setLayout(gl_status);
-			
-		LText txtStatus = new LText(status, true);
-		txtStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnStatus = new IDButton(status, 1) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
-		btnStatus.setNameWidget(txtStatus);
-		addControl(btnStatus, "statusID");
-		
-		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus, SWT.NONE);
-		btnRemoveOnExit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
-		addControl(btnRemoveOnExit, "removeOnExit");
-		
 		// Graphics
 		
 		Group grpGraphics = new Group(left, SWT.NONE);
@@ -136,9 +106,30 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 			}
 		});
 		addChild(lstAudio, "sounds");
-		
-		new LLabel(right, "").setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		// Status
+		
+		Group grpStatus = new Group(right, SWT.NONE);
+		grpStatus.setLayout(new GridLayout(2, false));
+		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatus.setText(Vocab.instance.STATUS);
+			
+		LText txtStatus = new LText(grpStatus, true);
+		txtStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IDButton btnStatus = new IDButton(grpStatus, 1) {
+			public LDataTree<Object> getDataTree() {
+				return Project.current.status.getTree();
+			}
+		};
+		btnStatus.setNameWidget(txtStatus);
+		addControl(btnStatus, "statusID");
+		
+		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus, SWT.NONE);
+		btnRemoveOnExit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
+		addControl(btnRemoveOnExit, "removeOnExit");
+		
 	}
 
 	@Override

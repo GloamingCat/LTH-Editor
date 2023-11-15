@@ -153,7 +153,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		Group grpAtt = new Group(middle, SWT.NONE);
 		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
 		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3);
-		gd_grpAtt.heightHint = 100;
+		gd_grpAtt.heightHint = 200;
 		gd_grpAtt.widthHint = 240;
 		
 		grpAtt.setLayoutData(gd_grpAtt);
@@ -178,9 +178,16 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		};
 		addChild(lstElements, "elements");
 		
+		Composite bottom = new Composite(left, SWT.NONE);
+		GridLayout gl_bottom = new GridLayout(2, true);
+		gl_bottom.marginHeight = 0;
+		gl_bottom.marginWidth = 0;
+		bottom.setLayout(gl_bottom);
+		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
 		// Skills
 		
-		Group grpSkills = new Group(middle, SWT.NONE);
+		Group grpSkills = new Group(bottom, SWT.NONE);
 		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpSkills.setText(Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")");
 		grpSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -191,10 +198,10 @@ public class BattlerTab extends DatabaseTab<Battler> {
 			}
 		};
 		addChild(lstSkills, "skills");
-
+		
 		// Status
 		
-		Group grpStatus = new Group(middle, SWT.NONE);
+		Group grpStatus = new Group(bottom, SWT.NONE);
 		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpStatus.setText(Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")");
 		grpStatus.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -205,24 +212,6 @@ public class BattlerTab extends DatabaseTab<Battler> {
 			}
 		};
 		addChild(lstStatus, "status");
-		
-		// AI
-
-		Group grpAI = new Group(right, SWT.NONE);
-		grpAI.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpAI.setText(Vocab.instance.AI);
-		grpAI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI, SWT.NONE);
-		lstRules.type = Rule.class;
-		lstRules.setIncludeID(false);
-		lstRules.setShellFactory(new LShellFactory<Rule>() {
-			@Override
-			public LObjectShell<Rule> createShell(Shell parent) {
-				return new RuleShell(parent);
-			}
-		});
-		addChild(lstRules, "ai");
 		
 		// Equip
 		
@@ -243,6 +232,24 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		DropList lstDrop = new DropList(grpDrop, SWT.NONE);
 		addChild(lstDrop, "items");
+		
+		// AI
+
+		Group grpAI = new Group(right, SWT.NONE);
+		grpAI.setLayout(new FillLayout(SWT.HORIZONTAL));
+		grpAI.setText(Vocab.instance.AI);
+		grpAI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI, SWT.NONE);
+		lstRules.type = Rule.class;
+		lstRules.setIncludeID(false);
+		lstRules.setShellFactory(new LShellFactory<Rule>() {
+			@Override
+			public LObjectShell<Rule> createShell(Shell parent) {
+				return new RuleShell(parent);
+			}
+		});
+		addChild(lstRules, "ai");	
 		
 	}
 
