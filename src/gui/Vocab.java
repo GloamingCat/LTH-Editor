@@ -163,8 +163,6 @@ public class Vocab {
 	public String CONSUME = "Consume on use";
 	public String NEEDSUSER = "Needs user";
 	public String ITEMSKILL = "Item Skill ID";
-	public String STATUSADD = "Add Status";
-	public String STATUSREMOVE = "Cure Status";
 	public String EQUIP = "Equip";
 	public String SLOT = "Slot Type";
 	public String ALLSLOTS = "Use all slots of type";
@@ -249,6 +247,7 @@ public class Vocab {
 	public String SHADOW = "Shadow";
 	public String COLLIDERTILES = "Collision Tiles";
 	public String PORTRAITS = "Portraits";
+	public String KOANIM = "KO Effect";
 	
 	// Job
 	public String BUILD = "Build";
@@ -273,7 +272,7 @@ public class Vocab {
 	// Status
 	public String VISIBLE = "Visible";
 	public String PRIORITY = "Priority";
-	public String KO = "KO";
+	public String KOLIKE = "KO Equivalent";
 	public String DEACTIVATE = "Deactivate";
 	public String CUMULATIVE = "Cumulative";
 	public String DURABILITY = "Durability";
@@ -365,6 +364,8 @@ public class Vocab {
 	public String SUCCESSRATE = "Success Rate";
 	public String HEAL = "Heal";
 	public String ABSORB = "Absorb";
+	public String STATUSADD = "Add Status";
+	public String STATUSREMOVE = "Cure Status";
 
 	// ========================================================================
 	// Field

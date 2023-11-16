@@ -7,6 +7,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TransformEditor;
+import gui.views.fieldTree.subcontent.ScriptList;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
@@ -16,6 +17,7 @@ import lwt.event.LEditEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -44,9 +46,6 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 	public CharacterTab(Composite parent) {
 		super(parent);
 		
-		GridData gd_General = (GridData) grpGeneral.getLayoutData();
-		gd_General.grabExcessVerticalSpace = true;
-		
 		new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
 		
 		Composite battler = new Composite(grpGeneral, SWT.NONE);
@@ -68,22 +67,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
-		// Tiles
-		
-		new LLabel(grpGeneral, Vocab.instance.COLLIDERTILES)
-			.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		
-		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpGeneral, SWT.NONE);
-		lstTiles.type = Tile.class;
-		lstTiles.setIncludeID(false);
-		lstTiles.setShellFactory(new LShellFactory<Tile>() {
-			@Override
-			public LObjectShell<Tile> createShell(Shell parent) {
-				return new CharTileShell(parent);
-			}
-		});
-		lstTiles.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		addChild(lstTiles, "tiles");
+		// Shadow
 		
 		new LLabel(grpGeneral, Vocab.instance.SHADOW);
 		
@@ -93,8 +77,6 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		gl_shadow.marginHeight = 0;
 		gl_shadow.marginWidth = 0;
 		shadow.setLayout(gl_shadow);
-		
-		// Shadow
 		
 		LText txtShadow = new LText(shadow, true);
 		txtShadow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -108,20 +90,52 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		btnShadow.setNameWidget(txtShadow);
 		addControl(btnShadow, "shadowID");
 		
-		// Transform
+		// Tiles
 		
-		Group grpTransform = new Group(left, SWT.NONE);
-		grpTransform.setText(Vocab.instance.TRANSFORM);
-		grpTransform.setLayout(new FillLayout());
-		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Composite middle = new Composite(left, SWT.NONE);
+		FillLayout fl_middle = new FillLayout(SWT.HORIZONTAL);
+		fl_middle.spacing = gl_battler.horizontalSpacing;
+		middle.setLayout(fl_middle);
+		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
-		addChild(transformTab, "transform");
+		Group grpTiles = new Group(middle, SWT.NONE);
+		grpTiles.setLayout(new GridLayout(1, true));
+		grpTiles.setText(Vocab.instance.COLLIDERTILES);
+
+		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles, SWT.NONE);
+		lstTiles.type = Tile.class;
+		lstTiles.setIncludeID(false);
+		lstTiles.setShellFactory(new LShellFactory<Tile>() {
+			@Override
+			public LObjectShell<Tile> createShell(Shell parent) {
+				return new CharTileShell(parent);
+			}
+		});
+		GridData gd_tiles = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tiles.heightHint = 60;
+		gd_tiles.minimumHeight = 60;
+		lstTiles.setLayoutData(gd_tiles);
+		addChild(lstTiles, "tiles");
+		
+		// Scripts
+		
+		Group grpScripts = new Group(middle, SWT.NONE);
+		grpScripts.setLayout(new GridLayout(1, true));
+		grpScripts.setText(Vocab.instance.SCRIPTS);
+		
+		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
+		lstScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		addChild(lstScripts, "scripts");
+		
+		LCheckBox btnRepeat = new LCheckBox(grpScripts, SWT.NONE);
+		btnRepeat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
+		addControl(btnRepeat, "repeatCollisions");
 		
 		// KO
 		
 		Group grpKO = new Group(left, SWT.NONE);
-		grpKO.setText(Vocab.instance.KO);
+		grpKO.setText(Vocab.instance.KOANIM);
 		grpKO.setLayout(new GridLayout(3, false));
 		grpKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
@@ -147,9 +161,26 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		spnFade.setMaximum(999);
 		addControl(spnFade, "koFadeout");
 		
+		// Transform
+		
+		Group grpTransform = new Group(right, SWT.NONE);
+		grpTransform.setText(Vocab.instance.TRANSFORM);
+		grpTransform.setLayout(new FillLayout());
+		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		TransformEditor transformTab = new TransformEditor(grpTransform, SWT.NONE);
+		addChild(transformTab, "transform");
+		
 		// Animations
 		
-		Group grpAnimations = new Group(right, SWT.NONE);
+		Composite graphics = new Composite(contentEditor, SWT.NONE);
+		graphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		GridLayout gl_graphics = new GridLayout(2, true);
+		gl_graphics.marginWidth = 0;
+		gl_graphics.marginHeight = 0;
+		graphics.setLayout(gl_graphics);
+		
+		Group grpAnimations = new Group(graphics, SWT.NONE);
 		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAnimations.setText(Vocab.instance.ANIMATIONS);
 		GridLayout gl_anim = new GridLayout(2, false);
@@ -184,7 +215,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			}
 		});
 		
-		Group grpPortraits = new Group(right, SWT.NONE);
+		Group grpPortraits = new Group(graphics, SWT.NONE);
 		grpPortraits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpPortraits.setText(Vocab.instance.PORTRAITS);
 		GridLayout gl_portraits = new GridLayout(2, false);
@@ -213,6 +244,9 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				updatePortrait(imgPotrait, e.newData);
 			}
 		});
+		
+		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 	}
 	

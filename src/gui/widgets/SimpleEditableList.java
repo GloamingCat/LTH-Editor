@@ -1,7 +1,5 @@
 package gui.widgets;
 
-import java.lang.reflect.Type;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -11,7 +9,7 @@ import lwt.dataestructure.LDataList;
 
 public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 
-	public Type type;
+	public Class<?> type;
 	protected LDataList<T> currentList;
 	
 	public SimpleEditableList(Composite parent) {
@@ -29,7 +27,7 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		getCollectionWidget().setPasteEnabled(true);
 	}
 	
-	public SimpleEditableList(Composite parent, Type type) {
+	public SimpleEditableList(Composite parent, Class<?> type) {
 		this(parent, 0);
 		this.type = type;
 	}
@@ -45,7 +43,7 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		return currentList;
 	}
 	
-	public Type getType() {
+	public Class<?> getType() {
 		return type;
 	}
 	

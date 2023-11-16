@@ -3,7 +3,7 @@ package data;
 import java.util.Arrays;
 
 import project.Project;
-import data.subcontent.Bonus;
+import data.subcontent.Property;
 import data.subcontent.Icon;
 import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
@@ -31,7 +31,7 @@ public class Skill extends Data {
 	public LDataList<Tag> costs = new LDataList<>();
 	
 	// Elements
-	public LDataList<Bonus> elements = new LDataList<>(); 
+	public LDataList<Property> elements = new LDataList<>(); 
 	public boolean userElements = true;
 	
 	// User Animations

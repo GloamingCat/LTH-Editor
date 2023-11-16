@@ -8,6 +8,7 @@ import lwt.widget.LText;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.database.JobSkillShell;
+import gui.shell.database.JobStatusShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
 import gui.widgets.IDButton;
@@ -71,12 +72,12 @@ public class JobTab extends DatabaseTab<Job> {
 		grpSkillNodes.setText(Vocab.instance.SKILLNODES);
 		grpSkillNodes.setLayout(new FillLayout());
 		
-		SimpleEditableList<Job.Skill> lstNodes = new SimpleEditableList<>(grpSkillNodes, SWT.NONE);
-		lstNodes.getCollectionWidget().setEditEnabled(false);
-		lstNodes.setIncludeID(false);
-		lstNodes.type = Job.Skill.class;
-		addChild(lstNodes, "skills");
-		lstNodes.setShellFactory(new LShellFactory<Job.Skill>() {
+		SimpleEditableList<Job.Skill> lstSkills = new SimpleEditableList<>(grpSkillNodes, SWT.NONE);
+		lstSkills.getCollectionWidget().setEditEnabled(false);
+		lstSkills.setIncludeID(false);
+		lstSkills.type = Job.Skill.class;
+		addChild(lstSkills, "skills");
+		lstSkills.setShellFactory(new LShellFactory<Job.Skill>() {
 			@Override
 			public LObjectShell<Job.Skill> createShell(Shell parent) {
 				return new JobSkillShell(parent);
@@ -87,6 +88,18 @@ public class JobTab extends DatabaseTab<Job> {
 		grpStatusNodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpStatusNodes.setText(Vocab.instance.STATUSNODES);
 		grpStatusNodes.setLayout(new FillLayout());
+		
+		SimpleEditableList<Job.Status> lstStatuses = new SimpleEditableList<>(grpStatusNodes, SWT.NONE);
+		lstStatuses.getCollectionWidget().setEditEnabled(false);
+		lstStatuses.setIncludeID(false);
+		lstStatuses.type = Job.Status.class;
+		addChild(lstStatuses, "skills");
+		lstStatuses.setShellFactory(new LShellFactory<Job.Status>() {
+			@Override
+			public LObjectShell<Job.Status> createShell(Shell parent) {
+				return new JobStatusShell(parent);
+			}
+		});
 
 	}
 

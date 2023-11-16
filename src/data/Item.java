@@ -2,9 +2,10 @@ package data;
 
 import project.Project;
 import data.Skill.Effect;
-import data.subcontent.Element;
+import data.subcontent.Bonus;
 import data.subcontent.Icon;
 import lwt.dataestructure.LDataList;
+import lwt.dataestructure.LDataTree;
 
 public class Item extends Data {
 
@@ -25,9 +26,9 @@ public class Item extends Data {
 	public String slot = "";
 	public boolean allSlots = false;
 	public LDataList<String> blocked = new LDataList<>();
-	public LDataList<EquipStatus> equipStatus = new LDataList<>();
-	public LDataList<Element> elements = new LDataList<>();
 	public LDataList<Attribute> equipAttributes = new LDataList<>();
+	public LDataList<EquipStatus> equipStatus = new LDataList<>();
+	public LDataList<Bonus> bonuses = new LDataList<>();
 	
 	public static class EquipStatus {
 		
@@ -63,4 +64,13 @@ public class Item extends Data {
 		
 	}
 
+	// Legacy
+	public LDataList<Bonus> elements = new LDataList<>();
+	
+	public void onStart(LDataTree<Object> root, LDataTree<Object> node) {
+		super.onStart(root, node);
+		bonuses.addAll(elements);
+		elements.clear();
+	}
+	
 }

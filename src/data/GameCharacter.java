@@ -3,6 +3,7 @@ package data;
 import project.Project;
 import data.subcontent.Icon;
 import data.subcontent.Node;
+import data.subcontent.Script;
 import data.subcontent.Tile;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
@@ -17,6 +18,9 @@ public class GameCharacter extends Data {
 	public Transform transform = new Transform();
 	public LDataList<Portrait> portraits = new LDataList<>();
 	public LDataList<Node> animations = new LDataList<>();
+	
+	public LDataList<Script> scripts = new LDataList<>();
+	public boolean repeatCollisions = false;
 	
 	public GameCharacter() {
 		animations.add(new Node());

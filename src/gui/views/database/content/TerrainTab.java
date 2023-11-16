@@ -4,7 +4,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.AudioShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.PropertyList;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
 import lwt.dataestructure.LDataTree;
@@ -59,7 +59,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
-		BonusList lstJobMoveCost = new BonusList(moveCost, SWT.NONE) {
+		PropertyList lstJobMoveCost = new PropertyList(moveCost, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.jobs.getTree();

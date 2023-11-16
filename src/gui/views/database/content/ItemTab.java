@@ -4,7 +4,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
-import gui.views.database.subcontent.ElementList;
+import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.EquipStatusList;
 import gui.widgets.IDButton;
@@ -26,9 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import project.Project;
-
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 
 import data.Item;
 
@@ -183,7 +180,15 @@ public class ItemTab extends DatabaseTab<Item> {
 		lstEquipAtt.setLayoutData(gd_EquipAtt);
 		addChild(lstEquipAtt, "equipAttributes");
 		
-		new LLabel(grpEquip, Vocab.instance.STATUS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		new LLabel(grpEquip, Vocab.instance.PROPERTIES).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		BonusList lstElement = new BonusList(grpEquip, SWT.NONE);
+		GridData gd_equipElements = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_equipElements.heightHint = 60;
+		gd_equipElements.minimumHeight = 60;
+		lstElement.setLayoutData(gd_equipElements);
+		addChild(lstElement, "bonuses");
+		
+		new LLabel(grpEquip, Vocab.instance.STATUSADD).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip, SWT.NONE);
 		lstEquipStatus.setIncludeID(false);
 		GridData gd_status = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -191,14 +196,6 @@ public class ItemTab extends DatabaseTab<Item> {
 		gd_status.minimumHeight = 60;
 		lstEquipStatus.setLayoutData(gd_status);
 		addChild(lstEquipStatus, "equipStatus");
-		
-		new LLabel(grpEquip, Vocab.instance.ELEMENTS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		ElementList lstElement = new ElementList(grpEquip, SWT.NONE);
-		GridData gd_equipElements = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_equipElements.heightHint = 60;
-		gd_equipElements.minimumHeight = 60;
-		lstElement.setLayoutData(gd_equipElements);
-		addChild(lstElement, "elements");
 		
 	}
 

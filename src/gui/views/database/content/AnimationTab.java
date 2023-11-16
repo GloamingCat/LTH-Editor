@@ -164,10 +164,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		Group grpImg = new Group(left, SWT.NONE);
 		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_grpImg = new GridLayout(1, false);
-		gl_grpImg.marginWidth = 0;
-		gl_grpImg.marginHeight = 0;
-		grpImg.setLayout(gl_grpImg);
+		grpImg.setLayout(new GridLayout(1, false));
 		grpImg.setText(Vocab.instance.GRAPHICS);
 		
 		LImage image = new LImage(grpImg, SWT.NONE);

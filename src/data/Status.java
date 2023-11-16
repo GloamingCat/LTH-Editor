@@ -1,11 +1,12 @@
 package data;
 
 import data.Item.Attribute;
-import data.subcontent.Element;
+import data.subcontent.Bonus;
 import data.subcontent.Icon;
 import data.subcontent.Rule;
 import data.subcontent.Transformation;
 import lwt.dataestructure.LDataList;
+import lwt.dataestructure.LDataTree;
 
 public class Status extends Data {
 	
@@ -36,10 +37,24 @@ public class Status extends Data {
 	public int drainValue = 0;
 	public boolean percentage = true;
 	
-	// Other
+	// Effects
 	public LDataList<Attribute> attributes = new LDataList<>();
-	public LDataList<Element> elements = new LDataList<>();
-	public LDataList<Integer> statusDef = new LDataList<>();
+	public LDataList<Bonus> bonuses = new LDataList<>();
 	public LDataList<Integer> cancel = new LDataList<>();
+
 	
+	// Legacy
+	public LDataList<Bonus> elements = new LDataList<>();
+	public LDataList<Integer> statusDef = new LDataList<>();
+	
+	public void onStart(LDataTree<Object> root, LDataTree<Object> node) {
+		super.onStart(root, node);
+		for (Integer id : statusDef) {
+			elements.add(new Bonus(3, 100, id));
+		}
+		statusDef.clear();
+		bonuses.addAll(elements);
+		elements.clear();
+	}
+
 }

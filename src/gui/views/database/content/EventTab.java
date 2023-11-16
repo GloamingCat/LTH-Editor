@@ -28,7 +28,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	public EventTab(Composite parent) {
 		super(parent);
 		
-		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION)
+			.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
 		LTextBox txtDescription = new LTextBox(grpGeneral);
 		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

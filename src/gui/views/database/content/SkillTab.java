@@ -4,7 +4,7 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.database.MaskShell;
 import gui.views.database.DatabaseTab;
-import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.PropertyList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
@@ -348,14 +348,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Elements
 		
 		Group grpElements = new Group(right, SWT.NONE);
-		GridLayout gl_grpElements = new GridLayout(2, false);
-		gl_grpElements.marginWidth = 0;
-		gl_grpElements.marginHeight = 0;
-		grpElements.setLayout(gl_grpElements);
+		grpElements.setLayout(new GridLayout(2, false));
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
+		PropertyList lstElements = new PropertyList(grpElements, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.elements.getList().toTree();

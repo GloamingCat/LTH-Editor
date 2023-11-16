@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.database.RuleShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
-import gui.views.database.subcontent.BonusList;
+import gui.views.database.subcontent.PropertyList;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.EquipList;
 import gui.widgets.IDButton;
@@ -26,6 +26,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -78,8 +79,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		new LLabel(grpGeneral, 1);
 		
 		Composite check = new Composite(grpGeneral, SWT.NONE);
-		check.setLayout(new FillLayout(SWT.HORIZONTAL));
 		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		check.setLayout(new RowLayout());
 		
 		LCheckBox btnPersistent = new LCheckBox(check, SWT.NONE);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
@@ -170,7 +171,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpElements.setText(Vocab.instance.ELEMENTS);
 		
-		BonusList lstElements = new BonusList(grpElements, SWT.NONE) {
+		PropertyList lstElements = new PropertyList(grpElements, SWT.NONE) {
 			@Override
 			protected LDataTree<Object> getDataTree() {
 				return Project.current.elements.getList().toTree();

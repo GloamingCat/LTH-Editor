@@ -1,7 +1,7 @@
 package data;
 
 import project.Project;
-import data.subcontent.Bonus;
+import data.subcontent.Property;
 import data.subcontent.Icon;
 import data.subcontent.Rule;
 import lwt.dataestructure.LDataList;
@@ -19,7 +19,7 @@ public class Battler extends Data {
 	// Initial
 	public LDataList<Integer> skills = new LDataList<>();
 	public LDataList<Integer> status = new LDataList<>();
-	public LDataList<Bonus> elements = new LDataList<>();
+	public LDataList<Property> elements = new LDataList<>();
 	
 	// Items
 	public LDataList<Drop> items = new LDataList<>();
@@ -61,7 +61,7 @@ public class Battler extends Data {
 		
 	}
 	
-	public static class Drop extends Bonus {
+	public static class Drop extends Property {
 		
 		public int count = 1;
 		

@@ -25,7 +25,6 @@ public class CharTile {
 	public int defaultSpeed = 100;
 	
 	public LDataList<Script> scripts = new LDataList<>();
-	
 	public boolean repeatCollisions = false;
 	
 	public CharTile() {}

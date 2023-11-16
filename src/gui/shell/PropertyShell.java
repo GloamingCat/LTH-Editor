@@ -4,7 +4,7 @@ import gui.Vocab;
 
 import org.eclipse.swt.widgets.Shell;
 
-import data.subcontent.Bonus;
+import data.subcontent.Property;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
@@ -14,9 +14,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
-public abstract class BonusShell extends ObjectShell<Bonus> {
+public abstract class PropertyShell extends ObjectShell<Property> {
 
-	public BonusShell(Shell parent) {
+	public PropertyShell(Shell parent) {
 		super(parent);
 		setMinimumSize(372, 329);
 		contentEditor.setLayout(new GridLayout(2, false));

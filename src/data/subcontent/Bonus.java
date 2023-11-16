@@ -1,26 +1,36 @@
 package data.subcontent;
 
-public class Bonus {
+import gui.Vocab;
+import project.Project;
 
-	public int id = 0;
-	public int value = 100;
+public class Bonus extends Property {
+
+	// 0 => immunity
+	// 1 => attack property
+	// 2 => damage buff
+	// 3 => status immunity
+	public int type = 0;
 	
 	public Bonus() {}
-	
-	public Bonus(Bonus copy) {
-		id = copy.id;
-		value = copy.value;
-	}
-	
-	public boolean equals(Object obj) {
-		if (obj instanceof Bonus) {
-			Bonus bonus = (Bonus) obj;
-			return bonus.id == id && bonus.value == value;
-		} else return false;
+	public Bonus(int type, int value, int id) {
+		this.type = type;
+		this.id = id;
+		this.value = value;
 	}
 	
 	public String toString() {
-		return id + ": " + value;
+		if (type <= 2) {
+			Object element = Project.current.elements.getList().get(id);
+			if (element == null) element = "NULL";
+			String t = type == 0 ? Vocab.instance.ELEMENTDEF : 
+				type == 1 ? Vocab.instance.ELEMENTATK :
+				type == 2 ? Vocab.instance.ELEMENTBUFF : "";
+			return element.toString() + ": " + value + "% (" + t + ")";
+		} else {
+			Object status = Project.current.status.getData().get(id);
+			if (status == null) status = "NULL";
+			return status.toString() + ": " + value + "% (" + Vocab.instance.STATUSDEF + ")";
+		}
 	}
-
+	
 }

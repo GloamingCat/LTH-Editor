@@ -58,12 +58,24 @@ public class ObjectShell<T> extends LObjectShell<T> {
 		contentEditor.addChild(editor, key);
 	}
 	
+	public void removeChild(LEditor editor) {
+		contentEditor.removeChild(editor);
+	}
+	
 	protected void addControl(LControlWidget<?> control, String attName) {
 		contentEditor.addControl(control, attName);
 	}
 	
 	protected void addControl(LControlView<?> view, String attName) {
 		contentEditor.addControl(view, attName);
+	}
+	
+	protected void removeControl(LControlWidget<?> control) {
+		contentEditor.removeControl(control);
+	}
+	
+	protected void removeControl(LControlView<?> view) {
+		contentEditor.removeControl(view);
 	}
 	
 }

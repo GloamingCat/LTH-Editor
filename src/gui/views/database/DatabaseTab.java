@@ -97,7 +97,8 @@ public abstract class DatabaseTab<T> extends LView {
 		
 		grpGeneral = new Group(left, SWT.NONE);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpGeneral.setLayout(new GridLayout(2, false));
+		GridLayout gl_general = new GridLayout(2, false);
+		grpGeneral.setLayout(gl_general);
 		grpGeneral.setText(Vocab.instance.GENERAL);
 		
 		Composite compID = new Composite(grpGeneral, SWT.NONE);
@@ -141,7 +142,10 @@ public abstract class DatabaseTab<T> extends LView {
 		gd_tags.minimumHeight = 140;
 		gd_tags.heightHint = 140;
 		grpTags.setLayoutData(gd_tags);
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		FillLayout fl_tags = new FillLayout(SWT.HORIZONTAL);
+		fl_tags.marginWidth = gl_general.marginWidth;
+		fl_tags.marginHeight = gl_general.marginHeight;
+		grpTags.setLayout(fl_tags);
 		grpTags.setText(Vocab.instance.TAGS);
 		
 		TagList lstTags = new TagList(grpTags, SWT.NONE);

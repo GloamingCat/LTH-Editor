@@ -54,17 +54,28 @@ public class TroopTab extends DatabaseTab<Troop> {
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
+		// Rewards
+		
 		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
-		LSpinner spnMoney = new LSpinner(grpGeneral, SWT.NONE);
+		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
+		GridLayout gl_compositeReward = new GridLayout(3, false);
+		gl_compositeReward.marginWidth = 0;
+		gl_compositeReward.marginHeight = 0;
+		compositeReward.setLayout(gl_compositeReward);
+		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		LSpinner spnMoney = new LSpinner(compositeReward, SWT.NONE);
+		spnMoney.setMaximum(99999999);
 		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMoney, "money");
 		
-		new LLabel(grpGeneral, Vocab.instance.EXP);
+		new LLabel(compositeReward, Vocab.instance.EXP);
 		
-		LSpinner spnExp = new LSpinner(grpGeneral, SWT.NONE);
-		spnExp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		addControl(spnExp, "exp");
+		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
+		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnEXP.setMaximum(99999999);
+		addControl(spnEXP, "exp");
 		
 		// AI
 		
