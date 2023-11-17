@@ -93,7 +93,7 @@ public class JobTab extends DatabaseTab<Job> {
 		lstStatuses.getCollectionWidget().setEditEnabled(false);
 		lstStatuses.setIncludeID(false);
 		lstStatuses.type = Job.Status.class;
-		addChild(lstStatuses, "skills");
+		addChild(lstStatuses, "statuses");
 		lstStatuses.setShellFactory(new LShellFactory<Job.Status>() {
 			@Override
 			public LObjectShell<Job.Status> createShell(Shell parent) {
