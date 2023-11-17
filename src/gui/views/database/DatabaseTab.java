@@ -1,6 +1,5 @@
 package gui.views.database;
 
-import java.lang.reflect.Type;
 import java.util.LinkedList;
 
 import gson.editor.GDefaultObjectEditor;
@@ -64,8 +63,8 @@ public abstract class DatabaseTab<T> extends LView {
 				return getSerializer().getTree();
 			}
 			@Override
-			public Type getType() {
-				return getSerializer().getDataType();
+			public Class<?> getType() {
+				return (Class<?>) getSerializer().getDataType();
 			}
 		};
 		

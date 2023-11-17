@@ -295,7 +295,13 @@ public class SceneHelper {
 			buffer.put(i*4, data.data[i*channels+2]);
 			buffer.put(i*4+1, data.data[i*channels+1]);
 			buffer.put(i*4+2, data.data[i*channels]);
-			buffer.put(i*4+3, data.alphaData[i]);
+			byte alpha = (byte)255;
+			if (data.alphaData != null)
+				alpha = data.alphaData[i];
+			else if (data.transparentPixel != -1)
+				alpha = data.transparentPixel == data.getPixel(i % data.width, i / data.width)
+					? (byte)0 : (byte)255;
+			buffer.put(i*4+3, alpha);
 		}
 		return new Texture(data.width, data.height, 4, buffer);
 	}
