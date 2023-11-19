@@ -5,9 +5,9 @@ import gui.widgets.FileSelector;
 import java.io.File;
 
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
@@ -19,11 +19,11 @@ public class LuaShell extends LObjectShell<String> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public LuaShell(Shell parent) {
-		this(parent, 1);
+	public LuaShell(LShell parent) {
+		this(parent, true);
 	}
 	
-	public LuaShell(Shell parent, int optional) {
+	public LuaShell(LShell parent, boolean optional) {
 		super(parent);
 		content.setLayout(new FillLayout(SWT.HORIZONTAL));
 		selFile = new FileSelector(content, optional) {

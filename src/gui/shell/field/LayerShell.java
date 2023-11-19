@@ -4,10 +4,8 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import gui.views.fieldTree.FieldSideEditor;
-
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
-
+import lwt.container.LFrame;
+import lwt.dialog.LShell;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -19,11 +17,9 @@ import org.eclipse.swt.layout.GridLayout;
 
 import data.field.Layer.Info;
 
-import org.eclipse.swt.layout.FillLayout;
-
 public class LayerShell extends ObjectShell<Info> {
 
-	public LayerShell(Shell parent) {
+	public LayerShell(LShell parent) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -34,39 +30,28 @@ public class LayerShell extends ObjectShell<Info> {
 		gridLayout.marginHeight = 0;
 		contentEditor.setLayout(gridLayout);
 		
-		Group grpGeneral = new Group(contentEditor, SWT.NONE);
+		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 2, false);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpGeneral.setText(Vocab.instance.GENERAL);
-		GridLayout gl_grpGeneral = new GridLayout(2, false);
-		gl_grpGeneral.marginWidth = 0;
-		gl_grpGeneral.marginHeight = 0;
-		grpGeneral.setLayout(gl_grpGeneral);
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
 		LText txtName = new LText(grpGeneral);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		
 		new LLabel(grpGeneral, Vocab.instance.HEIGHT);
 		
-		LSpinner spnHeight = new LSpinner(grpGeneral, SWT.CENTER);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		LSpinner spnHeight = new LSpinner(grpGeneral);
 		spnHeight.setMinimum(1);
 		spnHeight.setMaximum(FieldSideEditor.instance.field.prefs.maxHeight);
 		addControl(spnHeight, "height");
 		
-		LCheckBox btnNoAuto = new LCheckBox(grpGeneral);
-		btnNoAuto.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		LCheckBox btnNoAuto = new LCheckBox(grpGeneral, 2);
 		btnNoAuto.setText(Vocab.instance.NOAUTO);
 		addControl(btnNoAuto, "noAuto");
 		
-		Group grpTags = new Group(contentEditor, SWT.NONE);
-		grpTags.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, true, true);
 		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		
 		pack();

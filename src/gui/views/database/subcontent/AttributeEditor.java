@@ -1,116 +1,34 @@
 package gui.views.database.subcontent;
 
-import java.util.ArrayList;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-
 import data.config.Attribute;
-import gson.editor.GDefaultObjectEditor;
+import gson.editor.GGridForm;
 import project.Project;
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataList;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
-import lwt.widget.LLabel;
+import lwt.widget.LControlWidget;
 import lwt.widget.LSpinner;
 
-public class AttributeEditor extends GDefaultObjectEditor<LDataList<Integer>> {
+public class AttributeEditor extends GGridForm<Integer> {
+	
+	public AttributeEditor(LContainer parent, int columns) {
+		super(parent, columns);
+	}
 
-	protected LDataList<Integer> values;
-	protected ArrayList<LSpinner> spinners;
-	protected ScrolledComposite scrollComp;
-	protected Composite content;
-	protected int columns = 2;
-	
-	protected LDataList<Integer> list;
-	
-	public AttributeEditor(Composite parent, int style) {
-		super(parent, style);
-		
-		setLayout(new FillLayout());
-		spinners = new ArrayList<>();
-		
-		scrollComp = new ScrolledComposite(this, SWT.V_SCROLL);
-		scrollComp.setExpandVertical(true);
-		scrollComp.setExpandHorizontal(true);
-		scrollComp.setLayout(new FillLayout());
-		
-		content = new Composite(scrollComp, SWT.NONE);
-		scrollComp.setContent(content);
-
+	protected Integer getDefaultValue() {
+		return 0;
 	}
 	
-	public void setObject(Object obj) {
-		super.setObject(obj);
-		if (obj != null) {
-			list = getObject();
-			for(int i = 0; i < spinners.size(); i++) {
-				if (i < list.size()) {
-					spinners.get(i).setValue(list.get(i));
-				} else {
-					list.add(0);
-					spinners.get(i).setValue(0);
-				}
-			}
-		} else {
-			for(LSpinner spinner : spinners) {
-				spinner.setValue(null);
-			}
-		}
+	protected LDataList<Object> getList() {
+		return Project.current.attributes.getList();
 	}
 	
-	public void setColumns(int i) {
-		columns = i;
+	protected LControlWidget<Integer> createControl(final int i, final Object obj) {
+		return new LSpinner(content);
 	}
 	
-	public void onVisible() {
-		content.setLayout(new GridLayout(columns, false));
-		Control[] controls = content.getChildren();
-		ArrayList<Object> attributes = Project.current.attributes.getList();
-		// Add spinners for exceeding attributes
-		for(int i = controls.length / 2; i < attributes.size(); i ++) {
-			LLabel label = new LLabel(content, "");
-			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-			createSpinner(i);
-		}
-		// Remove exceeding spinners
-		for (int i = attributes.size() * 2; i < controls.length; i++) {
-			controls[i].dispose();
-		}
-		// Update spinners
-		controls = content.getChildren();
-		spinners.clear();
-		for (int i = 0; i < attributes.size(); i++)	{
-			Attribute att = (Attribute) attributes.get(i);
-			LLabel label = (LLabel) controls[i * 2];
-			label.setText(att.shortName);
-			LSpinner spinner = (LSpinner) controls[i * 2 + 1];
-			spinner.setMaximum(999999);
-			spinner.setMinimum(-999999);
-			spinners.add(spinner);
-		}
-		scrollComp.setContent(content);
-		scrollComp.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-	}
-	
-	private LSpinner createSpinner(final int i) {
-		LSpinner spinner = new LSpinner(content, SWT.NONE);
-		spinner.setActionStack(getActionStack());
-		spinner.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (list != null) {
-					list.set(i, (Integer) event.newValue);
-				}
-			}
-		});
-		spinner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		return spinner;
+	protected String getLabelText(final int i, final Object obj) {
+		Attribute att = (Attribute) obj;
+		return att.shortName;
 	}
 
 }

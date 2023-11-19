@@ -10,19 +10,20 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.ImageButton;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
 import com.google.gson.Gson;
 
+import lwt.container.LContainer;
+import lwt.container.LControlView;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
+import lwt.container.LView;
 import lwt.dataestructure.LDataTree;
-import lwt.editor.LControlView;
 import lwt.editor.LEditor;
-import lwt.editor.LView;
 import lwt.event.LControlEvent;
 import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
@@ -40,24 +41,24 @@ public abstract class DatabaseTab<T> extends LView {
 	
 	protected GDefaultTreeEditor<Object> listEditor;
 	protected GDefaultObjectEditor<T> contentEditor;
-	protected Group grpGeneral, grpTags;
+	protected LFrame grpGeneral, grpTags;
 	protected LLabel lblID;
 	protected LLabel lblKey;
 	protected LText txtKey;
 	protected LLabel lblName;
 	protected LText txtName;
-	protected Composite left, right;
+	protected LPanel left, right;
 	
-	public DatabaseTab(Composite parent) {
-		super(parent);
+	public DatabaseTab(LContainer parent) {
+		super(parent, true);
 		
 		setLayout(new FillLayout());
 		
 		createActionStack();
 		
-		SashForm sashForm = new SashForm(this, SWT.NONE);
+		LSashPanel sashForm = new LSashPanel(this, true);
 		
-		listEditor = new GDefaultTreeEditor<Object>(sashForm, SWT.NONE) {
+		listEditor = new GDefaultTreeEditor<Object>(sashForm) {
 			@Override
 			public LDataTree<Object> getDataCollection() {
 				return getSerializer().getTree();
@@ -78,33 +79,18 @@ public abstract class DatabaseTab<T> extends LView {
 		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
-		contentEditor = new GDefaultObjectEditor<T>(sashForm, SWT.NONE);
+		contentEditor = new GDefaultObjectEditor<T>(sashForm, true);
 		contentEditor.setLayout(new GridLayout(2, true));
 		
-		left = new Composite(contentEditor, SWT.NONE);
+		left = new LPanel(contentEditor, 1);
 		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_left = new GridLayout();
-		gl_left.marginWidth = 0;
-		gl_left.marginHeight = 0;
-		left.setLayout(gl_left);
-		right = new Composite(contentEditor, SWT.NONE);
+		right = new LPanel(contentEditor, 1);
 		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_right = new GridLayout();
-		gl_right.marginWidth = 0;
-		gl_right.marginHeight = 0;
-		right.setLayout(gl_right);
 		
-		grpGeneral = new Group(left, SWT.NONE);
+		grpGeneral = new LFrame(left, Vocab.instance.GENERAL, 2, false);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_general = new GridLayout(2, false);
-		grpGeneral.setLayout(gl_general);
-		grpGeneral.setText(Vocab.instance.GENERAL);
 		
-		Composite compID = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compID = new GridLayout(3, false);
-		gl_compID.marginWidth = 0;
-		gl_compID.marginHeight = 0;
-		compID.setLayout(gl_compID);
+		LPanel compID = new LPanel(grpGeneral, 3, false);
 		compID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		lblID = new LLabel(compID, "");
@@ -113,7 +99,6 @@ public abstract class DatabaseTab<T> extends LView {
 		lblKey = new LLabel(compID, Vocab.instance.KEY);
 		
 		txtKey = new LText(compID);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtKey.addModifyListener(new LControlListener<String>() {
 			@Override
 			public void onModify(LControlEvent<String> event) {
@@ -131,23 +116,16 @@ public abstract class DatabaseTab<T> extends LView {
 		lblName.setLayoutData(gd_name);
 		
 		txtName = new LText(grpGeneral);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		contentEditor.addControl(txtName, "name");
 		
 		// Tags
 		
-		grpTags = new Group(right, SWT.NONE);
+		grpTags = new LFrame(right, Vocab.instance.TAGS, true, true);
 		GridData gd_tags = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_tags.minimumHeight = 140;
 		gd_tags.heightHint = 140;
 		grpTags.setLayoutData(gd_tags);
-		FillLayout fl_tags = new FillLayout(SWT.HORIZONTAL);
-		fl_tags.marginWidth = gl_general.marginWidth;
-		fl_tags.marginHeight = gl_general.marginHeight;
-		grpTags.setLayout(fl_tags);
-		grpTags.setText(Vocab.instance.TAGS);
-		
-		TagList lstTags = new TagList(grpTags, SWT.NONE);
+		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		
 		listEditor.addChild(contentEditor);

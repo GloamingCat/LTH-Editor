@@ -1,6 +1,9 @@
 package gui.views.fieldTree;
 
-import lwt.editor.LView;
+import lwt.container.LContainer;
+import lwt.container.LView;
+import lwt.dialog.LShell;
+import lwt.widget.LLabel;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.action.BucketAction;
 import gui.views.fieldTree.action.CharAction;
@@ -22,7 +25,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.field.CharTile;
@@ -40,6 +42,9 @@ public abstract class FieldCanvas extends LView {
 	public float scale = 1;
 	public int x0;
 	public int y0;
+	
+	public LLabel lblId = null;
+	public LLabel lblCoords = null;
 
 	protected Point mousePoint = new Point(0, 0);
 	protected int tileX = 0;
@@ -61,9 +66,16 @@ public abstract class FieldCanvas extends LView {
 
 	//////////////////////////////////////////////////
 	// {{ Initialization
-
-	public FieldCanvas(Composite parent, int style) {
-		super(parent, style | SWT.DOUBLE_BUFFERED);
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public FieldCanvas() {
+		this(new LShell());
+	}
+	
+	public FieldCanvas(LContainer parent) {
+		super(parent, false);
 		setBackground(SWTResourceManager.getColor(new RGB(250, 250, 250)));
 		addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
@@ -119,7 +131,7 @@ public abstract class FieldCanvas extends LView {
 		selection[0][0] = 0;
 		selectionPoint = new Point(0, 0);
 	}
-	
+
 	public void onDispose() {
 		if (buffer != null)
 			buffer.dispose();
@@ -240,6 +252,8 @@ public abstract class FieldCanvas extends LView {
 		if (draggingLeft) {
 			onTileLeftDown();
 		}
+		if (lblCoords != null)
+			lblCoords.setText("(" + (x + 1) + ", " + (y + 1) + ", " + (height + 1) + ")");
 	}
 
 	public void onTileChange(int x, int y) {}
@@ -315,13 +329,17 @@ public abstract class FieldCanvas extends LView {
 			this.field = null;
 			this.currentLayer = null;
 			rescale(1);
+			if (lblId != null)
+				lblId.setText("ID: -1");
 		} else {
 			this.field = field;
 			this.currentLayer = null;
 			rescale(scale);
+			if (lblId != null)
+				lblId.setText("ID: " + field.id);
 		}
 		refresh();
-	}
+	}	
 
 	public void setClickedTile(int x, int y, int h) {
 		clickedTile = new Point(x, y);
@@ -391,8 +409,10 @@ public abstract class FieldCanvas extends LView {
 		CharAction action = new CharAction(tile, x + 1, y + 1, height + 1);
 		action.redo();
 		getActionStack().newAction(action);
+		FieldSideEditor.instance.onMoveCharacter(tile);
 		return tile;
 	}
+
 	// }}
 
 	//////////////////////////////////////////////////

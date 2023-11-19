@@ -1,15 +1,12 @@
 package gui.shell.database;
 
 import gui.Vocab;
+import gui.shell.ObjectShell;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Spinner;
-
-import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
-import lwt.dialog.LObjectShell;
-import lwt.editor.LDefaultTreeEditor;
+import lwt.dialog.LShell;
 import lwt.widget.LLabel;
+import lwt.widget.LNodeSelector;
+import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -18,72 +15,29 @@ import org.eclipse.swt.layout.GridData;
 import project.Project;
 import data.Battler.Drop;
 
-public class DropShell extends LObjectShell<Drop> {
-	
-	private LDefaultTreeEditor<Object> tree;
-	private Spinner spnChance;
-	private Spinner spnCount;
+public class DropShell extends ObjectShell<Drop> {
 
-	public DropShell(Shell parent) {
+	public DropShell(LShell parent) {
 		super(parent);
 		setMinimumSize(400, 200);
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
-		content.setLayout(new GridLayout(2, false));
+		contentEditor.setLayout(new GridLayout(2, false));
 		
-		new LLabel(content, Vocab.instance.CHANCE);
+		new LLabel(contentEditor, Vocab.instance.CHANCE);
+		LSpinner spnChance = new LSpinner(contentEditor);
+		addControl(spnChance, "value");
 		
-		spnChance = new Spinner(content, SWT.BORDER);
-		spnChance.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		new LLabel(content, Vocab.instance.COUNT);
-		
-		spnCount = new Spinner(content, SWT.BORDER);
+		new LLabel(contentEditor, Vocab.instance.COUNT);
+		LSpinner spnCount = new LSpinner(contentEditor);
 		spnCount.setMaximum(999999999);
 		spnCount.setMinimum(1);
-		spnCount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		addControl(spnCount, "count");
 		
-		tree = new LDefaultTreeEditor<Object>(content, 0) {
-			@Override
-			public LDataTree<Object> getDataCollection() { return getTree(); }
-			@Override
-			protected Object createNewData() { return null; }
-			@Override
-			protected Object duplicateData(Object original) { return null; }
-		};
+		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, false);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		tree.getCollectionWidget().dragEnabled = false;
+		tree.setCollection(Project.current.items.getTree());
+		addControl(tree, "id");
 		
 		pack();
-	}
-	
-	public void open(Drop initial) {
-		super.open(initial);
-		tree.onVisible();
-		tree.getCollectionWidget().select(null);
-		if (initial.id >= 0) {
-			LDataTree<Object> node = getTree().findNode(initial.id);
-			if (node != null) {
-				tree.getCollectionWidget().select(node.toPath());
-			}
-		}
-		spnChance.setSelection(initial.value);
-		spnCount.setSelection(initial.count);
-	}
-
-	@Override
-	protected Drop createResult(Drop initial) {
-		LPath path = tree.getCollectionWidget().getSelectedPath();
-		Drop drop = new Drop();
-		drop.id = path == null ? -1 : getTree().getNode(path).id;
-		drop.value = spnChance.getSelection();
-		drop.count = spnCount.getSelection();
-		return drop;
-	}
-	
-	protected LDataTree<Object> getTree() {
-		return Project.current.items.getTree();
 	}
 	
 }

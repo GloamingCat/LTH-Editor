@@ -1,23 +1,23 @@
 package gui.widgets;
 
 import gui.shell.IDShell;
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Animation;
 
-public abstract class IDButton extends LObjectButton<Integer> {
+public class IDButton extends LObjectButton<Integer> {
 	
+	public LDataTree<Object> dataTree = null;
 	protected LText txtName;
 	protected LImage image;
 
@@ -26,12 +26,12 @@ public abstract class IDButton extends LObjectButton<Integer> {
 	 * @param parent
 	 * @param style
 	 */
-	public IDButton(Composite parent, int style) {
-		super(parent, SWT.NONE);
+	public IDButton(LContainer parent, boolean optional) {
+		super(parent);
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
-			public LObjectShell<Integer> createShell(Shell parent) {
-				IDShell shell = new IDShell(parent, style) {
+			public LObjectShell<Integer> createShell(LShell parent) {
+				IDShell shell = new IDShell(parent, optional) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 
 					}
@@ -41,7 +41,7 @@ public abstract class IDButton extends LObjectButton<Integer> {
 		});
 	}
 	
-	public abstract LDataTree<Object> getDataTree();
+	public LDataTree<Object> getDataTree() { return dataTree; }
 	
 	public void setNameWidget(LText text) {
 		txtName = text;

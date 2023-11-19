@@ -2,9 +2,8 @@ package gui.shell;
 
 import gui.Vocab;
 
-import org.eclipse.swt.widgets.Shell;
-
 import data.subcontent.Tag;
+import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
@@ -18,7 +17,7 @@ public class TagShell extends ObjectShell<Tag> {
 	private LText txtKey;
 	private LTextBox txtValue;
 
-	public TagShell(Shell parent) {
+	public TagShell(LShell parent) {
 		super(parent);
 		setMinimumSize(400, 300);
 		contentEditor.setLayout(new GridLayout(2, false));
@@ -26,10 +25,9 @@ public class TagShell extends ObjectShell<Tag> {
 		new LLabel(contentEditor, Vocab.instance.NAME);
 		
 		txtKey = new LText(contentEditor);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, Vocab.instance.VALUE).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		new LLabel(contentEditor, LLabel.TOP, Vocab.instance.VALUE);
 		
 		txtValue = new LTextBox(contentEditor);
 		GridData gd_txtValue = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

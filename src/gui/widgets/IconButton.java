@@ -2,15 +2,14 @@ package gui.widgets;
 
 import gui.shell.IconShell;
 import gui.views.database.subcontent.TransformEditor;
+import lwt.container.LContainer;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Animation;
@@ -22,12 +21,12 @@ public class IconButton extends LObjectButton<Icon> {
 	private LText text;
 	private TransformEditor transform;
 	
-	public IconButton(Composite parent, int style) {
-		super(parent, SWT.NONE);
+	public IconButton(LContainer parent, boolean optional) {
+		super(parent);
 		setShellFactory(new LShellFactory<Icon>() {
 			@Override
-			public IconShell createShell(Shell parent) {
-				return new IconShell(parent, style);
+			public IconShell createShell(LShell parent) {
+				return new IconShell(parent, optional);
 			}
 		});
 	}

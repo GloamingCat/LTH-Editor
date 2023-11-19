@@ -1,17 +1,20 @@
 package gui.widgets;
 
-import org.eclipse.swt.widgets.Composite;
-
+import lwt.container.LContainer;
 import lwt.widget.LCombo;
 
 public class DirectionCombo extends LCombo {
 
-	public DirectionCombo(Composite parent) {
-		super(parent);
+	public DirectionCombo(LContainer parent) {
+		this(parent, 1);
+	}
+	
+	public DirectionCombo(LContainer parent, int columns) {
+		super(parent, columns, true);
 		setIncludeID(false);
 		setOptional(false);
-		String[] d = new String[] {"0Â°", "45Â°", "90Â°", "135Â°", 
-				"180Â°", "225Â°", "270Â°", "315Â°"};
+		String[] d = new String[] {"0°", "45°", "90°", "135°", 
+				"180°", "225°", "270°", "315°"};
 		setItems(d);
 	}
 	
@@ -21,6 +24,5 @@ public class DirectionCombo extends LCombo {
 	public int getSelectionIndex() {
 		return super.getSelectionIndex() * 45;
 	}
-	
 	
 }

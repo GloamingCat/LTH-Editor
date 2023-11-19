@@ -9,23 +9,24 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import lwt.container.LContainer;
+import lwt.container.LPanel;
 import lwt.dialog.LObjectDialog;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
-public class FieldToolBar extends Composite {
+public class FieldToolBar extends LPanel {
 
 	// External
 	public static FieldToolBar instance;
 	
-	public FieldToolBar(Composite parent) {
-		super(parent, 0);
+	public FieldToolBar(LContainer parent) {
+		super(parent, true);
 		instance = this;
 		setSize(440, 0);
 		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
@@ -155,7 +156,7 @@ public class FieldToolBar extends Composite {
 		LObjectDialog<Rectangle> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
 		dialog.setFactory(new LShellFactory<Rectangle>() {
 			@Override
-			public LObjectShell<Rectangle> createShell(Shell parent) {
+			public LObjectShell<Rectangle> createShell(LShell parent) {
 				return new ResizeShell(parent);
 			}
 		});

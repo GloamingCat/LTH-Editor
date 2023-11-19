@@ -3,22 +3,21 @@ package gui.views.database.subcontent;
 import gui.shell.database.EquipStatusShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import data.Item.EquipStatus;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public class EquipStatusList extends SimpleEditableList<EquipStatus> {
 	
-	public EquipStatusList(Composite parent, int style) {
-		super(parent, style);
+	public EquipStatusList(LContainer parent) {
+		super(parent);
 		type = EquipStatus.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<EquipStatus>() {
 			@Override
-			public LObjectShell<EquipStatus> createShell(Shell parent) {
+			public LObjectShell<EquipStatus> createShell(LShell parent) {
 				return new EquipStatusShell(parent);
 			}
 		});

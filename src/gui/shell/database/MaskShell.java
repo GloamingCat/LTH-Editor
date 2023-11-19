@@ -5,18 +5,19 @@ import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
 import data.Skill.Mask;
 import data.subcontent.Point;
+import lwt.container.LPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
+import lwt.widget.LCombo;
 import lwt.widget.LLabel;
+import lwt.widget.LSpinner;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.MouseAdapter;
@@ -24,17 +25,16 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Combo;
 
 public class MaskShell extends LObjectShell<Mask> {
 
-	private Composite canvas;
-	private Spinner spnMinH;
-	private Spinner spnMinX;
-	private Spinner spnMinY;
-	private Spinner spnMaxH;
-	private Spinner spnMaxX;
-	private Spinner spnMaxY;
+	private LPanel canvas;
+	private LSpinner spnMinH;
+	private LSpinner spnMinX;
+	private LSpinner spnMinY;
+	private LSpinner spnMaxH;
+	private LSpinner spnMaxX;
+	private LSpinner spnMaxY;
 	
 	boolean[][][] grid;
 	int x0, y0, height;
@@ -42,13 +42,13 @@ public class MaskShell extends LObjectShell<Mask> {
 	public Color falseColor;
 	public Color trueColor;
 	public Color centerColor;
-	private Combo cmbHeight;
+	private LCombo cmbHeight;
 	
 	/**
 	 * Create the shell.
 	 * @param display
 	 */
-	public MaskShell(Shell parent) {
+	public MaskShell(LShell parent) {
 		super(parent);
 		content.setLayout(new GridLayout(6, false));
 		
@@ -56,13 +56,13 @@ public class MaskShell extends LObjectShell<Mask> {
 		
 		// Minimum Limits
 		
-		spnMinH = new Spinner(content, SWT.BORDER);
-		spnMinH.addSelectionListener(new SelectionAdapter() {
+		spnMinH = new LSpinner(content);
+		spnMinH.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int n = spnMaxH.getSelection() + spnMinH.getSelection() + 1;
+			public void onModify(LControlEvent<Integer> event) {
+				int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
 				if (n < grid.length) {
-					height = Math.max(height, -spnMinH.getSelection());
+					height = Math.max(height, -spnMinH.getValue());
 					shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
 				} else 
 					expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
@@ -70,15 +70,14 @@ public class MaskShell extends LObjectShell<Mask> {
 			}
 		});
 		spnMinH.setMaximum(20);
-		spnMinH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(content, "Min X");
 		
-		spnMinX = new Spinner(content, SWT.BORDER);
-		spnMinX.addSelectionListener(new SelectionAdapter() {
+		spnMinX = new LSpinner(content);
+		spnMinX.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int n = spnMaxX.getSelection() + spnMinX.getSelection() + 1;
+			public void onModify(LControlEvent<Integer> event) {
+				int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
 				if (n < grid[0].length)
 					shrink(n, grid[0][0].length, grid.length, grid[0].length - n, 0, 0);
 				else 
@@ -86,15 +85,14 @@ public class MaskShell extends LObjectShell<Mask> {
 			}
 		});
 		spnMinX.setMaximum(20);
-		spnMinX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(content, "Min Y");
 		
-		spnMinY = new Spinner(content, SWT.BORDER);
-		spnMinY.addSelectionListener(new SelectionAdapter() {
+		spnMinY = new LSpinner(content);
+		spnMinY.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int n = spnMaxY.getSelection() + spnMinY.getSelection() + 1;
+			public void onModify(LControlEvent<Integer> event) {
+				int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
 				if (n < grid[0][0].length)
 					shrink(grid[0].length, n, grid.length, 0, grid[0][0].length - n, 0);
 				else 
@@ -102,19 +100,18 @@ public class MaskShell extends LObjectShell<Mask> {
 			}
 		});
 		spnMinY.setMaximum(20);
-		spnMinY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(content, "Max Height");
 		
 		// Maximum Limits
 		
-		spnMaxH = new Spinner(content, SWT.BORDER);
-		spnMaxH.addSelectionListener(new SelectionAdapter() {
+		spnMaxH = new LSpinner(content);
+		spnMaxH.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int n = spnMaxH.getSelection() + spnMinH.getSelection() + 1;
+			public void onModify(LControlEvent<Integer> event) {
+				int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
 				if (n < grid.length) {
-					height = Math.min(height, spnMaxH.getSelection());
+					height = Math.min(height, spnMaxH.getValue());
 					shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
 				} else 
 					expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);
@@ -122,15 +119,14 @@ public class MaskShell extends LObjectShell<Mask> {
 			}
 		});
 		spnMaxH.setMaximum(20);
-		spnMaxH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(content, "Max X");
 		
-		spnMaxX = new Spinner(content, SWT.BORDER);
-		spnMaxX.addSelectionListener(new SelectionAdapter() {
+		spnMaxX = new LSpinner(content);
+		spnMaxX.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int n = spnMaxX.getSelection() + spnMinX.getSelection() + 1;
+			public void onModify(LControlEvent<Integer> event) {
+				int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
 				if (n < grid[0].length)
 					shrink(n, grid[0][0].length, grid.length, 0, 0, 0);
 				else 
@@ -138,15 +134,14 @@ public class MaskShell extends LObjectShell<Mask> {
 			}
 		});
 		spnMaxX.setMaximum(20);
-		spnMaxX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(content, "Max Y");
 		
-		spnMaxY = new Spinner(content, SWT.BORDER);
-		spnMaxY.addSelectionListener(new SelectionAdapter() {
+		spnMaxY = new LSpinner(content);
+		spnMaxY.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				int n = spnMaxY.getSelection() + spnMinY.getSelection() + 1;
+			public void onModify(LControlEvent<Integer> event) {
+				int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
 				if (n < grid[0][0].length)
 					shrink(grid[0].length, n, grid.length, 0, 0, 0);
 				else 
@@ -154,24 +149,20 @@ public class MaskShell extends LObjectShell<Mask> {
 			}
 		});
 		spnMaxY.setMaximum(20);
-		spnMaxY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(content, Vocab.instance.HEIGHT);
 		
-		cmbHeight = new Combo(content, SWT.READ_ONLY);
-		cmbHeight.addSelectionListener(new SelectionAdapter() {
+		cmbHeight = new LCombo(content, true);
+		cmbHeight.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				height = cmbHeight.getSelectionIndex() - spnMinH.getSelection();
+			public void onModify(LControlEvent<Integer> event) {
+				height = cmbHeight.getValue() - spnMinH.getValue();
 				canvas.redraw();
 			}
 		});
-		GridData gd_cmbHeight = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_cmbHeight.widthHint = 0;
-		cmbHeight.setLayoutData(gd_cmbHeight);
-		new LLabel(content, 4);
+		new LLabel(content, 4, 1);
 		
-		canvas = new Composite(content, SWT.NONE);
+		canvas = new LPanel(content, true);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 6, 1));
 		
 		canvas.addPaintListener(new PaintListener() {
@@ -192,7 +183,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				int h = (height + spnMinH.getSelection());
+				int h = (height + spnMinH.getValue());
 				int px = e.x - (x0 + canvas.getSize().x / 2);
 				int py = e.y - (y0 + canvas.getSize().y / 2);
 				int pd = h * FieldHelper.config.grid.pixelsPerHeight;
@@ -210,7 +201,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		FieldPainter painter = new FieldPainter();
 		int x0 = this.x0 + canvas.getSize().x / 2;
 		int y0 = this.y0 + canvas.getSize().y / 2;
-		int currentH = spnMinH.getSelection() + height;
+		int currentH = spnMinH.getValue() + height;
 		for (int h = 0; h < grid.length; h++) {
 			gc.setAlpha(h == currentH ? 255 : 127);
 			for (int x = 0; x < grid[h].length; x++) {
@@ -222,9 +213,9 @@ public class MaskShell extends LObjectShell<Mask> {
 				}
 			}
 		}
-		int h = spnMinH.getSelection();
-		int x = spnMinX.getSelection();
-		int y = spnMinY.getSelection();
+		int h = spnMinH.getValue();
+		int x = spnMinX.getValue();
+		int y = spnMinY.getValue();
 		Point p = FieldHelper.math.tile2Pixel(x, y, h);
 		gc.setForeground(centerColor);
 		painter.scale = 0.8f;
@@ -260,9 +251,9 @@ public class MaskShell extends LObjectShell<Mask> {
 	private void updateLayerCombo() {
 		String[] items = new String[grid.length];
 		for (int i = 0; i < grid.length; i++)
-			items[i] = "" + (i - spnMinH.getSelection());
+			items[i] = "" + (i - spnMinH.getValue());
 		cmbHeight.setItems(items);
-		cmbHeight.select(height + spnMinH.getSelection());
+		cmbHeight.setValue(height + spnMinH.getValue());
 		canvas.redraw();
 	}
 
@@ -273,12 +264,12 @@ public class MaskShell extends LObjectShell<Mask> {
 			for (int j = 0; j < grid[i].length; j++)
 				grid[i][j] = initial.grid[i][j].clone();
 		}
-		spnMinH.setSelection(initial.centerH - 1);
-		spnMinX.setSelection(initial.centerX - 1);
-		spnMinY.setSelection(initial.centerY - 1);
-		spnMaxH.setSelection(grid.length - initial.centerH);
-		spnMaxX.setSelection(grid[0].length - initial.centerX);
-		spnMaxY.setSelection(grid[0][0].length - initial.centerY);
+		spnMinH.setValue(initial.centerH - 1);
+		spnMinX.setValue(initial.centerX - 1);
+		spnMinY.setValue(initial.centerY - 1);
+		spnMaxH.setValue(grid.length - initial.centerH);
+		spnMaxX.setValue(grid[0].length - initial.centerX);
+		spnMaxY.setValue(grid[0][0].length - initial.centerY);
 		Point p = FieldHelper.math.pixelSize(grid[0].length, grid[0][0].length);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(grid[0][0].length) - p.y / 2;
@@ -290,9 +281,9 @@ public class MaskShell extends LObjectShell<Mask> {
 	protected Mask createResult(Mask initial) {
 		Mask m = new Mask();
 		m.grid = grid;
-		m.centerH = spnMinH.getSelection() + 1;
-		m.centerX = spnMinX.getSelection() + 1;
-		m.centerY = spnMinY.getSelection() + 1;
+		m.centerH = spnMinH.getValue() + 1;
+		m.centerX = spnMinX.getValue() + 1;
+		m.centerY = spnMinY.getValue() + 1;
 		return m;
 	}
 }

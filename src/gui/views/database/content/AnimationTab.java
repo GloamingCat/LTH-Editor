@@ -8,7 +8,11 @@ import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.QuadButton;
 import gui.widgets.SimpleEditableList;
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
@@ -20,11 +24,6 @@ import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.FillLayout;
 
 import project.Project;
 import data.Animation;
@@ -34,146 +33,111 @@ public class AnimationTab extends DatabaseTab<Animation> {
 
 	private LSpinner spnCols;
 	private LSpinner spnRows;
-	
+
 	/**
-	 * Create the composite.
-	 * @param parent
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
-	public AnimationTab(Composite parent) {
+	public AnimationTab(LContainer parent) {
 		super(parent);
-		
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gridData.widthHint = 240;
-		grpGeneral.setLayoutData(gridData);
 		
 		// Script
 		
 		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		
-		Composite script = new Composite(grpGeneral,  SWT.NONE);
+		LPanel script = new LPanel(grpGeneral, 2, false);
 		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridLayout gl_script = new GridLayout(2, false);
-		gl_script.marginWidth = 0;
-		gl_script.marginHeight = 0;
-		script.setLayout(gl_script);
 		
 		LText txtScript = new LText(script, true);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		LuaButton btnScript = new LuaButton(script, 1);
-		btnScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		LuaButton btnScript = new LuaButton(script, true);
 		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "script");
 
 		// Size
 		
-		Composite size = new Composite(grpGeneral, SWT.NONE);
-		size.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-		GridLayout gl_size = new GridLayout(4, false);
-		gl_size.marginWidth = 0;
-		gl_size.marginHeight = 0;
-		size.setLayout(gl_size);
+		new LLabel(grpGeneral, Vocab.instance.SIZE);
+		
+		LPanel size = new LPanel(grpGeneral, 4, false);
+		size.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		new LLabel(size, Vocab.instance.COLUMNS);
 		
-		spnCols = new LSpinner(size, SWT.NONE);
-		spnCols.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnCols = new LSpinner(size);
 		addControl(spnCols, "cols");
 		
 		new LLabel(size, Vocab.instance.ROWS);
 		
-		spnRows = new LSpinner(size, SWT.NONE);
-		spnRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnRows = new LSpinner(size);
 		addControl(spnRows, "rows");
 		
 		// Transform
 		
-		Group grpTransform = new Group(right, SWT.NONE);
-		grpTransform.setText(Vocab.instance.TRANSFORM);
-		grpTransform.setLayout(new FillLayout());
+		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
 		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		TransformEditor transformEditor = new TransformEditor(grpTransform, SWT.NONE);
+		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		addChild(transformEditor, "transform");
 		
 		// Audio
 		
-		Group grpAudio = new Group(right, SWT.NONE);
-		grpAudio.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
 		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpAudio.setText(Vocab.instance.SOUND);
-		
-		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio, SWT.NONE);
+		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
 		lstAudio.type = Audio.class;
 		lstAudio.setIncludeID(false);
 		lstAudio.setShellFactory(new LShellFactory<Audio>() {
 			@Override
-			public LObjectShell<Audio> createShell(Shell parent) {
-				return new AudioShell(parent, 0);
+			public LObjectShell<Audio> createShell(LShell parent) {
+				return new AudioShell(parent, false);
 			}
 		});
 		addChild(lstAudio, "audio");
 		
 		// Intro
 		
-		Group grpIntro = new Group(left, SWT.NONE);
+		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO, 3, false);
 		grpIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		grpIntro.setLayout(new GridLayout(3, false));
-		grpIntro.setText(Vocab.instance.INTRO);
 		
 		new LLabel(grpIntro, Vocab.instance.PATTERN);
 		
 		LText txtIntroPattern = new LText(grpIntro);
-		txtIntroPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroPattern, "introPattern");
-		
 		LActionButton btnIntroPattern = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
 		
 		new LLabel(grpIntro, Vocab.instance.DURATION);
 
 		LText txtIntroDuration = new LText(grpIntro);
-		txtIntroDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtIntroDuration, "introDuration");
-		
 		LActionButton btnIntroDuration = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
 		
 		// Loop
 		
-		Group grpLoop = new Group(left, SWT.NONE);
+		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP, 3, false);
 		grpLoop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		grpLoop.setLayout(new GridLayout(3, false));
-		grpLoop.setText(Vocab.instance.LOOP);
 		
 		new LLabel(grpLoop, Vocab.instance.PATTERN);
 		
 		LText txtLoopPattern = new LText(grpLoop);
-		txtLoopPattern.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtLoopPattern, "loopPattern");
-		
 		LActionButton btnLoopPattern = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
 		new LLabel(grpLoop, Vocab.instance.DURATION);
 
 		LText txtLoopDuration = new LText(grpLoop);
-		txtLoopDuration.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtLoopDuration, "loopDuration");
-		
 		LActionButton btnLoopDuration = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
 		// Graphics
 		
-		Group grpImg = new Group(left, SWT.NONE);
+		LFrame grpImg = new LFrame(left, Vocab.instance.GRAPHICS, 1);
 		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpImg.setLayout(new GridLayout(1, false));
-		grpImg.setText(Vocab.instance.GRAPHICS);
 		
 		LImage image = new LImage(grpImg, SWT.NONE);
 		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_image.widthHint = 150;
 		image.setLayoutData(gd_image);
 		
-		QuadButton btnImage = new QuadButton(grpImg, 1);
-		btnImage.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		QuadButton btnImage = new QuadButton(grpImg, true);
 		addControl(btnImage, "quad");
 		
 		transformEditor.setImage(image);

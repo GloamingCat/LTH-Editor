@@ -12,8 +12,11 @@ import gui.widgets.IDButton;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
-import lwt.dataestructure.LDataTree;
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
@@ -23,13 +26,7 @@ import lwt.widget.LText;
 import lwt.widget.LTextBox;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Battler;
@@ -37,18 +34,23 @@ import data.subcontent.Rule;
 
 public class BattlerTab extends DatabaseTab<Battler> {
 	
-	public BattlerTab(Composite parent) {
+	private IDList lstSkills;
+	private IDList lstStatus;
+	private PropertyList lstElements;
+	private IDButton btnJob;
+	
+	/**
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
+	 */
+	public BattlerTab(LContainer parent) {
 		super(parent);
 
 		// Icon
 		
 		new LLabel(grpGeneral, Vocab.instance.ICON);
 		
-		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeIcon = new GridLayout(2, false);
-		gl_compositeIcon.marginWidth = 0;
-		gl_compositeIcon.marginHeight = 0;
-		compositeIcon.setLayout(gl_compositeIcon);
+		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
@@ -59,13 +61,13 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		imgIcon.setVerticalAlign(SWT.CENTER);
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		IconButton btnGraphics = new IconButton(compositeIcon, 0);
+		IconButton btnGraphics = new IconButton(compositeIcon, false);
 		btnGraphics.setImageWidget(imgIcon);
 		addControl(btnGraphics, "icon");
 		
 		// Description
 		
-		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.DESCRIPTION);
 		
 		LTextBox txtDescription = new LTextBox(grpGeneral);
 		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -76,17 +78,16 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Properties
 		
-		new LLabel(grpGeneral, 1);
+		new LLabel(grpGeneral, 1, 1);
 		
-		Composite check = new Composite(grpGeneral, SWT.NONE);
+		LPanel check = new LPanel(grpGeneral, 2, true);
 		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		check.setLayout(new RowLayout());
 		
-		LCheckBox btnPersistent = new LCheckBox(check, SWT.NONE);
+		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
-		LCheckBox btnRecruit = new LCheckBox(check, SWT.NONE);
+		LCheckBox btnRecruit = new LCheckBox(check);
 		btnRecruit.setText(Vocab.instance.RECRUIT);
 		addControl(btnRecruit, "persistent");
 		
@@ -94,22 +95,16 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
-		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeReward = new GridLayout(3, false);
-		gl_compositeReward.marginWidth = 0;
-		gl_compositeReward.marginHeight = 0;
-		compositeReward.setLayout(gl_compositeReward);
+		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
 		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		LSpinner spnMoney = new LSpinner(compositeReward, SWT.NONE);
+		LSpinner spnMoney = new LSpinner(compositeReward);
 		spnMoney.setMaximum(99999999);
-		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMoney, "money");
 		
 		new LLabel(compositeReward, Vocab.instance.EXP);
 		
-		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
-		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		LSpinner spnEXP = new LSpinner(compositeReward);
 		spnEXP.setMaximum(99999999);
 		addControl(spnEXP, "exp");
 		
@@ -117,141 +112,102 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		new LLabel(grpGeneral, Vocab.instance.JOB);
 		
-		Composite job = new Composite(grpGeneral, SWT.NONE);
+		LPanel job = new LPanel(grpGeneral, 4, false);
 		job.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_job = new GridLayout(4, false);
-		gl_job.marginHeight = 0;
-		gl_job.marginWidth = 0;
-		job.setLayout(gl_job);
 		
 		LText txtJob = new LText(job, true);
-		txtJob.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnJob = new IDButton(job, 0) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.jobs.getTree();
-			}
-		};
+		btnJob = new IDButton(job, false);
 		btnJob.setNameWidget(txtJob);
 		addControl(btnJob, "jobID");
 		
 		new LLabel(job, Vocab.instance.LEVEL);
 
-		LSpinner spnLevel = new LSpinner(job, SWT.NONE);
-		spnLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		LSpinner spnLevel = new LSpinner(job);
 		addControl(spnLevel, "level");
 		
 		// Attributes
 		
-		Composite middle = new Composite(left, SWT.NONE);
-		GridLayout gl_middle = new GridLayout(2, false);
-		gl_middle.marginHeight = 0;
-		gl_middle.marginWidth = 0;
-		middle.setLayout(gl_middle);
+		LPanel middle = new LPanel(left, 2, false);
 		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Group grpAtt = new Group(middle, SWT.NONE);
-		grpAtt.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3);
-		gd_grpAtt.heightHint = 200;
-		gd_grpAtt.widthHint = 240;
-		
+		LFrame grpAtt = new LFrame(middle, Vocab.instance.ATTRIBUTES, true, true);
+		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_grpAtt.widthHint = 220;
 		grpAtt.setLayoutData(gd_grpAtt);
-		grpAtt.setText(Vocab.instance.ATTRIBUTES);
 
-		AttributeEditor attEditor = new AttributeEditor(grpAtt, SWT.NONE);
-		attEditor.setColumns(4);
+		AttributeEditor attEditor = new AttributeEditor(grpAtt, 2);
 		addChild(attEditor, "attributes");
 
 		// Elements
 		
-		Group grpElements = new Group(middle, SWT.NONE);
-		grpElements.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LFrame grpElements = new LFrame(middle, Vocab.instance.ELEMENTS, true, true);
 		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpElements.setText(Vocab.instance.ELEMENTS);
-		
-		PropertyList lstElements = new PropertyList(grpElements, SWT.NONE) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.elements.getList().toTree();
-			}
-		};
+		lstElements = new PropertyList(grpElements);
 		addChild(lstElements, "elements");
 		
-		Composite bottom = new Composite(left, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(2, true);
-		gl_bottom.marginHeight = 0;
-		gl_bottom.marginWidth = 0;
-		bottom.setLayout(gl_bottom);
+		LPanel bottom = new LPanel(left, 2, true);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		// Skills
 		
-		Group grpSkills = new Group(bottom, SWT.NONE);
+		LFrame grpSkills = new LFrame(bottom,
+				Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")", true, true);
 		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpSkills.setText(Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")");
-		grpSkills.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		IDList lstSkills = new IDList(grpSkills, SWT.NONE) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
+		lstSkills = new IDList(grpSkills);
 		addChild(lstSkills, "skills");
 		
 		// Status
 		
-		Group grpStatus = new Group(bottom, SWT.NONE);
+		LFrame grpStatus = new LFrame(bottom, 
+				Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")", true, true);
 		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpStatus.setText(Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")");
-		grpStatus.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		IDList lstStatus = new IDList(grpStatus, SWT.NONE) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
+		lstStatus = new IDList(grpStatus);
 		addChild(lstStatus, "status");
 		
 		// Equip
 		
-		Group grpEquip = new Group(right, SWT.NONE);
+		LFrame grpEquip = new LFrame(right, 
+				Vocab.instance.EQUIP + " (" + Vocab.instance.INITIAL + ")", true, true);
 		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpEquip.setText(Vocab.instance.EQUIP + " (" + Vocab.instance.INITIAL + ")");
-		grpEquip.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		EquipList lstEquip = new EquipList(grpEquip, SWT.NONE);
+		EquipList lstEquip = new EquipList(grpEquip);
 		addChild(lstEquip, "equip");
 		
 		// Drop
 		
-		Group grpDrop = new Group(right, SWT.NONE);
-		grpDrop.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LFrame grpDrop = new LFrame(right, Vocab.instance.DROP, true, true);
 		grpDrop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpDrop.setText(Vocab.instance.DROP);
 		
-		DropList lstDrop = new DropList(grpDrop, SWT.NONE);
+		DropList lstDrop = new DropList(grpDrop);
 		addChild(lstDrop, "items");
 		
 		// AI
 
-		Group grpAI = new Group(right, SWT.NONE);
-		grpAI.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpAI.setText(Vocab.instance.AI);
+		LFrame grpAI = new LFrame(right, Vocab.instance.AI, true, true);
 		grpAI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI, SWT.NONE);
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
 		lstRules.setShellFactory(new LShellFactory<Rule>() {
 			@Override
-			public LObjectShell<Rule> createShell(Shell parent) {
+			public LObjectShell<Rule> createShell(LShell parent) {
 				return new RuleShell(parent);
 			}
 		});
-		addChild(lstRules, "ai");	
+		addChild(lstRules, "ai");
 		
+	}
+	
+	@Override
+	public void onVisible() {
+		lstSkills.dataTree = Project.current.skills.getTree();
+		lstStatus.dataTree = Project.current.status.getTree();
+		lstElements.dataTree = Project.current.elements.getList().toTree();
+		btnJob.dataTree = Project.current.jobs.getTree();
+		super.onVisible();
 	}
 
 	@Override

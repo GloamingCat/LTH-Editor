@@ -7,31 +7,30 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.container.LFrame;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
+import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Rule;
 import project.Project;
 
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 public class RuleShell extends ObjectShell<Rule> {
 	
 	private FileSelector selFile;
 	
-	public RuleShell(Shell parent) {
+	public RuleShell(LShell parent) {
 		super(parent);
 		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
-		SashForm form = new SashForm(contentEditor, SWT.NONE);
-		selFile = new FileSelector(form, 0) {
+		LSashPanel form = new LSashPanel(contentEditor, true);
+		selFile = new FileSelector(form, false) {
 			@Override
 			protected boolean isValidFile(File f) {
 				return f.getName().endsWith(".lua");
@@ -39,24 +38,16 @@ public class RuleShell extends ObjectShell<Rule> {
 		};
 		selFile.setFolder(Project.current.scriptPath());
 		
-		Composite composite = new Composite(form, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(2, false);
-		gl_composite.marginHeight = 0;
-		gl_composite.marginWidth = 0;
-		composite.setLayout(gl_composite);
+		LPanel composite = new LPanel(form, 2, false);
 		
-		Group grpParameters = new Group(composite, SWT.NONE);
+		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
 		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		grpParameters.setText(Vocab.instance.PARAM);
-		grpParameters.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		TagList lstParam = new TagList(grpParameters, SWT.NONE);
+		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
 		new LLabel(composite, Vocab.instance.CONDITION);
 		
 		LText txtCondition = new LText(composite);
-		txtCondition.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(txtCondition, "condition");
 		
 		form.setWeights(new int[] {1, 1});

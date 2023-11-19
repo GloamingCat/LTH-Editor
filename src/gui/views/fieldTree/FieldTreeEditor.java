@@ -6,12 +6,6 @@ import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import gui.shell.field.FieldPrefShell;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import project.Project;
 
 import com.google.gson.Gson;
@@ -20,12 +14,15 @@ import data.field.Field;
 import data.field.Field.Prefs;
 import data.field.FieldNode;
 import lwt.action.LActionStack;
+import lwt.container.LContainer;
+import lwt.container.LSashPanel;
+import lwt.container.LView;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LTreeEditor;
-import lwt.editor.LView;
 import lwt.event.LEditEvent;
 import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
@@ -35,56 +32,70 @@ import lwt.widget.LTree;
 
 public class FieldTreeEditor extends LView {
 
+	protected static class FieldTree extends LTreeEditor<FieldNode, Prefs> {
+		
+		private FieldTree(LContainer parent) {
+			super(parent);
+		}
+
+		@Override
+		public LDataTree<FieldNode> getDataCollection() {
+			return Project.current.fieldTree.getData();
+		}
+
+		@Override
+		public FieldNode createNewData() {
+			return Project.current.fieldTree.newNode();
+		}
+
+		@Override
+		public FieldNode duplicateData(FieldNode original) {
+			return Project.current.fieldTree.duplicateNode(original);
+		}
+
+		@Override
+		protected Prefs getEditableData(LPath path) {
+			return Project.current.fieldTree.loadField(path).prefs;
+		}
+
+		@Override
+		protected void setEditableData(LPath path, Prefs newData) {
+			Project.current.fieldTree.loadField(path).prefs = newData;
+		}
+
+		@Override
+		public void forceFirstSelection() {
+			if (getDataCollection() != null) {
+				LDataTree<FieldNode> tree = getDataCollection().toTree();
+				getCollectionWidget().setItems(tree);
+				int lastField = Project.current.fieldTree.getData().lastField;
+				LDataTree<FieldNode> lastNode = Project.current.fieldTree.getData().findNode(lastField);
+				getCollectionWidget().forceSelection(lastNode == null ? null : lastNode.toPath());
+			} else {
+				getCollectionWidget().setItems(null);
+				getCollectionWidget().forceSelection(null);
+			}
+		}
+	}
+
 	public static FieldTreeEditor instance;
 	protected static Gson gson = new Gson();
 	
 	public LTree<FieldNode, Field.Prefs> fieldTree;
-	
-	public FieldTreeEditor(Composite parent) {
-		super(parent);
-		instance = this;
-		
-		setLayout(new FillLayout());
+
+	/**
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
+	 */
+	public FieldTreeEditor(LContainer parent) {
+		super(parent, true, true);
+		FieldTreeEditor.instance = this;
 		
 		actionStack = new LActionStack(this);
 		
-		SashForm sashForm = new SashForm(this, SWT.NONE);
+		LSashPanel sashForm = new LSashPanel(this, true);
 		
-		LTreeEditor<FieldNode, Field.Prefs> treeEditor = new LTreeEditor<FieldNode, Field.Prefs>(sashForm, SWT.NONE) {
-			@Override
-			public LDataTree<FieldNode> getDataCollection() {
-				return Project.current.fieldTree.getData();
-			}
-			@Override
-			public FieldNode createNewData() {
-				return Project.current.fieldTree.newNode();
-			}
-			@Override
-			public FieldNode duplicateData(FieldNode original) {
-				return Project.current.fieldTree.duplicateNode(original);
-			}
-			@Override
-			protected Prefs getEditableData(LPath path) {
-				return Project.current.fieldTree.loadField(path).prefs;
-			}
-			@Override
-			protected void setEditableData(LPath path, Prefs newData) {
-				Project.current.fieldTree.loadField(path).prefs = newData;
-			}
-			@Override
-			public void forceFirstSelection() {
-				if (getDataCollection() != null) {
-					LDataTree<FieldNode> tree = getDataCollection().toTree();
-					getCollectionWidget().setItems(tree);
-					int lastField = Project.current.fieldTree.getData().lastField;
-					LDataTree<FieldNode> lastNode = Project.current.fieldTree.getData().findNode(lastField);
-					getCollectionWidget().forceSelection(lastNode == null ? null : lastNode.toPath());
-				} else {
-					getCollectionWidget().setItems(null);
-					getCollectionWidget().forceSelection(null);
-				}
-			}
-		};
+		LTreeEditor<FieldNode, Field.Prefs> treeEditor = new FieldTree(sashForm);
 		treeEditor.getCollectionWidget().setInsertNewEnabled(true);
 		treeEditor.getCollectionWidget().setEditEnabled(true);
 		treeEditor.getCollectionWidget().setDuplicateEnabled(true);
@@ -94,7 +105,7 @@ public class FieldTreeEditor extends LView {
 		treeEditor.getCollectionWidget().setPasteEnabled(true);
 		treeEditor.setShellFactory(new LShellFactory<Prefs>() {
 			@Override
-			public LObjectShell<Prefs> createShell(Shell parent) {
+			public LObjectShell<Prefs> createShell(LShell parent) {
 				FieldNode n = treeEditor.getCollectionWidget().getSelectedObject();
 				FieldPrefShell shell = new FieldPrefShell(parent);
 				int id = Project.current.fieldTree.getData().findNode(n).id;
@@ -105,10 +116,10 @@ public class FieldTreeEditor extends LView {
 		addChild(treeEditor);
 		fieldTree = treeEditor.getCollectionWidget();
 
-		FieldEditor fieldEditor = new FieldEditor(sashForm, SWT.NONE);		
+		FieldEditor fieldEditor = new FieldEditor(sashForm);		
 		treeEditor.addChild(fieldEditor);
 		
-		FieldSideEditor sideEditor = new FieldSideEditor(sashForm, SWT.NONE);
+		FieldSideEditor sideEditor = new FieldSideEditor(sashForm);
 		fieldEditor.addChild(sideEditor);
 		
 		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
@@ -141,7 +152,7 @@ public class FieldTreeEditor extends LView {
 			}
 		});
 		
-		sashForm.setWeights(new int[] {9, 29, 12});
+		sashForm.setWeights(new int[] {1, 3, 1});
 	}
 	
 	public void onVisible() {

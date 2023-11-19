@@ -3,22 +3,21 @@ package gui.views.system;
 import gui.shell.system.RegionShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.widgets.Composite;
-
 import data.config.Region;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public class RegionList extends SimpleEditableList<Region> {
 
-	public RegionList(Composite parent, int style) {
-		super(parent, style);
+	public RegionList(LContainer parent) {
+		super(parent);
 		type = Region.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<Region>() {
 			@Override
-			public LObjectShell<Region> createShell(
-					org.eclipse.swt.widgets.Shell parent) {
+			public LObjectShell<Region> createShell(LShell parent) {
 				return new RegionShell(parent);
 			}
 		});

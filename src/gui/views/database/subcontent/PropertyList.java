@@ -3,27 +3,27 @@ package gui.views.database.subcontent;
 import gui.shell.PropertyShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import data.subcontent.Property;
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.event.LEditEvent;
 import lwt.widget.LList;
 
-public abstract class PropertyList extends SimpleEditableList<Property> {
+public class PropertyList extends SimpleEditableList<Property> {
 
-	public PropertyList(Composite parent, int style) {
-		super(parent, style);
+	public LDataTree<Object> dataTree = null;
+	
+	public PropertyList(LContainer parent) {
+		super(parent);
 		type = Property.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Property>() {
 			@Override
-			public LObjectShell<Property> createShell(Shell parent) {
+			public LObjectShell<Property> createShell(LShell parent) {
 				return new PropertyShell(parent) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
@@ -35,7 +35,7 @@ public abstract class PropertyList extends SimpleEditableList<Property> {
 	
 	protected LList<Property, Property> createList() {
 		PropertyList self = this;
-		return new LList<Property, Property>(this, SWT.NONE) {
+		return new LList<Property, Property>(this) {
 			@Override
 			public LEditEvent<Property> edit(LPath path) {
 				return onEditItem(path);
@@ -71,6 +71,6 @@ public abstract class PropertyList extends SimpleEditableList<Property> {
 		};
 	}
 	
-	protected abstract LDataTree<Object> getDataTree();
+	protected LDataTree<Object> getDataTree() { return dataTree; }
 
 }

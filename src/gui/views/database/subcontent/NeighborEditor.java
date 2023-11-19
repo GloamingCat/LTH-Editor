@@ -3,13 +3,12 @@ package gui.views.database.subcontent;
 import gui.Vocab;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
 import gson.editor.GDefaultObjectEditor;
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LActionButton;
@@ -20,25 +19,17 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 
 	private LToggleButton[] labels;
 	
-	public NeighborEditor(Composite parent, int style) {
-		super(parent, style);
-		
-		setLayout(new FillLayout());
-		
-		Group group = new Group(this, SWT.NONE);
-		group.setText(Vocab.instance.NEIGHBORS);
-		group.setLayout(new GridLayout(2, false));
+	public NeighborEditor(LContainer parent) {
+		super(parent, true, false);
+		LFrame group = new LFrame(this, Vocab.instance.NEIGHBORS, 2, true);
 		
 		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
-		btnNone.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnNone.addModifyListener(allAction(false));
 		
 		LActionButton btnAll = new LActionButton(group, Vocab.instance.ALL);
-		btnAll.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnAll.addModifyListener(allAction(true));
 		
-		Composite composite = new Composite(group, SWT.NONE);
-		composite.setLayout(new GridLayout(3, true));
+		LPanel composite = new LPanel(group, 3, true);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		LToggleButton arrow135 = new LToggleButton(composite, "/img/arrow_135.png", "/img/falsearrow_135.png");
@@ -49,7 +40,7 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		
 		LToggleButton arrow180 = new LToggleButton(composite, "/img/arrow_180.png", "/img/falsearrow_180.png");
 		
-		new LLabel(composite, 1);
+		new LLabel(composite, 1, 1);
 		
 		LToggleButton arrow0 = new LToggleButton(composite, "/img/arrow_0.png", "/img/falsearrow_0.png");
 		

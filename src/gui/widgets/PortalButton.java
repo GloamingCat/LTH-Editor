@@ -1,14 +1,12 @@
 package gui.widgets;
 
 import gui.shell.field.PortalShell;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import data.field.Transition.Portal;
 
@@ -21,17 +19,17 @@ public class PortalButton extends LObjectButton<Portal> {
 	 * @param parent
 	 * @param style
 	 */
-	public PortalButton(Composite parent, int fieldID) {
-		super(parent, SWT.NONE);
+	public PortalButton(LContainer parent, int fieldID) {
+		super(parent);
 		setShellFactory(new LShellFactory<Portal>() {
 			@Override
-			public LObjectShell<Portal> createShell(Shell parent) {
+			public LObjectShell<Portal> createShell(LShell parent) {
 				return new PortalShell(parent, fieldID);
 			}
 		});
 	}
 	
-	public PortalButton(Composite parent) {
+	public PortalButton(LContainer parent) {
 		this(parent, -1);
 	}
 	

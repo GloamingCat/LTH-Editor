@@ -2,25 +2,26 @@ package gui.shell;
 
 import gui.Vocab;
 import gui.views.fieldTree.*;
+import gui.widgets.DirectionCombo;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
+import lwt.container.LScrollPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
+import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
+import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
+import lwt.widget.LSpinner;
 import lwt.widget.LTree;
 import data.field.Field;
 import data.field.FieldNode;
@@ -32,15 +33,15 @@ public class PositionShell extends LObjectShell<Position> {
 	private LTree<FieldNode, Field> tree;
 	private FieldCanvas canvas;
 	private LCombo cmbDirection;
-	private Spinner spnX;
-	private Spinner spnY;
-	private Spinner spnH;
-	private ScrolledComposite scrolledComposite;
+	private LSpinner spnX;
+	private LSpinner spnY;
+	private LSpinner spnH;
+	private LScrollPanel scrolledComposite;
 	private LLabel lblPos;
 	
 	private LPath path = null;
 
-	public PositionShell(Shell parent) {
+	public PositionShell(LShell parent) {
 		super(parent);
 		setMinimumSize(640, 480);
 		GridData gridData = (GridData) content.getLayoutData();
@@ -48,10 +49,10 @@ public class PositionShell extends LObjectShell<Position> {
 		gridData.grabExcessVerticalSpace = true;
 		content.setLayout(new GridLayout(1, false));
 
-		SashForm sashForm = new SashForm(content, SWT.NONE);
+		LSashPanel sashForm = new LSashPanel(content, true);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		tree = new LTree<FieldNode, Field>(sashForm, SWT.NONE) {
+		tree = new LTree<FieldNode, Field>(sashForm) {
 			@Override
 			protected LDataTree<FieldNode> emptyNode() {
 				return null;
@@ -78,12 +79,12 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		});
 		
-		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new LScrollPanel(sashForm, true);
 
-		canvas = new FieldCanvasOpenGL(scrolledComposite, SWT.NONE) {
+		canvas = new FieldCanvasOpenGL(scrolledComposite) {
 			public void onTileLeftDown() {
-				spnX.setSelection(tileX + 1);
-				spnY.setSelection(tileY + 1);
+				spnX.setValue(tileX + 1);
+				spnY.setValue(tileY + 1);
 				updateClickPoint();
 				canvas.redraw();
 			}
@@ -95,58 +96,43 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		scrolledComposite.setContent(canvas);
 
-		Composite bottom = new Composite(content, SWT.NONE);
-		GridLayout gl_bottom = new GridLayout(4, false);
-		gl_bottom.marginWidth = 0;
-		gl_bottom.marginHeight = 0;
-		bottom.setLayout(gl_bottom);
+		LPanel bottom = new LPanel(content, 4, false);
 		bottom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Composite coordinates = new Composite(bottom, SWT.NONE);
+		LPanel coordinates = new LPanel(bottom, 6, false);
 		coordinates.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_coordinates = new GridLayout(6, false);
-		gl_coordinates.marginHeight = 0;
-		gl_coordinates.marginWidth = 0;
-		coordinates.setLayout(gl_coordinates);
 		
-		ModifyListener redraw = new ModifyListener() {
+		LControlListener<Integer> redraw = new LControlListener<Integer>() {
 			@Override
-			public void modifyText(ModifyEvent arg0) {
+			public void onModify(LControlEvent<Integer> event) {
 				updateClickPoint();
 				canvas.redraw();
 			}
 		};
 		
-		new LLabel(coordinates, "X").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		new LLabel(coordinates, "X");
 		
-		spnX = new Spinner(coordinates, SWT.BORDER);
+		spnX = new LSpinner(coordinates);
 		spnX.setMinimum(1);
-		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnX.setValue(1);
 		spnX.addModifyListener(redraw);
 		
-		new LLabel(coordinates, "Y").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		new LLabel(coordinates, "Y");
 		
-		spnY = new Spinner(coordinates, SWT.BORDER);
+		spnY = new LSpinner(coordinates);
 		spnY.setMinimum(1);
-		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnY.setValue(1);
 		spnY.addModifyListener(redraw);
 		
-		new LLabel(coordinates, "H").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		new LLabel(coordinates, "H");
 		
-		spnH = new Spinner(coordinates, SWT.BORDER);
+		spnH = new LSpinner(coordinates);
 		spnH.setMinimum(1);
-		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spnH.setValue(1);
 		spnH.addModifyListener(redraw);
 		
-		new LLabel(bottom, Vocab.instance.DIRECTION).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		
-		cmbDirection = new LCombo(bottom, SWT.READ_ONLY);
-		cmbDirection.setOptional(true);
-		cmbDirection.setIncludeID(false);
-		String[] d = new String[] {"0°", "45°", "90°", "135°", 
-				"180°", "225°", "270°", "315°"};
-		cmbDirection.setItems(d);
-		cmbDirection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new LLabel(bottom, LLabel.RIGHT, Vocab.instance.DIRECTION);
+		cmbDirection = new DirectionCombo(bottom);
 		
 		lblPos = new LLabel(bottom, "(-99, -99)");
 		
@@ -169,9 +155,9 @@ public class PositionShell extends LObjectShell<Position> {
 	}
 	
 	private void updateClickPoint() {
-		int x = spnX.getSelection() - 1;
-		int y = spnY.getSelection() - 1;
-		int h = spnH.getSelection() - 1;
+		int x = spnX.getValue() - 1;
+		int y = spnY.getValue() - 1;
+		int h = spnH.getValue() - 1;
 		canvas.setClickedTile(x, y, h);
 	}
 	
@@ -183,9 +169,9 @@ public class PositionShell extends LObjectShell<Position> {
 		} else {
 			tree.forceSelection(path);
 		}
-		spnX.setSelection(initial.x);
-		spnY.setSelection(initial.y);
-		spnH.setSelection(initial.h);
+		spnX.setValue(initial.x);
+		spnY.setValue(initial.y);
+		spnH.setValue(initial.h);
 		if (initial.direction == -1) {
 			cmbDirection.setValue(-1);
 		} else {
@@ -203,13 +189,9 @@ public class PositionShell extends LObjectShell<Position> {
 	@Override
 	protected Position createResult(Position initial) {
 		Position pos = new Position();
-		pos.x = spnX.getSelection();
-		pos.y = spnY.getSelection();
-		pos.h = spnH.getSelection();
-		pos.direction = cmbDirection.getSelectionIndex();
-		if (pos.direction >= 0) {
-			pos.direction *= 45;
-		}
+		pos.x = spnX.getValue();
+		pos.y = spnY.getValue();
+		pos.h = spnH.getValue();
 		pos.fieldID = canvas.field.id;
 		return pos;
 	}

@@ -37,16 +37,29 @@ import rendering.VertexArray;
 
 public class SceneHelper {
 	
-	public static final Context context = new Context(1, 1) {public void render() {	}};
+	public static final Context context = new Context(1, 1);
 	private static HashMap<String, Texture> loadedTextures = new HashMap<String, Texture>();
 	private static Config conf;
 	private static Texture whiteTexture;
 
-	public static void initContext() {
+	public static boolean initContext() {
 		if (!context.isInitialized()) {
-			context.init();
+			try {
+				context.init();
+			} catch (UnsatisfiedLinkError e) {
+				return false;
+			} catch (ExceptionInInitializerError e) {
+				return false;
+			}
 			whiteTexture = Texture.white(255);
 		}
+		return true;
+	}
+	
+	public static void terminateContext() {
+		if (context.isInitialized())
+			context.dispose();
+		reload();
 	}
 
 	public static void reload() {

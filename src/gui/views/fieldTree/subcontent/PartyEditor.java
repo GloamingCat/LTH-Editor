@@ -7,18 +7,18 @@ import gui.views.fieldTree.FieldSideEditor;
 import gui.widgets.SimpleEditableList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
 
 import data.field.Party;
 import data.field.Party.TroopSpawn;
 import gson.editor.GDefaultObjectEditor;
 
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
@@ -27,8 +27,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.layout.FillLayout;
-
 public class PartyEditor extends GDefaultObjectEditor<Party> {
 
 	/**
@@ -36,15 +34,10 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 	 * @param parent
 	 * @param style
 	 */
-	public PartyEditor(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(2, false));
+	public PartyEditor(LContainer parent) {
+		super(parent, 2, false, false);
 		
-		Composite position = new Composite(this, SWT.NONE);
-		GridLayout gl_position = new GridLayout(4, false);
-		gl_position.marginWidth = 0;
-		gl_position.marginHeight = 0;
-		position.setLayout(gl_position);
+		LPanel position = new LPanel(this, 4, false);
 		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		// Position
@@ -52,17 +45,14 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		new LLabel(position, Vocab.instance.POSITION);
 		
 		LSpinner spnX = new LSpinner(position);
-		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnX.setMinimum(1);
 		addControl(spnX, "x");
 		
 		LSpinner spnY = new LSpinner(position);
-		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnY.setMinimum(1);
 		addControl(spnY, "y");
 		
 		LSpinner spnH = new LSpinner(position);
-		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnH.setMinimum(1);
 		addControl(spnH, "h");
 		
@@ -91,7 +81,6 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		new LLabel(this, Vocab.instance.NAME);
 		
 		LText txtName = new LText(this);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtName, "name");
 		txtName.addModifyListener(new LControlListener<String>() {
 			@Override
@@ -103,7 +92,6 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		new LLabel(this, Vocab.instance.DIRECTION);
 		
 		LCombo cmbDir = new LCombo(this);
-		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		String[] d = new String[] {"0°", "90°", "180°", "270°"};
 		cmbDir.setIncludeID(false);
 		cmbDir.setOptional(false);
@@ -122,24 +110,20 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		new LLabel(this, Vocab.instance.PARTYGEN);
 		
 		LCombo cmbGen = new LCombo(this);
-		cmbGen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		String[] s = new String[] {Vocab.instance.FIELDCHARS, Vocab.instance.TROOPUNITS};
 		cmbGen.setIncludeID(false);
 		cmbGen.setOptional(false);
 		cmbGen.setItems(s);
 		addControl(cmbGen, "memberGen");
 		
-		Group grpTroops = new Group(this, SWT.NONE);
-		grpTroops.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS, true, true);
 		grpTroops.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		grpTroops.setText(Vocab.instance.TROOPS);
-
-		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops, SWT.NONE);
+		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops);
 		lstTroops.type = TroopSpawn.class;
 		lstTroops.setIncludeID(false);
 		lstTroops.setShellFactory(new LShellFactory<TroopSpawn>() {
 			@Override
-			public LObjectShell<TroopSpawn> createShell(Shell parent) {
+			public LObjectShell<TroopSpawn> createShell(LShell parent) {
 				return new TroopSpawnShell(parent);
 			}
 		});

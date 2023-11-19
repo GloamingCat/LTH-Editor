@@ -4,9 +4,11 @@ import gui.shell.field.LayerShell;
 import gui.views.fieldTree.FieldEditor;
 import gui.views.fieldTree.FieldSideEditor;
 import gui.views.fieldTree.FieldTreeEditor;
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.editor.LListEditor;
 import lwt.event.LEditEvent;
@@ -17,8 +19,6 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.field.Field;
@@ -31,16 +31,16 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	private int type;
 	
 	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
+	 * @wbp.eval.method.parameter type 0
 	 */
-	public LayerList(Composite parent, int type) {
-		super(parent, SWT.CHECK);
+	public LayerList(LContainer parent, int type) {
+		super(parent, true);
 		this.type = type;
 		setShellFactory(new LShellFactory<Info>() {
 			@Override
-			public LObjectShell<Info> createShell(Shell parent) {
+			public LObjectShell<Info> createShell(LShell parent) {
 				return new LayerShell(parent);
 			}
 		});
@@ -85,7 +85,8 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		};
 		getCollectionWidget().addInsertListener(listener);
 		getCollectionWidget().addMoveListener(listener);
-		setActionStack(FieldTreeEditor.instance.getActionStack());
+		if (FieldTreeEditor.instance != null)
+			setActionStack(FieldTreeEditor.instance.getActionStack());
 	}
 	
 	public void setEditor(FieldSideEditor parent) {

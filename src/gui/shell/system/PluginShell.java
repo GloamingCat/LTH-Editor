@@ -7,19 +7,18 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.container.LFrame;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
+import lwt.dialog.LShell;
 import lwt.widget.LCheckBox;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Shell;
 
 import data.config.Plugin;
 import project.Project;
 
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 public class PluginShell extends ObjectShell<Plugin> {
@@ -29,14 +28,14 @@ public class PluginShell extends ObjectShell<Plugin> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public PluginShell(Shell parent) {
-		this(parent, 1);
+	public PluginShell(LShell parent) {
+		this(parent, true);
 	}
 	
-	public PluginShell(Shell parent, int optional) {
+	public PluginShell(LShell parent, boolean optional) {
 		super(parent);
 		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
-		SashForm form = new SashForm(contentEditor, SWT.NONE);
+		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new FileSelector(form, optional) {
 			@Override
 			protected boolean isValidFile(File f) {
@@ -45,21 +44,14 @@ public class PluginShell extends ObjectShell<Plugin> {
 		};
 		selFile.setFolder(Project.current.scriptPath());
 		
-		Composite composite = new Composite(form, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(1, false);
-		gl_composite.marginHeight = 0;
-		gl_composite.marginWidth = 0;
-		composite.setLayout(gl_composite);
+		LPanel composite = new LPanel(form, 1);
 		
-		Group grpParameters = new Group(composite, SWT.NONE);
+		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
 		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpParameters.setText(Vocab.instance.PARAM);
-		grpParameters.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		TagList lstParam = new TagList(grpParameters, SWT.NONE);
+		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
-		LCheckBox btnON = new LCheckBox(composite, SWT.NONE);
+		LCheckBox btnON = new LCheckBox(composite);
 		btnON.setText(Vocab.instance.PLUGINON);
 		addControl(btnON, "on");
 		

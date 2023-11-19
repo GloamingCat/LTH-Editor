@@ -1,18 +1,15 @@
 package gui.views.fieldTree.subcontent;
 
 import gui.views.fieldTree.FieldEditor;
+import lwt.container.LContainer;
+import lwt.container.LView;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.editor.LState;
-import lwt.editor.LView;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
 import lwt.widget.LNodeSelector;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.SWT;
 
 public abstract class TileTree extends LView {
 
@@ -24,11 +21,9 @@ public abstract class TileTree extends LView {
 	 * @param parent
 	 * @param style
 	 */
-	public TileTree(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		selector = new LNodeSelector<>(this, 0);
+	public TileTree(LContainer parent) {
+		super(parent, true, false);
+		selector = new LNodeSelector<>(this, false);
 		selector.addModifyListener(new LControlListener<Integer>() {
 			public void onModify(LControlEvent<Integer> event) {
 				FieldEditor.instance.canvas.setSelection(event.newValue);
@@ -37,7 +32,6 @@ public abstract class TileTree extends LView {
 				}
 			}
 		});
-		
 	}
 	
 	public void setTile(int id) {

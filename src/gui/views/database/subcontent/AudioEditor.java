@@ -2,31 +2,19 @@ package gui.views.database.subcontent;
 
 import gui.widgets.AudioButton;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-
 import data.subcontent.Audio;
 import gson.editor.GDefaultObjectEditor;
+import lwt.container.LContainer;
 import lwt.widget.LText;
 
 public class AudioEditor extends GDefaultObjectEditor<Audio> {
 
 	AudioButton btnSelectSound;
 	
-	public AudioEditor(Composite parent, int style) {
-		super(parent, style);
-		
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.marginWidth = 0;
-		gridLayout.marginHeight = 0;
-		setLayout(gridLayout);
-
-		LText txtSource = new LText(this, true);
-		txtSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		btnSelectSound = new AudioButton(this, SWT.NONE);
+	public AudioEditor(LContainer parent) {
+		super(parent, 2, false, false);
+		LText txtSource = new LText(this, true);		
+		btnSelectSound = new AudioButton(this, true);
 		btnSelectSound.setTextWidget(txtSource);
 		addControl(btnSelectSound, "audio");
 		

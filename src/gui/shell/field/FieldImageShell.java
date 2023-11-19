@@ -1,8 +1,11 @@
 package gui.shell.field;
 
 import gui.Vocab;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckBox;
@@ -16,14 +19,11 @@ import data.field.FieldImage;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -43,7 +43,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	private LCheckBox btnForeground;
 	private LCheckBox btnGlued;
 	
-	public FieldImageShell(Shell parent, int style) {
+	public FieldImageShell(LShell parent) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -55,12 +55,11 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		new LLabel(content, Vocab.instance.NAME);
 		
 		txtName = new LText(content);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		SashForm sashForm = new SashForm(content, SWT.HORIZONTAL);
+		LSashPanel sashForm = new LSashPanel(content, true);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		tree = new LNodeSelector<Object>(sashForm, style);
+		tree = new LNodeSelector<Object>(sashForm, false);
 		tree.setCollection(getTree());
 		tree.addModifyListener(new LControlListener<Integer>() {
 			@Override
@@ -101,19 +100,16 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		scroll.setContent(image);		
 		sashForm.setWeights(new int[] {1, 2});
 
-		Composite options = new Composite(content, SWT.NONE);
-		GridLayout gl_options = new GridLayout(3, false);
-		gl_options.marginHeight = 0;
-		options.setLayout(gl_options);
+		LPanel options = new LPanel(content, 3, false);
 		options.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		
-		btnVisible = new LCheckBox(options, SWT.CHECK);
+		btnVisible = new LCheckBox(options);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		
-		btnForeground = new LCheckBox(options, SWT.CHECK);
+		btnForeground = new LCheckBox(options);
 		btnForeground.setText(Vocab.instance.FOREGROUND);
 		
-		btnGlued = new LCheckBox(options, SWT.CHECK);
+		btnGlued = new LCheckBox(options);
 		btnGlued.setText(Vocab.instance.GLUED);
 		
 		pack();

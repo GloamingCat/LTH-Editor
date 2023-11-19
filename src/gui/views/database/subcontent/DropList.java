@@ -3,22 +3,21 @@ package gui.views.database.subcontent;
 import gui.shell.database.DropShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import data.Battler.Drop;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public class DropList extends SimpleEditableList<Drop> {
 	
-	public DropList(Composite parent, int style) {
-		super(parent, style);
+	public DropList(LContainer parent) {
+		super(parent);
 		type = Drop.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Drop>() {
 			@Override
-			public LObjectShell<Drop> createShell(Shell parent) {
+			public LObjectShell<Drop> createShell(LShell parent) {
 				return new DropShell(parent);
 			}
 		});

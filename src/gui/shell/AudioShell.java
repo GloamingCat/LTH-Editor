@@ -1,57 +1,48 @@
 package gui.shell;
 
 import gui.Vocab;
+import gui.widgets.AudioPlayer;
 import gui.widgets.FileSelector;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import lwt.LSoundPlayer;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
+import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
+import lwt.event.LSelectionEvent;
 import lwt.event.listener.LControlListener;
+import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
 
 import data.subcontent.Audio;
-
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
 public class AudioShell extends ObjectShell<Audio> {
 	
 	protected LCombo cmbSound;
 	protected FileSelector selFile;
-	protected boolean isBGM = false;
+	protected Audio comboAudio = null;
 	
 	public static final int BGM = 0x01;
 	
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public AudioShell(Shell parent) {
-		this(parent, 1);
-	}
-	
-	public AudioShell(Shell parent, int style) {
+
+	public AudioShell(LShell parent, boolean isBGM) {
 		super(parent);
 
 		setMinimumSize(400, 400);
 		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
-		SashForm form = new SashForm(contentEditor, SWT.NONE);
-		selFile = new FileSelector(form, style) {
+		LSashPanel form = new LSashPanel(contentEditor, true);
+		selFile = new FileSelector(form, false) {
 			@Override
 			protected boolean isValidFile(File f) {
 				String name = f.getName();
@@ -59,86 +50,74 @@ public class AudioShell extends ObjectShell<Audio> {
 			}
 		};
 		selFile.setFolder(Project.current.audioPath());
+		cmbSound = new LCombo(selFile);
+		cmbSound.setOptional(true);
+		cmbSound.setIncludeID(false);
 		selFile.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				cmbSound.setValue(-1);
 			}
 		});
-		
-		cmbSound = new LCombo(selFile);
-		cmbSound.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cmbSound.setOptional(true);
-		cmbSound.setIncludeID(false);
 		cmbSound.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				selFile.setValue(-1);
+				ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
+				comboAudio = list.get(cmbSound.getValue());
 			}
 		});
-		
-		isBGM = style / 2 == 1;
-		
-		Composite composite = new Composite(form, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
+
+		LPanel composite = new LPanel(form, 2, false);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		new LLabel(composite, Vocab.instance.VOLUME);
 		
-		LSpinner spnVolume = new LSpinner(composite, SWT.NONE);
+		LSpinner spnVolume = new LSpinner(composite);
 		spnVolume.setMaximum(1000);
-		spnVolume.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnVolume, "volume");
 		
 		new LLabel(composite, Vocab.instance.PITCH);
 		
-		LSpinner spnPitch = new LSpinner(composite, SWT.NONE);
+		LSpinner spnPitch = new LSpinner(composite);
 		spnPitch.setMaximum(1000);
 		spnPitch.setMinimum(1);
-		spnPitch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnPitch, "pitch");
 		
 		new LLabel(composite, Vocab.instance.TIME);
 		
-		LSpinner spnTime = new LSpinner(composite, SWT.NONE);
+		LSpinner spnTime = new LSpinner(composite);
 		spnTime.setMaximum(10000);
 		spnTime.setMinimum(0);
-		spnTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(spnTime, "time");
 		
-		Composite reproduction = new Composite(composite, SWT.NONE);
-		GridLayout gl_reproduction = new GridLayout(2, false);
-		gl_reproduction.marginWidth = 0;
-		gl_reproduction.marginHeight = 0;
-		reproduction.setLayout(gl_reproduction);
+		AudioPlayer reproduction = new AudioPlayer(composite);
 		reproduction.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 2, 1));
+		reproduction.loop = isBGM;
 		
-		Button btnPlay = new Button(reproduction, SWT.NONE);
-		btnPlay.addSelectionListener(new SelectionAdapter() {
+		selFile.addSelectionListener(new LSelectionListener() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String name = selFile.getSelectedFile();
-				if (name == null || name.isEmpty())
-					return;
-				String path = Project.current.audioPath() + name;
-				float volume = spnVolume.getValue() * 0.1f;
-				float pitch = spnPitch.getValue() * 0.1f;
-				if (isBGM)
-					LSoundPlayer.playBGM(path, volume, pitch);
-				else
-					LSoundPlayer.playSFX(path, volume, pitch);
+			public void onSelect(LSelectionEvent event) {
+				reproduction.filename = comboAudio == null ? 
+						event.data.toString() : comboAudio.name;
 			}
 		});
-		btnPlay.setText(Vocab.instance.PLAY);
-		
-		Button btnStop = new Button(reproduction, SWT.NONE);
-		btnStop.addSelectionListener(new SelectionAdapter() {
+		spnVolume.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				LSoundPlayer.stop();
+			public void onModify(LControlEvent<Integer> event) {
+				reproduction.volume = event.newValue *
+						(comboAudio == null ? 1 : comboAudio.volume * 0.01f);
+				reproduction.refresh();
 			}
 		});
-		btnStop.setText(Vocab.instance.STOP);
+		spnPitch.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				reproduction.pitch = event.newValue *
+						(comboAudio == null ? 1 : comboAudio.pitch * 0.01f);
+				reproduction.refresh();
+			}
+		});
 		
 		form.setWeights(new int[] { 1, 1 });
 		

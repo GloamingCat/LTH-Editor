@@ -1,10 +1,10 @@
 package gui.views.fieldTree;
 
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.widgets.Composite;
 
 import batching.Batch;
 import batching.BatchIterator;
@@ -12,6 +12,7 @@ import batching.Scene;
 import data.subcontent.Point;
 import gui.helper.FieldHelper;
 import gui.helper.SceneHelper;
+import lwt.container.LContainer;
 import rendering.Renderer;
 import rendering.Screen;
 import rendering.ShaderProgram;
@@ -27,15 +28,35 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	protected VertexArray vertexArray;
 	protected int nFloats;
 	
-	public FieldCanvasOpenGL(Composite parent, int style) {
-		super(parent, style);
+	/**
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
+	 */
+	public FieldCanvasOpenGL(LContainer parent) {
+		super(parent);
+		try {
+			initRenderer();
+		} catch(LinkageError e) {
+			
+		}
+	}
+	
+	/**
+	 * @wbp.eval.method.return true
+	 */
+	private boolean initRenderer() {
 		SceneHelper.initContext();
 		renderer = new Renderer();
 		renderer.setBackgroundColor(192, 192, 192, 255);
 		renderer.setPencilSize(1);
-		shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");
+		try {
+			shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");
+		} catch (UncheckedIOException e) {
+			shader = new ShaderProgram();
+		}
+		return true;
 	}
-	
+
 	//////////////////////////////////////////////////
 	// {{ Draw
 	
@@ -103,7 +124,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	public void onDispose() {
 		screen.dispose();
 		shader.dispose();
-		SceneHelper.reload();
+		SceneHelper.terminateContext();
 	}
 	
 	// }}

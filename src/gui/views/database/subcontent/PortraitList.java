@@ -3,24 +3,22 @@ package gui.views.database.subcontent;
 import gui.shell.database.PortraitShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import data.GameCharacter.Portrait;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public class PortraitList extends SimpleEditableList<Portrait> {
 	
-	public PortraitList(Composite parent, int style) {
-		super(parent, SWT.NONE);
+	public PortraitList(LContainer parent) {
+		super(parent);
 		type = Portrait.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Portrait>() {
 			@Override
-			public LObjectShell<Portrait> createShell(Shell parent) {
-				return new PortraitShell(parent, style);
+			public LObjectShell<Portrait> createShell(LShell parent) {
+				return new PortraitShell(parent);
 			}
 		});
 	}

@@ -1,18 +1,18 @@
 package gui.shell;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
+import lwt.container.LSashPanel;
+import lwt.container.LScrollPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
@@ -29,9 +29,9 @@ public class IconShell extends LObjectShell<Icon> {
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
 	protected int col, row;
-	private ScrolledComposite scroll;
+	private LScrollPanel scroll;
 	
-	public IconShell(Shell parent, int style) {
+	public IconShell(LShell parent, boolean optional) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -41,9 +41,9 @@ public class IconShell extends LObjectShell<Icon> {
 		
 		content.setLayout(new FillLayout());
 		
-		SashForm sashForm = new SashForm(content, SWT.HORIZONTAL);
+		LSashPanel sashForm = new LSashPanel(content, true);
 		
-		tree = new LNodeSelector<Object>(sashForm, style);
+		tree = new LNodeSelector<Object>(sashForm, optional);
 		tree.setCollection(getTree());
 		tree.addModifyListener(new LControlListener<Integer>() {
 			@Override
@@ -53,11 +53,7 @@ public class IconShell extends LObjectShell<Icon> {
 			}
 		});
 		
-		scroll = new ScrolledComposite(sashForm, SWT.NONE);
-		scroll.setExpandVertical(true);
-		scroll.setExpandHorizontal(true);
-		scroll.setLayout(new FillLayout());
-		
+		scroll = new LScrollPanel(sashForm, true);
 		image = new LImage(scroll, SWT.NONE);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		image.addPaintListener(new PaintListener() {

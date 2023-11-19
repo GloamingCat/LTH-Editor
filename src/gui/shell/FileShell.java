@@ -3,30 +3,30 @@ package gui.shell;
 import java.io.File;
 import java.util.ArrayList;
 
+import lwt.container.LSashPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.FillLayout;
 
 public abstract class FileShell<T> extends LObjectShell<T> {
 
 	protected String folder;
-	protected SashForm sashForm;
+	protected LSashPanel sashForm;
 	protected List list;
 	protected boolean optional;
 	
-	public FileShell(Shell parent, int style) {
+	public FileShell(LShell parent) {
 		this(parent, "", true);
 	}
 	
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public FileShell(Shell parent, String folder, boolean optional) {
+	public FileShell(LShell parent, String folder, boolean optional) {
 		super(parent);
 		this.optional = optional;
 		this.folder = folder;
@@ -35,7 +35,7 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		gridData.grabExcessVerticalSpace = true;
 		content.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		sashForm = new SashForm(content, SWT.NONE);
+		sashForm = new LSashPanel(content, true);
 		
 		list = new List(sashForm, SWT.BORDER | SWT.V_SCROLL);
 		list.setItems(getItems(folder + "/", optional));

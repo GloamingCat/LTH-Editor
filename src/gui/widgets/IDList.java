@@ -1,27 +1,26 @@
 package gui.widgets;
 
 import gui.shell.IDShell;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.dataestructure.LPath;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.event.LEditEvent;
 import lwt.widget.LList;
 
-public abstract class IDList extends SimpleEditableList<Integer> {
+public class IDList extends SimpleEditableList<Integer> {
 
-	public IDList(Composite parent, int style) {
-		super(parent, style);
+	public LDataTree<Object> dataTree = null;
+	
+	public IDList(LContainer parent) {
+		super(parent);
 		type = Integer.class;
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
-			public LObjectShell<Integer> createShell(Shell parent) {
-				IDShell shell = new IDShell(parent, SWT.NONE) {
+			public LObjectShell<Integer> createShell(LShell parent) {
+				IDShell shell = new IDShell(parent, false) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}
@@ -34,7 +33,7 @@ public abstract class IDList extends SimpleEditableList<Integer> {
 	
 	protected LList<Integer, Integer> createList() {
 		IDList self = this;
-		return new LList<Integer, Integer>(this, SWT.NONE) {
+		return new LList<Integer, Integer>(this) {
 			@Override
 			public LEditEvent<Integer> edit(LPath path) {
 				return onEditItem(path);
@@ -69,6 +68,6 @@ public abstract class IDList extends SimpleEditableList<Integer> {
 		};
 	}
 
-	public abstract LDataTree<Object> getDataTree();
+	public LDataTree<Object> getDataTree() { return dataTree; }
 	
 }

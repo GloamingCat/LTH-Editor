@@ -1,9 +1,8 @@
 package gui.shell;
 
-import org.eclipse.swt.widgets.Shell;
-
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.widget.LNodeSelector;
 
 import org.eclipse.swt.SWT;
@@ -14,7 +13,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 	
 	protected LNodeSelector<Object> tree;
 	
-	public IDShell(Shell parent, int style) {
+	public IDShell(LShell parent, boolean optional) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -22,7 +21,7 @@ public abstract class IDShell extends LObjectShell<Integer> {
 		setMinimumSize(350, 500);
 		
 		content.setLayout(new FillLayout());
-		tree = new LNodeSelector<>(content, style);
+		tree = new LNodeSelector<>(content, optional);
 		tree.setCollection(getTree());
 
 		pack();

@@ -2,10 +2,9 @@ package gui.widgets;
 
 import java.io.File;
 
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LNodeSelector;
-
-import org.eclipse.swt.widgets.Composite;
 
 public abstract class FileSelector extends LNodeSelector<String> {
 
@@ -16,8 +15,8 @@ public abstract class FileSelector extends LNodeSelector<String> {
 	 * @param parent
 	 * @param style
 	 */
-	public FileSelector(Composite parent, int style) {
-		super(parent, style);
+	public FileSelector(LContainer parent, boolean optional) {
+		super(parent, optional);
 	}
 	
 	public void setFolder(String folder) {

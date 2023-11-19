@@ -6,20 +6,19 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.container.LFrame;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
+import lwt.dialog.LShell;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Script;
 import project.Project;
 
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -27,20 +26,23 @@ public class ScriptShell extends ObjectShell<Script> {
 	
 	private FileSelector selFile;
 	
-	public ScriptShell(Shell parent, int style) {
+	public static final int OPTIONAL = 0x1;
+	public static final int ONLOAD = 0x01;
+	public static final int ONCOLLIDE = 0x001;
+	public static final int ONINTERACT = 0x0001;
+	
+	public ScriptShell(LShell parent, int style) {
 		super(parent);
 		contentEditor.setLayout(new GridLayout(2, false));
 		
-		LLabel label = new LLabel(contentEditor, Vocab.instance.DESCRIPTION);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		new LLabel(contentEditor, Vocab.instance.DESCRIPTION);;
 		
 		LText txtDescription = new LText(contentEditor);
-		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		addControl(txtDescription, "description");
 		
-		SashForm form = new SashForm(contentEditor, SWT.NONE);
+		LSashPanel form = new LSashPanel(contentEditor, true);
 		form.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		selFile = new FileSelector(form, style) {
+		selFile = new FileSelector(form, (style & OPTIONAL) > 0) {
 			@Override
 			protected boolean isValidFile(File f) {
 				return f.getName().endsWith(".lua");
@@ -48,22 +50,14 @@ public class ScriptShell extends ObjectShell<Script> {
 		};
 		selFile.setFolder(Project.current.scriptPath());
 		
-		Composite composite = new Composite(form, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(1, false);
-		gl_composite.marginHeight = 0;
-		gl_composite.marginWidth = 0;
-		composite.setLayout(gl_composite);
+		LPanel composite = new LPanel(form, 1);
 		
-		Group grpParameters = new Group(composite, SWT.NONE);
+		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
 		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpParameters.setText(Vocab.instance.PARAM);
-		grpParameters.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		TagList lstParam = new TagList(grpParameters, SWT.NONE);
+		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
-		Composite options = new Composite(composite, SWT.NONE);
-		options.setLayout(new GridLayout(3, false));
+		LPanel options = new LPanel(composite, 3, false);
 		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		LCheckBox btnGlobal = new LCheckBox(options);
@@ -81,17 +75,17 @@ public class ScriptShell extends ObjectShell<Script> {
 		LCheckBox btnLoad = new LCheckBox(options);
 		btnLoad.setText(Vocab.instance.ONLOAD);
 		addControl(btnLoad, "onLoad");
-		btnLoad.setEnabled((style & 2) != 0);
+		btnLoad.setEnabled((style & ONLOAD) > 0);
 	
 		LCheckBox btnCollide = new LCheckBox(options);
 		btnCollide.setText(Vocab.instance.ONCOLLIDE);
 		addControl(btnCollide, "onCollide");
-		btnCollide.setEnabled((style & 4) != 0);
+		btnCollide.setEnabled((style & ONCOLLIDE) > 0);
 		
 		LCheckBox btnInteract = new LCheckBox(options);
 		btnInteract.setText(Vocab.instance.ONINTERACT);
 		addControl(btnInteract, "onInteract");
-		btnInteract.setEnabled((style & 8) != 0);
+		btnInteract.setEnabled((style & ONINTERACT) > 0);
 		
 		form.setWeights(new int[] {1, 2});
 	}

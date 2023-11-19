@@ -1,9 +1,7 @@
 package gui.widgets;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-
 import gson.editor.GDefaultListEditor;
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 
@@ -12,12 +10,8 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 	public Class<?> type;
 	protected LDataList<T> currentList;
 	
-	public SimpleEditableList(Composite parent) {
-		this(parent, SWT.NONE);
-	}
-	
-	public SimpleEditableList(Composite parent, int style) {
-		super(parent, style);
+	public SimpleEditableList(LContainer parent) {
+		super(parent);
 		getCollectionWidget().setEditEnabled(true);
 		getCollectionWidget().setInsertNewEnabled(true);
 		getCollectionWidget().setDuplicateEnabled(true);
@@ -25,10 +19,11 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		getCollectionWidget().setDragEnabled(true);
 		getCollectionWidget().setCopyEnabled(true);
 		getCollectionWidget().setPasteEnabled(true);
+		pack();
 	}
 	
-	public SimpleEditableList(Composite parent, Class<?> type) {
-		this(parent, 0);
+	public SimpleEditableList(LContainer parent, Class<?> type) {
+		this(parent);
 		this.type = type;
 	}
 	

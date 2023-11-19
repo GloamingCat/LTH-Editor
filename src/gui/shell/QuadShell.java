@@ -9,7 +9,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LControlListener;
@@ -19,7 +22,6 @@ import lwt.widget.LImage;
 import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -27,13 +29,11 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.subcontent.Quad;
 import project.Project;
 
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Spinner;
@@ -49,12 +49,12 @@ public class QuadShell extends LObjectShell<Quad> {
 	private Spinner spnHeight;
 	private ScrolledComposite scroll;
 	
-	public QuadShell(Shell parent, int optional) {
+	public QuadShell(LShell parent, boolean optional) {
 		super(parent);
 		setMinimumSize(600, 400);
 		content.setLayout(new FillLayout());
 		
-		SashForm form = new SashForm(content, SWT.HORIZONTAL);
+		LSashPanel form = new LSashPanel(content, true);
 		selFile = new FileSelector(form, optional) {
 			@Override
 			protected boolean isValidFile(File f) {
@@ -63,8 +63,7 @@ public class QuadShell extends LObjectShell<Quad> {
 		};
 		selFile.setFolder(Project.current.imagePath());
 		
-		Composite quad = new Composite(form, SWT.NONE);
-		quad.setLayout(new GridLayout(1, false));
+		LPanel quad = new LPanel(form, 1);
 		
 		scroll = new ScrolledComposite(quad, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -74,12 +73,8 @@ public class QuadShell extends LObjectShell<Quad> {
 		imgQuad.setVerticalAlign(SWT.CENTER);
 		scroll.setContent(imgQuad);
 		
-		Composite spinners = new Composite(quad, SWT.NONE);
+		LPanel spinners = new LPanel(quad, 4, false);
 		spinners.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_spinners = new GridLayout(4, false);
-		gl_spinners.marginHeight = 0;
-		gl_spinners.marginWidth = 0;
-		spinners.setLayout(gl_spinners);
 		
 		new LLabel(spinners, Vocab.instance.QUADX);
 		

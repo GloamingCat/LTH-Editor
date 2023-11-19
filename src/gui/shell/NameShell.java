@@ -3,19 +3,17 @@ package gui.shell;
 import gui.Vocab;
 
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 public class NameShell extends LObjectShell<String> {
 	
 	private LText txtName;
 
-	public NameShell(Shell parent) {
+	public NameShell(LShell parent) {
 		super(parent);
 		setMinimumSize(300, 120);
 		
@@ -24,7 +22,6 @@ public class NameShell extends LObjectShell<String> {
 		new LLabel(content, Vocab.instance.NAME);
 		
 		txtName = new LText(content);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		pack();
 	}

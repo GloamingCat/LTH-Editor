@@ -1,8 +1,11 @@
 package gui.shell.database;
 
 import gui.Vocab;
+import lwt.container.LSashPanel;
+import lwt.container.LScrollPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
@@ -16,16 +19,12 @@ import data.GameCharacter.Portrait;
 import project.Project;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
@@ -34,10 +33,10 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
 	protected int col, row;
-	private ScrolledComposite scroll;
+	private LScrollPanel scroll;
 	private LText txtName;
 	
-	public PortraitShell(Shell parent, int style) {
+	public PortraitShell(LShell parent) {
 		super(parent);
 		GridData gridData = (GridData) content.getLayoutData();
 		gridData.verticalAlignment = SWT.FILL;
@@ -48,14 +47,12 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		content.setLayout(new GridLayout(2, false));
 		
 		new LLabel(content, Vocab.instance.NAME);
-		
 		txtName = new LText(content);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		SashForm sashForm = new SashForm(content, SWT.HORIZONTAL);
+		LSashPanel sashForm = new LSashPanel(content, true);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		tree = new LNodeSelector<Object>(sashForm, style);
+		tree = new LNodeSelector<Object>(sashForm, true);
 		tree.setCollection(getTree());
 		tree.addModifyListener(new LControlListener<Integer>() {
 			@Override
@@ -65,10 +62,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 			}
 		});
 		
-		scroll = new ScrolledComposite(sashForm, SWT.NONE);
-		scroll.setExpandVertical(true);
-		scroll.setExpandHorizontal(true);
-		scroll.setLayout(new FillLayout());
+		scroll = new LScrollPanel(sashForm, true);
 		
 		image = new LImage(scroll, SWT.NONE);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));

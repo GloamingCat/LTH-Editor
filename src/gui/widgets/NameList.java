@@ -1,22 +1,20 @@
 package gui.widgets;
 
 import gui.shell.NameShell;
-
-import org.eclipse.swt.widgets.Composite;
-
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public class NameList extends SimpleEditableList<String> {
 
-	public NameList(Composite parent, int style) {
-		super(parent, style);
+	public NameList(LContainer parent) {
+		super(parent);
 		type = String.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<String>() {
 			@Override
-			public LObjectShell<String> createShell(
-					org.eclipse.swt.widgets.Shell parent) {
+			public LObjectShell<String> createShell(LShell parent) {
 				return new NameShell(parent);
 			}
 		});

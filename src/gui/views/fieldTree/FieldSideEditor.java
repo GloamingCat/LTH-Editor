@@ -7,6 +7,10 @@ import gui.views.fieldTree.subcontent.LayerList;
 import gui.views.fieldTree.subcontent.PartyEditor;
 import gui.views.fieldTree.subcontent.TileTree;
 import gui.widgets.SimpleEditableList;
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
+import lwt.container.LSashPanel;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
 import lwt.event.LDeleteEvent;
@@ -19,10 +23,7 @@ import lwt.widget.LImage;
 import lwt.widget.LLabel;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
 import project.Project;
 import data.field.CharTile;
@@ -31,8 +32,6 @@ import data.field.Layer;
 import data.field.Party;
 import gson.editor.GDefaultObjectEditor;
 
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 public class FieldSideEditor extends GDefaultObjectEditor<Field> {
@@ -46,7 +45,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 	
 	private LayerList[] lists;
 	private TileTree[] trees;
-	private Composite editors;
+	private LPanel editors;
 	
 	private SimpleEditableList<CharTile> lstChars;
 	private SimpleEditableList<Party> lstParties;
@@ -64,42 +63,36 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 	};
 	
 	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
-	public FieldSideEditor(Composite parent, int style) {
-		super(parent, style);
+	FieldSideEditor(LContainer parent) {
+		super(parent, 1, false, false);
 		instance = this;
 		
-		setLayout(new GridLayout());
+		lblTitle = new LLabel(this, LLabel.CENTER, Vocab.instance.TERRAIN);
 		
-		lblTitle = new LLabel(this, Vocab.instance.TERRAIN);
-		lblTitle.setAlignment(SWT.CENTER);
-		lblTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		editors = new Composite(this, SWT.NONE);
+		editors = new LPanel(this);
 		editors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		editors.setLayout(stack);
+		stack.marginWidth = 5;
+		stack.marginHeight = 5;
 		
 		// Terrain
 		
-		SashForm terrain = new SashForm(editors, SWT.VERTICAL);
+		LSashPanel terrain = new LSashPanel(editors, false);
 		
-		Group grpTerrainLayers = new Group(terrain, SWT.NONE);
-		grpTerrainLayers.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpTerrainLayers.setText(Vocab.instance.LAYERS);
+		LFrame grpTerrainLayers = new LFrame(terrain, Vocab.instance.LAYERS, true, true);
 		LayerList lstTerrain = new LayerList(grpTerrainLayers, 0) {
+			@Override
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.terrain;
 			}
 		};
 		lstTerrain.setEditor(this);
 		
-		Group grpTerrainTiles = new Group(terrain, SWT.NONE);
-		grpTerrainTiles.setLayout(new FillLayout(SWT.VERTICAL));
-		grpTerrainTiles.setText(Vocab.instance.TILES);
-		TileTree selTerrain = new TileTree(grpTerrainTiles, SWT.NONE) {
+		LFrame grpTerrainTiles = new LFrame(terrain, Vocab.instance.TILES, false);
+		TileTree selTerrain = new TileTree(grpTerrainTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.terrains.getTree();
@@ -118,22 +111,19 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		
 		// Obstacle
 		
-		SashForm obstacle = new SashForm(editors, SWT.VERTICAL);
+		LSashPanel obstacle = new LSashPanel(editors, false);
 		
-		Group grpObstacleLayers = new Group(obstacle, SWT.NONE);
-		grpObstacleLayers.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpObstacleLayers.setText(Vocab.instance.LAYERS);
+		LFrame grpObstacleLayers = new LFrame(obstacle, Vocab.instance.LAYERS, true, true);
 		LayerList lstObstacle = new LayerList(grpObstacleLayers, 1) {
+			@Override
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.obstacle;
 			}
 		};
 		lstObstacle.setEditor(this);
 		
-		Group grpObstacleTiles = new Group(obstacle, SWT.NONE);
-		grpObstacleTiles.setLayout(new FillLayout(SWT.VERTICAL));
-		grpObstacleTiles.setText(Vocab.instance.TILES);
-		TileTree selObstacle = new TileTree(grpObstacleTiles, SWT.NONE) {
+		LFrame grpObstacleTiles = new LFrame(obstacle, Vocab.instance.TILES, false);
+		TileTree selObstacle = new TileTree(grpObstacleTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.obstacles.getTree();
@@ -152,12 +142,10 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		
 		// Region
 		
-		SashForm region = new SashForm(editors, SWT.VERTICAL);
+		LSashPanel region = new LSashPanel(editors, false);
 		region.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Group grpRegionLayers = new Group(region, SWT.NONE);
-		grpRegionLayers.setLayout(new FillLayout(SWT.HORIZONTAL));
-		grpRegionLayers.setText(Vocab.instance.LAYERS);
+		LFrame grpRegionLayers = new LFrame(region, Vocab.instance.LAYERS, true, true);
 		LayerList lstRegion = new LayerList(grpRegionLayers, 2) {
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.region;
@@ -165,10 +153,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 		lstRegion.setEditor(this);
 		
-		Group grpRegionTiles = new Group(region, SWT.NONE);
-		grpRegionTiles.setLayout(new FillLayout(SWT.VERTICAL));
-		grpRegionTiles.setText(Vocab.instance.TILES);
-		TileTree selRegion = new TileTree(grpRegionTiles, SWT.NONE) {
+		LFrame grpRegionTiles = new LFrame(region, Vocab.instance.TILES, false);
+		TileTree selRegion = new TileTree(grpRegionTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.regions.getList().toTree();
@@ -187,7 +173,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		
 		// Characters
 		
-		SashForm character = new SashForm(editors, SWT.VERTICAL);
+		LSashPanel character = new LSashPanel(editors, false);
 		character.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LCollectionListener<CharTile> charListener = new LCollectionListener<CharTile>() {
@@ -205,14 +191,15 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			}
 		};
 		
-		lstChars = new SimpleEditableList<>(character, SWT.NONE);
-		lstChars.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LFrame grpChars = new LFrame(character, Vocab.instance.LAYERS, true, true);
+		grpChars.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstChars = new SimpleEditableList<>(grpChars);
 		lstChars.getCollectionWidget().setEditEnabled(false);
 		lstChars.setIncludeID(false);
 		lstChars.type = CharTile.class;
 		addChild(lstChars, "characters");
 		
-		charEditor = new CharTileEditor(character, SWT.NONE);
+		charEditor = new CharTileEditor(character);
 		charEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		lstChars.addChild(charEditor);
 		lstChars.getCollectionWidget().addInsertListener(charListener);
@@ -230,19 +217,17 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		// Party
 		
-		Composite party = new Composite(editors, SWT.NONE);
+		LPanel party = new LPanel(editors, 2, false);
 		party.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		party.setLayout(new GridLayout(2, false));
 		
 		new LLabel(party, Vocab.instance.PLAYERPARTY);
 		
-		cmbPlayerParty = new LCombo(party, SWT.NONE);
+		cmbPlayerParty = new LCombo(party);
 		cmbPlayerParty.setIncludeID(false);
 		cmbPlayerParty.setOptional(true);
-		cmbPlayerParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		addControl(cmbPlayerParty, "playerParty");
 		
-		SashForm partylist = new SashForm(party, SWT.VERTICAL);
+		LSashPanel partylist = new LSashPanel(party, false);
 		partylist.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		LCollectionListener<Party> partyListener = new LCollectionListener<Party>() {
@@ -256,7 +241,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			}
 		};
 		
-		lstParties = new SimpleEditableList<>(partylist, SWT.NONE);
+		lstParties = new SimpleEditableList<>(partylist);
 		lstParties.getCollectionWidget().setEditEnabled(false);
 		lstParties.setIncludeID(true);
 		lstParties.type = Party.class;
@@ -273,7 +258,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			}
 		});
 		
-		partyEditor = new PartyEditor(partylist, SWT.NONE);
+		partyEditor = new PartyEditor(partylist);
 		lstParties.addChild(partyEditor);
 		
 		lists = new LayerList[] { lstTerrain, lstObstacle, lstRegion };

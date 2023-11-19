@@ -3,15 +3,14 @@ package gui.views.fieldTree;
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainter;
 import lwt.LImageHelper;
+import lwt.container.LContainer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import data.field.CharTile;
@@ -24,8 +23,8 @@ public class FieldCanvasGC extends FieldCanvas {
 	public Image[][] tileImages;
 	public FieldPainter painter;
 
-	public FieldCanvasGC(Composite parent, int style) {
-		super(parent, style | SWT.DOUBLE_BUFFERED);
+	public FieldCanvasGC(LContainer parent) {
+		super(parent);
 		painter = new FieldPainter(1);
 	}
 

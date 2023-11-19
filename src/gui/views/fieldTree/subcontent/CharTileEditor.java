@@ -6,8 +6,10 @@ import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
@@ -17,8 +19,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 import project.Project;
@@ -26,8 +26,6 @@ import project.Project;
 import data.field.CharTile;
 import data.field.Field;
 import gson.editor.GDefaultObjectEditor;
-
-import org.eclipse.swt.widgets.Group;
 
 public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
@@ -41,31 +39,23 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 	 * @param parent
 	 * @param style
 	 */
-	public CharTileEditor(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(4, false));
+	public CharTileEditor(LContainer parent) {
+		super(parent, 4, false, false);
 		
-		Composite position = new Composite(this, SWT.NONE);
-		GridLayout gl_position = new GridLayout(4, false);
-		gl_position.marginWidth = 0;
-		gl_position.marginHeight = 0;
-		position.setLayout(gl_position);
+		LPanel position = new LPanel(this, 4, false);
 		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		
 		new LLabel(position, Vocab.instance.POSITION);
 		
 		spnX = new LSpinner(position);
-		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnX.setMinimum(1);
 		addControl(spnX, "x");
 		
 		spnY = new LSpinner(position);
-		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnY.setMinimum(1);
 		addControl(spnY, "y");
 		
 		spnH = new LSpinner(position);
-		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spnH.setMinimum(1);
 		addControl(spnH, "h");
 		
@@ -104,34 +94,29 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		
 		new LLabel(this, Vocab.instance.KEY);
 		
-		LText txtKey = new LText(this);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		LText txtKey = new LText(this, 3);
 		addControl(txtKey, "key");
 		
-		Composite compOptions = new Composite(this, SWT.NONE);
+		LPanel compOptions = new LPanel(this, 3, true);
 		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
-		compOptions.setLayout(new FillLayout());
 
-		LCheckBox btnPersistent = new LCheckBox(compOptions, SWT.NONE);
+		LCheckBox btnPersistent = new LCheckBox(compOptions);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
-		LCheckBox btnPassable = new LCheckBox(compOptions, SWT.NONE);
+		LCheckBox btnPassable = new LCheckBox(compOptions);
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
-		LCheckBox btnVisible = new LCheckBox(compOptions, SWT.NONE);
+		LCheckBox btnVisible = new LCheckBox(compOptions);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		addControl(btnVisible, "visible");
 		
 		// Char
 		
 		new LLabel(this, Vocab.instance.CHARACTER);
-		
-		LText txtChar = new LText(this, true);
-		txtChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		
-		IDButton btnChar = new IDButton(this, 1) {
+		LText txtChar = new LText(this, 2, true);
+		IDButton btnChar = new IDButton(this, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.characters.getTree();
@@ -141,9 +126,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		addControl(btnChar, "charID");
 		
 		new LLabel(this, Vocab.instance.SPEED);
-		
-		LSpinner spnSpeed = new LSpinner(this);
-		spnSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		LSpinner spnSpeed = new LSpinner(this, 3);
 		spnSpeed.setMaximum(9999);
 		addControl(spnSpeed, "defaultSpeed");
 		
@@ -160,46 +143,36 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		};
 		
 		new LLabel(this, Vocab.instance.DIRECTION);
-		
 		DirectionCombo cmbDir = new DirectionCombo(this);
-		cmbDir.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(cmbDir, "direction");
 		cmbDir.addModifyListener(listener);
 		
-		LLabel label = new LLabel(this, Vocab.instance.FRAME);
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false, 1, 1));
-		new LLabel(this, "");
+		new LLabel(this, LLabel.BOTTOM, Vocab.instance.FRAME, 2);
 		
 		new LLabel(this, Vocab.instance.ANIMATION);
-		
 		LText txtAnim = new LText(this);
-		txtAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		addControl(txtAnim, "animation");
 		
 		btnChar.addModifyListener(listener);
 		
-		LSpinner spnFrame = new LSpinner(this);
-		GridData gd_spnFrame = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-		gd_spnFrame.widthHint = 84;
-		spnFrame.setLayoutData(gd_spnFrame);
+		LSpinner spnFrame = new LSpinner(this, 2);
+		GridData gd_spnFrame = (GridData) spnFrame.getLayoutData();
+		gd_spnFrame.widthHint = 36;
 		addControl(spnFrame, "frame");
 		
 		// Battle
 		
 		new LLabel(this, Vocab.instance.PARTY);
 		
-		cmbParty = new LCombo(this);
+		cmbParty = new LCombo(this, 3, true);
 		cmbParty.setIncludeID(false);
 		cmbParty.setOptional(true);
-		cmbParty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		addControl(cmbParty, "party");
 		
 		new LLabel(this, Vocab.instance.CHARBATTLER);
 		
-		LText txtBattler = new LText(this, true);
-		txtBattler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		
-		IDButton btnBattler = new IDButton(this, SWT.NONE) {
+		LText txtBattler = new LText(this, 2, true);		
+		IDButton btnBattler = new IDButton(this, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();
@@ -208,17 +181,14 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
-		Group grpScripts = new Group(this, SWT.NONE);
-		grpScripts.setLayout(new GridLayout(1, true));
+		LFrame grpScripts = new LFrame(this, Vocab.instance.SCRIPTS, 1);
 		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
-		grpScripts.setText(Vocab.instance.SCRIPTS);
 		
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
 		lstScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		addChild(lstScripts, "scripts");
 		
-		LCheckBox btnRepeat = new LCheckBox(grpScripts, SWT.NONE);
-		btnRepeat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		addControl(btnRepeat, "repeatCollisions");
 

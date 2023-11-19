@@ -3,22 +3,21 @@ package gui.views.database.subcontent;
 import gui.shell.database.EquipShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import data.Battler.Equip;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public class EquipList extends SimpleEditableList<Equip> {
 	
-	public EquipList(Composite parent, int style) {
-		super(parent, style);
+	public EquipList(LContainer parent) {
+		super(parent);
 		type = Equip.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Equip>() {
 			@Override
-			public LObjectShell<Equip> createShell(Shell parent) {
+			public LObjectShell<Equip> createShell(LShell parent) {
 				return new EquipShell(parent);
 			}
 		});

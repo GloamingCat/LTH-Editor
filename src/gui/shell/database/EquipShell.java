@@ -4,23 +4,20 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.widgets.IDButton;
 
-import org.eclipse.swt.widgets.Shell;
-
 import data.Battler.Equip;
 import lwt.dataestructure.LDataTree;
+import lwt.dialog.LShell;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
 public class EquipShell extends ObjectShell<Equip> {
 
-	public EquipShell(Shell parent) {
+	public EquipShell(LShell parent) {
 		super(parent);
 		
 		setText(Vocab.instance.EQUIP);
@@ -28,14 +25,12 @@ public class EquipShell extends ObjectShell<Equip> {
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 
-		LText txtKey = new LText(contentEditor);
-		txtKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		LText txtKey = new LText(contentEditor, 2);
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, Vocab.instance.STATE);
 		
-		LCombo cmbState = new LCombo(contentEditor, SWT.NONE);
-		cmbState.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		LCombo cmbState = new LCombo(contentEditor, 2);
 		cmbState.setIncludeID(false);
 		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {
@@ -48,9 +43,7 @@ public class EquipShell extends ObjectShell<Equip> {
 		new LLabel(contentEditor, Vocab.instance.EQUIPITEM);
 		
 		LText txtItem = new LText(contentEditor, true);
-		txtItem.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		IDButton btnItem = new IDButton(contentEditor, 1) {
+		IDButton btnItem = new IDButton(contentEditor, true) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.items.getTree();
 			}

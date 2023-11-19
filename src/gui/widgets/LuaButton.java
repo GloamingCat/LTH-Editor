@@ -1,14 +1,12 @@
 package gui.widgets;
 
 import gui.shell.LuaShell;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 public class LuaButton extends LObjectButton<String> {
 	
@@ -19,16 +17,16 @@ public class LuaButton extends LObjectButton<String> {
 	 * @param parent
 	 * @param style
 	 */
-	public LuaButton(Composite parent, int optional) {
-		super(parent, SWT.NONE);
+	public LuaButton(LContainer parent, boolean optional) {
+		super(parent);
 		setShellFactory(new LShellFactory<String>() {
 			@Override
-			public LObjectShell<String> createShell(Shell parent) {
+			public LObjectShell<String> createShell(LShell parent) {
 				return new LuaShell(parent, optional);
 			}
 		});
 	}
-	
+
 	public void setPathWidget(LText text) {
 		pathText = text;
 	}

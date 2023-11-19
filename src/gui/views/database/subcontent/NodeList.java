@@ -3,23 +3,22 @@ package gui.views.database.subcontent;
 import gui.shell.NodeShell;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.widgets.Composite;
-
 import data.subcontent.Node;
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
 public abstract class NodeList extends SimpleEditableList<Node> {
 
-	public NodeList(Composite parent, int style) {
-		super(parent, style);
+	public NodeList(LContainer parent) {
+		super(parent);
 		type = Node.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<Node>() {
 			@Override
-			public LObjectShell<Node> createShell(
-					org.eclipse.swt.widgets.Shell parent) {
+			public LObjectShell<Node> createShell(LShell parent) {
 				return new NodeShell(parent) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();

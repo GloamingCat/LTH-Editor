@@ -1,14 +1,12 @@
 package gui.widgets;
 
 import gui.shell.PositionShell;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Position;
 
@@ -21,11 +19,11 @@ public class PositionButton extends LObjectButton<Position> {
 	 * @param parent
 	 * @param style
 	 */
-	public PositionButton(Composite parent) {
-		super(parent, SWT.NONE);
+	public PositionButton(LContainer parent) {
+		super(parent);
 		setShellFactory(new LShellFactory<Position>() {
 			@Override
-			public LObjectShell<Position> createShell(Shell parent) {
+			public LObjectShell<Position> createShell(LShell parent) {
 				return new PositionShell(parent);
 			}
 		});

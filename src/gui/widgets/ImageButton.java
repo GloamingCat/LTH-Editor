@@ -1,10 +1,10 @@
 package gui.widgets;
 
+import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LImage;
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Composite;
 
 import data.Animation;
 import project.Project;
@@ -13,8 +13,8 @@ public class ImageButton extends IDButton {
 	
 	protected LImage label;
 	
-	public ImageButton(Composite parent, int style) {
-		super(parent, style);
+	public ImageButton(LContainer parent, boolean optional) {
+		super(parent, optional);
 	}
 	
 	public void setLabel(LImage label) {

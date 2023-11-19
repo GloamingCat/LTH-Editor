@@ -1,14 +1,12 @@
 package gui.widgets;
 
 import gui.shell.AudioShell;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 
 import data.subcontent.Audio;
 
@@ -21,11 +19,11 @@ public class AudioButton extends LObjectButton<Audio> {
 	 * @param parent
 	 * @param style
 	 */
-	public AudioButton(Composite parent, int optional) {
+	public AudioButton(LContainer parent, boolean optional) {
 		super(parent);
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
-			public LObjectShell<Audio> createShell(Shell parent) {
+			public LObjectShell<Audio> createShell(LShell parent) {
 				return new AudioShell(parent, optional);
 			}
 		});

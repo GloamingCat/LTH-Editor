@@ -1,13 +1,12 @@
 package gui.widgets;
 
 import gui.shell.system.FontShell;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.FontData;
 
@@ -20,11 +19,11 @@ public class FontButton extends LObjectButton<FontData> {
 	 * @param parent
 	 * @param style
 	 */
-	public FontButton(Composite parent, int style) {
-		super(parent, style);
+	public FontButton(LContainer parent) {
+		super(parent);
 		setShellFactory(new LShellFactory<FontData>() {
 			@Override
-			public LObjectShell<FontData> createShell(Shell parent) {
+			public LObjectShell<FontData> createShell(LShell parent) {
 				return new FontShell(parent);
 			}
 		});

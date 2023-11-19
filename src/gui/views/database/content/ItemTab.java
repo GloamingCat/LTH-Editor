@@ -10,7 +10,9 @@ import gui.views.database.subcontent.EquipStatusList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
-import lwt.dataestructure.LDataTree;
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.widget.LCheckBox;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
@@ -19,11 +21,8 @@ import lwt.widget.LText;
 import lwt.widget.LTextBox;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
 import project.Project;
 
@@ -31,22 +30,20 @@ import data.Item;
 
 public class ItemTab extends DatabaseTab<Item> {
 
+	private IDButton btnSkill;
+	
 	/**
-	 * Create the composite.
-	 * @param parent
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
 	 */
-	public ItemTab(Composite parent) {
+	public ItemTab(LContainer parent) {
 		super(parent);
 
 		// Icon
 		
 		new LLabel(grpGeneral, Vocab.instance.ICON);
 		
-		Composite compositeIcon = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeIcon = new GridLayout(2, false);
-		gl_compositeIcon.marginWidth = 0;
-		gl_compositeIcon.marginHeight = 0;
-		compositeIcon.setLayout(gl_compositeIcon);
+		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
 		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
@@ -57,13 +54,13 @@ public class ItemTab extends DatabaseTab<Item> {
 		imgIcon.setVerticalAlign(SWT.CENTER);
 		imgIcon.setLayoutData(gd_imgIcon);
 		
-		IconButton btnGraphics = new IconButton(compositeIcon, 0);
+		IconButton btnGraphics = new IconButton(compositeIcon, true);
 		btnGraphics.setImageWidget(imgIcon);
 		addControl(btnGraphics, "icon");
 		
 		// Description
 		
-		new LLabel(grpGeneral, Vocab.instance.DESCRIPTION).setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.DESCRIPTION);
 		
 		LTextBox txtDescription = new LTextBox(grpGeneral);
 		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -76,70 +73,52 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		new LLabel(grpGeneral, Vocab.instance.PRICE);
 		
-		Composite price = new Composite(grpGeneral, SWT.NONE);
+		LPanel price = new LPanel(grpGeneral, 2, false);
 		price.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridLayout gl_price = new GridLayout(2, false);
-		gl_price.marginWidth = 0;
-		gl_price.marginHeight = 0;
-		price.setLayout(gl_price);
 		
-		LSpinner spnPrice = new LSpinner(price, SWT.NONE);
+		LSpinner spnPrice = new LSpinner(price);
 		spnPrice.setMinimum(0);
 		spnPrice.setMaximum(9999999);
-		spnPrice.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnPrice, "price");
 		
-		LCheckBox btnSellable = new LCheckBox(price, SWT.NONE);
+		LCheckBox btnSellable = new LCheckBox(price);
 		btnSellable.setText(Vocab.instance.SELLABLE);
-		GridLayout gl_right = new GridLayout(1, false);
-		gl_right.marginWidth = 0;
-		gl_right.marginHeight = 0;
-		right.setLayout(gl_right);
 		addControl(btnSellable, "sellable");
 
 		// Use
 		
-		Group grpUse = new Group(left, SWT.NONE);
+		LFrame grpUse = new LFrame(left, Vocab.instance.USE, 3, false);
 		grpUse.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpUse.setText(Vocab.instance.USE);
-		grpUse.setLayout(new GridLayout(3, false));
 		
 		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
 	
-		LText txtSkill = new LText(grpUse, true);
-		txtSkill.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		IDButton btnSkill = new IDButton(grpUse, 1) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.skills.getTree();
-			}
-		};
+		LText txtSkill = new LText(grpUse, true);		
+		btnSkill = new IDButton(grpUse, true);
 		btnSkill.setNameWidget(txtSkill);
 		addControl(btnSkill, "skillID");
 		
-		Composite checkButtons = new Composite(grpUse, SWT.NONE);
-		checkButtons.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LPanel checkButtons = new LPanel(grpUse, true);
 		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
 		
-		LCheckBox btnConsume = new LCheckBox(checkButtons, SWT.NONE);
+		LCheckBox btnConsume = new LCheckBox(checkButtons);
 		btnConsume.setText(Vocab.instance.CONSUME);
 		addControl(btnConsume, "consume");
 		
-		LCheckBox btnNeedsUser = new LCheckBox(checkButtons, SWT.NONE);
+		LCheckBox btnNeedsUser = new LCheckBox(checkButtons);
 		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
 		addControl(btnNeedsUser, "needsUser");
 		
-		new LLabel(grpUse, Vocab.instance.EFFECTS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		new LLabel(grpUse, LLabel.TOP, Vocab.instance.EFFECTS);
 		
-		SkillEffectList lstEffects = new SkillEffectList(grpUse, SWT.NONE);
+		SkillEffectList lstEffects = new SkillEffectList(grpUse);
 		GridData gd_effect = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_effect.heightHint = 60;
 		gd_effect.minimumHeight = 60;
 		lstEffects.setLayoutData(gd_effect);
 		addChild(lstEffects, "effects");
 		
-		new LLabel(grpUse, Vocab.instance.ATTRIBUTES).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		AttributeList lstUseAtt = new AttributeList(grpUse, SWT.NONE);
+		new LLabel(grpUse, LLabel.TOP, Vocab.instance.ATTRIBUTES);
+		AttributeList lstUseAtt = new AttributeList(grpUse);
 		GridData gd_att = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_att.heightHint = 60;
 		gd_att.minimumHeight = 60;
@@ -148,48 +127,46 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		// Equip
 		
-		Group grpEquip = new Group(right, SWT.NONE);
+		LFrame grpEquip = new LFrame(right, Vocab.instance.EQUIP, 2, false);
 		grpEquip.setLayout(new GridLayout(2, false));
 		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		grpEquip.setText(Vocab.instance.EQUIP);
 		
 		new LLabel(grpEquip, Vocab.instance.SLOT);
 		
 		LText txtSlot = new LText(grpEquip);
-		txtSlot.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(txtSlot, "slot");
 		
-		LCheckBox btnAllSlots = new LCheckBox(grpEquip, SWT.NONE);
-		btnAllSlots.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		new LLabel(grpEquip, 1, 1);
+		LCheckBox btnAllSlots = new LCheckBox(grpEquip);
 		btnAllSlots.setText(Vocab.instance.ALLSLOTS);
 		addControl(btnAllSlots, "allSlots");
 		
-		new LLabel(grpEquip, Vocab.instance.BLOCKEDSLOTS).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		new LLabel(grpEquip, LLabel.TOP, Vocab.instance.BLOCKEDSLOTS);
 
-		NameList lstBlocked = new NameList(grpEquip, SWT.NONE);
+		NameList lstBlocked = new NameList(grpEquip);
 		GridData gd_lstBlocked = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_lstBlocked.heightHint = 48;
 		lstBlocked.setLayoutData(gd_lstBlocked);
 		addChild(lstBlocked, "blocked");
 		
-		new LLabel(grpEquip, Vocab.instance.ATTRIBUTES).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		AttributeList lstEquipAtt = new AttributeList(grpEquip, SWT.NONE);
+		new LLabel(grpEquip, LLabel.TOP, Vocab.instance.ATTRIBUTES);
+		AttributeList lstEquipAtt = new AttributeList(grpEquip);
 		GridData gd_EquipAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_EquipAtt.heightHint = 60;
 		gd_EquipAtt.minimumHeight = 60;
 		lstEquipAtt.setLayoutData(gd_EquipAtt);
 		addChild(lstEquipAtt, "equipAttributes");
 		
-		new LLabel(grpEquip, Vocab.instance.PROPERTIES).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		BonusList lstElement = new BonusList(grpEquip, SWT.NONE);
+		new LLabel(grpEquip, LLabel.TOP, Vocab.instance.PROPERTIES);
+		BonusList lstElement = new BonusList(grpEquip);
 		GridData gd_equipElements = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_equipElements.heightHint = 60;
 		gd_equipElements.minimumHeight = 60;
 		lstElement.setLayoutData(gd_equipElements);
 		addChild(lstElement, "bonuses");
 		
-		new LLabel(grpEquip, Vocab.instance.STATUSADD).setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip, SWT.NONE);
+		new LLabel(grpEquip, Vocab.instance.STATUSADD, LLabel.TOP);
+		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip);
 		lstEquipStatus.setIncludeID(false);
 		GridData gd_status = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_status.heightHint = 60;
@@ -197,6 +174,12 @@ public class ItemTab extends DatabaseTab<Item> {
 		lstEquipStatus.setLayoutData(gd_status);
 		addChild(lstEquipStatus, "equipStatus");
 		
+	}
+	
+	@Override
+	public void onVisible() {
+		btnSkill.dataTree = Project.current.skills.getTree();
+		super.onVisible();
 	}
 
 	@Override

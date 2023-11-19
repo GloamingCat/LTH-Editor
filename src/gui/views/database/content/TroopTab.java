@@ -1,5 +1,8 @@
 package gui.views.database.content;
 
+import lwt.container.LContainer;
+import lwt.container.LFrame;
+import lwt.container.LPanel;
 import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
@@ -21,9 +24,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
 import data.GameCharacter;
 import data.Troop;
@@ -32,7 +32,6 @@ import data.config.Config;
 import project.Project;
 
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 
 public class TroopTab extends DatabaseTab<Troop> {
 	
@@ -40,17 +39,16 @@ public class TroopTab extends DatabaseTab<Troop> {
 	public static final int tHeight = 48;
 
 	/**
-	 * Create the composite.
-	 * @param parent
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
 	 */
-	public TroopTab(Composite parent) {
+	public TroopTab(LContainer parent) {
 		super(parent);
 		
 		// General
 		
-		new LLabel(grpGeneral, "");
-		LCheckBox btnPersistent = new LCheckBox(grpGeneral, SWT.NONE);
-		btnPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new LLabel(grpGeneral, 1, 1);
+		LCheckBox btnPersistent = new LCheckBox(grpGeneral);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
@@ -58,22 +56,16 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
-		Composite compositeReward = new Composite(grpGeneral, SWT.NONE);
-		GridLayout gl_compositeReward = new GridLayout(3, false);
-		gl_compositeReward.marginWidth = 0;
-		gl_compositeReward.marginHeight = 0;
-		compositeReward.setLayout(gl_compositeReward);
+		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
 		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		LSpinner spnMoney = new LSpinner(compositeReward, SWT.NONE);
+		LSpinner spnMoney = new LSpinner(compositeReward);
 		spnMoney.setMaximum(99999999);
-		spnMoney.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnMoney, "money");
 		
 		new LLabel(compositeReward, Vocab.instance.EXP);
 		
-		LSpinner spnEXP = new LSpinner(compositeReward, SWT.NONE);
-		spnEXP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		LSpinner spnEXP = new LSpinner(compositeReward);
 		spnEXP.setMaximum(99999999);
 		addControl(spnEXP, "exp");
 		
@@ -81,50 +73,33 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		new LLabel(grpGeneral, Vocab.instance.AI);
 		
-		Composite select = new Composite(grpGeneral, SWT.NONE);
+		LPanel select = new LPanel(grpGeneral, 2, false);
 		select.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridLayout gl_select = new GridLayout(2, false);
-		gl_select.marginHeight = 0;
-		gl_select.marginWidth = 0;
-		select.setLayout(gl_select);
 		
-		LText txtAI = new LText(select, true);
-		txtAI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		LuaButton btnAI = new LuaButton(select, 1);
+		LText txtAI = new LText(select, true);		
+		LuaButton btnAI = new LuaButton(select, true);
 		btnAI.setPathWidget(txtAI);
 		addControl(btnAI, "ai");
 		
 		// Grid
 		
-		Group grpGrid = new Group(left, SWT.NONE);
-		grpGrid.setText(Vocab.instance.GRID);
+		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
 		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpGrid.setLayout(new FillLayout());
-		
-		Composite gridEditor = new Composite(grpGrid, SWT.NONE);
-		gridEditor.setLayout(new FillLayout());
+		LPanel gridEditor = new LPanel(grpGrid, SWT.NONE);
 
 		// Items
 		
-		Group grpItems = new Group(right, SWT.NONE);
-		grpItems.setLayout(new FillLayout(SWT.HORIZONTAL));
+		LFrame grpItems = new LFrame(right, Vocab.instance.ITEMS, true, true);
 		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpItems.setText(Vocab.instance.ITEMS);
-		
-		DropList lstItems = new DropList(grpItems, SWT.NONE);
+		DropList lstItems = new DropList(grpItems);
 		addChild(lstItems, "items");
-		
-		new LLabel(right, "").setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		// Units
 		
-		Group grpMembers = new Group(contentEditor, SWT.NONE);
+		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS, 2, false);
 		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		grpMembers.setLayout(new GridLayout(2, false));
-		grpMembers.setText(Vocab.instance.UNITS);
 		
-		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers, SWT.NONE);
+		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers);
 		lstMembers.getCollectionWidget().setEditEnabled(false);
 		lstMembers.setIncludeID(false);
 		lstMembers.type = Unit.class;
@@ -133,11 +108,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		lstMembers.setLayoutData(gd_lstUnits);
 		addChild(lstMembers, "members");
 		
-		UnitEditor unitEditor = new UnitEditor(grpMembers, SWT.NONE) {
-			public void refresh() {
-				gridEditor.redraw();
-			}
-		};
+		UnitEditor unitEditor = new UnitEditor(grpMembers);
 		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		lstMembers.addChild(unitEditor);
 		

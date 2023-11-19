@@ -1,13 +1,12 @@
 package gui.widgets;
 
 import gui.shell.ScriptShell;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import data.subcontent.Script;
 
@@ -20,11 +19,11 @@ public class ScriptButton extends LObjectButton<Script> {
 	 * @param parent
 	 * @param style
 	 */
-	public ScriptButton(Composite parent, int style) {
+	public ScriptButton(LContainer parent, int style) {
 		super(parent);
 		setShellFactory(new LShellFactory<Script>() {
 			@Override
-			public LObjectShell<Script> createShell(Shell parent) {
+			public LObjectShell<Script> createShell(LShell parent) {
 				return new ScriptShell(parent, style);
 			}
 		});

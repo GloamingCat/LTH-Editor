@@ -4,21 +4,21 @@ import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.*;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 
+import lwt.container.LScrollPanel;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
+import lwt.event.LControlEvent;
+import lwt.event.listener.LControlListener;
 import lwt.widget.LLabel;
+import lwt.widget.LSpinner;
 import project.Project;
 import data.field.Field;
 import data.field.Transition.Portal;
@@ -27,8 +27,8 @@ import data.subcontent.Point;
 public class PortalShell extends LObjectShell<Portal> {
 	
 	protected FieldCanvas canvas;
-	protected Spinner spnH;
-	protected ScrolledComposite scrolledComposite;
+	protected LSpinner spnH;
+	protected LScrollPanel scrolledComposite;
 	protected LLabel lblPos;
 	protected boolean[][][] selectedTiles;
 	protected int fieldID;
@@ -36,16 +36,16 @@ public class PortalShell extends LObjectShell<Portal> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public PortalShell(Shell parent, int fieldID) {
+	public PortalShell(LShell parent, int fieldID) {
 		super(parent);
 		this.fieldID = fieldID;
 		setMinimumSize(640, 480);
 		content.setLayout(new GridLayout(3, false));
 		
-		scrolledComposite = new ScrolledComposite(content, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new LScrollPanel(content, true);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
-		canvas = new FieldCanvasOpenGL(scrolledComposite, SWT.NONE) {
+		canvas = new FieldCanvasOpenGL(scrolledComposite) {
 			public void onTileLeftDown() {
 				selectedTiles[height][tileX][tileY] = !selectedTiles[height][tileX][tileY];
 				canvas.redraw();
@@ -71,13 +71,13 @@ public class PortalShell extends LObjectShell<Portal> {
 		
 		new LLabel(content, Vocab.instance.HEIGHT).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		spnH = new Spinner(content, SWT.BORDER);
+		spnH = new LSpinner(content);
 		spnH.setMinimum(1);
-		spnH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		spnH.addModifyListener(new ModifyListener() {
+		spnH.setValue(1);
+		spnH.addModifyListener(new LControlListener<Integer>() {
 			@Override
-			public void modifyText(ModifyEvent arg0) {
-				canvas.setHeight(spnH.getSelection() - 1);
+			public void onModify(LControlEvent<Integer> event) {
+				canvas.setHeight(event.newValue - 1);
 				canvas.redraw();
 			}
 		});
@@ -91,16 +91,16 @@ public class PortalShell extends LObjectShell<Portal> {
 	public void open(Portal initial) {
 		super.open(initial);
 		if (initial.size() > 0) {
-			spnH.setSelection(initial.get(initial.size() - 1).height);
+			spnH.setValue(initial.get(initial.size() - 1).height);
 		} else {
-			spnH.setSelection(1);
+			spnH.setValue(1);
 		}
 		Field field = Project.current.fieldTree.loadField(fieldID);
 		int maxHeight = field.layers.maxHeight();
 		selectedTiles = initial.getMask(field.sizeX, field.sizeY, maxHeight);
 		spnH.setMaximum(maxHeight);
 		canvas.setField(field);
-		canvas.setHeight(spnH.getSelection() - 1);
+		canvas.setHeight(spnH.getValue() - 1);
 		content.layout();
 	}
 

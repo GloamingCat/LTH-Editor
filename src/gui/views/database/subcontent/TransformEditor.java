@@ -2,15 +2,12 @@ package gui.views.database.subcontent;
 
 import gui.Vocab;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 
 import data.subcontent.Transform;
 import gson.editor.GDefaultObjectEditor;
+import lwt.container.LContainer;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LImage;
@@ -20,17 +17,16 @@ import lwt.widget.LSpinner;
 public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	
 	public LImage image = null;
+	public Transform secondaryTransform = null;
 	private LSpinner spnOffsetX;
 	private LSpinner spnOffsetY;
 	private LSpinner spnScaleY;
 	private LSpinner spnScaleX;
 	private LSpinner spnRotation;
 
-	public TransformEditor(Composite parent, int style) {
-		super(parent, style);
+	public TransformEditor(LContainer parent) {
+		super(parent, 4, false, false);
 
-		setLayout(new GridLayout(4, false));
-		
 		LControlListener<Integer> updateColor = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
@@ -55,118 +51,105 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		new LLabel(this, Vocab.instance.OFFSETX);
 		
-		spnOffsetX = new LSpinner(this, SWT.NONE);
+		spnOffsetX = new LSpinner(this);
 		spnOffsetX.setMaximum(1024 * 4);
 		spnOffsetX.setMinimum(-1024 * 4);
-		spnOffsetX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetX, "offsetX");
 		spnOffsetX.addModifyListener(updateOffset);
 		
 		new LLabel(this, Vocab.instance.RED);
 		
-		LSpinner spnRed = new LSpinner(this, SWT.NONE);
+		LSpinner spnRed = new LSpinner(this);
 		spnRed.setMaximum(10000);
 		spnRed.setMinimum(0);
-		spnRed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRed, "red");
 		spnRed.addModifyListener(updateColor);
 		
 		new LLabel(this, Vocab.instance.OFFSETY);
 		
-		spnOffsetY = new LSpinner(this, SWT.NONE);
+		spnOffsetY = new LSpinner(this);
 		spnOffsetY.setMaximum(1024);
 		spnOffsetY.setMinimum(-1024);
-		spnOffsetY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetY, "offsetY");
 		spnOffsetY.addModifyListener(updateOffset);
 		
 		new LLabel(this, Vocab.instance.GREEN);
 		
-		LSpinner spnGreen = new LSpinner(this, SWT.NONE);
+		LSpinner spnGreen = new LSpinner(this);
 		spnGreen.setMaximum(10000);
 		spnGreen.setMinimum(0);
-		spnGreen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnGreen, "green");
 		spnGreen.addModifyListener(updateColor);
 		
 		new LLabel(this, Vocab.instance.OFFSETDEPTH);
 		
-		LSpinner spnOffsetDepth = new LSpinner(this, SWT.NONE);
+		LSpinner spnOffsetDepth = new LSpinner(this);
 		spnOffsetDepth.setMinimum(-1024);
 		spnOffsetDepth.setMaximum(1024);
-		spnOffsetDepth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnOffsetDepth, "offsetDepth");
 		
 		new LLabel(this, Vocab.instance.BLUE);
 		
-		LSpinner spnBlue = new LSpinner(this, SWT.NONE);
+		LSpinner spnBlue = new LSpinner(this);
 		spnBlue.setMaximum(10000);
 		spnBlue.setMinimum(0);
-		spnBlue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnBlue, "blue");
 		spnBlue.addModifyListener(updateColor);
 		
 		new LLabel(this, Vocab.instance.SCALEX);
 		
-		spnScaleX = new LSpinner(this, SWT.NONE);
+		spnScaleX = new LSpinner(this);
 		spnScaleX.setMaximum(10000);
 		spnScaleX.setMinimum(-10000);
-		spnScaleX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleX, "scaleX");
 		spnScaleX.addModifyListener(updateScale);
 		
 		new LLabel(this, Vocab.instance.ALPHA);
 		
-		LSpinner spnAlpha = new LSpinner(this, SWT.NONE);
+		LSpinner spnAlpha = new LSpinner(this);
 		spnAlpha.setMaximum(10000);
 		spnAlpha.setMinimum(0);
-		spnAlpha.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnAlpha, "alpha");
 		spnAlpha.addModifyListener(updateColor);
 		
 		new LLabel(this, Vocab.instance.SCALEY);
 		
-		spnScaleY = new LSpinner(this, SWT.NONE);
+		spnScaleY = new LSpinner(this);
 		spnScaleY.setMaximum(10000);
 		spnScaleY.setMinimum(-10000);
-		spnScaleY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnScaleY, "scaleY");
 		spnScaleY.addModifyListener(updateScale);
 		
 		new LLabel(this, Vocab.instance.HUE);
 		
-		LSpinner spnHue = new LSpinner(this, SWT.NONE);
+		LSpinner spnHue = new LSpinner(this);
 		spnHue.setMaximum(360);
 		spnHue.setMinimum(-360);
-		spnHue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnHue, "hue");
 		spnHue.addModifyListener(updateColor);
 		
 		new LLabel(this, Vocab.instance.ROTATION);
 		
-		spnRotation = new LSpinner(this, SWT.NONE);
+		spnRotation = new LSpinner(this);
 		spnRotation.setMaximum(360);
 		spnRotation.setMinimum(-360);
-		spnRotation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnRotation, "rotation");
 		
 		new LLabel(this, Vocab.instance.SATURATION);
 		
-		LSpinner spnSaturation = new LSpinner(this, SWT.NONE);
+		LSpinner spnSaturation = new LSpinner(this);
 		spnSaturation.setMaximum(10000);
 		spnSaturation.setMinimum(0);
-		spnSaturation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnSaturation, "saturation");
 		spnSaturation.addModifyListener(updateColor);
 		
-		new LLabel(this, "").setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		new LLabel(this, 2, 1);
 		
 		new LLabel(this, Vocab.instance.BRIGHTNESS);
 		
-		LSpinner spnBrightness = new LSpinner(this, SWT.NONE);
+		LSpinner spnBrightness = new LSpinner(this);
 		spnBrightness.setMaximum(10000);
 		spnBrightness.setMinimum(0);
-		spnBrightness.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		addControl(spnBrightness, "brightness");
 		spnBrightness.addModifyListener(updateColor);
 	}
@@ -194,7 +177,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	public void setObject(Object obj) {
 		if (obj != null && image != null) {
 			Transform t = (Transform) obj;
-			Transform t2 = secondaryTransform();
+			Transform t2 = secondaryTransform;
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
 			image.setRGBA(t.red / 255f, t.green / 255f, t.blue / 255f, t.alpha / 255f);
@@ -211,7 +194,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	
 	public void onChangeColor(Transform t) {
 		if (image != null && getObject() != null) {
-			Transform t2 = secondaryTransform();
+			Transform t2 = secondaryTransform;
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
 			t.setColorTransform(image);
@@ -222,7 +205,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	
 	public void onChangeScale(Transform t) {
 		if (image != null) {
-			Transform t2 = secondaryTransform();
+			Transform t2 = secondaryTransform;
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
 			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
@@ -233,7 +216,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	public void updateColorTransform(LImage img) {
 		Transform t1 = (Transform) getObject();
 		if (t1 != null) {
-			Transform t2 = secondaryTransform();
+			Transform t2 = secondaryTransform;
 			if (t2 != null) {
 				t1.setColorTransform(img, t2);
 			} else {
@@ -241,7 +224,5 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 			}
 		}
 	}
-	
-	public Transform secondaryTransform() { return null; }
 
 }

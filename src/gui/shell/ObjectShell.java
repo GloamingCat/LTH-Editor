@@ -1,14 +1,12 @@
 package gui.shell;
 
-import org.eclipse.swt.widgets.Shell;
-
+import lwt.container.LControlView;
 import lwt.dialog.LObjectShell;
-import lwt.editor.LControlView;
+import lwt.dialog.LShell;
 import lwt.editor.LEditor;
 import lwt.widget.LControlWidget;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 
 import com.google.gson.Gson;
@@ -21,16 +19,15 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	public GDefaultObjectEditor<T> contentEditor;
 	private static Gson gson = new Gson();
 
-	public ObjectShell(Shell parent, int width, int height) {
+	public ObjectShell(LShell parent, int width, int height) {
 		this(parent);
 		setMinimumSize(width, height);
 	}
 	
-	public ObjectShell(Shell parent) {
+	public ObjectShell(LShell parent) {
 		super(parent);
-		content.setLayout(new FillLayout());
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		contentEditor = new GDefaultObjectEditor<T>(content);
+		contentEditor = new GDefaultObjectEditor<T>(content, false);
 		contentEditor.createActionStack();
 	}
 	

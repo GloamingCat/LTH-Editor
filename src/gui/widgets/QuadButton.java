@@ -2,14 +2,14 @@ package gui.widgets;
 
 import gui.shell.QuadShell;
 import gui.views.database.subcontent.TransformEditor;
+import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
+import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import project.Project;
 import data.subcontent.Quad;
@@ -19,12 +19,12 @@ public class QuadButton extends LObjectButton<Quad> {
 	private LImage image;
 	private TransformEditor transform;
 	
-	public QuadButton(Composite parent, int style) {
-		super(parent, style);
+	public QuadButton(LContainer parent, boolean optional) {
+		super(parent);
 		setShellFactory(new LShellFactory<Quad>() {
 			@Override
-			public LObjectShell<Quad> createShell(Shell parent) {
-				return new QuadShell(parent, style);
+			public LObjectShell<Quad> createShell(LShell parent) {
+				return new QuadShell(parent, optional);
 			}
 		});
 	}
