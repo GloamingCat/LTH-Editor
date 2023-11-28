@@ -10,6 +10,7 @@ import gui.views.database.subcontent.EquipStatusList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -19,10 +20,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 
 import project.Project;
 
@@ -44,15 +41,14 @@ public class ItemTab extends DatabaseTab<Item> {
 		new LLabel(grpGeneral, Vocab.instance.ICON);
 		
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compositeIcon.setAlignment(LFlags.CENTER);
 		
-		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_imgIcon.widthHint = 48;
-		gd_imgIcon.heightHint = 48;
-		imgIcon.setVerticalAlign(SWT.CENTER);
-		imgIcon.setLayoutData(gd_imgIcon);
+		imgIcon.setExpand(true, true);
+		imgIcon.setMinimumWidth(48);
+		imgIcon.setMinimumHeight(48);
+		imgIcon.setAlignment(LFlags.CENTER);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
 		btnGraphics.setImageWidget(imgIcon);
@@ -60,13 +56,10 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		// Description
 		
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.DESCRIPTION);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
 		
-		LTextBox txtDescription = new LTextBox(grpGeneral);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtDescription.minimumHeight = 60;
-		gd_txtDescription.heightHint = 60;
-		txtDescription.setLayoutData(gd_txtDescription);
+		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
+		txtDescription.setMinimumHeight(60);
 		addControl(txtDescription, "description");
 		
 		// Price
@@ -74,7 +67,7 @@ public class ItemTab extends DatabaseTab<Item> {
 		new LLabel(grpGeneral, Vocab.instance.PRICE);
 		
 		LPanel price = new LPanel(grpGeneral, 2, false);
-		price.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		price.setAlignment(LFlags.CENTER);
 		
 		LSpinner spnPrice = new LSpinner(price);
 		spnPrice.setMinimum(0);
@@ -88,7 +81,7 @@ public class ItemTab extends DatabaseTab<Item> {
 		// Use
 		
 		LFrame grpUse = new LFrame(left, Vocab.instance.USE, 3, false);
-		grpUse.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpUse.setExpand(true, true);
 		
 		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
 	
@@ -98,7 +91,9 @@ public class ItemTab extends DatabaseTab<Item> {
 		addControl(btnSkill, "skillID");
 		
 		LPanel checkButtons = new LPanel(grpUse, true);
-		checkButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 3, 1));
+		checkButtons.setAlignment(LFlags.TOP);
+		checkButtons.setExpand(true, false);
+		checkButtons.setSpread(3, 1);
 		
 		LCheckBox btnConsume = new LCheckBox(checkButtons);
 		btnConsume.setText(Vocab.instance.CONSUME);
@@ -108,28 +103,25 @@ public class ItemTab extends DatabaseTab<Item> {
 		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
 		addControl(btnNeedsUser, "needsUser");
 		
-		new LLabel(grpUse, LLabel.TOP, Vocab.instance.EFFECTS);
+		new LLabel(grpUse, LFlags.TOP, Vocab.instance.EFFECTS);
 		
 		SkillEffectList lstEffects = new SkillEffectList(grpUse);
-		GridData gd_effect = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_effect.heightHint = 60;
-		gd_effect.minimumHeight = 60;
-		lstEffects.setLayoutData(gd_effect);
+		lstEffects.setMinimumHeight(60);
+		lstEffects.setExpand(true, true);
+		lstEffects.setSpread(2, 1);
 		addChild(lstEffects, "effects");
 		
-		new LLabel(grpUse, LLabel.TOP, Vocab.instance.ATTRIBUTES);
+		new LLabel(grpUse, LFlags.TOP, Vocab.instance.ATTRIBUTES);
 		AttributeList lstUseAtt = new AttributeList(grpUse);
-		GridData gd_att = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_att.heightHint = 60;
-		gd_att.minimumHeight = 60;
-		lstUseAtt.setLayoutData(gd_att);
+		lstUseAtt.setMinimumHeight(60);
+		lstUseAtt.setExpand(true, true);
+		lstUseAtt.setSpread(2, 1);
 		addChild(lstUseAtt, "attributes");
 		
 		// Equip
 		
 		LFrame grpEquip = new LFrame(right, Vocab.instance.EQUIP, 2, false);
-		grpEquip.setLayout(new GridLayout(2, false));
-		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		grpEquip.setExpand(false, true);
 		
 		new LLabel(grpEquip, Vocab.instance.SLOT);
 		
@@ -141,37 +133,30 @@ public class ItemTab extends DatabaseTab<Item> {
 		btnAllSlots.setText(Vocab.instance.ALLSLOTS);
 		addControl(btnAllSlots, "allSlots");
 		
-		new LLabel(grpEquip, LLabel.TOP, Vocab.instance.BLOCKEDSLOTS);
+		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.BLOCKEDSLOTS);
 
 		NameList lstBlocked = new NameList(grpEquip);
-		GridData gd_lstBlocked = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_lstBlocked.heightHint = 48;
-		lstBlocked.setLayoutData(gd_lstBlocked);
+		lstBlocked.setAlignment(LFlags.CENTER);
+		lstBlocked.setMinimumHeight(48);
 		addChild(lstBlocked, "blocked");
 		
-		new LLabel(grpEquip, LLabel.TOP, Vocab.instance.ATTRIBUTES);
+		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.ATTRIBUTES);
 		AttributeList lstEquipAtt = new AttributeList(grpEquip);
-		GridData gd_EquipAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_EquipAtt.heightHint = 60;
-		gd_EquipAtt.minimumHeight = 60;
-		lstEquipAtt.setLayoutData(gd_EquipAtt);
+		lstEquipAtt.setExpand(true, true);
+		lstEquipAtt.setMinimumHeight(60);
 		addChild(lstEquipAtt, "equipAttributes");
 		
-		new LLabel(grpEquip, LLabel.TOP, Vocab.instance.PROPERTIES);
+		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.PROPERTIES);
 		BonusList lstElement = new BonusList(grpEquip);
-		GridData gd_equipElements = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_equipElements.heightHint = 60;
-		gd_equipElements.minimumHeight = 60;
-		lstElement.setLayoutData(gd_equipElements);
+		lstElement.setExpand(true, true);
+		lstElement.setMinimumHeight(60);
 		addChild(lstElement, "bonuses");
 		
-		new LLabel(grpEquip, Vocab.instance.STATUSADD, LLabel.TOP);
+		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.STATUSADD);
 		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip);
+		lstEquipStatus.setExpand(true, true);
+		lstEquipStatus.setMinimumHeight(60);
 		lstEquipStatus.setIncludeID(false);
-		GridData gd_status = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_status.heightHint = 60;
-		gd_status.minimumHeight = 60;
-		lstEquipStatus.setLayoutData(gd_status);
 		addChild(lstEquipStatus, "equipStatus");
 		
 	}

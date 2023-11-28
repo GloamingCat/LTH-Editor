@@ -14,9 +14,6 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -50,7 +47,7 @@ public class MaskShell extends LObjectShell<Mask> {
 	 */
 	public MaskShell(LShell parent) {
 		super(parent);
-		content.setLayout(new GridLayout(6, false));
+		content.setGridLayout(6, false);
 		
 		new LLabel(content, "Min Height");
 		
@@ -163,7 +160,8 @@ public class MaskShell extends LObjectShell<Mask> {
 		new LLabel(content, 4, 1);
 		
 		canvas = new LPanel(content, true);
-		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 6, 1));
+		canvas.setExpand(false, true);
+		canvas.setSpread(6, 1);
 		
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {

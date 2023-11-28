@@ -8,11 +8,7 @@ import lwt.dialog.LShell;
 import lwt.widget.LCheckBox;
 import lwt.widget.LNodeSelector;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-
 import project.Project;
-import org.eclipse.swt.layout.GridLayout;
 
 public class EquipStatusShell extends ObjectShell<EquipStatus> {
 
@@ -20,10 +16,10 @@ public class EquipStatusShell extends ObjectShell<EquipStatus> {
 		super(parent);
 		setMinimumSize(300, 250);
 		setSize(310, 246);
-		contentEditor.setLayout(new GridLayout(1, false));
+		contentEditor.setGridLayout(1, false);
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tree.setExpand(true, true);
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "id");
 		

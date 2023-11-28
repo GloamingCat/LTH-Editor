@@ -2,8 +2,6 @@ package gui.shell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 import data.Animation;
@@ -33,13 +31,8 @@ public class IconShell extends LObjectShell<Icon> {
 	
 	public IconShell(LShell parent, boolean optional) {
 		super(parent);
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
 		setMinimumSize(600, 400);
 		setSize(800, 800);
-		
-		content.setLayout(new FillLayout());
 		
 		LSashPanel sashForm = new LSashPanel(content, true);
 		
@@ -54,7 +47,7 @@ public class IconShell extends LObjectShell<Icon> {
 		});
 		
 		scroll = new LScrollPanel(sashForm, true);
-		image = new LImage(scroll, SWT.NONE);
+		image = new LImage(scroll);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		image.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {

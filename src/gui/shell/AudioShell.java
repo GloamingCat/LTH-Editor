@@ -7,6 +7,7 @@ import gui.widgets.FileSelector;
 import java.io.File;
 import java.util.ArrayList;
 
+import lwt.LFlags;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.dialog.LShell;
@@ -18,12 +19,7 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-
 import project.Project;
-
-import org.eclipse.swt.layout.GridData;
 
 import data.subcontent.Audio;
 
@@ -40,7 +36,7 @@ public class AudioShell extends ObjectShell<Audio> {
 		super(parent);
 
 		setMinimumSize(400, 400);
-		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
+		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new FileSelector(form, false) {
 			@Override
@@ -69,7 +65,7 @@ public class AudioShell extends ObjectShell<Audio> {
 		});
 
 		LPanel composite = new LPanel(form, 2, false);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite.setExpand(true, true);
 		
 		new LLabel(composite, Vocab.instance.VOLUME);
 		
@@ -92,7 +88,9 @@ public class AudioShell extends ObjectShell<Audio> {
 		addControl(spnTime, "time");
 		
 		AudioPlayer reproduction = new AudioPlayer(composite);
-		reproduction.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 2, 1));
+		reproduction.setExpand(false, true);
+		reproduction.setSpread(2, 1);
+		reproduction.setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
 		reproduction.loop = isBGM;
 		
 		selFile.addSelectionListener(new LSelectionListener() {

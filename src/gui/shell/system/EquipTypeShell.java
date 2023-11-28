@@ -10,15 +10,13 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.layout.GridLayout;
-
 public class EquipTypeShell extends ObjectShell<EquipType> {
 
 	public EquipTypeShell(LShell parent) {
 		super(parent);
 		
 		setText(Vocab.instance.EQUIP);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);
 

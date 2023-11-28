@@ -4,10 +4,7 @@ import gui.Vocab;
 import gui.views.fieldTree.*;
 import gui.widgets.DirectionCombo;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
+import lwt.LFlags;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.container.LScrollPanel;
@@ -44,13 +41,10 @@ public class PositionShell extends LObjectShell<Position> {
 	public PositionShell(LShell parent) {
 		super(parent);
 		setMinimumSize(640, 480);
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
-		content.setLayout(new GridLayout(1, false));
+		content.setGridLayout(1, false);
 
 		LSashPanel sashForm = new LSashPanel(content, true);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		sashForm.setExpand(true, true);
 		
 		tree = new LTree<FieldNode, Field>(sashForm) {
 			@Override
@@ -97,10 +91,11 @@ public class PositionShell extends LObjectShell<Position> {
 		scrolledComposite.setContent(canvas);
 
 		LPanel bottom = new LPanel(content, 4, false);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		bottom.setAlignment(LFlags.CENTER);
 		
 		LPanel coordinates = new LPanel(bottom, 6, false);
-		coordinates.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		coordinates.setAlignment(LFlags.CENTER);
+		coordinates.setExpand(true, false);
 		
 		LControlListener<Integer> redraw = new LControlListener<Integer>() {
 			@Override
@@ -131,7 +126,7 @@ public class PositionShell extends LObjectShell<Position> {
 		spnH.setValue(1);
 		spnH.addModifyListener(redraw);
 		
-		new LLabel(bottom, LLabel.RIGHT, Vocab.instance.DIRECTION);
+		new LLabel(bottom, LFlags.RIGHT, Vocab.instance.DIRECTION);
 		cmbDirection = new DirectionCombo(bottom);
 		
 		lblPos = new LLabel(bottom, "(-99, -99)");

@@ -5,6 +5,7 @@ import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.widgets.IDButton;
 import gui.widgets.PositionButton;
+import lwt.LFlags;
 import lwt.action.LActionStack;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
@@ -16,10 +17,6 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 
 import data.config.Config;
 import gson.editor.GDefaultObjectEditor;
@@ -39,57 +36,37 @@ public class ConfigEditor extends LView {
 		actionStack = new LActionStack(this);
 
 		editor = new GDefaultObjectEditor<Config>(this, false);
-		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		editor.setLayout(new GridLayout(4, false));
+		editor.setAlignment(LFlags.CENTER);
+		editor.setSpread(4, 1);
+		editor.setExpand(true, false);
+		editor.setGridLayout(2, true);
 		addChild(editor);
 		
 		LPanel left = new LPanel(this, 1);
-		GridData gd_left = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_left.widthHint = 200;
-		left.setLayoutData(gd_left);
+		left.setExpand(true, true);
+		left.setMinimumWidth(200);
 		
 		LPanel middle = new LPanel(this, 1);
-		GridData gd_middle = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_middle.widthHint = 180;
-		middle.setLayoutData(gd_middle);
+		middle.setExpand(true, true);
+		middle.setMinimumWidth(180);
 		
 		LPanel right = new LPanel(this, false);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		right.setExpand(true, true);
 		
 		// Name
 		
-		new LLabel(editor, Vocab.instance.PROJECTNAME);
+		LFrame grpIdentity = new LFrame(editor, Vocab.instance.IDENTITY, 6, false);
+		grpIdentity.setExpand(true, false);
 		
-		LText txtName = new LText(editor);
+		new LLabel(grpIdentity, Vocab.instance.PROJECTNAME);
+		LText txtName = new LText(grpIdentity, 5);
 		editor.addControl(txtName, "name");
 		
-		// Platform
+		// Cover
 		
-		String[] platforms = new String[] {
-				Vocab.instance.DESKTOP,
-				Vocab.instance.MOBILE,
-				Vocab.instance.BROWSER,
-				Vocab.instance.MOBILEBROWSER
-			};
-		
-		new LLabel(editor, Vocab.instance.PLATFORM);
-		
-		LCombo cmbPlatform = new LCombo(editor);
-		cmbPlatform.setOptional(false);
-		cmbPlatform.setIncludeID(false);
-		cmbPlatform.setItems(platforms);
-		editor.addControl(cmbPlatform, "platform");
-		// TODO: export button
-		
-		// Cover / Logo
-		
-		LPanel cover = new LPanel(editor, 6, false);
-		cover.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		
-		new LLabel(cover, Vocab.instance.COVER);
-		
-		LText txtCover = new LText(cover, true);		
-		IDButton btnCover = new IDButton(cover, true) {
+		new LLabel(grpIdentity, Vocab.instance.COVER);
+		LText txtCover = new LText(grpIdentity, true);		
+		IDButton btnCover = new IDButton(grpIdentity, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
@@ -98,10 +75,11 @@ public class ConfigEditor extends LView {
 		btnCover.setNameWidget(txtCover);
 		editor.addControl(btnCover, "coverID");
 		
-		new LLabel(cover, Vocab.instance.LOGO);
+		// Logo
 		
-		LText txtLogo = new LText(cover, true);
-		IDButton btnLogo = new IDButton(cover, true) {
+		new LLabel(grpIdentity, Vocab.instance.LOGO);
+		LText txtLogo = new LText(grpIdentity, true);
+		IDButton btnLogo = new IDButton(grpIdentity, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.animations.getTree();
@@ -109,40 +87,57 @@ public class ConfigEditor extends LView {
 		};
 		btnLogo.setNameWidget(txtLogo);
 		editor.addControl(btnLogo, "logoID");
+		
+		// Platform
+		
+		LFrame grpPlatform = new LFrame(editor, Vocab.instance.EXECUTION, 4, false);
+		grpPlatform.setExpand(true, false);
+		
+		String[] platforms = new String[] {
+				Vocab.instance.DESKTOP,
+				Vocab.instance.MOBILE,
+				Vocab.instance.BROWSER,
+				Vocab.instance.MOBILEBROWSER
+			};
+		new LLabel(grpPlatform, Vocab.instance.PLATFORM);
+		LCombo cmbPlatform = new LCombo(grpPlatform, 3, true);
+		cmbPlatform.setOptional(false);
+		cmbPlatform.setIncludeID(false);
+		cmbPlatform.setItems(platforms);
+		editor.addControl(cmbPlatform, "platform");
+		// TODO: export button
 
 		// FPS
 
-		LPanel fpsLimits = new LPanel(editor, 4, false);
-		fpsLimits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		LLabel lblFPS = new LLabel(grpPlatform, Vocab.instance.FPSLIMIT);
+		lblFPS.setAlignment(LFlags.CENTER);
 		
-		LLabel lblFPS = new LLabel(fpsLimits, Vocab.instance.FPSLIMIT);
-		lblFPS.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
-		LSpinner spnFpsMin = new LSpinner(fpsLimits);
+		LSpinner spnFpsMin = new LSpinner(grpPlatform);
 		editor.addControl(spnFpsMin, "fpsMin");
 		spnFpsMin.setMinimum(1);
 		spnFpsMin.setMaximum(9999);
 		
-		new LLabel(fpsLimits, " ~ ");
+		new LLabel(grpPlatform, " ~ ");
 		
-		LSpinner spnFpsMax = new LSpinner(fpsLimits);
+		LSpinner spnFpsMax = new LSpinner(grpPlatform);
 		editor.addControl(spnFpsMax, "fpsMax");
 		spnFpsMax.setMinimum(1);
 		spnFpsMax.setMaximum(9999);
 		
 		// Screen
 		
-		LFrame grpScreen = new LFrame(left, Vocab.instance.SCREEN, true);
-		grpScreen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LFrame grpScreen = new LFrame(left, Vocab.instance.SCREEN, true, true);
+		grpScreen.setExpand(true, true);
 		
 		GDefaultObjectEditor<Config.Screen> screenEditor = new GDefaultObjectEditor<Config.Screen>(grpScreen, true);
 		editor.addChild(screenEditor, "screen");
-		screenEditor.setLayout(new GridLayout(3, false));
+		screenEditor.setGridLayout(3, false);
 		
 		new LLabel(screenEditor, Vocab.instance.NATIVESIZE);
 		
 		LPanel nativeSize = new LPanel(screenEditor, 3, false);
-		nativeSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		nativeSize.setAlignment(LFlags.CENTER);
+		nativeSize.setSpread(2, 1);
 		
 		LSpinner spnNativeWidth = new LSpinner(nativeSize);
 		screenEditor.addControl(spnNativeWidth, "nativeWidth");
@@ -159,7 +154,8 @@ public class ConfigEditor extends LView {
 		new LLabel(screenEditor, Vocab.instance.SCALEFACTOR);
 		
 		LPanel scaleFactor = new LPanel(screenEditor, 3, false);
-		scaleFactor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		scaleFactor.setAlignment(LFlags.CENTER);
+		scaleFactor.setSpread(2, 1);
 		
 		LSpinner spnWidthScale = new LSpinner(scaleFactor);
 		screenEditor.addControl(spnWidthScale, "widthScale");
@@ -197,7 +193,7 @@ public class ConfigEditor extends LView {
 		screenEditor.addControl(cmbScaleMobile, "mobileScaleType");
 		
 		LPanel checkScreen = new LPanel(screenEditor, true, false);
-		checkScreen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
+		checkScreen.setSpread(3, 1);
 		
 		LCheckBox btnPixelPerfect = new LCheckBox(checkScreen);
 		btnPixelPerfect.setText(Vocab.instance.PIXELPERFECT);
@@ -209,12 +205,12 @@ public class ConfigEditor extends LView {
 		
 		// Player
 		
-		LFrame grpPlayer = new LFrame(middle, Vocab.instance.PLAYER, true);
-		grpPlayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LFrame grpPlayer = new LFrame(middle, Vocab.instance.PLAYER, true, true);
+		grpPlayer.setExpand(true, true);
 		
 		GDefaultObjectEditor<Config.Player> playerEditor = new GDefaultObjectEditor<Config.Player>(grpPlayer, true);
 		editor.addChild(playerEditor, "player");
-		playerEditor.setLayout(new GridLayout(3, false));
+		playerEditor.setGridLayout(3, false);
 		
 		new LLabel(playerEditor, Vocab.instance.WALKSPEED);
 		
@@ -244,12 +240,12 @@ public class ConfigEditor extends LView {
 		
 		// Grid
 		
-		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true);
-		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
+		grpGrid.setExpand(true, true);
 		
 		GDefaultObjectEditor<Config.Grid> gridEditor = new GDefaultObjectEditor<Config.Grid>(grpGrid, true);
 		editor.addChild(gridEditor, "grid");
-		gridEditor.setLayout(new GridLayout(3, false));
+		gridEditor.setGridLayout(3, false);
 		
 		new LLabel(gridEditor, Vocab.instance.TILEWIDTH);
 		LSpinner spnTileW = new LSpinner(gridEditor, 2);
@@ -280,7 +276,9 @@ public class ConfigEditor extends LView {
 		gridEditor.addControl(spnDepthPerY, "depthPerY");
 		
 		LPanel gridOptions = new LPanel(gridEditor, 2, false);
-		gridOptions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		gridOptions.setAlignment(LFlags.CENTER);
+		gridOptions.setExpand(true, false);
+		gridOptions.setSpread(3, 1);
 		
 		LCheckBox btnAllNeighbors = new LCheckBox(gridOptions);
 		btnAllNeighbors.setText(Vocab.instance.ALLNEIGHBORS);
@@ -291,18 +289,17 @@ public class ConfigEditor extends LView {
 		gridEditor.addControl(btnOverpassAllies, "overpassAllies");
 
 		LCheckBox btnOverpassDeads = new LCheckBox(gridOptions);
-		btnOverpassDeads.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnOverpassDeads.setText(Vocab.instance.OVERPASSDEADS);
 		gridEditor.addControl(btnOverpassDeads, "overpassDeads");
 		
 		// Battle
 		
-		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE, true);
-		grpBattle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE, true, true);
+		grpBattle.setExpand(true, true);
 		
 		GDefaultObjectEditor<Config.Battle> battleEditor = new GDefaultObjectEditor<Config.Battle>(grpBattle, true);
 		editor.addChild(battleEditor, "battle");
-		battleEditor.setLayout(new GridLayout(3, false));
+		battleEditor.setGridLayout(3, false);
 		
 		new LLabel(battleEditor, Vocab.instance.MAXLEVEL);
 		
@@ -339,7 +336,8 @@ public class ConfigEditor extends LView {
 		new LLabel(battleEditor, "%");
 		
 		LPanel checkBattle = new LPanel(battleEditor, true, false);
-		checkBattle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		checkBattle.setExpand(true, false);
+		checkBattle.setSpread(2, 1);
 
 		LCheckBox btnRevive = new LCheckBox(checkBattle);
 		btnRevive.setText(Vocab.instance.BATTLEENDREVIVE);
@@ -351,12 +349,12 @@ public class ConfigEditor extends LView {
 		
 		// Troop
 		
-		LFrame grpTroop = new LFrame(middle, Vocab.instance.TROOP, true);
-		grpTroop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LFrame grpTroop = new LFrame(middle, Vocab.instance.TROOP, true, true);
+		grpTroop.setExpand(true, true);
 		
 		GDefaultObjectEditor<Config.Troop> troopEditor = new GDefaultObjectEditor<Config.Troop>(grpTroop, true);
 		editor.addChild(troopEditor, "troop");
-		troopEditor.setLayout(new GridLayout(3, false));
+		troopEditor.setGridLayout(3, false);
 		
 		new LLabel(troopEditor, Vocab.instance.INITIALTROOP);
 		
@@ -378,7 +376,8 @@ public class ConfigEditor extends LView {
 		new LLabel(troopEditor, Vocab.instance.TROOPSIZE);
 		
 		LPanel troopSize = new LPanel(troopEditor, 3, false);
-		troopSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		troopSize.setAlignment(LFlags.CENTER);
+		troopSize.setSpread(2, 1);
 		
 		LSpinner spnWidth = new LSpinner(troopSize);
 		troopEditor.addControl(spnWidth, "width");
@@ -409,7 +408,7 @@ public class ConfigEditor extends LView {
 		// Sounds
 		
 		LFrame grpSounds = new LFrame(this, Vocab.instance.SOUNDS, true, true);
-		grpSounds.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpSounds.setExpand(true, true);
 		SoundList lstSounds = new SoundList(grpSounds);
 		editor.addChild(lstSounds, "sounds");
 		

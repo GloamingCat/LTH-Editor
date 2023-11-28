@@ -8,9 +8,7 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.layout.FillLayout;
 
 public abstract class FileShell<T> extends LObjectShell<T> {
 
@@ -30,10 +28,7 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		super(parent);
 		this.optional = optional;
 		this.folder = folder;
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
-		content.setLayout(new FillLayout(SWT.HORIZONTAL));
+		content.setFillLayout(true);
 		
 		sashForm = new LSashPanel(content, true);
 		

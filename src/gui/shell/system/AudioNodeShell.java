@@ -7,6 +7,7 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.LFlags;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.dialog.LShell;
@@ -19,12 +20,7 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-
 import project.Project;
-
-import org.eclipse.swt.layout.GridData;
 
 import data.subcontent.Audio;
 
@@ -39,7 +35,7 @@ public class AudioNodeShell extends ObjectShell<Audio.Node> {
 	
 	public AudioNodeShell(LShell parent, int style) {
 		super(parent, 400, 400);
-		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
+		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new FileSelector(form, (style & OPTIONAL) > 0) {
 			@Override
@@ -51,7 +47,7 @@ public class AudioNodeShell extends ObjectShell<Audio.Node> {
 		selFile.setFolder(Project.current.audioPath());
 
 		LPanel composite = new LPanel(form, 2, false);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite.setExpand(true, true);
 
 		new LLabel(composite, Vocab.instance.KEY);
 		
@@ -84,7 +80,9 @@ public class AudioNodeShell extends ObjectShell<Audio.Node> {
 		loop.setValue(true);
 		
 		reproduction = new AudioPlayer(composite);
-		reproduction.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 2, 1));
+		reproduction.setExpand(false, true);
+		reproduction.setSpread(2, 1);
+		reproduction.setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
 		
 		selFile.addSelectionListener(new LSelectionListener() {
 			@Override

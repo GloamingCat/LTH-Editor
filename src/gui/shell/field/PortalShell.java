@@ -7,11 +7,10 @@ import gui.views.fieldTree.*;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 
+import lwt.LFlags;
 import lwt.container.LScrollPanel;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
@@ -25,14 +24,14 @@ import data.field.Transition.Portal;
 import data.subcontent.Point;
 
 public class PortalShell extends LObjectShell<Portal> {
-	
+
 	protected FieldCanvas canvas;
 	protected LSpinner spnH;
 	protected LScrollPanel scrolledComposite;
 	protected LLabel lblPos;
 	protected boolean[][][] selectedTiles;
 	protected int fieldID;
-	
+
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -40,11 +39,12 @@ public class PortalShell extends LObjectShell<Portal> {
 		super(parent);
 		this.fieldID = fieldID;
 		setMinimumSize(640, 480);
-		content.setLayout(new GridLayout(3, false));
-		
+		content.setGridLayout(3, false);
+
 		scrolledComposite = new LScrollPanel(content, true);
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		
+		scrolledComposite.setExpand(true, true);
+		scrolledComposite.setSpread(3, 1);
+
 		canvas = new FieldCanvasOpenGL(scrolledComposite) {
 			public void onTileLeftDown() {
 				selectedTiles[height][tileX][tileY] = !selectedTiles[height][tileX][tileY];
@@ -56,21 +56,20 @@ public class PortalShell extends LObjectShell<Portal> {
 			}
 		};
 		canvas.addPaintListener(new PaintListener() {
-	        public void paintControl(PaintEvent e) {
-	    		for (int h = 0; h < selectedTiles.length; h++)
-	    			for (int x = 0; x < selectedTiles[h].length; x++)
-	    				for (int y = 0; y < selectedTiles[h][x].length; y++) 
-	    					if (selectedTiles[h][x][y]) {
-	    						Point point = FieldHelper.math.tile2Pixel(x, y, h);
-	    						canvas.drawCursor(e.gc, SWTResourceManager.getColor(SWT.COLOR_YELLOW), point);
-	    		}
-	        }
-	    });
-		
+			public void paintControl(PaintEvent e) {
+				for (int h = 0; h < selectedTiles.length; h++)
+					for (int x = 0; x < selectedTiles[h].length; x++)
+						for (int y = 0; y < selectedTiles[h][x].length; y++) 
+							if (selectedTiles[h][x][y]) {
+								Point point = FieldHelper.math.tile2Pixel(x, y, h);
+								canvas.drawCursor(e.gc, SWTResourceManager.getColor(SWT.COLOR_YELLOW), point);
+							}
+			}
+		});
+
 		scrolledComposite.setContent(canvas);
-		
-		new LLabel(content, Vocab.instance.HEIGHT).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		
+
+		new LLabel(content, Vocab.instance.HEIGHT).setAlignment(LFlags.CENTER);
 		spnH = new LSpinner(content);
 		spnH.setMinimum(1);
 		spnH.setValue(1);
@@ -81,13 +80,11 @@ public class PortalShell extends LObjectShell<Portal> {
 				canvas.redraw();
 			}
 		});
-		
-		lblPos = new LLabel(content, "(-99, -99)");
-		lblPos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		lblPos = new LLabel(content, "(-99, -99)", LFlags.EXPAND);
+
 		pack();
 	}
-	
+
 	public void open(Portal initial) {
 		super.open(initial);
 		if (initial.size() > 0) {
@@ -108,5 +105,5 @@ public class PortalShell extends LObjectShell<Portal> {
 	protected Portal createResult(Portal initial) {
 		return new Portal(selectedTiles);
 	}
-	
+
 }

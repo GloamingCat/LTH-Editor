@@ -4,9 +4,7 @@ import gui.Vocab;
 import gui.views.fieldTree.FieldEditor;
 import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
-
-import org.eclipse.swt.SWT;
-
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -18,8 +16,6 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
@@ -43,7 +39,9 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		super(parent, 4, false, false);
 		
 		LPanel position = new LPanel(this, 4, false);
-		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		position.setExpand(true, false);
+		position.setSpread(4, 1);
+		position.setAlignment(LFlags.CENTER);
 		
 		new LLabel(position, Vocab.instance.POSITION);
 		
@@ -98,7 +96,8 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		addControl(txtKey, "key");
 		
 		LPanel compOptions = new LPanel(this, 3, true);
-		compOptions.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+		compOptions.setSpread(4, 1);
+		compOptions.setAlignment(LFlags.CENTER);
 
 		LCheckBox btnPersistent = new LCheckBox(compOptions);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
@@ -147,7 +146,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		addControl(cmbDir, "direction");
 		cmbDir.addModifyListener(listener);
 		
-		new LLabel(this, LLabel.BOTTOM, Vocab.instance.FRAME, 2);
+		new LLabel(this, LFlags.BOTTOM, Vocab.instance.FRAME, 2);
 		
 		new LLabel(this, Vocab.instance.ANIMATION);
 		LText txtAnim = new LText(this);
@@ -156,8 +155,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		btnChar.addModifyListener(listener);
 		
 		LSpinner spnFrame = new LSpinner(this, 2);
-		GridData gd_spnFrame = (GridData) spnFrame.getLayoutData();
-		gd_spnFrame.widthHint = 36;
+		spnFrame.setMinimumWidth(36);
 		addControl(spnFrame, "frame");
 		
 		// Battle
@@ -182,10 +180,11 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		addControl(btnBattler, "battlerID");
 		
 		LFrame grpScripts = new LFrame(this, Vocab.instance.SCRIPTS, 1);
-		grpScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
+		grpScripts.setSpread(4, 1);
+		grpScripts.setExpand(false, true);
 		
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
-		lstScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstScripts.setExpand(true, true);
 		addChild(lstScripts, "scripts");
 		
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);

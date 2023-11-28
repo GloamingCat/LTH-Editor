@@ -27,10 +27,8 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.Animation;
@@ -56,7 +54,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
 		
 		LPanel battler = new LPanel(grpGeneral, 2, false);
-		battler.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		battler.setExpand(true, false);
 		
 		LText txtBattler = new LText(battler, true);
 		btnBattler = new IDButton(battler, true);
@@ -68,7 +66,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		new LLabel(grpGeneral, Vocab.instance.SHADOW);
 		
 		LPanel shadow = new LPanel(grpGeneral, 2, false);
-		shadow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		shadow.setExpand(true, false);
 		
 		LText txtShadow = new LText(shadow, true);		
 		btnShadow = new IDButton(shadow, true);
@@ -78,7 +76,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// Tiles
 		
 		LPanel middle = new LPanel(left, true, true);
-		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		middle.setExpand(true, true);
 		
 		LFrame grpTiles = new LFrame(middle, Vocab.instance.COLLIDERTILES, true, true);
 		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles);
@@ -96,7 +94,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS, 1);
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
-		lstScripts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstScripts.setExpand(true, true);
 		addChild(lstScripts, "scripts");
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
@@ -105,7 +103,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// KO
 		
 		LFrame grpKO = new LFrame(left, Vocab.instance.KOANIM, 3, false);
-		grpKO.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpKO.initGridData();
 		
 		new LLabel(grpKO, Vocab.instance.ANIMATION);
 		
@@ -124,7 +122,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
-		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpTransform.setExpand(true, false);
 		
 		TransformEditor transformTab = new TransformEditor(grpTransform);
 		addChild(transformTab, "transform");
@@ -132,24 +130,24 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// Animations
 		
 		LPanel graphics = new LPanel(contentEditor, 2, true);
-		graphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		graphics.setExpand(true, true);
+		graphics.setSpread(2, 1);
 		
 		LFrame grpAnimations = new LFrame(graphics, Vocab.instance.ANIMATIONS, 2, false);
-		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAnimations.setExpand(true, true);
 
 		NodeList lstAnim = new NodeList(grpAnimations) {
 			protected LDataTree<Object> getDataTree() { 
 				return Project.current.animations.getTree(); 
 			}
 		};
-		GridData gd_anims = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_anims.widthHint = 128;
-		lstAnim.setLayoutData(gd_anims);
 		lstAnim.getCollectionWidget().setIncludeID(false);
+		lstAnim.setMinimumWidth(128);
+		lstAnim.setExpand(false, true);
 		addChild(lstAnim, "animations");
 		
-		LImage imgAnim = new LImage(grpAnimations, SWT.NONE);
-		imgAnim.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LImage imgAnim = new LImage(grpAnimations);
+		imgAnim.setExpand(true, true);
 		
 		lstAnim.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
@@ -165,16 +163,15 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		});
 		
 		LFrame grpPortraits = new LFrame(graphics, Vocab.instance.PORTRAITS, 2, false);
-		grpPortraits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpPortraits.setExpand(true, true);
 		
 		PortraitList lstPortraits = new PortraitList(grpPortraits);
-		GridData gd_portraits = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_portraits.widthHint = 128;
-		lstPortraits.setLayoutData(gd_portraits);
+		lstPortraits.setMinimumWidth(128);
+		lstPortraits.setExpand(false, true);
 		addChild(lstPortraits, "portraits");
 		
-		LImage imgPotrait = new LImage(grpPortraits, SWT.NONE);
-		imgPotrait.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LImage imgPotrait = new LImage(grpPortraits);
+		imgPotrait.setExpand(true, true);
 
 		lstPortraits.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
@@ -189,8 +186,8 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			}
 		});
 		
-		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		left.setExpand(true, false);
+		right.setExpand(true, false);
 		
 	}
 	

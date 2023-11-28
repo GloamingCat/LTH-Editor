@@ -13,13 +13,8 @@ import lwt.container.LSashPanel;
 import lwt.dialog.LShell;
 import lwt.widget.LCheckBox;
 
-import org.eclipse.swt.SWT;
-
 import data.config.Plugin;
 import project.Project;
-
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 
 public class PluginShell extends ObjectShell<Plugin> {
 	
@@ -34,7 +29,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 	
 	public PluginShell(LShell parent, boolean optional) {
 		super(parent);
-		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
+		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new FileSelector(form, optional) {
 			@Override
@@ -47,7 +42,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 		LPanel composite = new LPanel(form, 1);
 		
 		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
-		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpParameters.setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		

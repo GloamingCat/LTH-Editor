@@ -3,6 +3,7 @@ package gui.shell.field;
 import gui.Vocab;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
+import lwt.container.LScrollPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
@@ -17,14 +18,10 @@ import lwt.widget.LText;
 import data.Animation;
 import data.field.FieldImage;
 
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
@@ -37,7 +34,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
 	protected int col, row;
-	private ScrolledComposite scroll;
+	private LScrollPanel scroll;
 	private LText txtName;
 	private LCheckBox btnVisible;
 	private LCheckBox btnForeground;
@@ -45,19 +42,17 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	
 	public FieldImageShell(LShell parent) {
 		super(parent);
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
 		setMinimumSize(400, 300);
 
-		content.setLayout(new GridLayout(2, false));
+		content.setGridLayout(2, false);
 		
 		new LLabel(content, Vocab.instance.NAME);
 		
 		txtName = new LText(content);
 
 		LSashPanel sashForm = new LSashPanel(content, true);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		sashForm.setExpand(true, true);
+		sashForm.setSpread(2, 1);
 		
 		tree = new LNodeSelector<Object>(sashForm, false);
 		tree.setCollection(getTree());
@@ -69,12 +64,9 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 			}
 		});
 		
-		scroll = new ScrolledComposite(sashForm, SWT.NONE);
-		scroll.setExpandVertical(true);
-		scroll.setExpandHorizontal(true);
-		scroll.setLayout(new FillLayout());
+		scroll = new LScrollPanel(sashForm, true);
 		
-		image = new LImage(scroll, SWT.NONE);
+		image = new LImage(scroll);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		image.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
@@ -101,7 +93,8 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		sashForm.setWeights(new int[] {1, 2});
 
 		LPanel options = new LPanel(content, 3, false);
-		options.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		options.setExpand(true, false);
+		options.setSpread(2, 1);
 		
 		btnVisible = new LCheckBox(options);
 		btnVisible.setText(Vocab.instance.VISIBLE);

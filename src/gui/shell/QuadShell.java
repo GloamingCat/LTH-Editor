@@ -9,8 +9,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import lwt.LFlags;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
+import lwt.container.LScrollPanel;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
@@ -20,11 +22,8 @@ import lwt.event.listener.LSelectionListener;
 import lwt.widget.LActionButton;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
+import lwt.widget.LSpinner;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
@@ -34,25 +33,19 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import data.subcontent.Quad;
 import project.Project;
 
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.layout.GridData;
-
 public class QuadShell extends LObjectShell<Quad> {
 
 	private FileSelector selFile;
 	private LImage imgQuad;
-	private Spinner spnX;
-	private Spinner spnY;
-	private Spinner spnWidth;
-	private Spinner spnHeight;
-	private ScrolledComposite scroll;
+	private LSpinner spnX;
+	private LSpinner spnY;
+	private LSpinner spnWidth;
+	private LSpinner spnHeight;
+	private LScrollPanel scroll;
 	
 	public QuadShell(LShell parent, boolean optional) {
 		super(parent);
 		setMinimumSize(600, 400);
-		content.setLayout(new FillLayout());
 		
 		LSashPanel form = new LSashPanel(content, true);
 		selFile = new FileSelector(form, optional) {
@@ -65,56 +58,47 @@ public class QuadShell extends LObjectShell<Quad> {
 		
 		LPanel quad = new LPanel(form, 1);
 		
-		scroll = new ScrolledComposite(quad, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		scroll = new LScrollPanel(quad);
+		scroll.setExpand(true, true);
 		
 		imgQuad = new LImage(scroll);
-		imgQuad.setHorizontalAlign(SWT.CENTER);
-		imgQuad.setVerticalAlign(SWT.CENTER);
 		scroll.setContent(imgQuad);
 		
 		LPanel spinners = new LPanel(quad, 4, false);
-		spinners.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spinners.setExpand(true, false);
+		spinners.setAlignment(LFlags.CENTER);
 		
 		new LLabel(spinners, Vocab.instance.QUADX);
 		
-		spnX = new Spinner(spinners, SWT.BORDER);
+		spnX = new LSpinner(spinners);
 		spnX.setMaximum(4095);
-		spnX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(spinners, Vocab.instance.QUADW);
 		
-		spnWidth = new Spinner(spinners, SWT.BORDER);
+		spnWidth = new LSpinner(spinners);
 		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
-		spnWidth.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(spinners, Vocab.instance.QUADY);
 		
-		spnY = new Spinner(spinners, SWT.BORDER);
+		spnY = new LSpinner(spinners);
 		spnY.setMaximum(4095);
-		spnY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		new LLabel(spinners, Vocab.instance.QUADH);
 		
-		spnHeight = new Spinner(spinners, SWT.BORDER);
+		spnHeight = new LSpinner(spinners);
 		spnHeight.setMaximum(4096);
 		spnHeight.setMinimum(1);
-		spnHeight.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		LActionButton btnFullImage = new LActionButton(quad, Vocab.instance.FULLIMAGE);
-		GridLayout gl_composite_2 = new GridLayout(2, false);
-		gl_composite_2.marginWidth = 0;
-		gl_composite_2.marginHeight = 0;
-		btnFullImage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		btnFullImage.addModifyListener(new LControlListener<Object>() {
 			@Override
 			public void onModify(LControlEvent<Object> e) {
 				Rectangle rect = imgQuad.getImage().getBounds();
-				spnX.setSelection(0);
-				spnY.setSelection(0);
-				spnWidth.setSelection(rect.width);
-				spnHeight.setSelection(rect.height);
+				spnX.setValue(0);
+				spnY.setValue(0);
+				spnWidth.setValue(rect.width);
+				spnHeight.setValue(rect.height);
 				imgQuad.redraw();
 			}
 		});
@@ -122,10 +106,10 @@ public class QuadShell extends LObjectShell<Quad> {
 		imgQuad.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				int x1 = spnX.getSelection();
-				int y1 = spnY.getSelection();
-				int x2 = x1 + spnWidth.getSelection() - 1;
-				int y2 = y1 + spnHeight.getSelection() - 1;
+				int x1 = spnX.getValue();
+				int y1 = spnY.getValue();
+				int x2 = x1 + spnWidth.getValue() - 1;
+				int y2 = y1 + spnHeight.getValue() - 1;
 				e.gc.drawLine(x1, y1, x2, y1);
 				e.gc.drawLine(x1, y2, x2, y2);
 				e.gc.drawLine(x1, y1, x1, y2);
@@ -140,9 +124,9 @@ public class QuadShell extends LObjectShell<Quad> {
 			}
 		});
 		
-		ModifyListener redrawListener = new ModifyListener() {
+		LControlListener<Integer> redrawListener = new LControlListener<Integer>() {
 			@Override
-			public void modifyText(ModifyEvent arg0) {
+			public void onModify(LControlEvent<Integer> event) {
 				imgQuad.redraw();
 			}
 		};
@@ -160,10 +144,10 @@ public class QuadShell extends LObjectShell<Quad> {
 	public void open(Quad initial) {
 		super.open(initial);
 		selFile.setSelectedFile(initial.path);
-		spnX.setSelection(initial.x);
-		spnY.setSelection(initial.y);
-		spnWidth.setSelection(initial.width);
-		spnHeight.setSelection(initial.height);
+		spnX.setValue(initial.x);
+		spnY.setValue(initial.y);
+		spnWidth.setValue(initial.width);
+		spnHeight.setValue(initial.height);
 		resetImage();
 	}
 
@@ -173,10 +157,10 @@ public class QuadShell extends LObjectShell<Quad> {
 		Image img = imgQuad.getImage();
 		if (img != null) {
 			Rectangle rect = imgQuad.getImage().getBounds();
-			q.x = Math.min(spnX.getSelection(), rect.width);
-			q.y = Math.min(spnY.getSelection(), rect.height);
-			q.width = Math.min(spnWidth.getSelection(), rect.width);
-			q.height = Math.min(spnHeight.getSelection(), rect.height);
+			q.x = Math.min(spnX.getValue(), rect.width);
+			q.y = Math.min(spnY.getValue(), rect.height);
+			q.width = Math.min(spnWidth.getValue(), rect.width);
+			q.height = Math.min(spnHeight.getValue(), rect.height);
 			q.path = selFile.getSelectedFile();
 		}
 		return q;

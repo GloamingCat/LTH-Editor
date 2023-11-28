@@ -10,19 +10,16 @@ import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
 import project.Project;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
 public class JobSkillShell extends ObjectShell<Job.Skill> {
 
 	public JobSkillShell(LShell parent) {
 		super(parent);
 		setMinimumSize(300, 100);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
+		tree.setExpand(true, true);
+		tree.setSpread(2, 1);
 		tree.setCollection(Project.current.skills.getTree());
 		addControl(tree, "id");
 		

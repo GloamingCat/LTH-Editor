@@ -3,12 +3,10 @@ package gui.views.database.subcontent;
 import gui.Vocab;
 import gui.widgets.IDButton;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-
 import data.Troop.Unit;
 import gson.editor.GDefaultObjectEditor;
 import project.Project;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LPanel;
 import lwt.dataestructure.LDataTree;
@@ -42,7 +40,9 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		new LLabel(this, Vocab.instance.CHARACTER);
 		
 		LPanel character = new LPanel(this, 2, false);
-		character.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		character.setExpand(true, false);
+		character.setAlignment(LFlags.CENTER);
+		character.setSpread(3, 1);
 		
 		LText txtChar = new LText(character, true);		
 		IDButton btnChar = new IDButton(character, false) {
@@ -57,7 +57,9 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		new LLabel(this, Vocab.instance.CHARBATTLER);
 		
 		LPanel battler = new LPanel(this, 2, false);
-		battler.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		battler.setExpand(true, false);
+		battler.setAlignment(LFlags.CENTER);
+		battler.setSpread(3, 1);
 		
 		LText txtBattler = new LText(battler, true);
 		IDButton btnBattler = new IDButton(battler, true) {

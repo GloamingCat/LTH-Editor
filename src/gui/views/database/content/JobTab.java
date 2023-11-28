@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -16,9 +17,6 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import data.Job;
 import project.Project;
@@ -45,7 +43,8 @@ public class JobTab extends DatabaseTab<Job> {
 		new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL);
 		
 		LPanel attackSkill = new LPanel(grpGeneral, 2, false);
-		attackSkill.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		attackSkill.setExpand(true, false);
+		attackSkill.setAlignment(LFlags.CENTER);
 		
 		LText txtAttack = new LText(attackSkill, true);
 		btnAttack = new IDButton(attackSkill, false);
@@ -53,12 +52,12 @@ public class JobTab extends DatabaseTab<Job> {
 		addControl(btnAttack, "attackID");
 		
 		LFrame grpBuild = new LFrame(left, Vocab.instance.BUILD, true, true);
-		grpBuild.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpBuild.setExpand(true, true);
 		BuildEditor buildEditor = new BuildEditor(grpBuild, 1);
 		addChild(buildEditor, "build");
 		
 		LPanel nodes = new LPanel(right, false, true);
-		nodes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		nodes.setExpand(true, true);
 
 		LFrame grpSkillNodes = new LFrame(nodes, Vocab.instance.SKILLNODES, true, true);
 		SimpleEditableList<Job.Skill> lstSkills = new SimpleEditableList<>(grpSkillNodes);

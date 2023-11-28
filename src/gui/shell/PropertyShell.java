@@ -9,16 +9,12 @@ import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
 public abstract class PropertyShell extends ObjectShell<Property> {
 
 	public PropertyShell(LShell parent) {
 		super(parent);
-		setMinimumSize(372, 329);
-		contentEditor.setLayout(new GridLayout(2, false));
+		setMinimumSize(400, 320);
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.VALUE);
 		LSpinner spnValue = new LSpinner(contentEditor);
@@ -27,7 +23,8 @@ public abstract class PropertyShell extends ObjectShell<Property> {
 		addControl(spnValue, "value");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		tree.setExpand(true, true);
+		tree.setSpread(2, 1);
 		tree.setCollection(getTree());
 		addControl(tree, "id");
 		

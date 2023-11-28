@@ -12,16 +12,12 @@ import lwt.widget.LNodeSelector;
 import lwt.widget.LText;
 import project.Project;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
 public class SkillEffectShell extends ObjectShell<Effect> {
 
 	public SkillEffectShell(LShell parent) {
 		super(parent);
 		setMinimumSize(300, 100);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 		
@@ -47,7 +43,8 @@ public class SkillEffectShell extends ObjectShell<Effect> {
 		addControl(btnAbsorb, "absorb");
 		
 		LFrame grpStatus = new LFrame(contentEditor, Vocab.instance.STATUS, true, true);
-		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grpStatus.setExpand(true, true);
+		grpStatus.setSpread(2, 1);
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(grpStatus, true);
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "statusID");

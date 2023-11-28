@@ -11,27 +11,17 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
 import data.field.Layer.Info;
 
 public class LayerShell extends ObjectShell<Info> {
 
 	public LayerShell(LShell parent) {
 		super(parent);
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
 
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.marginWidth = 0;
-		gridLayout.marginHeight = 0;
-		contentEditor.setLayout(gridLayout);
+		contentEditor.setGridLayout(2, false);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 2, false);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGeneral.setExpand(true, true);
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME);
 		
@@ -50,7 +40,7 @@ public class LayerShell extends ObjectShell<Info> {
 		addControl(btnNoAuto, "noAuto");
 		
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, true, true);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpTags.setExpand(true, true);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		

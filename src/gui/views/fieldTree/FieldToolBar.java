@@ -8,7 +8,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -29,8 +28,7 @@ public class FieldToolBar extends LPanel {
 		super(parent, true);
 		instance = this;
 		setSize(440, 0);
-		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
-		setLayout(fillLayout);
+		setFillLayout(true);
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		

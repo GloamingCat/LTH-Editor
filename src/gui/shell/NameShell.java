@@ -7,8 +7,6 @@ import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.layout.GridLayout;
-
 public class NameShell extends LObjectShell<String> {
 	
 	private LText txtName;
@@ -17,7 +15,7 @@ public class NameShell extends LObjectShell<String> {
 		super(parent);
 		setMinimumSize(300, 120);
 		
-		content.setLayout(new GridLayout(2, false));
+		content.setGridLayout(2, false);
 		
 		new LLabel(content, Vocab.instance.NAME);
 		

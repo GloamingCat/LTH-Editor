@@ -7,8 +7,6 @@ import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.layout.GridLayout;
-
 import data.subcontent.Tile;
 
 public class CharTileShell extends ObjectShell<Tile> {
@@ -16,10 +14,7 @@ public class CharTileShell extends ObjectShell<Tile> {
 	public CharTileShell(LShell parent) {
 		super(parent, 200, 160);
 		
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.marginWidth = 0;
-		gridLayout.marginHeight = 0;
-		contentEditor.setLayout(gridLayout);
+		contentEditor.setGridLayout(2, false);
 
 		new LLabel(contentEditor, Vocab.instance.OFFSETX);
 		

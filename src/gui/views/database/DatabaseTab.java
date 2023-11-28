@@ -9,13 +9,9 @@ import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.ImageButton;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
 import com.google.gson.Gson;
 
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LControlView;
 import lwt.container.LFrame;
@@ -52,7 +48,7 @@ public abstract class DatabaseTab<T> extends LView {
 	public DatabaseTab(LContainer parent) {
 		super(parent, true);
 		
-		setLayout(new FillLayout());
+		setFillLayout(true);
 		
 		createActionStack();
 		
@@ -80,24 +76,21 @@ public abstract class DatabaseTab<T> extends LView {
 		super.addChild(listEditor);
 		
 		contentEditor = new GDefaultObjectEditor<T>(sashForm, true);
-		contentEditor.setLayout(new GridLayout(2, true));
+		contentEditor.setGridLayout(2, true);
 		
 		left = new LPanel(contentEditor, 1);
-		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		left.setExpand(true, true);
 		right = new LPanel(contentEditor, 1);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		right.setExpand(true, true);
 		
 		grpGeneral = new LFrame(left, Vocab.instance.GENERAL, 2, false);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpGeneral.setExpand(true, false);
 		
 		LPanel compID = new LPanel(grpGeneral, 3, false);
-		compID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		
-		lblID = new LLabel(compID, "");
-		lblID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		compID.setExpand(true, false);
+		compID.setSpread(2, 1);
+		lblID = new LLabel(compID, LFlags.EXPAND, "");
 		lblKey = new LLabel(compID, Vocab.instance.KEY);
-		
 		txtKey = new LText(compID);
 		txtKey.addModifyListener(new LControlListener<String>() {
 			@Override
@@ -110,10 +103,7 @@ public abstract class DatabaseTab<T> extends LView {
 		contentEditor.addControl(txtKey, "key");
 		
 		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);
-		GridData gd_name = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-		gd_name.minimumWidth = 72;
-		gd_name.widthHint = 72;
-		lblName.setLayoutData(gd_name);
+		lblName.setMinimumWidth(72);
 		
 		txtName = new LText(grpGeneral);
 		contentEditor.addControl(txtName, "name");
@@ -121,10 +111,8 @@ public abstract class DatabaseTab<T> extends LView {
 		// Tags
 		
 		grpTags = new LFrame(right, Vocab.instance.TAGS, true, true);
-		GridData gd_tags = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_tags.minimumHeight = 140;
-		gd_tags.heightHint = 140;
-		grpTags.setLayoutData(gd_tags);
+		grpTags.setExpand(true, false);
+		grpTags.setMinimumHeight(140);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		

@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -31,8 +32,6 @@ import data.Troop.Unit;
 import data.config.Config;
 import project.Project;
 
-import org.eclipse.swt.layout.GridData;
-
 public class TroopTab extends DatabaseTab<Troop> {
 	
 	public static final int tWidth = 32;
@@ -57,7 +56,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
 		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
-		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		compositeReward.setExpand(true, false);
 		
 		LSpinner spnMoney = new LSpinner(compositeReward);
 		spnMoney.setMaximum(99999999);
@@ -74,7 +73,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		new LLabel(grpGeneral, Vocab.instance.AI);
 		
 		LPanel select = new LPanel(grpGeneral, 2, false);
-		select.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		select.setAlignment(LFlags.CENTER);
 		
 		LText txtAI = new LText(select, true);		
 		LuaButton btnAI = new LuaButton(select, true);
@@ -84,32 +83,32 @@ public class TroopTab extends DatabaseTab<Troop> {
 		// Grid
 		
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
-		grpGrid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGrid.setExpand(true, true);
 		LPanel gridEditor = new LPanel(grpGrid, SWT.NONE);
 
 		// Items
 		
 		LFrame grpItems = new LFrame(right, Vocab.instance.ITEMS, true, true);
-		grpItems.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpItems.setExpand(true, true);
 		DropList lstItems = new DropList(grpItems);
 		addChild(lstItems, "items");
 
 		// Units
 		
 		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS, 2, false);
-		grpMembers.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		grpMembers.setExpand(true, false);
+		grpMembers.setSpread(2, 1);
 		
 		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers);
 		lstMembers.getCollectionWidget().setEditEnabled(false);
 		lstMembers.setIncludeID(false);
 		lstMembers.type = Unit.class;
-		GridData gd_lstUnits = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_lstUnits.widthHint = 220;
-		lstMembers.setLayoutData(gd_lstUnits);
+		lstMembers.setExpand(true, false);
+		lstMembers.setMinimumWidth(220);
 		addChild(lstMembers, "members");
 		
 		UnitEditor unitEditor = new UnitEditor(grpMembers);
-		unitEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		unitEditor.setExpand(true, false);
 		lstMembers.addChild(unitEditor);
 		
 		gridEditor.addPaintListener(new PaintListener() {

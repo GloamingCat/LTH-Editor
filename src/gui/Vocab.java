@@ -57,7 +57,8 @@ public class Vocab {
 	// ========================================================================
 	
 	// Config
-	public String PROJECTNAME = "Project Name";
+	public String IDENTITY = "Identity";
+	public String PROJECTNAME = "Title";
 	public String ICONS = "Icons";
 	public String SOUNDS = "Sounds";
 	public String LISTS = "Lists";
@@ -70,6 +71,7 @@ public class Vocab {
 	public String COLOR = "Color";
 	public String SIZE = "Size";
 	public String FORMAT = "Format";
+	public String EXECUTION = "Run Settings";
 	public String PLATFORM = "Platform";
 	public String DESKTOP = "Desktop";
 	public String MOBILE = "Mobile App";

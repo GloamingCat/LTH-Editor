@@ -2,9 +2,6 @@ package gui.views.database.subcontent;
 
 import gui.Vocab;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-
 import gson.editor.GDefaultObjectEditor;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
@@ -30,7 +27,8 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		btnAll.addModifyListener(allAction(true));
 		
 		LPanel composite = new LPanel(group, 3, true);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		composite.setExpand(true, true);
+		composite.setSpread(2, 1);
 		
 		LToggleButton arrow135 = new LToggleButton(composite, "/img/arrow_135.png", "/img/falsearrow_135.png");
 		

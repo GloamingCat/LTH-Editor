@@ -11,6 +11,7 @@ import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -22,9 +23,6 @@ import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import data.Status;
 import data.subcontent.Rule;
@@ -47,15 +45,13 @@ public class StatusTab extends DatabaseTab<Status> {
 		new LLabel(grpGeneral, Vocab.instance.ICON);
 
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		compositeIcon.setExpand(false, false);
 
-		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_imgIcon.widthHint = 48;
-		gd_imgIcon.heightHint = 48;
-		imgIcon.setVerticalAlign(SWT.CENTER);
-		imgIcon.setLayoutData(gd_imgIcon);
+		imgIcon.setAlignment(LFlags.CENTER);
+		imgIcon.setExpand(true, true);
+		imgIcon.setMinimumHeight(48);
 
 		IconButton btnSelectIcon = new IconButton(compositeIcon, true);
 		btnSelectIcon.setImageWidget(imgIcon);
@@ -63,24 +59,20 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Cancel
 
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.STATUSCANCEL);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL);
 
 		lstCancel = new IDList(grpGeneral);
-		GridData gd_cancel = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_cancel.heightHint = 70;
-		gd_cancel.minimumHeight = 70;
-		lstCancel.setLayoutData(gd_cancel);
+		lstCancel.setExpand(true, true);
+		lstCancel.setMinimumHeight(70);
 		addChild(lstCancel, "cancel");
 
 		// Behavior Script
 
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.BEHAVIOR);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.BEHAVIOR);
 
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpGeneral);
-		GridData gd_rules = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_rules.heightHint = 70;
-		gd_rules.minimumHeight = 70;
-		lstRules.setLayoutData(gd_rules);
+		lstRules.setExpand(true, true);
+		lstRules.setMinimumHeight(70);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
 		lstRules.setShellFactory(new LShellFactory<Rule>() {
@@ -96,7 +88,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 
 		LPanel compositeScript = new LPanel(grpGeneral, 2, false);
-		compositeScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compositeScript.setExpand(false, false);
+		compositeScript.setAlignment(LFlags.CENTER);
 
 		LText txtScript = new LText(compositeScript, true);
 		LuaButton btnSelectScript = new LuaButton(compositeScript, true);
@@ -108,7 +101,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		new LLabel(grpGeneral, Vocab.instance.PRIORITY);
 
 		LPanel compositeVisible = new LPanel(grpGeneral, 2, false);
-		compositeVisible.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compositeVisible.setExpand(false, false);
+		compositeVisible.setAlignment(LFlags.CENTER);
 
 		LSpinner spnPriority = new LSpinner(compositeVisible);
 		spnPriority.setMinimum(0);
@@ -122,7 +116,9 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Other properties
 		
 		LPanel check = new LPanel(grpGeneral, 3, true);
-		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		check.setSpread(2, 1);
+		check.setExpand(false, false);
+		check.setAlignment(LFlags.CENTER);
 
 		LCheckBox btnKO = new LCheckBox(check);
 		btnKO.setText(Vocab.instance.KOLIKE);
@@ -139,9 +135,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Durability
 
 		LFrame grpDurability = new LFrame(left, Vocab.instance.DURABILITY, 3, false);
-		GridData gd_grpDurability = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_grpDurability.widthHint = 212;
-		grpDurability.setLayoutData(gd_grpDurability);
+		grpDurability.setExpand(true, false);
+		grpDurability.setMinimumWidth(200);
 
 		new LLabel(grpDurability, Vocab.instance.TURNS);
 
@@ -155,7 +150,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		addControl(btnBattleOnly, "battleOnly");
 
 		LPanel checkDurability = new LPanel(grpDurability, true, false);
-		checkDurability.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		checkDurability.setExpand(true, false);
+		checkDurability.setSpread(2, 1);
 
 		LCheckBox btnRemoveOnKO = new LCheckBox(checkDurability);
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
@@ -168,16 +164,16 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Graphics
 
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 2, false);
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGraphics.setExpand(true, true);
 
 		new LLabel(grpGraphics, Vocab.instance.CHARANIM);
 		LText txtCharAnim = new LText(grpGraphics);
 		addControl(txtCharAnim, "charAnim");
 
-		new LLabel(grpGraphics, LLabel.TOP, Vocab.instance.TRANSFORMATIONS);
+		new LLabel(grpGraphics, LFlags.TOP, Vocab.instance.TRANSFORMATIONS);
 		SimpleEditableList<Transformation> lstTransformations = new SimpleEditableList<>(grpGraphics);
 		lstTransformations.type = Transformation.class;
-		lstTransformations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstTransformations.setExpand(true, true);
 		lstTransformations.setShellFactory(new LShellFactory<Transformation>() {
 			@Override
 			public LObjectShell<Transformation> createShell(LShell parent) {
@@ -190,9 +186,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Drain
 
 		LFrame grpDrain = new LFrame(right, Vocab.instance.DRAIN, 3, false);
-		GridData gd_grpDrain = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_grpDrain.widthHint = 215;
-		grpDrain.setLayoutData(gd_grpDrain);
+		grpDrain.setExpand(true, false);
+		grpDrain.setMinimumWidth(200);
 
 		new LLabel(grpDrain, Vocab.instance.DRAINATT);
 		LText txtDrainAtt = new LText(grpDrain, 2);
@@ -211,15 +206,15 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Effects
 
 		LPanel effects = new LPanel(right, 2, true);
-		effects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		effects.setExpand(true, true);
 
 		LFrame grpAtt = new LFrame(effects, Vocab.instance.ATTRIBUTES, true, true);
-		grpAtt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAtt.setExpand(true, true);
 		AttributeList lstAttributes = new AttributeList(grpAtt);
 		addChild(lstAttributes, "attributes");
 
 		LFrame grpBonuses = new LFrame(effects, Vocab.instance.PROPERTIES, true, true);
-		grpBonuses.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpBonuses.setExpand(true, true);
 		BonusList lstBonus = new BonusList(grpBonuses);
 		addChild(lstBonus, "bonuses");
 

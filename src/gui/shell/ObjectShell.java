@@ -6,9 +6,6 @@ import lwt.dialog.LShell;
 import lwt.editor.LEditor;
 import lwt.widget.LControlWidget;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
@@ -26,7 +23,7 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	
 	public ObjectShell(LShell parent) {
 		super(parent);
-		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		content.setExpand(true, true);
 		contentEditor = new GDefaultObjectEditor<T>(content, false);
 		contentEditor.createActionStack();
 	}

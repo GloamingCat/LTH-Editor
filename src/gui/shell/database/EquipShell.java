@@ -11,8 +11,6 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.layout.GridLayout;
-
 import project.Project;
 
 public class EquipShell extends ObjectShell<Equip> {
@@ -21,7 +19,7 @@ public class EquipShell extends ObjectShell<Equip> {
 		super(parent);
 		
 		setText(Vocab.instance.EQUIP);
-		contentEditor.setLayout(new GridLayout(3, false));
+		contentEditor.setGridLayout(3, false);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 

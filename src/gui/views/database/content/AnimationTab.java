@@ -8,6 +8,7 @@ import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.QuadButton;
 import gui.widgets.SimpleEditableList;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -21,9 +22,6 @@ import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 import data.Animation;
@@ -44,9 +42,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Script
 		
 		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
-		
 		LPanel script = new LPanel(grpGeneral, 2, false);
-		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		script.setAlignment(LFlags.CENTER);
 		
 		LText txtScript = new LText(script, true);
 		LuaButton btnScript = new LuaButton(script, true);
@@ -58,7 +55,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		new LLabel(grpGeneral, Vocab.instance.SIZE);
 		
 		LPanel size = new LPanel(grpGeneral, 4, false);
-		size.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		size.setExpand(false, false);
 		
 		new LLabel(size, Vocab.instance.COLUMNS);
 		
@@ -73,7 +70,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
-		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpTransform.setExpand(true, false);
 		
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		addChild(transformEditor, "transform");
@@ -81,7 +78,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Audio
 		
 		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
-		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAudio.setExpand(true, true);
 		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
 		lstAudio.type = Audio.class;
 		lstAudio.setIncludeID(false);
@@ -96,7 +93,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Intro
 		
 		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO, 3, false);
-		grpIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpIntro.initGridData();
 		
 		new LLabel(grpIntro, Vocab.instance.PATTERN);
 		
@@ -113,7 +110,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Loop
 		
 		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP, 3, false);
-		grpLoop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpLoop.initGridData();
 		
 		new LLabel(grpLoop, Vocab.instance.PATTERN);
 		
@@ -130,12 +127,11 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Graphics
 		
 		LFrame grpImg = new LFrame(left, Vocab.instance.GRAPHICS, 1);
-		grpImg.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpImg.setExpand(true, true);
 		
-		LImage image = new LImage(grpImg, SWT.NONE);
-		GridData gd_image = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_image.widthHint = 150;
-		image.setLayoutData(gd_image);
+		LImage image = new LImage(grpImg);
+		image.setExpand(true, true);
+		image.setMinimumWidth(150);
 		
 		QuadButton btnImage = new QuadButton(grpImg, true);
 		addControl(btnImage, "quad");

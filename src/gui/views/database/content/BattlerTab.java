@@ -12,6 +12,7 @@ import gui.widgets.IDButton;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -24,9 +25,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 import data.Battler;
@@ -51,15 +49,13 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		new LLabel(grpGeneral, Vocab.instance.ICON);
 		
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compositeIcon.setAlignment(LFlags.CENTER);
 		
-		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_imgIcon.widthHint = 48;
-		gd_imgIcon.heightHint = 48;
-		imgIcon.setVerticalAlign(SWT.CENTER);
-		imgIcon.setLayoutData(gd_imgIcon);
+		imgIcon.setMinimumWidth(48);
+		imgIcon.setMinimumHeight(48);
+		imgIcon.setExpand(true, true);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, false);
 		btnGraphics.setImageWidget(imgIcon);
@@ -67,13 +63,10 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Description
 		
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.DESCRIPTION);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
 		
-		LTextBox txtDescription = new LTextBox(grpGeneral);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtDescription.heightHint = 60;
-		gd_txtDescription.minimumHeight = 60;
-		txtDescription.setLayoutData(gd_txtDescription);
+		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
+		txtDescription.setMinimumHeight(60);
 		addControl(txtDescription, "description");
 		
 		// Properties
@@ -81,7 +74,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		new LLabel(grpGeneral, 1, 1);
 		
 		LPanel check = new LPanel(grpGeneral, 2, true);
-		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		check.setExpand(true, false);
+		check.setAlignment(LFlags.CENTER);
 		
 		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
@@ -96,7 +90,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		new LLabel(grpGeneral, Vocab.instance.MONEY);
 		
 		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
-		compositeReward.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		compositeReward.setExpand(true, false);
 		
 		LSpinner spnMoney = new LSpinner(compositeReward);
 		spnMoney.setMaximum(99999999);
@@ -113,7 +107,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		new LLabel(grpGeneral, Vocab.instance.JOB);
 		
 		LPanel job = new LPanel(grpGeneral, 4, false);
-		job.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		job.setExpand(true, false);
+		job.setAlignment(LFlags.CENTER);
 		
 		LText txtJob = new LText(job, true);
 		btnJob = new IDButton(job, false);
@@ -128,12 +123,11 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Attributes
 		
 		LPanel middle = new LPanel(left, 2, false);
-		middle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		middle.setExpand(true, true);
 		
 		LFrame grpAtt = new LFrame(middle, Vocab.instance.ATTRIBUTES, true, true);
-		GridData gd_grpAtt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_grpAtt.widthHint = 220;
-		grpAtt.setLayoutData(gd_grpAtt);
+		grpAtt.setExpand(true, true);
+		grpAtt.setMinimumWidth(220);
 
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, 2);
 		addChild(attEditor, "attributes");
@@ -141,18 +135,18 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Elements
 		
 		LFrame grpElements = new LFrame(middle, Vocab.instance.ELEMENTS, true, true);
-		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpElements.setExpand(true, true);
 		lstElements = new PropertyList(grpElements);
 		addChild(lstElements, "elements");
 		
 		LPanel bottom = new LPanel(left, 2, true);
-		bottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		bottom.setExpand(true, true);
 		
 		// Skills
 		
 		LFrame grpSkills = new LFrame(bottom,
 				Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")", true, true);
-		grpSkills.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpSkills.setExpand(true, true);
 		
 		lstSkills = new IDList(grpSkills);
 		addChild(lstSkills, "skills");
@@ -161,7 +155,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		LFrame grpStatus = new LFrame(bottom, 
 				Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")", true, true);
-		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatus.setExpand(true, true);
 		
 		lstStatus = new IDList(grpStatus);
 		addChild(lstStatus, "status");
@@ -170,7 +164,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		LFrame grpEquip = new LFrame(right, 
 				Vocab.instance.EQUIP + " (" + Vocab.instance.INITIAL + ")", true, true);
-		grpEquip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpEquip.setExpand(true, true);
 		
 		EquipList lstEquip = new EquipList(grpEquip);
 		addChild(lstEquip, "equip");
@@ -178,7 +172,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Drop
 		
 		LFrame grpDrop = new LFrame(right, Vocab.instance.DROP, true, true);
-		grpDrop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpDrop.setExpand(true, true);
 		
 		DropList lstDrop = new DropList(grpDrop);
 		addChild(lstDrop, "items");
@@ -186,7 +180,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// AI
 
 		LFrame grpAI = new LFrame(right, Vocab.instance.AI, true, true);
-		grpAI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAI.setExpand(true, true);
 
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI);
 		lstRules.type = Rule.class;

@@ -1,5 +1,6 @@
 package gui.shell.field;
 
+import lwt.LFlags;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.dialog.LShell;
@@ -31,10 +32,6 @@ import data.field.Transition;
 import gson.editor.GDefaultObjectEditor;
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridLayout;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
@@ -44,24 +41,24 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		super(parent);
 
 		setMinimumSize(600, 400);
-		GridLayout gridLayout = new GridLayout(3, true);
-		gridLayout.verticalSpacing = 0;
-		contentEditor.setLayout(gridLayout);
+		contentEditor.setGridLayout(3, true);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 3, false);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+		grpGeneral.setAlignment(LFlags.TOP);
+		grpGeneral.setExpand(true, false);
 		
 		new LLabel(grpGeneral, 1, 1);
 		LPanel key = new LPanel(grpGeneral, 2, false);
-		key.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		key.setExpand(true, false);
+		key.setSpread(2, 1);
+		key.setAlignment(LFlags.CENTER);
 		
 		new LLabel(key, Vocab.instance.KEY);
 		LText txtKey = new LText(key);
 		addControl(txtKey, "key");
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME);
-		LText txtName = new LText(grpGeneral);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		LText txtName = new LText(grpGeneral, 2);
 		addControl(txtName, "name");
 		
 		new LLabel(grpGeneral, Vocab.instance.PERSISTENT);
@@ -87,7 +84,6 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(grpGeneral, Vocab.instance.ONLOAD);
 		LText txtScript = new LText(grpGeneral, true);
-		txtScript.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		ScriptButton btnScript = new ScriptButton(grpGeneral, 1);
 		btnScript.setPathWidget(txtScript);
@@ -96,11 +92,12 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		// Images
 		
 		LFrame grpImages = new LFrame(contentEditor, Vocab.instance.IMAGES, false, true);
-		grpImages.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
+		grpImages.setSpread(1, 2);
+		grpImages.setExpand(false, true);
 		
 		FieldImageList lstImages = new FieldImageList(grpImages);
 		addChild(lstImages, "images");
-		LImage img = new LImage(grpImages, SWT.NONE);
+		LImage img = new LImage(grpImages);
 		lstImages.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -117,23 +114,25 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		// Tags
 		
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, false, true);
-		grpTags.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
+		grpTags.setSpread(1, 2);
+		grpTags.setExpand(false, true);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		
 		// Transitions
 		
 		LFrame grpTransitions = new LFrame(contentEditor, Vocab.instance.TRANSITIONS, 1, false);
-		grpTransitions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpTransitions.setExpand(true, true);
 		
 		SimpleEditableList<Transition> lstTransitions = new SimpleEditableList<>(grpTransitions);
 		lstTransitions.type = Transition.class;
 		lstTransitions.getCollectionWidget().setEditEnabled(false);
-		lstTransitions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstTransitions.setExpand(true, true);
 		addChild(lstTransitions, "transitions");
 		
 		GDefaultObjectEditor<Transition> transitionEditor = new GDefaultObjectEditor<Transition>(grpTransitions, 3, false, false);
-		transitionEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		transitionEditor.setExpand(true, false);
+		transitionEditor.setAlignment(LFlags.CENTER);
 		lstTransitions.addChild(transitionEditor);
 		
 		// Destination

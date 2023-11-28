@@ -10,16 +10,12 @@ import lwt.widget.LLabel;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
 public class AttributeShell extends ObjectShell<Attribute> {
 	
 	public AttributeShell(LShell parent) {
 		super(parent);
 		
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME);
 		
@@ -51,12 +47,9 @@ public class AttributeShell extends ObjectShell<Attribute> {
 		new LLabel(contentEditor, Vocab.instance.SCRIPT);
 		//lblScript.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		LTextBox txtScript = new LTextBox(contentEditor);
-		GridData gd_txtScript = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtScript.widthHint = 266;
-		gd_txtScript.minimumWidth = 192;
-		gd_txtScript.minimumHeight = 48;
-		txtScript.setLayoutData(gd_txtScript);
+		LTextBox txtScript = new LTextBox(contentEditor, 1, 1);
+		txtScript.setMinimumWidth(200);
+		txtScript.setMinimumHeight(48);
 		addControl(txtScript, "script");
 		
 		pack();

@@ -9,13 +9,11 @@ import gui.shell.ObjectShell;
 
 import data.Item.Attribute;
 
-import org.eclipse.swt.layout.GridLayout;
-
 public class AttributeBonusShell extends ObjectShell<Attribute> {
 
 	public AttributeBonusShell(LShell parent) {
 		super(parent, 400, 100);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);
 		

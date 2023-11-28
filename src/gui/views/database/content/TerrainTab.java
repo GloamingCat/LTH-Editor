@@ -7,6 +7,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.PropertyList;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -19,9 +20,6 @@ import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import data.Terrain;
 import data.subcontent.Audio;
@@ -42,10 +40,10 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		// General
 		
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.MOVECOST);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.MOVECOST);
 		
 		LPanel moveCost = new LPanel(grpGeneral, 2, false);
-		moveCost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		moveCost.setAlignment(LFlags.CENTER);
 		
 		LSpinner spnCost = new LSpinner(moveCost);
 		spnCost.setMinimum(100);
@@ -57,19 +55,18 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		addControl(btnPassable, "passable");
 		
 		lstJobMoveCost = new PropertyList(moveCost);
-		lstJobMoveCost.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		lstJobMoveCost.setExpand(true, true);
+		lstJobMoveCost.setSize(2, 1);
 		addChild(lstJobMoveCost, "jobMoveCost");
 		
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGraphics.setExpand(true, true);
 		
-		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
+		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		imgGraphics.setHorizontalAlign(SWT.CENTER);
-		imgGraphics.setVerticalAlign(SWT.CENTER);
+		imgGraphics.setExpand(true, true);
 		
 		btnAnim = new IDButton(grpGraphics, true) {
 			public LDataTree<Object> getDataTree() {
@@ -82,7 +79,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		// Audio
 		
 		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
-		grpAudio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpAudio.setExpand(true, true);
 		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
 		lstAudio.type = Audio.class;
 		lstAudio.setIncludeID(false);
@@ -97,7 +94,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		// Status
 		
 		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS, 2, false);
-		grpStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpStatus.setExpand(true, true);
 		LText txtStatus = new LText(grpStatus, true);		
 		btnStatus = new IDButton(grpStatus, true) {
 			public LDataTree<Object> getDataTree() {
@@ -107,7 +104,8 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		btnStatus.setNameWidget(txtStatus);
 		addControl(btnStatus, "statusID");
 		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus);
-		btnRemoveOnExit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnRemoveOnExit.setExpand(true, false);
+		btnRemoveOnExit.setAlignment(LFlags.CENTER);
 		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
 		

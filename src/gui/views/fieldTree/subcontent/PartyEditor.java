@@ -6,14 +6,10 @@ import gui.views.fieldTree.FieldEditor;
 import gui.views.fieldTree.FieldSideEditor;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.SWT;
-
 import data.field.Party;
 import data.field.Party.TroopSpawn;
 import gson.editor.GDefaultObjectEditor;
-
-import org.eclipse.swt.layout.GridData;
-
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -38,7 +34,9 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		super(parent, 2, false, false);
 		
 		LPanel position = new LPanel(this, 4, false);
-		position.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		position.setExpand(true, false);
+		position.setSpread(2, 1);
+		position.setAlignment(LFlags.CENTER);
 		
 		// Position
 		
@@ -117,7 +115,8 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		addControl(cmbGen, "memberGen");
 		
 		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS, true, true);
-		grpTroops.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grpTroops.setExpand(true, true);
+		grpTroops.setSpread(2, 1);
 		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops);
 		lstTroops.type = TroopSpawn.class;
 		lstTroops.setIncludeID(false);

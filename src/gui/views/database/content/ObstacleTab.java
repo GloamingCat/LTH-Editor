@@ -7,6 +7,7 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.dialog.LObjectShell;
@@ -16,9 +17,6 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import data.Animation;
 import data.Obstacle;
@@ -34,7 +32,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 	public ObstacleTab(LContainer parent) {
 		super(parent);
 
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.COLLIDERTILES);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES);
 		
 		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpGeneral);
 		tileList.type = ObstacleTile.class;
@@ -45,19 +43,18 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 				return new ObstacleTileShell(parent);
 			}
 		});
-		GridData gd_tiles = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_tiles.heightHint = 60;
-		gd_tiles.minimumHeight = 60;
-		tileList.setLayoutData(gd_tiles);
+
+		tileList.setExpand(true, true);
+		tileList.setMinimumHeight(60);
 		addChild(tileList, "tiles");
 		
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
-		grpGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpGraphics.setExpand(true, true);
 
-		LImage imgGraphics = new LImage(grpGraphics, SWT.NONE);
-		imgGraphics.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		LImage imgGraphics = new LImage(grpGraphics);
+		imgGraphics.setExpand(true, true);
 		
 		IconButton btnGraphics = new IconButton(grpGraphics, false);
 		addControl(btnGraphics, "image");
@@ -65,7 +62,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
-		grpTransform.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
+		grpTransform.setExpand(true, false);
 		
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		addChild(transformEditor, "transform");

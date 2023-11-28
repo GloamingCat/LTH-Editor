@@ -4,10 +4,6 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.NeighborEditor;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
 import lwt.container.LFrame;
 import lwt.dialog.LShell;
 import lwt.widget.LCombo;
@@ -25,39 +21,36 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 	
 	public ObstacleTileShell(LShell parent) {
 		super(parent);
-		
-		GridLayout gridLayout = new GridLayout(2, true);
-		gridLayout.marginWidth = 0;
-		gridLayout.marginHeight = 0;
-		contentEditor.setLayout(gridLayout);
+
+		contentEditor.setGridLayout(2, true);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 2, false);
-		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpGeneral.setExpand(true, false);
 
 		new LLabel(grpGeneral, Vocab.instance.OFFSETX);
 		
-		spnX = new LSpinner(grpGeneral, SWT.BORDER);
+		spnX = new LSpinner(grpGeneral);
 		spnX.setMaximum(100);
 		spnX.setMinimum(-100);
 		addControl(spnX, "dx");
 		
 		new LLabel(grpGeneral, Vocab.instance.OFFSETY);
 		
-		spnY = new LSpinner(grpGeneral, SWT.BORDER);
+		spnY = new LSpinner(grpGeneral);
 		spnY.setMaximum(100);
 		spnY.setMinimum(-100);
 		addControl(spnY, "dy");
 		
 		new LLabel(grpGeneral, Vocab.instance.HEIGHT);
 		
-		spnHeight = new LSpinner(grpGeneral, SWT.BORDER);
+		spnHeight = new LSpinner(grpGeneral);
 		spnHeight.setMaximum(100);
 		spnHeight.setMinimum(0);
 		addControl(spnX, "height");
 		
 		new LLabel(grpGeneral, Vocab.instance.MODE);
 		
-		cmbMode = new LCombo(grpGeneral, SWT.NONE | SWT.READ_ONLY);
+		cmbMode = new LCombo(grpGeneral, true);
 		cmbMode.setItems(new String[] {
 			Vocab.instance.BLOCK,
 			Vocab.instance.RAMP,
@@ -66,7 +59,7 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 		addControl(cmbMode, "mode");
 		
 		neighborEditor = new NeighborEditor(contentEditor);
-		neighborEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		neighborEditor.setExpand(true, true);
 		addChild(neighborEditor, "neighbors");
 		
 		pack();

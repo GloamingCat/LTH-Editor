@@ -25,8 +25,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 public class PortraitShell extends LObjectShell<Portrait> {
 	
@@ -38,19 +36,17 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	
 	public PortraitShell(LShell parent) {
 		super(parent);
-		GridData gridData = (GridData) content.getLayoutData();
-		gridData.verticalAlignment = SWT.FILL;
-		gridData.grabExcessVerticalSpace = true;
 		setMinimumSize(600, 400);
 		setSize(800, 800);
 
-		content.setLayout(new GridLayout(2, false));
+		content.setGridLayout(2, false);
 		
 		new LLabel(content, Vocab.instance.NAME);
 		txtName = new LText(content);
 
 		LSashPanel sashForm = new LSashPanel(content, true);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		sashForm.setSpread(2, 1);
+		sashForm.setExpand(true, true);
 		
 		tree = new LNodeSelector<Object>(sashForm, true);
 		tree.setCollection(getTree());
@@ -64,7 +60,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		
 		scroll = new LScrollPanel(sashForm, true);
 		
-		image = new LImage(scroll, SWT.NONE);
+		image = new LImage(scroll);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		image.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {

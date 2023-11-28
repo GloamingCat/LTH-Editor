@@ -15,7 +15,6 @@ import org.eclipse.swt.graphics.Font;
 
 import project.Project;
 
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Display;
 
 import data.subcontent.FontData;
@@ -29,7 +28,7 @@ public class FontShell extends FileShell<FontData> {
 		super(parent, "", false);
 		
 		LPanel composite = new LPanel(sashForm, 2, false);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite.setExpand(true, true);
 		
 		new LLabel(composite, Vocab.instance.SIZE);
 		

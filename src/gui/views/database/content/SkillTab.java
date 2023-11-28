@@ -10,6 +10,7 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -32,7 +33,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -58,17 +58,14 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Icon
 		
 		new LLabel(grpGeneral, Vocab.instance.ICON);
-		
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
-		compositeIcon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compositeIcon.setAlignment(LFlags.CENTER);
 		
-		LImage imgIcon = new LImage(compositeIcon, SWT.NONE);
+		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		GridData gd_imgIcon = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_imgIcon.widthHint = 48;
-		gd_imgIcon.heightHint = 48;
-		imgIcon.setVerticalAlign(SWT.CENTER);
-		imgIcon.setLayoutData(gd_imgIcon);
+		imgIcon.setExpand(true, true);
+		imgIcon.setMinimumHeight(48);
+		imgIcon.setAlignment(LFlags.CENTER);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
 		btnGraphics.setImageWidget(imgIcon);
@@ -76,13 +73,9 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Description
 		
-		new LLabel(grpGeneral, LLabel.TOP, Vocab.instance.DESCRIPTION);
-		
-		LTextBox txtDescription = new LTextBox(grpGeneral);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_txtDescription.minimumHeight = 60;
-		gd_txtDescription.heightHint = 60;
-		txtDescription.setLayoutData(gd_txtDescription);
+		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
+		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
+		txtDescription.setMinimumHeight(60);
 		addControl(txtDescription, "description");
 		
 		// Script
@@ -90,7 +83,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		
 		LPanel script = new LPanel(grpGeneral, 2, false);
-		script.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		script.setAlignment(LFlags.CENTER);
 		
 		LText txtScript = new LText(script, true);		
 		LuaButton btnScript = new LuaButton(script, true);
@@ -100,15 +93,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Restrictions
 		
 		LFrame grpRestrictions = new LFrame(left, Vocab.instance.RESTRICTIONS, 2, false);
-		grpRestrictions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpRestrictions.setExpand(true, false);
 		
 		new LLabel(grpRestrictions, Vocab.instance.COSTS);
 		
 		TagList lstCosts = new TagList(grpRestrictions);
-		GridData gd_lstCosts = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
-		gd_lstCosts.minimumHeight = 60;
-		gd_lstCosts.heightHint = 60;
-		lstCosts.setLayoutData(gd_lstCosts);
+		lstCosts.setExpand(true, false);
+		lstCosts.setMinimumHeight(60);
 		addChild(lstCosts, "costs");
 		
 		new LLabel(grpRestrictions, Vocab.instance.CONTEXT);
@@ -130,10 +121,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Effects
 		
 		LFrame grpEffects = new LFrame(left, Vocab.instance.EFFECTS, 2, false);
-		grpEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpEffects.setExpand(true, true);
 		
 		SkillEffectList lstEffects = new SkillEffectList(grpEffects);
-		lstEffects.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		lstEffects.setExpand(true, true);
+		lstEffects.setSpread(2, 1);
 		addChild(lstEffects, "effects");
 		
 		new LLabel(grpEffects, Vocab.instance.EFFECTCONDITION);
@@ -144,12 +136,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Target Selection
 		
 		LFrame grpTarget = new LFrame(left, Vocab.instance.TARGET, 2, false);
-		grpTarget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpTarget.setExpand(true, false);
 		
 		new LLabel(grpTarget, Vocab.instance.TYPE);
 		
 		LCombo cmbType = new LCombo(grpTarget, true);
-		cmbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmbType.setIncludeID(false);
 		cmbType.setOptional(false);
 		cmbType.setItems(new String[] {	
@@ -172,7 +163,9 @@ public class SkillTab extends DatabaseTab<Skill> {
 		addControl(cmbSelection, "selection");
 		
 		LPanel check = new LPanel(grpTarget, 3, true);
-		check.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		check.setExpand(true, false);
+		check.setSpread(2, 1);
+		check.setAlignment(LFlags.CENTER);
 		
 		LCheckBox btnAllParties = new LCheckBox(check);
 		btnAllParties.setText(Vocab.instance.ALLPARTIES);
@@ -189,10 +182,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Animations
 		
 		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS, 1);
-		grpAnimations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		grpAnimations.setExpand(true, true);
 		
 		LViewFolder tabAnim = new LViewFolder(grpAnimations, false);
-		tabAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		tabAnim.setExpand(true, false);
+		tabAnim.setAlignment(LFlags.CENTER);
 		
 		// Battle Animations
 		
@@ -221,7 +215,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		addControl(btnIndAnim, "individualAnimID");
 		
 		LCheckBox btnMirror = new LCheckBox(battleAnim);
-		btnMirror.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
+		btnMirror.setSpread(3, 1);
+		btnMirror.setExpand(false, false);
 		btnMirror.setText(Vocab.instance.MIRROR);
 		addControl(btnMirror, "mirror");
 		
@@ -238,8 +233,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LText txtUserCastAnim = new LText(userAnim);
 		addControl(txtUserCastAnim, "userCastAnim");
 		
-		LCheckBox btnStep = new LCheckBox(userAnim);
-		btnStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+		LCheckBox btnStep = new LCheckBox(userAnim, 2);
 		btnStep.setText(Vocab.instance.STEPONCAST);
 		addControl(btnStep, "stepOnCast");
 		
@@ -269,55 +263,55 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LText txtFinishTime = new LText(animOptions);
 		addControl(txtFinishTime, "finishTime");
 		
-		LCheckBox btnDamageAnim = new LCheckBox(animOptions);
-		btnDamageAnim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		LCheckBox btnDamageAnim = new LCheckBox(animOptions, 2);
 		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
 		addControl(btnDamageAnim, "damageAnim");
 		
 		// Elements
 		
 		LFrame grpElements = new LFrame(right, Vocab.instance.ELEMENTS, 2, false);
-		grpElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpElements.setExpand(true, true);
 		
 		lstElements = new PropertyList(grpElements);
-		lstElements.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lstElements.setExpand(true, true);
 		addChild(lstElements, "elements");
 		
-		LCheckBox btnUserElements = new LCheckBox(grpElements);
+		LCheckBox btnUserElements = new LCheckBox(grpElements, 1);
+		btnUserElements.setAlignment(LFlags.TOP);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
-		btnUserElements.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		addControl(btnUserElements, "userElements");
 		
 		// Range
 		
 		LPanel range = new LPanel(right, 2, false);
-		range.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		range.setExpand(true, true);
 		
 		LFrame grpEffect = new LFrame(range, Vocab.instance.EFFECTMASK, 2, false);
-		grpEffect.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpEffect.setExpand(true, true);
 
 		LObjectButton<Mask> btnEffectMask = new LObjectButton<Mask>(grpEffect);
-		btnEffectMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		btnEffectMask.setAlignment(LFlags.LEFT | LFlags.TOP);
+		btnEffectMask.setExpand(true, false);
 		addControl(btnEffectMask, "effectMask");
 		
 		LPanel effectMask = new LPanel(grpEffect);
-		effectMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		effectMask.setExpand(true, true);
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
-		LCheckBox btnRotate = new LCheckBox(grpEffect);
-		btnRotate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		LCheckBox btnRotate = new LCheckBox(grpEffect, 2);
 		btnRotate.setText(Vocab.instance.ROTATE);
 		addControl(btnRotate, "rotateEffect");
 		
 		LFrame grpCast = new LFrame(range, Vocab.instance.CASTMASK, 2, false);
-		grpCast.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpCast.setExpand(true, true);
 		
 		LObjectButton<Mask> btnCastMask = new LObjectButton<Mask>(grpCast);
-		btnCastMask.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		btnCastMask.setAlignment(LFlags.LEFT | LFlags.TOP);
+		btnCastMask.setExpand(true, false);
 		addControl(btnCastMask, "castMask");
 		
 		LPanel castMask = new LPanel(grpCast);
-		castMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		castMask.setExpand(true, true);
 		addMaskButton(btnCastMask, castMask, castColor);	
 		
 	}

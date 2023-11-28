@@ -6,6 +6,7 @@ import gui.widgets.FileSelector;
 
 import java.io.File;
 
+import lwt.LFlags;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
@@ -14,13 +15,8 @@ import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
-
 import data.subcontent.Script;
 import project.Project;
-
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 public class ScriptShell extends ObjectShell<Script> {
 	
@@ -33,7 +29,7 @@ public class ScriptShell extends ObjectShell<Script> {
 	
 	public ScriptShell(LShell parent, int style) {
 		super(parent);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.DESCRIPTION);;
 		
@@ -41,7 +37,8 @@ public class ScriptShell extends ObjectShell<Script> {
 		addControl(txtDescription, "description");
 		
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		form.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		form.setExpand(true, true);
+		form.setSpread(2, 1);
 		selFile = new FileSelector(form, (style & OPTIONAL) > 0) {
 			@Override
 			protected boolean isValidFile(File f) {
@@ -53,12 +50,12 @@ public class ScriptShell extends ObjectShell<Script> {
 		LPanel composite = new LPanel(form, 1);
 		
 		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
-		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpParameters.setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
 		LPanel options = new LPanel(composite, 3, false);
-		options.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		options.setAlignment(LFlags.CENTER);
 		
 		LCheckBox btnGlobal = new LCheckBox(options);
 		btnGlobal.setText(Vocab.instance.GLOBAL);

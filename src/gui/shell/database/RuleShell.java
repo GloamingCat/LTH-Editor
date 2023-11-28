@@ -14,13 +14,8 @@ import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-import org.eclipse.swt.SWT;
-
 import data.subcontent.Rule;
 import project.Project;
-
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 
 public class RuleShell extends ObjectShell<Rule> {
 	
@@ -28,7 +23,7 @@ public class RuleShell extends ObjectShell<Rule> {
 	
 	public RuleShell(LShell parent) {
 		super(parent);
-		contentEditor.setLayout(new FillLayout(SWT.HORIZONTAL));
+		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new FileSelector(form, false) {
 			@Override
@@ -41,7 +36,8 @@ public class RuleShell extends ObjectShell<Rule> {
 		LPanel composite = new LPanel(form, 2, false);
 		
 		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
-		grpParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grpParameters.setExpand(true, true);
+		grpParameters.setSpread(2, 1);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		

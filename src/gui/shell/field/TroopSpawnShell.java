@@ -11,15 +11,11 @@ import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
 import project.Project;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
 public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 
 	public TroopSpawnShell(LShell parent) {
 		super(parent, 360, 320);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.MINLEVEL);
 		
@@ -38,7 +34,8 @@ public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 		addControl(spnMax, "maxLevel");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		tree.setSpread(2, 1);
+		tree.setExpand(true, true);
 		tree.setCollection(Project.current.troops.getTree());
 		addControl(tree, "id");
 		

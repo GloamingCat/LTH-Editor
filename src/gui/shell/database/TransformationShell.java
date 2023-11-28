@@ -10,13 +10,11 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.layout.GridLayout;
-
 public class TransformationShell extends ObjectShell<Transformation> {
 
 	public TransformationShell(LShell parent) {
 		super(parent, 270, 100);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.TYPE);
 		

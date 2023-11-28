@@ -9,7 +9,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridLayout;
 
 public class ResizeShell extends ObjectShell<Rectangle> {
 
@@ -17,7 +16,7 @@ public class ResizeShell extends ObjectShell<Rectangle> {
 		super(parent);
 		setMinimumSize(240, 0);
 		
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.SIZEX);
 		

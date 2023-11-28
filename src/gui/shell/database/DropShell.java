@@ -8,10 +8,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
 import project.Project;
 import data.Battler.Drop;
 
@@ -20,7 +16,7 @@ public class DropShell extends ObjectShell<Drop> {
 	public DropShell(LShell parent) {
 		super(parent);
 		setMinimumSize(400, 200);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		new LLabel(contentEditor, Vocab.instance.CHANCE);
 		LSpinner spnChance = new LSpinner(contentEditor);
@@ -33,7 +29,8 @@ public class DropShell extends ObjectShell<Drop> {
 		addControl(spnCount, "count");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, false);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		tree.setExpand(true, true);
+		tree.setSpread(2, 1);
 		tree.setCollection(Project.current.items.getTree());
 		addControl(tree, "id");
 		

@@ -4,7 +4,8 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.subcontent.Bonus;
-import lwt.container.LPanel;
+import lwt.LFlags;
+import lwt.container.LStack;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
@@ -12,11 +13,6 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 import project.Project;
 
@@ -28,7 +24,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 	
 	public BonusShell(LShell parent) {
 		super(parent, 270, 100);
-		contentEditor.setLayout(new GridLayout(2, false));
+		contentEditor.setGridLayout(2, false);
 		
 		// Type of bonus
 		
@@ -56,17 +52,15 @@ public class BonusShell extends ObjectShell<Bonus> {
 		
 		// ID
 		
-		typeLabel = new LLabel(contentEditor, LLabel.TOP, Vocab.instance.ELEMENT);
+		typeLabel = new LLabel(contentEditor, LFlags.TOP, Vocab.instance.ELEMENT);
 		
-		final LPanel idStack = new LPanel(contentEditor);
-		idStack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		final StackLayout stack = new StackLayout();
-		idStack.setLayout(stack);
+		final LStack stack = new LStack(contentEditor);
+		stack.setExpand(true, true);
 		
-		final LNodeSelector<Object> elementTree = new LNodeSelector<Object>(idStack, false);
+		final LNodeSelector<Object> elementTree = new LNodeSelector<Object>(stack, false);
 		elementTree.setCollection(Project.current.elements.getList().toTree());
 		
-		final LNodeSelector<Object> statusTree = new LNodeSelector<Object>(idStack, false);
+		final LNodeSelector<Object> statusTree = new LNodeSelector<Object>(stack, false);
 		statusTree.setCollection(Project.current.status.getTree());
 		
 		cmbType.addModifyListener(new LControlListener<Integer>() {
@@ -76,18 +70,18 @@ public class BonusShell extends ObjectShell<Bonus> {
 					// Status
 					typeLabel.setText(Vocab.instance.STATUS);
 					typeNode = statusTree;
-					stack.topControl = typeNode;
+					stack.setTop(typeNode);
 					removeControl(elementTree);
 					addControl(typeNode, "id");
 				} else {
 					// Element
 					typeLabel.setText(Vocab.instance.ELEMENT);
 					typeNode = elementTree;
-					stack.topControl = typeNode;	
+					stack.setTop(typeNode);	
 					removeControl(statusTree);
 					addControl(typeNode, "id");
 				}
-				idStack.layout();
+				stack.layout();
 			}
 		});
 		

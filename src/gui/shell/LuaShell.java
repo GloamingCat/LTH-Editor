@@ -7,9 +7,6 @@ import java.io.File;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-
 import project.Project;
 
 public class LuaShell extends LObjectShell<String> {
@@ -25,7 +22,7 @@ public class LuaShell extends LObjectShell<String> {
 	
 	public LuaShell(LShell parent, boolean optional) {
 		super(parent);
-		content.setLayout(new FillLayout(SWT.HORIZONTAL));
+		content.setFillLayout(true);
 		selFile = new FileSelector(content, optional) {
 			@Override
 			protected boolean isValidFile(File f) {
