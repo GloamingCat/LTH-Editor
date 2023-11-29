@@ -15,54 +15,32 @@ import data.config.Region;
 import data.config.Config.Grid;
 import data.field.CharTile;
 import data.field.Field;
-import data.field.FieldImage;
 import data.field.Layer;
 import data.subcontent.Quad;
 import data.subcontent.Transform;
-import data.subcontent.Icon;
-import data.subcontent.Point;
 import lwt.LImageHelper;
 import project.Project;
 
-public class FieldPainter {
+public class FieldPainterSWT {
 
 	public Color gridColor = SWTResourceManager.getColor(new RGB(50, 50, 50));
 
-	public float scale = 1;
 	public int imgW, imgH;
-
-	public FieldPainter() {	}
-
-	public FieldPainter(float scale) {
-		this.scale = scale;
-	}
 
 	// -------------------------------------------------------------------------------------
 	// Grid
 	// -------------------------------------------------------------------------------------
-
-	public void drawTile(GC gc, int x0, int y0) {
-		int[] p = FieldHelper.getTilePolygon(x0, y0, scale);
-		gc.drawPolygon(p);
-	}
 
 	public void drawGrid(GC gc, int x0, int y0) {
 		drawGrid(gc, x0, y0, gridColor);
 	}
 
 	public void drawGrid(GC gc, int x0, int y0, Color color) {
-		float scale = this.scale;
-		this.scale *= 0.95f;
 		gc.setAlpha(127);
 		gc.setForeground(color);
-		drawTile(gc, x0, y0);
+		int[] p = FieldHelper.getTilePolygon(x0, y0, 0.95f);
+		gc.drawPolygon(p);
 		gc.setAlpha(255);
-		this.scale = scale;
-	}
-
-	public void fillTile(GC gc, int x0, int y0) {
-		int[] p = FieldHelper.getTilePolygon(x0, y0, scale);
-		gc.fillPolygon(p);
 	}
 
 	// -------------------------------------------------------------------------------------
@@ -82,19 +60,11 @@ public class FieldPainter {
 			int h = img.getBounds().height / (anim.rows * 2);
 			int dx = x0 - (anim.transform.offsetX * anim.transform.scaleX) / 100;
 			int dy = y0 - (anim.transform.offsetY * anim.transform.scaleY) / 100;
-			gc.drawImage(img, 
-					0, h * 2 * rows[0], w, h, 
-					dx, dy, w, h);
-			gc.drawImage(img, 
-					w, h * 2 * rows[1], w, h, 
-					dx + w, dy, w, h);
-			gc.drawImage(img, 
-					0, h + h * 2 * rows[2], w, h, 
-					dx, dy + h, w, h);
-			gc.drawImage(img, 
-					w, h + h * 2 * rows[3], w, h, 
-					dx + w, dy + h, w, h);
-		} catch(IndexOutOfBoundsException e) {
+			gc.drawImage(img, 0, h * 2 * rows[0], w, h, dx, dy, w, h);
+			gc.drawImage(img, w, h * 2 * rows[1], w, h, dx + w, dy, w, h);
+			gc.drawImage(img, 0, h + h * 2 * rows[2], w, h, dx, dy + h, w, h);
+			gc.drawImage(img, w, h + h * 2 * rows[3], w, h, dx + w, dy + h, w, h);
+		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		} catch (java.lang.IllegalArgumentException e) {
 			e.printStackTrace();
@@ -128,8 +98,9 @@ public class FieldPainter {
 				return;
 			Region r = (Region) Project.current.regions.getData().get(layer.grid[x][y]);
 			gc.setAlpha(200);
-			gc.setBackground(SWTResourceManager.getColor(r.rgb));
-			fillTile(gc, x0, y0);
+			gc.setBackground(SWTResourceManager.getColor(r.color.red, r.color.green, r.color.blue));
+			int[] p = FieldHelper.getTilePolygon(x0, y0, 1);
+			gc.fillPolygon(p);
 			gc.setAlpha(255);
 			Grid conf = FieldHelper.config.grid;
 			gc.drawImage(img, x0 - conf.tileW / 2, y0 - conf.tileH / 2);
@@ -150,23 +121,20 @@ public class FieldPainter {
 			Animation anim;
 			GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(tile.charID);
 			if (c != null) {
-				anim = (Animation) Project.current.animations.getTree().
-						get(c.findAnimation(tile.animation));
+				anim = (Animation) Project.current.animations.getTree().get(c.findAnimation(tile.animation));
 				sxc = c.transform.scaleX / 100f;
 				syc = c.transform.scaleY / 100f;
-				oxc = (int)(c.transform.offsetX * sxc);
-				oyc = (int)(c.transform.offsetY * syc);
+				oxc = (int) (c.transform.offsetX * sxc);
+				oyc = (int) (c.transform.offsetY * syc);
 				Animation shadow = (Animation) Project.current.animations.getTree().get(c.shadowID);
 				if (shadow != null) {
 					int sw = shadow.quad.width / shadow.cols;
 					int sh = shadow.quad.height / shadow.rows;
 					float sx = shadow.transform.scaleX / 100f;
 					float sy = shadow.transform.scaleY / 100f;
-					Image simg = shadow.quad.getImage();
-					gc.drawImage(simg, shadow.quad.x, shadow.quad.y, sw, sh, 
-							x0 - (int)(shadow.transform.offsetX * sx),
-							y0 - (int)(shadow.transform.offsetY * sy), 
-							(int)(sw * sx), (int)(sh * sy));
+					Image simg = SWTResourceManager.getImage(shadow.quad.fullPath());
+					gc.drawImage(simg, shadow.quad.x, shadow.quad.y, sw, sh, x0 - (int) (shadow.transform.offsetX * sx),
+							y0 - (int) (shadow.transform.offsetY * sy), (int) (sw * sx), (int) (sh * sy));
 				}
 			} else {
 				int animID = Project.current.animations.getData().get(tile.animation);
@@ -176,11 +144,8 @@ public class FieldPainter {
 			int h = img.getBounds().height;
 			float sxa = anim.transform.scaleX / 100f;
 			float sya = anim.transform.scaleY / 100f;
-			gc.drawImage(img, 0, 0, w, h,
-					x0 - (int)(anim.transform.offsetX * sxa) - oxc, 
-					y0 - (int)(anim.transform.offsetY * sya) - oyc,
-					(int)(sxc * sxa * w),
-					(int)(syc * sya * h));
+			gc.drawImage(img, 0, 0, w, h, x0 - (int) (anim.transform.offsetX * sxa) - oxc,
+					y0 - (int) (anim.transform.offsetY * sya) - oyc, (int) (sxc * sxa * w), (int) (syc * sya * h));
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		} catch (java.lang.IllegalArgumentException e) {
@@ -192,55 +157,28 @@ public class FieldPainter {
 	// Field
 	// -------------------------------------------------------------------------------------
 
-	public void paintBackground(Field field, FieldImage img, int x0, int y0, GC gc) {
-		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
-		paintIcon(img, x0 + center.x, y0 + center.y, gc);
-	}
-	
-	public void paintIcon(Icon icon, int x0, int y0, GC gc) {
-		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
-		if (anim == null)
-			return;
-		Quad quad = anim.quad;
-		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
-			return;
-		int width = quad.width / anim.cols;
-		int height = quad.height / anim.rows;
-		int x = quad.x + width * icon.col;
-		int y = quad.y + height * icon.row;
-		Image bg = quad.getImage();
-		if (bg == null)
-			return;
-		int w = Math.min(width - x, bg.getBounds().width);
-		int h = Math.min(height - y, bg.getBounds().height);
-		width = (int)(w * anim.transform.scaleX / 100f);
-		height = (int)( h  * anim.transform.scaleX / 100f);
-		x0 -= anim.transform.offsetX * anim.transform.scaleX / 100f;
-		y0 -= anim.transform.offsetY * anim.transform.scaleY / 100f;
-		gc.drawImage(bg, x, y, w, h, x0, y0, width, height);
-	}
-	
 	public void paintQuad(Quad quad, int x0, int y0, GC gc) {
-		Image bg = quad.getImage();
+		Image bg = SWTResourceManager.getImage(quad.fullPath());
 		if (bg == null)
 			return;
 		int w = Math.min(quad.width - quad.x, bg.getBounds().width);
 		int h = Math.min(quad.height - quad.y, bg.getBounds().height);
 		gc.drawImage(bg, quad.x, quad.y, w, h, x0, y0, w, h);
 	}
-	
+
 	public void paintQuad(Quad quad, int x0, int y0, Transform transform, GC gc) {
-		Image bg = quad.getImage();
+		Image bg = SWTResourceManager.getImage(quad.fullPath());
 		if (bg == null)
 			return;
 		x0 -= (transform.offsetX * transform.scaleX) / 100;
 		y0 -= (transform.offsetY * transform.scaleY) / 100;
 		int width = (quad.width * transform.scaleX) / 100;
-		int height = (quad.height  * transform.scaleY) / 100;
+		int height = (quad.height * transform.scaleY) / 100;
 		gc.drawImage(bg, quad.x, quad.y, quad.width, quad.height, x0, y0, width, height);
 	}
 
-	public Image createTileImage(Field field, int x, int y, boolean showGrid, Layer currentLayer, CharTile currentChar) {
+	public Image createTileImage(Field field, int x, int y, boolean showGrid, Layer currentLayer,
+			CharTile currentChar) {
 		Image img = LImageHelper.newImage(imgW, imgH);
 
 		int x0 = imgW / 2;
@@ -265,8 +203,7 @@ public class FieldPainter {
 		for (Layer layer : field.layers.region) {
 			if (!layer.visible || layer != currentLayer)
 				continue;
-			paintRegion(layer, x, y, 
-					gc, x0, y0 - (layer.info.height - 1) * pph);
+			paintRegion(layer, x, y, gc, x0, y0 - (layer.info.height - 1) * pph);
 			if (showGrid && layer == currentLayer)
 				drawGrid(gc, x0, y0 - (layer.info.height - 1) * pph);
 			break;
@@ -294,4 +231,3 @@ public class FieldPainter {
 	}
 
 }
-

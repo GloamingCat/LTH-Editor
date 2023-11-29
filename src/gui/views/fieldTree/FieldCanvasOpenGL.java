@@ -3,9 +3,6 @@ package gui.views.fieldTree;
 import java.io.UncheckedIOException;
 import java.util.ArrayList;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
-
 import batching.Batch;
 import batching.BatchIterator;
 import batching.Scene;
@@ -61,14 +58,13 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	// {{ Draw
 	
 	public void redrawBuffer() {
-		if (buffer != null)
-			buffer.dispose();
 		SceneHelper.context.bind();
 		shader.bind();
 		screen.bind(shader);
 		renderer.fillBackground();
 		drawScene();
-		buffer = SceneHelper.toImage(screen.texture);
+		disposeBuffer();
+		setBuffer(SceneHelper.toImage(screen.texture));
 	}
 	
 	protected void drawScene() {
@@ -90,15 +86,6 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 			vertexArray.unbind();
 		}
 		renderer.resetBindings();
-	}
-
-	public void drawCursor(GC gc, Color color, Point point) {
-		gc.setForeground(color);
-		int[] p = FieldHelper.getTilePolygon(
-				Math.round(scale * (point.x + x0)),
-				Math.round(scale * (point.y + y0)),
-				scale * 0.75f);
-		gc.drawPolygon(p);
 	}
 
 	// }}

@@ -10,11 +10,14 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
+import lwt.LColor;
 import lwt.LFlags;
+import lwt.container.LCanvas;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LViewFolder;
+import lwt.container.LCanvas.LPainter;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
@@ -27,14 +30,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LObjectButton;
 import lwt.widget.LTextBox;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.Project;
 
@@ -294,7 +289,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		btnEffectMask.setExpand(true, false);
 		addControl(btnEffectMask, "effectMask");
 		
-		LPanel effectMask = new LPanel(grpEffect);
+		LCanvas effectMask = new LCanvas(grpEffect);
 		effectMask.setExpand(true, true);
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
@@ -310,7 +305,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		btnCastMask.setExpand(true, false);
 		addControl(btnCastMask, "castMask");
 		
-		LPanel castMask = new LPanel(grpCast);
+		LCanvas castMask = new LCanvas(grpCast);
 		castMask.setExpand(true, true);
 		addMaskButton(btnCastMask, castMask, castColor);	
 		
@@ -337,12 +332,12 @@ public class SkillTab extends DatabaseTab<Skill> {
 	protected static final int cellSize = 8;
 	protected static final int border = 2;
 	
-	public Color effectColor = SWTResourceManager.getColor(SWT.COLOR_GREEN);
-	public Color castColor = SWTResourceManager.getColor(SWT.COLOR_BLUE);
-	public Color falseColor = SWTResourceManager.getColor(SWT.COLOR_BLACK);
-	public Color centerColor = SWTResourceManager.getColor(SWT.COLOR_RED);
+	public LColor effectColor = new LColor(0, 255, 0);
+	public LColor castColor = new LColor(0, 0, 255);
+	public LColor falseColor = new LColor(0, 0, 0);
+	public LColor centerColor = new LColor(255, 0, 0);
 	
-	private void addMaskButton(LObjectButton<Mask> button, Composite mask, Color trueColor) {
+	private void addMaskButton(LObjectButton<Mask> button, LCanvas mask, LColor trueColor) {
 		button.setShellFactory(new LShellFactory<Mask>() {
 			@Override
 			public LObjectShell<Mask> createShell(LShell parent) {
@@ -359,26 +354,26 @@ public class SkillTab extends DatabaseTab<Skill> {
 				mask.redraw();
 			}
 		});
-		mask.addPaintListener(new PaintListener() {
+		mask.addPainter(new LPainter() {
 			@Override
-			public void paintControl(PaintEvent e) {
+			public void paint() {
 				Mask m = button.getValue();
 				if (m == null) return;
 				boolean[][] middle = m.grid[m.centerH - 1];
-				e.gc.drawRectangle(new Rectangle(0, 0, 
+				mask.drawRect(0, 0, 
 						middle.length * cellSize, 
-						middle[0].length * cellSize));
+						middle[0].length * cellSize);
 				for (int i = 0; i < middle.length; i++) {
 					for (int j = 0; j < middle[i].length; j++) {
-						e.gc.setBackground(middle[i][j] ? trueColor : falseColor);
-						e.gc.fillRectangle(border + i * cellSize, border + j * cellSize,
+						mask.setFillColor(middle[i][j] ? trueColor : falseColor);
+						mask.fillRect(border + i * cellSize, border + j * cellSize,
 									cellSize - border, cellSize - border);
-						e.gc.drawRectangle(i * cellSize, j * cellSize,
+						mask.drawRect(i * cellSize, j * cellSize,
 									cellSize, cellSize);
 					}
 				}
-				e.gc.setForeground(centerColor);
-				e.gc.drawRectangle(border + (m.centerX - 1) * cellSize, 
+				mask.setPaintColor(centerColor);
+				mask.drawRect(border + (m.centerX - 1) * cellSize, 
 						border + (m.centerY - 1)* cellSize,
 						cellSize - border - 2, 
 						cellSize - border - 2);

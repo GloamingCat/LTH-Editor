@@ -4,8 +4,6 @@ import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LImage;
 
-import org.eclipse.swt.graphics.Image;
-
 import data.Animation;
 import project.Project;
 
@@ -29,15 +27,15 @@ public class ImageButton extends IDButton {
 			if (label != null) {
 				if (id >= 0) {
 					Animation anim = (Animation) getDataTree().get(id);
-					label.setImage(anim.quad.getImage());
+					label.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
 				} else {
-					label.setImage((Image) null);
+					label.setImage((String) null);
 				}
 			}
 		} else {
 			button.setEnabled(false);
 			if (label != null) {
-				label.setImage((Image) null);
+				label.setImage((String) null);
 			}
 		}
 		super.setValue(value);

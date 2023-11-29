@@ -31,8 +31,6 @@ import data.field.FieldImage;
 import data.field.Transition;
 import gson.editor.GDefaultObjectEditor;
 
-import org.eclipse.swt.graphics.Image;
-
 import project.Project;
 
 public class FieldPrefShell extends ObjectShell<Field.Prefs> {
@@ -166,17 +164,17 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		if (p != null) {
 			Object obj = Project.current.animations.getTree().get(p.id);
 			if (obj == null) {
-				img.setImage((Image) null);
+				img.setImage((String) null);
 				return;
 			}
 			Animation anim = (Animation) obj;
 			if (anim.quad.path.isEmpty()) {
-				img.setImage((Image) null);
+				img.setImage((String) null);
 				return;
 			}
-			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
+			img.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
 		} else {
-			img.setImage((Image) null);
+			img.setImage((String) null);
 		}
 	}
 	

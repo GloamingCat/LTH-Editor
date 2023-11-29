@@ -27,10 +27,6 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.wb.swt.SWTResourceManager;
-
 import data.Animation;
 import data.GameCharacter;
 import data.GameCharacter.Portrait;
@@ -196,15 +192,13 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
 			if (anim != null) {
 				GameCharacter c = (GameCharacter) contentEditor.getObject();
-				Rectangle rect = anim.quad.getRectangle();
 				anim.transform.setColorTransform(img, c.transform);
-				img.setImage(SWTResourceManager.getImage(
-						Project.current.imagePath() + anim.quad.path), rect);
+				img.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
 			} else {
-				img.setImage((Image) null); 
+				img.setImage((String) null); 
 			}
 		} else {
-			img.setImage((Image) null); 
+			img.setImage((String) null); 
 		}
 	}
 	
@@ -212,19 +206,19 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		if (p != null) {
 			Object obj = Project.current.animations.getTree().get(p.id);
 			if (obj == null) {
-				img.setImage((Image) null);
+				img.setImage((String) null);
 				return;
 			}
 			GameCharacter c = (GameCharacter) contentEditor.getObject();
 			Animation anim = (Animation) obj;
 			anim.transform.setColorTransform(img, c.transform);
 			if (anim.quad.path.isEmpty()) {
-				img.setImage((Image) null);
+				img.setImage((String) null);
 				return;
 			}
 			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
 		} else {
-			img.setImage((Image) null);
+			img.setImage((String) null);
 		}
 	}
 	

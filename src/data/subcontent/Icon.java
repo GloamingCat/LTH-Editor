@@ -1,6 +1,5 @@
 package data.subcontent;
 
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 
 import project.Project;
@@ -29,21 +28,16 @@ public class Icon {
 		return anim == null ? null : anim.quad.path;
 	}
 	
-	public Image getImage() {
-		return getAnimation().quad.getImage();
+	public String fullPath() {
+		Animation anim = getAnimation();
+		return anim == null ? null : anim.quad.fullPath();
 	}
 
 	public Rectangle getRectangle() {
 		Animation anim = getAnimation();
 		if (anim == null)
 			return null;
-		if (anim.cols == 0 || anim.rows == 0)
-			return null;
-		int w = anim.quad.width / anim.cols;
-		int h = anim.quad.height / anim.rows;
-		int x = anim.quad.x + w * col;
-		int y = anim.quad.y + h * row;
-		return new Rectangle(x, y, w, h);
+		return anim.getCell(col, row);
 	}
 	
 	public boolean equals(Object obj) {

@@ -1,6 +1,7 @@
 package gui.shell.field;
 
 import gui.Vocab;
+import lwt.container.LCanvas.LPainter;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.container.LScrollPanel;
@@ -24,9 +25,6 @@ import project.Project;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class FieldImageShell extends LObjectShell<FieldImage> {
@@ -68,13 +66,13 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		
 		image = new LImage(scroll);
 		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		image.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
+		image.addPainter(new LPainter() {
+			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
 				if (anim != null && anim.cols > 0 && anim.rows > 0) {
 					int w = anim.quad.width / anim.cols;
 					int h = anim.quad.height / anim.rows;
-					e.gc.drawRectangle(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
+					image.drawRect(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
 				}
 			}
 		});
@@ -111,8 +109,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	private void setImage(Animation anim) {
 		if (anim == null)
 			return;
-		Image img = anim.quad.getImage();
-		image.setImage(img);
+		image.setImage(anim.quad.fullPath());
 		scroll.setMinSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}

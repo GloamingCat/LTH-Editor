@@ -6,15 +6,13 @@ import java.util.ArrayList;
 import lwt.container.LSashPanel;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.List;
+import lwt.widget.LFlatList;
 
 public abstract class FileShell<T> extends LObjectShell<T> {
 
 	protected String folder;
 	protected LSashPanel sashForm;
-	protected List list;
+	protected LFlatList list;
 	protected boolean optional;
 	
 	public FileShell(LShell parent) {
@@ -32,27 +30,12 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		
 		sashForm = new LSashPanel(content, true);
 		
-		list = new List(sashForm, SWT.BORDER | SWT.V_SCROLL);
+		list = new LFlatList(sashForm, optional);
 		list.setItems(getItems(folder + "/", optional));
 	}
 	
 	protected boolean nullSelected() {
-		return optional && list.getSelectionIndex() == 0;
-	}
-
-	protected int indexOf(String path) {
-		int i = 0;
-		if (path == null) {
-			System.out.println("Null path");
-			return -1;
-		}
-		for(String s : list.getItems()) {
-			if (path.equals(folder + "/" + s)) {
-				return i;
-			}
-			i++;
-		}
-		return -1;
+		return optional && list.getValue() == -1;
 	}
 	
 	protected String[] getItems(String folder, boolean optional) {
@@ -80,6 +63,10 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 					items.add(path + entry.getName());
 			}
 		}
+	}
+	
+	protected String getSelectedPath() {
+		return folder + list.getSelectedText();
 	}
 	
 	protected abstract boolean isValidFile(File entry);

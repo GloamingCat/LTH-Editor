@@ -1,13 +1,12 @@
 package data.config;
 
-import org.eclipse.swt.graphics.RGB;
-
 import data.Data;
+import lwt.LColor;
 import lwt.dataestructure.LDataList;
 
 public class Region extends Data {
 	
-	public RGB rgb = new RGB(255, 255, 255);
+	public LColor color = new LColor();
 	public LDataList<Integer> troops = new LDataList<>();
 
 }

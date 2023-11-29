@@ -25,7 +25,7 @@ public class FontShell extends FileShell<FontData> {
 	private LText txtFormat;
 	
 	public FontShell(LShell parent) {
-		super(parent, "", false);
+		super(parent, "fonts/", false);
 		
 		LPanel composite = new LPanel(sashForm, 2, false);
 		composite.setExpand(true, true);
@@ -42,18 +42,18 @@ public class FontShell extends FileShell<FontData> {
 	
 	public void open(FontData initial) {
 		super.open(initial);
-		int i = indexOf(initial.path);
-		list.select(i);
+		int i = list.indexOf(initial.path);
+		list.setValue(i);
 		spnSize.setValue(initial.size);
 		txtFormat.setValue(initial.format);
 	}
 
 	@Override
 	protected FontData createResult(FontData initial) {
-		int i = list.getSelectionIndex();
+		int i = list.getValue();
 		if (i < 0)
 			return null;
-		return new FontData(folder + "/" + list.getItem(i), 
+		return new FontData(getSelectedPath(), 
 			spnSize.getValue(), 
 			txtFormat.getValue());
 	}

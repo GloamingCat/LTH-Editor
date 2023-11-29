@@ -1,8 +1,6 @@
 package data.subcontent;
 
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import project.Project;
 
@@ -44,8 +42,8 @@ public class Quad {
 		}
 	}
 	
-	public Image getImage() {
-		return SWTResourceManager.getImage(Project.current.imagePath() + path);
+	public String fullPath() {
+		return Project.current.imagePath() + path;
 	}
 	
 	public Rectangle getRectangle() {

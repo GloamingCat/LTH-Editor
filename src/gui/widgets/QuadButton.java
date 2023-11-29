@@ -9,9 +9,6 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 
-import org.eclipse.swt.graphics.Image;
-
-import project.Project;
 import data.subcontent.Quad;
 
 public class QuadButton extends LObjectButton<Quad> {
@@ -47,16 +44,16 @@ public class QuadButton extends LObjectButton<Quad> {
 					transform.updateColorTransform(image);
 				}
 				if (s.path.isEmpty()) {
-					image.setImage((Image) null);
+					image.setImage((String) null);
 				} else {
-					image.setImage(Project.current.imagePath() + s.path, s.getRectangle());
+					image.setImage(s.fullPath(), s.getRectangle());
 				}
 			}
 			currentValue = s;
 		} else {
 			button.setEnabled(false);
 			if (image != null) {
-				image.setImage((Image) null);
+				image.setImage((String) null);
 			}
 			currentValue = null;
 		}

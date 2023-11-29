@@ -4,38 +4,42 @@ import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
+import lwt.dataestructure.LDataList;
+import lwt.dataestructure.LPath;
+import lwt.editor.LGridEditor;
 import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCheckBox;
+import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
-import gui.helper.TilePainter;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.UnitEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
-
+import data.Animation;
 import data.GameCharacter;
 import data.Troop;
 import data.Troop.Unit;
 import data.config.Config;
+import data.subcontent.Icon;
+import data.subcontent.Point;
 import project.Project;
 
 public class TroopTab extends DatabaseTab<Troop> {
 	
-	public static final int tWidth = 32;
-	public static final int tHeight = 48;
+	public static int tWidth = 32;
+	public static int tHeight = 48;
+	
+	private LGridEditor<Point, Point> gridEditor;
+	private LDataList<Point> points = new LDataList<Point>();
 
 	/**
 	 * @wbp.parser.constructor
@@ -84,7 +88,26 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
 		grpGrid.setExpand(true, true);
-		LPanel gridEditor = new LPanel(grpGrid, SWT.NONE);
+		gridEditor = new LGridEditor<Point, Point>(grpGrid) {
+			@Override
+			protected Point createNewData() { return null; }
+			@Override
+			protected Point duplicateData(Point original) { return null; }
+			@Override
+			protected void setImage(LImage label, int i) {
+				refreshUnit(label, i);
+			}
+			@Override
+			protected LDataList<Point> getDataCollection() {
+				return points;
+			}
+			@Override
+			protected Point getEditableData(LPath path) { return null; }
+			@Override
+			protected void setEditableData(LPath path, Point newData) {}
+		};
+		gridEditor.getCollectionWidget().cellWidth = tWidth;
+		gridEditor.getCollectionWidget().cellHeight = tHeight;
 
 		// Items
 		
@@ -111,81 +134,114 @@ public class TroopTab extends DatabaseTab<Troop> {
 		unitEditor.setExpand(true, false);
 		lstMembers.addChild(unitEditor);
 		
-		gridEditor.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				Config.Troop conf = Project.current.config.getData().troop;
-				for (int i = 0; i < conf.width; i++)
-					for (int j = 0; j < conf.height; j++)
-						e.gc.drawRectangle(i * tWidth, j * tHeight, tWidth, tHeight);
-				if (contentEditor.getObject() != null) {
-					Troop troop = (Troop) contentEditor.getObject();
-					for (Unit u : troop.members) {
-						if (u.list != 0)
-							continue;
-						GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
-						if (c == null)
-							continue;
-						int animID = c.defaultAnimationID();
-						if (animID == -1)
-							continue;
-						Image img = TilePainter.getAnimationTile(u.charID, animID, 270, 0, c.transform);
-						if (img == null)
-							continue;
-						Rectangle bounds = img.getBounds();
-						int sw = bounds.width;
-						int sh = bounds.height;
-						sw = Math.min(tWidth, sw);
-						sh = Math.min(tHeight, sh);
-						int dx = tWidth / 2 - sw / 2;
-						int dy = tHeight / 2 - sh / 2;
-						e.gc.drawImage(img, 
-								0, 0, sw, sh, 
-								tWidth * (u.x - 1) + dx, tHeight * (u.y - 1) + dy, sw, sh);
+		unitEditor.addModifyListener(new LControlListener<Troop.Unit>() {
+			@Override
+			public void onModify(LControlEvent<Unit> event) {
+				refreshUnit(event.newValue);
+			}
+		});
+		
+		LCollectionListener<Unit> modifyListener = new LCollectionListener<Unit>() {
+			public void onEdit(LEditEvent<Unit> e) {
+				refreshUnit(e.newData);
+			}
+			public void onInsert(LInsertEvent<Unit> e) {
+				refreshUnit(e.node.data);
+			}
+			public void onDelete(LDeleteEvent<Unit> e) {
+				refreshUnit(e.node.data);
+			}
+			public void onMove(LMoveEvent<Unit> e) {}
+		};
+		lstMembers.getCollectionWidget().addEditListener(modifyListener);
+		lstMembers.getCollectionWidget().addInsertListener(modifyListener);
+		lstMembers.getCollectionWidget().addDeleteListener(modifyListener);
+		lstMembers.getCollectionWidget().addMoveListener(modifyListener);
+		lstMembers.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			public void onSelect(LSelectionEvent event) {
+				Unit u = (Unit) event.data;
+				if (u != null) {
+					Config.Troop conf = Project.current.config.getData().troop;
+					int i = (u.y - 1) * conf.width + (u.x - 1);
+					gridEditor.getCollectionWidget().select(new LPath(i));
+				}
+			}
+		});
+		gridEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
+			@Override
+			public void onSelect(LSelectionEvent event) {
+				Troop troop = contentEditor.getObject();
+				if (troop == null)
+					return;
+				Point p = (Point) event.data;
+				if (p != null) {
+					int i = troop.find(p.x, p.y);
+					if (i != -1) {
+						lstMembers.getCollectionWidget().select(new LPath(i));
 					}
-					Unit u = lstMembers.getCollectionWidget().getSelectedObject();
-					if (u == null) return;
-					e.gc.drawRectangle((u.x - 1) * tWidth + 2, (u.y - 1) * tHeight + 2,
-							tWidth - 4, tHeight - 4);
 				}
 			}
 		});
 		
-		LCollectionListener<Unit> listener = new LCollectionListener<Unit>() {
-			public void onEdit(LEditEvent<Unit> e) {
-				gridEditor.redraw();
-			}
-			public void onInsert(LInsertEvent<Unit> e) {
-				gridEditor.redraw();
-			}
-			public void onDelete(LDeleteEvent<Unit> e) {
-				gridEditor.redraw();
-			}
-			public void onMove(LMoveEvent<Unit> e) {
-				gridEditor.redraw();
-			}
-		};
-		lstMembers.getCollectionWidget().addEditListener(listener);
-		lstMembers.getCollectionWidget().addInsertListener(listener);
-		lstMembers.getCollectionWidget().addDeleteListener(listener);
-		lstMembers.getCollectionWidget().addMoveListener(listener);
-		lstMembers.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			public void onSelect(LSelectionEvent event) {
-				gridEditor.redraw();
-			}
-		});
-		
-		LSelectionListener listener2 = new LSelectionListener() {
+		LSelectionListener selectionListener = new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				gridEditor.redraw();
+				gridEditor.getCollectionWidget().setDataCollection(points);
 			}
 		};
-		
-		listEditor.getCollectionWidget().addSelectionListener(listener2);
-		unitEditor.addSelectionListener(listener2);
+		listEditor.getCollectionWidget().addSelectionListener(selectionListener);
+		unitEditor.addSelectionListener(selectionListener);
 		
 	}
-
+	
+	@Override
+	public void onVisible() {
+		Config.Troop conf = Project.current.config.getData().troop;
+		gridEditor.getCollectionWidget().setColumns(conf.width);
+		points.clear();
+		for (int j = 0; j < conf.height; j++) {				
+			for (int i = 0; i < conf.width; i++) {
+				points.add(new Point(i + 1, j + 1));
+			}
+		}
+		super.onVisible();
+	}
+	
+	protected void refreshUnit(LImage img, int i) {
+		Point p = (Point) img.getData();
+		Troop troop = contentEditor.getObject();
+		if (troop == null) {
+			img.setImage((String) null);
+			return;
+		}
+		i = troop.find(p.x, p.y);
+		Unit u = i >= 0 ? troop.members.get(i) : null;
+		refreshUnit(img, u);
+	}
+	
+	protected void refreshUnit(Unit u) {
+		Config.Troop conf = Project.current.config.getData().troop;
+		int i = (u.y - 1) * conf.width + (u.x - 1);
+		LImage img = (LImage) gridEditor.getCollectionWidget().getChildren()[i];
+		refreshUnit(img, u);
+	}
+	
+	protected void refreshUnit(LImage img, Unit u) {
+		if (u != null) {
+			GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
+			int animID = c == null ? -1 : c.defaultAnimationID();
+			Animation anim = (Animation) Project.current.animations.getData().get(animID);
+			if (anim != null && anim.cols > 0 && anim.rows > 0) {
+				Icon icon = new Icon(animID, anim.getFrame(0), 270 / 45);
+				anim.transform.setColorTransform(img, c.transform);
+				img.setScale(anim.transform.scaleX * c.transform.scaleX / 10000f, anim.transform.scaleY * c.transform.scaleY / 10000f);
+				img.setImage(icon.fullPath(), icon.getRectangle());
+				return;
+			}
+		}
+		img.setImage((String) null);
+	}
+	
 	@Override
 	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.troops;

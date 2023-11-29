@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
@@ -26,6 +25,7 @@ import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Icon;
 import data.subcontent.Point;
+import lwt.LColor;
 import lwt.LImageHelper;
 import project.Project;
 import rendering.Context;
@@ -324,8 +324,8 @@ public class SceneHelper {
 	//////////////////////////////////////////////////
 	// {{ Tile texture
 	
-	public static Image createTileImage(Renderer renderer, float scale, Color color, ShaderProgram shader) {
-		renderer.setPencilColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+	public static Image createTileImage(Renderer renderer, float scale, LColor color, ShaderProgram shader) {
+		renderer.setPencilColor(color.red, color.green, color.blue, color.alpha);
 		Texture texture = createTileTexture(renderer, scale, 255, shader);
 		Image img = toImage(texture);
 		texture.dispose();
@@ -351,14 +351,13 @@ public class SceneHelper {
 	
 	private static Texture createRegionTexture(Renderer renderer, int id, float scale, ShaderProgram shader) {
 		Region r = (Region) Project.current.regions.getData().get(id);
-		Color color = SWTResourceManager.getColor(r.rgb);
 		int w = (int)Math.ceil(conf.grid.tileW * scale) + 6;
 		int h = (int)Math.ceil(conf.grid.tileH * scale) + 6;
 		Screen cellBuffer = new Screen(w, h, false);
 		VertexArray array = VertexArray.octagon(w / 2, h / 2, 
 				conf.grid.tileW * scale, conf.grid.tileH * scale,
 				conf.grid.tileB * scale, conf.grid.tileS * scale,
-				color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+				r.color.red, r.color.green, r.color.blue, r.color.alpha);
 		array.initVAO(shader.attributes, shader.vertexSize);
 		cellBuffer.bind(shader);
 		whiteTexture.bind();

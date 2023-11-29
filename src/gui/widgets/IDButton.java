@@ -10,8 +10,6 @@ import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
-import org.eclipse.swt.graphics.Image;
-
 import project.Project;
 import data.Animation;
 
@@ -70,9 +68,9 @@ public class IDButton extends LObjectButton<Integer> {
 			if (image != null) {
 				Animation anim = (Animation) Project.current.animations.getTree().get(id);
 				if (anim == null)
-					image.setImage((Image) null); 
+					image.setImage((String) null); 
 				else {
-					image.setImage(anim.quad.getImage(), anim.quad.getRectangle());
+					image.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
 				}
 			}
 			currentValue = id;

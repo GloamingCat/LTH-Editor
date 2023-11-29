@@ -1,11 +1,10 @@
 package gui.shell;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
-
 import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
+import lwt.LColor;
+import lwt.container.LCanvas.LPainter;
 import lwt.container.LSashPanel;
 import lwt.container.LScrollPanel;
 import lwt.dataestructure.LDataTree;
@@ -18,12 +17,10 @@ import lwt.widget.LNodeSelector;
 
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class IconShell extends LObjectShell<Icon> {
 	
+	protected static LColor bg = new LColor(127, 127, 127);
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
 	protected int col, row;
@@ -48,14 +45,14 @@ public class IconShell extends LObjectShell<Icon> {
 		
 		scroll = new LScrollPanel(sashForm, true);
 		image = new LImage(scroll);
-		image.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		image.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
+		image.setBackground(bg);
+		image.addPainter(new LPainter() {
+			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
 				if (anim != null && anim.cols > 0 && anim.rows > 0) {
 					int w = anim.quad.width / anim.cols;
 					int h = anim.quad.height / anim.rows;
-					e.gc.drawRectangle(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
+					image.drawRect(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
 				}
 			}
 		});
@@ -80,8 +77,7 @@ public class IconShell extends LObjectShell<Icon> {
 	private void setImage(Animation anim) {
 		if (anim == null)
 			return;
-		Image img = anim.quad.getImage();
-		image.setImage(img);
+		image.setImage(anim.quad.fullPath());
 		scroll.setMinSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}

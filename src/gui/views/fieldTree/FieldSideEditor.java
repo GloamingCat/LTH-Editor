@@ -1,7 +1,6 @@
 package gui.views.fieldTree;
 
 import gui.Vocab;
-import gui.helper.TilePainter;
 import gui.views.fieldTree.subcontent.CharTileEditor;
 import gui.views.fieldTree.subcontent.LayerList;
 import gui.views.fieldTree.subcontent.PartyEditor;
@@ -15,16 +14,21 @@ import lwt.container.LSashPanel;
 import lwt.container.LStack;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LDataTree;
+import lwt.event.LControlEvent;
 import lwt.event.LDeleteEvent;
 import lwt.event.LInsertEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
+import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
 import lwt.widget.LImage;
 import lwt.widget.LLabel;
 
 import project.Project;
+import data.Animation;
+import data.Obstacle;
+import data.Terrain;
 import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
@@ -70,6 +74,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lblTitle = new LLabel(this, LFlags.CENTER | LFlags.EXPAND, Vocab.instance.TERRAIN);
 		
 		stack = new LStack(this);
+		stack.setExpand(true, true);
 		
 		// Terrain
 		
@@ -90,14 +95,23 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			public LDataTree<Object> getTree() {
 				return Project.current.terrains.getTree();
 			}
-			@Override
-			public void updateImage(Object obj, int id) {
-				image.setImage(TilePainter.getTerrainTile(id, false));
-			}
 		};
-		
 		LImage imgTerrain = new LImage(grpTerrainTiles);
-		selTerrain.image = imgTerrain;
+		selTerrain.selector.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event.newValue == -1) {
+					imgTerrain.setImage((String) null);
+					return;
+				}
+				Terrain terrain = (Terrain) Project.current.terrains.getData().get(event.newValue);
+				Animation anim = (Animation) Project.current.animations.getData().get(terrain.animID);
+				if (anim == null)
+					imgTerrain.setImage((String) null);
+				else
+					imgTerrain.setImage(anim.quad.fullPath(), anim.getCell(0, 0));
+			}
+		});
 		terrain.setWeights(new int[] {1, 2});
 		
 		// Obstacle
@@ -114,19 +128,24 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lstObstacle.setEditor(this);
 		
 		LFrame grpObstacleTiles = new LFrame(obstacle, Vocab.instance.TILES, false);
+		LImage imgObstacle = new LImage(grpObstacleTiles);
 		TileTree selObstacle = new TileTree(grpObstacleTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.obstacles.getTree();
 			}
-			@Override
-			public void updateImage(Object obj, int id) {
-				image.setImage(TilePainter.getObstacleTile(id));
-			}
 		};
-		
-		LImage imgObstacle = new LImage(grpObstacleTiles);
-		selObstacle.image = imgObstacle;
+		selObstacle.selector.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event.newValue == -1) {
+					imgObstacle.setImage((String) null);
+					return;
+				}
+				Obstacle obstacle = (Obstacle) Project.current.obstacles.getData().get(event.newValue);
+				imgObstacle.setImage(obstacle.image.fullPath(), obstacle.image.getRectangle());
+			}
+		});
 		obstacle.setWeights(new int[] {1, 2});
 		
 		// Region
@@ -149,14 +168,18 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			public LDataTree<Object> getTree() {
 				return Project.current.regions.getList().toTree();
 			}
-			@Override
-			public void updateImage(Object obj, int id) {
-				image.setImage(TilePainter.getRegionTile(id, true));
-			}
 		};
-		
-		LImage imgRegion = new LImage(grpRegionTiles);
-		selRegion.image = imgRegion;
+		LLabel lblRegion = new LLabel(grpRegionTiles);
+		selRegion.selector.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event.newValue == -1) {
+					imgTerrain.setImage((String) null);
+					return;
+				}
+				lblRegion.setText(Project.current.regions.getList().get(event.newValue).toString());
+			}
+		});
 		region.setWeights(new int[] {1, 2});
 		
 		// Characters

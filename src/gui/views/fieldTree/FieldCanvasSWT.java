@@ -1,37 +1,38 @@
 package gui.views.fieldTree;
 
 import gui.helper.FieldHelper;
-import gui.helper.FieldPainter;
+import gui.helper.FieldPainterSWT;
 import lwt.LImageHelper;
 import lwt.container.LContainer;
+import project.Project;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 
+import data.Animation;
 import data.field.CharTile;
 import data.field.FieldImage;
+import data.subcontent.Icon;
 import data.subcontent.Point;
+import data.subcontent.Quad;
 
-public class FieldCanvasGC extends FieldCanvas {
+public class FieldCanvasSWT extends FieldCanvas {
 
 	// Image cache
 	public Image[][] tileImages;
-	public FieldPainter painter;
+	public FieldPainterSWT painter;
 
-	public FieldCanvasGC(LContainer parent) {
+	public FieldCanvasSWT(LContainer parent) {
 		super(parent);
-		painter = new FieldPainter(1);
+		painter = new FieldPainterSWT();
 	}
 
 	//////////////////////////////////////////////////
 	// {{ Draw
 	
-
 	protected class PainterThread extends Thread {
 		public int liney;
 		public Image line;
@@ -61,7 +62,7 @@ public class FieldCanvasGC extends FieldCanvas {
 		
 	}
 
-	protected void drawLines(GC gc) {
+	protected void drawLines() {
 		final Point tsize = tileImageSize();
 		Iterator<ArrayList<Point>> it = FieldHelper.math.lineIterator(field.sizeX, field.sizeY);
 		ArrayList<PainterThread> threads = new ArrayList<>();
@@ -76,7 +77,7 @@ public class FieldCanvasGC extends FieldCanvas {
 		try {
 			for (PainterThread thread : threads) {
 				thread.join();
-				gc.drawImage(thread.line, 0, thread.liney);
+				drawImage(thread.line, 0, thread.liney);
 				thread.line.dispose();
 			}
 		} catch (Exception e) {
@@ -85,35 +86,53 @@ public class FieldCanvasGC extends FieldCanvas {
 	}
 	
 	public void redrawBuffer() {
-		if (buffer != null)
-			buffer.dispose();
+		disposeBuffer();
 		Point size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
 		int w = x0 * 2;
 		int h = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
 				FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
-		buffer = new Image(Display.getCurrent(), size.x + w, size.y + h); 
-		GC gc = new GC(buffer);
-		gc.setBackground(getBackground());
-		gc.fillRectangle(buffer.getBounds());
+		pushBuffer(size.x + w, size.y + h);
+		fillRect();
 		for (FieldImage bg : field.prefs.images) {
 			if (bg.visible && !bg.foreground)
-				painter.paintBackground(field, bg, x0, y0, gc);
+				paintBackground(bg);
 		}
-		drawLines(gc);
+		drawLines();
 		for (FieldImage bg : field.prefs.images) {
 			if (bg.visible && bg.foreground)
-				painter.paintBackground(field, bg, x0, y0, gc);
+				paintBackground(bg);
 		}
-		gc.dispose();
+		popBuffer();
 	}
 	
-	public void drawCursor(GC gc, Color color, Point point) {
-		float previousScale = painter.scale;
-		painter.scale = scale * 0.75f;
-		gc.setForeground(color);
-		painter.drawTile(gc, Math.round(scale * (point.x + x0)), Math.round(scale * (point.y + y0)));
-		painter.scale = previousScale;
+	public void paintBackground(FieldImage img) {
+		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
+		paintIcon(img, x0 + center.x, y0 + center.y);
 	}
+
+	public void paintIcon(Icon icon, int x0, int y0) {
+		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
+		if (anim == null)
+			return;
+		Quad quad = anim.quad;
+		if (quad.path.isEmpty() || quad.width == 0 || quad.height == 0)
+			return;
+		int width = quad.width / anim.cols;
+		int height = quad.height / anim.rows;
+		int x = quad.x + width * icon.col;
+		int y = quad.y + height * icon.row;
+		String bg = quad.fullPath();
+		if (bg.isEmpty())
+			return;
+		int w = width - x;
+		int h = height - y;
+		width = (int) (w * anim.transform.scaleX / 100f);
+		height = (int) (h * anim.transform.scaleX / 100f);
+		x0 -= anim.transform.offsetX * anim.transform.scaleX / 100f;
+		y0 -= anim.transform.offsetY * anim.transform.scaleY / 100f;
+		drawImage(bg, x, y, w, h, x0, y0, width, height);
+	}
+	
 	// }}
 
 	//////////////////////////////////////////////////

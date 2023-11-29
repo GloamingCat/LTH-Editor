@@ -2,10 +2,11 @@ package gui.shell.database;
 
 import gui.Vocab;
 import gui.helper.FieldHelper;
-import gui.helper.FieldPainter;
 import data.Skill.Mask;
 import data.subcontent.Point;
-import lwt.container.LPanel;
+import lwt.LColor;
+import lwt.container.LCanvas;
+import lwt.container.LCanvas.LPainter;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
@@ -14,18 +15,12 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
 
 public class MaskShell extends LObjectShell<Mask> {
 
-	private LPanel canvas;
+	private LCanvas canvas;
 	private LSpinner spnMinH;
 	private LSpinner spnMinX;
 	private LSpinner spnMinY;
@@ -36,9 +31,9 @@ public class MaskShell extends LObjectShell<Mask> {
 	boolean[][][] grid;
 	int x0, y0, height;
 	
-	public Color falseColor;
-	public Color trueColor;
-	public Color centerColor;
+	public LColor falseColor;
+	public LColor trueColor;
+	public LColor centerColor;
 	private LCombo cmbHeight;
 	
 	/**
@@ -150,6 +145,8 @@ public class MaskShell extends LObjectShell<Mask> {
 		new LLabel(content, Vocab.instance.HEIGHT);
 		
 		cmbHeight = new LCombo(content, true);
+		cmbHeight.setOptional(false);
+		cmbHeight.setIncludeID(false);
 		cmbHeight.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
@@ -159,20 +156,18 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		new LLabel(content, 4, 1);
 		
-		canvas = new LPanel(content, true);
+		canvas = new LCanvas(content);
 		canvas.setExpand(false, true);
 		canvas.setSpread(6, 1);
 		
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				Image buffer = new Image(Display.getCurrent(), getBounds());
-				GC gc = new GC(buffer);
-				gc.setBackground(getBackground());
-				gc.fillRectangle(buffer.getBounds());
-				drawGrid(gc);
-				gc.dispose();
-				e.gc.drawImage(buffer, 0, 0);
-				buffer.dispose();
+		canvas.addPainter(new LPainter() {
+			@Override
+			public void paint() {
+				canvas.pushBuffer();
+				drawGrid();
+				canvas.popBuffer();
+				canvas.drawBuffer(0, 0);
+				canvas.disposeBuffer();
 			}
 		});
 		
@@ -195,29 +190,30 @@ public class MaskShell extends LObjectShell<Mask> {
 		
 	}
 	
-	private void drawGrid(GC gc) {
-		FieldPainter painter = new FieldPainter();
+	private void drawGrid() {
 		int x0 = this.x0 + canvas.getSize().x / 2;
 		int y0 = this.y0 + canvas.getSize().y / 2;
 		int currentH = spnMinH.getValue() + height;
 		for (int h = 0; h < grid.length; h++) {
-			gc.setAlpha(h == currentH ? 255 : 127);
+			canvas.setTransparency(h == currentH ? 255 : 127);
 			for (int x = 0; x < grid[h].length; x++) {
 				for (int y = 0; y < grid[h][x].length; y++) {
-					gc.setBackground(grid[h][x][y] ? trueColor : falseColor);
-					Point p = FieldHelper.math.tile2Pixel(x, y, h);
-					painter.fillTile(gc, p.x + x0, p.y + y0);
-					painter.drawTile(gc, p.x + x0, p.y + y0);
+					canvas.setFillColor(grid[h][x][y] ? trueColor : falseColor);
+					Point center = FieldHelper.math.tile2Pixel(x, y, h);
+					int[] p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 1);
+					canvas.fillPolygon(p);
+					canvas.drawPolygon(p, true);
 				}
 			}
 		}
 		int h = spnMinH.getValue();
 		int x = spnMinX.getValue();
 		int y = spnMinY.getValue();
-		Point p = FieldHelper.math.tile2Pixel(x, y, h);
-		gc.setForeground(centerColor);
-		painter.scale = 0.8f;
-		painter.drawGrid(gc, p.x + x0, p.y + y0);
+		Point center = FieldHelper.math.tile2Pixel(x, y, h);
+		int[] p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 0.8f);
+		canvas.setPaintColor(centerColor);
+		canvas.fillPolygon(p);
+		canvas.drawPolygon(p, true);
 	}
 	
 	private void expand(int x, int y, int h, int dx, int dy, int dh) {

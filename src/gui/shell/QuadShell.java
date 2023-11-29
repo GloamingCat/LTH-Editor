@@ -28,7 +28,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import data.subcontent.Quad;
 import project.Project;
@@ -42,11 +41,11 @@ public class QuadShell extends LObjectShell<Quad> {
 	private LSpinner spnWidth;
 	private LSpinner spnHeight;
 	private LScrollPanel scroll;
-	
+
 	public QuadShell(LShell parent, boolean optional) {
 		super(parent);
 		setMinimumSize(600, 400);
-		
+
 		LSashPanel form = new LSashPanel(content, true);
 		selFile = new FileSelector(form, optional) {
 			@Override
@@ -55,41 +54,41 @@ public class QuadShell extends LObjectShell<Quad> {
 			}
 		};
 		selFile.setFolder(Project.current.imagePath());
-		
+
 		LPanel quad = new LPanel(form, 1);
-		
+
 		scroll = new LScrollPanel(quad);
 		scroll.setExpand(true, true);
-		
+
 		imgQuad = new LImage(scroll);
 		scroll.setContent(imgQuad);
-		
+
 		LPanel spinners = new LPanel(quad, 4, false);
 		spinners.setExpand(true, false);
 		spinners.setAlignment(LFlags.CENTER);
-		
+
 		new LLabel(spinners, Vocab.instance.QUADX);
-		
+
 		spnX = new LSpinner(spinners);
 		spnX.setMaximum(4095);
-		
+
 		new LLabel(spinners, Vocab.instance.QUADW);
-		
+
 		spnWidth = new LSpinner(spinners);
 		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
-		
+
 		new LLabel(spinners, Vocab.instance.QUADY);
-		
+
 		spnY = new LSpinner(spinners);
 		spnY.setMaximum(4095);
-		
+
 		new LLabel(spinners, Vocab.instance.QUADH);
-		
+
 		spnHeight = new LSpinner(spinners);
 		spnHeight.setMaximum(4096);
 		spnHeight.setMinimum(1);
-		
+
 		LActionButton btnFullImage = new LActionButton(quad, Vocab.instance.FULLIMAGE);
 		btnFullImage.addModifyListener(new LControlListener<Object>() {
 			@Override
@@ -102,7 +101,7 @@ public class QuadShell extends LObjectShell<Quad> {
 				imgQuad.redraw();
 			}
 		});
-		
+
 		imgQuad.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
@@ -123,24 +122,24 @@ public class QuadShell extends LObjectShell<Quad> {
 				resetImage();
 			}
 		});
-		
+
 		LControlListener<Integer> redrawListener = new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
 				imgQuad.redraw();
 			}
 		};
-		
+
 		spnX.addModifyListener(redrawListener);
 		spnY.addModifyListener(redrawListener);
 		spnWidth.addModifyListener(redrawListener);
 		spnHeight.addModifyListener(redrawListener);
-		
+
 		form.setWeights(new int[] {1, 1});
-		
+
 		layout(false, true);
 	}
-	
+
 	public void open(Quad initial) {
 		super.open(initial);
 		selFile.setSelectedFile(initial.path);
@@ -168,24 +167,21 @@ public class QuadShell extends LObjectShell<Quad> {
 
 	protected boolean isImage(File entry) {
 		try {
-		    BufferedImage image = ImageIO.read(entry);
-		    if (image != null) {
-		    	image.flush();
-		    } else {
-		    	return false;
-		    }
-		    return true;
+			BufferedImage image = ImageIO.read(entry);
+			if (image != null) {
+				image.flush();
+			} else {
+				return false;
+			}
+			return true;
 		} catch(IOException ex) {
-		    return false;
+			return false;
 		}
 	}
-	
+
 	protected void resetImage() {
 		String path = selFile.getRootFolder() + selFile.getSelectedFile();
-		Image image = SWTResourceManager.getImage(path);
-		imgQuad.setImage(image);
-		if (image != null)
-			imgQuad.setBounds(image.getBounds());
+		imgQuad.setImage(path);
 		scroll.setMinSize(imgQuad.getSize());
 		imgQuad.redraw();
 	}

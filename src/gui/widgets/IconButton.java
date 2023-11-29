@@ -9,9 +9,6 @@ import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
-import org.eclipse.swt.graphics.Image;
-
-import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
 
@@ -50,15 +47,15 @@ public class IconButton extends LObjectButton<Icon> {
 				}
 				Animation anim = i.getAnimation();
 				if (anim != null && !anim.quad.path.isEmpty())
-					image.setImage(Project.current.imagePath() + anim.quad.path, i.getRectangle());
+					image.setImage(anim.quad.fullPath(), i.getRectangle());
 				else
-					image.setImage((Image) null);
+					image.setImage((String) null);
 			}
 			currentValue = i;
 		} else {
 			button.setEnabled(false);
 			if (image != null) {
-				image.setImage((Image) null);
+				image.setImage((String) null);
 			}
 			if (text != null) {
 				text.setValue("");

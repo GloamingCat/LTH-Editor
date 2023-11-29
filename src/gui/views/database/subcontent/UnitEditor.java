@@ -18,6 +18,11 @@ import lwt.widget.LText;
 public class UnitEditor extends GDefaultObjectEditor<Unit> {
 
 	public LPanel gridCanvas = null;
+	public LSpinner spnX;
+	public LSpinner spnY;
+	public LText txtChar;
+	public LText txtBattler;
+	public LCombo cmbList;
 	
 	public UnitEditor(LContainer parent) {
 		super(parent, 4, false, false);
@@ -29,12 +34,12 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		
 		new LLabel(this, Vocab.instance.POSITIONX);
 		
-		LSpinner spnX = new LSpinner(this);;
+		spnX = new LSpinner(this);;
 		addControl(spnX, "x");
 		
 		new LLabel(this, Vocab.instance.POSITIONY);
 		
-		LSpinner spnY = new LSpinner(this);
+		spnY = new LSpinner(this);
 		addControl(spnY, "y");
 		
 		new LLabel(this, Vocab.instance.CHARACTER);
@@ -44,7 +49,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		character.setAlignment(LFlags.CENTER);
 		character.setSpread(3, 1);
 		
-		LText txtChar = new LText(character, true);		
+		txtChar = new LText(character, true);		
 		IDButton btnChar = new IDButton(character, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
@@ -61,7 +66,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		battler.setAlignment(LFlags.CENTER);
 		battler.setSpread(3, 1);
 		
-		LText txtBattler = new LText(battler, true);
+		txtBattler = new LText(battler, true);
 		IDButton btnBattler = new IDButton(battler, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
@@ -73,7 +78,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 
 		new LLabel(this, Vocab.instance.LIST);
 		
-		LCombo cmbList = new LCombo(this, 3);
+		cmbList = new LCombo(this, 3);
 		cmbList.setOptional(false);
 		cmbList.setIncludeID(false);
 		cmbList.setItems(new String[] {

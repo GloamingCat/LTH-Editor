@@ -8,13 +8,11 @@ import lwt.dataestructure.LPath;
 import lwt.editor.LState;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
-import lwt.widget.LImage;
 import lwt.widget.LNodeSelector;
 
 public abstract class TileTree extends LView {
 
-	private LNodeSelector<Object> selector;
-	public LImage image = null;
+	public final LNodeSelector<Object> selector;
 	
 	/**
 	 * Create the composite.
@@ -27,9 +25,6 @@ public abstract class TileTree extends LView {
 		selector.addModifyListener(new LControlListener<Integer>() {
 			public void onModify(LControlEvent<Integer> event) {
 				FieldEditor.instance.canvas.setSelection(event.newValue);
-				if (image != null) {
-					updateImage(selector.getSelectedObject(), event.newValue);
-				}
 			}
 		});
 	}
@@ -68,6 +63,5 @@ public abstract class TileTree extends LView {
 	}
 	
 	public abstract LDataTree<Object> getTree();
-	public abstract void updateImage(Object obj, int id);
 
 }

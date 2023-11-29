@@ -53,7 +53,7 @@ public class TilePainter {
 		if (terrain == null) return null;
 		Animation anim = (Animation) Project.current.animations.getTree().get(terrain.animID);
 		if (anim == null) return null;
-		Image terrainImg = anim.quad.getImage();
+		Image terrainImg = SWTResourceManager.getImage(anim.quad.fullPath());
 		if (terrainImg == null) return null;
 		int w = anim.quad.width;
 		int h = anim.quad.height;
@@ -101,7 +101,7 @@ public class TilePainter {
 		int w = Math.round(rect.width * anim.transform.scaleX / 100f * obj.transform.scaleX / 100f);
 		int h = Math.round(rect.height * anim.transform.scaleY / 100f * obj.transform.scaleY / 100f);
 		img = LImageHelper.newImage(w, h);
-		Image texture = obj.image.getImage();
+		Image texture = SWTResourceManager.getImage(obj.image.fullPath());
 		if (texture == null)
 			return null;
 		try {
@@ -160,7 +160,7 @@ public class TilePainter {
 		int col = anim.getFrame(frame);
 		int row = (direction / 45);
 		img = LImageHelper.newImage(w, h);
-		Image quadImg = anim.quad.getImage();
+		Image quadImg = SWTResourceManager.getImage(anim.quad.fullPath());
 		try {
 			GC gc = new GC(img);
 			gc.setAlpha(anim.transform.alpha * transform.alpha / 255);
@@ -196,7 +196,7 @@ public class TilePainter {
 		Region r = (Region) Project.current.regions.getData().get(id);
 		if (rect)
 			img = LImageHelper.getStringImage(id + "", conf.grid.tileW + 1, conf.grid.tileH + 1, 
-				SWTResourceManager.getColor(r.rgb), true);
+				SWTResourceManager.getColor(r.color.red, r.color.green, r.color.blue), true);
 		else
 			img = LImageHelper.getStringImage(id + "", conf.grid.tileW, conf.grid.tileH, null, false);
 		regionCache.put(key, img);

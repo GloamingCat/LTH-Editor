@@ -4,12 +4,6 @@ import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.*;
 
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-
 import lwt.LFlags;
 import lwt.container.LScrollPanel;
 import lwt.dialog.LObjectShell;
@@ -54,18 +48,16 @@ public class PortalShell extends LObjectShell<Portal> {
 			public void onTileEnter(int x, int y) {
 				lblPos.setText("(" + (x + 1) + "," + (y + 1) + ")");
 			}
-		};
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
+			public void drawSelection() {
 				for (int h = 0; h < selectedTiles.length; h++)
 					for (int x = 0; x < selectedTiles[h].length; x++)
 						for (int y = 0; y < selectedTiles[h][x].length; y++) 
 							if (selectedTiles[h][x][y]) {
 								Point point = FieldHelper.math.tile2Pixel(x, y, h);
-								canvas.drawCursor(e.gc, SWTResourceManager.getColor(SWT.COLOR_YELLOW), point);
+								drawCursor(point);
 							}
 			}
-		});
+		};
 
 		scrolledComposite.setContent(canvas);
 

@@ -1,5 +1,7 @@
 package data;
 
+import org.eclipse.swt.graphics.Rectangle;
+
 import data.subcontent.Audio;
 import data.subcontent.Quad;
 import data.subcontent.Transform;
@@ -36,6 +38,14 @@ public class Animation extends Data {
 			e.printStackTrace();
 			return i;
 		}
+	}
+	
+	public Rectangle getCell(int i, int j) {
+		if (cols == 0 || rows == 0)
+			return null;
+		int w = quad.width / cols;
+		int h = quad.height / rows;
+		return new Rectangle(quad.x + i * w, quad.y + j * h, w, h);
 	}
 
 }

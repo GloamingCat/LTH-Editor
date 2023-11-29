@@ -57,5 +57,13 @@ public class Troop extends Data {
 		}
 		
 	}
+
+	public int find(int col, int row) {
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).x == col && members.get(i).y == row)
+				return i;
+		}
+		return -1;
+	}
 	
 }
