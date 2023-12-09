@@ -10,12 +10,7 @@ import lwt.widget.LText;
 
 import java.io.File;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-
 import project.Project;
-
-import org.eclipse.swt.widgets.Display;
 
 import data.subcontent.FontData;
 
@@ -60,9 +55,9 @@ public class FontShell extends FileShell<FontData> {
 
 	protected boolean isValidFile(File file) {
 		try {
-			Font f = new Font(Display.getCurrent(), file.getPath(), 
-					spnSize.getValue(), SWT.NONE);
-			f.dispose();
+			//Font f = new Font(Display.getCurrent(), file.getPath(), 
+			//		spnSize.getValue(), SWT.NONE);
+			//f.dispose();
 			return true;
 		} catch (Exception e) {
 			return false;

@@ -3,7 +3,7 @@ package gui.helper;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.subcontent.Point;
+import lwt.graphics.LPoint;
 
 public class OrtField extends FieldMath {
 
@@ -11,12 +11,12 @@ public class OrtField extends FieldMath {
 		super(6, 270);
 	}
 	
-	protected void removePoints(ArrayList<Point> p) {
+	protected void removePoints(ArrayList<LPoint> p) {
 		if (!conf.allNeighbors) {
-			Point p0 = p.get(0);
-			Point p1 = p.get(2);
-			Point p2 = p.get(4);
-			Point p3 = p.get(6);
+			LPoint p0 = p.get(0);
+			LPoint p1 = p.get(2);
+			LPoint p2 = p.get(4);
+			LPoint p3 = p.get(6);
 			p.remove(p0);
 			p.remove(p1);
 			p.remove(p2);
@@ -25,13 +25,13 @@ public class OrtField extends FieldMath {
 	}
 	
 	@Override
-	public Point pixelSize(int sizeX, int sizeY) {
-		return new Point(sizeX * conf.tileW, sizeY * conf.tileH);
+	public LPoint pixelSize(int sizeX, int sizeY) {
+		return new LPoint(sizeX * conf.tileW, sizeY * conf.tileH);
 	}
 	
 	@Override
-	public Point pixelCenter(int sizeX, int sizeY, int height) {
-		return new Point((sizeX * conf.tileW) / 2 , 
+	public LPoint pixelCenter(int sizeX, int sizeY, int height) {
+		return new LPoint((sizeX * conf.tileW) / 2 , 
 				(sizeY * conf.tileH + pixelDisplacement(height)) / 2);
 	}
 	
@@ -46,11 +46,11 @@ public class OrtField extends FieldMath {
 	}
 	
 	@Override
-	public Point depthLimits(int sizeX, int sizeY, int height) {
+	public LPoint depthLimits(int sizeX, int sizeY, int height) {
 		int dpy = conf.depthPerY;
 		int pph = conf.pixelsPerHeight;
 		int dph = conf.depthPerHeight;
-		return new Point(
+		return new LPoint(
 				(int)-Math.ceil(sizeY * dpy + pph* 2 + dph * (height - 1)),
 				(int) Math.ceil(pph + dph * (height + 1)));
 	}
@@ -61,19 +61,19 @@ public class OrtField extends FieldMath {
 	}
 	
 	@Override
-	public Point pixel2Tile(float x, float y, float d) {
+	public LPoint pixel2Tile(float x, float y, float d) {
 		float newH = d / conf.pixelsPerHeight;
 		int newX = Math.round(x / conf.tileW);
 		int newY = Math.round((y + newH) / conf.tileH);
-		return new Point(newX, newY);
+		return new LPoint(newX, newY);
 	}
 
 	@Override
-	public Point tile2Pixel(float x, float y, float h) {		
+	public LPoint tile2Pixel(float x, float y, float h) {		
 		float newH = h * conf.pixelsPerHeight;
 		int newX = Math.round(x * conf.tileW);
 		int newY = Math.round(y * conf.tileH - newH);
-		return new Point(newX, newY);
+		return new LPoint(newX, newY);
 	}
 
 	@Override
@@ -113,14 +113,14 @@ public class OrtField extends FieldMath {
 		return rows;
 	}
 	
-	public Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY) {
-		return new Iterator<ArrayList<Point>>() {
+	public Iterator<ArrayList<LPoint>> lineIterator(int sizeX, int sizeY) {
+		return new Iterator<ArrayList<LPoint>>() {
 			int j = 0;
 			@Override
-			public ArrayList<Point> next() {
-				ArrayList<Point> list = new ArrayList<>();
+			public ArrayList<LPoint> next() {
+				ArrayList<LPoint> list = new ArrayList<>();
 				for(int i = 0; i < sizeX; i++) {
-					list.add(new Point(i, j));
+					list.add(new LPoint(i, j));
 				}
 				j++;
 				return list;

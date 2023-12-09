@@ -9,6 +9,7 @@ import gui.widgets.SimpleEditableList;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.container.LStack;
@@ -22,7 +23,6 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCombo;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 
 import project.Project;
@@ -112,7 +112,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 					imgTerrain.setImage(anim.quad.fullPath(), anim.getCell(0, 0));
 			}
 		});
-		terrain.setWeights(new int[] {1, 2});
+		terrain.setWeights(1, 2);
 		
 		// Obstacle
 		
@@ -146,7 +146,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				imgObstacle.setImage(obstacle.image.fullPath(), obstacle.image.getRectangle());
 			}
 		});
-		obstacle.setWeights(new int[] {1, 2});
+		obstacle.setWeights(1, 2);
 		
 		// Region
 		
@@ -180,7 +180,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				lblRegion.setText(Project.current.regions.getList().get(event.newValue).toString());
 			}
 		});
-		region.setWeights(new int[] {1, 2});
+		region.setWeights(1, 2);
 		
 		// Characters
 		
@@ -325,7 +325,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		}
 		lblTitle.setText(titles[i]);
 		stack.setTop(editors[i]);
-		stack.layout();
 	}
 	
 	public void selectTile(int i) {

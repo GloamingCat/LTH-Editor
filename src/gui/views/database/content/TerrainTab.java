@@ -10,13 +10,13 @@ import gui.widgets.SimpleEditableList;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LCheckBox;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -56,7 +56,6 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		lstJobMoveCost = new PropertyList(moveCost);
 		lstJobMoveCost.setExpand(true, true);
-		lstJobMoveCost.setSize(2, 1);
 		addChild(lstJobMoveCost, "jobMoveCost");
 		
 		// Graphics

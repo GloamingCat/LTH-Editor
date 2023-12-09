@@ -3,9 +3,9 @@ package gui.widgets;
 import gui.shell.IconShell;
 import gui.views.database.subcontent.TransformEditor;
 import lwt.container.LContainer;
+import lwt.container.LImage;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -39,7 +39,7 @@ public class IconButton extends LObjectButton<Icon> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			Icon i = (Icon) value;
 			if (image != null) {
 				if (transform != null) {
@@ -53,7 +53,7 @@ public class IconButton extends LObjectButton<Icon> {
 			}
 			currentValue = i;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (image != null) {
 				image.setImage((String) null);
 			}

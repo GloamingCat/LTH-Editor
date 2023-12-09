@@ -15,7 +15,6 @@ public class EquipStatusShell extends ObjectShell<EquipStatus> {
 	public EquipStatusShell(LShell parent) {
 		super(parent);
 		setMinimumSize(300, 250);
-		setSize(310, 246);
 		contentEditor.setGridLayout(1, false);
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);

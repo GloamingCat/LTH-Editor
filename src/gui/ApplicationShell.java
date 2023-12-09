@@ -8,7 +8,6 @@ import project.Project;
 import lwt.LDefaultApplicationShell;
 import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
-import org.eclipse.swt.graphics.Point;
 
 public class ApplicationShell extends LDefaultApplicationShell {
 	
@@ -27,7 +26,7 @@ public class ApplicationShell extends LDefaultApplicationShell {
 
 	public ApplicationShell(String folder) {
 		super(1200, 700, "LTH Editor", "/img/icon.png");
-		setMinimumSize(new Point(800, 600));
+		setMinimumSize(800, 600);
 		
 		FieldTreeEditor fieldTreeEditor = new FieldTreeEditor(this);
 		DatabaseEditor databaseEditor = new DatabaseEditor(this);

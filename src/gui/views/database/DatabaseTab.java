@@ -15,6 +15,7 @@ import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LControlView;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.container.LView;
@@ -27,7 +28,6 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LControlWidget;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 

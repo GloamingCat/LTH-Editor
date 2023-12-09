@@ -81,7 +81,6 @@ public class BonusShell extends ObjectShell<Bonus> {
 					removeControl(statusTree);
 					addControl(typeNode, "id");
 				}
-				stack.layout();
 			}
 		});
 		

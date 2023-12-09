@@ -1,8 +1,13 @@
 package gui.views.fieldTree;
 
-import lwt.LColor;
+import lwt.LFlags;
 import lwt.container.LCanvas;
 import lwt.container.LContainer;
+import lwt.event.LMouseEvent;
+import lwt.event.listener.LMouseListener;
+import lwt.graphics.LColor;
+import lwt.graphics.LPainter;
+import lwt.graphics.LPoint;
 import lwt.widget.LLabel;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.action.BucketAction;
@@ -13,17 +18,10 @@ import gui.views.fieldTree.action.PencilAction;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
-
 import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
 import data.field.Party;
-import data.subcontent.Point;
 
 public abstract class FieldCanvas extends LCanvas {
 
@@ -38,18 +36,18 @@ public abstract class FieldCanvas extends LCanvas {
 	public LLabel lblId = null;
 	public LLabel lblCoords = null;
 
-	protected Point mousePoint = new Point(0, 0);
+	protected LPoint mousePoint = new LPoint(0, 0);
 	protected int tileX = 0;
 	protected int tileY = 0;
 	protected int height = 0;
-	protected Point clickedTile = null;
+	protected LPoint clickedTile = null;
 	protected int clickedHeight = 0;
 	protected boolean draggingLeft = false;
-	protected Point dragOrigin = null;
+	protected LPoint dragOrigin = null;
 	protected int mode = 0;
 	protected int tool = 0;
 	protected boolean showGrid = true;
-	protected Point selectionPoint;
+	protected LPoint selectionPoint;
 	protected int[][] selection;
 
 	public LColor hoverColor = new LColor(0, 0, 0);
@@ -68,127 +66,112 @@ public abstract class FieldCanvas extends LCanvas {
 		super(parent);
 		addPainter(new LPainter() {
 			public void paint() {
-				draw();
+				draw(this);
 				setTransparency(100);
 				if (currentParty != null) {
 					setFillColor(partyColor);
-					drawParty();
+					drawParty(this);
 				} else if (currentLayer != null) {
 					setFillColor(selectionColor);
-					drawSelection();
+					drawSelection(this);
 				}
 			}
 		});
-		addMouseMoveListener(new MouseMoveListener() {
-			public void mouseMove(MouseEvent e) {
-				onMouseMove(e.x, e.y);
-			}
-		});
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (tileX < 0 || tileX >= field.sizeX || tileY < 0 || tileY >= field.sizeY)
-					return;
-				dragOrigin = new Point(tileX, tileY);
-				if (e.button == 1) { // Left button.
-					draggingLeft = true;
-					onTileLeftDown();
-				} else if (!draggingLeft) {
-					onTileRightDown();
+		addMouseListener(new LMouseListener() {
+			public void onMouseChange(LMouseEvent e) {
+				if (e.button == 0) {
+					onMouseMove(e.x, e.y);
+				} else if (e.type == LFlags.PRESS) {
+					if (tileX < 0 || tileX >= field.sizeX || tileY < 0 || tileY >= field.sizeY)
+						return;
+					dragOrigin = new LPoint(tileX, tileY);
+					if (e.button == LFlags.LEFT) {
+						draggingLeft = true;
+						onTileLeftDown();
+					} else if (e.button == LFlags.RIGHT && !draggingLeft) {
+						onTileRightDown();
+					}
+				} else if (e.type == LFlags.RELEASE) {
+					if (e.button == LFlags.LEFT) {
+						if (draggingLeft)
+							onTileLeftUp();
+						draggingLeft = false;
+					} else if (e.button == LFlags.RIGHT && !draggingLeft) {
+						onTileRightUp();
+					}
+					dragOrigin = null;
 				}
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				if (e.button == 1) { // Left button.
-					if (draggingLeft)
-						onTileLeftUp();
-					draggingLeft = false;
-				} else if (!draggingLeft) { // Right button.
-					onTileRightUp();
-				}
-				dragOrigin = null;
-			}
-		});
-		addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent arg0) {
-				onDispose();
 			}
 		});
 		selection = new int[1][1];
 		selection[0][0] = 0;
-		selectionPoint = new Point(0, 0);
+		selectionPoint = new LPoint(0, 0);
 	}
 
-	public void onDispose() {
-		disposeBuffer();
-	}
-	
 	// }}
 
 	//////////////////////////////////////////////////
 	// {{ Draw
 
-	public void draw() {
+	public void draw(LPainter painter) {
 		if (field != null) {
 			drawBuffer(0, 0, scale, scale);
-			setPaintColor(hoverColor);
-			drawCursor(mousePoint);
+			painter.setPaintColor(hoverColor);
+			drawCursor(painter, mousePoint);
 			if (clickedTile != null) {
-				Point clickPoint = FieldHelper.math.tile2Pixel(clickedTile.x, clickedTile.y, clickedHeight);
-				setPaintColor(cursorColor);
-				drawCursor(clickPoint);
+				LPoint clickPoint = FieldHelper.math.tile2Pixel(clickedTile.x, clickedTile.y, clickedHeight);
+				painter.setPaintColor(cursorColor);
+				drawCursor(painter, clickPoint);
 			}
 		}
 	}
 
 	public abstract void redrawBuffer();
 
-	protected void drawSelection() {
+	protected void drawSelection(LPainter painter) {
 		if (dragOrigin == null || draggingLeft)
 			return;
 		int h = currentLayer.info.height - 1;
-		Point p1 = FieldHelper.math.tile2Pixel(tileX, tileY, h);
-		Point p2 = FieldHelper.math.tile2Pixel(tileX, dragOrigin.y, h);
-		Point p3 = FieldHelper.math.tile2Pixel(dragOrigin.x, dragOrigin.y, h);
-		Point p4 = FieldHelper.math.tile2Pixel(dragOrigin.x, tileY, h);
+		LPoint p1 = FieldHelper.math.tile2Pixel(tileX, tileY, h);
+		LPoint p2 = FieldHelper.math.tile2Pixel(tileX, dragOrigin.y, h);
+		LPoint p3 = FieldHelper.math.tile2Pixel(dragOrigin.x, dragOrigin.y, h);
+		LPoint p4 = FieldHelper.math.tile2Pixel(dragOrigin.x, tileY, h);
 		int[] poly = new int[] { (int) ((p1.x + x0) * scale), (int) ((p1.y + y0) * scale), (int) ((p2.x + x0) * scale),
 				(int) ((p2.y + y0) * scale), (int) ((p3.x + x0) * scale), (int) ((p3.y + y0) * scale),
 				(int) ((p4.x + x0) * scale), (int) ((p4.y + y0) * scale), (int) ((p1.x + x0) * scale),
 				(int) ((p1.y + y0) * scale) };
-		fillPolygon(poly);
+		painter.fillPolygon(poly);
 	}
 
-	protected void drawParty() {
+	protected void drawParty(LPainter painter) {
 		int maxx = currentParty.maxX() - 1;
 		int maxy = currentParty.maxY() - 1;
 		int minx = currentParty.x - 1;
 		int miny = currentParty.y - 1;
-		Point p1 = FieldHelper.math.tile2Pixel(maxx, maxy, currentParty.h - 1);
-		Point p2 = FieldHelper.math.tile2Pixel(maxx, miny, currentParty.h - 1);
-		Point p3 = FieldHelper.math.tile2Pixel(minx, miny, currentParty.h - 1);
-		Point p4 = FieldHelper.math.tile2Pixel(minx, maxy, currentParty.h - 1);
+		LPoint p1 = FieldHelper.math.tile2Pixel(maxx, maxy, currentParty.h - 1);
+		LPoint p2 = FieldHelper.math.tile2Pixel(maxx, miny, currentParty.h - 1);
+		LPoint p3 = FieldHelper.math.tile2Pixel(minx, miny, currentParty.h - 1);
+		LPoint p4 = FieldHelper.math.tile2Pixel(minx, maxy, currentParty.h - 1);
 		int[] poly = new int[] { (int) ((p1.x + x0) * scale), (int) ((p1.y + y0) * scale), (int) ((p2.x + x0) * scale),
 				(int) ((p2.y + y0) * scale), (int) ((p3.x + x0) * scale), (int) ((p3.y + y0) * scale),
 				(int) ((p4.x + x0) * scale), (int) ((p4.y + y0) * scale), (int) ((p1.x + x0) * scale),
 				(int) ((p1.y + y0) * scale) };
-		fillPolygon(poly);
+		painter.fillPolygon(poly);
 		int direction = (currentParty.rotation * 90 + FieldHelper.math.initialDirection) % 360;
 		String dirName =  "/img/falsearrow_" + direction;
-		setTransparency(255);
-		drawImageCenter(dirName + ".png",
+		painter.setTransparency(255);
+		painter.drawImageCenter(dirName + ".png",
 				(int) (x0 + (p1.x + p3.x) * scale / 2),
 				(int) (y0 + (p1.y + p3.y) * scale / 2),
 				scale, scale);
 	}
 	
-	public void drawCursor(Point point) {
+	public void drawCursor(LPainter painter, LPoint point) {
 		int[] p = FieldHelper.getTilePolygon(
 				Math.round(scale * (point.x + x0)),
 				Math.round(scale * (point.y + y0)),
 				scale * 0.75f);
-		drawPolygon(p, true);
+		painter.drawPolygon(p, true);
 	}
 	
 	// }}
@@ -197,7 +180,7 @@ public abstract class FieldCanvas extends LCanvas {
 	// {{ Callbacks
 
 	public void onMouseMove(int x, int y) {
-		Point tilePos = FieldHelper.math.pixel2Tile(x * 1.0f / scale - x0, y * 1.0f / scale - y0,
+		LPoint tilePos = FieldHelper.math.pixel2Tile(x * 1.0f / scale - x0, y * 1.0f / scale - y0,
 				height * FieldHelper.config.grid.pixelsPerHeight);
 		if ((tileX != tilePos.x || tileY != tilePos.y) && field != null) {
 			if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
@@ -214,7 +197,7 @@ public abstract class FieldCanvas extends LCanvas {
 		if (mode == 0) // Layers
 			useTool(tileX, tileY);
 		else { // Characters and Parties
-			clickedTile = new Point(tileX, tileY);
+			clickedTile = new LPoint(tileX, tileY);
 			clickedHeight = height;
 			onTileChange(tileX, tileY);
 			redrawBuffer();
@@ -248,7 +231,7 @@ public abstract class FieldCanvas extends LCanvas {
 	public void onTileChange(int x, int y) {
 	}
 
-	public void onTileChange(ArrayList<Point> tiles) {
+	public void onTileChange(ArrayList<LPoint> tiles) {
 	}
 
 	// }}
@@ -263,17 +246,17 @@ public abstract class FieldCanvas extends LCanvas {
 
 	public void rescale(float scale) {
 		this.scale = scale;
-		Point pixelSize;
+		LPoint pixelSize;
 		x0 = 100;
 		if (field == null) {
-			pixelSize = new Point(0, 0);
+			pixelSize = new LPoint(0, 0);
 			y0 = 0;
 		} else {
 			pixelSize = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
 			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + x0
 					+ FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
-		setSize(Math.round((pixelSize.x + x0 * 2 - FieldHelper.config.grid.tileB) * scale),
+		setCurrentSize(Math.round((pixelSize.x + x0 * 2 - FieldHelper.config.grid.tileB) * scale),
 				Math.round((pixelSize.y + y0) * scale));
 	}
 
@@ -333,7 +316,7 @@ public abstract class FieldCanvas extends LCanvas {
 	}
 
 	public void setClickedTile(int x, int y, int h) {
-		clickedTile = new Point(x, y);
+		clickedTile = new LPoint(x, y);
 		clickedHeight = h;
 		redraw();
 	}
@@ -343,22 +326,22 @@ public abstract class FieldCanvas extends LCanvas {
 	//////////////////////////////////////////////////
 	// {{ Edit
 
-	public void setSelection(int[][] s, Point p) {
+	public void setSelection(int[][] s, LPoint p) {
 		selection = s;
 		selectionPoint = p;
 	}
 
 	public void setSelection(int index) {
 		selection = new int[][] { { index } };
-		selectionPoint = new Point(0, 0);
+		selectionPoint = new LPoint(0, 0);
 	}
 
 	public void onSelect() {
 		if (currentLayer == null)
 			return;
-		Point origin = dragOrigin;
+		LPoint origin = dragOrigin;
 		if (origin == null)
-			origin = new Point(tileX, tileY);
+			origin = new LPoint(tileX, tileY);
 		int[][] grid = currentLayer.grid;
 
 		int x1 = Math.min(tileX, origin.x);
@@ -366,7 +349,7 @@ public abstract class FieldCanvas extends LCanvas {
 		int x2 = Math.max(tileX, origin.x);
 		int y2 = Math.max(tileY, origin.y);
 
-		selectionPoint = new Point(tileX - x1, tileY - y1);
+		selectionPoint = new LPoint(tileX - x1, tileY - y1);
 		selection = new int[x2 - x1 + 1][y2 - y1 + 1];
 		for (int i = 0; i < selection.length; i++) {
 			for (int j = 0; j < selection[i].length; j++) {
@@ -389,7 +372,7 @@ public abstract class FieldCanvas extends LCanvas {
 			clickedTile = null;
 	}
 
-	public CharTile moveCharacter(int x, int y, Point origin) {
+	public CharTile moveCharacter(int x, int y, LPoint origin) {
 		if (origin == null)
 			return null;
 		if (origin.x == tileX && origin.y == tileY)
@@ -455,18 +438,18 @@ public abstract class FieldCanvas extends LCanvas {
 		int id = grid[tileX][tileY];
 		int newID = selection[selectionPoint.x][selectionPoint.y];
 		if (newID != id) {
-			ArrayList<Point> modified = new ArrayList<>();
-			Stack<Point> stack = new Stack<Point>();
-			stack.push(new Point(tileX, tileY));
+			ArrayList<LPoint> modified = new ArrayList<>();
+			Stack<LPoint> stack = new Stack<LPoint>();
+			stack.push(new LPoint(tileX, tileY));
 			while (!stack.isEmpty()) {
-				Point p = stack.pop();
+				LPoint p = stack.pop();
 				if (p.x >= 0 && p.x < grid.length && p.y >= 0 && p.y < grid[0].length) {
 					if (grid[p.x][p.y] == id) {
 						modified.add(p);
 						grid[p.x][p.y] = newID;
-						Point[] shift = FieldHelper.math.neighborShift;
+						LPoint[] shift = FieldHelper.math.neighborShift;
 						for (int k = 0; k < shift.length; k++) {
-							stack.push(new Point(p.x + shift[k].x, p.y + shift[k].y));
+							stack.push(new LPoint(p.x + shift[k].x, p.y + shift[k].y));
 						}
 					}
 				}

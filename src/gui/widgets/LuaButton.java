@@ -34,14 +34,14 @@ public class LuaButton extends LObjectButton<String> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			String s = (String) value;
 			if (pathText != null) {
 				pathText.setValue(s);
 			}
 			currentValue = s;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (pathText != null) {
 				pathText.setValue("");
 			}

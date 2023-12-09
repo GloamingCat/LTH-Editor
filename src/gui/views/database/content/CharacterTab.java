@@ -12,6 +12,7 @@ import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
@@ -22,7 +23,6 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCheckBox;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -193,7 +193,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			if (anim != null) {
 				GameCharacter c = (GameCharacter) contentEditor.getObject();
 				anim.transform.setColorTransform(img, c.transform);
-				img.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
+				img.setImage(anim.quad.fullPath(), anim.quad.getRect());
 			} else {
 				img.setImage((String) null); 
 			}
@@ -216,7 +216,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				img.setImage((String) null);
 				return;
 			}
-			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRectangle());
+			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRect());
 		} else {
 			img.setImage((String) null);
 		}

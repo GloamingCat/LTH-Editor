@@ -10,12 +10,13 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
+import lwt.graphics.LPainter;
+import lwt.graphics.LPoint;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import project.Project;
 import data.field.Field;
 import data.field.Transition.Portal;
-import data.subcontent.Point;
 
 public class PortalShell extends LObjectShell<Portal> {
 
@@ -48,18 +49,16 @@ public class PortalShell extends LObjectShell<Portal> {
 			public void onTileEnter(int x, int y) {
 				lblPos.setText("(" + (x + 1) + "," + (y + 1) + ")");
 			}
-			public void drawSelection() {
+			public void drawSelection(LPainter painter) {
 				for (int h = 0; h < selectedTiles.length; h++)
 					for (int x = 0; x < selectedTiles[h].length; x++)
 						for (int y = 0; y < selectedTiles[h][x].length; y++) 
 							if (selectedTiles[h][x][y]) {
-								Point point = FieldHelper.math.tile2Pixel(x, y, h);
-								drawCursor(point);
+								LPoint point = FieldHelper.math.tile2Pixel(x, y, h);
+								drawCursor(painter, point);
 							}
 			}
 		};
-
-		scrolledComposite.setContent(canvas);
 
 		new LLabel(content, Vocab.instance.HEIGHT).setAlignment(LFlags.CENTER);
 		spnH = new LSpinner(content);
@@ -90,7 +89,7 @@ public class PortalShell extends LObjectShell<Portal> {
 		spnH.setMaximum(maxHeight);
 		canvas.setField(field);
 		canvas.setHeight(spnH.getValue() - 1);
-		content.layout();
+		pack();
 	}
 
 	@Override

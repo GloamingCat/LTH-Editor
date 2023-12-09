@@ -6,9 +6,9 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
 import lwt.LFlags;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dialog.LShell;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 

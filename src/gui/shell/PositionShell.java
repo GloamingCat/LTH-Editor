@@ -87,8 +87,6 @@ public class PositionShell extends LObjectShell<Position> {
 				lblPos.setText("(" + (x + 1) + "," + (y + 1) + ")");
 			}
 		};
-		
-		scrolledComposite.setContent(canvas);
 
 		LPanel bottom = new LPanel(content, 4, false);
 		bottom.setAlignment(LFlags.CENTER);
@@ -145,8 +143,7 @@ public class PositionShell extends LObjectShell<Position> {
 		spnY.setMaximum(field.sizeY);
 		canvas.setField(field);
 		updateClickPoint();
-		scrolledComposite.layout();
-		scrolledComposite.setMinSize(canvas.getSize());
+		scrolledComposite.refreshSize(canvas.getCurrentSize());
 	}
 	
 	private void updateClickPoint() {
@@ -173,7 +170,7 @@ public class PositionShell extends LObjectShell<Position> {
 			cmbDirection.setValue(initial.direction / 45);
 		}
 		updateClickPoint();
-		content.layout();
+		pack();
 	}
 	
 	private LPath findPath(int id) {

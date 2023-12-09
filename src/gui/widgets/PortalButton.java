@@ -40,14 +40,14 @@ public class PortalButton extends LObjectButton<Portal> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			Portal s = (Portal) value;
 			if (text != null) {
 				text.setValue(s.toString());
 			}
 			currentValue = s;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (text != null) {
 				text.setValue("");
 			}

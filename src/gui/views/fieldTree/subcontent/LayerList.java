@@ -18,8 +18,6 @@ import lwt.event.LSelectionEvent;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 
-import org.eclipse.swt.SWT;
-
 import project.Project;
 import data.field.Field;
 import data.field.Layer;
@@ -60,7 +58,7 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Layer l = (Layer) event.data;
-				if (event.detail == SWT.CHECK) { 
+				if (event.check) { 
 					l.visible = !l.visible;
 					FieldEditor.instance.canvas.refresh();
 				} else {

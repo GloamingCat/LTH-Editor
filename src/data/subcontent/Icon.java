@@ -1,9 +1,8 @@
 package data.subcontent;
 
-import org.eclipse.swt.graphics.Rectangle;
-
-import project.Project;
 import data.Animation;
+import lwt.graphics.LRect;
+import project.Project;
 
 public class Icon {
 	
@@ -33,7 +32,7 @@ public class Icon {
 		return anim == null ? null : anim.quad.fullPath();
 	}
 
-	public Rectangle getRectangle() {
+	public LRect getRectangle() {
 		Animation anim = getAnimation();
 		if (anim == null)
 			return null;

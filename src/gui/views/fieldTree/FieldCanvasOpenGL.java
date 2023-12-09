@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import batching.Batch;
 import batching.BatchIterator;
 import batching.Scene;
-import data.subcontent.Point;
 import gui.helper.FieldHelper;
 import gui.helper.SceneHelper;
 import lwt.container.LContainer;
+import lwt.graphics.LPoint;
 import rendering.Renderer;
 import rendering.Screen;
 import rendering.ShaderProgram;
@@ -97,7 +97,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		refresh();
 	}
 	
-	public void onTileChange(ArrayList<Point> tiles) {
+	public void onTileChange(ArrayList<LPoint> tiles) {
 		refresh();
 	}
 	
@@ -127,7 +127,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		vertexArray = new VertexArray(scene.allObjects().size() * 4);
 		vertexArray.initVAO(shader.attributes, shader.vertexSize);
 		nFloats = shader.vertexSize / 4;
-		Point size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
+		LPoint size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
 		int w = size.x + x0 * 2;
 		int h = size.y + (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
 				FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());

@@ -10,12 +10,12 @@ import gui.widgets.SimpleEditableList;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LSelectionListener;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 
 import data.Animation;
@@ -55,6 +55,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 
 		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setExpand(true, true);
+		imgGraphics.setAlignment(LFlags.TOP & LFlags.LEFT);
 		
 		IconButton btnGraphics = new IconButton(grpGraphics, false);
 		addControl(btnGraphics, "image");

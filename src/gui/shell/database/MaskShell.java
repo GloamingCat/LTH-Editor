@@ -3,20 +3,20 @@ package gui.shell.database;
 import gui.Vocab;
 import gui.helper.FieldHelper;
 import data.Skill.Mask;
-import data.subcontent.Point;
-import lwt.LColor;
+import lwt.LFlags;
 import lwt.container.LCanvas;
-import lwt.container.LCanvas.LPainter;
+import lwt.graphics.LColor;
+import lwt.graphics.LPainter;
+import lwt.graphics.LPoint;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
+import lwt.event.LMouseEvent;
 import lwt.event.listener.LControlListener;
+import lwt.event.listener.LMouseListener;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
-
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class MaskShell extends LObjectShell<Mask> {
 
@@ -164,7 +164,7 @@ public class MaskShell extends LObjectShell<Mask> {
 			@Override
 			public void paint() {
 				canvas.pushBuffer();
-				drawGrid();
+				drawGrid(this);
 				canvas.popBuffer();
 				canvas.drawBuffer(0, 0);
 				canvas.disposeBuffer();
@@ -173,47 +173,49 @@ public class MaskShell extends LObjectShell<Mask> {
 		
 		// Flip Tile
 		
-		canvas.addMouseListener(new MouseAdapter() {
+		canvas.addMouseListener(new LMouseListener() {
 			@Override
-			public void mouseDown(MouseEvent e) {
-				int h = (height + spnMinH.getValue());
-				int px = e.x - (x0 + canvas.getSize().x / 2);
-				int py = e.y - (y0 + canvas.getSize().y / 2);
-				int pd = h * FieldHelper.config.grid.pixelsPerHeight;
-				Point tile = FieldHelper.math.pixel2Tile(px, py, pd);
-				try {
-					grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];
-					canvas.redraw();
-				} catch (IndexOutOfBoundsException ex) {}
+			public void onMouseChange(LMouseEvent e) {
+				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+					int h = (height + spnMinH.getValue());
+					LPoint size = canvas.getCurrentSize();
+					int px = e.x - (x0 + size.x / 2);
+					int py = e.y - (y0 + size.y / 2);
+					int pd = h * FieldHelper.config.grid.pixelsPerHeight;
+					LPoint tile = FieldHelper.math.pixel2Tile(px, py, pd);
+					try {
+						grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];
+						canvas.redraw();
+					} catch (IndexOutOfBoundsException ex) {}
+				}
 			}
 		});
-		
 	}
 	
-	private void drawGrid() {
-		int x0 = this.x0 + canvas.getSize().x / 2;
-		int y0 = this.y0 + canvas.getSize().y / 2;
+	private void drawGrid(LPainter painter) {
+		int x0 = this.x0 + canvas.getCurrentSize().x / 2;
+		int y0 = this.y0 + canvas.getCurrentSize().y / 2;
 		int currentH = spnMinH.getValue() + height;
 		for (int h = 0; h < grid.length; h++) {
-			canvas.setTransparency(h == currentH ? 255 : 127);
+			painter.setTransparency(h == currentH ? 255 : 127);
 			for (int x = 0; x < grid[h].length; x++) {
 				for (int y = 0; y < grid[h][x].length; y++) {
-					canvas.setFillColor(grid[h][x][y] ? trueColor : falseColor);
-					Point center = FieldHelper.math.tile2Pixel(x, y, h);
+					painter.setFillColor(grid[h][x][y] ? trueColor : falseColor);
+					LPoint center = FieldHelper.math.tile2Pixel(x, y, h);
 					int[] p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 1);
-					canvas.fillPolygon(p);
-					canvas.drawPolygon(p, true);
+					painter.fillPolygon(p);
+					painter.drawPolygon(p, true);
 				}
 			}
 		}
 		int h = spnMinH.getValue();
 		int x = spnMinX.getValue();
 		int y = spnMinY.getValue();
-		Point center = FieldHelper.math.tile2Pixel(x, y, h);
+		LPoint center = FieldHelper.math.tile2Pixel(x, y, h);
 		int[] p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 0.8f);
-		canvas.setPaintColor(centerColor);
-		canvas.fillPolygon(p);
-		canvas.drawPolygon(p, true);
+		painter.setPaintColor(centerColor);
+		painter.fillPolygon(p);
+		painter.drawPolygon(p, true);
 	}
 	
 	private void expand(int x, int y, int h, int dx, int dy, int dh) {
@@ -223,7 +225,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		for (int j = 0; j < grid[k][i].length; j++)
 			newgrid[k + dh][i + dx][j + dy] = grid[k][i][j];
 		grid = newgrid;
-		Point p = FieldHelper.math.pixelSize(x, y);
+		LPoint p = FieldHelper.math.pixelSize(x, y);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
 		canvas.redraw();
@@ -236,7 +238,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		for (int j = 0; j < y; j++)
 			newgrid[k][i][j] = grid[k + dh][i + dx][j + dy];
 		grid = newgrid;
-		Point p = FieldHelper.math.pixelSize(x, y);
+		LPoint p = FieldHelper.math.pixelSize(x, y);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
 		canvas.redraw();
@@ -264,7 +266,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		spnMaxH.setValue(grid.length - initial.centerH);
 		spnMaxX.setValue(grid[0].length - initial.centerX);
 		spnMaxY.setValue(grid[0][0].length - initial.centerY);
-		Point p = FieldHelper.math.pixelSize(grid[0].length, grid[0][0].length);
+		LPoint p = FieldHelper.math.pixelSize(grid[0].length, grid[0][0].length);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(grid[0][0].length) - p.y / 2;
 		updateLayerCombo();

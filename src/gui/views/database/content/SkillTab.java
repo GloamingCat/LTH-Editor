@@ -10,14 +10,15 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
-import lwt.LColor;
 import lwt.LFlags;
 import lwt.container.LCanvas;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.container.LViewFolder;
-import lwt.container.LCanvas.LPainter;
+import lwt.graphics.LColor;
+import lwt.graphics.LPainter;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
@@ -25,7 +26,6 @@ import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LObjectButton;
 import lwt.widget.LTextBox;
@@ -220,11 +220,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LPanel userAnim = new LPanel(tabAnim, 2, false);
 		tabAnim.addTab(Vocab.instance.USER, userAnim);
 		
-		new LLabel(userAnim, Vocab.instance.LOAD).setBounds(0, 0, 55, 15);
+		new LLabel(userAnim, Vocab.instance.LOAD);
 		LText txtUserLoadAnim = new LText(userAnim);
 		addControl(txtUserLoadAnim, "userLoadAnim");
 		
-		new LLabel(userAnim, Vocab.instance.CAST).setBounds(0, 0, 55, 15);
+		new LLabel(userAnim, Vocab.instance.CAST);
 		LText txtUserCastAnim = new LText(userAnim);
 		addControl(txtUserCastAnim, "userCastAnim");
 		
@@ -360,20 +360,20 @@ public class SkillTab extends DatabaseTab<Skill> {
 				Mask m = button.getValue();
 				if (m == null) return;
 				boolean[][] middle = m.grid[m.centerH - 1];
-				mask.drawRect(0, 0, 
+				drawRect(0, 0, 
 						middle.length * cellSize, 
 						middle[0].length * cellSize);
 				for (int i = 0; i < middle.length; i++) {
 					for (int j = 0; j < middle[i].length; j++) {
-						mask.setFillColor(middle[i][j] ? trueColor : falseColor);
-						mask.fillRect(border + i * cellSize, border + j * cellSize,
+						setFillColor(middle[i][j] ? trueColor : falseColor);
+						fillRect(border + i * cellSize, border + j * cellSize,
 									cellSize - border, cellSize - border);
-						mask.drawRect(i * cellSize, j * cellSize,
+						drawRect(i * cellSize, j * cellSize,
 									cellSize, cellSize);
 					}
 				}
-				mask.setPaintColor(centerColor);
-				mask.drawRect(border + (m.centerX - 1) * cellSize, 
+				setPaintColor(centerColor);
+				drawRect(border + (m.centerX - 1) * cellSize, 
 						border + (m.centerY - 1)* cellSize,
 						cellSize - border - 2, 
 						cellSize - border - 2);

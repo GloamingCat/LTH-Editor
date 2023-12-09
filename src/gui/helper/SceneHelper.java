@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.PaletteData;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.wb.swt.SWTResourceManager;
-
 import batching.Quad;
 import batching.Scene;
 import batching.Transform;
@@ -24,9 +18,9 @@ import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Icon;
-import data.subcontent.Point;
-import lwt.LColor;
-import lwt.LImageHelper;
+import lwt.graphics.LColor;
+import lwt.graphics.LPoint;
+import lwt.graphics.LTexture;
 import project.Project;
 import rendering.Context;
 import rendering.Renderer;
@@ -93,12 +87,12 @@ public class SceneHelper {
 	
 	public static Scene createScene(Field field, int x0, int y0, boolean showGrid,
 			Layer currentLayer, CharTile currentChar) {
-		Point depthLimits = FieldHelper.math.depthLimits(field.sizeX, field.sizeY, field.prefs.maxHeight);
+		LPoint depthLimits = FieldHelper.math.depthLimits(field.sizeX, field.sizeY, field.prefs.maxHeight);
 		Scene scene = new Scene(depthLimits.first(), depthLimits.second());
-		Iterator<ArrayList<Point>> it = FieldHelper.math.lineIterator(field.sizeX, field.sizeY);
+		Iterator<ArrayList<LPoint>> it = FieldHelper.math.lineIterator(field.sizeX, field.sizeY);
 		while (it.hasNext()) {
-			ArrayList<Point> tiles = it.next();
-			for (Point tile : tiles) {
+			ArrayList<LPoint> tiles = it.next();
+			for (LPoint tile : tiles) {
 				for (int i = 0; i < field.layers.terrain.size(); i++) {
 					Layer layer = field.layers.terrain.get(i);
 					if (!layer.visible)
@@ -137,7 +131,7 @@ public class SceneHelper {
 		return scene;
 	}
 	
-	public static void addTerrain(Layer layer, Point tile, Scene scene, int x0, int y0, int order) {
+	public static void addTerrain(Layer layer, LPoint tile, Scene scene, int x0, int y0, int order) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
@@ -154,7 +148,7 @@ public class SceneHelper {
 		int dw = anim.quad.width / anim.cols;
 		int dh = anim.quad.height / anim.rows;
 		
-		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
+		LPoint pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
 		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, layer.info.height - 1);
 		int dTop = depth + anim.transform.offsetDepth + order;
 		int dBottom = dTop + conf.grid.depthPerY / 2;
@@ -192,15 +186,15 @@ public class SceneHelper {
 		scene.add(br, tbr, pos.x + x0, pos.y + y0, w, h, dBottom);
 	}
 	
-	public static void addRegion(Layer layer, Point tile, Scene scene, int x0, int y0) {
+	public static void addRegion(Layer layer, LPoint tile, Scene scene, int x0, int y0) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
 		addTile(tile, layer.info.height, scene, x0, y0, "?" + id);
 	}
 	
-	public static void addTile(Point tile, int height, Scene scene, int x0, int y0, String tex) {
-		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, height - 1);
+	public static void addTile(LPoint tile, int height, Scene scene, int x0, int y0, String tex) {
+		LPoint pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, height - 1);
 		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, height - 1);
 		Texture texture = loadedTextures.get(tex);
 		Quad quad = new Quad(tex, 0, 0, texture.width, texture.height);
@@ -210,19 +204,19 @@ public class SceneHelper {
 		scene.add(quad, transform, pos.x + x0, pos.y + y0, quad.width, quad.height, depth);
 	}
 	
-	public static void addObstacle(Layer layer, Point tile, Scene scene, int x0, int y0) {
+	public static void addObstacle(Layer layer, LPoint tile, Scene scene, int x0, int y0) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
 		Obstacle obj = (Obstacle) Project.current.obstacles.getTree().get(id);
 		if (obj == null)
 			return;
-		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
+		LPoint pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
 		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, layer.info.height - 1);
 		addIcon(obj.image, obj.transform, pos, scene, x0, y0, depth);
 	}
 	
-	public static void addCharacter(CharTile info, Point tile, Scene scene, int x0, int y0) {
+	public static void addCharacter(CharTile info, LPoint tile, Scene scene, int x0, int y0) {
 		GameCharacter c = (GameCharacter) Project.current.characters.getTree().get(info.charID);
 		Icon icon = new Icon();
 		if (c != null) {
@@ -235,7 +229,7 @@ public class SceneHelper {
 		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
 		icon.col = anim.getFrame(info.frame - 1);
 		icon.row = info.direction / 45;
-		Point pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, info.h - 1);
+		LPoint pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, info.h - 1);
 		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, info.h - 1);
 		if (c != null) {
 			addIcon(icon, c.transform, pos, scene, x0, y0, depth - 1);
@@ -250,7 +244,7 @@ public class SceneHelper {
 		}
 	}
 	
-	public static void addIcon(Icon icon, data.subcontent.Transform transform, Point pos, Scene scene, int x0, int y0, int depth) {
+	public static void addIcon(Icon icon, data.subcontent.Transform transform, LPoint pos, Scene scene, int x0, int y0, int depth) {
 		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
 		if (anim == null)
 			return;
@@ -274,8 +268,8 @@ public class SceneHelper {
 	public static Texture getTexture(String path) {
 		Texture texture = loadedTextures.get(path);
 		if (texture == null) {
-			Image image = SWTResourceManager.getImage(Project.current.imagePath() + path);
-			if (image == null)
+			LTexture image = new LTexture(Project.current.imagePath() + path);
+			if (image.isEmpty())
 				return null;
 			texture = SceneHelper.toTexture(image);
 			loadedTextures.put(path, texture);
@@ -283,40 +277,14 @@ public class SceneHelper {
 		return texture;
 	}
 	
-	public static Image toImage(Texture texture) {
+	public static LTexture toImage(Texture texture) {
 		ByteBuffer buffer = texture.toBuffer(4);
-		byte[] bytes;
-		if (buffer.hasArray())
-			bytes = buffer.array();
-		else {
-			bytes = new byte[buffer.capacity()];
-			buffer.get(bytes);
-		}
-		ImageData data = new ImageData(
-				texture.width, texture.height, texture.channels * 8,
-				new PaletteData(0xff000000, 0xff0000, 0xff00), 1,
-				bytes);
-		LImageHelper.correctTransparency(data);
-		return new Image(Display.getCurrent(), data);
+		return new LTexture(buffer, texture.width, texture.height, texture.channels);
 	}
 	
-	public static Texture toTexture(Image image) {
-		ImageData data = image.getImageData();
-		int channels = data.depth / 8;
-		ByteBuffer buffer = ByteBuffer.allocateDirect(data.width * data.height * 4);
-		for (int i = 0; i < data.width * data.height; i++) {
-			buffer.put(i*4, data.data[i*channels+2]);
-			buffer.put(i*4+1, data.data[i*channels+1]);
-			buffer.put(i*4+2, data.data[i*channels]);
-			byte alpha = (byte)255;
-			if (data.alphaData != null)
-				alpha = data.alphaData[i];
-			else if (data.transparentPixel != -1)
-				alpha = data.transparentPixel == data.getPixel(i % data.width, i / data.width)
-					? (byte)0 : (byte)255;
-			buffer.put(i*4+3, alpha);
-		}
-		return new Texture(data.width, data.height, 4, buffer);
+	public static Texture toTexture(LTexture image) {
+		LPoint size = image.getSize();
+		return new Texture(size.x, size.y, 4, image.toBuffer());
 	}
 	
 	// }}
@@ -324,10 +292,10 @@ public class SceneHelper {
 	//////////////////////////////////////////////////
 	// {{ Tile texture
 	
-	public static Image createTileImage(Renderer renderer, float scale, LColor color, ShaderProgram shader) {
+	public static LTexture createTileImage(Renderer renderer, float scale, LColor color, ShaderProgram shader) {
 		renderer.setPencilColor(color.red, color.green, color.blue, color.alpha);
 		Texture texture = createTileTexture(renderer, scale, 255, shader);
-		Image img = toImage(texture);
+		LTexture img = toImage(texture);
 		texture.dispose();
 		return img;
 	}

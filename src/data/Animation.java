@@ -1,11 +1,10 @@
 package data;
 
-import org.eclipse.swt.graphics.Rectangle;
-
 import data.subcontent.Audio;
 import data.subcontent.Quad;
 import data.subcontent.Transform;
 import lwt.dataestructure.LDataList;
+import lwt.graphics.LRect;
 
 public class Animation extends Data {
 	
@@ -40,12 +39,12 @@ public class Animation extends Data {
 		}
 	}
 	
-	public Rectangle getCell(int i, int j) {
+	public LRect getCell(int i, int j) {
 		if (cols == 0 || rows == 0)
 			return null;
 		int w = quad.width / cols;
 		int h = quad.height / rows;
-		return new Rectangle(quad.x + i * w, quad.y + j * h, w, h);
+		return new LRect(quad.x + i * w, quad.y + j * h, w, h);
 	}
 
 }

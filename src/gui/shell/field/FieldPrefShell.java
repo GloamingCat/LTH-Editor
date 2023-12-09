@@ -2,6 +2,7 @@ package gui.shell.field;
 
 import lwt.LFlags;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dialog.LShell;
 import lwt.event.LEditEvent;
@@ -10,7 +11,6 @@ import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -172,7 +172,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 				img.setImage((String) null);
 				return;
 			}
-			img.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
+			img.setImage(anim.quad.fullPath(), anim.quad.getRect());
 		} else {
 			img.setImage((String) null);
 		}

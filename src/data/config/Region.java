@@ -1,8 +1,8 @@
 package data.config;
 
 import data.Data;
-import lwt.LColor;
 import lwt.dataestructure.LDataList;
+import lwt.graphics.LColor;
 
 public class Region extends Data {
 	

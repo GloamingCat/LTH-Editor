@@ -36,14 +36,14 @@ public class ScriptButton extends LObjectButton<Script> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			Script s = (Script) value;
 			if (pathText != null) {
 				pathText.setValue(s.name);
 			}
 			currentValue = s;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (pathText != null) {
 				pathText.setValue("");
 			}

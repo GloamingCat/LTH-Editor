@@ -109,7 +109,7 @@ public class FieldTreeEditor extends LView {
 				FieldNode n = treeEditor.getCollectionWidget().getSelectedObject();
 				FieldPrefShell shell = new FieldPrefShell(parent);
 				int id = Project.current.fieldTree.getData().findNode(n).id;
-				shell.setText(String.format("[%03d] ", id) + n.name);
+				shell.setTitle(String.format("[%03d] ", id) + n.name);
 				return shell;
 			}
 		});

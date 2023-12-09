@@ -2,27 +2,25 @@ package gui.views.fieldTree;
 
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainterSWT;
-import lwt.LImageHelper;
 import lwt.container.LContainer;
+import lwt.graphics.LPainter;
+import lwt.graphics.LPoint;
+import lwt.graphics.LTexture;
 import project.Project;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-
 import data.Animation;
 import data.field.CharTile;
 import data.field.FieldImage;
 import data.subcontent.Icon;
-import data.subcontent.Point;
 import data.subcontent.Quad;
 
 public class FieldCanvasSWT extends FieldCanvas {
 
 	// Image cache
-	public Image[][] tileImages;
+	public LTexture[][] tileImages;
 	public FieldPainterSWT painter;
 
 	public FieldCanvasSWT(LContainer parent) {
@@ -35,39 +33,45 @@ public class FieldCanvasSWT extends FieldCanvas {
 	
 	protected class PainterThread extends Thread {
 		public int liney;
-		public Image line;
-		private Point size;
-		private ArrayList<Point> tiles;
+		public LTexture line;
+		private LPoint size;
+		private ArrayList<LPoint> tiles;
 		
-		public PainterThread(Point size, ArrayList<Point> tiles) {
+		public PainterThread(LPoint size, ArrayList<LPoint> tiles) {
 			super();
 			this.size = size;
 			this.tiles = tiles;
 		}
 
 		public void run() {
+			LPoint o = tiles.get(0);
 			int imgW = FieldHelper.math.lineWidth(field.sizeX, field.sizeY);
-			Image img = LImageHelper.newImage(size.x + imgW, size.y);
-			GC gc = new GC(img);
-			Point o = tiles.get(0);
-			liney = y0 + FieldHelper.math.tile2Pixel(o.x, o.y, 0).y - size.y + FieldHelper.config.grid.tileH;
-			for(Point p : tiles) {
-				Point pos = FieldHelper.math.tile2Pixel(p.x, p.y, 0);
-				int x = x0 + pos.x - size.x / 2;
-				gc.drawImage(tileImages[p.x][p.y], 0, 0, size.x, size.y, x, 0, size.x, size.y);
-			}
+			LTexture img = new LTexture(size.x + imgW, size.y);
+			LPainter gc = new LPainter(img) {
+				@Override
+				public void paint() {
+					liney = y0 + FieldHelper.math.tile2Pixel(o.x, o.y, 0).y - size.y + FieldHelper.config.grid.tileH;
+					for(LPoint p : tiles) {
+						LPoint pos = FieldHelper.math.tile2Pixel(p.x, p.y, 0);
+						int x = x0 + pos.x - size.x / 2;
+						drawImage(tileImages[p.x][p.y], 0, 0, size.x, size.y, x, 0, size.x, size.y);
+					}
+				}
+			};
+			gc.paint();
 			gc.dispose();
-			line = LImageHelper.correctTransparency(img);
+			img.correctTransparency();
+			line = img;
 		}
 		
 	}
 
-	protected void drawLines() {
-		final Point tsize = tileImageSize();
-		Iterator<ArrayList<Point>> it = FieldHelper.math.lineIterator(field.sizeX, field.sizeY);
+	protected void drawLines(LPainter painter) {
+		final LPoint tsize = tileImageSize();
+		Iterator<ArrayList<LPoint>> it = FieldHelper.math.lineIterator(field.sizeX, field.sizeY);
 		ArrayList<PainterThread> threads = new ArrayList<>();
 		while (it.hasNext()) {
-			ArrayList<Point> list = it.next();
+			ArrayList<LPoint> list = it.next();
 			if (list.isEmpty())
 				continue;
 			PainterThread thread = new PainterThread(tsize, list);
@@ -77,7 +81,7 @@ public class FieldCanvasSWT extends FieldCanvas {
 		try {
 			for (PainterThread thread : threads) {
 				thread.join();
-				drawImage(thread.line, 0, thread.liney);
+				painter.drawImage(thread.line, 0, thread.liney);
 				thread.line.dispose();
 			}
 		} catch (Exception e) {
@@ -87,30 +91,31 @@ public class FieldCanvasSWT extends FieldCanvas {
 	
 	public void redrawBuffer() {
 		disposeBuffer();
-		Point size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
+		LPoint size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
 		int w = x0 * 2;
 		int h = (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
 				FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		pushBuffer(size.x + w, size.y + h);
 		fillRect();
+		LPainter painter = getBufferPainter();
 		for (FieldImage bg : field.prefs.images) {
 			if (bg.visible && !bg.foreground)
-				paintBackground(bg);
+				paintBackground(painter, bg);
 		}
-		drawLines();
+		drawLines(painter);
 		for (FieldImage bg : field.prefs.images) {
 			if (bg.visible && bg.foreground)
-				paintBackground(bg);
+				paintBackground(painter, bg);
 		}
 		popBuffer();
 	}
 	
-	public void paintBackground(FieldImage img) {
-		Point center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
-		paintIcon(img, x0 + center.x, y0 + center.y);
+	public void paintBackground(LPainter painter, FieldImage img) {
+		LPoint center = FieldHelper.math.pixelCenter(field.sizeX, field.sizeY, field.layers.maxHeight());
+		paintIcon(painter, img, x0 + center.x, y0 + center.y);
 	}
 
-	public void paintIcon(Icon icon, int x0, int y0) {
+	public void paintIcon(LPainter painter, Icon icon, int x0, int y0) {
 		Animation anim = (Animation) Project.current.animations.getTree().get(icon.id);
 		if (anim == null)
 			return;
@@ -130,7 +135,7 @@ public class FieldCanvasSWT extends FieldCanvas {
 		height = (int) (h * anim.transform.scaleX / 100f);
 		x0 -= anim.transform.offsetX * anim.transform.scaleX / 100f;
 		y0 -= anim.transform.offsetY * anim.transform.scaleY / 100f;
-		drawImage(bg, x, y, w, h, x0, y0, width, height);
+		painter.drawImage(bg, x, y, w, h, x0, y0, width, height);
 	}
 	
 	// }}
@@ -138,8 +143,8 @@ public class FieldCanvasSWT extends FieldCanvas {
 	//////////////////////////////////////////////////
 	// {{ Tile Images
 	
-	public void onDispose() {
-		super.onDispose();
+	public void dispose() {
+		super.dispose();
 		clearTileImages(0, 0);
 	}
 	
@@ -147,8 +152,8 @@ public class FieldCanvasSWT extends FieldCanvas {
 		updateTileImage(x, y, true);
 	}
 	
-	public void onTileChange(ArrayList<Point> tiles) {
-		for (Point p : tiles) {
+	public void onTileChange(ArrayList<LPoint> tiles) {
+		for (LPoint p : tiles) {
 			updateTileImage(p.x, p.y, true);
 		}
 	}
@@ -161,10 +166,10 @@ public class FieldCanvasSWT extends FieldCanvas {
 			e.printStackTrace();
 			return;
 		}
-		Point size = tileImageSize();
+		LPoint size = tileImageSize();
 		painter.imgW = size.x;
 		painter.imgH = size.y;
-		Point[] shift = FieldHelper.math.neighborShift;
+		LPoint[] shift = FieldHelper.math.neighborShift;
 		tileImages[x][y] = painter.createTileImage(field, x, y, showGrid,
 				currentLayer, currentChar);
 		if (!updateNeighbors)
@@ -186,7 +191,7 @@ public class FieldCanvasSWT extends FieldCanvas {
 			clearTileImages(0, 0);
 		} else {
 			clearTileImages(field.sizeX, field.sizeY);
-			Point size = tileImageSize();
+			LPoint size = tileImageSize();
 			painter.imgW = size.x;
 			painter.imgH = size.y;
 			for(int i = 0; i < field.sizeX; i++) {
@@ -207,14 +212,14 @@ public class FieldCanvasSWT extends FieldCanvas {
 				}
 			}
 		}
-		tileImages = new Image[sizeX][sizeY];
+		tileImages = new LTexture[sizeX][sizeY];
 		System.gc();
 	}
 
-	public Point tileImageSize() {
+	public LPoint tileImageSize() {
 		int imgW = FieldHelper.config.grid.tileW * 3;
 		int imgH = FieldHelper.config.grid.tileH * (field.layers.maxHeight() + 5);
-		return new Point(imgW, imgH);
+		return new LPoint(imgW, imgH);
 	}
 	// }}
 

@@ -3,6 +3,7 @@ package gui.views.database.content;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
@@ -11,8 +12,8 @@ import lwt.event.*;
 import lwt.event.listener.LCollectionListener;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.graphics.LPoint;
 import lwt.widget.LCheckBox;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -30,7 +31,6 @@ import data.Troop;
 import data.Troop.Unit;
 import data.config.Config;
 import data.subcontent.Icon;
-import data.subcontent.Point;
 import project.Project;
 
 public class TroopTab extends DatabaseTab<Troop> {
@@ -38,8 +38,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 	public static int tWidth = 32;
 	public static int tHeight = 48;
 	
-	private LGridEditor<Point, Point> gridEditor;
-	private LDataList<Point> points = new LDataList<Point>();
+	private LGridEditor<LPoint, LPoint> gridEditor;
+	private LDataList<LPoint> points = new LDataList<LPoint>();
 
 	/**
 	 * @wbp.parser.constructor
@@ -88,23 +88,23 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
 		grpGrid.setExpand(true, true);
-		gridEditor = new LGridEditor<Point, Point>(grpGrid) {
+		gridEditor = new LGridEditor<LPoint, LPoint>(grpGrid) {
 			@Override
-			protected Point createNewData() { return null; }
+			protected LPoint createNewData() { return null; }
 			@Override
-			protected Point duplicateData(Point original) { return null; }
+			protected LPoint duplicateData(LPoint original) { return null; }
 			@Override
 			protected void setImage(LImage label, int i) {
 				refreshUnit(label, i);
 			}
 			@Override
-			protected LDataList<Point> getDataCollection() {
+			protected LDataList<LPoint> getDataCollection() {
 				return points;
 			}
 			@Override
-			protected Point getEditableData(LPath path) { return null; }
+			protected LPoint getEditableData(LPath path) { return null; }
 			@Override
-			protected void setEditableData(LPath path, Point newData) {}
+			protected void setEditableData(LPath path, LPoint newData) {}
 		};
 		gridEditor.getCollectionWidget().cellWidth = tWidth;
 		gridEditor.getCollectionWidget().cellHeight = tHeight;
@@ -173,7 +173,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 				Troop troop = contentEditor.getObject();
 				if (troop == null)
 					return;
-				Point p = (Point) event.data;
+				LPoint p = (LPoint) event.data;
 				if (p != null) {
 					int i = troop.find(p.x, p.y);
 					if (i != -1) {
@@ -201,14 +201,14 @@ public class TroopTab extends DatabaseTab<Troop> {
 		points.clear();
 		for (int j = 0; j < conf.height; j++) {				
 			for (int i = 0; i < conf.width; i++) {
-				points.add(new Point(i + 1, j + 1));
+				points.add(new LPoint(i + 1, j + 1));
 			}
 		}
 		super.onVisible();
 	}
 	
 	protected void refreshUnit(LImage img, int i) {
-		Point p = (Point) img.getData();
+		LPoint p = (LPoint) img.getData();
 		Troop troop = contentEditor.getObject();
 		if (troop == null) {
 			img.setImage((String) null);
@@ -222,7 +222,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 	protected void refreshUnit(Unit u) {
 		Config.Troop conf = Project.current.config.getData().troop;
 		int i = (u.y - 1) * conf.width + (u.x - 1);
-		LImage img = (LImage) gridEditor.getCollectionWidget().getChildren()[i];
+		LImage img = (LImage) gridEditor.getCollectionWidget().getChild(i);
 		refreshUnit(img, u);
 	}
 	

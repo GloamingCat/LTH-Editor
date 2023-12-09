@@ -11,6 +11,7 @@ import gui.widgets.SimpleEditableList;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
@@ -18,7 +19,6 @@ import lwt.dialog.LShellFactory;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
 import lwt.widget.LActionButton;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -132,6 +132,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		LImage image = new LImage(grpImg);
 		image.setExpand(true, true);
 		image.setMinimumWidth(150);
+		image.setAlignment(LFlags.TOP & LFlags.LEFT);
 		
 		QuadButton btnImage = new QuadButton(grpImg, true);
 		addControl(btnImage, "quad");

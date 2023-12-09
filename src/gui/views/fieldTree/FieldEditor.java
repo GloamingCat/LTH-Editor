@@ -44,7 +44,6 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		canvas = new FieldCanvasOpenGL(scrolledComposite);
 		canvas.lblId = lblId;
 		addChild(canvas);
-		scrolledComposite.setContent(canvas);
 
 		LPanel bottom = new LPanel(this, 2, false);
 		bottom.setAlignment(LFlags.CENTER);
@@ -62,7 +61,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 			@Override
 			public void onModify(LControlEvent<Object> event) {
 				canvas.rescale(0.5f);
-				scrolledComposite.setMinSize(canvas.getSize());
+				scrolledComposite.refreshSize(canvas.getCurrentSize());
 			}
 		});
 
@@ -71,7 +70,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 			@Override
 			public void onModify(LControlEvent<Object> event) {
 				canvas.rescale(1);
-				scrolledComposite.setMinSize(canvas.getSize());
+				scrolledComposite.refreshSize(canvas.getCurrentSize());
 			}
 		});
 		
@@ -80,7 +79,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 			@Override
 			public void onModify(LControlEvent<Object> event) {
 				canvas.rescale(2);
-				scrolledComposite.setMinSize(canvas.getSize());
+				scrolledComposite.refreshSize(canvas.getCurrentSize());
 			}
 		});
 		
@@ -92,7 +91,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	
 	public void selectField(Field field) {
 		canvas.setField(field);
-		scrolledComposite.setMinSize(canvas.getSize());
+		scrolledComposite.refreshSize(canvas.getCurrentSize());
 	}
 	
 	@Override

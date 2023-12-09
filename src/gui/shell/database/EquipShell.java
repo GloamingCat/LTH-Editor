@@ -18,7 +18,7 @@ public class EquipShell extends ObjectShell<Equip> {
 	public EquipShell(LShell parent) {
 		super(parent);
 		
-		setText(Vocab.instance.EQUIP);
+		setTitle(Vocab.instance.EQUIP);
 		contentEditor.setGridLayout(3, false);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY);

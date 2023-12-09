@@ -2,7 +2,7 @@ package gui.helper;
 
 import java.util.ArrayList;
 
-import data.subcontent.Point;
+import lwt.graphics.LPoint;
 
 public class IsoField extends BaseIsoField {
 
@@ -11,12 +11,12 @@ public class IsoField extends BaseIsoField {
 		initialDirection = 315;
 	}
 
-	protected void removePoints(ArrayList<Point> p) {
+	protected void removePoints(ArrayList<LPoint> p) {
 		if (!conf.allNeighbors) {
-			Point p0 = p.get(0);
-			Point p1 = p.get(2);
-			Point p2 = p.get(4);
-			Point p3 = p.get(6);
+			LPoint p0 = p.get(0);
+			LPoint p1 = p.get(2);
+			LPoint p2 = p.get(4);
+			LPoint p3 = p.get(6);
 			p.remove(p0);
 			p.remove(p1);
 			p.remove(p2);

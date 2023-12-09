@@ -36,14 +36,14 @@ public class PositionButton extends LObjectButton<Position> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			Position s = (Position) value;
 			if (text != null) {
 				text.setValue(s.toString());
 			}
 			currentValue = s;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (text != null) {
 				text.setValue("");
 			}

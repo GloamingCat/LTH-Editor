@@ -36,14 +36,14 @@ public class FontButton extends LObjectButton<FontData> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			FontData s = (FontData) value;
 			if (text != null) {
 				text.setValue(s.toString());
 			}
 			currentValue = s;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (text != null) {
 				text.setValue("");
 			}

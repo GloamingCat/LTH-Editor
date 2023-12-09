@@ -1,9 +1,8 @@
 package gui.widgets;
 
 import lwt.container.LContainer;
+import lwt.container.LImage;
 import lwt.dataestructure.LDataTree;
-import lwt.widget.LImage;
-
 import data.Animation;
 import project.Project;
 
@@ -22,18 +21,18 @@ public class ImageButton extends IDButton {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			int id = (int) value;
 			if (label != null) {
 				if (id >= 0) {
 					Animation anim = (Animation) getDataTree().get(id);
-					label.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
+					label.setImage(anim.quad.fullPath(), anim.quad.getRect());
 				} else {
 					label.setImage((String) null);
 				}
 			}
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (label != null) {
 				label.setImage((String) null);
 			}

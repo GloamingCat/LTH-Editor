@@ -2,11 +2,11 @@ package gui.widgets;
 
 import gui.shell.IDShell;
 import lwt.container.LContainer;
+import lwt.container.LImage;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
-import lwt.widget.LImage;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -52,7 +52,7 @@ public class IDButton extends LObjectButton<Integer> {
 	@Override
 	public void setValue(Object value) {
 		if (value != null) {
-			button.setEnabled(true);
+			setEnabled(true);
 			Integer id = (Integer) value;
 			if (txtName != null) {
 				if (id < 0)
@@ -70,12 +70,12 @@ public class IDButton extends LObjectButton<Integer> {
 				if (anim == null)
 					image.setImage((String) null); 
 				else {
-					image.setImage(anim.quad.fullPath(), anim.quad.getRectangle());
+					image.setImage(anim.quad.fullPath(), anim.quad.getRect());
 				}
 			}
 			currentValue = id;
 		} else {
-			button.setEnabled(false);
+			setEnabled(false);
 			if (txtName != null) {
 				txtName.setValue("");
 			}

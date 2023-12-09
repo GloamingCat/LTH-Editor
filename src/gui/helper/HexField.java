@@ -2,7 +2,7 @@ package gui.helper;
 
 import java.util.ArrayList;
 
-import data.subcontent.Point;
+import lwt.graphics.LPoint;
 
 public class HexField extends BaseIsoField {
 
@@ -10,12 +10,12 @@ public class HexField extends BaseIsoField {
 		super(9);
 	}
 	
-	protected void removePoints(ArrayList<Point> p) {
+	protected void removePoints(ArrayList<LPoint> p) {
 		if (!conf.allNeighbors) {
-			Point p0 = p.get(0);
-			Point p1 = p.get(4);
-			Point p2 = p.get(2);
-			Point p3 = p.get(6);
+			LPoint p0 = p.get(0);
+			LPoint p1 = p.get(4);
+			LPoint p2 = p.get(2);
+			LPoint p3 = p.get(6);
 			if (conf.tileS == 0) {
 				// Vertically connected
 				p.remove(p0);
@@ -32,7 +32,7 @@ public class HexField extends BaseIsoField {
 	@Override
 	public int[] autotile(int[][] grid, int x, int y) {
 		int[] rows = new int[] {0, 0, 0, 0};
-		Point p = new Point(x, y);
+		LPoint p = new LPoint(x, y);
 		
 		if (conf.tileS == 0) {
 			// Vertically connected

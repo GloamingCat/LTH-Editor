@@ -1,7 +1,7 @@
 package gui.helper;
 
 import data.config.Config;
-import data.subcontent.Point;
+import lwt.graphics.LPoint;
 import project.Project;
 
 public class FieldHelper {
@@ -21,7 +21,7 @@ public class FieldHelper {
 	}
 	
 	public static int[] getTilePolygon(int x0, int y0, float scale) {
-		Point[] shift = math.vertexShift;
+		LPoint[] shift = math.vertexShift;
 		int[] p = new int[shift.length * 2];
 		for(int i = 0; i < shift.length; i++) {
 			p[i * 2] = Math.round((shift[i].x * scale + x0));

@@ -7,17 +7,18 @@ import gui.views.fieldTree.action.ResizeAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LPanel;
 import lwt.dialog.LObjectDialog;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
+import lwt.graphics.LRect;
 
 public class FieldToolBar extends LPanel {
 
@@ -27,7 +28,7 @@ public class FieldToolBar extends LPanel {
 	public FieldToolBar(LContainer parent) {
 		super(parent, true);
 		instance = this;
-		setSize(440, 0);
+		setCurrentSize(440, 0);
 		setFillLayout(true);
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
@@ -148,13 +149,13 @@ public class FieldToolBar extends LPanel {
 	}
 	
 	public void onResize() {
-		Rectangle size = new Rectangle(SWT.LEFT, SWT.TOP, 
+		LRect size = new LRect(LFlags.LEFT, LFlags.TOP, 
 				FieldSideEditor.instance.field.sizeX, 
 				FieldSideEditor.instance.field.sizeY);
-		LObjectDialog<Rectangle> dialog = new LObjectDialog<>(getShell(), getShell().getStyle());
-		dialog.setFactory(new LShellFactory<Rectangle>() {
+		LObjectDialog<LRect> dialog = new LObjectDialog<>(getShell());
+		dialog.setFactory(new LShellFactory<LRect>() {
 			@Override
-			public LObjectShell<Rectangle> createShell(LShell parent) {
+			public LObjectShell<LRect> createShell(LShell parent) {
 				return new ResizeShell(parent);
 			}
 		});
@@ -164,7 +165,7 @@ public class FieldToolBar extends LPanel {
 		}
 	}
 	
-	private void resizeField(Rectangle size) {
+	private void resizeField(LRect size) {
 		ResizeAction action = new ResizeAction(size.width, size.height, size.x, size.y);
 		FieldEditor.instance.canvas.getActionStack().newAction(action);
 		action.redo();

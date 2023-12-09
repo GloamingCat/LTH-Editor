@@ -2,15 +2,13 @@ package gui.shell.field;
 
 import gui.Vocab;
 import gui.shell.ObjectShell;
-
 import lwt.dialog.LShell;
+import lwt.graphics.LRect;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-import org.eclipse.swt.graphics.Rectangle;
-
-public class ResizeShell extends ObjectShell<Rectangle> {
+public class ResizeShell extends ObjectShell<LRect> {
 
 	public ResizeShell(LShell parent) {
 		super(parent);

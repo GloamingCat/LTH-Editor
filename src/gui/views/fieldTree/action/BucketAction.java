@@ -2,20 +2,19 @@ package gui.views.fieldTree.action;
 
 import java.util.ArrayList;
 
-import data.subcontent.Point;
-
 import gui.views.fieldTree.FieldCanvas;
 import lwt.action.LAction;
+import lwt.graphics.LPoint;
 
 public class BucketAction implements LAction {
 
 	private int[][] grid;
 	private FieldCanvas canvas;
-	private ArrayList<Point> tiles;
+	private ArrayList<LPoint> tiles;
 	private int newID;
 	private int oldID;
 	
-	public BucketAction(int[][] grid, int newID, int oldID, ArrayList<Point> modified, FieldCanvas canvas) {
+	public BucketAction(int[][] grid, int newID, int oldID, ArrayList<LPoint> modified, FieldCanvas canvas) {
 		this.grid = grid;
 		this.tiles = modified;
 		this.canvas = canvas;
@@ -25,7 +24,7 @@ public class BucketAction implements LAction {
 	
 	@Override
 	public void undo() {
-		for(Point p : tiles) {
+		for(LPoint p : tiles) {
 			grid[p.x][p.y] = oldID;
 		}
 		canvas.onTileChange(tiles);
@@ -35,7 +34,7 @@ public class BucketAction implements LAction {
 
 	@Override
 	public void redo() {
-		for(Point p : tiles) {
+		for(LPoint p : tiles) {
 			grid[p.x][p.y] = newID;
 		}
 		canvas.onTileChange(tiles);

@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import lwt.LFlags;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.container.LScrollPanel;
@@ -19,15 +20,11 @@ import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.graphics.LPainter;
+import lwt.graphics.LPoint;
 import lwt.widget.LActionButton;
-import lwt.widget.LImage;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
-
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 
 import data.subcontent.Quad;
 import project.Project;
@@ -57,7 +54,7 @@ public class QuadShell extends LObjectShell<Quad> {
 		scroll.setExpand(true, true);
 
 		imgQuad = new LImage(scroll);
-		scroll.setContent(imgQuad);
+		imgQuad.setAlignment(LFlags.TOP & LFlags.LEFT);
 
 		LPanel spinners = new LPanel(quad, 4, false);
 		spinners.setExpand(true, false);
@@ -89,26 +86,23 @@ public class QuadShell extends LObjectShell<Quad> {
 		btnFullImage.addModifyListener(new LControlListener<Object>() {
 			@Override
 			public void onModify(LControlEvent<Object> e) {
-				Rectangle rect = imgQuad.getImage().getBounds();
+				LPoint size = imgQuad.getImageSize();
 				spnX.setValue(0);
 				spnY.setValue(0);
-				spnWidth.setValue(rect.width);
-				spnHeight.setValue(rect.height);
+				spnWidth.setValue(size.x);
+				spnHeight.setValue(size.y);
 				imgQuad.redraw();
 			}
 		});
 
-		imgQuad.addPaintListener(new PaintListener() {
+		imgQuad.addPainter(new LPainter() {
 			@Override
-			public void paintControl(PaintEvent e) {
-				int x1 = spnX.getValue();
-				int y1 = spnY.getValue();
-				int x2 = x1 + spnWidth.getValue() - 1;
-				int y2 = y1 + spnHeight.getValue() - 1;
-				e.gc.drawLine(x1, y1, x2, y1);
-				e.gc.drawLine(x1, y2, x2, y2);
-				e.gc.drawLine(x1, y1, x1, y2);
-				e.gc.drawLine(x2, y1, x2, y2);
+			public void paint() {
+				int x = spnX.getValue();
+				int y = spnY.getValue();
+				int w = spnWidth.getValue();
+				int h = spnHeight.getValue();
+				drawRect(x, y, w, h);
 			}
 		});
 
@@ -131,9 +125,8 @@ public class QuadShell extends LObjectShell<Quad> {
 		spnWidth.addModifyListener(redrawListener);
 		spnHeight.addModifyListener(redrawListener);
 
-		form.setWeights(new int[] {1, 1});
+		form.setWeights(1, 1);
 
-		layout(false, true);
 	}
 
 	public void open(Quad initial) {
@@ -149,13 +142,12 @@ public class QuadShell extends LObjectShell<Quad> {
 	@Override
 	protected Quad createResult(Quad initial) {
 		Quad q = new Quad();
-		Image img = imgQuad.getImage();
-		if (img != null) {
-			Rectangle rect = imgQuad.getImage().getBounds();
-			q.x = Math.min(spnX.getValue(), rect.width);
-			q.y = Math.min(spnY.getValue(), rect.height);
-			q.width = Math.min(spnWidth.getValue(), rect.width);
-			q.height = Math.min(spnHeight.getValue(), rect.height);
+		if (imgQuad.hasImage()) {
+			LPoint size = imgQuad.getImageSize();
+			q.x = Math.min(spnX.getValue(), size.x);
+			q.y = Math.min(spnY.getValue(), size.y);
+			q.width = Math.min(spnWidth.getValue(), size.x);
+			q.height = Math.min(spnHeight.getValue(), size.y);
 			q.path = selFile.getSelectedFile();
 		}
 		return q;
@@ -178,7 +170,7 @@ public class QuadShell extends LObjectShell<Quad> {
 	protected void resetImage() {
 		String path = selFile.getRootFolder() + selFile.getSelectedFile();
 		imgQuad.setImage(path);
-		scroll.setMinSize(imgQuad.getSize());
+		scroll.refreshSize(imgQuad.getCurrentSize());
 		imgQuad.redraw();
 	}
 

@@ -1,16 +1,19 @@
 package gui.shell.database;
 
 import gui.Vocab;
-import lwt.LColor;
-import lwt.container.LCanvas.LPainter;
+import lwt.graphics.LColor;
+import lwt.graphics.LPainter;
+import lwt.LFlags;
+import lwt.container.LImage;
 import lwt.container.LSashPanel;
 import lwt.container.LScrollPanel;
 import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
+import lwt.event.LMouseEvent;
 import lwt.event.listener.LControlListener;
-import lwt.widget.LImage;
+import lwt.event.listener.LMouseListener;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LText;
@@ -19,9 +22,6 @@ import data.Animation;
 import data.GameCharacter.Portrait;
 
 import project.Project;
-
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class PortraitShell extends LObjectShell<Portrait> {
 	
@@ -34,7 +34,6 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	public PortraitShell(LShell parent) {
 		super(parent);
 		setMinimumSize(600, 400);
-		setSize(800, 800);
 
 		content.setGridLayout(2, false);
 		
@@ -59,28 +58,31 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		
 		image = new LImage(scroll);
 		image.setBackground(new LColor(127, 127, 127));
+		image.setAlignment(LFlags.TOP & LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
 				if (anim != null && anim.cols > 0 && anim.rows > 0) {
 					int w = anim.quad.width / anim.cols;
 					int h = anim.quad.height / anim.rows;
-					image.drawRect(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
+					drawRect(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
 				}
 			}
 		});
-		image.addMouseListener(new MouseAdapter() {
+		image.addMouseListener(new LMouseListener() {
+			
 			@Override
-			public void mouseUp(MouseEvent arg0) {
-				Animation anim = (Animation) tree.getSelectedObject();
-				if (anim != null) {
-					col = (int) (arg0.x - anim.quad.x) / (anim.quad.width / anim.cols);
-					row = (int) (arg0.y - anim.quad.y) / (anim.quad.height / anim.rows);
-					image.redraw();
+			public void onMouseChange(LMouseEvent e) {
+				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+					Animation anim = (Animation) tree.getSelectedObject();
+					if (anim != null) {
+						col = (int) (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
+						row = (int) (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+						image.redraw();
+					}
 				}
 			}
-		});
-		scroll.setContent(image);		
+		});		
 		sashForm.setWeights(new int[] {1, 2});
 
 		pack();
@@ -90,7 +92,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		if (anim == null)
 			return;
 		image.setImage(anim.quad.fullPath());
-		scroll.setMinSize(anim.quad.width, anim.quad.height);
+		scroll.refreshSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}
 	

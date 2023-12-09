@@ -1,7 +1,6 @@
 package data.subcontent;
 
-import org.eclipse.swt.graphics.Rectangle;
-
+import lwt.graphics.LRect;
 import project.Project;
 
 public class Quad {
@@ -46,8 +45,8 @@ public class Quad {
 		return Project.current.imagePath() + path;
 	}
 	
-	public Rectangle getRectangle() {
-		return new Rectangle(x, y, width, height);
+	public LRect getRect() {
+		return new LRect(x, y, width, height);
 	}
 
 }

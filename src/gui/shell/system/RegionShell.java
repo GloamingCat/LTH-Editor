@@ -5,18 +5,16 @@ import gui.shell.ObjectShell;
 import gui.widgets.IDList;
 import lwt.LFlags;
 import lwt.container.LFrame;
+import lwt.container.LImage;
 import lwt.container.LPanel;
 import lwt.dialog.LShell;
+import lwt.graphics.LColor;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
-
-import org.eclipse.swt.SWT;
 
 import project.Project;
 
 import data.config.Region;
-
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class RegionShell extends ObjectShell<Region> {
 	
@@ -35,8 +33,8 @@ public class RegionShell extends ObjectShell<Region> {
 		LPanel color = new LPanel(contentEditor, 2, false);
 		color.setAlignment(LFlags.CENTER);
 		
-		LPanel imgColor = new LPanel(color);
-		imgColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		LImage imgColor = new LImage(color);
+		imgColor.setBackground(new LColor(255, 255, 255));
 		imgColor.setExpand(true, false);
 		imgColor.setAlignment(LFlags.CENTER);
 

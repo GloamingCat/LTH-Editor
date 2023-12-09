@@ -3,14 +3,14 @@ package gui.helper;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.subcontent.Point;
 import data.config.Config.Grid;
 import data.field.Layer;
+import lwt.graphics.LPoint;
 
 public abstract class FieldMath {
 
-	public Point[] neighborShift;
-	public Point[] vertexShift;
+	public LPoint[] neighborShift;
+	public LPoint[] vertexShift;
 	public int autoTileRows;
 	public int initialDirection;
 	protected final Grid conf;
@@ -19,68 +19,68 @@ public abstract class FieldMath {
 		this.autoTileRows = autoTileRows;
 		this.initialDirection = initialDirection;
 		this.conf = FieldHelper.config.grid;
-		ArrayList<Point> neighbors = createNeighborShift();
-		neighborShift = new Point[neighbors.size()];
+		ArrayList<LPoint> neighbors = createNeighborShift();
+		neighborShift = new LPoint[neighbors.size()];
 		for (int i = 0; i < neighborShift.length; i++) {
 			neighborShift[i] = neighbors.get(i);
 		}
-		ArrayList<Point> vertex = createVertexShift();
-		vertexShift = new Point[vertex.size()];
+		ArrayList<LPoint> vertex = createVertexShift();
+		vertexShift = new LPoint[vertex.size()];
 		for (int i = 0; i < vertexShift.length; i++) {
 			vertexShift[i] = vertex.get(i);
 		}
 	}
 	
-	public ArrayList<Point> fullNeighborShift() {
-		ArrayList<Point> p = new ArrayList<>();
-		p.add(new Point(1, 1));
-		p.add(new Point(1, 0));
-		p.add(new Point(1, -1));
-		p.add(new Point(0, -1));
-		p.add(new Point(-1, -1));
-		p.add(new Point(-1, 0));
-		p.add(new Point(-1, 1));
-		p.add(new Point(0, 1));
+	public ArrayList<LPoint> fullNeighborShift() {
+		ArrayList<LPoint> p = new ArrayList<>();
+		p.add(new LPoint(1, 1));
+		p.add(new LPoint(1, 0));
+		p.add(new LPoint(1, -1));
+		p.add(new LPoint(0, -1));
+		p.add(new LPoint(-1, -1));
+		p.add(new LPoint(-1, 0));
+		p.add(new LPoint(-1, 1));
+		p.add(new LPoint(0, 1));
 		return p;
 	}
 	
-	public ArrayList<Point> fullVertexShift() {
-		ArrayList<Point> p = new ArrayList<>();
-		p.add(new Point(-conf.tileW / 2, -conf.tileS / 2));
-		p.add(new Point(-conf.tileB / 2, -conf.tileH / 2));
-		p.add(new Point(conf.tileB / 2, -conf.tileH / 2));
-		p.add(new Point(conf.tileW / 2, -conf.tileS / 2));
-		p.add(new Point(conf.tileW / 2, conf.tileS / 2));
-		p.add(new Point(conf.tileB / 2, conf.tileH / 2));
-		p.add(new Point(-conf.tileB / 2, conf.tileH / 2));
-		p.add(new Point(-conf.tileW / 2, conf.tileS / 2));
+	public ArrayList<LPoint> fullVertexShift() {
+		ArrayList<LPoint> p = new ArrayList<>();
+		p.add(new LPoint(-conf.tileW / 2, -conf.tileS / 2));
+		p.add(new LPoint(-conf.tileB / 2, -conf.tileH / 2));
+		p.add(new LPoint(conf.tileB / 2, -conf.tileH / 2));
+		p.add(new LPoint(conf.tileW / 2, -conf.tileS / 2));
+		p.add(new LPoint(conf.tileW / 2, conf.tileS / 2));
+		p.add(new LPoint(conf.tileB / 2, conf.tileH / 2));
+		p.add(new LPoint(-conf.tileB / 2, conf.tileH / 2));
+		p.add(new LPoint(-conf.tileW / 2, conf.tileS / 2));
 		return p;
 	}
 	
-	protected abstract void removePoints(ArrayList<Point> p);
+	protected abstract void removePoints(ArrayList<LPoint> p);
 	
-	protected ArrayList<Point> createNeighborShift() {
-		ArrayList<Point> p = fullNeighborShift();
+	protected ArrayList<LPoint> createNeighborShift() {
+		ArrayList<LPoint> p = fullNeighborShift();
 		removePoints(p);
 		return p;
 	}
 
-	protected ArrayList<Point> createVertexShift() {
-		ArrayList<Point> p = fullVertexShift();
+	protected ArrayList<LPoint> createVertexShift() {
+		ArrayList<LPoint> p = fullVertexShift();
 		removePoints(p);
 		return p;
 	}
 	
-	public abstract Point pixelSize(int sizeX, int sizeY);
-	public abstract Point pixelCenter(int sizeX, int sizeY, int height);
+	public abstract LPoint pixelSize(int sizeX, int sizeY);
+	public abstract LPoint pixelCenter(int sizeX, int sizeY, int height);
 	public abstract int pixelDisplacement(int height);
 	public abstract int fieldDepth(int sizeX, int sizeY);
-	public abstract Point depthLimits(int sizeX, int sizeY, int height);
+	public abstract LPoint depthLimits(int sizeX, int sizeY, int height);
 	public abstract int lineWidth(int sizeX, int sizeY);
-	public abstract Point pixel2Tile(float x, float y, float d);
-	public abstract Point tile2Pixel(float x, float y, float h);
+	public abstract LPoint pixel2Tile(float x, float y, float d);
+	public abstract LPoint tile2Pixel(float x, float y, float h);
 	public abstract int[] autotile(int[][] grid, int x, int y);
-	public abstract Iterator<ArrayList<Point>> lineIterator(int sizeX, int sizeY);
+	public abstract Iterator<ArrayList<LPoint>> lineIterator(int sizeX, int sizeY);
 	
 	public int pixelDepth(int x, int y, int height) {
 		int ty = y + height * conf.pixelsPerHeight;
@@ -107,7 +107,7 @@ public abstract class FieldMath {
 		return t1 == t2;
 	}
 	
-	protected static boolean sameType(int[][] grid, Point p, int dx, int dy) {
+	protected static boolean sameType(int[][] grid, LPoint p, int dx, int dy) {
 		return sameType(grid, p.x, p.y, p.x + dx, p.y + dy);
 	}
 

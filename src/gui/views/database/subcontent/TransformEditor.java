@@ -2,15 +2,13 @@ package gui.views.database.subcontent;
 
 import gui.Vocab;
 
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-
 import data.subcontent.Transform;
 import gson.editor.GDefaultObjectEditor;
 import lwt.container.LContainer;
+import lwt.container.LImage;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
-import lwt.widget.LImage;
+import lwt.graphics.LPainter;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
@@ -155,20 +153,20 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	}
 	
 	public void setImage(LImage img) {
-		img.addPaintListener(new PaintListener() {
+		img.addPainter(new LPainter() {
 			@Override
-			public void paintControl(PaintEvent e) {
+			public void paint() {
 				Object obj = getObject();
 				if (obj == null)
 					return;
 				Transform t = (Transform) obj;
 				float sw = t.scaleX / 100f;
 				float sh = t.scaleY / 100f;
-				int x = Math.round(t.offsetX * sw) + e.x;
-				int y = Math.round(t.offsetY * sh) + e.y;
+				int x = Math.round(t.offsetX * sw) + (int) img.ox;
+				int y = Math.round(t.offsetY * sh) + (int) img.oy;
 				x -= 1;
-				e.gc.drawLine(x - 2, y, x + 2, y);
-				e.gc.drawLine(x, y - 2, x, y + 2);
+				drawLine(x - 2, y, x + 2, y);
+				drawLine(x, y - 2, x, y + 2);
 			}
 		});
 		image = img;
@@ -198,8 +196,8 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
 			t.setColorTransform(image);
-			image.setImage(image.getOriginalImage(), image.getRectangle());
-			image.redraw();
+			image.setRect(image.getRect());
+			image.refreshImage();
 		}
 	}
 	
