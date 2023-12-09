@@ -1,8 +1,5 @@
 package gui.widgets;
 
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-
 import gui.Vocab;
 import lwt.LSoundPlayer;
 import lwt.container.LContainer;
@@ -44,16 +41,15 @@ public class AudioPlayer extends LPanel {
 			}
 		};
 		
-		addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				LSoundPlayer.stop();
-			}
-		});
 	}
 	
 	public void refresh() {
 		LSoundPlayer.refresh(volume * 0.01f, pitch * 0.01f);
+	}
+	
+	public void dispose() {
+		super.dispose();
+		LSoundPlayer.stop();
 	}
 
 }

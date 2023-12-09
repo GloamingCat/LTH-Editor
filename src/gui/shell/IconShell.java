@@ -13,11 +13,10 @@ import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
+import lwt.event.LMouseEvent;
 import lwt.event.listener.LControlListener;
+import lwt.event.listener.LMouseListener;
 import lwt.widget.LNodeSelector;
-
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class IconShell extends LObjectShell<Icon> {
 	
@@ -58,19 +57,21 @@ public class IconShell extends LObjectShell<Icon> {
 				}
 			}
 		});
-		image.addMouseListener(new MouseAdapter() {
+		image.addMouseListener(new LMouseListener() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
-				Animation anim = (Animation) tree.getSelectedObject();
-				if (anim != null) {
-					col = (int) (arg0.x - anim.quad.x) / (anim.quad.width / anim.cols);
-					row = (int) (arg0.y - anim.quad.y) / (anim.quad.height / anim.rows);
-					image.redraw();
+			public void onMouseChange(LMouseEvent e) {
+				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+					Animation anim = (Animation) tree.getSelectedObject();
+					if (anim != null) {
+						col = (int) (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
+						row = (int) (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+						image.redraw();
+					}
 				}
 			}
 		});
 		
-		sashForm.setWeights(new int[] {1, 2});
+		sashForm.setWeights(1, 2);
 		
 		pack();
 	}
