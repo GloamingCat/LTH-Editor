@@ -5,8 +5,6 @@ import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.FileSelector;
 
-import java.io.File;
-
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
@@ -31,12 +29,8 @@ public class PluginShell extends ObjectShell<Plugin> {
 		super(parent);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, optional) {
-			@Override
-			protected boolean isValidFile(File f) {
-				return f.getName().endsWith(".lua");
-			}
-		};
+		selFile = new FileSelector(form, optional);
+		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 		
 		LPanel composite = new LPanel(form, 1);

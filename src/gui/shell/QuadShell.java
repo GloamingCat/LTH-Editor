@@ -47,12 +47,8 @@ public class QuadShell extends LObjectShell<Quad> {
 		setMinimumSize(600, 400);
 
 		LSashPanel form = new LSashPanel(content, true);
-		selFile = new FileSelector(form, optional) {
-			@Override
-			protected boolean isValidFile(File f) {
-				return isImage(f);
-			}
-		};
+		selFile = new FileSelector(form, optional);
+		selFile.addFileRestriction( (f) -> { return isImage(f); } );
 		selFile.setFolder(Project.current.imagePath());
 
 		LPanel quad = new LPanel(form, 1);

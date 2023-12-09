@@ -5,8 +5,6 @@ import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.FileSelector;
 
-import java.io.File;
-
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
@@ -25,13 +23,9 @@ public class RuleShell extends ObjectShell<Rule> {
 		super(parent);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, false) {
-			@Override
-			protected boolean isValidFile(File f) {
-				return f.getName().endsWith(".lua");
-			}
-		};
-		selFile.setFolder(Project.current.scriptPath());
+		selFile = new FileSelector(form, false);
+		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
+		selFile.setFolder(Project.current.rulePath());
 		
 		LPanel composite = new LPanel(form, 2, false);
 		

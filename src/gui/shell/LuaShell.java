@@ -2,8 +2,6 @@ package gui.shell;
 
 import gui.widgets.FileSelector;
 
-import java.io.File;
-
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 
@@ -23,12 +21,8 @@ public class LuaShell extends LObjectShell<String> {
 	public LuaShell(LShell parent, boolean optional) {
 		super(parent);
 		content.setFillLayout(true);
-		selFile = new FileSelector(content, optional) {
-			@Override
-			protected boolean isValidFile(File f) {
-				return f.getName().endsWith(".lua");
-			}
-		};
+		selFile = new FileSelector(content, optional);
+		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 	}
 	

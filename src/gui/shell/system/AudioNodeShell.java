@@ -5,8 +5,6 @@ import gui.shell.ObjectShell;
 import gui.widgets.AudioPlayer;
 import gui.widgets.FileSelector;
 
-import java.io.File;
-
 import lwt.LFlags;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
@@ -37,13 +35,11 @@ public class AudioNodeShell extends ObjectShell<Audio.Node> {
 		super(parent, 400, 400);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, (style & OPTIONAL) > 0) {
-			@Override
-			protected boolean isValidFile(File f) {
-				String name = f.getName();
-				return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
-			}
-		};
+		selFile = new FileSelector(form, (style & OPTIONAL) > 0);
+		selFile.addFileRestriction( (f) -> { 
+			String name = f.getName();
+			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
+		} );
 		selFile.setFolder(Project.current.audioPath());
 
 		LPanel composite = new LPanel(form, 2, false);

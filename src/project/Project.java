@@ -119,6 +119,10 @@ public class Project implements LSerializer {
 		return path + "scripts/custom/";
 	}
 	
+	public String rulePath() {
+		return scriptPath() + "rule/";
+	}
+	
 	public String audioPath() {
 		return path + settings.audioPath;
 	}

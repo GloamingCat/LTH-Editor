@@ -4,7 +4,6 @@ import gui.Vocab;
 import gui.widgets.AudioPlayer;
 import gui.widgets.FileSelector;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import lwt.LFlags;
@@ -30,7 +29,6 @@ public class AudioShell extends ObjectShell<Audio> {
 	protected Audio comboAudio = null;
 	
 	public static final int BGM = 0x01;
-	
 
 	public AudioShell(LShell parent, boolean isBGM) {
 		super(parent);
@@ -38,13 +36,11 @@ public class AudioShell extends ObjectShell<Audio> {
 		setMinimumSize(400, 400);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, false) {
-			@Override
-			protected boolean isValidFile(File f) {
-				String name = f.getName();
-				return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
-			}
-		};
+		selFile = new FileSelector(form, false);
+		selFile.addFileRestriction( (f) -> { 
+			String name = f.getName();
+			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
+		} );
 		selFile.setFolder(Project.current.audioPath());
 		cmbSound = new LCombo(selFile);
 		cmbSound.setOptional(true);

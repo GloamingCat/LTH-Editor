@@ -1,14 +1,17 @@
 package gui.widgets;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.function.Function;
 
 import lwt.container.LContainer;
 import lwt.dataestructure.LDataTree;
 import lwt.widget.LNodeSelector;
 
-public abstract class FileSelector extends LNodeSelector<String> {
+public class FileSelector extends LNodeSelector<String> {
 
 	protected LDataTree<String> root;
+	protected ArrayList<Function<File, Boolean>> fileRestrictions = new ArrayList<>();
 	
 	/**
 	 * Create the composite.
@@ -90,6 +93,21 @@ public abstract class FileSelector extends LNodeSelector<String> {
 		return null;
 	}
 
-	protected abstract boolean isValidFile(File entry);
+	private boolean isValidFile(File entry) {
+		for (var r : fileRestrictions) {
+			if (!r.apply(entry)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public void addFileRestriction(Function<File, Boolean> r) {
+		fileRestrictions.add(r);
+	}
+	
+	public void removeFileRestriction(Function<File, Boolean> r) {
+		fileRestrictions.remove(r);
+	}
 
 }

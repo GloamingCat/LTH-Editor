@@ -4,8 +4,6 @@ import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.FileSelector;
 
-import java.io.File;
-
 import lwt.LFlags;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -39,12 +37,8 @@ public class ScriptShell extends ObjectShell<Script> {
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		form.setExpand(true, true);
 		form.setSpread(2, 1);
-		selFile = new FileSelector(form, (style & OPTIONAL) > 0) {
-			@Override
-			protected boolean isValidFile(File f) {
-				return f.getName().endsWith(".lua");
-			}
-		};
+		selFile = new FileSelector(form, (style & OPTIONAL) > 0);
+		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 		
 		LPanel composite = new LPanel(form, 1);
