@@ -9,6 +9,7 @@ import lwt.container.LStack;
 import lwt.dialog.LShell;
 import lwt.event.LControlEvent;
 import lwt.event.listener.LControlListener;
+import lwt.widget.LWidget;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
@@ -70,14 +71,14 @@ public class BonusShell extends ObjectShell<Bonus> {
 					// Status
 					typeLabel.setText(Vocab.instance.STATUS);
 					typeNode = statusTree;
-					stack.setTop(typeNode);
+					stack.setTop((LWidget) typeNode);
 					removeControl(elementTree);
 					addControl(typeNode, "id");
 				} else {
 					// Element
 					typeLabel.setText(Vocab.instance.ELEMENT);
 					typeNode = elementTree;
-					stack.setTop(typeNode);	
+					stack.setTop((LWidget) typeNode);	
 					removeControl(statusTree);
 					addControl(typeNode, "id");
 				}

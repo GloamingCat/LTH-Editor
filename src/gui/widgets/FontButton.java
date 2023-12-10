@@ -8,6 +8,8 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
+import java.lang.reflect.Type;
+
 import data.subcontent.FontData;
 
 public class FontButton extends LObjectButton<FontData> {
@@ -49,6 +51,11 @@ public class FontButton extends LObjectButton<FontData> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return FontData.class;
 	}
 
 }

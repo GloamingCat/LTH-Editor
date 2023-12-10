@@ -33,6 +33,8 @@ import lwt.widget.LText;
 
 import project.Project;
 
+import java.lang.reflect.Type;
+
 import data.Skill;
 import data.Skill.Mask;
 
@@ -284,7 +286,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LFrame grpEffect = new LFrame(range, Vocab.instance.EFFECTMASK, 2, false);
 		grpEffect.setExpand(true, true);
 
-		LObjectButton<Mask> btnEffectMask = new LObjectButton<Mask>(grpEffect);
+		MaskButton btnEffectMask = new MaskButton(grpEffect);
 		btnEffectMask.setAlignment(LFlags.LEFT | LFlags.TOP);
 		btnEffectMask.setExpand(true, false);
 		addControl(btnEffectMask, "effectMask");
@@ -300,7 +302,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LFrame grpCast = new LFrame(range, Vocab.instance.CASTMASK, 2, false);
 		grpCast.setExpand(true, true);
 		
-		LObjectButton<Mask> btnCastMask = new LObjectButton<Mask>(grpCast);
+		MaskButton btnCastMask = new MaskButton(grpCast);
 		btnCastMask.setAlignment(LFlags.LEFT | LFlags.TOP);
 		btnCastMask.setExpand(true, false);
 		addControl(btnCastMask, "castMask");
@@ -379,6 +381,17 @@ public class SkillTab extends DatabaseTab<Skill> {
 						cellSize - border - 2);
 			}
 		});
+	}
+	
+	private static class MaskButton extends LObjectButton<Mask> {
+		public MaskButton(LContainer parent) {
+			super(parent);
+		}
+
+		@Override
+		protected Type getType() {
+			return Mask.class;
+		}
 	}
 
 }

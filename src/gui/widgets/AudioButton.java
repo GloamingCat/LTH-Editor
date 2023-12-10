@@ -8,6 +8,8 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
+import java.lang.reflect.Type;
+
 import data.subcontent.Audio;
 
 public class AudioButton extends LObjectButton<Audio> {
@@ -49,6 +51,11 @@ public class AudioButton extends LObjectButton<Audio> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return Audio.class;
 	}
 
 }

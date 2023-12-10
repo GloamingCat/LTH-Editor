@@ -3,12 +3,11 @@ package gui.shell.system;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.FileSelector;
-
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.dialog.LShell;
+import lwt.widget.LFileSelector;
 import lwt.widget.LCheckBox;
 
 import data.config.Plugin;
@@ -16,7 +15,7 @@ import project.Project;
 
 public class PluginShell extends ObjectShell<Plugin> {
 	
-	private FileSelector selFile;
+	private LFileSelector selFile;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -29,7 +28,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 		super(parent);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, optional);
+		selFile = new LFileSelector(form, optional);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 		

@@ -14,7 +14,6 @@ import data.field.Field;
 import data.field.Field.Prefs;
 import data.field.FieldNode;
 import lwt.LGlobals;
-import lwt.action.LActionStack;
 import lwt.container.LContainer;
 import lwt.container.LSashPanel;
 import lwt.container.LView;
@@ -45,27 +44,32 @@ public class FieldTreeEditor extends LView {
 		}
 
 		@Override
-		public FieldNode createNewData() {
+		public FieldNode createNewElement() {
 			return Project.current.fieldTree.newNode();
 		}
 
 		@Override
-		public FieldNode duplicateData(FieldNode original) {
+		public FieldNode duplicateElement(FieldNode original) {
 			return Project.current.fieldTree.duplicateNode(original);
 		}
 		
 		@Override
-		protected String encodeData(FieldNode data) {
+		protected String encodeElement(FieldNode data) {
 			Field field = Project.current.fieldTree.loadField(data);
 			return LGlobals.gson.toJson(field);
 		}
 
 		@Override
-		protected FieldNode decodeData(String str) {
+		protected FieldNode decodeElement(String str) {
 			Field field = LGlobals.gson.fromJson(str, Field.class);
 			return Project.current.fieldTree.addField(field);
 		}
 
+		@Override
+		public boolean canDecode(String str) {
+			return true;
+		}
+		
 		@Override
 		protected Prefs getEditableData(LPath path) {
 			return Project.current.fieldTree.loadField(path).prefs;
@@ -105,7 +109,7 @@ public class FieldTreeEditor extends LView {
 		super(parent, true, true);
 		FieldTreeEditor.instance = this;
 		
-		actionStack = new LActionStack(this);
+		createMenuInterface();
 		
 		LSashPanel sashForm = new LSashPanel(this, true);
 		

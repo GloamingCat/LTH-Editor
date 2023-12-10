@@ -6,7 +6,6 @@ import gui.views.database.subcontent.PortraitList;
 import gui.widgets.IDButton;
 import gui.widgets.PositionButton;
 import lwt.LFlags;
-import lwt.action.LActionStack;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -35,7 +34,7 @@ public class ConfigEditor extends LView {
 	public ConfigEditor(LContainer parent) {
 		super(parent, 4, false, true);
 
-		actionStack = new LActionStack(this);
+		createMenuInterface();
 
 		editor = new MainEditor(this, false);
 		editor.setAlignment(LFlags.CENTER);

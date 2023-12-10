@@ -3,12 +3,11 @@ package gui.shell.database;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.FileSelector;
-
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.dialog.LShell;
+import lwt.widget.LFileSelector;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
@@ -17,13 +16,13 @@ import project.Project;
 
 public class RuleShell extends ObjectShell<Rule> {
 	
-	private FileSelector selFile;
+	private LFileSelector selFile;
 	
 	public RuleShell(LShell parent) {
 		super(parent);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, false);
+		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.rulePath());
 		

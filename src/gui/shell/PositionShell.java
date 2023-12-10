@@ -5,6 +5,7 @@ import gui.views.fieldTree.*;
 import gui.widgets.DirectionCombo;
 
 import lwt.LFlags;
+import lwt.container.LContainer;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.container.LScrollPanel;
@@ -27,7 +28,7 @@ import project.Project;
 
 public class PositionShell extends LObjectShell<Position> {
 	
-	private LTree<FieldNode, Field> tree;
+	private FieldSelector tree;
 	private FieldCanvas canvas;
 	private LCombo cmbDirection;
 	private LSpinner spnX;
@@ -46,32 +47,7 @@ public class PositionShell extends LObjectShell<Position> {
 		LSashPanel sashForm = new LSashPanel(content, true);
 		sashForm.setExpand(true, true);
 		
-		tree = new LTree<FieldNode, Field>(sashForm) {
-			@Override
-			protected LDataTree<FieldNode> emptyNode() {
-				return null;
-			}
-			@Override
-			protected LDataTree<FieldNode> duplicateNode(LDataTree<FieldNode> node) {
-				return null;
-			}
-			@Override
-			public LDataTree<FieldNode> toNode(LPath path) {
-				return Project.current.fieldTree.getData().getNode(path);
-			}
-			@Override
-			public FieldNode toObject(LPath path) {
-				return toNode(path).data;
-			}
-			@Override
-			protected String encodeNode(LDataTree<FieldNode> node) {
-				return null;
-			}
-			@Override
-			protected LDataTree<FieldNode> decodeNode(String node) {
-				return null;
-			}
-		};
+		tree = new FieldSelector(sashForm);
 		tree.setDragEnabled(false);
 		tree.setDataCollection(Project.current.fieldTree.getData());
 		tree.addSelectionListener(new LSelectionListener() {
@@ -194,6 +170,40 @@ public class PositionShell extends LObjectShell<Position> {
 		pos.h = spnH.getValue();
 		pos.fieldID = canvas.field.id;
 		return pos;
+	}
+	
+	private static class FieldSelector extends LTree<FieldNode, Field> {
+		public FieldSelector(LContainer parent) {
+			super(parent);
+		}
+		@Override
+		protected LDataTree<FieldNode> emptyNode() {
+			return null;
+		}
+		@Override
+		protected LDataTree<FieldNode> duplicateNode(LDataTree<FieldNode> node) {
+			return null;
+		}
+		@Override
+		public LDataTree<FieldNode> toNode(LPath path) {
+			return Project.current.fieldTree.getData().getNode(path);
+		}
+		@Override
+		public FieldNode toObject(LPath path) {
+			return toNode(path).data;
+		}
+		@Override
+		protected String encodeNode(LDataTree<FieldNode> node) {
+			return null;
+		}
+		@Override
+		protected LDataTree<FieldNode> decodeNode(String node) {
+			return null;
+		}
+		@Override
+		public boolean canDecode(String str) {
+			return false;
+		}
 	}
 	
 }

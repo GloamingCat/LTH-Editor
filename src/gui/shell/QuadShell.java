@@ -1,7 +1,6 @@
 package gui.shell;
 
 import gui.Vocab;
-import gui.widgets.FileSelector;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,6 +21,7 @@ import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
 import lwt.graphics.LPainter;
 import lwt.graphics.LPoint;
+import lwt.widget.LFileSelector;
 import lwt.widget.LActionButton;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -31,7 +31,7 @@ import project.Project;
 
 public class QuadShell extends LObjectShell<Quad> {
 
-	private FileSelector selFile;
+	private LFileSelector selFile;
 	private LImage imgQuad;
 	private LSpinner spnX;
 	private LSpinner spnY;
@@ -44,7 +44,7 @@ public class QuadShell extends LObjectShell<Quad> {
 		setMinimumSize(600, 400);
 
 		LSashPanel form = new LSashPanel(content, true);
-		selFile = new FileSelector(form, optional);
+		selFile = new LFileSelector(form, optional);
 		selFile.addFileRestriction( (f) -> { return isImage(f); } );
 		selFile.setFolder(Project.current.imagePath());
 

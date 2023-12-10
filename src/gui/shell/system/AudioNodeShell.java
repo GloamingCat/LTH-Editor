@@ -3,8 +3,6 @@ package gui.shell.system;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.widgets.AudioPlayer;
-import gui.widgets.FileSelector;
-
 import lwt.LFlags;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
@@ -13,6 +11,7 @@ import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LFileSelector;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -24,7 +23,7 @@ import data.subcontent.Audio;
 
 public class AudioNodeShell extends ObjectShell<Audio.Node> {
 	
-	protected FileSelector selFile;
+	protected LFileSelector selFile;
 	protected AudioPlayer reproduction;
 	protected LSpinner spnVolume;
 	protected LSpinner spnPitch;
@@ -35,7 +34,7 @@ public class AudioNodeShell extends ObjectShell<Audio.Node> {
 		super(parent, 400, 400);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, (style & OPTIONAL) > 0);
+		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { 
 			String name = f.getName();
 			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");

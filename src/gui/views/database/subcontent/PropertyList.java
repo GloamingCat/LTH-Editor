@@ -70,11 +70,15 @@ public class PropertyList extends SimpleEditableList<Property> {
 			}
 			@Override
 			protected String encodeNode(LDataTree<Property> node) {
-				return self.encodeNode(node);
+				return self.encodeData(node);
 			}
 			@Override
 			protected LDataTree<Property> decodeNode(String str) {
-				return self.decodeNode(str);
+				return self.decodeData(str);
+			}
+			@Override
+			public boolean canDecode(String str) {
+				return self.canDecode(str);
 			}
 		};
 	}

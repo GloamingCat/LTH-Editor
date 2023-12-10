@@ -11,6 +11,9 @@ import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
 import project.Project;
+
+import java.lang.reflect.Type;
+
 import data.Animation;
 
 public class IDButton extends LObjectButton<Integer> {
@@ -81,6 +84,11 @@ public class IDButton extends LObjectButton<Integer> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return Integer.class;
 	}
 
 }

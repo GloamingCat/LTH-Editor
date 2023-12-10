@@ -1,15 +1,13 @@
 package gui.shell;
 
-import gui.widgets.FileSelector;
-
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
-
+import lwt.widget.LFileSelector;
 import project.Project;
 
 public class LuaShell extends LObjectShell<String> {
 	
-	private FileSelector selFile;
+	private LFileSelector selFile;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -21,7 +19,7 @@ public class LuaShell extends LObjectShell<String> {
 	public LuaShell(LShell parent, boolean optional) {
 		super(parent);
 		content.setFillLayout(true);
-		selFile = new FileSelector(content, optional);
+		selFile = new LFileSelector(content, optional);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 	}

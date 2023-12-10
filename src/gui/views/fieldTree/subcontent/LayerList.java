@@ -85,7 +85,7 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		getCollectionWidget().addInsertListener(listener);
 		getCollectionWidget().addMoveListener(listener);
 		if (FieldTreeEditor.instance != null)
-			setActionStack(FieldTreeEditor.instance.getActionStack());
+			setMenuInterface(FieldTreeEditor.instance.getMenuInterface());
 	}
 	
 	public void setEditor(FieldSideEditor parent) {
@@ -111,21 +111,26 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		return editor.field == null ? null : getLayerList(editor.field);
 	}
 	@Override
-	protected Layer createNewData() {
+	protected Layer createNewElement() {
 		return new Layer(editor.field.sizeX, editor.field.sizeY);
 	}
 	@Override
-	protected Layer duplicateData(Layer original) {
+	protected Layer duplicateElement(Layer original) {
 		return new Layer(original);
 	}
 	@Override
-	protected String encodeData(Layer data) {
+	protected String encodeElement(Layer data) {
 		return LGlobals.gson.toJson(data);
 	}
 	@Override
-	protected Layer decodeData(String str) {
+	protected Layer decodeElement(String str) {
 		return LGlobals.gson.fromJson(str, Layer.class);
 	}
+	@Override
+	public boolean canDecode(String str) {
+		return true;
+	}
+	
 	@Override
 	protected Info getEditableData(LPath path) {
 		return getLayerList(editor.field).get(path.index).info;

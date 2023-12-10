@@ -8,6 +8,8 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
+import java.lang.reflect.Type;
+
 import data.subcontent.Script;
 
 public class ScriptButton extends LObjectButton<Script> {
@@ -49,6 +51,11 @@ public class ScriptButton extends LObjectButton<Script> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return Script.class;
 	}
 
 }

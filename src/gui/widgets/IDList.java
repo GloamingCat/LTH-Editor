@@ -73,6 +73,15 @@ public class IDList extends SimpleEditableList<Integer> {
 			protected LDataTree<Integer> decodeNode(String str) {
 				return new LDataTree<Integer>(Integer.parseInt(str));
 			}
+			@Override
+			public boolean canDecode(String str) {
+				try {
+					Integer.parseInt(str);
+					return true;
+				} catch(NumberFormatException e) {
+					return false;
+				}
+			}
 		};
 	}
 

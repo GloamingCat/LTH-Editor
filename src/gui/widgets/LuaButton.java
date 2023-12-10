@@ -1,5 +1,7 @@
 package gui.widgets;
 
+import java.lang.reflect.Type;
+
 import gui.shell.LuaShell;
 import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
@@ -47,6 +49,11 @@ public class LuaButton extends LObjectButton<String> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return String.class;
 	}
 
 }

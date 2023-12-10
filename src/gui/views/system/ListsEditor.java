@@ -2,7 +2,6 @@ package gui.views.system;
 
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
-import lwt.action.LActionStack;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
@@ -25,7 +24,7 @@ public class ListsEditor extends LObjectEditor<Object> {
 	public ListsEditor(LContainer parent) {
 		super(parent, false, true);
 
-		actionStack = new LActionStack(this);
+		createMenuInterface();
 
 		LPanel top = new LPanel(this, true, true);
 		
@@ -94,6 +93,11 @@ public class ListsEditor extends LObjectEditor<Object> {
 	@Override
 	public Object decodeData(String str) {
 		return null;
+	}
+
+	@Override
+	public boolean canDecode(String str) {
+		return false;
 	}
 	
 }

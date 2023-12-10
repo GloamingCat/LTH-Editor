@@ -51,7 +51,7 @@ public abstract class DatabaseTab<T> extends LView {
 		
 		setFillLayout(true);
 		
-		createActionStack();
+		createMenuInterface();
 		
 		LSashPanel sashForm = new LSashPanel(this, true);
 		

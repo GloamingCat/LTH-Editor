@@ -8,6 +8,8 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
+import java.lang.reflect.Type;
+
 import data.subcontent.Position;
 
 public class PositionButton extends LObjectButton<Position> {
@@ -49,6 +51,11 @@ public class PositionButton extends LObjectButton<Position> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return Position.class;
 	}
 
 }

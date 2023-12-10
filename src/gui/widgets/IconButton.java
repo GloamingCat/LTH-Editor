@@ -9,6 +9,8 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
+import java.lang.reflect.Type;
+
 import data.Animation;
 import data.subcontent.Icon;
 
@@ -62,6 +64,11 @@ public class IconButton extends LObjectButton<Icon> {
 			}
 			currentValue = null;
 		}
+	}
+
+	@Override
+	protected Type getType() {
+		return Icon.class;
 	}
 	
 }

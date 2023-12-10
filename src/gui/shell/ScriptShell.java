@@ -2,13 +2,12 @@ package gui.shell;
 
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.FileSelector;
-
 import lwt.LFlags;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LSashPanel;
 import lwt.dialog.LShell;
+import lwt.widget.LFileSelector;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
@@ -18,7 +17,7 @@ import project.Project;
 
 public class ScriptShell extends ObjectShell<Script> {
 	
-	private FileSelector selFile;
+	private LFileSelector selFile;
 	
 	public static final int OPTIONAL = 0x1;
 	public static final int ONLOAD = 0x01;
@@ -37,7 +36,7 @@ public class ScriptShell extends ObjectShell<Script> {
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		form.setExpand(true, true);
 		form.setSpread(2, 1);
-		selFile = new FileSelector(form, (style & OPTIONAL) > 0);
+		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 		

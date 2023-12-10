@@ -88,24 +88,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
 		grpGrid.setExpand(true, true);
-		gridEditor = new LGridEditor<LPoint, LPoint>(grpGrid) {
-			@Override
-			protected LPoint createNewData() { return null; }
-			@Override
-			protected LPoint duplicateData(LPoint original) { return null; }
-			@Override
-			protected void setImage(LImage label, int i) {
-				refreshUnit(label, i);
-			}
-			@Override
-			protected LDataList<LPoint> getDataCollection() {
-				return points;
-			}
-			@Override
-			protected LPoint getEditableData(LPath path) { return null; }
-			@Override
-			protected void setEditableData(LPath path, LPoint newData) {}
-		};
+		gridEditor = new UnitGrid(grpGrid);
 		gridEditor.getCollectionWidget().cellWidth = tWidth;
 		gridEditor.getCollectionWidget().cellHeight = tHeight;
 
@@ -245,6 +228,46 @@ public class TroopTab extends DatabaseTab<Troop> {
 	@Override
 	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.troops;
+	}
+	
+	private class UnitGrid extends LGridEditor<LPoint, LPoint> {
+		
+		public UnitGrid(LContainer parent) {
+			super(parent);
+			// TODO Auto-generated constructor stub
+		}
+		
+		@Override
+		protected LPoint createNewElement() { return null; }
+		@Override
+		protected LPoint duplicateElement(LPoint original) { return null; }
+		@Override
+		protected void setImage(LImage label, int i) {
+			refreshUnit(label, i);
+		}
+		@Override
+		protected LDataList<LPoint> getDataCollection() {
+			return points;
+		}
+		@Override
+		protected LPoint getEditableData(LPath path) { return null; }
+		@Override
+		protected void setEditableData(LPath path, LPoint newData) {}
+		@Override
+		protected String encodeElement(LPoint data) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		protected LPoint decodeElement(String str) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public boolean canDecode(String str) {
+			// TODO Auto-generated method stub
+			return false;
+		}
 	}
 	
 }

@@ -32,7 +32,7 @@ public class ObjectShell<T> extends LObjectShell<T> {
 				return null;
 			}
 		};
-		contentEditor.createActionStack();
+		contentEditor.createMenuInterface();
 	}
 	
 	@SuppressWarnings("unchecked")

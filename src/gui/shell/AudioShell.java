@@ -2,7 +2,6 @@ package gui.shell;
 
 import gui.Vocab;
 import gui.widgets.AudioPlayer;
-import gui.widgets.FileSelector;
 
 import java.util.ArrayList;
 
@@ -14,6 +13,7 @@ import lwt.event.LControlEvent;
 import lwt.event.LSelectionEvent;
 import lwt.event.listener.LControlListener;
 import lwt.event.listener.LSelectionListener;
+import lwt.widget.LFileSelector;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -25,7 +25,7 @@ import data.subcontent.Audio;
 public class AudioShell extends ObjectShell<Audio> {
 	
 	protected LCombo cmbSound;
-	protected FileSelector selFile;
+	protected LFileSelector selFile;
 	protected Audio comboAudio = null;
 	
 	public static final int BGM = 0x01;
@@ -36,13 +36,14 @@ public class AudioShell extends ObjectShell<Audio> {
 		setMinimumSize(400, 400);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new FileSelector(form, false);
+		LPanel sound = new LPanel(form, 1, false);
+		selFile = new LFileSelector(sound, false);
 		selFile.addFileRestriction( (f) -> { 
 			String name = f.getName();
 			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
 		} );
 		selFile.setFolder(Project.current.audioPath());
-		cmbSound = new LCombo(selFile);
+		cmbSound = new LCombo(sound);
 		cmbSound.setOptional(true);
 		cmbSound.setIncludeID(false);
 		selFile.addModifyListener(new LControlListener<Integer>() {

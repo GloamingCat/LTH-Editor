@@ -9,6 +9,8 @@ import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 import lwt.widget.LObjectButton;
 
+import java.lang.reflect.Type;
+
 import data.subcontent.Quad;
 
 public class QuadButton extends LObjectButton<Quad> {
@@ -58,5 +60,10 @@ public class QuadButton extends LObjectButton<Quad> {
 			currentValue = null;
 		}
 	}
-	
+
+	@Override
+	protected Type getType() {
+		return Quad.class;
+	}
+
 }
