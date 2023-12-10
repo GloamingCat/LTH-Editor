@@ -85,5 +85,15 @@ public class ListsEditor extends LObjectEditor<Object> {
 	public Object duplicateData(Object obj) {
 		return null;
 	}
+
+	@Override
+	public String encodeData(Object obj) {
+		return null;
+	}
+
+	@Override
+	public Object decodeData(String str) {
+		return null;
+	}
 	
 }

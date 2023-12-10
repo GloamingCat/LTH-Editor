@@ -31,4 +31,9 @@ public class AttributeEditor extends GGridForm<Integer> {
 		return att.shortName;
 	}
 
+	@Override
+	public Class<?> getType() {
+		return Integer.class;
+	}
+
 }

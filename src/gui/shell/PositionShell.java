@@ -63,6 +63,14 @@ public class PositionShell extends LObjectShell<Position> {
 			public FieldNode toObject(LPath path) {
 				return toNode(path).data;
 			}
+			@Override
+			protected String encodeNode(LDataTree<FieldNode> node) {
+				return null;
+			}
+			@Override
+			protected LDataTree<FieldNode> decodeNode(String node) {
+				return null;
+			}
 		};
 		tree.setDragEnabled(false);
 		tree.setDataCollection(Project.current.fieldTree.getData());

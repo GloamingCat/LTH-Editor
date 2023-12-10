@@ -18,6 +18,8 @@ import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
+import java.lang.reflect.Type;
+
 import data.config.Config;
 import gson.editor.GDefaultObjectEditor;
 import project.Project;
@@ -35,7 +37,7 @@ public class ConfigEditor extends LView {
 
 		actionStack = new LActionStack(this);
 
-		editor = new GDefaultObjectEditor<Config>(this, false);
+		editor = new MainEditor(this, false);
 		editor.setAlignment(LFlags.CENTER);
 		editor.setSpread(4, 1);
 		editor.setExpand(true, false);
@@ -129,7 +131,7 @@ public class ConfigEditor extends LView {
 		LFrame grpScreen = new LFrame(left, Vocab.instance.SCREEN, true, true);
 		grpScreen.setExpand(true, true);
 		
-		GDefaultObjectEditor<Config.Screen> screenEditor = new GDefaultObjectEditor<Config.Screen>(grpScreen, true);
+		ScreenEditor screenEditor = new ScreenEditor(grpScreen, true);
 		editor.addChild(screenEditor, "screen");
 		screenEditor.setGridLayout(3, false);
 		
@@ -208,7 +210,7 @@ public class ConfigEditor extends LView {
 		LFrame grpPlayer = new LFrame(middle, Vocab.instance.PLAYER, true, true);
 		grpPlayer.setExpand(true, true);
 		
-		GDefaultObjectEditor<Config.Player> playerEditor = new GDefaultObjectEditor<Config.Player>(grpPlayer, true);
+		PlayerEditor playerEditor = new PlayerEditor(grpPlayer, true);
 		editor.addChild(playerEditor, "player");
 		playerEditor.setGridLayout(3, false);
 		
@@ -243,7 +245,7 @@ public class ConfigEditor extends LView {
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
 		grpGrid.setExpand(true, true);
 		
-		GDefaultObjectEditor<Config.Grid> gridEditor = new GDefaultObjectEditor<Config.Grid>(grpGrid, true);
+		GDefaultObjectEditor<Config.Grid> gridEditor = new GridEditor(grpGrid, true);
 		editor.addChild(gridEditor, "grid");
 		gridEditor.setGridLayout(3, false);
 		
@@ -297,7 +299,7 @@ public class ConfigEditor extends LView {
 		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE, true, true);
 		grpBattle.setExpand(true, true);
 		
-		GDefaultObjectEditor<Config.Battle> battleEditor = new GDefaultObjectEditor<Config.Battle>(grpBattle, true);
+		BattleEditor battleEditor = new BattleEditor(grpBattle, true);
 		editor.addChild(battleEditor, "battle");
 		battleEditor.setGridLayout(3, false);
 		
@@ -352,7 +354,7 @@ public class ConfigEditor extends LView {
 		LFrame grpTroop = new LFrame(middle, Vocab.instance.TROOP, true, true);
 		grpTroop.setExpand(true, true);
 		
-		GDefaultObjectEditor<Config.Troop> troopEditor = new GDefaultObjectEditor<Config.Troop>(grpTroop, true);
+		TroopEditor troopEditor = new TroopEditor(grpTroop, true);
 		editor.addChild(troopEditor, "troop");
 		troopEditor.setGridLayout(3, false);
 		
@@ -417,6 +419,66 @@ public class ConfigEditor extends LView {
 	public void onVisible() {
 		super.onVisible();
 		editor.setObject(Project.current.config.getData());
+	}
+	
+	private static class MainEditor extends GDefaultObjectEditor<Config> {
+		public MainEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Config.class;
+		}
+	}
+	
+	private static class GridEditor extends GDefaultObjectEditor<Config.Grid> {
+		public GridEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Config.Grid.class;
+		}
+	}
+	
+	private static class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
+		public ScreenEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Config.Screen.class;
+		}
+	}
+	
+	private static class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
+		public PlayerEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Config.Player.class;
+		}
+	}
+	
+	private static class BattleEditor extends GDefaultObjectEditor<Config.Battle> {
+		public BattleEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Config.Battle.class;
+		}
+	}
+	
+	private static class TroopEditor extends GDefaultObjectEditor<Config.Troop> {
+		public TroopEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Config.Troop.class;
+		}
 	}
 	
 }

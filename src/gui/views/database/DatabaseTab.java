@@ -1,5 +1,6 @@
 package gui.views.database;
 
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 
 import gson.editor.GDefaultObjectEditor;
@@ -75,7 +76,13 @@ public abstract class DatabaseTab<T> extends LView {
 		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
-		contentEditor = new GDefaultObjectEditor<T>(sashForm, true);
+		
+		contentEditor = new GDefaultObjectEditor<T>(sashForm, true) {
+			@Override
+			public Type getType() {
+				return getSerializer().getDataType();
+			}
+		};
 		contentEditor.setGridLayout(2, true);
 		
 		left = new LPanel(contentEditor, 1);

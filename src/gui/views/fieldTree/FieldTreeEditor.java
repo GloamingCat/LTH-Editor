@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import data.field.Field;
 import data.field.Field.Prefs;
 import data.field.FieldNode;
+import lwt.LGlobals;
 import lwt.action.LActionStack;
 import lwt.container.LContainer;
 import lwt.container.LSashPanel;
@@ -52,6 +53,18 @@ public class FieldTreeEditor extends LView {
 		public FieldNode duplicateData(FieldNode original) {
 			return Project.current.fieldTree.duplicateNode(original);
 		}
+		
+		@Override
+		protected String encodeData(FieldNode data) {
+			Field field = Project.current.fieldTree.loadField(data);
+			return LGlobals.gson.toJson(field);
+		}
+
+		@Override
+		protected FieldNode decodeData(String str) {
+			Field field = LGlobals.gson.fromJson(str, Field.class);
+			return Project.current.fieldTree.addField(field);
+		}
 
 		@Override
 		protected Prefs getEditableData(LPath path) {
@@ -76,6 +89,7 @@ public class FieldTreeEditor extends LView {
 				getCollectionWidget().forceSelection(null);
 			}
 		}
+
 	}
 
 	public static FieldTreeEditor instance;

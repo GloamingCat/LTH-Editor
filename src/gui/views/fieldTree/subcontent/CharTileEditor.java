@@ -206,5 +206,10 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		spnY.setValue(tile.y);
 		spnH.setValue(tile.h);
 	}
+
+	@Override
+	public Class<?> getType() {
+		return CharTile.class;
+	}
 	
 }

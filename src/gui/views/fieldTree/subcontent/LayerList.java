@@ -4,6 +4,7 @@ import gui.shell.field.LayerShell;
 import gui.views.fieldTree.FieldEditor;
 import gui.views.fieldTree.FieldSideEditor;
 import gui.views.fieldTree.FieldTreeEditor;
+import lwt.LGlobals;
 import lwt.container.LContainer;
 import lwt.dataestructure.LDataList;
 import lwt.dataestructure.LPath;
@@ -116,6 +117,14 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	@Override
 	protected Layer duplicateData(Layer original) {
 		return new Layer(original);
+	}
+	@Override
+	protected String encodeData(Layer data) {
+		return LGlobals.gson.toJson(data);
+	}
+	@Override
+	protected Layer decodeData(String str) {
+		return LGlobals.gson.fromJson(str, Layer.class);
 	}
 	@Override
 	protected Info getEditableData(LPath path) {

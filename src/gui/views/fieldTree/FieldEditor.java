@@ -111,4 +111,9 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		}
 	}
 
+	@Override
+	public Class<?> getType() {
+		return Field.class;
+	}
+
 }

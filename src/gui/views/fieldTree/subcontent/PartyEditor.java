@@ -129,5 +129,10 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		addChild(lstTroops, "troopSpawn");
 		
 	}
+
+	@Override
+	public Class<?> getType() {
+		return Party.class;
+	}
 	
 }

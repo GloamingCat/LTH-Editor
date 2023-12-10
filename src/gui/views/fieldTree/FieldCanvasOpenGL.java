@@ -120,20 +120,22 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	// {{ Visualization
 	
 	public void refresh() {
-		SceneHelper.createTileTextures(renderer, shader);
-		scene = SceneHelper.createScene(field, x0, y0, showGrid, currentLayer, currentChar);
-		if (vertexArray != null)
-			vertexArray.dispose();
-		vertexArray = new VertexArray(scene.allObjects().size() * 4);
-		vertexArray.initVAO(shader.attributes, shader.vertexSize);
-		nFloats = shader.vertexSize / 4;
-		LPoint size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
-		int w = size.x + x0 * 2;
-		int h = size.y + (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
-				FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
-		if (screen != null)
-			screen.dispose();
-		screen = new Screen(w, h, false);
+		if (field != null) {
+			SceneHelper.createTileTextures(renderer, shader);
+			scene = SceneHelper.createScene(field, x0, y0, showGrid, currentLayer, currentChar);
+			if (vertexArray != null)
+				vertexArray.dispose();
+			vertexArray = new VertexArray(scene.allObjects().size() * 4);
+			vertexArray.initVAO(shader.attributes, shader.vertexSize);
+			nFloats = shader.vertexSize / 4;
+			LPoint size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
+			int w = size.x + x0 * 2;
+			int h = size.y + (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
+					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
+			if (screen != null)
+				screen.dispose();
+			screen = new Screen(w, h, false);
+		}
 		super.refresh();
 	}
 	

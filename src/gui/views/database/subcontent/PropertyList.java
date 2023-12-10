@@ -68,6 +68,14 @@ public class PropertyList extends SimpleEditableList<Property> {
 					return "NULL";
 				return id + obj.toString() + ": " + item.value;
 			}
+			@Override
+			protected String encodeNode(LDataTree<Property> node) {
+				return self.encodeNode(node);
+			}
+			@Override
+			protected LDataTree<Property> decodeNode(String str) {
+				return self.decodeNode(str);
+			}
 		};
 	}
 	

@@ -1,6 +1,7 @@
 package gui.shell.field;
 
 import lwt.LFlags;
+import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
@@ -24,6 +25,8 @@ import gui.widgets.PortalButton;
 import gui.widgets.PositionButton;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
+
+import java.lang.reflect.Type;
 
 import data.Animation;
 import data.field.Field;
@@ -128,7 +131,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		lstTransitions.setExpand(true, true);
 		addChild(lstTransitions, "transitions");
 		
-		GDefaultObjectEditor<Transition> transitionEditor = new GDefaultObjectEditor<Transition>(grpTransitions, 3, false, false);
+		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, 3, false, false);
 		transitionEditor.setExpand(true, false);
 		transitionEditor.setAlignment(LFlags.CENTER);
 		lstTransitions.addChild(transitionEditor);
@@ -184,6 +187,17 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 				t.convert();
 		}
 		super.open(initial);
+	}
+	
+	private static class TransitionEditor extends GDefaultObjectEditor<Transition> {
+		public TransitionEditor(LContainer parent, int columns, boolean equalCols, boolean doubleBuffered) {
+			super(parent, columns, equalCols, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return Transition.class;
+		}
+		
 	}
 	
 }

@@ -2,6 +2,8 @@ package gui.views.database.subcontent;
 
 import gui.widgets.AudioButton;
 
+import java.lang.reflect.Type;
+
 import data.subcontent.Audio;
 import gson.editor.GDefaultObjectEditor;
 import lwt.container.LContainer;
@@ -18,6 +20,11 @@ public class AudioEditor extends GDefaultObjectEditor<Audio> {
 		btnSelectSound.setTextWidget(txtSource);
 		addControl(btnSelectSound, "audio");
 		
+	}
+
+	@Override
+	public Type getType() {
+		return Audio.class;
 	}
 	
 }

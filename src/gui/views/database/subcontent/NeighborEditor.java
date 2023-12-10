@@ -2,6 +2,10 @@ package gui.views.database.subcontent;
 
 import gui.Vocab;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.reflect.TypeToken;
+
 import gson.editor.GDefaultObjectEditor;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
@@ -83,6 +87,11 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 			values[i] = labels[i].getValue();
 		}
 		return values;
+	}
+
+	@Override
+	public Type getType() {
+		return new TypeToken<boolean[]>() {}.getType();
 	}
 
 }

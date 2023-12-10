@@ -1,6 +1,7 @@
 package project;
 
 import gson.project.GMultiSerializer;
+import lwt.LGlobals;
 import lwt.dataestructure.LPath;
 import data.field.Field;
 import data.field.FieldNode;
@@ -68,6 +69,14 @@ public class FieldTreeSerializer extends
 		return field;
 	}
 	
+	public FieldNode addField(Field field) {
+		FieldNode node = new FieldNode();
+		node.name = field.prefs.name;
+		field.id = data.findID();
+		loadedData.put(node, field);
+		return node;
+	}
+	
 	// Duplicate
 	
 	public FieldNode duplicateNode(FieldNode node) {
@@ -80,8 +89,8 @@ public class FieldTreeSerializer extends
 	}
 
 	public Field duplicateField(int id, Field original) {
-		String json = gson.toJson(original, Field.class);
-		Field newField = gson.fromJson(json, Field.class);
+		String json = LGlobals.gson.toJson(original, Field.class);
+		Field newField = LGlobals.gson.fromJson(json, Field.class);
 		newField.id = id;
 		return newField;
 	}

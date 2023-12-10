@@ -32,4 +32,9 @@ public class BuildEditor extends GGridForm<String> {
 		return att.shortName;
 	}
 
+	@Override
+	public Class<?> getType() {
+		return String.class;
+	}
+
 }

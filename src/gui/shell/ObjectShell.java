@@ -6,6 +6,8 @@ import lwt.dialog.LShell;
 import lwt.editor.LEditor;
 import lwt.widget.LControlWidget;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
@@ -24,7 +26,12 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	public ObjectShell(LShell parent) {
 		super(parent);
 		content.setExpand(true, true);
-		contentEditor = new GDefaultObjectEditor<T>(content, false);
+		contentEditor = new GDefaultObjectEditor<T>(content, false) {
+			@Override
+			public Type getType() {
+				return null;
+			}
+		};
 		contentEditor.createActionStack();
 	}
 	

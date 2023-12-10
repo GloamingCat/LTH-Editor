@@ -223,4 +223,9 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		}
 	}
 
+	@Override
+	public Class<?> getType() {
+		return Transform.class;
+	}
+
 }

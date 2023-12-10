@@ -65,6 +65,14 @@ public class IDList extends SimpleEditableList<Integer> {
 					return idstr + "    ";
 				return idstr + obj.toString();
 			}
+			@Override
+			protected String encodeNode(LDataTree<Integer> node) {
+				return node.data + "";
+			}
+			@Override
+			protected LDataTree<Integer> decodeNode(String str) {
+				return new LDataTree<Integer>(Integer.parseInt(str));
+			}
 		};
 	}
 

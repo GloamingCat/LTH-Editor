@@ -95,4 +95,9 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 			gridCanvas.redraw();
 	}
 
+	@Override
+	public Class<?> getType() {
+		return Unit.class;
+	}
+
 }

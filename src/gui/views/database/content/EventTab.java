@@ -13,6 +13,8 @@ import lwt.widget.LLabel;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
 
+import java.lang.reflect.Type;
+
 import data.EventSheet;
 import project.Project;
 
@@ -40,7 +42,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		lstEvents.setExpand(true, true);
 		addChild(lstEvents, "events");
 		
-		GDefaultObjectEditor<EventSheet.Event> eventEditor = new GDefaultObjectEditor<EventSheet.Event>(grpEvents, 2, false, false);
+		EventEditor eventEditor = new EventEditor(grpEvents, 2, false, false);
 		eventEditor.setExpand(true, false);
 		lstEvents.addChild(eventEditor);
 		
@@ -69,6 +71,16 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	@Override
 	protected GObjectTreeSerializer getSerializer() {
 		return Project.current.events;
+	}
+	
+	private static class EventEditor extends GDefaultObjectEditor<EventSheet.Event> {
+		public EventEditor(LContainer parent, int columns, boolean equalCols, boolean doubleBuffered) {
+			super(parent, columns, equalCols, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return EventSheet.Event.class;
+		}
 	}
 
 }
