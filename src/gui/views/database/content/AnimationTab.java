@@ -41,38 +41,39 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Script
 		
-		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
+		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		LPanel script = new LPanel(grpGeneral, 2, false);
 		script.setAlignment(LFlags.CENTER);
 		
 		LText txtScript = new LText(script, true);
 		LuaButton btnScript = new LuaButton(script, true);
 		btnScript.setPathWidget(txtScript);
+		btnScript.addMenu(lblScript);
+		btnScript.addMenu(txtScript);
 		addControl(btnScript, "script");
 
 		// Size
 		
 		new LLabel(grpGeneral, Vocab.instance.SIZE);
-		
 		LPanel size = new LPanel(grpGeneral, 4, false);
 		size.setExpand(false, false);
 		
-		new LLabel(size, Vocab.instance.COLUMNS);
-		
+		LLabel lblCols = new LLabel(size, Vocab.instance.COLUMNS);
 		spnCols = new LSpinner(size);
+		spnCols.addMenu(lblCols);
 		addControl(spnCols, "cols");
 		
-		new LLabel(size, Vocab.instance.ROWS);
-		
+		LLabel lblRows = new LLabel(size, Vocab.instance.ROWS);
 		spnRows = new LSpinner(size);
+		spnRows.addMenu(lblRows);
 		addControl(spnRows, "rows");
 		
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
 		grpTransform.setExpand(true, false);
-		
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
+		transformEditor.addMenu(grpTransform);
 		addChild(transformEditor, "transform");
 		
 		// Audio
@@ -88,6 +89,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 				return new AudioShell(parent, false);
 			}
 		});
+		lstAudio.addMenu(grpAudio);
 		addChild(lstAudio, "audio");
 		
 		// Intro
@@ -95,15 +97,15 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO, 3, false);
 		grpIntro.initGridData();
 		
-		new LLabel(grpIntro, Vocab.instance.PATTERN);
-		
+		LLabel lblIntroPattern = new LLabel(grpIntro, Vocab.instance.PATTERN);
 		LText txtIntroPattern = new LText(grpIntro);
+		txtIntroPattern.addMenu(lblIntroPattern);
 		addControl(txtIntroPattern, "introPattern");
 		LActionButton btnIntroPattern = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
 		
-		new LLabel(grpIntro, Vocab.instance.DURATION);
-
+		LLabel lblIntroDuration = new LLabel(grpIntro, Vocab.instance.DURATION);
 		LText txtIntroDuration = new LText(grpIntro);
+		txtIntroDuration.addMenu(lblIntroDuration);
 		addControl(txtIntroDuration, "introDuration");
 		LActionButton btnIntroDuration = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
 		
@@ -112,15 +114,15 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP, 3, false);
 		grpLoop.initGridData();
 		
-		new LLabel(grpLoop, Vocab.instance.PATTERN);
-		
+		LLabel lblLoopPattern = new LLabel(grpLoop, Vocab.instance.PATTERN);
 		LText txtLoopPattern = new LText(grpLoop);
+		txtLoopPattern.addMenu(lblLoopPattern);
 		addControl(txtLoopPattern, "loopPattern");
 		LActionButton btnLoopPattern = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
-		new LLabel(grpLoop, Vocab.instance.DURATION);
-
+		LLabel lblLoopDuration = new LLabel(grpLoop, Vocab.instance.DURATION);
 		LText txtLoopDuration = new LText(grpLoop);
+		txtLoopDuration.addMenu(lblLoopDuration);
 		addControl(txtLoopDuration, "loopDuration");
 		LActionButton btnLoopDuration = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
 		
@@ -135,6 +137,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		image.setAlignment(LFlags.TOP & LFlags.LEFT);
 		
 		QuadButton btnImage = new QuadButton(grpImg, true);
+		btnImage.addMenu(image);
+		btnImage.addMenu(grpImg);
 		addControl(btnImage, "quad");
 		
 		transformEditor.setImage(image);

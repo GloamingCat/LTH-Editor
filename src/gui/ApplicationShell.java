@@ -5,11 +5,11 @@ import gui.views.fieldTree.FieldTreeEditor;
 import gui.views.system.SystemEditor;
 
 import project.Project;
-import lwt.LDefaultApplicationShell;
+import lwt.LApplicationShell;
 import lwt.dataserialization.LFileManager;
 import lwt.dataserialization.LSerializer;
 
-public class ApplicationShell extends LDefaultApplicationShell {
+public class ApplicationShell extends LApplicationShell {
 	
 	public static void main(String args[]) {
 		try {

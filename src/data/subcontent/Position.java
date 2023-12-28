@@ -23,7 +23,7 @@ public class Position {
 	
 	public String toString() {
 		FieldNode node = Project.current.fieldTree.getData().get(fieldID);
-		String name = node == null ? "NULL" : node.name;
+		String name = node == null ? ("NULL " + fieldID) : node.name;
 		String dir = direction == -1 ? "" : ", " + direction + "°";
 		return name + " (" + x + "," + y + "), Layer " + h + dir;
 	}

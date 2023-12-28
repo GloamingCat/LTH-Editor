@@ -10,8 +10,10 @@ import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
 
-public abstract class NodeList extends SimpleEditableList<Node> {
+public class NodeList extends SimpleEditableList<Node> {
 
+	public LDataTree<Object> dataTree;
+	
 	public NodeList(LContainer parent) {
 		super(parent);
 		type = Node.class;
@@ -28,6 +30,8 @@ public abstract class NodeList extends SimpleEditableList<Node> {
 		});
 	}
 	
-	protected abstract LDataTree<Object> getDataTree();
+	protected LDataTree<Object> getDataTree() {
+		return dataTree;
+	}
 
 }

@@ -32,8 +32,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 	public ObstacleTab(LContainer parent) {
 		super(parent);
 
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES);
-		
+		LLabel lblTiles = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES);
 		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpGeneral);
 		tileList.type = ObstacleTile.class;
 		tileList.setIncludeID(false);
@@ -43,41 +42,43 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 				return new ObstacleTileShell(parent);
 			}
 		});
-
 		tileList.setExpand(true, true);
 		tileList.setMinimumHeight(60);
+		tileList.addMenu(lblTiles);
 		addChild(tileList, "tiles");
 		
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
 		grpGraphics.setExpand(true, true);
-
 		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setExpand(true, true);
 		imgGraphics.setAlignment(LFlags.TOP & LFlags.LEFT);
-		
 		IconButton btnGraphics = new IconButton(grpGraphics, false);
+		btnGraphics.addMenu(grpGraphics);
+		btnGraphics.addMenu(imgGraphics);
 		addControl(btnGraphics, "image");
 		
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
 		grpTransform.setExpand(true, false);
-		
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
+		transformEditor.addMenu(grpTransform);
 		addChild(transformEditor, "transform");
 		transformEditor.addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
 				Obstacle o = (Obstacle) contentEditor.getObject();
+				if (o == null)
+					return;
 				Animation a = (Animation) Project.current.animations.getData().get(o.image.id);
 				if (a == null)
 					return;
 				transformEditor.secondaryTransform = a.transform;
 			}
 		});
-		
+
 		btnGraphics.setImageWidget(imgGraphics);
 		btnGraphics.setTransform(transformEditor);
 		transformEditor.setImage(imgGraphics);

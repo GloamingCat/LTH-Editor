@@ -67,10 +67,8 @@ public class Battler extends Data {
 		
 		public String toString() {
 			Item item = (Item) Project.current.items.getTree().get(id);
-			if (item == null)
-				return "NULL";
-			else
-				return item.toString() + " x " + count + " (" + this.value + "%)";
+			String name = item == null ? ("NULL " + id) : item.toString();
+			return name + " x " + count + " (" + this.value + "%)";
 		}
 		
 		public boolean equals(Object obj) {

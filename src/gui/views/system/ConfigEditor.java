@@ -26,6 +26,7 @@ import project.Project;
 public class ConfigEditor extends LView {
 
 	private GDefaultObjectEditor<Config> editor;
+	private NodeList lstAnimations;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -391,12 +392,7 @@ public class ConfigEditor extends LView {
 		// Animations
 		
 		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS, true, true);
-		NodeList lstAnimations = new NodeList(grpAnimations) {
-			@Override
-			protected LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
+		lstAnimations = new NodeList(grpAnimations);
 		lstAnimations.setIncludeID(false);
 		editor.addChild(lstAnimations, "animations");
 		
@@ -416,6 +412,7 @@ public class ConfigEditor extends LView {
 	}
 	
 	public void onVisible() {
+		lstAnimations.dataTree = Project.current.animations.getTree();
 		super.onVisible();
 		editor.setObject(Project.current.config.getData());
 	}

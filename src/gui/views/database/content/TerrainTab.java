@@ -11,8 +11,6 @@ import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
@@ -40,40 +38,36 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		// General
 		
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.MOVECOST);
-		
-		LPanel moveCost = new LPanel(grpGeneral, 2, false);
-		moveCost.setAlignment(LFlags.CENTER);
-		
-		LSpinner spnCost = new LSpinner(moveCost);
+		LLabel lblCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.MOVECOST);
+		LSpinner spnCost = new LSpinner(grpGeneral);
 		spnCost.setMinimum(100);
 		spnCost.setMaximum(1000);
+		spnCost.addMenu(lblCost);
 		addControl(spnCost, "moveCost");
 		
-		LCheckBox btnPassable = new LCheckBox(moveCost);
+		LLabel lblJobCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.JOBMOVECOST);
+		lstJobMoveCost = new PropertyList(grpGeneral);
+		lstJobMoveCost.setExpand(true, true);
+		lstJobMoveCost.addMenu(lblJobCost);
+		addChild(lstJobMoveCost, "jobMoveCost");		
+		
+		new LLabel(grpGeneral, 1, 1);
+		LCheckBox btnPassable = new LCheckBox(grpGeneral);
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		addControl(btnPassable, "passable");
-		
-		lstJobMoveCost = new PropertyList(moveCost);
-		lstJobMoveCost.setExpand(true, true);
-		addChild(lstJobMoveCost, "jobMoveCost");
 		
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
 		grpGraphics.setExpand(true, true);
-		
 		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgGraphics.setExpand(true, true);
-		
-		btnAnim = new IDButton(grpGraphics, true) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
-		addControl(btnAnim, "animID");
+		btnAnim = new IDButton(grpGraphics, true);
 		btnAnim.setImage(imgGraphics);
+		btnAnim.addMenu(grpGraphics);
+		btnAnim.addMenu(imgGraphics);
+		addControl(btnAnim, "animID");
 		
 		// Audio
 		
@@ -88,6 +82,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 				return new AudioShell(parent, false);
 			}
 		});
+		lstAudio.addMenu(grpAudio);
 		addChild(lstAudio, "sounds");
 
 		// Status
@@ -95,13 +90,11 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS, 2, false);
 		grpStatus.setExpand(true, true);
 		LText txtStatus = new LText(grpStatus, true);		
-		btnStatus = new IDButton(grpStatus, true) {
-			public LDataTree<Object> getDataTree() {
-				return Project.current.status.getTree();
-			}
-		};
+		btnStatus = new IDButton(grpStatus, true);
 		btnStatus.setNameWidget(txtStatus);
+		btnStatus.addMenu(grpStatus);
 		addControl(btnStatus, "statusID");
+		
 		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus);
 		btnRemoveOnExit.setExpand(true, false);
 		btnRemoveOnExit.setAlignment(LFlags.CENTER);

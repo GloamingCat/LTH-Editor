@@ -57,31 +57,30 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		// Rewards
 		
-		new LLabel(grpGeneral, Vocab.instance.MONEY);
-		
+		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY);
 		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
 		compositeReward.setExpand(true, false);
-		
 		LSpinner spnMoney = new LSpinner(compositeReward);
 		spnMoney.setMaximum(99999999);
+		spnMoney.addMenu(lblMoney);
 		addControl(spnMoney, "money");
 		
-		new LLabel(compositeReward, Vocab.instance.EXP);
-		
+		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP);
 		LSpinner spnEXP = new LSpinner(compositeReward);
 		spnEXP.setMaximum(99999999);
+		spnEXP.addMenu(lblExp);
 		addControl(spnEXP, "exp");
 		
 		// AI
 		
-		new LLabel(grpGeneral, Vocab.instance.AI);
-		
+		LLabel lblAI = new LLabel(grpGeneral, Vocab.instance.AI);
 		LPanel select = new LPanel(grpGeneral, 2, false);
 		select.setAlignment(LFlags.CENTER);
-		
 		LText txtAI = new LText(select, true);		
 		LuaButton btnAI = new LuaButton(select, true);
 		btnAI.setPathWidget(txtAI);
+		btnAI.addMenu(lblAI);
+		btnAI.addMenu(txtAI);
 		addControl(btnAI, "ai");
 		
 		// Grid
@@ -97,6 +96,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		LFrame grpItems = new LFrame(right, Vocab.instance.ITEMS, true, true);
 		grpItems.setExpand(true, true);
 		DropList lstItems = new DropList(grpItems);
+		lstItems.addMenu(grpItems);
 		addChild(lstItems, "items");
 
 		// Units
@@ -111,12 +111,12 @@ public class TroopTab extends DatabaseTab<Troop> {
 		lstMembers.type = Unit.class;
 		lstMembers.setExpand(true, false);
 		lstMembers.setMinimumWidth(220);
+		lstMembers.addMenu(grpMembers);
 		addChild(lstMembers, "members");
 		
 		UnitEditor unitEditor = new UnitEditor(grpMembers);
 		unitEditor.setExpand(true, false);
 		lstMembers.addChild(unitEditor);
-		
 		unitEditor.addModifyListener(new LControlListener<Troop.Unit>() {
 			@Override
 			public void onModify(LControlEvent<Unit> event) {
@@ -234,7 +234,6 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		public UnitGrid(LContainer parent) {
 			super(parent);
-			// TODO Auto-generated constructor stub
 		}
 		
 		@Override
@@ -255,17 +254,14 @@ public class TroopTab extends DatabaseTab<Troop> {
 		protected void setEditableData(LPath path, LPoint newData) {}
 		@Override
 		protected String encodeElement(LPoint data) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
 		protected LPoint decodeElement(String str) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
 		public boolean canDecode(String str) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 	}

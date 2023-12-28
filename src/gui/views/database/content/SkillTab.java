@@ -4,10 +4,10 @@ import gson.project.GObjectTreeSerializer;
 import gui.Vocab;
 import gui.shell.database.MaskShell;
 import gui.views.database.DatabaseTab;
+import gui.views.database.subcontent.AnimInfoEditor;
 import gui.views.database.subcontent.PropertyList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import lwt.LFlags;
@@ -16,7 +16,6 @@ import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.container.LViewFolder;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
 import lwt.dialog.LObjectShell;
@@ -40,9 +39,7 @@ import data.Skill.Mask;
 
 public class SkillTab extends DatabaseTab<Skill> {
 
-	private IDButton btnLoadAnim;
-	private IDButton btnCastAnim;
-	private IDButton btnIndAnim;
+
 	private PropertyList lstElements;
 	
 	/**
@@ -54,10 +51,9 @@ public class SkillTab extends DatabaseTab<Skill> {
 
 		// Icon
 		
-		new LLabel(grpGeneral, Vocab.instance.ICON);
+		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
 		compositeIcon.setAlignment(LFlags.CENTER);
-		
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.setExpand(true, true);
@@ -66,25 +62,29 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
 		btnGraphics.setImageWidget(imgIcon);
+		btnGraphics.addMenu(lblIcon);
+		btnGraphics.addMenu(imgIcon);
 		addControl(btnGraphics, "icon");
 		
 		// Description
 		
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
+		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
 		txtDescription.setMinimumHeight(60);
+		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 		
 		// Script
 		
-		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
-		
+		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		LPanel script = new LPanel(grpGeneral, 2, false);
 		script.setAlignment(LFlags.CENTER);
 		
 		LText txtScript = new LText(script, true);		
 		LuaButton btnScript = new LuaButton(script, true);
 		btnScript.setPathWidget(txtScript);
+		btnScript.addMenu(lblScript);
+		btnScript.addMenu(txtScript);
 		addControl(btnScript, "script");
 		
 		// Restrictions
@@ -92,15 +92,14 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LFrame grpRestrictions = new LFrame(left, Vocab.instance.RESTRICTIONS, 2, false);
 		grpRestrictions.setExpand(true, false);
 		
-		new LLabel(grpRestrictions, Vocab.instance.COSTS);
-		
+		LLabel lblCosts = new LLabel(grpRestrictions, Vocab.instance.COSTS);
 		TagList lstCosts = new TagList(grpRestrictions);
 		lstCosts.setExpand(true, false);
 		lstCosts.setMinimumHeight(60);
+		lstCosts.addMenu(lblCosts);
 		addChild(lstCosts, "costs");
 		
-		new LLabel(grpRestrictions, Vocab.instance.CONTEXT);
-		
+		LLabel lblContext = new LLabel(grpRestrictions, Vocab.instance.CONTEXT);
 		LCombo cmbRestrictions = new LCombo(grpRestrictions, true);
 		cmbRestrictions.setIncludeID(false);
 		cmbRestrictions.setOptional(false);
@@ -108,26 +107,28 @@ public class SkillTab extends DatabaseTab<Skill> {
 				Vocab.instance.ALWAYS,
 				Vocab.instance.BATTLEONLY,
 				Vocab.instance.FIELDONLY});
+		cmbRestrictions.addMenu(lblContext);
+		cmbRestrictions.addMenu(cmbRestrictions);
 		addControl(cmbRestrictions, "restriction");
 		
-		new LLabel(grpRestrictions, Vocab.instance.USECONDITION);
-		
+		LLabel lblUseCond = new LLabel(grpRestrictions, Vocab.instance.USECONDITION);
 		LText txtCondition = new LText(grpRestrictions);
+		txtCondition.addMenu(lblUseCond);
 		addControl(txtCondition, "condition");
 		
 		// Effects
 		
 		LFrame grpEffects = new LFrame(left, Vocab.instance.EFFECTS, 2, false);
 		grpEffects.setExpand(true, true);
-		
 		SkillEffectList lstEffects = new SkillEffectList(grpEffects);
 		lstEffects.setExpand(true, true);
 		lstEffects.setSpread(2, 1);
+		lstEffects.addMenu(grpEffects);
 		addChild(lstEffects, "effects");
 		
-		new LLabel(grpEffects, Vocab.instance.EFFECTCONDITION);
-		
+		LLabel lblEffCond = new LLabel(grpEffects, Vocab.instance.EFFECTCONDITION);
 		LText txtEffectCondition = new LText(grpEffects);
+		txtEffectCondition.addMenu(lblEffCond);
 		addControl(txtEffectCondition, "effectCondition");
 		
 		// Target Selection
@@ -135,8 +136,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LFrame grpTarget = new LFrame(left, Vocab.instance.TARGET, 2, false);
 		grpTarget.setExpand(true, false);
 		
-		new LLabel(grpTarget, Vocab.instance.TYPE);
-		
+		LLabel lblType = new LLabel(grpTarget, Vocab.instance.TYPE);
 		LCombo cmbType = new LCombo(grpTarget, true);
 		cmbType.setIncludeID(false);
 		cmbType.setOptional(false);
@@ -145,10 +145,10 @@ public class SkillTab extends DatabaseTab<Skill> {
 			Vocab.instance.ATTACK,
 			Vocab.instance.SUPPORT
 		});
+		cmbType.addMenu(lblType);
 		addControl(cmbType, "type");
 		
-		new LLabel(grpTarget, Vocab.instance.TARGETSELECTION);
-		
+		LLabel lblSelection = new LLabel(grpTarget, Vocab.instance.TARGETSELECTION);
 		LCombo cmbSelection = new LCombo(grpTarget);
 		cmbSelection.setIncludeID(false);
 		cmbSelection.setOptional(false);
@@ -157,6 +157,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 				Vocab.instance.EFFECTONLY,
 				Vocab.instance.RANGEONLY,
 				Vocab.instance.EFFECTRANGE});
+		cmbSelection.addMenu(lblSelection);
 		addControl(cmbSelection, "selection");
 		
 		LPanel check = new LPanel(grpTarget, 3, true);
@@ -179,98 +180,20 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Animations
 		
 		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS, 1);
-		grpAnimations.setExpand(true, true);
-		
-		LViewFolder tabAnim = new LViewFolder(grpAnimations, false);
-		tabAnim.setExpand(true, false);
-		tabAnim.setAlignment(LFlags.CENTER);
-		
-		// Battle Animations
-		
-		LPanel battleAnim = new LPanel(tabAnim, 3, false);
-		tabAnim.addTab(Vocab.instance.BATTLE, battleAnim);
-		
-		new LLabel(battleAnim, Vocab.instance.LOAD);
-		
-		LText txtLoadAnim = new LText(battleAnim, true);
-		btnLoadAnim = new IDButton(battleAnim, true);
-		btnLoadAnim.setNameWidget(txtLoadAnim);
-		addControl(btnLoadAnim, "loadAnimID");
-		
-		new LLabel(battleAnim, Vocab.instance.CAST);
-		
-		LText txtCastAnim = new LText(battleAnim, true);
-		btnCastAnim = new IDButton(battleAnim, true);
-		btnCastAnim.setNameWidget(txtCastAnim);
-		addControl(btnCastAnim, "castAnimID");
-		
-		new LLabel(battleAnim, Vocab.instance.INDIVIDUAL);
-
-		LText txtIndAnim = new LText(battleAnim, true);
-		btnIndAnim = new IDButton(battleAnim, true);
-		btnIndAnim.setNameWidget(txtIndAnim);
-		addControl(btnIndAnim, "individualAnimID");
-		
-		LCheckBox btnMirror = new LCheckBox(battleAnim);
-		btnMirror.setSpread(3, 1);
-		btnMirror.setExpand(false, false);
-		btnMirror.setText(Vocab.instance.MIRROR);
-		addControl(btnMirror, "mirror");
-		
-		// User Animations
-		
-		LPanel userAnim = new LPanel(tabAnim, 2, false);
-		tabAnim.addTab(Vocab.instance.USER, userAnim);
-		
-		new LLabel(userAnim, Vocab.instance.LOAD);
-		LText txtUserLoadAnim = new LText(userAnim);
-		addControl(txtUserLoadAnim, "userLoadAnim");
-		
-		new LLabel(userAnim, Vocab.instance.CAST);
-		LText txtUserCastAnim = new LText(userAnim);
-		addControl(txtUserCastAnim, "userCastAnim");
-		
-		LCheckBox btnStep = new LCheckBox(userAnim, 2);
-		btnStep.setText(Vocab.instance.STEPONCAST);
-		addControl(btnStep, "stepOnCast");
-		
-		// Animation Options
-		
-		LPanel animOptions = new LPanel(tabAnim, 4, false);
-		tabAnim.addTab(Vocab.instance.OPTIONS, animOptions);
-		
-		new LLabel(animOptions, Vocab.instance.INTROTIME);
-		LText txtIntroTime = new LText(animOptions);
-		addControl(txtIntroTime, "introTime");
-		
-		new LLabel(animOptions, Vocab.instance.CASTTIME);
-		LText txtCastTime = new LText(animOptions);
-		addControl(txtCastTime, "castTime");
-		
-		new LLabel(animOptions, Vocab.instance.CENTERTIME);
-		LText txtCenterTime = new LText(animOptions);
-		addControl(txtCenterTime, "centerTime");
-		
-		new LLabel(animOptions, Vocab.instance.TARGETTIME);
-		LText txtTargetTime = new LText(animOptions);
-		addControl(txtTargetTime, "targetTime");
-		
-		new LLabel(animOptions, Vocab.instance.FINISHTIME);
-		
-		LText txtFinishTime = new LText(animOptions);
-		addControl(txtFinishTime, "finishTime");
-		
-		LCheckBox btnDamageAnim = new LCheckBox(animOptions, 2);
-		btnDamageAnim.setText(Vocab.instance.DAMAGEANIM);
-		addControl(btnDamageAnim, "damageAnim");
+		grpAnimations.setExpand(true, false);
+		AnimInfoEditor animEditor = new AnimInfoEditor(grpAnimations);
+		animEditor.setExpand(true, false);
+		animEditor.setAlignment(LFlags.CENTER);
+		animEditor.addMenu(grpAnimations);
+		addChild(animEditor, "animInfo");
 		
 		// Elements
 		
 		LFrame grpElements = new LFrame(right, Vocab.instance.ELEMENTS, 2, false);
 		grpElements.setExpand(true, true);
-		
 		lstElements = new PropertyList(grpElements);
 		lstElements.setExpand(true, true);
+		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
 		
 		LCheckBox btnUserElements = new LCheckBox(grpElements, 1);
@@ -285,39 +208,39 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		LFrame grpEffect = new LFrame(range, Vocab.instance.EFFECTMASK, 2, false);
 		grpEffect.setExpand(true, true);
-
 		MaskButton btnEffectMask = new MaskButton(grpEffect);
 		btnEffectMask.setAlignment(LFlags.LEFT | LFlags.TOP);
 		btnEffectMask.setExpand(true, false);
+		btnEffectMask.addMenu(grpEffect);
 		addControl(btnEffectMask, "effectMask");
 		
 		LCanvas effectMask = new LCanvas(grpEffect);
 		effectMask.setExpand(true, true);
+		effectMask.setMenu(btnEffectMask.getMenu());
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
 		LCheckBox btnRotate = new LCheckBox(grpEffect, 2);
 		btnRotate.setText(Vocab.instance.ROTATE);
+		btnRotate.addMenu();
 		addControl(btnRotate, "rotateEffect");
 		
 		LFrame grpCast = new LFrame(range, Vocab.instance.CASTMASK, 2, false);
 		grpCast.setExpand(true, true);
-		
 		MaskButton btnCastMask = new MaskButton(grpCast);
 		btnCastMask.setAlignment(LFlags.LEFT | LFlags.TOP);
 		btnCastMask.setExpand(true, false);
+		btnCastMask.addMenu(grpCast);
 		addControl(btnCastMask, "castMask");
 		
 		LCanvas castMask = new LCanvas(grpCast);
 		castMask.setExpand(true, true);
+		castMask.setMenu(btnCastMask.getMenu());
 		addMaskButton(btnCastMask, castMask, castColor);	
 		
 	}
 	
 	@Override
 	public void onVisible() {
-		btnCastAnim.dataTree = Project.current.animations.getTree();
-		btnIndAnim.dataTree = Project.current.animations.getTree();
-		btnLoadAnim.dataTree = Project.current.animations.getTree();
 		lstElements.dataTree = Project.current.elements.getList().toTree();
 		super.onVisible();
 	}

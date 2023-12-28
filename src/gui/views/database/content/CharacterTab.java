@@ -14,7 +14,6 @@ import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.dataestructure.LDataTree;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
@@ -39,6 +38,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 	private IDButton btnBattler;
 	private IDButton btnShadow;
 	private IDButton btnKO;
+	private NodeList lstAnim;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -47,33 +47,32 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 	public CharacterTab(LContainer parent) {
 		super(parent);
 		
-		new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
-		
+		LLabel lblBattler = new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
 		LPanel battler = new LPanel(grpGeneral, 2, false);
 		battler.setExpand(true, false);
-		
 		LText txtBattler = new LText(battler, true);
 		btnBattler = new IDButton(battler, true);
 		btnBattler.setNameWidget(txtBattler);
+		btnBattler.addMenu(lblBattler);
+		btnBattler.addMenu(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
 		// Shadow
 		
-		new LLabel(grpGeneral, Vocab.instance.SHADOW);
-		
+		LLabel lblShadow = new LLabel(grpGeneral, Vocab.instance.SHADOW);
 		LPanel shadow = new LPanel(grpGeneral, 2, false);
 		shadow.setExpand(true, false);
-		
 		LText txtShadow = new LText(shadow, true);		
 		btnShadow = new IDButton(shadow, true);
 		btnShadow.setNameWidget(txtShadow);
+		btnShadow.addMenu(lblShadow);
+		btnShadow.addMenu(txtShadow);
 		addControl(btnShadow, "shadowID");
 		
 		// Tiles
 		
 		LPanel middle = new LPanel(left, true, true);
 		middle.setExpand(true, true);
-		
 		LFrame grpTiles = new LFrame(middle, Vocab.instance.COLLIDERTILES, true, true);
 		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles);
 		lstTiles.type = Tile.class;
@@ -84,6 +83,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				return new CharTileShell(parent);
 			}
 		});
+		lstTiles.addMenu(grpTiles);
 		addChild(lstTiles, "tiles");
 		
 		// Scripts
@@ -91,7 +91,9 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS, 1);
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
 		lstScripts.setExpand(true, true);
+		lstScripts.addMenu(grpScripts);
 		addChild(lstScripts, "scripts");
+		
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		addControl(btnRepeat, "repeatCollisions");
@@ -101,27 +103,27 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LFrame grpKO = new LFrame(left, Vocab.instance.KOANIM, 3, false);
 		grpKO.initGridData();
 		
-		new LLabel(grpKO, Vocab.instance.ANIMATION);
-		
+		LLabel lblKO = new LLabel(grpKO, Vocab.instance.ANIMATION);
 		LText txtKO = new LText(grpKO, true);		
 		btnKO = new IDButton(grpKO, true);
 		btnKO.setNameWidget(txtKO);
+		btnKO.addMenu(lblKO);
 		addControl(btnKO, "koAnimID");
 		
-		new LLabel(grpKO, Vocab.instance.FADEOUT);
-		
+		LLabel lblFade = new LLabel(grpKO, Vocab.instance.FADEOUT);
 		LSpinner spnFade = new LSpinner(grpKO, 2);
 		spnFade.setMinimum(-1);
 		spnFade.setMaximum(999);
+		spnFade.addMenu(lblFade);
 		addControl(spnFade, "koFadeout");
 		
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
 		grpTransform.setExpand(true, false);
-		
-		TransformEditor transformTab = new TransformEditor(grpTransform);
-		addChild(transformTab, "transform");
+		TransformEditor transform = new TransformEditor(grpTransform);
+		transform.addMenu(grpTransform);
+		addChild(transform, "transform");
 		
 		// Animations
 		
@@ -131,20 +133,14 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		LFrame grpAnimations = new LFrame(graphics, Vocab.instance.ANIMATIONS, 2, false);
 		grpAnimations.setExpand(true, true);
-
-		NodeList lstAnim = new NodeList(grpAnimations) {
-			protected LDataTree<Object> getDataTree() { 
-				return Project.current.animations.getTree(); 
-			}
-		};
+		lstAnim = new NodeList(grpAnimations);
 		lstAnim.getCollectionWidget().setIncludeID(false);
 		lstAnim.setMinimumWidth(128);
 		lstAnim.setExpand(false, true);
+		lstAnim.addMenu(grpAnimations);
 		addChild(lstAnim, "animations");
-		
 		LImage imgAnim = new LImage(grpAnimations);
 		imgAnim.setExpand(true, true);
-		
 		lstAnim.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -160,15 +156,13 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		LFrame grpPortraits = new LFrame(graphics, Vocab.instance.PORTRAITS, 2, false);
 		grpPortraits.setExpand(true, true);
-		
 		PortraitList lstPortraits = new PortraitList(grpPortraits);
 		lstPortraits.setMinimumWidth(128);
 		lstPortraits.setExpand(false, true);
+		lstPortraits.addMenu(grpPortraits);
 		addChild(lstPortraits, "portraits");
-		
 		LImage imgPotrait = new LImage(grpPortraits);
 		imgPotrait.setExpand(true, true);
-
 		lstPortraits.getCollectionWidget().addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
@@ -227,6 +221,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		btnBattler.dataTree = Project.current.battlers.getTree();
 		btnShadow.dataTree = Project.current.animations.getTree();
 		btnKO.dataTree = Project.current.animations.getTree();
+		lstAnim.dataTree = Project.current.animations.getTree();
 		super.onVisible();
 	}
 	

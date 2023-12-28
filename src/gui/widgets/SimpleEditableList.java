@@ -2,13 +2,11 @@ package gui.widgets;
 
 import gson.editor.GDefaultListEditor;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataCollection;
 import lwt.dataestructure.LDataList;
 
 public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 
 	public Class<?> type;
-	protected LDataList<T> currentList;
 	
 	public SimpleEditableList(LContainer parent) {
 		super(parent);
@@ -28,15 +26,11 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 	}
 	
 	@Override
-	public void setDataCollection(LDataCollection<T> list) {
-		currentList = (LDataList<T>) list;
-		super.setDataCollection(list);
+	public LDataList<T> getDataCollection() {
+		return (LDataList<T>) currentObject;
 	}
 	
-	@Override
-	public LDataList<T> getDataCollection() {
-		return currentList;
-	}
+	public void refreshDataCollection() {}
 	
 	public Class<?> getType() {
 		return type;

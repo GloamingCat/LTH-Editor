@@ -27,40 +27,40 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	public EventTab(LContainer parent) {
 		super(parent);
 		
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
+		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
+		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 
 		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS, 2, false);
 		grpEvents.setExpand(false, true);
 		grpEvents.setSpread(2, 1);
-		
 		SimpleEditableList<EventSheet.Event> lstEvents = new SimpleEditableList<>(grpEvents);
 		lstEvents.getCollectionWidget().setEditEnabled(false);
 		lstEvents.setIncludeID(false);
 		lstEvents.type = EventSheet.Event.class;
 		lstEvents.setExpand(true, true);
+		lstEvents.addMenu(grpEvents);
 		addChild(lstEvents, "events");
-		
 		EventEditor eventEditor = new EventEditor(grpEvents, 2, false, false);
 		eventEditor.setExpand(true, false);
 		lstEvents.addChild(eventEditor);
 		
-		new LLabel(eventEditor, LFlags.TOP, Vocab.instance.COMMAND);
-		
+		LLabel lblCmd = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.COMMAND);
 		LTextBox txtCommand = new LTextBox(eventEditor);
 		txtCommand.setExpand(true, true);
+		txtCommand.addMenu(lblCmd);
 		eventEditor.addControl(txtCommand, "name");
 		
-		new LLabel(eventEditor, LFlags.TOP, Vocab.instance.PARAM);
-		
+		LLabel lblParam = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.PARAM);
 		TagList txtArgs = new TagList(eventEditor);
 		txtArgs.setExpand(true, true);
+		txtArgs.addMenu(lblParam);
 		eventEditor.addChild(txtArgs, "tags");
 		
-		new LLabel(eventEditor, Vocab.instance.CONDITION);
-		
+		LLabel lblCondition = new LLabel(eventEditor, Vocab.instance.CONDITION);
 		LText txtCondition = new LText(eventEditor);
+		txtCondition.addMenu(lblCondition);
 		eventEditor.addControl(txtCondition, "condition");
 		
 		grpGeneral.setExpand(true, true);

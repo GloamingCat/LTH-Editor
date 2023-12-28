@@ -42,34 +42,32 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Icon
 
-		new LLabel(grpGeneral, Vocab.instance.ICON);
-
+		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
 		compositeIcon.setExpand(false, false);
-
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.setAlignment(LFlags.CENTER);
 		imgIcon.setExpand(true, true);
 		imgIcon.setMinimumHeight(48);
-
 		IconButton btnSelectIcon = new IconButton(compositeIcon, true);
 		btnSelectIcon.setImageWidget(imgIcon);
+		btnSelectIcon.addMenu(lblIcon);
+		btnSelectIcon.addMenu(imgIcon);
 		addControl(btnSelectIcon, "icon");
 
 		// Cancel
 
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL);
-
+		LLabel lblCancel = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL);
 		lstCancel = new IDList(grpGeneral);
 		lstCancel.setExpand(true, true);
 		lstCancel.setMinimumHeight(70);
+		lstCancel.addMenu(lblCancel);
 		addChild(lstCancel, "cancel");
 
 		// Behavior Script
 
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.BEHAVIOR);
-
+		LLabel lblBehavior = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.BEHAVIOR);
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpGeneral);
 		lstRules.setExpand(true, true);
 		lstRules.setMinimumHeight(70);
@@ -81,32 +79,33 @@ public class StatusTab extends DatabaseTab<Status> {
 				return new RuleShell(parent);
 			}
 		});
+		lstRules.addMenu(lblBehavior);
 		addChild(lstRules, "behavior");
 
 		// Script
 
-		new LLabel(grpGeneral, Vocab.instance.SCRIPT);
-
+		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT);
 		LPanel compositeScript = new LPanel(grpGeneral, 2, false);
 		compositeScript.setExpand(false, false);
 		compositeScript.setAlignment(LFlags.CENTER);
-
 		LText txtScript = new LText(compositeScript, true);
 		LuaButton btnSelectScript = new LuaButton(compositeScript, true);
 		btnSelectScript.setPathWidget(txtScript);
+		btnSelectScript.addMenu(lblScript);
+		btnSelectScript.addMenu(txtScript);
 		addControl(btnSelectScript, "script");
 
 		// Visibility
 
-		new LLabel(grpGeneral, Vocab.instance.PRIORITY);
-
+		LLabel lblPriority = new LLabel(grpGeneral, Vocab.instance.PRIORITY);
 		LPanel compositeVisible = new LPanel(grpGeneral, 2, false);
 		compositeVisible.setExpand(false, false);
 		compositeVisible.setAlignment(LFlags.CENTER);
-
+		
 		LSpinner spnPriority = new LSpinner(compositeVisible);
 		spnPriority.setMinimum(0);
 		spnPriority.setMaximum(200);
+		spnPriority.addMenu(lblPriority);
 		addControl(spnPriority, "priority");
 
 		LCheckBox btnVisible = new LCheckBox(compositeVisible);
@@ -138,11 +137,11 @@ public class StatusTab extends DatabaseTab<Status> {
 		grpDurability.setExpand(true, false);
 		grpDurability.setMinimumWidth(200);
 
-		new LLabel(grpDurability, Vocab.instance.TURNS);
-
+		LLabel lblTurns = new LLabel(grpDurability, Vocab.instance.TURNS);
 		LSpinner spnTurns = new LSpinner(grpDurability);
 		spnTurns.setMaximum(999999);
 		spnTurns.setMinimum(-1);
+		spnTurns.addMenu(lblTurns);
 		addControl(spnTurns, "duration");
 
 		LCheckBox btnBattleOnly = new LCheckBox(grpDurability);
@@ -166,11 +165,12 @@ public class StatusTab extends DatabaseTab<Status> {
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 2, false);
 		grpGraphics.setExpand(true, true);
 
-		new LLabel(grpGraphics, Vocab.instance.CHARANIM);
+		LLabel lblAnim = new LLabel(grpGraphics, Vocab.instance.CHARANIM);
 		LText txtCharAnim = new LText(grpGraphics);
+		txtCharAnim.addMenu(lblAnim);
 		addControl(txtCharAnim, "charAnim");
 
-		new LLabel(grpGraphics, LFlags.TOP, Vocab.instance.TRANSFORMATIONS);
+		LLabel lblTransform = new LLabel(grpGraphics, LFlags.TOP, Vocab.instance.TRANSFORMATIONS);
 		SimpleEditableList<Transformation> lstTransformations = new SimpleEditableList<>(grpGraphics);
 		lstTransformations.type = Transformation.class;
 		lstTransformations.setExpand(true, true);
@@ -181,6 +181,7 @@ public class StatusTab extends DatabaseTab<Status> {
 			}
 		});
 		lstTransformations.setIncludeID(false);
+		lstTransformations.addMenu(lblTransform);
 		addChild(lstTransformations, "transformations");
 		
 		// Drain
@@ -189,14 +190,16 @@ public class StatusTab extends DatabaseTab<Status> {
 		grpDrain.setExpand(true, false);
 		grpDrain.setMinimumWidth(200);
 
-		new LLabel(grpDrain, Vocab.instance.DRAINATT);
+		LLabel lblDrainAtt = new LLabel(grpDrain, Vocab.instance.DRAINATT);
 		LText txtDrainAtt = new LText(grpDrain, 2);
+		txtDrainAtt.addMenu(lblDrainAtt);
 		addControl(txtDrainAtt, "drainAtt");
 
-		new LLabel(grpDrain, Vocab.instance.DRAINVALUE);
+		LLabel lblDrain = new LLabel(grpDrain, Vocab.instance.DRAINVALUE);
 		LSpinner spnDrain = new LSpinner(grpDrain);
 		spnDrain.setMaximum(999999);
 		spnDrain.setMinimum(0);
+		spnDrain.addMenu(lblDrain);
 		addControl(spnDrain, "drainValue");
 
 		LCheckBox btnPercentage = new LCheckBox(grpDrain);
@@ -211,11 +214,13 @@ public class StatusTab extends DatabaseTab<Status> {
 		LFrame grpAtt = new LFrame(effects, Vocab.instance.ATTRIBUTES, true, true);
 		grpAtt.setExpand(true, true);
 		AttributeList lstAttributes = new AttributeList(grpAtt);
+		lstAttributes.addMenu(grpAtt);
 		addChild(lstAttributes, "attributes");
 
 		LFrame grpBonuses = new LFrame(effects, Vocab.instance.PROPERTIES, true, true);
 		grpBonuses.setExpand(true, true);
 		BonusList lstBonus = new BonusList(grpBonuses);
+		lstBonus.addMenu(grpBonuses);
 		addChild(lstBonus, "bonuses");
 
 	}

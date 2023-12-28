@@ -46,6 +46,10 @@ public abstract class DatabaseTab<T> extends LView {
 	protected LText txtName;
 	protected LPanel left, right;
 	
+	/**
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
+	 */
 	public DatabaseTab(LContainer parent) {
 		super(parent, true);
 		
@@ -55,17 +59,7 @@ public abstract class DatabaseTab<T> extends LView {
 		
 		LSashPanel sashForm = new LSashPanel(this, true);
 		
-		listEditor = new GDefaultTreeEditor<Object>(sashForm) {
-			@Override
-			public LDataTree<Object> getDataCollection() {
-				return getSerializer().getTree();
-			}
-			@Override
-			public Class<?> getType() {
-				return (Class<?>) getSerializer().getDataType();
-			}
-		};
-		
+		listEditor = new DatabaseTreeEditor(sashForm);
 		listEditor.getCollectionWidget().setInsertNewEnabled(true);
 		listEditor.getCollectionWidget().setEditEnabled(false);
 		listEditor.getCollectionWidget().setDuplicateEnabled(true);
@@ -76,13 +70,7 @@ public abstract class DatabaseTab<T> extends LView {
 		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
-		
-		contentEditor = new GDefaultObjectEditor<T>(sashForm, true) {
-			@Override
-			public Type getType() {
-				return getSerializer().getDataType();
-			}
-		};
+		contentEditor = new DatabaseContentEditor(sashForm, true);
 		contentEditor.setGridLayout(2, true);
 		
 		left = new LPanel(contentEditor, 1);
@@ -174,6 +162,30 @@ public abstract class DatabaseTab<T> extends LView {
 		button.setLabel(label);
 		button.setNameWidget(text);
 		addControl(button, attName);
+	}
+	
+	private class DatabaseTreeEditor extends GDefaultTreeEditor<Object> {
+		public DatabaseTreeEditor(LContainer parent) {
+			super(parent);
+		}
+		@Override
+		public LDataTree<Object> getDataCollection() {
+			return getSerializer().getTree();
+		}
+		@Override
+		public Class<?> getType() {
+			return (Class<?>) getSerializer().getDataType();
+		}
+	}
+	
+	private class DatabaseContentEditor extends GDefaultObjectEditor<T> {
+		public DatabaseContentEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
+		}
+		@Override
+		public Type getType() {
+			return getSerializer().getDataType();
+		}
 	}
 
 }

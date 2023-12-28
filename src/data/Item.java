@@ -37,7 +37,7 @@ public class Item extends Data {
 		
 		public String toString() {
 			Status s = (Status) Project.current.status.getData().get(id);
-			String name = s == null ? "NULL" : s.name;
+			String name = s == null ? ("NULL " + id) : s.name;
 			if (battle)
 				name += " (battle)";
 			return name;

@@ -33,15 +33,14 @@ public class JobTab extends DatabaseTab<Job> {
 	public JobTab(LContainer parent) {
 		super(parent);
 		
-		new LLabel(grpGeneral, Vocab.instance.EXPCURVE);
-		
+		LLabel lblExp = new LLabel(grpGeneral, Vocab.instance.EXPCURVE);
 		LText txtCurve = new LText(grpGeneral);
+		txtCurve.addMenu(lblExp);
 		addControl(txtCurve, "expCurve");
 		
 		// Attack Skill
 		
-		new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL);
-		
+		LLabel lblAtk = new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL);
 		LPanel attackSkill = new LPanel(grpGeneral, 2, false);
 		attackSkill.setExpand(true, false);
 		attackSkill.setAlignment(LFlags.CENTER);
@@ -49,11 +48,14 @@ public class JobTab extends DatabaseTab<Job> {
 		LText txtAttack = new LText(attackSkill, true);
 		btnAttack = new IDButton(attackSkill, false);
 		btnAttack.setNameWidget(txtAttack);
+		btnAttack.addMenu(lblAtk);
+		btnAttack.addMenu(lblExp);
 		addControl(btnAttack, "attackID");
 		
 		LFrame grpBuild = new LFrame(left, Vocab.instance.BUILD, true, true);
 		grpBuild.setExpand(true, true);
 		BuildEditor buildEditor = new BuildEditor(grpBuild, 1);
+		buildEditor.addMenu(grpBuild);
 		addChild(buildEditor, "build");
 		
 		LPanel nodes = new LPanel(right, false, true);
@@ -64,6 +66,7 @@ public class JobTab extends DatabaseTab<Job> {
 		lstSkills.getCollectionWidget().setEditEnabled(false);
 		lstSkills.setIncludeID(false);
 		lstSkills.type = Job.Skill.class;
+		lstSkills.addMenu(grpSkillNodes);
 		addChild(lstSkills, "skills");
 		lstSkills.setShellFactory(new LShellFactory<Job.Skill>() {
 			@Override
@@ -77,6 +80,7 @@ public class JobTab extends DatabaseTab<Job> {
 		lstStatuses.getCollectionWidget().setEditEnabled(false);
 		lstStatuses.setIncludeID(false);
 		lstStatuses.type = Job.Status.class;
+		lstStatuses.addMenu(grpStatusNodes);
 		addChild(lstStatuses, "statuses");
 		lstStatuses.setShellFactory(new LShellFactory<Job.Status>() {
 			@Override

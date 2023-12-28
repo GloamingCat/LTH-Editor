@@ -66,9 +66,7 @@ public class GameCharacter extends Data {
 		public String name = "New";
 		
 		public String toString() {
-			//Animation anim = (Animation) Project.current.animations.getTree().get(id);
-			//return name + ": " + (anim == null ? "NULL" : anim.toString());
-			return name;
+			return name + ": " + super.toString();
 		}
 		
 		public boolean equals(Object obj) {
@@ -80,6 +78,14 @@ public class GameCharacter extends Data {
 			} else return false;
 		}
 		
+	}
+	
+	public static class Spritesheet extends Node {
+		public String toString() {
+			Animation anim = (Animation) Project.current.animations.getTree().get(id);
+			String name = (anim == null ? ("NULL " + id) : anim.toString());
+			return this.name + ": " + name;
+		}
 	}
 	
 }

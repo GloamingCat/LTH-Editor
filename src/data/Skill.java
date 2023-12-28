@@ -7,6 +7,7 @@ import data.subcontent.Property;
 import data.subcontent.Icon;
 import data.subcontent.Tag;
 import lwt.dataestructure.LDataList;
+import lwt.dataestructure.LDataTree;
 
 public class Skill extends Data {
 
@@ -34,24 +35,48 @@ public class Skill extends Data {
 	public LDataList<Property> elements = new LDataList<>(); 
 	public boolean userElements = true;
 	
-	// User Animations
-	public String userLoadAnim = "";
-	public String userCastAnim = "";
-	public boolean stepOnCast = true;
+	public AnimInfo animInfo = new AnimInfo();
 	
-	// Battle Animations
-	public int loadAnimID = -1;
-	public int castAnimID = -1;
-	public int individualAnimID = -1;
-	public boolean mirror = true;
+	// Legacy
+	public String userLoadAnim;
+	public String userCastAnim;
+	public boolean stepOnCast;
+	public int loadAnimID;
+	public int castAnimID;
+	public int individualAnimID;
+	public boolean mirror;
+	public String introTime;
+	public String castTime;
+	public String centerTime;
+	public String targetTime;
+	public String finishTime;
+	public boolean damageAnim;
 	
-	// Animation Options
-	public String introTime = "";
-	public String castTime = "";
-	public String centerTime = "";
-	public String targetTime = "";
-	public String finishTime = "";
-	public boolean damageAnim = true;
+	@Override
+	public void onStart(LDataTree<Object> root, LDataTree<Object> node) {
+		if (userLoadAnim != null) {
+			animInfo.userLoad = userLoadAnim;
+			animInfo.userCast = userCastAnim;
+			animInfo.stepOnCast = stepOnCast;
+			animInfo.loadID = loadAnimID;
+			animInfo.castID = castAnimID;
+			animInfo.individualID = individualAnimID;
+			animInfo.mirror = mirror;
+			animInfo.introTime = introTime.isEmpty() ? -1 : Integer.parseInt(introTime);
+			animInfo.castTime = castTime.isEmpty() ? -1 : Integer.parseInt(castTime);
+			animInfo.centerTime = centerTime.isEmpty() ? -1 : Integer.parseInt(centerTime);
+			animInfo.targetTime = targetTime.isEmpty() ? -1 : Integer.parseInt(targetTime);
+			animInfo.finishTime = finishTime.isEmpty() ? -1 : Integer.parseInt(finishTime);
+			animInfo.damageAnim = damageAnim;
+			userLoadAnim = null;
+			userCastAnim = null;
+			introTime = null;
+			castTime = null;
+			centerTime = null;
+			targetTime = null;
+			finishTime = null;
+		}
+	}
 	
 	// Effects
 	public LDataList<Effect> effects = new LDataList<>();
@@ -117,4 +142,24 @@ public class Skill extends Data {
 		
 	}
 
+	public static class AnimInfo {		
+		// User Animations
+		public String userLoad = "";
+		public String userCast = "";
+		public boolean stepOnCast = true;
+		
+		// Battle Animations
+		public int loadID = -1;
+		public int castID = -1;
+		public int individualID = -1;
+		public boolean mirror = true;
+		
+		// Animation Options
+		public int introTime = -1;
+		public int castTime = -1;
+		public int centerTime = -1;
+		public int targetTime = -1;
+		public int finishTime = -1;
+		public boolean damageAnim = true;
+	}
 }

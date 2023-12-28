@@ -47,7 +47,9 @@ public class Icon {
 	}
 	
 	public String toString() {
-		return id + ", " + col + ", " + row;
+		Animation anim = (Animation) Project.current.animations.getTree().get(id);
+		String name = (anim == null ? ("NULL " + id) : anim.toString());
+		return name + ", " + col + ", " + row;
 	}
 	
 }

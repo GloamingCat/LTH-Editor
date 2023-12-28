@@ -46,108 +46,116 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 				onChangeScale((Transform) getObject());
 			}
 		};
+		LControlListener<Integer> updateRotation = new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				if (event.oldValue == null) return;
+				onChangeRotation((Transform) getObject());
+			}
+		};
 		
-		new LLabel(this, Vocab.instance.OFFSETX);
-		
+		LLabel lblOffsetX = new LLabel(this, Vocab.instance.OFFSETX);
 		spnOffsetX = new LSpinner(this);
 		spnOffsetX.setMaximum(1024 * 4);
 		spnOffsetX.setMinimum(-1024 * 4);
+		spnOffsetX.addMenu(lblOffsetX);
 		addControl(spnOffsetX, "offsetX");
 		spnOffsetX.addModifyListener(updateOffset);
 		
-		new LLabel(this, Vocab.instance.RED);
-		
+		LLabel lblRed = new LLabel(this, Vocab.instance.RED);
 		LSpinner spnRed = new LSpinner(this);
 		spnRed.setMaximum(10000);
 		spnRed.setMinimum(0);
+		spnRed.addMenu(lblRed);
 		addControl(spnRed, "red");
 		spnRed.addModifyListener(updateColor);
 		
-		new LLabel(this, Vocab.instance.OFFSETY);
-		
+		LLabel lblOffsetY = new LLabel(this, Vocab.instance.OFFSETY);
 		spnOffsetY = new LSpinner(this);
 		spnOffsetY.setMaximum(1024);
 		spnOffsetY.setMinimum(-1024);
+		spnOffsetY.addMenu(lblOffsetY);
 		addControl(spnOffsetY, "offsetY");
 		spnOffsetY.addModifyListener(updateOffset);
 		
-		new LLabel(this, Vocab.instance.GREEN);
-		
+		LLabel lblGreen = new LLabel(this, Vocab.instance.GREEN);
 		LSpinner spnGreen = new LSpinner(this);
 		spnGreen.setMaximum(10000);
 		spnGreen.setMinimum(0);
+		spnGreen.addMenu(lblGreen);
 		addControl(spnGreen, "green");
 		spnGreen.addModifyListener(updateColor);
 		
-		new LLabel(this, Vocab.instance.OFFSETDEPTH);
-		
+		LLabel lblOffsetDepth = new LLabel(this, Vocab.instance.OFFSETDEPTH);
 		LSpinner spnOffsetDepth = new LSpinner(this);
 		spnOffsetDepth.setMinimum(-1024);
 		spnOffsetDepth.setMaximum(1024);
+		spnOffsetDepth.addMenu(lblOffsetDepth);
 		addControl(spnOffsetDepth, "offsetDepth");
 		
-		new LLabel(this, Vocab.instance.BLUE);
-		
+		LLabel lblBlue = new LLabel(this, Vocab.instance.BLUE);
 		LSpinner spnBlue = new LSpinner(this);
 		spnBlue.setMaximum(10000);
 		spnBlue.setMinimum(0);
+		spnBlue.addMenu(lblBlue);
 		addControl(spnBlue, "blue");
 		spnBlue.addModifyListener(updateColor);
 		
-		new LLabel(this, Vocab.instance.SCALEX);
-		
+		LLabel lblScaleX = new LLabel(this, Vocab.instance.SCALEX);
 		spnScaleX = new LSpinner(this);
 		spnScaleX.setMaximum(10000);
 		spnScaleX.setMinimum(-10000);
+		spnScaleX.addMenu(lblScaleX);
 		addControl(spnScaleX, "scaleX");
 		spnScaleX.addModifyListener(updateScale);
 		
-		new LLabel(this, Vocab.instance.ALPHA);
-		
+		LLabel lblAlpha = new LLabel(this, Vocab.instance.ALPHA);
 		LSpinner spnAlpha = new LSpinner(this);
 		spnAlpha.setMaximum(10000);
 		spnAlpha.setMinimum(0);
+		spnAlpha.addMenu(lblAlpha);
 		addControl(spnAlpha, "alpha");
 		spnAlpha.addModifyListener(updateColor);
 		
-		new LLabel(this, Vocab.instance.SCALEY);
-		
+		LLabel lblScaleY = new LLabel(this, Vocab.instance.SCALEY);
 		spnScaleY = new LSpinner(this);
 		spnScaleY.setMaximum(10000);
 		spnScaleY.setMinimum(-10000);
+		spnScaleY.addMenu(lblScaleY);
 		addControl(spnScaleY, "scaleY");
 		spnScaleY.addModifyListener(updateScale);
 		
-		new LLabel(this, Vocab.instance.HUE);
-		
+		LLabel lblHue = new LLabel(this, Vocab.instance.HUE);
 		LSpinner spnHue = new LSpinner(this);
 		spnHue.setMaximum(360);
 		spnHue.setMinimum(-360);
+		spnHue.addMenu(lblHue);
 		addControl(spnHue, "hue");
 		spnHue.addModifyListener(updateColor);
 		
-		new LLabel(this, Vocab.instance.ROTATION);
-		
+		LLabel lblRotation = new LLabel(this, Vocab.instance.ROTATION);
 		spnRotation = new LSpinner(this);
 		spnRotation.setMaximum(360);
 		spnRotation.setMinimum(-360);
+		spnRotation.addMenu(lblRotation);
 		addControl(spnRotation, "rotation");
+		spnRotation.addModifyListener(updateRotation);
 		
-		new LLabel(this, Vocab.instance.SATURATION);
-		
+		LLabel lblSaturation = new LLabel(this, Vocab.instance.SATURATION);
 		LSpinner spnSaturation = new LSpinner(this);
 		spnSaturation.setMaximum(10000);
 		spnSaturation.setMinimum(0);
+		spnSaturation.addMenu(lblSaturation);
 		addControl(spnSaturation, "saturation");
 		spnSaturation.addModifyListener(updateColor);
 		
 		new LLabel(this, 2, 1);
 		
-		new LLabel(this, Vocab.instance.BRIGHTNESS);
-		
+		LLabel lblBrightness = new LLabel(this, Vocab.instance.BRIGHTNESS);
 		LSpinner spnBrightness = new LSpinner(this);
 		spnBrightness.setMaximum(10000);
 		spnBrightness.setMinimum(0);
+		spnBrightness.addMenu(lblBrightness);
 		addControl(spnBrightness, "brightness");
 		spnBrightness.addModifyListener(updateColor);
 	}
@@ -162,8 +170,8 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 				Transform t = (Transform) obj;
 				float sw = t.scaleX / 100f;
 				float sh = t.scaleY / 100f;
-				int x = Math.round(t.offsetX * sw) + (int) img.ox;
-				int y = Math.round(t.offsetY * sh) + (int) img.oy;
+				int x = Math.round(t.offsetX * sw) + (int) img.getImageX();
+				int y = Math.round(t.offsetY * sh) + (int) img.getImageY();
 				x -= 1;
 				drawLine(x - 2, y, x + 2, y);
 				drawLine(x, y - 2, x, y + 2);
@@ -180,14 +188,35 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 				t = new Transform().combine(t).combine(t2);
 			image.setRGBA(t.red / 255f, t.green / 255f, t.blue / 255f, t.alpha / 255f);
 			image.setHSV(t.hue, t.saturation / 100f, t.brightness / 100f);
+			image.setOffset(t.offsetX, t.offsetY);
 			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
+			image.setRotation(t.rotation);
 		}
 		super.setObject(obj);
 	}
 	
 	public void onChangeOffset(Transform t) {
-		if (image != null)
+		if (image != null) {
+			int ox = t.offsetX;
+			int oy = t.offsetY;
+			if (secondaryTransform != null) {
+				ox += secondaryTransform.offsetX;
+				oy += secondaryTransform.offsetY;
+			}
+			image.setOffset(ox, oy);
 			image.redraw();
+		}
+	}
+	
+	public void onChangeRotation(Transform t) {
+		if (image != null) {
+			int r = t.rotation;
+			if (secondaryTransform != null) {
+				r += secondaryTransform.rotation;
+			}
+			image.setRotation(r);
+			image.redraw();
+		}
 	}
 	
 	public void onChangeColor(Transform t) {

@@ -65,7 +65,7 @@ public class PropertyList extends SimpleEditableList<Property> {
 				Object obj = self.getDataTree().get(item.id);
 				String id = includeID ? stringID(item.id) : "";
 				if (obj == null)
-					return "NULL";
+					return "NULL " + item.id;
 				return id + obj.toString() + ": " + item.value;
 			}
 			@Override

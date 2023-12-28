@@ -27,28 +27,26 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 	public UnitEditor(LContainer parent) {
 		super(parent, 4, false, false);
 		
-		new LLabel(this, Vocab.instance.KEY);
-		
+		LLabel lblKey = new LLabel(this, Vocab.instance.KEY);
 		LText txtKey = new LText(this, 3);
+		txtKey.addMenu(lblKey);
 		addControl(txtKey, "key");
 		
-		new LLabel(this, Vocab.instance.POSITIONX);
-		
-		spnX = new LSpinner(this);;
+		LLabel lblX = new LLabel(this, Vocab.instance.POSITIONX);
+		spnX = new LSpinner(this);
+		spnX.addMenu(lblX);
 		addControl(spnX, "x");
 		
-		new LLabel(this, Vocab.instance.POSITIONY);
-		
+		LLabel lblY = new LLabel(this, Vocab.instance.POSITIONY);
 		spnY = new LSpinner(this);
+		spnY.addMenu(lblY);
 		addControl(spnY, "y");
 		
-		new LLabel(this, Vocab.instance.CHARACTER);
-		
+		LLabel lblChar = new LLabel(this, Vocab.instance.CHARACTER);
 		LPanel character = new LPanel(this, 2, false);
 		character.setExpand(true, false);
 		character.setAlignment(LFlags.CENTER);
 		character.setSpread(3, 1);
-		
 		txtChar = new LText(character, true);		
 		IDButton btnChar = new IDButton(character, false) {
 			@Override
@@ -57,27 +55,26 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 			}
 		};
 		btnChar.setNameWidget(txtChar);
+		btnChar.addMenu(lblChar);
 		addControl(btnChar, "charID");
 		
-		new LLabel(this, Vocab.instance.CHARBATTLER);
-		
+		LLabel lblBattler = new LLabel(this, Vocab.instance.CHARBATTLER);
 		LPanel battler = new LPanel(this, 2, false);
 		battler.setExpand(true, false);
 		battler.setAlignment(LFlags.CENTER);
 		battler.setSpread(3, 1);
-		
 		txtBattler = new LText(battler, true);
 		IDButton btnBattler = new IDButton(battler, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();
 			}
-		};
-		addControl(btnBattler, "battlerID");
+		};		
 		btnBattler.setNameWidget(txtBattler);
+		btnBattler.addMenu(lblBattler);
+		addControl(btnBattler, "battlerID");
 
-		new LLabel(this, Vocab.instance.LIST);
-		
+		LLabel lblList = new LLabel(this, Vocab.instance.LIST);
 		cmbList = new LCombo(this, 3);
 		cmbList.setOptional(false);
 		cmbList.setIncludeID(false);
@@ -86,6 +83,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 				Vocab.instance.BACKUP,
 				Vocab.instance.HIDDEN
 		});
+		cmbList.addMenu(lblList);
 		addControl(cmbList, "list");
 		
 	}

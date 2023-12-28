@@ -1,7 +1,6 @@
 package data.field;
 
 import project.Project;
-import data.Troop;
 import lwt.dataestructure.LDataList;
 
 public class Party {
@@ -50,10 +49,10 @@ public class Party {
 		public int minLevel = 1;
 		
 		public String toString() {
-			Troop troop = (Troop) Project.current.troops.getData().get(id);
+			Object troop = Project.current.troops.getData().get(id);
 			if (troop == null)
-				return "NULL";
-			return troop.name + " [" + minLevel + "-" + maxLevel + "]";
+				troop = "NULL " + id;
+			return troop.toString() + " [" + minLevel + "-" + maxLevel + "]";
 		}
 
 	}

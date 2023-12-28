@@ -43,7 +43,7 @@ public class Troop extends Data {
 				id = gc == null ? -1 : gc.battlerID;
 			}
 			Battler b = (Battler) Project.current.battlers.getData().get(id);
-			String name = " (" + (b == null ? "NULL" : b.name) + ")";
+			String name = " (" + (b == null ? ("NULL " + id) : b.name) + ")";
 			String pos = " (" + x + ", " + y + ")";
 			return key + name + pos;
 		}

@@ -94,10 +94,10 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	
 	public void setField(Field field) {
 		if (field == null) {
-			setDataCollection(null);
+			setObject(null);
 		} else {
 			LDataList<Layer> layers = getLayerList(field);
-			setDataCollection(layers);
+			setObject(layers);
 			int layer = Project.current.fieldTree.getData().getLastLayer(field.id, type);
 			if (layer >= 0)
 				getCollectionWidget().select(new LPath(layer));

@@ -38,40 +38,38 @@ public class ItemTab extends DatabaseTab<Item> {
 
 		// Icon
 		
-		new LLabel(grpGeneral, Vocab.instance.ICON);
-		
+		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
 		compositeIcon.setAlignment(LFlags.CENTER);
-		
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.setExpand(true, true);
 		imgIcon.setMinimumWidth(48);
 		imgIcon.setMinimumHeight(48);
 		imgIcon.setAlignment(LFlags.CENTER);
-		
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
 		btnGraphics.setImageWidget(imgIcon);
+		btnGraphics.addMenu(lblIcon);
+		btnGraphics.addMenu(imgIcon);
 		addControl(btnGraphics, "icon");
 		
 		// Description
 		
-		new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
-		
+		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
 		txtDescription.setMinimumHeight(60);
+		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 		
 		// Price
 		
-		new LLabel(grpGeneral, Vocab.instance.PRICE);
-		
+		LLabel lblPrice = new LLabel(grpGeneral, Vocab.instance.PRICE);
 		LPanel price = new LPanel(grpGeneral, 2, false);
 		price.setAlignment(LFlags.CENTER);
-		
 		LSpinner spnPrice = new LSpinner(price);
 		spnPrice.setMinimum(0);
 		spnPrice.setMaximum(9999999);
+		spnPrice.addMenu(lblPrice);
 		addControl(spnPrice, "price");
 		
 		LCheckBox btnSellable = new LCheckBox(price);
@@ -83,11 +81,11 @@ public class ItemTab extends DatabaseTab<Item> {
 		LFrame grpUse = new LFrame(left, Vocab.instance.USE, 3, false);
 		grpUse.setExpand(true, true);
 		
-		new LLabel(grpUse, Vocab.instance.ITEMSKILL);
-	
+		LLabel lblSkill = new LLabel(grpUse, Vocab.instance.ITEMSKILL);
 		LText txtSkill = new LText(grpUse, true);		
 		btnSkill = new IDButton(grpUse, true);
 		btnSkill.setNameWidget(txtSkill);
+		btnSkill.addMenu(lblSkill);
 		addControl(btnSkill, "skillID");
 		
 		LPanel checkButtons = new LPanel(grpUse, true);
@@ -103,19 +101,21 @@ public class ItemTab extends DatabaseTab<Item> {
 		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
 		addControl(btnNeedsUser, "needsUser");
 		
-		new LLabel(grpUse, LFlags.TOP, Vocab.instance.EFFECTS);
+		LLabel lblEffects = new LLabel(grpUse, LFlags.TOP, Vocab.instance.EFFECTS);
 		
 		SkillEffectList lstEffects = new SkillEffectList(grpUse);
 		lstEffects.setMinimumHeight(60);
 		lstEffects.setExpand(true, true);
 		lstEffects.setSpread(2, 1);
+		lstEffects.addMenu(lblEffects);
 		addChild(lstEffects, "effects");
 		
-		new LLabel(grpUse, LFlags.TOP, Vocab.instance.ATTRIBUTES);
+		LLabel lblAtt = new LLabel(grpUse, LFlags.TOP, Vocab.instance.ATTRIBUTES);
 		AttributeList lstUseAtt = new AttributeList(grpUse);
 		lstUseAtt.setMinimumHeight(60);
 		lstUseAtt.setExpand(true, true);
 		lstUseAtt.setSpread(2, 1);
+		lstUseAtt.addMenu(lblAtt);
 		addChild(lstUseAtt, "attributes");
 		
 		// Equip
@@ -123,9 +123,9 @@ public class ItemTab extends DatabaseTab<Item> {
 		LFrame grpEquip = new LFrame(right, Vocab.instance.EQUIP, 2, false);
 		grpEquip.setExpand(false, true);
 		
-		new LLabel(grpEquip, Vocab.instance.SLOT);
-		
+		LLabel lblSlot = new LLabel(grpEquip, Vocab.instance.SLOT);
 		LText txtSlot = new LText(grpEquip);
+		txtSlot.addMenu(lblSlot);
 		addControl(txtSlot, "slot");
 		
 		new LLabel(grpEquip, 1, 1);
@@ -133,30 +133,33 @@ public class ItemTab extends DatabaseTab<Item> {
 		btnAllSlots.setText(Vocab.instance.ALLSLOTS);
 		addControl(btnAllSlots, "allSlots");
 		
-		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.BLOCKEDSLOTS);
-
+		LLabel lblBlock = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.BLOCKEDSLOTS);
 		NameList lstBlocked = new NameList(grpEquip);
 		lstBlocked.setAlignment(LFlags.CENTER);
 		lstBlocked.setMinimumHeight(48);
+		lstBlocked.addMenu(lblBlock);
 		addChild(lstBlocked, "blocked");
 		
-		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.ATTRIBUTES);
+		LLabel lblEquipAtt = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.ATTRIBUTES);
 		AttributeList lstEquipAtt = new AttributeList(grpEquip);
 		lstEquipAtt.setExpand(true, true);
 		lstEquipAtt.setMinimumHeight(60);
+		lstEquipAtt.addMenu(lblEquipAtt);
 		addChild(lstEquipAtt, "equipAttributes");
 		
-		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.PROPERTIES);
+		LLabel lblProp = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.PROPERTIES);
 		BonusList lstElement = new BonusList(grpEquip);
 		lstElement.setExpand(true, true);
 		lstElement.setMinimumHeight(60);
+		lstElement.addMenu(lblProp);
 		addChild(lstElement, "bonuses");
 		
-		new LLabel(grpEquip, LFlags.TOP, Vocab.instance.STATUSADD);
+		LLabel lblStatus = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.STATUSADD);
 		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip);
 		lstEquipStatus.setExpand(true, true);
 		lstEquipStatus.setMinimumHeight(60);
 		lstEquipStatus.setIncludeID(false);
+		lstEquipStatus.addMenu(lblStatus);
 		addChild(lstEquipStatus, "equipStatus");
 		
 	}

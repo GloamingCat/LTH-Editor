@@ -295,6 +295,7 @@ public class Vocab {
 
 	// Terrain
 	public String MOVECOST = "Move Cost";
+	public String JOBMOVECOST = "Per Job";
 	public String PASSABLE = "Passable";
 	public String REMOVEONEXIT = "Remove on Exit";
 	public String ALLMEMBERS = "Affect All Members";
