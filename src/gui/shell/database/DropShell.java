@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -18,11 +19,11 @@ public class DropShell extends ObjectShell<Drop> {
 		setMinimumSize(400, 200);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.CHANCE);
+		new LLabel(contentEditor, Vocab.instance.CHANCE, Tooltip.instance.CHANCE);
 		LSpinner spnChance = new LSpinner(contentEditor);
 		addControl(spnChance, "value");
 		
-		new LLabel(contentEditor, Vocab.instance.COUNT);
+		new LLabel(contentEditor, Vocab.instance.COUNT, Tooltip.instance.COUNT);
 		LSpinner spnCount = new LSpinner(contentEditor);
 		spnCount.setMaximum(999999999);
 		spnCount.setMinimum(1);

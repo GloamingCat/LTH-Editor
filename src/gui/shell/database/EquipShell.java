@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.widgets.IDButton;
@@ -21,12 +22,12 @@ public class EquipShell extends ObjectShell<Equip> {
 		setTitle(Vocab.instance.EQUIP);
 		contentEditor.setGridLayout(3, false);
 		
-		new LLabel(contentEditor, Vocab.instance.KEY);
+		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 
 		LText txtKey = new LText(contentEditor, 2);
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, Vocab.instance.STATE);
+		new LLabel(contentEditor, Vocab.instance.STATE, Tooltip.instance.STATE);
 		
 		LCombo cmbState = new LCombo(contentEditor, 2);
 		cmbState.setIncludeID(false);
@@ -38,7 +39,7 @@ public class EquipShell extends ObjectShell<Equip> {
 		});
 		addControl(cmbState, "state");
 		
-		new LLabel(contentEditor, Vocab.instance.EQUIPITEM);
+		new LLabel(contentEditor, Vocab.instance.EQUIPITEM, Tooltip.instance.EQUIPITEM);
 		
 		LText txtItem = new LText(contentEditor, true);
 		IDButton btnItem = new IDButton(contentEditor, true) {

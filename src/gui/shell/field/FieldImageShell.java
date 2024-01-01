@@ -1,5 +1,6 @@
 package gui.shell.field;
 
+import gui.Tooltip;
 import gui.Vocab;
 import lwt.LFlags;
 import lwt.container.LImage;
@@ -43,7 +44,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 
 		content.setGridLayout(2, false);
 		
-		new LLabel(content, Vocab.instance.NAME);
+		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
 		
 		txtName = new LText(content);
 
@@ -97,12 +98,15 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		
 		btnVisible = new LCheckBox(options);
 		btnVisible.setText(Vocab.instance.VISIBLE);
+		btnVisible.setHoverText(Tooltip.instance.IMGVISIBLE);
 		
 		btnForeground = new LCheckBox(options);
 		btnForeground.setText(Vocab.instance.FOREGROUND);
+		btnForeground.setHoverText(Tooltip.instance.FOREGROUND);
 		
 		btnGlued = new LCheckBox(options);
 		btnGlued.setText(Vocab.instance.GLUED);
+		btnGlued.setHoverText(Tooltip.instance.GLUED);
 		
 		pack();
 	}

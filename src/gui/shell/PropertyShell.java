@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 
 import data.subcontent.Property;
@@ -16,7 +17,7 @@ public abstract class PropertyShell extends ObjectShell<Property> {
 		setMinimumSize(400, 320);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.VALUE);
+		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.VALUE);
 		LSpinner spnValue = new LSpinner(contentEditor);
 		spnValue.setMinimum(-100000);
 		spnValue.setMaximum(100000);

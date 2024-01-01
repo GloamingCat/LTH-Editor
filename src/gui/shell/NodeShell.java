@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 
 import data.subcontent.Node;
@@ -23,7 +24,7 @@ public abstract class NodeShell extends ObjectShell<Node> {
 		name.setExpand(true, false);
 		name.setAlignment(LFlags.CENTER);
 		
-		new LLabel(name, Vocab.instance.NAME);
+		new LLabel(name, Vocab.instance.NAME, Tooltip.instance.KEY);
 		
 		LText txtName = new LText(name);
 		addControl(txtName, "name");

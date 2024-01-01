@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -16,15 +17,15 @@ public class TransformationShell extends ObjectShell<Transformation> {
 		super(parent, 270, 100);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.TYPE);
+		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.TRANSFORMTYPE);
 		
-		LCombo cmbType = new LCombo(contentEditor);
+		LCombo cmbType = new LCombo(contentEditor, true);
 		cmbType.setOptional(false);
 		cmbType.setIncludeID(false);
 		cmbType.setItems(Transformation.types);
 		addControl(cmbType, "type");
 		
-		new LLabel(contentEditor, Vocab.instance.VALUE);
+		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.TRANSFORMVALUE);
 		
 		LSpinner spnValue = new LSpinner(contentEditor);
 		spnValue.setMinimum(-10000);
@@ -33,6 +34,7 @@ public class TransformationShell extends ObjectShell<Transformation> {
 		
 		LCheckBox btnOverride = new LCheckBox(contentEditor, 2);
 		btnOverride.setText(Vocab.instance.OVERRIDETRANSFORM);
+		btnOverride.setHoverText(Tooltip.instance.OVERRIDETRANSFORM);
 		addControl(btnOverride, "override");
 		
 		pack();

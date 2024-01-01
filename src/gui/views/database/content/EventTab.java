@@ -2,6 +2,7 @@ package gui.views.database.content;
 
 import gson.editor.GDefaultObjectEditor;
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TagList;
@@ -27,12 +28,14 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	public EventTab(LContainer parent) {
 		super(parent);
 		
-		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
+		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
+				Tooltip.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 
 		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS, 2, false);
+		grpEvents.setHoverText(Tooltip.instance.EVENTS);
 		grpEvents.setExpand(false, true);
 		grpEvents.setSpread(2, 1);
 		SimpleEditableList<EventSheet.Event> lstEvents = new SimpleEditableList<>(grpEvents);
@@ -46,19 +49,22 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		eventEditor.setExpand(true, false);
 		lstEvents.addChild(eventEditor);
 		
-		LLabel lblCmd = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.COMMAND);
+		LLabel lblCmd = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.COMMAND,
+				Tooltip.instance.COMMAND);
 		LTextBox txtCommand = new LTextBox(eventEditor);
 		txtCommand.setExpand(true, true);
 		txtCommand.addMenu(lblCmd);
 		eventEditor.addControl(txtCommand, "name");
 		
-		LLabel lblParam = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.PARAM);
+		LLabel lblParam = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.PARAM,
+				Tooltip.instance.PARAM);
 		TagList txtArgs = new TagList(eventEditor);
 		txtArgs.setExpand(true, true);
 		txtArgs.addMenu(lblParam);
 		eventEditor.addChild(txtArgs, "tags");
 		
-		LLabel lblCondition = new LLabel(eventEditor, Vocab.instance.CONDITION);
+		LLabel lblCondition = new LLabel(eventEditor, Vocab.instance.CONDITION,
+				Tooltip.instance.CONDITION);
 		LText txtCondition = new LText(eventEditor);
 		txtCondition.addMenu(lblCondition);
 		eventEditor.addControl(txtCondition, "condition");

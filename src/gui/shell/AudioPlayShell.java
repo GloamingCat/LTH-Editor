@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.AudioPlayer;
 
@@ -22,28 +23,33 @@ import project.Project;
 
 import data.subcontent.Audio;
 
-public class AudioShell extends ObjectShell<Audio> {
+public class AudioPlayShell extends ObjectShell<Audio> {
 	
 	protected LCombo cmbSound;
 	protected LFileSelector selFile;
 	protected Audio comboAudio = null;
 	
-	public static final int BGM = 0x01;
+	public static final int OPTIONAL = 0x01;
+	public static final int TIMED = 0x02;
+	public static final int BGM = 0x04;
 
-	public AudioShell(LShell parent, boolean isBGM) {
-		super(parent);
-
-		setMinimumSize(400, 400);
+	/**
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
+	 */
+	public AudioPlayShell(LShell parent, int style) {
+		super(parent, 400, 400);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		LPanel sound = new LPanel(form, 1, false);
-		selFile = new LFileSelector(sound, false);
+		selFile = new LFileSelector(sound, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { 
 			String name = f.getName();
 			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
 		} );
 		selFile.setFolder(Project.current.audioPath());
-		cmbSound = new LCombo(sound);
+		selFile.setExpand(true, true);
+		cmbSound = new LCombo(sound, true);
 		cmbSound.setOptional(true);
 		cmbSound.setIncludeID(false);
 		selFile.addModifyListener(new LControlListener<Integer>() {
@@ -64,37 +70,38 @@ public class AudioShell extends ObjectShell<Audio> {
 		LPanel composite = new LPanel(form, 2, false);
 		composite.setExpand(true, true);
 		
-		new LLabel(composite, Vocab.instance.VOLUME);
-		
+		new LLabel(composite, Vocab.instance.VOLUME, Tooltip.instance.VOLUME);
 		LSpinner spnVolume = new LSpinner(composite);
 		spnVolume.setMaximum(1000);
 		addControl(spnVolume, "volume");
 		
-		new LLabel(composite, Vocab.instance.PITCH);
-		
+		new LLabel(composite, Vocab.instance.PITCH, Tooltip.instance.PITCH);
 		LSpinner spnPitch = new LSpinner(composite);
 		spnPitch.setMaximum(1000);
 		spnPitch.setMinimum(1);
 		addControl(spnPitch, "pitch");
 		
-		new LLabel(composite, Vocab.instance.TIME);
-		
-		LSpinner spnTime = new LSpinner(composite);
-		spnTime.setMaximum(10000);
-		spnTime.setMinimum(0);
-		addControl(spnTime, "time");
+		if ((style & TIMED) > 0) {
+			new LLabel(composite, Vocab.instance.TIME, Tooltip.instance.TIME);
+			LSpinner spnTime = new LSpinner(composite);
+			spnTime.setMaximum(10000);
+			spnTime.setMinimum(0);
+			addControl(spnTime, "time");
+		}
 		
 		AudioPlayer reproduction = new AudioPlayer(composite);
 		reproduction.setExpand(false, true);
 		reproduction.setSpread(2, 1);
 		reproduction.setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
-		reproduction.loop = isBGM;
+		reproduction.loop = (style & BGM) > 0;
 		
 		selFile.addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				reproduction.filename = comboAudio == null ? 
-						event.data.toString() : comboAudio.name;
+				reproduction.filename = 
+						comboAudio != null ? comboAudio.name :
+						event.data != null ? event.data.toString() : 
+						"";
 			}
 		});
 		spnVolume.addModifyListener(new LControlListener<Integer>() {

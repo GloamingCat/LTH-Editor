@@ -1,6 +1,6 @@
 package gui.widgets;
 
-import gui.shell.AudioShell;
+import gui.shell.AudioPlayShell;
 import lwt.container.LContainer;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
@@ -26,7 +26,7 @@ public class AudioButton extends LObjectButton<Audio> {
 		setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(LShell parent) {
-				return new AudioShell(parent, optional);
+				return new AudioPlayShell(parent, AudioPlayShell.OPTIONAL);
 			}
 		});
 	}

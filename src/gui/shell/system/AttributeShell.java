@@ -1,5 +1,6 @@
 package gui.shell.system;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -17,24 +18,24 @@ public class AttributeShell extends ObjectShell<Attribute> {
 		
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME);
-		
-		LText txtName = new LText(contentEditor);
-		addControl(txtName, "name");
-		
-		new LLabel(contentEditor, Vocab.instance.SHORTNAME);
-		
-		LText txtShortName = new LText(contentEditor);
-		addControl(txtShortName, "shortName");
-		
-		new LLabel(contentEditor, Vocab.instance.KEY);
+		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 		
 		LText txtKey = new LText(contentEditor);
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, Vocab.instance.VISIBILITY);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
-		LCombo cmbVisibliy = new LCombo(contentEditor);
+		LText txtName = new LText(contentEditor);
+		addControl(txtName, "name");
+		
+		new LLabel(contentEditor, Vocab.instance.SHORTNAME, Tooltip.instance.SHORTNAME);
+		
+		LText txtShortName = new LText(contentEditor);
+		addControl(txtShortName, "shortName");
+
+		new LLabel(contentEditor, Vocab.instance.VISIBILITY, Tooltip.instance.VISIBILITY);
+		
+		LCombo cmbVisibliy = new LCombo(contentEditor, true);
 		cmbVisibliy.setOptional(false);
 		cmbVisibliy.setIncludeID(false);
 		cmbVisibliy.setItems(new String [] {
@@ -44,7 +45,7 @@ public class AttributeShell extends ObjectShell<Attribute> {
 		});
 		addControl(cmbVisibliy, "visibility");
 		
-		new LLabel(contentEditor, Vocab.instance.SCRIPT);
+		new LLabel(contentEditor, Vocab.instance.FORMULA, Tooltip.instance.FORMULA);
 		//lblScript.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
 		LTextBox txtScript = new LTextBox(contentEditor, 1, 1);

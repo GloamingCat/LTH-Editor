@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
@@ -29,12 +30,13 @@ public class RuleShell extends ObjectShell<Rule> {
 		LPanel composite = new LPanel(form, 2, false);
 		
 		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
+		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.setExpand(true, true);
 		grpParameters.setSpread(2, 1);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
-		new LLabel(composite, Vocab.instance.CONDITION);
+		new LLabel(composite, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
 		
 		LText txtCondition = new LText(composite);
 		addControl(txtCondition, "condition");

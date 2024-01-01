@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -19,30 +20,33 @@ public class SkillEffectShell extends ObjectShell<Effect> {
 		setMinimumSize(300, 100);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.KEY);
+		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 		
 		LText txtKey = new LText(contentEditor);
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, Vocab.instance.BASICRESULT);
+		new LLabel(contentEditor, Vocab.instance.BASICRESULT, Tooltip.instance.BASICRESULT);
 		
 		LText txtBasicResult = new LText(contentEditor);
 		addControl(txtBasicResult, "basicResult");
 		
-		new LLabel(contentEditor, Vocab.instance.SUCCESSRATE);
+		new LLabel(contentEditor, Vocab.instance.SUCCESSRATE, Tooltip.instance.SUCCESSRATE);
 
 		LText txtSuccessRate = new LText(contentEditor);
 		addControl(txtSuccessRate, "successRate");
 		
 		LCheckBox btnHeal = new LCheckBox(contentEditor);
 		btnHeal.setText(Vocab.instance.HEAL);
+		btnHeal.setHoverText(Tooltip.instance.HEAL);
 		addControl(btnHeal, "heal");
 		
 		LCheckBox btnAbsorb = new LCheckBox(contentEditor);
 		btnAbsorb.setText(Vocab.instance.ABSORB);
+		btnAbsorb.setHoverText(Tooltip.instance.ABSORB);
 		addControl(btnAbsorb, "absorb");
 		
 		LFrame grpStatus = new LFrame(contentEditor, Vocab.instance.STATUS, true, true);
+		grpStatus.setHoverText(Tooltip.instance.EFFECTSTATUS);
 		grpStatus.setExpand(true, true);
 		grpStatus.setSpread(2, 1);
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(grpStatus, true);

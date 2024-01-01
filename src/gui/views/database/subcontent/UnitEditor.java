@@ -1,5 +1,6 @@
 package gui.views.database.subcontent;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.IDButton;
 
@@ -27,22 +28,22 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 	public UnitEditor(LContainer parent) {
 		super(parent, 4, false, false);
 		
-		LLabel lblKey = new LLabel(this, Vocab.instance.KEY);
+		LLabel lblKey = new LLabel(this, Vocab.instance.KEY, Tooltip.instance.KEY);
 		LText txtKey = new LText(this, 3);
 		txtKey.addMenu(lblKey);
 		addControl(txtKey, "key");
 		
-		LLabel lblX = new LLabel(this, Vocab.instance.POSITIONX);
+		LLabel lblX = new LLabel(this, Vocab.instance.GRIDX, Tooltip.instance.GRIDX);
 		spnX = new LSpinner(this);
 		spnX.addMenu(lblX);
 		addControl(spnX, "x");
 		
-		LLabel lblY = new LLabel(this, Vocab.instance.POSITIONY);
+		LLabel lblY = new LLabel(this, Vocab.instance.GRIDY, Tooltip.instance.GRIDY);
 		spnY = new LSpinner(this);
 		spnY.addMenu(lblY);
 		addControl(spnY, "y");
 		
-		LLabel lblChar = new LLabel(this, Vocab.instance.CHARACTER);
+		LLabel lblChar = new LLabel(this, Vocab.instance.CHARACTER, Tooltip.instance.CHARACTER);
 		LPanel character = new LPanel(this, 2, false);
 		character.setExpand(true, false);
 		character.setAlignment(LFlags.CENTER);
@@ -58,7 +59,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		btnChar.addMenu(lblChar);
 		addControl(btnChar, "charID");
 		
-		LLabel lblBattler = new LLabel(this, Vocab.instance.CHARBATTLER);
+		LLabel lblBattler = new LLabel(this, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
 		LPanel battler = new LPanel(this, 2, false);
 		battler.setExpand(true, false);
 		battler.setAlignment(LFlags.CENTER);
@@ -74,7 +75,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		btnBattler.addMenu(lblBattler);
 		addControl(btnBattler, "battlerID");
 
-		LLabel lblList = new LLabel(this, Vocab.instance.LIST);
+		LLabel lblList = new LLabel(this, Vocab.instance.UNITLIST, Tooltip.instance.UNITLIST);
 		cmbList = new LCombo(this, 3);
 		cmbList.setOptional(false);
 		cmbList.setIncludeID(false);

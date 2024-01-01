@@ -1,8 +1,9 @@
 package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.AudioShell;
+import gui.shell.AudioPlayShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
@@ -41,7 +42,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Script
 		
-		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT);
+		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
 		LPanel script = new LPanel(grpGeneral, 2, false);
 		script.setAlignment(LFlags.CENTER);
 		
@@ -54,16 +55,17 @@ public class AnimationTab extends DatabaseTab<Animation> {
 
 		// Size
 		
-		new LLabel(grpGeneral, Vocab.instance.SIZE);
+		LLabel lblSize = new LLabel(grpGeneral, Vocab.instance.SIZE, Tooltip.instance.SIZE);
+		lblSize.setHoverText(Tooltip.instance.SIZE);
 		LPanel size = new LPanel(grpGeneral, 4, false);
 		size.setExpand(false, false);
 		
-		LLabel lblCols = new LLabel(size, Vocab.instance.COLUMNS);
+		LLabel lblCols = new LLabel(size, Vocab.instance.COLUMNS, Tooltip.instance.COLUMNS);
 		spnCols = new LSpinner(size);
 		spnCols.addMenu(lblCols);
 		addControl(spnCols, "cols");
 		
-		LLabel lblRows = new LLabel(size, Vocab.instance.ROWS);
+		LLabel lblRows = new LLabel(size, Vocab.instance.ROWS, Tooltip.instance.ROWS);
 		spnRows = new LSpinner(size);
 		spnRows.addMenu(lblRows);
 		addControl(spnRows, "rows");
@@ -71,6 +73,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
+		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.setExpand(true, false);
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		transformEditor.addMenu(grpTransform);
@@ -79,6 +82,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Audio
 		
 		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
+		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.setExpand(true, true);
 		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
 		lstAudio.type = Audio.class;
@@ -86,7 +90,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		lstAudio.setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(LShell parent) {
-				return new AudioShell(parent, false);
+				return new AudioPlayShell(parent, AudioPlayShell.TIMED);
 			}
 		});
 		lstAudio.addMenu(grpAudio);
@@ -95,40 +99,47 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Intro
 		
 		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO, 3, false);
+		grpIntro.setHoverText(Tooltip.instance.INTRO);
 		grpIntro.initGridData();
 		
-		LLabel lblIntroPattern = new LLabel(grpIntro, Vocab.instance.PATTERN);
+		LLabel lblIntroPattern = new LLabel(grpIntro, Vocab.instance.PATTERN, Tooltip.instance.PATTERN);
 		LText txtIntroPattern = new LText(grpIntro);
 		txtIntroPattern.addMenu(lblIntroPattern);
 		addControl(txtIntroPattern, "introPattern");
 		LActionButton btnIntroPattern = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
+		btnIntroPattern.setHoverText(Tooltip.instance.PATTERNDEFAULT);
 		
-		LLabel lblIntroDuration = new LLabel(grpIntro, Vocab.instance.DURATION);
+		LLabel lblIntroDuration = new LLabel(grpIntro, Vocab.instance.DURATION, Tooltip.instance.DURATION);
 		LText txtIntroDuration = new LText(grpIntro);
 		txtIntroDuration.addMenu(lblIntroDuration);
 		addControl(txtIntroDuration, "introDuration");
 		LActionButton btnIntroDuration = new LActionButton(grpIntro, Vocab.instance.DEFAULT);
+		btnIntroDuration.setHoverText(Tooltip.instance.DURATIONDEFAULT);
 		
 		// Loop
 		
 		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP, 3, false);
+		grpLoop.setHoverText(Tooltip.instance.LOOP);
 		grpLoop.initGridData();
 		
-		LLabel lblLoopPattern = new LLabel(grpLoop, Vocab.instance.PATTERN);
+		LLabel lblLoopPattern = new LLabel(grpLoop, Vocab.instance.PATTERN, Tooltip.instance.PATTERN);
 		LText txtLoopPattern = new LText(grpLoop);
 		txtLoopPattern.addMenu(lblLoopPattern);
 		addControl(txtLoopPattern, "loopPattern");
 		LActionButton btnLoopPattern = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
+		btnLoopPattern.setHoverText(Tooltip.instance.PATTERNDEFAULT);
 		
-		LLabel lblLoopDuration = new LLabel(grpLoop, Vocab.instance.DURATION);
+		LLabel lblLoopDuration = new LLabel(grpLoop, Vocab.instance.DURATION, Tooltip.instance.DURATION);
 		LText txtLoopDuration = new LText(grpLoop);
 		txtLoopDuration.addMenu(lblLoopDuration);
 		addControl(txtLoopDuration, "loopDuration");
 		LActionButton btnLoopDuration = new LActionButton(grpLoop, Vocab.instance.DEFAULT);
+		btnLoopDuration.setHoverText(Tooltip.instance.DURATIONDEFAULT);
 		
 		// Graphics
 		
 		LFrame grpImg = new LFrame(left, Vocab.instance.GRAPHICS, 1);
+		grpImg.setHoverText(Tooltip.instance.GRAPHICS);
 		grpImg.setExpand(true, true);
 		
 		LImage image = new LImage(grpImg);

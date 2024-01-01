@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.RuleShell;
 import gui.views.database.DatabaseTab;
@@ -51,7 +52,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Icon
 		
-		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON);
+		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
 		compositeIcon.setAlignment(LFlags.CENTER);
 		LImage imgIcon = new LImage(compositeIcon);
@@ -66,7 +67,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Description
 		
-		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION);
+		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
+			Tooltip.instance.DESCRIPTION);
 		
 		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
 		txtDescription.setMinimumHeight(60);
@@ -82,15 +84,17 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
 		LCheckBox btnRecruit = new LCheckBox(check);
 		btnRecruit.setText(Vocab.instance.RECRUIT);
+		btnRecruit.setHoverText(Tooltip.instance.RECRUIT);
 		addControl(btnRecruit, "persistent");
 		
 		// Rewards
 		
-		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY);
+		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
 		
 		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
 		compositeReward.setExpand(true, false);
@@ -100,7 +104,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		spnMoney.addMenu(lblMoney);
 		addControl(spnMoney, "money");
 		
-		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP);
+		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP, Tooltip.instance.EXP);
 		LSpinner spnEXP = new LSpinner(compositeReward);
 		spnEXP.setMaximum(99999999);
 		spnEXP.addMenu(lblExp);
@@ -108,7 +112,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Job
 		
-		LLabel lblJob = new LLabel(grpGeneral, Vocab.instance.JOB);
+		LLabel lblJob = new LLabel(grpGeneral, Vocab.instance.JOB, Tooltip.instance.JOB);
 		LPanel job = new LPanel(grpGeneral, 4, false);
 		job.setExpand(true, false);
 		job.setAlignment(LFlags.CENTER);
@@ -119,7 +123,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		btnJob.addMenu(txtJob);
 		addControl(btnJob, "jobID");
 		
-		LLabel lblLevel = new LLabel(job, Vocab.instance.LEVEL);
+		LLabel lblLevel = new LLabel(job, Vocab.instance.LEVEL, Tooltip.instance.LEVEL);
 		LSpinner spnLevel = new LSpinner(job);
 		spnLevel.addMenu(lblLevel);
 		addControl(spnLevel, "level");
@@ -127,6 +131,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Attributes
 		
 		LFrame grpAtt = new LFrame(middle, Vocab.instance.ATTRIBUTES, true, true);
+		grpAtt.setHoverText(Tooltip.instance.BATTLERATT);
 		grpAtt.setExpand(true, true);
 		grpAtt.setMinimumWidth(220);
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, 2);
@@ -136,6 +141,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Elements
 		
 		LFrame grpElements = new LFrame(middle, Vocab.instance.ELEMENTS, true, true);
+		grpElements.setHoverText(Tooltip.instance.ELEMENTDEF);
 		grpElements.setExpand(true, true);
 		lstElements = new PropertyList(grpElements);
 		lstElements.addMenu(grpElements);
@@ -143,8 +149,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Skills
 		
-		LFrame grpSkills = new LFrame(bottom,
-			Vocab.instance.SKILLS + " (" + Vocab.instance.INITIAL + ")", true, true);
+		LFrame grpSkills = new LFrame(bottom, Vocab.instance.INITSKILLS, true, true);
+		grpSkills.setHoverText(Tooltip.instance.INITSKILLS);
 		grpSkills.setExpand(true, true);
 		lstSkills = new IDList(grpSkills);
 		lstSkills.addMenu(grpSkills);
@@ -152,8 +158,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Status
 		
-		LFrame grpStatus = new LFrame(bottom, 
-			Vocab.instance.STATUS + " (" + Vocab.instance.INITIAL + ")", true, true);
+		LFrame grpStatus = new LFrame(bottom, Vocab.instance.INITSTATUS, true, true);
+		grpStatus.setHoverText(Tooltip.instance.INITSTATUS);
 		grpStatus.setExpand(true, true);
 		lstStatus = new IDList(grpStatus);
 		lstStatus.addMenu(grpStatus);
@@ -161,8 +167,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Equip
 		
-		LFrame grpEquip = new LFrame(right, 
-			Vocab.instance.EQUIP + " (" + Vocab.instance.INITIAL + ")", true, true);
+		LFrame grpEquip = new LFrame(right, Vocab.instance.INITEQUIP, true, true);
+		grpEquip.setHoverText(Tooltip.instance.INITEQUIP);
 		grpEquip.setExpand(true, true);
 		EquipList lstEquip = new EquipList(grpEquip);
 		lstEquip.addMenu(grpEquip);
@@ -171,6 +177,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Drop
 		
 		LFrame grpDrop = new LFrame(right, Vocab.instance.DROP, true, true);
+		grpDrop.setHoverText(Tooltip.instance.DROP);
 		grpDrop.setExpand(true, true);
 		DropList lstDrop = new DropList(grpDrop);
 		lstDrop.addMenu(grpDrop);
@@ -178,7 +185,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// AI
 
-		LFrame grpAI = new LFrame(right, Vocab.instance.AI, true, true);
+		LFrame grpAI = new LFrame(right, Vocab.instance.RULES, true, true);
+		grpAI.setHoverText(Tooltip.instance.RULES);
 		grpAI.setExpand(true, true);
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI);
 		lstRules.type = Rule.class;

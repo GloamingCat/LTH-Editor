@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.ObstacleTileShell;
 import gui.views.database.DatabaseTab;
@@ -32,7 +33,8 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 	public ObstacleTab(LContainer parent) {
 		super(parent);
 
-		LLabel lblTiles = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES);
+		LLabel lblTiles = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES,
+				Tooltip.instance.COLLIDERTILES);
 		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpGeneral);
 		tileList.type = ObstacleTile.class;
 		tileList.setIncludeID(false);
@@ -50,6 +52,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
+		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.setExpand(true, true);
 		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setExpand(true, true);
@@ -62,6 +65,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
+		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.setExpand(true, false);
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		transformEditor.addMenu(grpTransform);

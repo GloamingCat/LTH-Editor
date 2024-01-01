@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 
 import lwt.dialog.LObjectShell;
@@ -17,7 +18,7 @@ public class NameShell extends LObjectShell<String> {
 		
 		content.setGridLayout(2, false);
 		
-		new LLabel(content, Vocab.instance.NAME);
+		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
 		txtName = new LText(content);
 		

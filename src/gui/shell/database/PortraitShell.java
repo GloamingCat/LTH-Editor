@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
@@ -37,7 +38,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 
 		content.setGridLayout(2, false);
 		
-		new LLabel(content, Vocab.instance.NAME);
+		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
 		txtName = new LText(content);
 
 		LSashPanel sashForm = new LSashPanel(content, true);

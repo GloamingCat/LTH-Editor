@@ -1,5 +1,6 @@
 package gui.shell.system;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.FileShell;
 import lwt.container.LPanel;
@@ -25,14 +26,16 @@ public class FontShell extends FileShell<FontData> {
 		LPanel composite = new LPanel(sashForm, 2, false);
 		composite.setExpand(true, true);
 		
-		new LLabel(composite, Vocab.instance.SIZE);
+		LLabel lblLength = new LLabel(composite, Vocab.instance.LENGTH, Tooltip.instance.LENGTH);
 		
 		spnSize = new LSpinner(composite);
+		spnSize.addMenu(lblLength);
 		
-		new LLabel(composite, Vocab.instance.FORMAT);
+		LLabel lblFormat =new LLabel(composite, Vocab.instance.FORMAT, Tooltip.instance.FORMAT);
 		//lblFormat.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		txtFormat = new LText(composite);
+		txtFormat.addMenu(lblFormat);
 	}
 	
 	public void open(FontData initial) {

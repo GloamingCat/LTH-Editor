@@ -125,10 +125,7 @@ public class FieldTreeEditor extends LView {
 			@Override
 			public LObjectShell<Prefs> createShell(LShell parent) {
 				FieldNode n = treeEditor.getCollectionWidget().getSelectedObject();
-				FieldPrefShell shell = new FieldPrefShell(parent);
-				int id = Project.current.fieldTree.getData().findNode(n).id;
-				shell.setTitle(String.format("[%03d] ", id) + n.name);
-				return shell;
+				return new FieldPrefShell(parent, n);
 			}
 		});
 		addChild(treeEditor);

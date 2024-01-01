@@ -1,5 +1,6 @@
 package gui.shell.system;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
@@ -35,12 +36,14 @@ public class PluginShell extends ObjectShell<Plugin> {
 		LPanel composite = new LPanel(form, 1);
 		
 		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
+		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
 		LCheckBox btnON = new LCheckBox(composite);
 		btnON.setText(Vocab.instance.PLUGINON);
+		btnON.setHoverText(Tooltip.instance.PLUGINON);
 		addControl(btnON, "on");
 		
 		form.setWeights(new int[] {1, 1});

@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.views.fieldTree.*;
 import gui.widgets.DirectionCombo;
@@ -87,28 +88,25 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		};
 		
-		new LLabel(coordinates, "X");
-		
+		new LLabel(coordinates, Vocab.instance.POSITIONX, Tooltip.instance.POSITIONX);
 		spnX = new LSpinner(coordinates);
 		spnX.setMinimum(1);
 		spnX.setValue(1);
 		spnX.addModifyListener(redraw);
 		
-		new LLabel(coordinates, "Y");
-		
+		new LLabel(coordinates, Vocab.instance.POSITIONY, Tooltip.instance.POSITIONY);
 		spnY = new LSpinner(coordinates);
 		spnY.setMinimum(1);
 		spnY.setValue(1);
 		spnY.addModifyListener(redraw);
 		
-		new LLabel(coordinates, "H");
-		
+		new LLabel(coordinates, Vocab.instance.POSITIONH, Tooltip.instance.POSITIONH);
 		spnH = new LSpinner(coordinates);
 		spnH.setMinimum(1);
 		spnH.setValue(1);
 		spnH.addModifyListener(redraw);
 		
-		new LLabel(bottom, LFlags.RIGHT, Vocab.instance.DIRECTION);
+		new LLabel(bottom, LFlags.RIGHT, Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR);
 		cmbDirection = new DirectionCombo(bottom);
 		
 		lblPos = new LLabel(bottom, "(-99, -99)");

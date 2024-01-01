@@ -33,9 +33,10 @@ public class PropertyList extends SimpleEditableList<Property> {
 		});
 	}
 	
-	protected LList<Property, Property> createList() {
+	@Override
+	protected LList<Property, Property> createList(boolean check) {
 		PropertyList self = this;
-		return new LList<Property, Property>(this) {
+		return new LList<Property, Property>(this, check) {
 			@Override
 			public LEditEvent<Property> edit(LPath path) {
 				return onEditItem(path);

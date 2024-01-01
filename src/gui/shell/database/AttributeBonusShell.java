@@ -4,6 +4,7 @@ import lwt.dialog.LShell;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -15,19 +16,19 @@ public class AttributeBonusShell extends ObjectShell<Attribute> {
 		super(parent, 400, 100);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.KEY);
+		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.ATTKEY);
 		
 		LText txtKey = new LText(contentEditor);
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, Vocab.instance.ATTADD);
+		new LLabel(contentEditor, Vocab.instance.ATTADD, Tooltip.instance.ATTADD);
 		
 		LSpinner spnAdd = new LSpinner(contentEditor);
 		spnAdd.setMaximum(999999);
 		spnAdd.setMinimum(-999999);
 		addControl(spnAdd, "add");
 		
-		new LLabel(contentEditor, Vocab.instance.ATTMUL);
+		new LLabel(contentEditor, Vocab.instance.ATTMUL, Tooltip.instance.ATTMUL);
 		
 		LSpinner spnMul = new LSpinner(contentEditor);
 		spnMul.setMaximum(999999);

@@ -31,9 +31,9 @@ public class IDList extends SimpleEditableList<Integer> {
 		list.setIncludeID(false);
 	}
 	
-	protected LList<Integer, Integer> createList() {
+	protected LList<Integer, Integer> createList(boolean check) {
 		IDList self = this;
-		return new LList<Integer, Integer>(this) {
+		return new LList<Integer, Integer>(this, check) {
 			@Override
 			public LEditEvent<Integer> edit(LPath path) {
 				return onEditItem(path);

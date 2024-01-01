@@ -1,8 +1,9 @@
 package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.AudioShell;
+import gui.shell.AudioPlayShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.PropertyList;
 import gui.widgets.IDButton;
@@ -38,14 +39,16 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		// General
 		
-		LLabel lblCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.MOVECOST);
+		LLabel lblCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.MOVECOST,
+				Tooltip.instance.MOVECOST);
 		LSpinner spnCost = new LSpinner(grpGeneral);
 		spnCost.setMinimum(100);
 		spnCost.setMaximum(1000);
 		spnCost.addMenu(lblCost);
 		addControl(spnCost, "moveCost");
 		
-		LLabel lblJobCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.JOBMOVECOST);
+		LLabel lblJobCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.JOBMOVECOST,
+				Tooltip.instance.JOBMOVECOST);
 		lstJobMoveCost = new PropertyList(grpGeneral);
 		lstJobMoveCost.setExpand(true, true);
 		lstJobMoveCost.addMenu(lblJobCost);
@@ -54,11 +57,13 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		new LLabel(grpGeneral, 1, 1);
 		LCheckBox btnPassable = new LCheckBox(grpGeneral);
 		btnPassable.setText(Vocab.instance.PASSABLE);
+		btnPassable.setHoverText(Tooltip.instance.PASSABLE);
 		addControl(btnPassable, "passable");
 		
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
+		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.setExpand(true, true);
 		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
@@ -72,6 +77,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		// Audio
 		
 		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
+		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.setExpand(true, true);
 		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
 		lstAudio.type = Audio.class;
@@ -79,7 +85,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		lstAudio.setShellFactory(new LShellFactory<Audio>() {
 			@Override
 			public LObjectShell<Audio> createShell(LShell parent) {
-				return new AudioShell(parent, false);
+				return new AudioPlayShell(parent, AudioPlayShell.TIMED);
 			}
 		});
 		lstAudio.addMenu(grpAudio);
@@ -88,6 +94,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		// Status
 		
 		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS, 2, false);
+		grpStatus.setHoverText(Tooltip.instance.TERRAINSTATUS);
 		grpStatus.setExpand(true, true);
 		LText txtStatus = new LText(grpStatus, true);		
 		btnStatus = new IDButton(grpStatus, true);
@@ -96,9 +103,10 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		addControl(btnStatus, "statusID");
 		
 		LCheckBox btnRemoveOnExit = new LCheckBox(grpStatus);
+		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
+		btnRemoveOnExit.setHoverText(Tooltip.instance.REMOVEONEXIT);
 		btnRemoveOnExit.setExpand(true, false);
 		btnRemoveOnExit.setAlignment(LFlags.CENTER);
-		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
 		
 	}

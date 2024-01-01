@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 
 import data.subcontent.Tag;
@@ -19,12 +20,12 @@ public class TagShell extends ObjectShell<Tag> {
 		setMinimumSize(400, 300);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.KEY);
 		
 		txtKey = new LText(contentEditor);
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, LFlags.TOP, Vocab.instance.VALUE);
+		new LLabel(contentEditor, LFlags.TOP, Vocab.instance.VALUE, Tooltip.instance.JSON);
 		
 		txtValue = new LTextBox(contentEditor, 1, 1);
 		txtValue.setMinimumWidth(170);

@@ -15,6 +15,7 @@ import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
@@ -31,6 +32,7 @@ import java.lang.reflect.Type;
 import data.Animation;
 import data.field.Field;
 import data.field.FieldImage;
+import data.field.FieldNode;
 import data.field.Transition;
 import gson.editor.GDefaultObjectEditor;
 
@@ -38,52 +40,57 @@ import project.Project;
 
 public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 
-	public FieldPrefShell(LShell parent) {
+	public FieldPrefShell(LShell parent, FieldNode n) {
 		super(parent);
+		int id = Project.current.fieldTree.getData().findNode(n).id;
+		setTitle(String.format("[%03d] ", id) + n.name);
 
 		setMinimumSize(600, 400);
 		contentEditor.setGridLayout(3, true);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 3, false);
+		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setAlignment(LFlags.TOP);
 		grpGeneral.setExpand(true, false);
 		
-		new LLabel(grpGeneral, 1, 1);
-		LPanel key = new LPanel(grpGeneral, 2, false);
+		LPanel key = new LPanel(grpGeneral, 3, false);
 		key.setExpand(true, false);
-		key.setSpread(2, 1);
-		key.setAlignment(LFlags.CENTER);
+		key.setSpread(3, 1);
 		
-		new LLabel(key, Vocab.instance.KEY);
+		new LLabel(key, LFlags.EXPAND, "ID: " + id, Tooltip.instance.ID);
+		
+		new LLabel(key, Vocab.instance.KEY, Tooltip.instance.KEY);
 		LText txtKey = new LText(key);
 		addControl(txtKey, "key");
 		
-		new LLabel(grpGeneral, Vocab.instance.NAME);
+		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
 		LText txtName = new LText(grpGeneral, 2);
 		addControl(txtName, "name");
 		
-		new LLabel(grpGeneral, Vocab.instance.PERSISTENT);
+		new LLabel(grpGeneral, 1, 1);
 		LCheckBox btnPersistent = new LCheckBox(grpGeneral, 2);
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
 		
-		new LLabel(grpGeneral, Vocab.instance.DEFAULTREGION);
-		LCombo cmbRegion = new LCombo(grpGeneral, 2);
+		new LLabel(grpGeneral, Vocab.instance.DEFAULTREGION, Tooltip.instance.DEFAULTREGION);
+		LCombo cmbRegion = new LCombo(grpGeneral, 2, true);
 		cmbRegion.setItems(Project.current.regions.getData());
 		addControl(cmbRegion, "defaultRegion");
 		
-		new LLabel(grpGeneral, Vocab.instance.MAXHEIGHT);
+		new LLabel(grpGeneral, Vocab.instance.FIELDMAXHEIGHT, Tooltip.instance.FIELDMAXHEIGHT);
 		LSpinner spnHeight = new LSpinner(grpGeneral, 2);
 		spnHeight.setMinimum(0);
 		spnHeight.setMaximum(99);
 		addControl(spnHeight, "maxHeight");
 		
-		new LLabel(grpGeneral, Vocab.instance.BGM);
+		new LLabel(grpGeneral, Vocab.instance.BGM, Tooltip.instance.BGM);
 		LText txtBGM = new LText(grpGeneral, true);
 		AudioButton btnBGM = new AudioButton(grpGeneral, true);
 		btnBGM.setTextWidget(txtBGM);
 		addControl(btnBGM, "bgm");
 		
-		new LLabel(grpGeneral, Vocab.instance.ONLOAD);
+		new LLabel(grpGeneral, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
 		LText txtScript = new LText(grpGeneral, true);
 		
 		ScriptButton btnScript = new ScriptButton(grpGeneral, 1);
@@ -93,6 +100,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		// Images
 		
 		LFrame grpImages = new LFrame(contentEditor, Vocab.instance.IMAGES, false, true);
+		grpImages.setHoverText(Tooltip.instance.IMAGES);
 		grpImages.setSpread(1, 2);
 		grpImages.setExpand(false, true);
 		
@@ -115,6 +123,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		// Tags
 		
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, false, true);
+		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.setSpread(1, 2);
 		grpTags.setExpand(false, true);
 		TagList lstTags = new TagList(grpTags);
@@ -123,6 +132,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		// Transitions
 		
 		LFrame grpTransitions = new LFrame(contentEditor, Vocab.instance.TRANSITIONS, 1, false);
+		grpTransitions.setHoverText(Tooltip.instance.TRANSITIONS);
 		grpTransitions.setExpand(true, true);
 		
 		SimpleEditableList<Transition> lstTransitions = new SimpleEditableList<>(grpTransitions);
@@ -138,7 +148,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Destination
 		
-		new LLabel(transitionEditor, Vocab.instance.DESTINATION);
+		new LLabel(transitionEditor, Vocab.instance.DESTINATION, Tooltip.instance.DESTINATION);
 		LText txtDest = new LText(transitionEditor, true);
 		PositionButton btnDest = new PositionButton(transitionEditor);
 		btnDest.setTextWidget(txtDest);
@@ -146,7 +156,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Origin Tiles
 		
-		new LLabel(transitionEditor, Vocab.instance.ORIGTILES);
+		new LLabel(transitionEditor, Vocab.instance.ORIGTILES, Tooltip.instance.ORIGTILES);
 		LText txtOrigin = new LText(transitionEditor, true);
 		PortalButton btnOrigin = new PortalButton(transitionEditor, FieldSideEditor.instance.field.id);
 		btnOrigin.setTextWidget(txtOrigin);
@@ -154,7 +164,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Fade
 		
-		new LLabel(transitionEditor, Vocab.instance.FADEOUT);
+		new LLabel(transitionEditor, Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT);
 		LSpinner spnFade = new LSpinner(transitionEditor);
 		spnFade.setMinimum(-1);
 		spnFade.setMaximum(99999);

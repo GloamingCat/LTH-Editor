@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 
 import java.awt.image.BufferedImage;
@@ -60,23 +61,23 @@ public class QuadShell extends LObjectShell<Quad> {
 		spinners.setExpand(true, false);
 		spinners.setAlignment(LFlags.CENTER);
 
-		new LLabel(spinners, Vocab.instance.QUADX);
+		new LLabel(spinners, Vocab.instance.QUADX, Tooltip.instance.QUADX);
 
 		spnX = new LSpinner(spinners);
 		spnX.setMaximum(4095);
 
-		new LLabel(spinners, Vocab.instance.QUADW);
+		new LLabel(spinners, Vocab.instance.QUADW, Tooltip.instance.QUADW);
 
 		spnWidth = new LSpinner(spinners);
 		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
 
-		new LLabel(spinners, Vocab.instance.QUADY);
+		new LLabel(spinners, Vocab.instance.QUADY, Tooltip.instance.QUADY);
 
 		spnY = new LSpinner(spinners);
 		spnY.setMaximum(4095);
 
-		new LLabel(spinners, Vocab.instance.QUADH);
+		new LLabel(spinners, Vocab.instance.QUADH, Tooltip.instance.QUADH);
 
 		spnHeight = new LSpinner(spinners);
 		spnHeight.setMaximum(4096);

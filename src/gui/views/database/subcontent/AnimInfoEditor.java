@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import data.Skill.AnimInfo;
 import gson.editor.GDefaultObjectEditor;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.IDButton;
 import lwt.container.LContainer;
@@ -31,7 +32,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		LPanel battle = new LPanel(tab, 3, false);
 		tab.addTab(Vocab.instance.BATTLE, battle);
 		
-		LLabel lblLoad = new LLabel(battle, Vocab.instance.LOAD);
+		LLabel lblLoad = new LLabel(battle, Vocab.instance.LOAD, Tooltip.instance.LOAD);
 		LText txtLoad = new LText(battle, true);
 		btnLoad = new IDButton(battle, true);
 		btnLoad.setNameWidget(txtLoad);
@@ -39,7 +40,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		btnLoad.addMenu(txtLoad);
 		addControl(btnLoad, "loadID");
 		
-		LLabel lblCast = new LLabel(battle, Vocab.instance.CAST);
+		LLabel lblCast = new LLabel(battle, Vocab.instance.CAST, Tooltip.instance.CAST);
 		LText txtCast = new LText(battle, true);
 		btnCast = new IDButton(battle, true);
 		btnCast.setNameWidget(txtCast);
@@ -47,7 +48,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		btnCast.addMenu(txtCast);
 		addControl(btnCast, "castID");
 		
-		LLabel lblInd = new LLabel(battle, Vocab.instance.INDIVIDUAL);
+		LLabel lblInd = new LLabel(battle, Vocab.instance.INDIVIDUAL, Tooltip.instance.INDIVIDUAL);
 		LText txtInd = new LText(battle, true);
 		btnInd = new IDButton(battle, true);
 		btnInd.setNameWidget(txtInd);
@@ -56,9 +57,10 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		addControl(btnInd, "individualID");
 		
 		LCheckBox btnMirror = new LCheckBox(battle);
+		btnMirror.setText(Vocab.instance.MIRROR);
+		btnMirror.setHoverText(Tooltip.instance.MIRROR);
 		btnMirror.setSpread(3, 1);
 		btnMirror.setExpand(false, false);
-		btnMirror.setText(Vocab.instance.MIRROR);
 		btnMirror.addMenu();
 		addControl(btnMirror, "mirror");
 		
@@ -67,12 +69,12 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		LPanel user = new LPanel(tab, 2, false);
 		tab.addTab(Vocab.instance.USER, user);
 		
-		LLabel lblUserLoad = new LLabel(user, Vocab.instance.LOAD);
+		LLabel lblUserLoad = new LLabel(user, Vocab.instance.LOAD, Tooltip.instance.USERLOAD);
 		LText txtUserLoad = new LText(user);
 		txtUserLoad.addMenu(lblUserLoad);
 		addControl(txtUserLoad, "userLoad");
 		
-		LLabel lblUserCast = new LLabel(user, Vocab.instance.CAST);
+		LLabel lblUserCast = new LLabel(user, Vocab.instance.CAST, Tooltip.instance.USERCAST);
 		LText txtUserCast = new LText(user);
 		txtUserCast.addMenu(lblUserCast);
 		addControl(txtUserCast, "userCast");
@@ -87,35 +89,35 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		LPanel animOptions = new LPanel(tab, 4, false);
 		tab.addTab(Vocab.instance.OPTIONS, animOptions);
 		
-		LLabel lblIntroTime = new LLabel(animOptions, Vocab.instance.INTROTIME);
+		LLabel lblIntroTime = new LLabel(animOptions, Vocab.instance.INTROTIME, Tooltip.instance.INTROTIME);
 		LSpinner spnIntroTime = new LSpinner(animOptions);
 		spnIntroTime.addMenu(lblIntroTime);
 		spnIntroTime.setMinimum(-1);
 		spnIntroTime.setMaximum(3600);
 		addControl(spnIntroTime, "introTime");
 		
-		LLabel lblCastTime = new LLabel(animOptions, Vocab.instance.CASTTIME);
+		LLabel lblCastTime = new LLabel(animOptions, Vocab.instance.CASTTIME, Tooltip.instance.CASTTIME);
 		LSpinner spnCastTime = new LSpinner(animOptions);
 		spnCastTime.addMenu(lblCastTime);
 		spnCastTime.setMinimum(-1);
 		spnCastTime.setMaximum(3600);
 		addControl(spnCastTime, "castTime");
 		
-		LLabel lblCenterTime = new LLabel(animOptions, Vocab.instance.CENTERTIME);
+		LLabel lblCenterTime = new LLabel(animOptions, Vocab.instance.CENTERTIME, Tooltip.instance.CENTERTIME);
 		LSpinner spnCenterTime = new LSpinner(animOptions);
 		spnCenterTime.addMenu(lblCenterTime);
 		spnCenterTime.setMinimum(-1);
 		spnCenterTime.setMaximum(3600);
 		addControl(spnCenterTime, "centerTime");
 		
-		LLabel lblTargetTime = new LLabel(animOptions, Vocab.instance.TARGETTIME);
+		LLabel lblTargetTime = new LLabel(animOptions, Vocab.instance.TARGETTIME, Tooltip.instance.TARGETTIME);
 		LSpinner spnTargetTime = new LSpinner(animOptions);
 		spnTargetTime.addMenu(lblTargetTime);
 		spnTargetTime.setMinimum(-1);
 		spnTargetTime.setMaximum(3600);
 		addControl(spnTargetTime, "targetTime");
 		
-		LLabel lblFinishTime = new LLabel(animOptions, Vocab.instance.FINISHTIME);
+		LLabel lblFinishTime = new LLabel(animOptions, Vocab.instance.FINISHTIME, Tooltip.instance.FINISHTIME);
 		LSpinner spnFinishTime = new LSpinner(animOptions);
 		spnFinishTime.addMenu(lblFinishTime);
 		spnFinishTime.setMinimum(-1);

@@ -18,9 +18,5 @@ public class Property {
 			return prop.id == id && prop.value == value;
 		} else return false;
 	}
-	
-	public String toString() {
-		return id + ": " + value;
-	}
 
 }

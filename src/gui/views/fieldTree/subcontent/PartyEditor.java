@@ -1,5 +1,6 @@
 package gui.views.fieldTree.subcontent;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.field.TroopSpawnShell;
 import gui.views.fieldTree.FieldEditor;
@@ -40,7 +41,7 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		
 		// Position
 		
-		new LLabel(position, Vocab.instance.POSITION);
+		new LLabel(position, Vocab.instance.POSITION, Tooltip.instance.PARTYPOS);
 		
 		LSpinner spnX = new LSpinner(position);
 		spnX.setMinimum(1);
@@ -76,7 +77,7 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 			}
 		});
 		
-		new LLabel(this, Vocab.instance.NAME);
+		new LLabel(this, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
 		LText txtName = new LText(this);
 		addControl(txtName, "name");
@@ -87,10 +88,10 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 			}
 		});
 		
-		new LLabel(this, Vocab.instance.DIRECTION);
+		new LLabel(this, Vocab.instance.DIRECTION, Tooltip.instance.PARTYDIR);
 		
-		LCombo cmbDir = new LCombo(this);
-		String[] d = new String[] {"0Â°", "90Â°", "180Â°", "270Â°"};
+		LCombo cmbDir = new LCombo(this, true);
+		String[] d = new String[] {"0°", "90°", "180°", "270°"};
 		cmbDir.setIncludeID(false);
 		cmbDir.setOptional(false);
 		cmbDir.setItems(d);
@@ -105,16 +106,20 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		
 		// Members
 		
-		new LLabel(this, Vocab.instance.PARTYGEN);
+		new LLabel(this, Vocab.instance.PARTYGEN, Tooltip.instance.PARTYGEN);
 		
-		LCombo cmbGen = new LCombo(this);
-		String[] s = new String[] {Vocab.instance.FIELDCHARS, Vocab.instance.TROOPUNITS};
+		LCombo cmbGen = new LCombo(this, true);
+		String[] s = new String[] {
+			Vocab.instance.FIELDCHARS,
+			Vocab.instance.TROOPUNITS
+		};
 		cmbGen.setIncludeID(false);
 		cmbGen.setOptional(false);
 		cmbGen.setItems(s);
 		addControl(cmbGen, "memberGen");
 		
 		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS, true, true);
+		grpTroops.setHoverText(Tooltip.instance.PARTYTROOPS);
 		grpTroops.setExpand(true, true);
 		grpTroops.setSpread(2, 1);
 		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops);

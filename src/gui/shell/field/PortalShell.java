@@ -1,5 +1,6 @@
 package gui.shell.field;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.*;
@@ -60,7 +61,7 @@ public class PortalShell extends LObjectShell<Portal> {
 			}
 		};
 
-		new LLabel(content, Vocab.instance.HEIGHT).setAlignment(LFlags.CENTER);
+		new LLabel(content, LFlags.CENTER, Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH);
 		spnH = new LSpinner(content);
 		spnH.setMinimum(1);
 		spnH.setValue(1);

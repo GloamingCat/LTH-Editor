@@ -1,5 +1,6 @@
 package gui.views.database.subcontent;
 
+import gui.Tooltip;
 import gui.Vocab;
 
 import java.lang.reflect.Type;
@@ -23,6 +24,7 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 	public NeighborEditor(LContainer parent) {
 		super(parent, true, false);
 		LFrame group = new LFrame(this, Vocab.instance.NEIGHBORS, 2, true);
+		group.setHoverText(Tooltip.instance.NEIGHBORS);
 		
 		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
 		btnNone.addModifyListener(allAction(false));

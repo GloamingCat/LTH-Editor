@@ -1,5 +1,6 @@
 package gui.views.fieldTree;
 
+import gui.Tooltip;
 import gui.helper.TilePainter;
 import lwt.LFlags;
 import lwt.container.LContainer;
@@ -35,7 +36,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		toolBar.setAlignment(LFlags.CENTER);
 		toolBar.setExpand(true, false);
 		
-		LLabel lblId = new LLabel(this, "ID: 9999");
+		LLabel lblId = new LLabel(this, "ID: 9999", Tooltip.instance.ID);
 		
 		scrolledComposite = new LScrollPanel(this, true);
 		scrolledComposite.setExpand(true, true);

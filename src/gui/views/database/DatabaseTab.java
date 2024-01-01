@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import gson.editor.GDefaultObjectEditor;
 import gson.editor.GDefaultTreeEditor;
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.ImageButton;
@@ -79,13 +80,14 @@ public abstract class DatabaseTab<T> extends LView {
 		right.setExpand(true, true);
 		
 		grpGeneral = new LFrame(left, Vocab.instance.GENERAL, 2, false);
+		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setExpand(true, false);
 		
 		LPanel compID = new LPanel(grpGeneral, 3, false);
 		compID.setExpand(true, false);
 		compID.setSpread(2, 1);
-		lblID = new LLabel(compID, LFlags.EXPAND, "");
-		lblKey = new LLabel(compID, Vocab.instance.KEY);
+		lblID = new LLabel(compID, LFlags.EXPAND, "", Tooltip.instance.ID);
+		lblKey = new LLabel(compID, Vocab.instance.KEY, Tooltip.instance.KEY);
 		txtKey = new LText(compID);
 		txtKey.addModifyListener(new LControlListener<String>() {
 			@Override
@@ -97,7 +99,7 @@ public abstract class DatabaseTab<T> extends LView {
 		});
 		contentEditor.addControl(txtKey, "key");
 		
-		lblName = new LLabel(grpGeneral, Vocab.instance.NAME);
+		lblName = new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
 		lblName.setMinimumWidth(72);
 		
 		txtName = new LText(grpGeneral);

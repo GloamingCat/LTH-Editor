@@ -1,5 +1,6 @@
 package gui.shell.system;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
@@ -21,12 +22,12 @@ public class ElementShell extends ObjectShell<Element> {
 		
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
 		LText txtName = new LText(contentEditor);
 		addControl(txtName, "name");
 		
-		new LLabel(contentEditor, Vocab.instance.ICON);
+		new LLabel(contentEditor, Vocab.instance.ICON, Tooltip.instance.ICON);
 		
 		LPanel icon = new LPanel(contentEditor, 2, false);
 		icon.setAlignment(LFlags.CENTER);
@@ -39,6 +40,7 @@ public class ElementShell extends ObjectShell<Element> {
 		addControl(btnIcon, "icon");
 		
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, true, true);
+		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.setSpread(2, 1);
 		grpTags.setExpand(false, true);
 		grpTags.setMinimumWidth(150);

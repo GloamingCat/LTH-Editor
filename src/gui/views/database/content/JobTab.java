@@ -10,6 +10,7 @@ import lwt.dialog.LShellFactory;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.JobSkillShell;
 import gui.shell.database.JobStatusShell;
@@ -33,14 +34,14 @@ public class JobTab extends DatabaseTab<Job> {
 	public JobTab(LContainer parent) {
 		super(parent);
 		
-		LLabel lblExp = new LLabel(grpGeneral, Vocab.instance.EXPCURVE);
+		LLabel lblExp = new LLabel(grpGeneral, Vocab.instance.EXPCURVE, Tooltip.instance.EXPCURVE);
 		LText txtCurve = new LText(grpGeneral);
 		txtCurve.addMenu(lblExp);
 		addControl(txtCurve, "expCurve");
 		
 		// Attack Skill
 		
-		LLabel lblAtk = new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL);
+		LLabel lblAtk = new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL, Tooltip.instance.ATTACKSKILL);
 		LPanel attackSkill = new LPanel(grpGeneral, 2, false);
 		attackSkill.setExpand(true, false);
 		attackSkill.setAlignment(LFlags.CENTER);
@@ -53,6 +54,7 @@ public class JobTab extends DatabaseTab<Job> {
 		addControl(btnAttack, "attackID");
 		
 		LFrame grpBuild = new LFrame(left, Vocab.instance.BUILD, true, true);
+		grpBuild.setHoverText(Tooltip.instance.BUILD);
 		grpBuild.setExpand(true, true);
 		BuildEditor buildEditor = new BuildEditor(grpBuild, 1);
 		buildEditor.addMenu(grpBuild);
@@ -62,6 +64,7 @@ public class JobTab extends DatabaseTab<Job> {
 		nodes.setExpand(true, true);
 
 		LFrame grpSkillNodes = new LFrame(nodes, Vocab.instance.SKILLNODES, true, true);
+		grpSkillNodes.setHoverText(Tooltip.instance.SKILLNODES);
 		SimpleEditableList<Job.Skill> lstSkills = new SimpleEditableList<>(grpSkillNodes);
 		lstSkills.getCollectionWidget().setEditEnabled(false);
 		lstSkills.setIncludeID(false);
@@ -76,6 +79,7 @@ public class JobTab extends DatabaseTab<Job> {
 		});
 
 		LFrame grpStatusNodes = new LFrame(nodes, Vocab.instance.STATUSNODES, true, true);
+		grpStatusNodes.setHoverText(Tooltip.instance.STATUSNODES);
 		SimpleEditableList<Job.Status> lstStatuses = new SimpleEditableList<>(grpStatusNodes);
 		lstStatuses.getCollectionWidget().setEditEnabled(false);
 		lstStatuses.setIncludeID(false);

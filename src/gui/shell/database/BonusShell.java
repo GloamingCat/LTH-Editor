@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -29,9 +30,9 @@ public class BonusShell extends ObjectShell<Bonus> {
 		
 		// Type of bonus
 		
-		new LLabel(contentEditor, Vocab.instance.TYPE);
+		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.BONUSTYPE);
 		
-		cmbType = new LCombo(contentEditor);
+		cmbType = new LCombo(contentEditor, true);
 		cmbType.setOptional(false);
 		cmbType.setIncludeID(false);
 		cmbType.setItems(new String[] {
@@ -44,7 +45,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 		
 		// Value of bonus
 		
-		new LLabel(contentEditor, Vocab.instance.VALUE);
+		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.BONUSVALUE);
 		
 		LSpinner spnValue = new LSpinner(contentEditor);
 		spnValue.setMinimum(-10000);
@@ -53,7 +54,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 		
 		// ID
 		
-		typeLabel = new LLabel(contentEditor, LFlags.TOP, Vocab.instance.ELEMENT);
+		typeLabel = new LLabel(contentEditor, LFlags.TOP, Vocab.instance.ELEMENT, Tooltip.instance.ELEMENTBONUS);
 		
 		final LStack stack = new LStack(contentEditor);
 		stack.setExpand(true, true);
@@ -70,6 +71,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 				if (event.newValue == 3) {
 					// Status
 					typeLabel.setText(Vocab.instance.STATUS);
+					typeLabel.setHoverText(Tooltip.instance.STATUSBONUS);
 					typeNode = statusTree;
 					stack.setTop((LWidget) typeNode);
 					removeControl(elementTree);
@@ -77,6 +79,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 				} else {
 					// Element
 					typeLabel.setText(Vocab.instance.ELEMENT);
+					typeLabel.setHoverText(Tooltip.instance.ELEMENTBONUS);
 					typeNode = elementTree;
 					stack.setTop((LWidget) typeNode);	
 					removeControl(statusTree);

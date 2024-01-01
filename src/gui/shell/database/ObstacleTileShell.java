@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.NeighborEditor;
@@ -25,30 +26,31 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 		contentEditor.setGridLayout(2, true);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 2, false);
+		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setExpand(true, false);
 
-		new LLabel(grpGeneral, Vocab.instance.OFFSETX);
+		new LLabel(grpGeneral, Vocab.instance.OFFSETX, Tooltip.instance.TILEX);
 		
 		spnX = new LSpinner(grpGeneral);
 		spnX.setMaximum(100);
 		spnX.setMinimum(-100);
 		addControl(spnX, "dx");
 		
-		new LLabel(grpGeneral, Vocab.instance.OFFSETY);
+		new LLabel(grpGeneral, Vocab.instance.OFFSETY, Tooltip.instance.TILEY);
 		
 		spnY = new LSpinner(grpGeneral);
 		spnY.setMaximum(100);
 		spnY.setMinimum(-100);
 		addControl(spnY, "dy");
 		
-		new LLabel(grpGeneral, Vocab.instance.HEIGHT);
+		new LLabel(grpGeneral, Vocab.instance.HEIGHT, Tooltip.instance.TILEH);
 		
 		spnHeight = new LSpinner(grpGeneral);
 		spnHeight.setMaximum(100);
 		spnHeight.setMinimum(0);
 		addControl(spnX, "height");
 		
-		new LLabel(grpGeneral, Vocab.instance.MODE);
+		new LLabel(grpGeneral, Vocab.instance.MODE, Tooltip.instance.MODE);
 		
 		cmbMode = new LCombo(grpGeneral, true);
 		cmbMode.setItems(new String[] {

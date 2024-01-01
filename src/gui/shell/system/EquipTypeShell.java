@@ -1,5 +1,6 @@
 package gui.shell.system;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -18,19 +19,19 @@ public class EquipTypeShell extends ObjectShell<EquipType> {
 		setTitle(Vocab.instance.EQUIP);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
 
 		LText txtName = new LText(contentEditor);
 		addControl(txtName, "name");
 		
-		new LLabel(contentEditor, Vocab.instance.KEY);
+		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 
 		LText txtKey = new LText(contentEditor);
 		addControl(txtKey, "key");
 		
-		new LLabel(contentEditor, Vocab.instance.STATE);
+		new LLabel(contentEditor, Vocab.instance.STATE, Tooltip.instance.STATE);
 		
-		LCombo cmbState = new LCombo(contentEditor);
+		LCombo cmbState = new LCombo(contentEditor, true);
 		cmbState.setIncludeID(false);
 		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {
@@ -40,7 +41,7 @@ public class EquipTypeShell extends ObjectShell<EquipType> {
 		});
 		addControl(cmbState, "state");
 		
-		new LLabel(contentEditor, Vocab.instance.COUNT);
+		new LLabel(contentEditor, Vocab.instance.COUNT, Tooltip.instance.SLOTSIZE);
 		
 		LSpinner spnCount = new LSpinner(contentEditor);
 		spnCount.setMinimum(1);

@@ -1,5 +1,6 @@
 package gui.views.fieldTree;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.views.fieldTree.subcontent.CharTileEditor;
 import gui.views.fieldTree.subcontent.LayerList;
@@ -63,6 +64,14 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		Vocab.instance.PARTY
 	};
 	
+	private static String[] tooltips = new String[] { 
+		Tooltip.instance.TERRAIN,
+		Tooltip.instance.OBSTACLE,
+		Tooltip.instance.REGION,
+		Tooltip.instance.CHARACTER,
+		Tooltip.instance.PARTY
+	};
+	
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
@@ -81,6 +90,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		LSashPanel terrain = new LSashPanel(stack, false);
 		
 		LFrame grpTerrainLayers = new LFrame(terrain, Vocab.instance.LAYERS, true, true);
+		grpTerrainLayers.setHoverText(Tooltip.instance.LAYERS);
 		LayerList lstTerrain = new LayerList(grpTerrainLayers, 0) {
 			@Override
 			public LDataList<Layer> getLayerList(Field field) {
@@ -90,6 +100,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lstTerrain.setEditor(this);
 		
 		LFrame grpTerrainTiles = new LFrame(terrain, Vocab.instance.TILES, false);
+		grpTerrainTiles.setHoverText(Tooltip.instance.TILESET);
 		TileTree selTerrain = new TileTree(grpTerrainTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
@@ -119,6 +130,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		LSashPanel obstacle = new LSashPanel(stack, false);
 		
 		LFrame grpObstacleLayers = new LFrame(obstacle, Vocab.instance.LAYERS, true, true);
+		grpObstacleLayers.setHoverText(Tooltip.instance.LAYERS);
 		LayerList lstObstacle = new LayerList(grpObstacleLayers, 1) {
 			@Override
 			public LDataList<Layer> getLayerList(Field field) {
@@ -128,13 +140,14 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lstObstacle.setEditor(this);
 		
 		LFrame grpObstacleTiles = new LFrame(obstacle, Vocab.instance.TILES, false);
-		LImage imgObstacle = new LImage(grpObstacleTiles);
+		grpObstacleTiles.setHoverText(Tooltip.instance.TILES);
 		TileTree selObstacle = new TileTree(grpObstacleTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
 				return Project.current.obstacles.getTree();
 			}
 		};
+		LImage imgObstacle = new LImage(grpObstacleTiles);
 		selObstacle.selector.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
@@ -155,6 +168,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		region.setAlignment(LFlags.CENTER);
 		
 		LFrame grpRegionLayers = new LFrame(region, Vocab.instance.LAYERS, true, true);
+		grpRegionLayers.setHoverText(Tooltip.instance.LAYERS);
 		LayerList lstRegion = new LayerList(grpRegionLayers, 2) {
 			public LDataList<Layer> getLayerList(Field field) {
 				return field.layers.region;
@@ -163,6 +177,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lstRegion.setEditor(this);
 		
 		LFrame grpRegionTiles = new LFrame(region, Vocab.instance.TILES, false);
+		grpRegionTiles.setHoverText(Tooltip.instance.TILES);
 		TileTree selRegion = new TileTree(grpRegionTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
@@ -185,8 +200,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		// Characters
 		
 		LSashPanel character = new LSashPanel(stack, false);
-		character.setExpand(true, false);
-		character.setAlignment(LFlags.CENTER);
 		
 		LCollectionListener<CharTile> charListener = new LCollectionListener<CharTile>() {
 			public void onInsert(LInsertEvent<CharTile> event) {
@@ -202,16 +215,17 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				FieldEditor.instance.canvas.redraw();
 			}
 		};
-		
-		LFrame grpChars = new LFrame(character, Vocab.instance.LAYERS, true, true);
-		grpChars.setExpand(true, true);
-		lstChars = new SimpleEditableList<>(grpChars);
+
+		lstChars = new SimpleEditableList<>(character);
+		lstChars.setMargins(5, 5);
+		lstChars.setExpand(true, true);
 		lstChars.getCollectionWidget().setEditEnabled(false);
 		lstChars.setIncludeID(false);
 		lstChars.type = CharTile.class;
 		addChild(lstChars, "characters");
 		
 		charEditor = new CharTileEditor(character);
+		charEditor.setMargins(5, 5);
 		charEditor.setExpand(true, false);
 		lstChars.addChild(charEditor);
 		lstChars.getCollectionWidget().addInsertListener(charListener);
@@ -232,10 +246,12 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		LPanel party = new LPanel(stack, 2, false);
 		party.setAlignment(LFlags.CENTER);
 		party.setExpand(true, false);
+		party.setMargins(5, 5);
+		party.setSpacing(5, 0);
 		
-		new LLabel(party, Vocab.instance.PLAYERPARTY);
+		new LLabel(party, Vocab.instance.PLAYERPARTY, Tooltip.instance.PLAYERPARTY);
 		
-		cmbPlayerParty = new LCombo(party);
+		cmbPlayerParty = new LCombo(party, true);
 		cmbPlayerParty.setIncludeID(false);
 		cmbPlayerParty.setOptional(true);
 		addControl(cmbPlayerParty, "playerParty");
@@ -256,6 +272,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 		
 		lstParties = new SimpleEditableList<>(partylist);
+		lstParties.setMargins(0, 5);
 		lstParties.getCollectionWidget().setEditEnabled(false);
 		lstParties.setIncludeID(true);
 		lstParties.type = Party.class;
@@ -324,6 +341,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			}
 		}
 		lblTitle.setText(titles[i]);
+		lblTitle.setHoverText(tooltips[i]);
 		stack.setTop(editors[i]);
 	}
 	

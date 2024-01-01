@@ -1,6 +1,6 @@
 package gui.views.system;
 
-import gui.shell.system.AudioNodeShell;
+import gui.shell.system.AudioShell;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Audio;
@@ -18,7 +18,7 @@ public class SoundList extends SimpleEditableList<Audio.Node> {
 		setShellFactory(new LShellFactory<Audio.Node>() {
 			@Override
 			public LObjectShell<Audio.Node> createShell(LShell parent) {
-				return new AudioNodeShell(parent, 0);
+				return new AudioShell(parent, AudioShell.OPTIONAL);
 			}
 		});
 	}

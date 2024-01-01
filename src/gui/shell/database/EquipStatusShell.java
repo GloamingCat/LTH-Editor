@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -24,6 +25,7 @@ public class EquipStatusShell extends ObjectShell<EquipStatus> {
 		
 		LCheckBox btnBattle = new LCheckBox(contentEditor);
 		btnBattle.setText(Vocab.instance.ADDONBATTLE);
+		btnBattle.setHoverText(Tooltip.instance.ADDONBATTLE);
 		addControl(btnBattle, "battle");
 		
 		pack();

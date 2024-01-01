@@ -1,5 +1,6 @@
 package gui.shell;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import lwt.LFlags;
@@ -28,7 +29,7 @@ public class ScriptShell extends ObjectShell<Script> {
 		super(parent);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.DESCRIPTION);;
+		new LLabel(contentEditor, Vocab.instance.DESCRIPTION, Tooltip.instance.DESCRIPTION);
 		
 		LText txtDescription = new LText(contentEditor);
 		addControl(txtDescription, "description");
@@ -43,6 +44,7 @@ public class ScriptShell extends ObjectShell<Script> {
 		LPanel composite = new LPanel(form, 1);
 		
 		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
+		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
@@ -52,28 +54,34 @@ public class ScriptShell extends ObjectShell<Script> {
 		
 		LCheckBox btnGlobal = new LCheckBox(options);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
+		btnGlobal.setHoverText(Tooltip.instance.GLOBAL);
 		addControl(btnGlobal, "global");
 		
 		LCheckBox btnWait = new LCheckBox(options);
 		btnWait.setText(Vocab.instance.WAIT);
+		btnWait.setHoverText(Tooltip.instance.WAIT);
 		addControl(btnWait, "wait");
 		
 		LCheckBox btnBlock = new LCheckBox(options);
 		btnBlock.setText(Vocab.instance.BLOCKPLAYER);
+		btnBlock.setHoverText(Tooltip.instance.BLOCKPLAYER);
 		addControl(btnBlock, "block");
 		
 		LCheckBox btnLoad = new LCheckBox(options);
 		btnLoad.setText(Vocab.instance.ONLOAD);
+		btnLoad.setHoverText(Tooltip.instance.ONLOAD);
 		addControl(btnLoad, "onLoad");
 		btnLoad.setEnabled((style & ONLOAD) > 0);
 	
 		LCheckBox btnCollide = new LCheckBox(options);
 		btnCollide.setText(Vocab.instance.ONCOLLIDE);
+		btnCollide.setHoverText(Tooltip.instance.ONCOLLIDE);
 		addControl(btnCollide, "onCollide");
 		btnCollide.setEnabled((style & ONCOLLIDE) > 0);
 		
 		LCheckBox btnInteract = new LCheckBox(options);
 		btnInteract.setText(Vocab.instance.ONINTERACT);
+		btnInteract.setHoverText(Tooltip.instance.ONINTERACT);
 		addControl(btnInteract, "onInteract");
 		btnInteract.setEnabled((style & ONINTERACT) > 0);
 		

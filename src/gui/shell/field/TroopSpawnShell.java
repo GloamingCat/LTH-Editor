@@ -1,6 +1,7 @@
 
 package gui.shell.field;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -17,7 +18,7 @@ public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 		super(parent, 360, 320);
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.MINLEVEL);
+		new LLabel(contentEditor, Vocab.instance.MINLEVEL, Tooltip.instance.MINLEVEL);
 		
 		LSpinner spnMin = new LSpinner(contentEditor);
 		spnMin.setMinimum(0);
@@ -25,7 +26,7 @@ public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 		spnMin.setValue(1);
 		addControl(spnMin, "minLevel");
 		
-		new LLabel(contentEditor, Vocab.instance.MAXLEVEL);
+		new LLabel(contentEditor, Vocab.instance.MAXLEVEL, Tooltip.instance.MAXLEVEL);
 		
 		LSpinner spnMax = new LSpinner(contentEditor);
 		spnMax.setMinimum(0);

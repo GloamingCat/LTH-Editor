@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
@@ -16,21 +17,21 @@ public class CharTileShell extends ObjectShell<Tile> {
 		
 		contentEditor.setGridLayout(2, false);
 
-		new LLabel(contentEditor, Vocab.instance.OFFSETX);
+		new LLabel(contentEditor, Vocab.instance.OFFSETX, Tooltip.instance.TILEX);
 		
 		LSpinner spnX = new LSpinner(contentEditor);
 		spnX.setMaximum(10);
 		spnX.setMinimum(-10);
 		addControl(spnX, "dx");
 		
-		new LLabel(contentEditor, Vocab.instance.OFFSETY);
+		new LLabel(contentEditor, Vocab.instance.OFFSETY, Tooltip.instance.TILEY);
 		
 		LSpinner spnY = new LSpinner(contentEditor);
 		spnY.setMaximum(10);
 		spnY.setMinimum(-10);
 		addControl(spnY, "dy");
 		
-		new LLabel(contentEditor, Vocab.instance.HEIGHT);
+		new LLabel(contentEditor, Vocab.instance.HEIGHT, Tooltip.instance.TILEH);
 		
 		LSpinner spnHeight = new LSpinner(contentEditor);
 		spnHeight.setMaximum(20);

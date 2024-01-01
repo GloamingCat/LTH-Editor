@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import gson.project.GObjectTreeSerializer;
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.CharTileShell;
 import gui.views.database.DatabaseTab;
@@ -47,7 +48,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 	public CharacterTab(LContainer parent) {
 		super(parent);
 		
-		LLabel lblBattler = new LLabel(grpGeneral, Vocab.instance.CHARBATTLER);
+		LLabel lblBattler = new LLabel(grpGeneral, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
 		LPanel battler = new LPanel(grpGeneral, 2, false);
 		battler.setExpand(true, false);
 		LText txtBattler = new LText(battler, true);
@@ -59,10 +60,10 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		// Shadow
 		
-		LLabel lblShadow = new LLabel(grpGeneral, Vocab.instance.SHADOW);
+		LLabel lblShadow = new LLabel(grpGeneral, Vocab.instance.SHADOW, Tooltip.instance.SHADOW);
 		LPanel shadow = new LPanel(grpGeneral, 2, false);
 		shadow.setExpand(true, false);
-		LText txtShadow = new LText(shadow, true);		
+		LText txtShadow = new LText(shadow, true);	
 		btnShadow = new IDButton(shadow, true);
 		btnShadow.setNameWidget(txtShadow);
 		btnShadow.addMenu(lblShadow);
@@ -74,6 +75,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LPanel middle = new LPanel(left, true, true);
 		middle.setExpand(true, true);
 		LFrame grpTiles = new LFrame(middle, Vocab.instance.COLLIDERTILES, true, true);
+		grpTiles.setHoverText(Tooltip.instance.COLLIDERTILES);
 		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles);
 		lstTiles.type = Tile.class;
 		lstTiles.setIncludeID(false);
@@ -89,6 +91,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// Scripts
 		
 		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS, 1);
+		grpScripts.setHoverText(Tooltip.instance.SCRIPTS);
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
 		lstScripts.setExpand(true, true);
 		lstScripts.addMenu(grpScripts);
@@ -96,21 +99,23 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
+		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
 		addControl(btnRepeat, "repeatCollisions");
 		
 		// KO
 		
-		LFrame grpKO = new LFrame(left, Vocab.instance.KOANIM, 3, false);
+		LFrame grpKO = new LFrame(left, Vocab.instance.KOEFFECT, 3, false);
+		grpKO.setHoverText(Tooltip.instance.KOEFFECT);
 		grpKO.initGridData();
 		
-		LLabel lblKO = new LLabel(grpKO, Vocab.instance.ANIMATION);
+		LLabel lblKO = new LLabel(grpKO, Vocab.instance.ANIMATION, Tooltip.instance.KOANIM);
 		LText txtKO = new LText(grpKO, true);		
 		btnKO = new IDButton(grpKO, true);
 		btnKO.setNameWidget(txtKO);
 		btnKO.addMenu(lblKO);
 		addControl(btnKO, "koAnimID");
 		
-		LLabel lblFade = new LLabel(grpKO, Vocab.instance.FADEOUT);
+		LLabel lblFade = new LLabel(grpKO, Vocab.instance.FADEOUT, Tooltip.instance.KOFADE);
 		LSpinner spnFade = new LSpinner(grpKO, 2);
 		spnFade.setMinimum(-1);
 		spnFade.setMaximum(999);
@@ -120,6 +125,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// Transform
 		
 		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
+		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.setExpand(true, false);
 		TransformEditor transform = new TransformEditor(grpTransform);
 		transform.addMenu(grpTransform);
@@ -132,6 +138,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		graphics.setSpread(2, 1);
 		
 		LFrame grpAnimations = new LFrame(graphics, Vocab.instance.ANIMATIONS, 2, false);
+		grpAnimations.setHoverText(Tooltip.instance.CHARANIMS);
 		grpAnimations.setExpand(true, true);
 		lstAnim = new NodeList(grpAnimations);
 		lstAnim.getCollectionWidget().setIncludeID(false);
@@ -155,6 +162,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		});
 		
 		LFrame grpPortraits = new LFrame(graphics, Vocab.instance.PORTRAITS, 2, false);
+		grpPortraits.setHoverText(Tooltip.instance.CHARICONS);
 		grpPortraits.setExpand(true, true);
 		PortraitList lstPortraits = new PortraitList(grpPortraits);
 		lstPortraits.setMinimumWidth(128);

@@ -7,8 +7,6 @@ public class Vocab {
 	public String DATABASEEDITOR = "Database Editor";
 	public String SYSTEMEDITOR = "System Editor";
 	public String FIELDEDITOR = "Field Editor";
-	public String GUIEDITOR = "GUI Editor";
-	public String DIALOGUEEDITOR = "Dialogue Editor";
 	
 	// Tab names
 	public String ANIMATIONS = "Animations";
@@ -29,11 +27,19 @@ public class Vocab {
 	public String GENERAL = "General";
 	public String GRAPHICS = "Graphics";
 	public String TAGS = "Tags";
+	public String BATTLE = "Battle";
+	public String GRID = "Grid";
+	public String SCREEN = "Screen";
+	public String PLAYER = "Player";
+	public String TROOP = "Troop";
 	public String ATTRIBUTES = "Attributes";
 	public String ELEMENTS = "Elements";
-	public String BATTLE = "Battle";
-	public String CHARACTER = "Character";
-	public String OTHER = "Other";
+	public String REGIONS = "Regions";
+	public String EQUIPTYPES = "Equip Types";
+	public String PLUGINS = "Plugins";
+	public String VARIABLES = "Variables";
+	public String ICONS = "Icons";
+	public String SOUNDS = "Sounds";
 	
 	// Common
 	public String ID = "ID";
@@ -44,51 +50,48 @@ public class Vocab {
 	public String VALUE = "Value";
 	public String CHANCE = "Chance";
 	public String COUNT = "Count";
-	public String PATH = "Path";
-	public String SECONDS = "sec";
 	public String PROPERTIES = "Properties";
 	public String TYPE = "Type";
 	public String DEFAULT = "Default";
 	public String OPTIONS = "Options";
 	public String ELEMENT = "Element";
+	public String SCRIPT = "Script";
 	
-	// ========================================================================
-	// Config
-	// ========================================================================
+	//////////////////////////////////////////////////
+	// {{ Config
 	
-	// Config
+	// General
 	public String IDENTITY = "Identity";
 	public String PROJECTNAME = "Title";
-	public String ICONS = "Icons";
-	public String SOUNDS = "Sounds";
-	public String LISTS = "Lists";
-	public String REGIONS = "Regions";
-	public String EQUIPTYPES = "Equip Types";
-	public String PLUGINS = "Plugins";
-	public String PLUGINON = "ON";
-	public String CONSTANTS = "Constants";
-	public String VARIABLES = "Variables";
-	public String COLOR = "Color";
-	public String SIZE = "Size";
-	public String FORMAT = "Format";
 	public String EXECUTION = "Run Settings";
 	public String PLATFORM = "Platform";
 	public String DESKTOP = "Desktop";
 	public String MOBILE = "Mobile App";
 	public String BROWSER = "Web Browser";
 	public String MOBILEBROWSER = "Mobile Web Browser";
+	public String LISTS = "Lists";
 	
-	// Attributes
+	// Sub-content
+	public String COLOR = "Color";
+	public String BATTLEFIELDS = "Battle Fields";
+	public String LENGTH = "Size";
+	public String FORMAT = "Format";
 	public String SHORTNAME = "Short Name";
 	public String MUTABLE = "Mutable";
-	public String SCRIPT = "Script";
+	public String FORMULA = "Formula";
 	public String VISIBILITY = "Visibility";
 	public String PRIMARY = "Primary";
 	public String SECONDARY = "Secondary";
 	public String NOTVISIBLE = "Not visible";
+	public String PLUGINON = "ON";
+	public String STATE = "State";
+	public String FREE = "Free";
+	public String NOTEMPTY = "Never empty";
+	public String ALLEQUIPED = "All equiped";
+	public String UNCHANGABLE = "Unchangable";
+	public String INVISIBLE = "Invisible";
 	
 	// Grid
-	public String GRID = "Grid";
 	public String TILEWIDTH = "Tile Width";
 	public String TILEHEIGHT = "Tile Height";
 	public String TILEBASE = "Tile Base";
@@ -101,16 +104,11 @@ public class Vocab {
 	public String OVERPASSDEADS = "Overpass Dead";
 	
 	// Screen
-	public String SCREEN = "Screen";
 	public String COVER = "Cover";
 	public String LOGO = "Logo";
 	public String FPSLIMIT = "FPS Limits";
 	public String NATIVESIZE = "Native Size";
-	public String NATIVEWIDTH = "Native Width";
-	public String NATIVEHEIGHT = "Native Height";
 	public String SCALEFACTOR = "Scale Factor";
-	public String WIDTHSCALE = "Width Scale";
-	public String HEIGHTSCALE = "Height Scale";
 	public String SCALETYPE = "Scale Type";
 	public String MOBILESCALETYPE = "Scale Type (Mobile)";
 	public String NOSCALE = "No scaling";
@@ -121,7 +119,6 @@ public class Vocab {
 	public String VSYNC = "V Sync";
 	
 	// Player
-	public String PLAYER = "Player";
 	public String STARTPOS = "Start Position";
 	public String PIXELMOV = "Pixel Movement";
 	public String STOPCOLL = "Stop On Collision";
@@ -130,7 +127,7 @@ public class Vocab {
 	public String DIAGTHRESHOLD = "Diag Threshold";
 	
 	// Battle
-	public String MAXLEVEL = "Max Level";
+	public String FINALLEVEL = "Max Level";
 	public String ATTHP = "HP Attribute";
 	public String ATTSP = "SP Attribute";
 	public String ATTSTEP = "Step Attribute";
@@ -140,23 +137,16 @@ public class Vocab {
 	public String CHARSPEED = "Char Speed";
 	
 	// Troop
-	public String TROOP = "Troop";
 	public String INITIALTROOP = "Initial Troop";
 	public String MAXMEMBERS = "Max Members";
 	public String TROOPSIZE = "Grid Size";
 	public String WIDTH = "Width";
 	public String HEIGHT = "Height";
 	
-	// Animations
-	public String GUI = "GUI";
-	public String CURSORANIMID = "Cursor Animation";
-	public String BATTLECURSORANIMID = "Battle Cursor Animation";
-	public String TILEANIMID = "Tile Animation";
-	public String TILEHLANIMID = "Tile Highlight Animation";
-	
-	// ========================================================================
-	// Database
-	// ========================================================================
+	// }}
+
+	//////////////////////////////////////////////////
+	// {{ Database
 	
 	// Item
 	public String PRICE = "Price";
@@ -171,28 +161,21 @@ public class Vocab {
 	public String BLOCKEDSLOTS = "Blocked Slots";
 	public String ATTADD = "By constant";
 	public String ATTMUL = "By percentage";
+	public String STATUSES = "Statuses";
 	public String ADDONBATTLE = "Add on battle";
-	public String ELEMENTATK = "Attack Property";
-	public String ELEMENTDEF = "Immunity";
-	public String ELEMENTBUFF = "Damage Multipler";
 	
 	// Battler
 	public String RECRUIT = "Recruitable";
 	public String JOB = "Job";
-	public String ATTACKSKILL = "Attack";
 	public String PERSISTENT = "Persistent";
-	public String AI = "AI";
+	public String RULES = "AI";
 	public String MONEY = "Money";
 	public String EXP = "EXP";
 	public String LEVEL = "Level";
-	public String INITIAL = "Initial";
+	public String INITSKILLS = "Initial Skills";
+	public String INITSTATUS = "Initial Status";
+	public String INITEQUIP = "Initial Equipment";
 	public String DROP = "Drop";
-	public String STATE = "State";
-	public String FREE = "Free";
-	public String NOTEMPTY = "Never empty";
-	public String ALLEQUIPED = "All equiped";
-	public String UNCHANGABLE = "Unchangable";
-	public String INVISIBLE = "Invisible";
 	public String EQUIPITEM = "Item ID";
 	
 	// Skill
@@ -218,9 +201,7 @@ public class Vocab {
 	public String CASTMASK = "Range Mask";
 	public String EFFECTMASK = "Effect Mask";
 	public String USERELEMENTS = "Include user's elements";
-	public String PROJECTILE = "Projectile";
 	public String ROTATE = "Rotate";
-	public String APPLYTRANSFORM = "Apply battle animation transform";
 	public String USERANIMATIONS = "User Animations";
 	public String BATTLEANIMATIONS = "Battle Animations";
 	public String MIRROR = "Mirror";
@@ -237,6 +218,7 @@ public class Vocab {
 	public String STEPONCAST = "Step on Cast";
 	
 	// Animation
+	public String SIZE = "Size";
 	public String COLUMNS = "Columns";
 	public String ROWS = "Rows";
 	public String PATTERN = "Pattern";
@@ -249,17 +231,14 @@ public class Vocab {
 	public String SHADOW = "Shadow";
 	public String COLLIDERTILES = "Collision Tiles";
 	public String PORTRAITS = "Portraits";
-	public String KOANIM = "KO Effect";
+	public String KOEFFECT = "KO Effect";
 	
 	// Job
+	public String ATTACKSKILL = "Attack";
 	public String BUILD = "Build";
 	public String EXPCURVE = "EXP Curve";;
 	public String SKILLNODES = "Skill Nodes";
 	public String STATUSNODES = "Status Nodes";
-	public String SKILL = "Skill";
-	public String REQUIREDSKILLS = "Required Skills";
-	public String EXPCOST = "EXP Cost";
-	public String MINLEVEL = "Min Level";
 	
 	// Obstacles
 	public String NEIGHBORS = "Neighbors";
@@ -291,7 +270,6 @@ public class Vocab {
 	public String PERCENTAGE = "Percent";
 	public String FREQUENCY = "Frequency";
 	public String STATUSCANCEL = "Cancel";
-	public String STATUSDEF = "Status Immunity";
 
 	// Terrain
 	public String MOVECOST = "Move Cost";
@@ -301,10 +279,11 @@ public class Vocab {
 	public String ALLMEMBERS = "Affect All Members";
 	
 	// Troops
+	public String AI = "AI";
 	public String UNITS = "Units";
-	public String POSITIONX = "Grid X";
-	public String POSITIONY = "Grid Y";
-	public String LIST = "List";
+	public String GRIDX = "Grid X";
+	public String GRIDY = "Grid Y";
+	public String UNITLIST = "List";
 	public String CURRENT = "Current";
 	public String BACKUP = "Backup";
 	public String HIDDEN = "Hidden";
@@ -313,9 +292,10 @@ public class Vocab {
 	public String EVENTS = "Events";
 	public String COMMAND = "Command";
 	
-	// ========================================================================
-	// Sub-content
-	// ========================================================================
+	// }}
+	
+	//////////////////////////////////////////////////
+	// {{ Sub-content
 	
 	// Audio
 	public String FILE = "File";
@@ -348,11 +328,7 @@ public class Vocab {
 	public String QUADW = "Quad Width";
 	public String QUADH = "Quad Height";
 	public String FULLIMAGE = "Full Image";
-	
-	// Icon
-	public String COLUMN = "Column";
-	public String ROW = "Row";
-	
+
 	// Script / Rule
 	public String PARAM = "Parameters";
 	public String GLOBAL = "Global";
@@ -367,16 +343,30 @@ public class Vocab {
 	public String SUCCESSRATE = "Success Rate";
 	public String HEAL = "Heal";
 	public String ABSORB = "Absorb";
-	public String STATUSADD = "Add Status";
-	public String STATUSREMOVE = "Cure Status";
-
-	// ========================================================================
-	// Field
-	// ========================================================================
 	
-	// Field
-	public String DEFAULTREGION = "Default Region";
+	// Mask
+	public String MINHEIGHT = "Min Height";
 	public String MAXHEIGHT = "Max Height";
+	public String MINX = "Min X";
+	public String MAXX = "Max X";
+	public String MINY = "Min Y";
+	public String MAXY = "Max Y";
+	
+	// Properties
+	public String ELEMENTDEF = "Elemental Immunity";
+	public String ELEMENTATK = "Attack Property";
+	public String ELEMENTBUFF = "Damage Multipler";
+	public String STATUSDEF = "Status Immunity";
+
+	// }}
+	
+	//////////////////////////////////////////////////
+	// {{ Field
+	
+	// Prefs
+	public String DEFAULTREGION = "Default Region";
+	public String FIELDMAXHEIGHT = "Max Height";
+	public String LOADSCRIPT = "Load Script";
 	public String BGM = "BGM";
 	public String IMAGES = "Images";
 	public String FOREGROUND = "Foreground";
@@ -404,6 +394,7 @@ public class Vocab {
 	public String RIGHT = "Right";
 	
 	// Character
+	public String CHARACTER = "Character";
 	public String ANIMATION = "Animation";
 	public String FRAME = "Frame";
 	public String ONLOAD = "On Load";
@@ -416,16 +407,23 @@ public class Vocab {
 	public String PARTYGEN = "Unit Generation";
 	public String TROOPUNITS = "Troop Units";
 	public String FIELDCHARS = "Field Characters";
+	public String MINLEVEL = "Min Level";
+	public String MAXLEVEL = "Max Level";
 	
 	// Position
 	public String POSITION = "Position";
 	public String LAYER = "Layer";
 	public String DIRECTION = "Direction";
+	public String POSITIONX = "X";
+	public String POSITIONY = "Y";
+	public String POSITIONH = "H";
 	
 	// Transition
 	public String TRANSITIONS = "Transitions";
 	public String DESTINATION = "Destination";
 	public String ORIGTILES = "Origin Tiles";
 	public String FADEOUT = "Fade out";
+	
+	// }}
 
 }

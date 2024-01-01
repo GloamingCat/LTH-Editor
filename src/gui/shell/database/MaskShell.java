@@ -1,5 +1,6 @@
 package gui.shell.database;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.helper.FieldHelper;
 import data.Skill.Mask;
@@ -44,7 +45,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		super(parent);
 		content.setGridLayout(6, false);
 		
-		new LLabel(content, "Min Height");
+		new LLabel(content, Vocab.instance.MINHEIGHT, Tooltip.instance.MINHEIGHT);
 		
 		// Minimum Limits
 		
@@ -63,7 +64,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		spnMinH.setMaximum(20);
 		
-		new LLabel(content, "Min X");
+		new LLabel(content, Vocab.instance.MINX, Tooltip.instance.MINX);
 		
 		spnMinX = new LSpinner(content);
 		spnMinX.addModifyListener(new LControlListener<Integer>() {
@@ -78,7 +79,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		spnMinX.setMaximum(20);
 		
-		new LLabel(content, "Min Y");
+		new LLabel(content, Vocab.instance.MINY, Tooltip.instance.MINY);
 		
 		spnMinY = new LSpinner(content);
 		spnMinY.addModifyListener(new LControlListener<Integer>() {
@@ -93,7 +94,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		spnMinY.setMaximum(20);
 		
-		new LLabel(content, "Max Height");
+		new LLabel(content, Vocab.instance.MAXHEIGHT, Tooltip.instance.MAXHEIGHT);
 		
 		// Maximum Limits
 		
@@ -112,7 +113,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		spnMaxH.setMaximum(20);
 		
-		new LLabel(content, "Max X");
+		new LLabel(content, Vocab.instance.MAXX, Tooltip.instance.MAXX);
 		
 		spnMaxX = new LSpinner(content);
 		spnMaxX.addModifyListener(new LControlListener<Integer>() {
@@ -127,7 +128,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		spnMaxX.setMaximum(20);
 		
-		new LLabel(content, "Max Y");
+		new LLabel(content, Vocab.instance.MAXY, Tooltip.instance.MAXY);
 		
 		spnMaxY = new LSpinner(content);
 		spnMaxY.addModifyListener(new LControlListener<Integer>() {
@@ -142,7 +143,7 @@ public class MaskShell extends LObjectShell<Mask> {
 		});
 		spnMaxY.setMaximum(20);
 		
-		new LLabel(content, Vocab.instance.HEIGHT);
+		new LLabel(content, Vocab.instance.HEIGHT, Tooltip.instance.MASKH);
 		
 		cmbHeight = new LCombo(content, true);
 		cmbHeight.setOptional(false);

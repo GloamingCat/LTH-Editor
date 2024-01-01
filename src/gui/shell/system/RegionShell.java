@@ -1,5 +1,6 @@
 package gui.shell.system;
 
+import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.widgets.IDList;
@@ -23,12 +24,12 @@ public class RegionShell extends ObjectShell<Region> {
 		
 		contentEditor.setGridLayout(2, false);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
 		LText txtName = new LText(contentEditor);
 		addControl(txtName, "name");
 		
-		new LLabel(contentEditor, Vocab.instance.COLOR);
+		new LLabel(contentEditor, Vocab.instance.COLOR, Tooltip.instance.COLOR);
 		
 		LPanel color = new LPanel(contentEditor, 2, false);
 		color.setAlignment(LFlags.CENTER);
@@ -43,13 +44,14 @@ public class RegionShell extends ObjectShell<Region> {
 		//btnColor.setColorWidget(imgColor);
 		//addControl(btnColor, "rgb");
 		
-		LFrame grpTroops = new LFrame(contentEditor, Vocab.instance.TROOPS, true, true);
+		LFrame grpTroops = new LFrame(contentEditor, Vocab.instance.BATTLEFIELDS, true, true);
+		grpTroops.setHoverText(Tooltip.instance.BATTLEFIELDS);
 		grpTroops.setSpread(2, 1);
 		grpTroops.setExpand(true, true);
 		grpTroops.setMinimumWidth(150);
 		grpTroops.setMinimumHeight(100);
 		IDList lstTroops = new IDList(grpTroops);
-		lstTroops.dataTree = Project.current.troops.getTree();
+		lstTroops.dataTree = Project.current.fieldTree.getData().toObjectTree();
 		addChild(lstTroops, "troops");
 
 		pack();
