@@ -14,9 +14,14 @@ import project.Project;
 public class JobSkillShell extends ObjectShell<Job.Skill> {
 
 	public JobSkillShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.SKILLSHELL);
 		setMinimumSize(300, 100);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
 		tree.setExpand(true, true);

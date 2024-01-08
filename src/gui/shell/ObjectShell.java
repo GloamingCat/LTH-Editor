@@ -18,14 +18,18 @@ public class ObjectShell<T> extends LObjectShell<T> {
 	public GDefaultObjectEditor<T> contentEditor;
 	private static Gson gson = new Gson();
 
-	public ObjectShell(LShell parent, int width, int height) {
-		this(parent);
-		setMinimumSize(width, height);
+	public ObjectShell(LShell parent, String title, int style) {
+		super(parent, title, style);
+		content.setExpand(true, true);
+	}
+
+	public ObjectShell(LShell parent, String title) {
+		this(parent, title, 0);
 	}
 	
-	public ObjectShell(LShell parent) {
-		super(parent);
-		content.setExpand(true, true);
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		contentEditor = new GDefaultObjectEditor<T>(content, false) {
 			@Override
 			public Type getType() {

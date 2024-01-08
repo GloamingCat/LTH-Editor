@@ -17,11 +17,17 @@ import data.field.Layer.Info;
 public class LayerShell extends ObjectShell<Info> {
 
 	public LayerShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.LAYERSHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 
-		contentEditor.setGridLayout(2, false);
+		contentEditor.setGridLayout(2);
 		
-		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 2, false);
+		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
+		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setExpand(true, true);
 		
@@ -40,8 +46,10 @@ public class LayerShell extends ObjectShell<Info> {
 		LCheckBox btnNoAuto = new LCheckBox(grpGeneral, 2);
 		btnNoAuto.setText(Vocab.instance.NOAUTO);
 		addControl(btnNoAuto, "noAuto");
+		LFrame frame = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
+		frame.setFillLayout(true);
 		
-		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, true, true);
+		LFrame grpTags = frame;
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.setExpand(true, true);
 		TagList lstTags = new TagList(grpTags);

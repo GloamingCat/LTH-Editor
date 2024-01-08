@@ -53,7 +53,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
+		LPanel compositeIcon = new LPanel(grpGeneral);
+		compositeIcon.setGridLayout(2);
 		compositeIcon.setAlignment(LFlags.CENTER);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
@@ -79,11 +80,12 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Script
 		
 		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
-		LPanel script = new LPanel(grpGeneral, 2, false);
+		LPanel script = new LPanel(grpGeneral);
+		script.setGridLayout(2);
 		script.setAlignment(LFlags.CENTER);
 		
 		LText txtScript = new LText(script, true);		
-		LuaButton btnScript = new LuaButton(script, true);
+		LuaButton btnScript = new LuaButton(script, Vocab.instance.SKILLSCRIPTSHELL, true);
 		btnScript.setPathWidget(txtScript);
 		btnScript.addMenu(lblScript);
 		btnScript.addMenu(txtScript);
@@ -91,7 +93,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Restrictions
 		
-		LFrame grpRestrictions = new LFrame(left, Vocab.instance.RESTRICTIONS, 2, false);
+		LFrame grpRestrictions = new LFrame(left, Vocab.instance.RESTRICTIONS);
+		grpRestrictions.setGridLayout(2);
 		grpRestrictions.setHoverText(Tooltip.instance.RESTRICTIONS);
 		grpRestrictions.setExpand(true, false);
 		
@@ -121,7 +124,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Effects
 		
-		LFrame grpEffects = new LFrame(left, Vocab.instance.EFFECTS, 2, false);
+		LFrame grpEffects = new LFrame(left, Vocab.instance.EFFECTS);
+		grpEffects.setGridLayout(2);
 		grpEffects.setHoverText(Tooltip.instance.EFFECTS);
 		grpEffects.setExpand(true, true);
 		SkillEffectList lstEffects = new SkillEffectList(grpEffects);
@@ -137,7 +141,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Target Selection
 		
-		LFrame grpTarget = new LFrame(left, Vocab.instance.TARGET, 2, false);
+		LFrame grpTarget = new LFrame(left, Vocab.instance.TARGET);
+		grpTarget.setGridLayout(2);
 		grpTarget.setHoverText(Tooltip.instance.TARGET);
 		grpTarget.setExpand(true, false);
 		
@@ -165,7 +170,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		cmbSelection.addMenu(lblSelection);
 		addControl(cmbSelection, "selection");
 		
-		LPanel check = new LPanel(grpTarget, 3, true);
+		LPanel check = new LPanel(grpTarget);
+		check.setGridLayout(3);
 		check.setExpand(true, false);
 		check.setSpread(2, 1);
 		check.setAlignment(LFlags.CENTER);
@@ -173,21 +179,25 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LCheckBox btnAllParties = new LCheckBox(check);
 		btnAllParties.setText(Vocab.instance.ALLPARTIES);
 		btnAllParties.setHoverText(Tooltip.instance.ALLPARTIES);
+		btnAllParties.setExpand(true, false);
 		addControl(btnAllParties, "allParties");
 		
 		LCheckBox btnAutopath = new LCheckBox(check);
 		btnAutopath.setText(Vocab.instance.AUTOPATH);
 		btnAutopath.setHoverText(Tooltip.instance.AUTOPATH);
+		btnAutopath.setExpand(true, false);
 		addControl(btnAutopath, "autoPath");
 		
 		LCheckBox btnFreeNavigation = new LCheckBox(check);
 		btnFreeNavigation.setText(Vocab.instance.FREENAVIGATION);
 		btnFreeNavigation.setHoverText(Tooltip.instance.FREENAVIGATION);
+		btnFreeNavigation.setExpand(true, false);
 		addControl(btnFreeNavigation, "freeNavigation");
 
 		// Animations
 		
-		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS, 1);
+		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS);
+		grpAnimations.setGridLayout(1);
 		grpAnimations.setHoverText(Tooltip.instance.ANIMATIONS);
 		grpAnimations.setExpand(true, false);
 		AnimInfoEditor animEditor = new AnimInfoEditor(grpAnimations);
@@ -198,10 +208,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Elements
 		
-		LFrame grpElements = new LFrame(right, Vocab.instance.ELEMENTS, 2, false);
+		LFrame grpElements = new LFrame(right, Vocab.instance.ELEMENTS);
+		grpElements.setGridLayout(2);
 		grpElements.setHoverText(Tooltip.instance.SKILLELEMENTS);
 		grpElements.setExpand(true, true);
-		lstElements = new PropertyList(grpElements);
+		lstElements = new PropertyList(grpElements, Vocab.instance.SKILLELEMENTSHELL);
 		lstElements.setExpand(true, true);
 		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
@@ -213,10 +224,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Range
 		
-		LPanel range = new LPanel(right, 2, false);
+		LPanel range = new LPanel(right);
+		range.setGridLayout(2);
+		range.setEqualCells(true, false);
 		range.setExpand(true, true);
-		
-		LFrame grpEffect = new LFrame(range, Vocab.instance.EFFECTMASK, 2, false);
+	
+		LFrame grpEffect = new LFrame(range, Vocab.instance.EFFECTMASK);
+		grpEffect.setGridLayout(2);
 		grpEffect.setHoverText(Tooltip.instance.EFFECTMASK);
 		grpEffect.setExpand(true, true);
 		MaskButton btnEffectMask = new MaskButton(grpEffect);
@@ -235,7 +249,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		btnRotate.addMenu();
 		addControl(btnRotate, "rotateEffect");
 		
-		LFrame grpCast = new LFrame(range, Vocab.instance.CASTMASK, 2, false);
+		LFrame grpCast = new LFrame(range, Vocab.instance.CASTMASK);
+		grpCast.setGridLayout(2);
 		grpCast.setHoverText(Tooltip.instance.CASTMASK);
 		grpCast.setExpand(true, true);
 		MaskButton btnCastMask = new MaskButton(grpCast);

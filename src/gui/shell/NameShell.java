@@ -12,16 +12,17 @@ public class NameShell extends LObjectShell<String> {
 	
 	private LText txtName;
 
-	public NameShell(LShell parent) {
-		super(parent);
+	public NameShell(LShell parent, String title) {
+		super(parent, title);
 		setMinimumSize(300, 120);
-		
-		content.setGridLayout(2, false);
-		
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		content.setGridLayout(2);
 		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.NAME);
-		
 		txtName = new LText(content);
-		
 		pack();
 	}
 	

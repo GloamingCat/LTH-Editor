@@ -40,24 +40,33 @@ import project.Project;
 
 public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 
+	protected LLabel fieldID;
+	
 	public FieldPrefShell(LShell parent, FieldNode n) {
-		super(parent);
+		super(parent, "");
 		int id = Project.current.fieldTree.getData().findNode(n).id;
 		setTitle(String.format("[%03d] ", id) + n.name);
-
+		fieldID.setText("ID: " + id);
 		setMinimumSize(600, 400);
-		contentEditor.setGridLayout(3, true);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(3);
 		
-		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 3, false);
+		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
+		grpGeneral.setGridLayout(3);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setAlignment(LFlags.TOP);
 		grpGeneral.setExpand(true, false);
 		
-		LPanel key = new LPanel(grpGeneral, 3, false);
+		LPanel key = new LPanel(grpGeneral);
+		key.setGridLayout(3);
 		key.setExpand(true, false);
 		key.setSpread(3, 1);
 		
-		new LLabel(key, LFlags.EXPAND, "ID: " + id, Tooltip.instance.ID);
+		fieldID = new LLabel(key, LFlags.EXPAND, "", Tooltip.instance.ID);
 		
 		new LLabel(key, Vocab.instance.KEY, Tooltip.instance.KEY);
 		LText txtKey = new LText(key);
@@ -99,10 +108,11 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Images
 		
-		LFrame grpImages = new LFrame(contentEditor, Vocab.instance.IMAGES, false, true);
+		LFrame grpImages = new LFrame(contentEditor, (String) Vocab.instance.IMAGES);
+		grpImages.setFillLayout(false);
 		grpImages.setHoverText(Tooltip.instance.IMAGES);
 		grpImages.setSpread(1, 2);
-		grpImages.setExpand(false, true);
+		grpImages.setExpand(true, true);
 		
 		FieldImageList lstImages = new FieldImageList(grpImages);
 		addChild(lstImages, "images");
@@ -122,16 +132,18 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		// Tags
 		
-		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, false, true);
+		LFrame grpTags = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
+		grpTags.setFillLayout(false);;
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.setSpread(1, 2);
-		grpTags.setExpand(false, true);
+		grpTags.setExpand(true, true);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		
 		// Transitions
 		
-		LFrame grpTransitions = new LFrame(contentEditor, Vocab.instance.TRANSITIONS, 1, false);
+		LFrame grpTransitions = new LFrame(contentEditor, Vocab.instance.TRANSITIONS);
+		grpTransitions.setGridLayout(1);
 		grpTransitions.setHoverText(Tooltip.instance.TRANSITIONS);
 		grpTransitions.setExpand(true, true);
 		
@@ -141,7 +153,8 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		lstTransitions.setExpand(true, true);
 		addChild(lstTransitions, "transitions");
 		
-		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, 3, false, false);
+		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, false);
+		transitionEditor.setGridLayout(3);
 		transitionEditor.setExpand(true, false);
 		transitionEditor.setAlignment(LFlags.CENTER);
 		lstTransitions.addChild(transitionEditor);
@@ -200,8 +213,8 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 	}
 	
 	private static class TransitionEditor extends GDefaultObjectEditor<Transition> {
-		public TransitionEditor(LContainer parent, int columns, boolean equalCols, boolean doubleBuffered) {
-			super(parent, columns, equalCols, doubleBuffered);
+		public TransitionEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
 		}
 		@Override
 		public Type getType() {

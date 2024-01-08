@@ -22,20 +22,24 @@ public class PluginShell extends ObjectShell<Plugin> {
 	 * @wbp.parser.constructor
 	 */
 	public PluginShell(LShell parent) {
-		this(parent, true);
+		super(parent, Vocab.instance.PLUGINSHELL);
 	}
 	
-	public PluginShell(LShell parent, boolean optional) {
-		super(parent);
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		selFile = new LFileSelector(form, optional);
+		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 		
-		LPanel composite = new LPanel(form, 1);
+		LPanel composite = new LPanel(form);
+		composite.setGridLayout(1);
+		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
+		frame.setFillLayout(true);
 		
-		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
+		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);

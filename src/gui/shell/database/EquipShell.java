@@ -17,10 +17,13 @@ import project.Project;
 public class EquipShell extends ObjectShell<Equip> {
 
 	public EquipShell(LShell parent) {
-		super(parent);
-		
-		setTitle(Vocab.instance.EQUIP);
-		contentEditor.setGridLayout(3, false);
+		super(parent, Vocab.instance.EQUIPSHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);		
+		contentEditor.setGridLayout(3);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 
@@ -42,7 +45,7 @@ public class EquipShell extends ObjectShell<Equip> {
 		new LLabel(contentEditor, Vocab.instance.EQUIPITEM, Tooltip.instance.EQUIPITEM);
 		
 		LText txtItem = new LText(contentEditor, true);
-		IDButton btnItem = new IDButton(contentEditor, true) {
+		IDButton btnItem = new IDButton(contentEditor, Vocab.instance.ITEMSHELL, true) {
 			public LDataTree<Object> getDataTree() {
 				return Project.current.items.getTree();
 			}

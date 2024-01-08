@@ -14,13 +14,13 @@ public class IDList extends SimpleEditableList<Integer> {
 
 	public LDataTree<Object> dataTree = null;
 	
-	public IDList(LContainer parent) {
+	public IDList(LContainer parent, String title) {
 		super(parent);
 		type = Integer.class;
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(LShell parent) {
-				IDShell shell = new IDShell(parent, false) {
+				IDShell shell = new IDShell(parent, title, 0) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}

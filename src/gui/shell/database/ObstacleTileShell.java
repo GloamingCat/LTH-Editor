@@ -21,11 +21,17 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 	private NeighborEditor neighborEditor;
 	
 	public ObstacleTileShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.OBSTACLESHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 
-		contentEditor.setGridLayout(2, true);
+		contentEditor.setGridLayout(2);
 		
-		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL, 2, false);
+		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
+		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setExpand(true, false);
 

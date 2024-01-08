@@ -14,8 +14,15 @@ import lwt.widget.LSpinner;
 public class TransformationShell extends ObjectShell<Transformation> {
 
 	public TransformationShell(LShell parent) {
-		super(parent, 270, 100);
-		contentEditor.setGridLayout(2, false);
+		super(parent, Vocab.instance.TRANSFORMSHELL);
+		setMinimumSize(270, 100);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.TRANSFORMTYPE);
 		

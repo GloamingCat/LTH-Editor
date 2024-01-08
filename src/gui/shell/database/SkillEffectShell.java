@@ -16,9 +16,14 @@ import project.Project;
 public class SkillEffectShell extends ObjectShell<Effect> {
 
 	public SkillEffectShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.EFFECTSHELL);
 		setMinimumSize(300, 100);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 		
@@ -44,8 +49,10 @@ public class SkillEffectShell extends ObjectShell<Effect> {
 		btnAbsorb.setText(Vocab.instance.ABSORB);
 		btnAbsorb.setHoverText(Tooltip.instance.ABSORB);
 		addControl(btnAbsorb, "absorb");
+		LFrame frame = new LFrame(contentEditor, (String) Vocab.instance.STATUS);
+		frame.setFillLayout(true);
 		
-		LFrame grpStatus = new LFrame(contentEditor, Vocab.instance.STATUS, true, true);
+		LFrame grpStatus = frame;
 		grpStatus.setHoverText(Tooltip.instance.EFFECTSTATUS);
 		grpStatus.setExpand(true, true);
 		grpStatus.setSpread(2, 1);

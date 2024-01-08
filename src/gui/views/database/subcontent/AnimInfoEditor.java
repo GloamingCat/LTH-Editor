@@ -6,7 +6,7 @@ import data.Skill.AnimInfo;
 import gson.editor.GDefaultObjectEditor;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.widgets.IDButton;
+import gui.widgets.ImageButton;
 import lwt.container.LContainer;
 import lwt.container.LPanel;
 import lwt.container.LViewFolder;
@@ -14,27 +14,25 @@ import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-import project.Project;
 
 public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
-
-	private IDButton btnLoad;
-	private IDButton btnCast;
-	private IDButton btnInd;
 	
 	public AnimInfoEditor(LContainer parent) {
-		super(parent, true, false);
+		super(parent, false);
+		setFillLayout(true);
 		
 		LViewFolder tab = new LViewFolder(this, false);
 		
 		// Battle
 		
-		LPanel battle = new LPanel(tab, 3, false);
+		LPanel battle = new LPanel(tab);
+		battle.setGridLayout(3);
+		battle.setMargins(5, 5);
 		tab.addTab(Vocab.instance.BATTLE, battle);
 		
 		LLabel lblLoad = new LLabel(battle, Vocab.instance.LOAD, Tooltip.instance.LOAD);
 		LText txtLoad = new LText(battle, true);
-		btnLoad = new IDButton(battle, true);
+		ImageButton btnLoad = new ImageButton(battle, true);
 		btnLoad.setNameWidget(txtLoad);
 		btnLoad.addMenu(lblLoad);
 		btnLoad.addMenu(txtLoad);
@@ -42,7 +40,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		
 		LLabel lblCast = new LLabel(battle, Vocab.instance.CAST, Tooltip.instance.CAST);
 		LText txtCast = new LText(battle, true);
-		btnCast = new IDButton(battle, true);
+		ImageButton btnCast = new ImageButton(battle, true);
 		btnCast.setNameWidget(txtCast);
 		btnCast.addMenu(lblCast);
 		btnCast.addMenu(txtCast);
@@ -50,7 +48,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		
 		LLabel lblInd = new LLabel(battle, Vocab.instance.INDIVIDUAL, Tooltip.instance.INDIVIDUAL);
 		LText txtInd = new LText(battle, true);
-		btnInd = new IDButton(battle, true);
+		ImageButton btnInd = new ImageButton(battle, true);
 		btnInd.setNameWidget(txtInd);
 		btnInd.addMenu(lblInd);
 		btnInd.addMenu(txtInd);
@@ -66,7 +64,9 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		
 		// User
 		
-		LPanel user = new LPanel(tab, 2, false);
+		LPanel user = new LPanel(tab);
+		user.setGridLayout(2);
+		user.setMargins(5, 5);
 		tab.addTab(Vocab.instance.USER, user);
 		
 		LLabel lblUserLoad = new LLabel(user, Vocab.instance.LOAD, Tooltip.instance.USERLOAD);
@@ -86,7 +86,9 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		
 		// Options
 		
-		LPanel animOptions = new LPanel(tab, 4, false);
+		LPanel animOptions = new LPanel(tab);
+		animOptions.setGridLayout(4);
+		animOptions.setMargins(5, 5);
 		tab.addTab(Vocab.instance.OPTIONS, animOptions);
 		
 		LLabel lblIntroTime = new LLabel(animOptions, Vocab.instance.INTROTIME, Tooltip.instance.INTROTIME);
@@ -129,13 +131,6 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		btnDamage.addMenu();
 		addControl(btnDamage, "damageAnim");
 		
-	}
-	
-	public void onVisible() {
-		btnCast.dataTree = Project.current.animations.getTree();
-		btnInd.dataTree = Project.current.animations.getTree();
-		btnLoad.dataTree = Project.current.animations.getTree();
-		super.onVisible();
 	}
 
 	@Override

@@ -13,9 +13,14 @@ import data.subcontent.Tile;
 public class CharTileShell extends ObjectShell<Tile> {
 	
 	public CharTileShell(LShell parent) {
-		super(parent, 200, 160);
-		
-		contentEditor.setGridLayout(2, false);
+		super(parent, Vocab.instance.CHARTILESHELL);
+		setMinimumSize(200, 160);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);		
+		contentEditor.setGridLayout(2);
 
 		new LLabel(contentEditor, Vocab.instance.OFFSETX, Tooltip.instance.TILEX);
 		

@@ -34,7 +34,13 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 	public static final int BGM = 0x04;
 	
 	public AudioShell(LShell parent, int style) {
-		super(parent, 400, 400);
+		super(parent, Vocab.instance.AUDIOFILESHELL, style);
+		setMinimumSize(400, 400);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
@@ -44,7 +50,8 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 		} );
 		selFile.setFolder(Project.current.audioPath());
 
-		LPanel composite = new LPanel(form, 2, false);
+		LPanel composite = new LPanel(form);
+		composite.setGridLayout(2);
 		composite.setExpand(true, true);
 
 		new LLabel(composite, Vocab.instance.KEY, Tooltip.instance.KEY);

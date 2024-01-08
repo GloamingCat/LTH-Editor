@@ -32,10 +32,15 @@ public class PortalShell extends LObjectShell<Portal> {
 	 * @wbp.parser.constructor
 	 */
 	public PortalShell(LShell parent, int fieldID) {
-		super(parent);
+		super(parent, Vocab.instance.PORTALSHELL);
 		this.fieldID = fieldID;
 		setMinimumSize(640, 480);
-		content.setGridLayout(3, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		content.setGridLayout(3);
 
 		scrolledComposite = new LScrollPanel(content, true);
 		scrolledComposite.setExpand(true, true);

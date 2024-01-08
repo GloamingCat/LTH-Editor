@@ -33,10 +33,15 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	private LText txtName;
 	
 	public PortraitShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.PORTRAITSHELL);
 		setMinimumSize(600, 400);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 
-		content.setGridLayout(2, false);
+		content.setGridLayout(2);
 		
 		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
 		txtName = new LText(content);

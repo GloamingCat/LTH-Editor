@@ -42,28 +42,33 @@ public class JobTab extends DatabaseTab<Job> {
 		// Attack Skill
 		
 		LLabel lblAtk = new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL, Tooltip.instance.ATTACKSKILL);
-		LPanel attackSkill = new LPanel(grpGeneral, 2, false);
+		LPanel attackSkill = new LPanel(grpGeneral);
+		attackSkill.setGridLayout(2);
 		attackSkill.setExpand(true, false);
 		attackSkill.setAlignment(LFlags.CENTER);
 		
 		LText txtAttack = new LText(attackSkill, true);
-		btnAttack = new IDButton(attackSkill, false);
+		btnAttack = new IDButton(attackSkill, Vocab.instance.SKILLSHELL, false);
 		btnAttack.setNameWidget(txtAttack);
 		btnAttack.addMenu(lblAtk);
 		btnAttack.addMenu(lblExp);
 		addControl(btnAttack, "attackID");
 		
-		LFrame grpBuild = new LFrame(left, Vocab.instance.BUILD, true, true);
+		LFrame grpBuild = new LFrame(left, (String) Vocab.instance.BUILD);
+		grpBuild.setFillLayout(true);
 		grpBuild.setHoverText(Tooltip.instance.BUILD);
 		grpBuild.setExpand(true, true);
 		BuildEditor buildEditor = new BuildEditor(grpBuild, 1);
 		buildEditor.addMenu(grpBuild);
 		addChild(buildEditor, "build");
 		
-		LPanel nodes = new LPanel(right, false, true);
+		LPanel nodes = new LPanel(right);
+		nodes.setFillLayout(false);
+		nodes.setSpacing(5);
 		nodes.setExpand(true, true);
 
-		LFrame grpSkillNodes = new LFrame(nodes, Vocab.instance.SKILLNODES, true, true);
+		LFrame grpSkillNodes = new LFrame(nodes, (String) Vocab.instance.SKILLNODES);
+		grpSkillNodes.setFillLayout(true);
 		grpSkillNodes.setHoverText(Tooltip.instance.SKILLNODES);
 		SimpleEditableList<Job.Skill> lstSkills = new SimpleEditableList<>(grpSkillNodes);
 		lstSkills.getCollectionWidget().setEditEnabled(false);
@@ -77,8 +82,9 @@ public class JobTab extends DatabaseTab<Job> {
 				return new JobSkillShell(parent);
 			}
 		});
-
-		LFrame grpStatusNodes = new LFrame(nodes, Vocab.instance.STATUSNODES, true, true);
+		
+		LFrame grpStatusNodes = new LFrame(nodes, (String) Vocab.instance.STATUSNODES);
+		grpStatusNodes.setFillLayout(true);
 		grpStatusNodes.setHoverText(Tooltip.instance.STATUSNODES);
 		SimpleEditableList<Job.Status> lstStatuses = new SimpleEditableList<>(grpStatusNodes);
 		lstStatuses.getCollectionWidget().setEditEnabled(false);

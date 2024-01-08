@@ -15,9 +15,14 @@ import data.Battler.Drop;
 public class DropShell extends ObjectShell<Drop> {
 
 	public DropShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.DROPSHELL);
 		setMinimumSize(400, 200);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.CHANCE, Tooltip.instance.CHANCE);
 		LSpinner spnChance = new LSpinner(contentEditor);

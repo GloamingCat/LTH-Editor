@@ -7,6 +7,7 @@ import gui.shell.AudioPlayShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.PropertyList;
 import gui.widgets.IDButton;
+import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
 import lwt.LFlags;
 import lwt.container.LContainer;
@@ -27,7 +28,6 @@ import project.Project;
 public class TerrainTab extends DatabaseTab<Terrain> {
 
 	private PropertyList lstJobMoveCost;
-	private IDButton btnAnim;
 	private IDButton btnStatus;
 	
 	/**
@@ -49,7 +49,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		LLabel lblJobCost = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.JOBMOVECOST,
 				Tooltip.instance.JOBMOVECOST);
-		lstJobMoveCost = new PropertyList(grpGeneral);
+		lstJobMoveCost = new PropertyList(grpGeneral, Vocab.instance.JOBMOVECOST);
 		lstJobMoveCost.setExpand(true, true);
 		lstJobMoveCost.addMenu(lblJobCost);
 		addChild(lstJobMoveCost, "jobMoveCost");		
@@ -62,21 +62,24 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		// Graphics
 		
-		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
+		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
+		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.setExpand(true, true);
 		LImage imgGraphics = new LImage(grpGraphics);
 		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgGraphics.setExpand(true, true);
-		btnAnim = new IDButton(grpGraphics, true);
+		ImageButton btnAnim = new ImageButton(grpGraphics, true);
 		btnAnim.setImage(imgGraphics);
 		btnAnim.addMenu(grpGraphics);
 		btnAnim.addMenu(imgGraphics);
 		addControl(btnAnim, "animID");
+		LFrame frame = new LFrame(right, (String) Vocab.instance.SOUND);
+		frame.setFillLayout(true);
 		
 		// Audio
 		
-		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
+		LFrame grpAudio = frame;
 		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.setExpand(true, true);
 		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
@@ -93,11 +96,12 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 		// Status
 		
-		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS, 2, false);
+		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS);
+		grpStatus.setGridLayout(2);
 		grpStatus.setHoverText(Tooltip.instance.TERRAINSTATUS);
 		grpStatus.setExpand(true, true);
 		LText txtStatus = new LText(grpStatus, true);		
-		btnStatus = new IDButton(grpStatus, true);
+		btnStatus = new IDButton(grpStatus, Vocab.instance.STATUSSHELL, true);
 		btnStatus.setNameWidget(txtStatus);
 		btnStatus.addMenu(grpStatus);
 		addControl(btnStatus, "statusID");
@@ -114,7 +118,6 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 	@Override
 	public void onVisible() {
 		btnStatus.dataTree = Project.current.status.getTree();
-		btnAnim.dataTree = Project.current.animations.getTree();
 		lstJobMoveCost.dataTree = Project.current.jobs.getTree();
 		super.onVisible();
 	}

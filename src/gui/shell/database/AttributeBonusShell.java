@@ -13,8 +13,14 @@ import data.Item.Attribute;
 public class AttributeBonusShell extends ObjectShell<Attribute> {
 
 	public AttributeBonusShell(LShell parent) {
-		super(parent, 400, 100);
-		contentEditor.setGridLayout(2, false);
+		super(parent, Vocab.instance.BUFFSHELL);
+		setMinimumSize(400, 100);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.ATTKEY);
 		

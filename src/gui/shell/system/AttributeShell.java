@@ -14,9 +14,14 @@ import lwt.widget.LTextBox;
 public class AttributeShell extends ObjectShell<Attribute> {
 	
 	public AttributeShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.ATTRIBUTESHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		
-		contentEditor.setGridLayout(2, false);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 		

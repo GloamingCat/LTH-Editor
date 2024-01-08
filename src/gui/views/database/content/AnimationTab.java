@@ -43,11 +43,12 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		// Script
 		
 		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
-		LPanel script = new LPanel(grpGeneral, 2, false);
+		LPanel script = new LPanel(grpGeneral);
+		script.setGridLayout(2);
 		script.setAlignment(LFlags.CENTER);
 		
 		LText txtScript = new LText(script, true);
-		LuaButton btnScript = new LuaButton(script, true);
+		LuaButton btnScript = new LuaButton(script, Vocab.instance.ANIMSCRIPTSHELL, true);
 		btnScript.setPathWidget(txtScript);
 		btnScript.addMenu(lblScript);
 		btnScript.addMenu(txtScript);
@@ -57,7 +58,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		LLabel lblSize = new LLabel(grpGeneral, Vocab.instance.SIZE, Tooltip.instance.SIZE);
 		lblSize.setHoverText(Tooltip.instance.SIZE);
-		LPanel size = new LPanel(grpGeneral, 4, false);
+		LPanel size = new LPanel(grpGeneral);
+		size.setGridLayout(4);
 		size.setExpand(false, false);
 		
 		LLabel lblCols = new LLabel(size, Vocab.instance.COLUMNS, Tooltip.instance.COLUMNS);
@@ -72,7 +74,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Transform
 		
-		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
+		LFrame grpTransform = new LFrame(right, (String) Vocab.instance.TRANSFORM);
+		grpTransform.setFillLayout(true);
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.setExpand(true, false);
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
@@ -81,7 +84,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Audio
 		
-		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND, true, true);
+		LFrame grpAudio = new LFrame(right, (String) Vocab.instance.SOUND);
+		grpAudio.setFillLayout(true);
 		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.setExpand(true, true);
 		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<Audio>(grpAudio);
@@ -98,9 +102,10 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Intro
 		
-		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO, 3, false);
+		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO);
+		grpIntro.setGridLayout(3);
 		grpIntro.setHoverText(Tooltip.instance.INTRO);
-		grpIntro.initGridData();
+		grpIntro.setExpand(true, false);
 		
 		LLabel lblIntroPattern = new LLabel(grpIntro, Vocab.instance.PATTERN, Tooltip.instance.PATTERN);
 		LText txtIntroPattern = new LText(grpIntro);
@@ -118,9 +123,10 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Loop
 		
-		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP, 3, false);
+		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP);
+		grpLoop.setGridLayout(3);
 		grpLoop.setHoverText(Tooltip.instance.LOOP);
-		grpLoop.initGridData();
+		grpLoop.setExpand(true, false);
 		
 		LLabel lblLoopPattern = new LLabel(grpLoop, Vocab.instance.PATTERN, Tooltip.instance.PATTERN);
 		LText txtLoopPattern = new LText(grpLoop);
@@ -138,7 +144,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Graphics
 		
-		LFrame grpImg = new LFrame(left, Vocab.instance.GRAPHICS, 1);
+		LFrame grpImg = new LFrame(left, Vocab.instance.GRAPHICS);
+		grpImg.setGridLayout(1);
 		grpImg.setHoverText(Tooltip.instance.GRAPHICS);
 		grpImg.setExpand(true, true);
 		

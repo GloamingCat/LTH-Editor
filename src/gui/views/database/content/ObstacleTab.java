@@ -51,7 +51,8 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		
 		// Graphics
 		
-		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 1);
+		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
+		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.setExpand(true, true);
 		LImage imgGraphics = new LImage(grpGraphics);
@@ -61,10 +62,12 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		btnGraphics.addMenu(grpGraphics);
 		btnGraphics.addMenu(imgGraphics);
 		addControl(btnGraphics, "image");
+		LFrame frame = new LFrame(right, (String) Vocab.instance.TRANSFORM);
+		frame.setFillLayout(true);
 		
 		// Transform
 		
-		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM, true, true);
+		LFrame grpTransform = frame;
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.setExpand(true, false);
 		TransformEditor transformEditor = new TransformEditor(grpTransform);

@@ -77,8 +77,9 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
 	FieldSideEditor(LContainer parent) {
-		super(parent, 1, false, false);
+		super(parent, false);
 		instance = this;
+		setGridLayout(1);
 		
 		lblTitle = new LLabel(this, LFlags.CENTER | LFlags.EXPAND, Vocab.instance.TERRAIN);
 		
@@ -89,7 +90,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		
 		LSashPanel terrain = new LSashPanel(stack, false);
 		
-		LFrame grpTerrainLayers = new LFrame(terrain, Vocab.instance.LAYERS, true, true);
+		LFrame grpTerrainLayers = new LFrame(terrain, Vocab.instance.LAYERS);
+		grpTerrainLayers.setFillLayout(true);
 		grpTerrainLayers.setHoverText(Tooltip.instance.LAYERS);
 		LayerList lstTerrain = new LayerList(grpTerrainLayers, 0) {
 			@Override
@@ -99,7 +101,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 		lstTerrain.setEditor(this);
 		
-		LFrame grpTerrainTiles = new LFrame(terrain, Vocab.instance.TILES, false);
+		LFrame grpTerrainTiles = new LFrame(terrain, Vocab.instance.TILES);
+		grpTerrainTiles.setFillLayout(false);
 		grpTerrainTiles.setHoverText(Tooltip.instance.TILESET);
 		TileTree selTerrain = new TileTree(grpTerrainTiles) {
 			@Override
@@ -122,14 +125,14 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				else
 					imgTerrain.setImage(anim.quad.fullPath(), anim.getCell(0, 0));
 			}
-		});
-		terrain.setWeights(1, 2);
+		});		terrain.setWeights(1, 2);
 		
 		// Obstacle
 		
 		LSashPanel obstacle = new LSashPanel(stack, false);
 		
-		LFrame grpObstacleLayers = new LFrame(obstacle, Vocab.instance.LAYERS, true, true);
+		LFrame grpObstacleLayers = new LFrame(obstacle, Vocab.instance.LAYERS);
+		grpObstacleLayers.setFillLayout(true);
 		grpObstacleLayers.setHoverText(Tooltip.instance.LAYERS);
 		LayerList lstObstacle = new LayerList(grpObstacleLayers, 1) {
 			@Override
@@ -139,7 +142,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 		lstObstacle.setEditor(this);
 		
-		LFrame grpObstacleTiles = new LFrame(obstacle, Vocab.instance.TILES, false);
+		LFrame grpObstacleTiles = new LFrame(obstacle, Vocab.instance.TILES);
+		grpObstacleTiles.setFillLayout(false);
 		grpObstacleTiles.setHoverText(Tooltip.instance.TILES);
 		TileTree selObstacle = new TileTree(grpObstacleTiles) {
 			@Override
@@ -158,8 +162,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				Obstacle obstacle = (Obstacle) Project.current.obstacles.getData().get(event.newValue);
 				imgObstacle.setImage(obstacle.image.fullPath(), obstacle.image.getRectangle());
 			}
-		});
-		obstacle.setWeights(1, 2);
+		});		obstacle.setWeights(1, 2);
 		
 		// Region
 		
@@ -167,7 +170,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		region.setExpand(true, false);
 		region.setAlignment(LFlags.CENTER);
 		
-		LFrame grpRegionLayers = new LFrame(region, Vocab.instance.LAYERS, true, true);
+		LFrame grpRegionLayers = new LFrame(region, Vocab.instance.LAYERS);
+		grpRegionLayers.setFillLayout(true);
 		grpRegionLayers.setHoverText(Tooltip.instance.LAYERS);
 		LayerList lstRegion = new LayerList(grpRegionLayers, 2) {
 			public LDataList<Layer> getLayerList(Field field) {
@@ -176,7 +180,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 		lstRegion.setEditor(this);
 		
-		LFrame grpRegionTiles = new LFrame(region, Vocab.instance.TILES, false);
+		LFrame grpRegionTiles = new LFrame(region, Vocab.instance.TILES);
+		grpRegionTiles.setFillLayout(false);
 		grpRegionTiles.setHoverText(Tooltip.instance.TILES);
 		TileTree selRegion = new TileTree(grpRegionTiles) {
 			@Override
@@ -194,8 +199,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				}
 				lblRegion.setText(Project.current.regions.getList().get(event.newValue).toString());
 			}
-		});
-		region.setWeights(1, 2);
+		});		region.setWeights(1, 2);
 		
 		// Characters
 		
@@ -243,7 +247,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		// Party
 		
-		LPanel party = new LPanel(stack, 2, false);
+		LPanel party = new LPanel(stack);
+		party.setGridLayout(2);
 		party.setAlignment(LFlags.CENTER);
 		party.setExpand(true, false);
 		party.setMargins(5, 5);

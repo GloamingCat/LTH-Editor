@@ -72,18 +72,23 @@ public abstract class DatabaseTab<T> extends LView {
 		super.addChild(listEditor);
 		
 		contentEditor = new DatabaseContentEditor(sashForm, true);
-		contentEditor.setGridLayout(2, true);
+		contentEditor.setGridLayout(2);
+		contentEditor.setEqualCells(true, true);
 		
-		left = new LPanel(contentEditor, 1);
+		left = new LPanel(contentEditor);
+		left.setGridLayout(1);
 		left.setExpand(true, true);
-		right = new LPanel(contentEditor, 1);
+		right = new LPanel(contentEditor);
+		right.setGridLayout(1);
 		right.setExpand(true, true);
 		
-		grpGeneral = new LFrame(left, Vocab.instance.GENERAL, 2, false);
+		grpGeneral = new LFrame(left, Vocab.instance.GENERAL);
+		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.setExpand(true, false);
 		
-		LPanel compID = new LPanel(grpGeneral, 3, false);
+		LPanel compID = new LPanel(grpGeneral);
+		compID.setGridLayout(3);
 		compID.setExpand(true, false);
 		compID.setSpread(2, 1);
 		lblID = new LLabel(compID, LFlags.EXPAND, "", Tooltip.instance.ID);
@@ -104,10 +109,12 @@ public abstract class DatabaseTab<T> extends LView {
 		
 		txtName = new LText(grpGeneral);
 		contentEditor.addControl(txtName, "name");
+		LFrame frame = new LFrame(right, (String) Vocab.instance.TAGS);
+		frame.setFillLayout(true);
 		
 		// Tags
 		
-		grpTags = new LFrame(right, Vocab.instance.TAGS, true, true);
+		grpTags = frame;
 		grpTags.setExpand(true, false);
 		grpTags.setMinimumHeight(140);
 		TagList lstTags = new TagList(grpTags);

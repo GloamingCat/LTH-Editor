@@ -27,12 +27,12 @@ public class IDButton extends LObjectButton<Integer> {
 	 * @param parent
 	 * @param style
 	 */
-	public IDButton(LContainer parent, boolean optional) {
+	public IDButton(LContainer parent, String title, boolean optional) {
 		super(parent);
 		setShellFactory(new LShellFactory<Integer>() {
 			@Override
 			public LObjectShell<Integer> createShell(LShell parent) {
-				IDShell shell = new IDShell(parent, optional) {
+				IDShell shell = new IDShell(parent, title, optional ? IDShell.OPTIONAL : 0) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 
 					}

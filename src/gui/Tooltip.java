@@ -7,7 +7,7 @@ public class Tooltip {
 	// Groups
 	public String GENERAL = "General settings.";
 	public String GRAPHICS = "Graphics settings.";
-	public String TAGS = "List of tags with their respective values. \n"
+	public String TAGS = "List of tags with their respective values.\n"
 			+ "The value of a tag is interpreted as JSON.";
 	
 	// Common
@@ -110,9 +110,9 @@ public class Tooltip {
 	public String WALKSPEED = "The default walking speed of the player character, in pixels per second.";
 	public String DASHSPEED = "The multipler of the speed (in percentage) when the player is holding the dash button.";
 	public String DIAGTHRESHOLD = "The minimum value that the axis input (from 0 to 100) should have to be considered non-zero.\n"
-			+ "For horizontally-liked hexagonal grid: if the horizontal input is bigger than the vertical input, \n"
+			+ "For horizontally-liked hexagonal grid: if the horizontal input is bigger than the vertical input,\n"
 			+ "the vertical input should be at least two times the threshold for it to be considered diagonal.\n"
-			+ "For vertically-liked hexagonal grid: if the vertical input is bigger than the horizontal input, \n"
+			+ "For vertically-liked hexagonal grid: if the vertical input is bigger than the horizontal input,\n"
 			+ "the horizontal input should be at least two times the threshold for it to be considered diagonal.\n"
 			+ "For orthogonal grid: both conditions above are applied.";
 	
@@ -140,13 +140,13 @@ public class Tooltip {
 	
 	// Item
 	public String PRICE = "Item's full price.";
-	public String SELLABLE = "Whether the player can sell the item or not. \n"
+	public String SELLABLE = "Whether the player can sell the item or not.\n"
 			+ "Uncheck this for key items.";
 	public String USE = "What happens when the item is used.";
 	public String CONSUME = "The item disappears when used.";
-	public String NEEDSUSER = "The effect of the item depends on who is using it. \n"
+	public String NEEDSUSER = "The effect of the item depends on who is using it.\n"
 			+ "When checked, a menu for user selection will open when the item is selected on the menu.";
-	public String ITEMSKILL = "The skill that is executed when the item is used. \n"
+	public String ITEMSKILL = "The skill that is executed when the item is used.\n"
 			+ "Set it as none if the item is not usable.";
 	public String EQUIP = "What happens when the item is equipped.";
 	public String SLOT = "Key of the slot this item should be equipped on.";
@@ -156,13 +156,13 @@ public class Tooltip {
 	public String ATTADD = "Constant value that will be added to the final value.";
 	public String ATTMUL = "Proportional value that will be added to the final value (in percentage).";
 	public String ADDONBATTLE = "When checked, the status will be added at the start of the battle if the character has this item equipped.\n"
-			+ "During the battle, the status can be removed normally. \n"
+			+ "During the battle, the status can be removed normally.\n"
 			+ "If unchecked, the status is always there, and will only be removed if the item is unequipoed.";
 	public String BONUSTYPE = "Elemental Immunity: add elemental defense (or vulnerability) to the battler.\n"
 			+ "Attack Property: add elemental properties to the character's attack.\n"
 			+ "Damage Multiplier: changes the heal/damage of the skills that has this element.\n"
 			+ "Status Immnunity: makes the character resistant to receiving the specified status.s";
-	public String ITEMEFFECTS = "The effects added to the item's skill's effects. \n"
+	public String ITEMEFFECTS = "The effects added to the item's skill's effects.\n"
 			+ "It is applied to the target character when this item is used.";
 	public String ITEMATTRIBUTES = "Values permanently added to a character's attributes when this item is used on that character.";
 	public String EQUIPATTRIBUTES = "Values added to a character's attributes while it has this item equipped.";
@@ -174,21 +174,21 @@ public class Tooltip {
 			+ "If unchecked, the character can't be dismissed.";
 	public String JOB = "Battler's job.";
 	public String PERSISTENT = "When checked, the changed data is stored in the save.";
-	public String RULES = "List of AI rules to be applied sequentially in every turn of this character. \n"
+	public String RULES = "List of AI rules to be applied sequentially in every turn of this character.\n"
 			+ "When this battler is in the player's party, the action menu will open if the rules are empty.\n"
 			+ "If not empty, the rules will be automatically executed without player input.";
 	public String MONEY = "Money rewarded to the player at the end of the battle, if this battler/troop is defeated.";
 	public String EXP = "EXP rewarded to all living allies at the end of the battle, if this battler/troop is defeated.";
 	public String LEVEL = "Initial level of the battler for indicated job.";
-	public String BATTLERATT = "Attribute values that are added to the job's attribute build. \n"
-			+ "These can be modified in-game if the character uses an item with permanent attribute bonuses. \n";
+	public String BATTLERATT = "Attribute values that are added to the job's attribute build.\n"
+			+ "These can be modified in-game if the character uses an item with permanent attribute bonuses.\n";
 	public String INITSKILLS = "Skills that start as available for this character.";
 	public String INITSTATUS = "Status that this battler starts with.";
 	public String INITEQUIP = "Equipment that this battler starts with.";
-	public String DROP = "Items that this battler drops when defeated. \n"
+	public String DROP = "Items that this battler drops when defeated.\n"
 			+ "The items are rewarded at the end of the battle along with money and EXP.";
 	public String EQUIPITEM = "The item currently equiped in this slot.";
-	public String ELEMENTDEF = "Elemental defense. 100% for a given element means neutral. \n"
+	public String ELEMENTDEF = "Elemental defense. 100% for a given element means neutral.\n"
 			+ "By default, the defense for all elements is 100%.";
 	public String CHANCE = "Chance with which the items will be added, in percentage.";
 	public String COUNT = "The number of items added.";
@@ -198,7 +198,7 @@ public class Tooltip {
 			+ "General: any character or tile.\n"
 			+ "Attack: enemy characters.\n"
 			+ "Support: Ally characters.";
-	public String ALLPARTIES = "When checked, the effects of the skill will be applied to characters of any party. \n"
+	public String ALLPARTIES = "When checked, the effects of the skill will be applied to characters of any party.\n"
 			+ "If unchecked, only the target party will be affected (ally characters if support, enemy characters if attack).";
 	public String TARGET = "Target selection/restriction.";
 	public String EFFECTCONDITION = "Condition";
@@ -217,7 +217,7 @@ public class Tooltip {
 			+ "Field Only: only outside of battle, from the field menu.";
 	public String COSTS = "List of costs to use the skill ('sp', 'hp' or some custom attribute).";
 	public String USECONDITION = "Lua expression that determines if the character can use this skill.";
-	public String SKILLELEMENTS = "Element properties of the skill damage/heal. \n";
+	public String SKILLELEMENTS = "Element properties of the skill damage/heal.\n";
 	public String CASTMASK = "Mask determining which tiles are reachable from the user's tile.\n"
 			+ "Melee skills will contain all tiles that are neighbor to the center tile.\n"
 			+ "If the mask only contains the center tile, then only the user's tile can be selected.";
@@ -256,7 +256,7 @@ public class Tooltip {
 	public String LOOP = "Looping part of the animation. It will repeat endlessly after the intro part.";
 	public String PATTERN = "The order of columns that are player (indexed from 0).\n"
 			+ "The columns might be repeated, left out and switched.";
-	public String DURATION = "Duration of the animation in frames. \n"
+	public String DURATION = "Duration of the animation in frames.\n"
 			+ "If the duration is a single number, the number of divided by the total number of columns.\n"
 			+ "Else, each number in the duration text (separared by spaces) is assigned as the duration of a single frame, in order.\n"
 			+ "In this case, the number of duration texts should be the same as the pattern text.";
@@ -268,16 +268,16 @@ public class Tooltip {
 	public String CHARBATTLER = "Default battler associated with this character.";
 	public String SHADOW = "A shadow image the appear below the character sprite.\n"
 			+ "It stays in place if the character is jumping/lifted from the ground.";
-	public String COLLIDERTILES = "The tiles this character occupy. \n"
-			+ "Each one can have a different height (in tiles). \n"
+	public String COLLIDERTILES = "The tiles this character occupy.\n"
+			+ "Each one can have a different height (in tiles).\n"
 			+ "If the character does not have any collision tiles, the player character cannot interact with it.";
-	public String CHARANIMS = "The list of animations of this character. \n"
+	public String CHARANIMS = "The list of animations of this character.\n"
 			+ "The name of the animation must be unique in the list, and it can include a set name.\n"
 			+ "If an animation belongs to a set, it will replace the default animation of this name if the set changes.\n"
 			+ "The set can be changed when the character is in a battle (to set 'Battle') and when it receives a status (e. g. 'Sleep').\n"
 			+ "Example: 'Battle:Idle' indicates that the animation's name is 'Idle', but it belongs to the set 'Battle',\n"
 			+ "so it replaces the 'Idle' animation during battle.\n";
-	public String CHARICONS = "The list of portrait icons of this character. \n"
+	public String CHARICONS = "The list of portrait icons of this character.\n"
 			+ "The name of the animation must be unique in the list.\n";
 	public String KOEFFECT = "What happens when this character is knocked out.";
 	public String KOANIM = "The name of the animation that over the character when it's knocked out.";
@@ -291,7 +291,7 @@ public class Tooltip {
 
 	// Job
 	public String ATTACKSKILL = "The skill set as the attack skill of the battler.";
-	public String BUILD = "The formulas for each attribute. \n"
+	public String BUILD = "The formulas for each attribute.\n"
 			+ "Use 'lvl' to refer to the current level. It should typically be a constante multiplied by 'lvl'.\n"
 			+ "The result of this formula is added to the attribute's formula (if any) and\n"
 			+ "the battler's attribute bonus to compute the final value of the attribute.";
@@ -358,6 +358,8 @@ public class Tooltip {
 	
 	// Troops
 	public String AI = "Troop's AI script file.";
+	public String TROOPGRID = "Grid with troop's units.\n"
+			+ "Click on a member to select it on the unit list.";
 	public String UNITS = "List with all members of the troop.\n"
 			+ "Different members can have the same battler or character, but each member must be identified by different unique keys.";
 	public String GRIDX = "Position of the unit's character relative to the troop's top-left corner\n"

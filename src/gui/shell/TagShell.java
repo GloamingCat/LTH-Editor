@@ -16,9 +16,15 @@ public class TagShell extends ObjectShell<Tag> {
 	private LTextBox txtValue;
 
 	public TagShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.TAGSHELL);
 		setMinimumSize(400, 300);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.KEY);
 		

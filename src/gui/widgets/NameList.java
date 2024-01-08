@@ -8,14 +8,14 @@ import lwt.dialog.LShellFactory;
 
 public class NameList extends SimpleEditableList<String> {
 
-	public NameList(LContainer parent) {
+	public NameList(LContainer parent, String title) {
 		super(parent);
 		type = String.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<String>() {
 			@Override
 			public LObjectShell<String> createShell(LShell parent) {
-				return new NameShell(parent);
+				return new NameShell(parent, title);
 			}
 		});
 	}

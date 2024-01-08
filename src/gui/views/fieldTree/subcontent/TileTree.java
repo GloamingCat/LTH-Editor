@@ -20,7 +20,8 @@ public abstract class TileTree extends LView {
 	 * @param style
 	 */
 	public TileTree(LContainer parent) {
-		super(parent, true, false);
+		super(parent, false);
+		setFillLayout(true);
 		selector = new LNodeSelector<>(this, false);
 		selector.addModifyListener(new LControlListener<Integer>() {
 			public void onModify(LControlEvent<Integer> event) {

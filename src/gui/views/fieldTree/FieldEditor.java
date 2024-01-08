@@ -29,8 +29,9 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
 	public FieldEditor(LContainer parent) {
-		super(parent, 2, false, true);
+		super(parent, true);
 		instance = this;
+		setGridLayout(2);
 		
 		FieldToolBar toolBar = new FieldToolBar(this);
 		toolBar.setAlignment(LFlags.CENTER);
@@ -46,18 +47,21 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		canvas.lblId = lblId;
 		addChild(canvas);
 
-		LPanel bottom = new LPanel(this, 2, false);
+		LPanel bottom = new LPanel(this);
+		bottom.setGridLayout(2);
 		bottom.setAlignment(LFlags.CENTER);
 		bottom.setSpread(2, 1);
 		
 		LLabel tileCoord = new LLabel(bottom, "(-99, -99, -99)");
 		canvas.lblCoords = tileCoord;
 		
-		LPanel scale = new LPanel(bottom, 3, true);
+		LPanel scale = new LPanel(bottom);
+		scale.setGridLayout(3);
 		scale.setExpand(true, false);
 		scale.setAlignment(LFlags.RIGHT | LFlags.CENTER);
 		
 		LActionButton btn50 = new LActionButton(scale, "1:2");
+		btn50.setExpand(true, false);
 		btn50.addModifyListener(new LControlListener<Object>() {
 			@Override
 			public void onModify(LControlEvent<Object> event) {
@@ -67,6 +71,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		});
 
 		LActionButton btn100 = new LActionButton(scale, "1:1");
+		btn100.setExpand(true, false);
 		btn100.addModifyListener(new LControlListener<Object>() {
 			@Override
 			public void onModify(LControlEvent<Object> event) {
@@ -76,6 +81,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		});
 		
 		LActionButton btn200 = new LActionButton(scale, "2:1");
+		btn200.setExpand(true, false);
 		btn200.addModifyListener(new LControlListener<Object>() {
 			@Override
 			public void onModify(LControlEvent<Object> event) {

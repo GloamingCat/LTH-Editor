@@ -37,9 +37,11 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 	 * @param style
 	 */
 	public CharTileEditor(LContainer parent) {
-		super(parent, 4, false, false);
+		super(parent, false);
+		setGridLayout(4);
 		
-		LPanel position = new LPanel(this, 4, false);
+		LPanel position = new LPanel(this);
+		position.setGridLayout(4);
 		position.setExpand(true, false);
 		position.setSpread(4, 1);
 		position.setAlignment(LFlags.CENTER);
@@ -96,30 +98,34 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		LText txtKey = new LText(this, 3);
 		addControl(txtKey, "key");
 		
-		LPanel compOptions = new LPanel(this, 3, true);
+		LPanel compOptions = new LPanel(this);
+		compOptions.setGridLayout(3);
 		compOptions.setSpread(4, 1);
 		compOptions.setAlignment(LFlags.CENTER);
 
 		LCheckBox btnPersistent = new LCheckBox(compOptions);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		btnPersistent.setHoverText(Tooltip.instance.CHARPERSISTENT);
+		btnPersistent.setExpand(true, false);
 		addControl(btnPersistent, "persistent");
 		
 		LCheckBox btnPassable = new LCheckBox(compOptions);
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		btnPassable.setHoverText(Tooltip.instance.CHARPASSABLE);
+		btnPassable.setExpand(true, false);
 		addControl(btnPassable, "passable");
 		
 		LCheckBox btnVisible = new LCheckBox(compOptions);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		btnVisible.setHoverText(Tooltip.instance.CHARVISIBLE);
+		btnVisible.setExpand(true, false);
 		addControl(btnVisible, "visible");
 		
 		// Char
 		
 		new LLabel(this, Vocab.instance.CHARACTER, Tooltip.instance.CHARACTER);
 		LText txtChar = new LText(this, 2, true);
-		IDButton btnChar = new IDButton(this, true) {
+		IDButton btnChar = new IDButton(this, Vocab.instance.CHARSHELL, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.characters.getTree();
@@ -174,7 +180,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		new LLabel(this, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
 		
 		LText txtBattler = new LText(this, 2, true);		
-		IDButton btnBattler = new IDButton(this, false) {
+		IDButton btnBattler = new IDButton(this, Vocab.instance.BATTLERSHELL, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();
@@ -183,7 +189,8 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
 		
-		LFrame grpScripts = new LFrame(this, Vocab.instance.SCRIPTS, 1);
+		LFrame grpScripts = new LFrame(this, Vocab.instance.SCRIPTS);
+		grpScripts.setGridLayout(1);
 		grpScripts.setSpread(4, 1);
 		grpScripts.setExpand(false, true);
 		

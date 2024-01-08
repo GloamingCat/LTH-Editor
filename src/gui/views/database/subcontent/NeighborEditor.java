@@ -22,17 +22,23 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 	private LToggleButton[] labels;
 	
 	public NeighborEditor(LContainer parent) {
-		super(parent, true, false);
-		LFrame group = new LFrame(this, Vocab.instance.NEIGHBORS, 2, true);
+		super(parent, false);
+		setFillLayout(true);
+		
+		LFrame group = new LFrame(this, Vocab.instance.NEIGHBORS);
+		group.setGridLayout(2);
 		group.setHoverText(Tooltip.instance.NEIGHBORS);
 		
 		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
 		btnNone.addModifyListener(allAction(false));
+		btnNone.setExpand(true, false);
 		
 		LActionButton btnAll = new LActionButton(group, Vocab.instance.ALL);
 		btnAll.addModifyListener(allAction(true));
+		btnAll.setExpand(true, false);
 		
-		LPanel composite = new LPanel(group, 3, true);
+		LPanel composite = new LPanel(group);
+		composite.setGridLayout(3);
 		composite.setExpand(true, true);
 		composite.setSpread(2, 1);
 		
@@ -55,7 +61,10 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		LToggleButton arrow315 = new LToggleButton(composite, "/img/arrow_315.png", "/img/falsearrow_315.png");
 		
 		labels = new LToggleButton [] {arrow0, arrow45, arrow90, arrow135, arrow180, arrow225, arrow270, arrow315};
-
+		for (LToggleButton btn : labels) {
+			btn.setExpand(true, true);
+		}
+		
 	}
 	
 	private LControlListener<Object> allAction(final boolean newValue) {

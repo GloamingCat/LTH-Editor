@@ -26,7 +26,8 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 	public LCombo cmbList;
 	
 	public UnitEditor(LContainer parent) {
-		super(parent, 4, false, false);
+		super(parent, false);
+		setGridLayout(4);
 		
 		LLabel lblKey = new LLabel(this, Vocab.instance.KEY, Tooltip.instance.KEY);
 		LText txtKey = new LText(this, 3);
@@ -44,12 +45,13 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		addControl(spnY, "y");
 		
 		LLabel lblChar = new LLabel(this, Vocab.instance.CHARACTER, Tooltip.instance.CHARACTER);
-		LPanel character = new LPanel(this, 2, false);
+		LPanel character = new LPanel(this);
+		character.setGridLayout(2);
 		character.setExpand(true, false);
 		character.setAlignment(LFlags.CENTER);
 		character.setSpread(3, 1);
 		txtChar = new LText(character, true);		
-		IDButton btnChar = new IDButton(character, false) {
+		IDButton btnChar = new IDButton(character, Vocab.instance.CHARSHELL, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.characters.getTree();
@@ -60,12 +62,13 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		addControl(btnChar, "charID");
 		
 		LLabel lblBattler = new LLabel(this, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
-		LPanel battler = new LPanel(this, 2, false);
+		LPanel battler = new LPanel(this);
+		battler.setGridLayout(2);
 		battler.setExpand(true, false);
 		battler.setAlignment(LFlags.CENTER);
 		battler.setSpread(3, 1);
 		txtBattler = new LText(battler, true);
-		IDButton btnBattler = new IDButton(battler, true) {
+		IDButton btnBattler = new IDButton(battler, Vocab.instance.BATTLERSHELL, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
 				return Project.current.battlers.getTree();

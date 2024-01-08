@@ -9,17 +9,19 @@ public class LuaShell extends LObjectShell<String> {
 	
 	private LFileSelector selFile;
 	
+	public static final int OPTIONAL = 0x01;
+	
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public LuaShell(LShell parent) {
-		this(parent, true);
+	public LuaShell(LShell parent, String title, int style) {
+		super(parent, title, style);
 	}
 	
-	public LuaShell(LShell parent, boolean optional) {
-		super(parent);
+	@Override
+	protected void createContent(int style) {
 		content.setFillLayout(true);
-		selFile = new LFileSelector(content, optional);
+		selFile = new LFileSelector(content, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 	}
@@ -36,4 +38,5 @@ public class LuaShell extends LObjectShell<String> {
 			return null;
 		return path;
 	}
+	
 }

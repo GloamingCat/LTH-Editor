@@ -15,11 +15,16 @@ import project.Project;
 public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 
 	public TroopSpawnShell(LShell parent) {
-		super(parent, 360, 320);
-		contentEditor.setGridLayout(2, false);
+		super(parent, Vocab.instance.TROOPSHELL);
+		setMinimumSize(360, 320);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.MINLEVEL, Tooltip.instance.MINLEVEL);
-		
 		LSpinner spnMin = new LSpinner(contentEditor);
 		spnMin.setMinimum(0);
 		spnMin.setMaximum(100000);
@@ -27,7 +32,6 @@ public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
 		addControl(spnMin, "minLevel");
 		
 		new LLabel(contentEditor, Vocab.instance.MAXLEVEL, Tooltip.instance.MAXLEVEL);
-		
 		LSpinner spnMax = new LSpinner(contentEditor);
 		spnMax.setMinimum(0);
 		spnMax.setMaximum(100000);

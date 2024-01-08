@@ -24,9 +24,15 @@ public class BonusShell extends ObjectShell<Bonus> {
 	protected LNodeSelector<Object> typeNode;
 	protected LCombo cmbType;
 	
-	public BonusShell(LShell parent) {
-		super(parent, 270, 100);
-		contentEditor.setGridLayout(2, false);
+	public BonusShell(LShell parent, String title) {
+		super(parent, title);
+		setMinimumSize(270, 100);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		// Type of bonus
 		

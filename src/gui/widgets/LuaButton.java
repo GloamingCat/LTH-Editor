@@ -19,12 +19,12 @@ public class LuaButton extends LObjectButton<String> {
 	 * @param parent
 	 * @param style
 	 */
-	public LuaButton(LContainer parent, boolean optional) {
+	public LuaButton(LContainer parent, String title, boolean optional) {
 		super(parent);
 		setShellFactory(new LShellFactory<String>() {
 			@Override
 			public LObjectShell<String> createShell(LShell parent) {
-				return new LuaShell(parent, optional);
+				return new LuaShell(parent, title, optional ? LuaShell.OPTIONAL : 0);
 			}
 		});
 	}

@@ -14,14 +14,14 @@ public class NodeList extends SimpleEditableList<Node> {
 
 	public LDataTree<Object> dataTree;
 	
-	public NodeList(LContainer parent) {
+	public NodeList(LContainer parent, String title) {
 		super(parent);
 		type = Node.class;
 		setIncludeID(true);
 		setShellFactory(new LShellFactory<Node>() {
 			@Override
 			public LObjectShell<Node> createShell(LShell parent) {
-				return new NodeShell(parent) {
+				return new NodeShell(parent, title) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}

@@ -34,7 +34,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 
-		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS, 2, false);
+		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS);
+		grpEvents.setGridLayout(2);
 		grpEvents.setHoverText(Tooltip.instance.EVENTS);
 		grpEvents.setExpand(false, true);
 		grpEvents.setSpread(2, 1);
@@ -45,7 +46,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		lstEvents.setExpand(true, true);
 		lstEvents.addMenu(grpEvents);
 		addChild(lstEvents, "events");
-		EventEditor eventEditor = new EventEditor(grpEvents, 2, false, false);
+		EventEditor eventEditor = new EventEditor(grpEvents, false);
+		eventEditor.setGridLayout(2);
 		eventEditor.setExpand(true, false);
 		lstEvents.addChild(eventEditor);
 		
@@ -80,8 +82,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	}
 	
 	private static class EventEditor extends GDefaultObjectEditor<EventSheet.Event> {
-		public EventEditor(LContainer parent, int columns, boolean equalCols, boolean doubleBuffered) {
-			super(parent, columns, equalCols, doubleBuffered);
+		public EventEditor(LContainer parent, boolean doubleBuffered) {
+			super(parent, doubleBuffered);
 		}
 		@Override
 		public Type getType() {

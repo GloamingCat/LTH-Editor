@@ -12,10 +12,15 @@ import lwt.widget.LSpinner;
 
 public abstract class PropertyShell extends ObjectShell<Property> {
 
-	public PropertyShell(LShell parent) {
-		super(parent);
+	public PropertyShell(LShell parent, String title) {
+		super(parent, title);
 		setMinimumSize(400, 320);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.VALUE);
 		LSpinner spnValue = new LSpinner(contentEditor);

@@ -40,7 +40,8 @@ public class ItemTab extends DatabaseTab<Item> {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
+		LPanel compositeIcon = new LPanel(grpGeneral);
+		compositeIcon.setGridLayout(2);
 		compositeIcon.setAlignment(LFlags.CENTER);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
@@ -66,7 +67,8 @@ public class ItemTab extends DatabaseTab<Item> {
 		// Price
 		
 		LLabel lblPrice = new LLabel(grpGeneral, Vocab.instance.PRICE, Tooltip.instance.PRICE);
-		LPanel price = new LPanel(grpGeneral, 2, false);
+		LPanel price = new LPanel(grpGeneral);
+		price.setGridLayout(2);
 		price.setAlignment(LFlags.CENTER);
 		LSpinner spnPrice = new LSpinner(price);
 		spnPrice.setMinimum(0);
@@ -81,18 +83,20 @@ public class ItemTab extends DatabaseTab<Item> {
 
 		// Use
 		
-		LFrame grpUse = new LFrame(left, Vocab.instance.USE, 3, false);
+		LFrame grpUse = new LFrame(left, Vocab.instance.USE);
+		grpUse.setGridLayout(3);
 		grpUse.setHoverText(Tooltip.instance.USE);
 		grpUse.setExpand(true, true);
 		
 		LLabel lblSkill = new LLabel(grpUse, Vocab.instance.ITEMSKILL, Tooltip.instance.ITEMSKILL);
 		LText txtSkill = new LText(grpUse, true);		
-		btnSkill = new IDButton(grpUse, true);
+		btnSkill = new IDButton(grpUse, Vocab.instance.SKILLSHELL, true);
 		btnSkill.setNameWidget(txtSkill);
 		btnSkill.addMenu(lblSkill);
 		addControl(btnSkill, "skillID");
 		
-		LPanel checkButtons = new LPanel(grpUse, true);
+		LPanel checkButtons = new LPanel(grpUse);
+		checkButtons.setSequentialLayout(true);
 		checkButtons.setAlignment(LFlags.TOP);
 		checkButtons.setExpand(true, false);
 		checkButtons.setSpread(3, 1);
@@ -126,7 +130,8 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		// Equip
 		
-		LFrame grpEquip = new LFrame(right, Vocab.instance.EQUIP, 2, false);
+		LFrame grpEquip = new LFrame(right, Vocab.instance.EQUIP);
+		grpEquip.setGridLayout(2);
 		grpEquip.setHoverText(Tooltip.instance.EQUIP);
 		grpEquip.setExpand(false, true);
 		
@@ -142,7 +147,7 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		LLabel lblBlock = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.BLOCKEDSLOTS,
 				Tooltip.instance.BLOCKEDSLOTS);
-		NameList lstBlocked = new NameList(grpEquip);
+		NameList lstBlocked = new NameList(grpEquip, Vocab.instance.SLOTSHELL);
 		lstBlocked.setAlignment(LFlags.CENTER);
 		lstBlocked.setMinimumHeight(48);
 		lstBlocked.addMenu(lblBlock);
@@ -158,7 +163,7 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		LLabel lblProp = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.PROPERTIES,
 				Tooltip.instance.EQUIPPROPERTIES);
-		BonusList lstElement = new BonusList(grpEquip);
+		BonusList lstElement = new BonusList(grpEquip, Vocab.instance.PROPERTYSHELL);
 		lstElement.setExpand(true, true);
 		lstElement.setMinimumHeight(60);
 		lstElement.addMenu(lblProp);

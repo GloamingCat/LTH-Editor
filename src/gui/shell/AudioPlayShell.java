@@ -32,16 +32,25 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 	public static final int OPTIONAL = 0x01;
 	public static final int TIMED = 0x02;
 	public static final int BGM = 0x04;
+	
+	protected boolean optional = false;
 
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
 	 */
 	public AudioPlayShell(LShell parent, int style) {
-		super(parent, 400, 400);
+		super(parent, Vocab.instance.AUDIOSHELL, style);
+		setMinimumSize(400, 400);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
-		LPanel sound = new LPanel(form, 1, false);
+		LPanel sound = new LPanel(form);
+		sound.setGridLayout(1);
 		selFile = new LFileSelector(sound, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { 
 			String name = f.getName();
@@ -67,7 +76,8 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 			}
 		});
 
-		LPanel composite = new LPanel(form, 2, false);
+		LPanel composite = new LPanel(form);
+		composite.setGridLayout(2);
 		composite.setExpand(true, true);
 		
 		new LLabel(composite, Vocab.instance.VOLUME, Tooltip.instance.VOLUME);

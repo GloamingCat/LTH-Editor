@@ -18,9 +18,14 @@ import data.config.Element;
 public class ElementShell extends ObjectShell<Element> {
 	
 	public ElementShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.ELEMENTSHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		
-		contentEditor.setGridLayout(2, false);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
@@ -29,7 +34,8 @@ public class ElementShell extends ObjectShell<Element> {
 		
 		new LLabel(contentEditor, Vocab.instance.ICON, Tooltip.instance.ICON);
 		
-		LPanel icon = new LPanel(contentEditor, 2, false);
+		LPanel icon = new LPanel(contentEditor);
+		icon.setGridLayout(2);
 		icon.setAlignment(LFlags.CENTER);
 		
 		LImage imgIcon = new LImage(icon);
@@ -38,8 +44,10 @@ public class ElementShell extends ObjectShell<Element> {
 		IconButton btnIcon = new IconButton(icon, true);
 		btnIcon.setImageWidget(imgIcon);
 		addControl(btnIcon, "icon");
+		LFrame frame = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
+		frame.setFillLayout(true);
 		
-		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS, true, true);
+		LFrame grpTags = frame;
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.setSpread(2, 1);
 		grpTags.setExpand(false, true);

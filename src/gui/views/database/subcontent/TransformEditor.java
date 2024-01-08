@@ -24,7 +24,8 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	private LSpinner spnRotation;
 
 	public TransformEditor(LContainer parent) {
-		super(parent, 4, false, false);
+		super(parent, false);
+		setGridLayout(4);
 
 		LControlListener<Integer> updateColor = new LControlListener<Integer>() {
 			@Override

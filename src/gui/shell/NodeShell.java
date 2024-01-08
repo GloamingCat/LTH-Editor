@@ -14,13 +14,21 @@ import lwt.widget.LText;
 
 public abstract class NodeShell extends ObjectShell<Node> {
 
-	public NodeShell(LShell parent) {
-		super(parent);
+	public NodeShell(LShell parent, String title, int style) {
+		super(parent, title, style);
 		setMinimumSize(400, 400);
+	}
+	
+	public NodeShell(LShell parent, String title) {
+		this(parent, title, 0);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		contentEditor.setGridLayout(1);
 		
-		contentEditor.setGridLayout(1, false);
-		
-		LPanel name = new LPanel(contentEditor, 2, false);
+		LPanel name = new LPanel(contentEditor);
+		name.setGridLayout(2);
 		name.setExpand(true, false);
 		name.setAlignment(LFlags.CENTER);
 		

@@ -5,13 +5,13 @@ import gui.Vocab;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.widgets.IDButton;
+import gui.widgets.ImageButton;
 import gui.widgets.PositionButton;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
 import lwt.container.LView;
-import lwt.dataestructure.LDataTree;
 import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
@@ -28,13 +28,15 @@ public class ConfigEditor extends LView {
 
 	private GDefaultObjectEditor<Config> editor;
 	private NodeList lstAnimations;
+	private IDButton btnInitialTroop;
 	
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
 	public ConfigEditor(LContainer parent) {
-		super(parent, 4, false, true);
+		super(parent, true);
+		setGridLayout(4);
 
 		createMenuInterface();
 
@@ -42,23 +44,28 @@ public class ConfigEditor extends LView {
 		editor.setAlignment(LFlags.CENTER);
 		editor.setSpread(4, 1);
 		editor.setExpand(true, false);
-		editor.setGridLayout(2, true);
+		editor.setGridLayout(2);
+		editor.setEqualCells(true, false);
 		addChild(editor);
 		
-		LPanel left = new LPanel(this, 1);
+		LPanel left = new LPanel(this);
+		left.setGridLayout(1);
 		left.setExpand(true, true);
-		left.setMinimumWidth(200);
+		left.setMinimumWidth(180);
 		
-		LPanel middle = new LPanel(this, 1);
+		LPanel middle = new LPanel(this);
+		middle.setGridLayout(1);
 		middle.setExpand(true, true);
-		middle.setMinimumWidth(180);
+		middle.setMinimumWidth(150);
 		
-		LPanel right = new LPanel(this, false);
+		LPanel right = new LPanel(this);
+		right.setFillLayout(false);
 		right.setExpand(true, true);
 		
 		// Name
 		
-		LFrame grpIdentity = new LFrame(editor, Vocab.instance.IDENTITY, 6, false);
+		LFrame grpIdentity = new LFrame(editor, Vocab.instance.IDENTITY);
+		grpIdentity.setGridLayout(6);
 		grpIdentity.setHoverText(Tooltip.instance.IDENTITY);
 		grpIdentity.setExpand(true, false);
 		
@@ -70,12 +77,7 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(grpIdentity, Vocab.instance.COVER, Tooltip.instance.COVER);
 		LText txtCover = new LText(grpIdentity, true);		
-		IDButton btnCover = new IDButton(grpIdentity, true) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
+		ImageButton btnCover = new ImageButton(grpIdentity, true);
 		btnCover.setNameWidget(txtCover);
 		editor.addControl(btnCover, "coverID");
 		
@@ -83,18 +85,14 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(grpIdentity, Vocab.instance.LOGO, Tooltip.instance.LOGO);
 		LText txtLogo = new LText(grpIdentity, true);
-		IDButton btnLogo = new IDButton(grpIdentity, true) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.animations.getTree();
-			}
-		};
+		ImageButton btnLogo = new ImageButton(grpIdentity, true);
 		btnLogo.setNameWidget(txtLogo);
 		editor.addControl(btnLogo, "logoID");
 		
 		// Platform
 		
-		LFrame grpExecution = new LFrame(editor, Vocab.instance.EXECUTION, 4, false);
+		LFrame grpExecution = new LFrame(editor, Vocab.instance.EXECUTION);
+		grpExecution.setGridLayout(4);
 		grpExecution.setHoverText(Tooltip.instance.EXECUTION);
 		grpExecution.setExpand(true, false);
 		
@@ -131,17 +129,20 @@ public class ConfigEditor extends LView {
 		
 		// Screen
 		
-		LFrame grpScreen = new LFrame(left, Vocab.instance.SCREEN, true, true);
+		LFrame grpScreen = new LFrame(left, Vocab.instance.SCREEN);
+		grpScreen.setFillLayout(true);
 		grpScreen.setHoverText(Tooltip.instance.SCREEN);
 		grpScreen.setExpand(true, true);
+		grpScreen.setMinimumHeight(-1);
 		
 		ScreenEditor screenEditor = new ScreenEditor(grpScreen, true);
 		editor.addChild(screenEditor, "screen");
-		screenEditor.setGridLayout(3, false);
+		screenEditor.setGridLayout(3);
 		
 		new LLabel(screenEditor, Vocab.instance.NATIVESIZE, Tooltip.instance.NATIVESIZE);
 		
-		LPanel nativeSize = new LPanel(screenEditor, 3, false);
+		LPanel nativeSize = new LPanel(screenEditor);
+		nativeSize.setGridLayout(3);
 		nativeSize.setAlignment(LFlags.CENTER);
 		nativeSize.setSpread(2, 1);
 		
@@ -159,7 +160,8 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(screenEditor, Vocab.instance.SCALEFACTOR, Tooltip.instance.SCALEFACTOR);
 		
-		LPanel scaleFactor = new LPanel(screenEditor, 3, false);
+		LPanel scaleFactor = new LPanel(screenEditor);
+		scaleFactor.setGridLayout(3);
 		scaleFactor.setAlignment(LFlags.CENTER);
 		scaleFactor.setSpread(2, 1);
 		
@@ -198,7 +200,8 @@ public class ConfigEditor extends LView {
 		cmbScaleMobile.setItems(scaleTypes);
 		screenEditor.addControl(cmbScaleMobile, "mobileScaleType");
 		
-		LPanel checkScreen = new LPanel(screenEditor, true, false);
+		LPanel checkScreen = new LPanel(screenEditor);
+		checkScreen.setSequentialLayout(true);
 		checkScreen.setSpread(3, 1);
 		
 		LCheckBox btnPixelPerfect = new LCheckBox(checkScreen);
@@ -213,13 +216,15 @@ public class ConfigEditor extends LView {
 		
 		// Player
 		
-		LFrame grpPlayer = new LFrame(middle, Vocab.instance.PLAYER, true, true);
+		LFrame grpPlayer = new LFrame(middle, Vocab.instance.PLAYER);
+		grpPlayer.setFillLayout(true);
 		grpPlayer.setHoverText(Tooltip.instance.PLAYER);
 		grpPlayer.setExpand(true, true);
+		grpPlayer.setMinimumHeight(-1);
 		
 		PlayerEditor playerEditor = new PlayerEditor(grpPlayer, true);
 		editor.addChild(playerEditor, "player");
-		playerEditor.setGridLayout(3, false);
+		playerEditor.setGridLayout(3);
 		
 		new LLabel(playerEditor, Vocab.instance.WALKSPEED, Tooltip.instance.WALKSPEED);
 		
@@ -249,13 +254,15 @@ public class ConfigEditor extends LView {
 		
 		// Grid
 		
-		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
+		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID);
+		grpGrid.setFillLayout(true);
 		grpGrid.setHoverText(Tooltip.instance.GRID);
 		grpGrid.setExpand(true, true);
+		grpGrid.setMinimumHeight(-1);
 		
 		GDefaultObjectEditor<Config.Grid> gridEditor = new GridEditor(grpGrid, true);
 		editor.addChild(gridEditor, "grid");
-		gridEditor.setGridLayout(3, false);
+		gridEditor.setGridLayout(3);
 		
 		new LLabel(gridEditor, Vocab.instance.TILEWIDTH, Tooltip.instance.TILEWIDTH);
 		LSpinner spnTileW = new LSpinner(gridEditor, 2);
@@ -285,7 +292,8 @@ public class ConfigEditor extends LView {
 		LSpinner spnDepthPerY = new LSpinner(gridEditor, 2);
 		gridEditor.addControl(spnDepthPerY, "depthPerY");
 		
-		LPanel gridOptions = new LPanel(gridEditor, 2, false);
+		LPanel gridOptions = new LPanel(gridEditor);
+		gridOptions.setGridLayout(2);
 		gridOptions.setAlignment(LFlags.CENTER);
 		gridOptions.setExpand(true, false);
 		gridOptions.setSpread(3, 1);
@@ -304,16 +312,18 @@ public class ConfigEditor extends LView {
 		btnOverpassDeads.setText(Vocab.instance.OVERPASSDEADS);
 		btnOverpassDeads.setHoverText(Tooltip.instance.OVERPASSDEADS);
 		gridEditor.addControl(btnOverpassDeads, "overpassDeads");
-		
+
 		// Battle
 		
-		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE, true, true);
+		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE);		
+		grpBattle.setFillLayout(true);
 		grpBattle.setHoverText(Tooltip.instance.BATTLE);
 		grpBattle.setExpand(true, true);
+		grpBattle.setMinimumHeight(-1);
 		
 		BattleEditor battleEditor = new BattleEditor(grpBattle, true);
 		editor.addChild(battleEditor, "battle");
-		battleEditor.setGridLayout(3, false);
+		battleEditor.setGridLayout(3);
 		
 		new LLabel(battleEditor, Vocab.instance.FINALLEVEL, Tooltip.instance.FINALLEVEL);
 		
@@ -349,7 +359,8 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(battleEditor, "%");
 		
-		LPanel checkBattle = new LPanel(battleEditor, true, false);
+		LPanel checkBattle = new LPanel(battleEditor);
+		checkBattle.setSequentialLayout(true);
 		checkBattle.setExpand(true, false);
 		checkBattle.setSpread(2, 1);
 
@@ -359,27 +370,24 @@ public class ConfigEditor extends LView {
 
 		LCheckBox btnKeepParties = new LCheckBox(checkBattle);
 		btnKeepParties.setText(Vocab.instance.KEEPPARTIES);
-		battleEditor.addControl(btnKeepParties, "keepParties");	
+		battleEditor.addControl(btnKeepParties, "keepParties");
 		
 		// Troop
 		
-		LFrame grpTroop = new LFrame(middle, Vocab.instance.TROOP, true, true);
+		LFrame grpTroop = new LFrame(middle, Vocab.instance.TROOP);
+		grpTroop.setFillLayout(true);
 		grpTroop.setHoverText(Tooltip.instance.TROOP);
 		grpTroop.setExpand(true, true);
+		grpTroop.setMinimumHeight(-1);
 		
 		TroopEditor troopEditor = new TroopEditor(grpTroop, true);
 		editor.addChild(troopEditor, "troop");
-		troopEditor.setGridLayout(3, false);
+		troopEditor.setGridLayout(3);
 		
 		new LLabel(troopEditor, Vocab.instance.INITIALTROOP, Tooltip.instance.INITIALTROOP);
 		
 		LText txtInitialTroop = new LText(troopEditor, true);
-		IDButton btnInitialTroop = new IDButton(troopEditor, false) {
-			@Override
-			public LDataTree<Object> getDataTree() {
-				return Project.current.troops.getTree();
-			}
-		};
+		btnInitialTroop = new IDButton(troopEditor, Vocab.instance.TROOPSHELL, false);
 		btnInitialTroop.setNameWidget(txtInitialTroop);
 		troopEditor.addControl(btnInitialTroop, "initialTroopID");		
 		
@@ -390,7 +398,8 @@ public class ConfigEditor extends LView {
 		
 		new LLabel(troopEditor, Vocab.instance.TROOPSIZE, Tooltip.instance.TROOPSIZE);
 		
-		LPanel troopSize = new LPanel(troopEditor, 3, false);
+		LPanel troopSize = new LPanel(troopEditor);
+		troopSize.setGridLayout(3);
 		troopSize.setAlignment(LFlags.CENTER);
 		troopSize.setSpread(2, 1);
 		
@@ -401,34 +410,38 @@ public class ConfigEditor extends LView {
 		
 		LSpinner spnHeight = new LSpinner(troopSize);
 		troopEditor.addControl(spnHeight, "height");
-		
+
 		// Animations
 		
-		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS, true, true);
+		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS);
+		grpAnimations.setFillLayout(true);
 		grpAnimations.setHoverText(Tooltip.instance.ANIMATIONS);
-		lstAnimations = new NodeList(grpAnimations);
+		lstAnimations = new NodeList(grpAnimations, Vocab.instance.ANIMSHELL);
 		lstAnimations.setIncludeID(false);
 		editor.addChild(lstAnimations, "animations");
 		
 		// Icons
-		
-		LFrame grpIcons = new LFrame(right, Vocab.instance.ICONS, true, true);
+
+		LFrame grpIcons = new LFrame(right, Vocab.instance.ICONS);
+		grpIcons.setFillLayout(true);
 		grpIcons.setHoverText(Tooltip.instance.ICONS);
 		PortraitList lstIcons = new PortraitList(grpIcons);
 		editor.addChild(lstIcons, "icons");
 		
 		// Sounds
-		
-		LFrame grpSounds = new LFrame(this, Vocab.instance.SOUNDS, true, true);
+
+		LFrame grpSounds = new LFrame(this, Vocab.instance.SOUNDS);
+		grpSounds.setFillLayout(true);
 		grpSounds.setHoverText(Tooltip.instance.SOUNDS);
 		grpSounds.setExpand(true, true);
 		SoundList lstSounds = new SoundList(grpSounds);
 		editor.addChild(lstSounds, "sounds");
-		
+
 	}
 	
 	public void onVisible() {
 		lstAnimations.dataTree = Project.current.animations.getTree();
+		btnInitialTroop.dataTree = Project.current.troops.getTree();
 		super.onVisible();
 		editor.setObject(Project.current.config.getData());
 	}

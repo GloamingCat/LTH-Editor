@@ -4,6 +4,7 @@ import lwt.container.LContainer;
 import lwt.container.LImage;
 import lwt.dataestructure.LDataTree;
 import data.Animation;
+import gui.Vocab;
 import project.Project;
 
 public class ImageButton extends IDButton {
@@ -11,7 +12,7 @@ public class ImageButton extends IDButton {
 	protected LImage label;
 	
 	public ImageButton(LContainer parent, boolean optional) {
-		super(parent, optional);
+		super(parent, Vocab.instance.ANIMSHELL, optional);
 	}
 	
 	public void setLabel(LImage label) {

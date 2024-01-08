@@ -14,10 +14,15 @@ import lwt.widget.LText;
 public class EquipTypeShell extends ObjectShell<EquipType> {
 
 	public EquipTypeShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.EQUIPTYPESHELL);
 		
 		setTitle(Vocab.instance.EQUIP);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
 

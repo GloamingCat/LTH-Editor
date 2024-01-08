@@ -26,8 +26,14 @@ public class ScriptShell extends ObjectShell<Script> {
 	public static final int ONINTERACT = 0x0001;
 	
 	public ScriptShell(LShell parent, int style) {
-		super(parent);
-		contentEditor.setGridLayout(2, false);
+		super(parent, Vocab.instance.SCRIPTSHELL, style);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.DESCRIPTION, Tooltip.instance.DESCRIPTION);
 		
@@ -41,15 +47,19 @@ public class ScriptShell extends ObjectShell<Script> {
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
 		
-		LPanel composite = new LPanel(form, 1);
+		LPanel composite = new LPanel(form);
+		composite.setGridLayout(1);
+		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
+		frame.setFillLayout(true);
 		
-		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
+		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
-		LPanel options = new LPanel(composite, 3, false);
+		LPanel options = new LPanel(composite);
+		options.setGridLayout(3);
 		options.setAlignment(LFlags.CENTER);
 		
 		LCheckBox btnGlobal = new LCheckBox(options);

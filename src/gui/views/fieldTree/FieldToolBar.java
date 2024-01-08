@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LToolBar;
-import lwt.dialog.LObjectDialog;
 import lwt.dialog.LObjectShell;
 import lwt.dialog.LShell;
 import lwt.dialog.LShellFactory;
@@ -91,14 +90,13 @@ public class FieldToolBar extends LToolBar {
 	public void onResize() {
 		LRect size = new LRect(LFlags.LEFT, LFlags.TOP, FieldSideEditor.instance.field.sizeX,
 				FieldSideEditor.instance.field.sizeY);
-		LObjectDialog<LRect> dialog = new LObjectDialog<>(getShell());
-		dialog.setFactory(new LShellFactory<LRect>() {
+		LShellFactory<LRect> factory = new LShellFactory<LRect>() {
 			@Override
 			public LObjectShell<LRect> createShell(LShell parent) {
 				return new ResizeShell(parent);
 			}
-		});
-		size = dialog.open(size);
+		};
+		size = factory.openShell(getShell(), size);
 		if (size != null) {
 			resizeField(size);
 		}

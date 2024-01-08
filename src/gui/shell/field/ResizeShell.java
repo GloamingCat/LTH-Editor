@@ -12,10 +12,15 @@ import lwt.widget.LSpinner;
 public class ResizeShell extends ObjectShell<LRect> {
 
 	public ResizeShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.RESIZESHELL);
 		setMinimumSize(240, 0);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		
-		contentEditor.setGridLayout(2, false);
+		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.SIZEX, Tooltip.instance.SIZEX);
 		

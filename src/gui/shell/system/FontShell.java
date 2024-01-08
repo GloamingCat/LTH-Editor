@@ -21,9 +21,11 @@ public class FontShell extends FileShell<FontData> {
 	private LText txtFormat;
 	
 	public FontShell(LShell parent) {
-		super(parent, "fonts/", false);
+		super(parent, Vocab.instance.FONTSHELL, 0);
+		setFolder("fonts/");
 		
-		LPanel composite = new LPanel(sashForm, 2, false);
+		LPanel composite = new LPanel(sashForm);
+		composite.setGridLayout(2);
 		composite.setExpand(true, true);
 		
 		LLabel lblLength = new LLabel(composite, Vocab.instance.LENGTH, Tooltip.instance.LENGTH);

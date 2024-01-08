@@ -45,15 +45,19 @@ public class BattlerTab extends DatabaseTab<Battler> {
 	public BattlerTab(LContainer parent) {
 		super(parent);
 		
-		LPanel middle = new LPanel(left, 2, false);
+		LPanel middle = new LPanel(left);
+		middle.setGridLayout(2);
 		middle.setExpand(true, true);
-		LPanel bottom = new LPanel(left, 2, true);
+		LPanel bottom = new LPanel(left);
+		bottom.setGridLayout(2);
+		bottom.setEqualCells(true, false);
 		bottom.setExpand(true, true);
 		
 		// Icon
 		
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
+		LPanel compositeIcon = new LPanel(grpGeneral);
+		compositeIcon.setGridLayout(2);
 		compositeIcon.setAlignment(LFlags.CENTER);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
@@ -78,25 +82,29 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Properties
 		
 		new LLabel(grpGeneral, 1, 1);
-		LPanel check = new LPanel(grpGeneral, 2, true);
+		LPanel check = new LPanel(grpGeneral);
+		check.setGridLayout(2);
 		check.setExpand(true, false);
 		check.setAlignment(LFlags.CENTER);
 		
 		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
+		btnPersistent.setExpand(true, false);
 		addControl(btnPersistent, "persistent");
 		
 		LCheckBox btnRecruit = new LCheckBox(check);
 		btnRecruit.setText(Vocab.instance.RECRUIT);
 		btnRecruit.setHoverText(Tooltip.instance.RECRUIT);
+		btnRecruit.setExpand(true, false);
 		addControl(btnRecruit, "persistent");
 		
 		// Rewards
 		
 		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
 		
-		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
+		LPanel compositeReward = new LPanel(grpGeneral);
+		compositeReward.setGridLayout(3);
 		compositeReward.setExpand(true, false);
 		
 		LSpinner spnMoney = new LSpinner(compositeReward);
@@ -113,11 +121,12 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Job
 		
 		LLabel lblJob = new LLabel(grpGeneral, Vocab.instance.JOB, Tooltip.instance.JOB);
-		LPanel job = new LPanel(grpGeneral, 4, false);
+		LPanel job = new LPanel(grpGeneral);
+		job.setGridLayout(4);
 		job.setExpand(true, false);
 		job.setAlignment(LFlags.CENTER);
 		LText txtJob = new LText(job, true);
-		btnJob = new IDButton(job, false);
+		btnJob = new IDButton(job, Vocab.instance.JOBSHELL, false);
 		btnJob.setNameWidget(txtJob);
 		btnJob.addMenu(lblJob);
 		btnJob.addMenu(txtJob);
@@ -130,7 +139,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Attributes
 		
-		LFrame grpAtt = new LFrame(middle, Vocab.instance.ATTRIBUTES, true, true);
+		LFrame grpAtt = new LFrame(middle, (String) Vocab.instance.ATTRIBUTES);
+		grpAtt.setFillLayout(true);
 		grpAtt.setHoverText(Tooltip.instance.BATTLERATT);
 		grpAtt.setExpand(true, true);
 		grpAtt.setMinimumWidth(220);
@@ -140,34 +150,38 @@ public class BattlerTab extends DatabaseTab<Battler> {
 
 		// Elements
 		
-		LFrame grpElements = new LFrame(middle, Vocab.instance.ELEMENTS, true, true);
+		LFrame grpElements = new LFrame(middle, (String) Vocab.instance.ELEMENTS);
+		grpElements.setFillLayout(true);
 		grpElements.setHoverText(Tooltip.instance.ELEMENTDEF);
 		grpElements.setExpand(true, true);
-		lstElements = new PropertyList(grpElements);
+		lstElements = new PropertyList(grpElements, Vocab.instance.BATTLERELEMENTSHELL);
 		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
 		
 		// Skills
 		
-		LFrame grpSkills = new LFrame(bottom, Vocab.instance.INITSKILLS, true, true);
+		LFrame grpSkills = new LFrame(bottom, (String) Vocab.instance.INITSKILLS);
+		grpSkills.setFillLayout(true);
 		grpSkills.setHoverText(Tooltip.instance.INITSKILLS);
 		grpSkills.setExpand(true, true);
-		lstSkills = new IDList(grpSkills);
+		lstSkills = new IDList(grpSkills, Vocab.instance.SKILLSHELL);
 		lstSkills.addMenu(grpSkills);
 		addChild(lstSkills, "skills");
 		
 		// Status
 		
-		LFrame grpStatus = new LFrame(bottom, Vocab.instance.INITSTATUS, true, true);
+		LFrame grpStatus = new LFrame(bottom, (String) Vocab.instance.INITSTATUS);
+		grpStatus.setFillLayout(true);
 		grpStatus.setHoverText(Tooltip.instance.INITSTATUS);
 		grpStatus.setExpand(true, true);
-		lstStatus = new IDList(grpStatus);
+		lstStatus = new IDList(grpStatus, Vocab.instance.STATUSSHELL);
 		lstStatus.addMenu(grpStatus);
 		addChild(lstStatus, "status");
 		
 		// Equip
 		
-		LFrame grpEquip = new LFrame(right, Vocab.instance.INITEQUIP, true, true);
+		LFrame grpEquip = new LFrame(right, (String) Vocab.instance.INITEQUIP);
+		grpEquip.setFillLayout(true);
 		grpEquip.setHoverText(Tooltip.instance.INITEQUIP);
 		grpEquip.setExpand(true, true);
 		EquipList lstEquip = new EquipList(grpEquip);
@@ -176,7 +190,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Drop
 		
-		LFrame grpDrop = new LFrame(right, Vocab.instance.DROP, true, true);
+		LFrame grpDrop = new LFrame(right, (String) Vocab.instance.DROP);
+		grpDrop.setFillLayout(true);
 		grpDrop.setHoverText(Tooltip.instance.DROP);
 		grpDrop.setExpand(true, true);
 		DropList lstDrop = new DropList(grpDrop);
@@ -185,7 +200,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// AI
 
-		LFrame grpAI = new LFrame(right, Vocab.instance.RULES, true, true);
+		LFrame grpAI = new LFrame(right, (String) Vocab.instance.RULES);
+		grpAI.setFillLayout(true);
 		grpAI.setHoverText(Tooltip.instance.RULES);
 		grpAI.setExpand(true, true);
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI);

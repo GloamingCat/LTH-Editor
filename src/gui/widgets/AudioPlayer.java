@@ -15,7 +15,8 @@ public class AudioPlayer extends LPanel {
 	public boolean loop = true;
 	
 	public AudioPlayer(LContainer parent) {
-		super(parent, 2, false);
+		super(parent);
+		setGridLayout(2);
 
 		new LCommandButton(this, Vocab.instance.PLAY) {
 			@Override

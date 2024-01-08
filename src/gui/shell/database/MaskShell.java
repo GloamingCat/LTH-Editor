@@ -42,8 +42,13 @@ public class MaskShell extends LObjectShell<Mask> {
 	 * @param display
 	 */
 	public MaskShell(LShell parent) {
-		super(parent);
-		content.setGridLayout(6, false);
+		super(parent, Vocab.instance.MASKSHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		content.setGridLayout(6);
 		
 		new LLabel(content, Vocab.instance.MINHEIGHT, Tooltip.instance.MINHEIGHT);
 		

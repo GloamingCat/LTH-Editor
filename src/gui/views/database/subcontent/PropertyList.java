@@ -17,14 +17,14 @@ public class PropertyList extends SimpleEditableList<Property> {
 
 	public LDataTree<Object> dataTree = null;
 	
-	public PropertyList(LContainer parent) {
+	public PropertyList(LContainer parent, String title) {
 		super(parent);
 		type = Property.class;
 		setIncludeID(false);
 		setShellFactory(new LShellFactory<Property>() {
 			@Override
 			public LObjectShell<Property> createShell(LShell parent) {
-				return new PropertyShell(parent) {
+				return new PropertyShell(parent, title) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					};
@@ -65,9 +65,8 @@ public class PropertyList extends SimpleEditableList<Property> {
 			protected String dataToString(Property item) {
 				Object obj = self.getDataTree().get(item.id);
 				String id = includeID ? stringID(item.id) : "";
-				if (obj == null)
-					return "NULL " + item.id;
-				return id + obj.toString() + ": " + item.value;
+				String name = obj != null ? obj.toString() : ("NULL " + item.id);
+				return id + name + ": " + item.value;
 			}
 			@Override
 			protected String encodeNode(LDataTree<Property> node) {

@@ -20,16 +20,24 @@ public class RuleShell extends ObjectShell<Rule> {
 	private LFileSelector selFile;
 	
 	public RuleShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.RULESHELL);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		contentEditor.setFillLayout(true);
 		LSashPanel form = new LSashPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.rulePath());
 		
-		LPanel composite = new LPanel(form, 2, false);
+		LPanel composite = new LPanel(form);
+		composite.setGridLayout(2);
+		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
+		frame.setFillLayout(true);
 		
-		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM, true, true);
+		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.setExpand(true, true);
 		grpParameters.setSpread(2, 1);

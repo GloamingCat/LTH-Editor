@@ -3,6 +3,7 @@ package gui.shell;
 import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
+import gui.Vocab;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
 import lwt.LFlags;
@@ -26,14 +27,22 @@ public class IconShell extends LObjectShell<Icon> {
 	protected int col, row;
 	private LScrollPanel scroll;
 	
-	public IconShell(LShell parent, boolean optional) {
-		super(parent);
+	public static final int OPTIONAL = 0x01;
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public IconShell(LShell parent, int style) {
+		super(parent, Vocab.instance.ICONSHELL);
 		setMinimumSize(600, 400);
 		setSize(800, 800);
-		
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 		LSashPanel sashForm = new LSashPanel(content, true);
-		
-		tree = new LNodeSelector<Object>(sashForm, optional);
+		tree = new LNodeSelector<Object>(sashForm, (style & OPTIONAL) > 0);
 		tree.setCollection(getTree());
 		tree.addModifyListener(new LControlListener<Integer>() {
 			@Override
@@ -42,7 +51,7 @@ public class IconShell extends LObjectShell<Icon> {
 				setImage(anim);
 			}
 		});
-		
+
 		scroll = new LScrollPanel(sashForm, true);
 		image = new LImage(scroll);
 		image.setBackground(bg);

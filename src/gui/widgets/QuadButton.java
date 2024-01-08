@@ -23,7 +23,7 @@ public class QuadButton extends LObjectButton<Quad> {
 		setShellFactory(new LShellFactory<Quad>() {
 			@Override
 			public LObjectShell<Quad> createShell(LShell parent) {
-				return new QuadShell(parent, optional);
+				return new QuadShell(parent, optional ? QuadShell.OPTIONAL : 0);
 			}
 		});
 	}

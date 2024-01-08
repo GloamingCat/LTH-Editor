@@ -39,17 +39,28 @@ public class QuadShell extends LObjectShell<Quad> {
 	private LSpinner spnWidth;
 	private LSpinner spnHeight;
 	private LScrollPanel scroll;
-
-	public QuadShell(LShell parent, boolean optional) {
-		super(parent);
+	
+	public static final int OPTIONAL = 0x01;
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public QuadShell(LShell parent, int style) {
+		super(parent, Vocab.instance.QUADSHELL, style);
 		setMinimumSize(600, 400);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 
 		LSashPanel form = new LSashPanel(content, true);
-		selFile = new LFileSelector(form, optional);
+		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { return isImage(f); } );
 		selFile.setFolder(Project.current.imagePath());
 
-		LPanel quad = new LPanel(form, 1);
+		LPanel quad = new LPanel(form);
+		quad.setGridLayout(1);
 
 		scroll = new LScrollPanel(quad);
 		scroll.setExpand(true, true);
@@ -57,7 +68,8 @@ public class QuadShell extends LObjectShell<Quad> {
 		imgQuad = new LImage(scroll);
 		imgQuad.setAlignment(LFlags.TOP & LFlags.LEFT);
 
-		LPanel spinners = new LPanel(quad, 4, false);
+		LPanel spinners = new LPanel(quad);
+		spinners.setGridLayout(4);
 		spinners.setExpand(true, false);
 		spinners.setAlignment(LFlags.CENTER);
 

@@ -32,9 +32,11 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 	 * @param style
 	 */
 	public PartyEditor(LContainer parent) {
-		super(parent, 2, false, false);
+		super(parent, false);
+		setGridLayout(2);
 		
-		LPanel position = new LPanel(this, 4, false);
+		LPanel position = new LPanel(this);
+		position.setGridLayout(4);
 		position.setExpand(true, false);
 		position.setSpread(2, 1);
 		position.setAlignment(LFlags.CENTER);
@@ -117,8 +119,10 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		cmbGen.setOptional(false);
 		cmbGen.setItems(s);
 		addControl(cmbGen, "memberGen");
+		LFrame frame = new LFrame(this, (String) Vocab.instance.TROOPS);
+		frame.setFillLayout(true);
 		
-		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS, true, true);
+		LFrame grpTroops = frame;
 		grpTroops.setHoverText(Tooltip.instance.PARTYTROOPS);
 		grpTroops.setExpand(true, true);
 		grpTroops.setSpread(2, 1);

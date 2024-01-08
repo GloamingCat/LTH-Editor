@@ -425,5 +425,63 @@ public class Vocab {
 	public String FADEOUT = "Fade out";
 	
 	// }}
+	
+	//////////////////////////////////////////////////
+	// {{ Shell
+	
+	// General
+	public String AUDIOSHELL = "Play Audio";
+	public String ICONSHELL = "Select Icon";
+	public String POSITIONSHELL = "Select Position";
+	public String QUADSHELL = "Select Quad";
+	public String TAGSHELL = "Tag Properties";
+	public String ITEMSHELL = "Select Item";
+	public String JOBSHELL = "Select Job";
+	public String BATTLERSHELL = "Select Battler";
+	public String STATUSSHELL = "Select Status";
+	public String SKILLSHELL = "Select Skill";
+	public String CHARSHELL = "Select Character";
+	public String TROOPSHELL = "Select Troop";
 
+	// System
+	public String ATTRIBUTESHELL = "Attribute Properties";
+	public String AUDIOFILESHELL = "Select Audio File";
+	public String EQUIPTYPESHELL = "Equipment Type Properties";
+	public String ELEMENTSHELL = "Element Properties";
+	public String FONTSHELL = "Select Font File";
+	public String PLUGINSHELL = "Select Plugin Lua File";
+	public String REGIONSHELL = "Region Properties";
+	
+	// Database
+	public String BATTLERELEMENTSHELL = "Element Vulnerability";
+	public String BUFFSHELL = "Attribute Modifier";
+	public String CHARTILESHELL = "Character Collider Tile";
+	public String ANIMSHELL = "Select Animation";
+	public String DROPSHELL = "Select Item";
+	public String EQUIPSHELL = "Slot State";
+	public String PROPERTYSHELL = "Select Property";
+	public String MASKSHELL = "Mask Tiles";
+	public String OBSTACLESHELL = "Obstacle Collider Tile";
+	public String PORTRAITSHELL = "Select Image";
+	public String RULESHELL = "Select Rule File";
+	public String EFFECTSHELL = "Effect Properties";
+	public String SKILLELEMENTSHELL = "Elemental Property";
+	public String TRANSFORMSHELL = "Transform Field";
+	public String SLOTSHELL = "Set Slot Name";
+
+	// Field
+	public String FIELDIMGSHELL = "Select Image";
+	public String LAYERSHELL = "Layer Properties";
+	public String RESIZESHELL = "Resize Field";
+	public String PORTALSHELL = "Origin Tiles";
+	public String SCRIPTSHELL = "Character Script";
+
+	public String ANIMSCRIPTSHELL = "Select Animation Lua File";
+	public String SKILLSCRIPTSHELL = "Select Skill Lua File";
+	public String STATUSSCRIPTSHELL = "Select Status Lua File";
+	public String TROOPSCRIPTSHELL = "Select Troop Lua File";
+
+
+	// }}
+	
 }

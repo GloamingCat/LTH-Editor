@@ -15,22 +15,26 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 	protected LFlatList list;
 	protected boolean optional;
 	
-	public FileShell(LShell parent) {
-		this(parent, "", true);
-	}
+	public static final int OPTIONAL = 0x01;
 	
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public FileShell(LShell parent, String folder, boolean optional) {
-		super(parent);
-		this.optional = optional;
-		this.folder = folder;
+	public FileShell(LShell parent, String title, int style) {
+		super(parent, title, style);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		this.optional = (style & OPTIONAL) > 0;
 		content.setFillLayout(true);
-		
 		sashForm = new LSashPanel(content, true);
-		
 		list = new LFlatList(sashForm, optional);
+	}
+	
+	public void setFolder(String folder) {
+		this.folder = folder;
 		list.setItems(getItems(folder + "/", optional));
 	}
 	

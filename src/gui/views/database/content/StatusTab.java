@@ -44,7 +44,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Icon
 
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral, 2, false);
+		LPanel compositeIcon = new LPanel(grpGeneral);
+		compositeIcon.setGridLayout(2);
 		compositeIcon.setExpand(false, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
@@ -61,7 +62,7 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		LLabel lblCancel = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL,
 				Tooltip.instance.STATUSCANCEL);
-		lstCancel = new IDList(grpGeneral);
+		lstCancel = new IDList(grpGeneral, Vocab.instance.STATUSSHELL);
 		lstCancel.setExpand(true, true);
 		lstCancel.setMinimumHeight(70);
 		lstCancel.addMenu(lblCancel);
@@ -88,11 +89,12 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Script
 
 		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
-		LPanel compositeScript = new LPanel(grpGeneral, 2, false);
+		LPanel compositeScript = new LPanel(grpGeneral);
+		compositeScript.setGridLayout(2);
 		compositeScript.setExpand(false, false);
 		compositeScript.setAlignment(LFlags.CENTER);
 		LText txtScript = new LText(compositeScript, true);
-		LuaButton btnSelectScript = new LuaButton(compositeScript, true);
+		LuaButton btnSelectScript = new LuaButton(compositeScript, Vocab.instance.STATUSSCRIPTSHELL, true);
 		btnSelectScript.setPathWidget(txtScript);
 		btnSelectScript.addMenu(lblScript);
 		btnSelectScript.addMenu(txtScript);
@@ -101,7 +103,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Visibility
 
 		LLabel lblPriority = new LLabel(grpGeneral, Vocab.instance.PRIORITY, Tooltip.instance.PRIORITY);
-		LPanel compositeVisible = new LPanel(grpGeneral, 2, false);
+		LPanel compositeVisible = new LPanel(grpGeneral);
+		compositeVisible.setGridLayout(2);
 		compositeVisible.setExpand(false, false);
 		compositeVisible.setAlignment(LFlags.CENTER);
 		
@@ -118,7 +121,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Other properties
 		
-		LPanel check = new LPanel(grpGeneral, 3, true);
+		LPanel check = new LPanel(grpGeneral);
+		check.setGridLayout(3);
 		check.setSpread(2, 1);
 		check.setExpand(false, false);
 		check.setAlignment(LFlags.CENTER);
@@ -126,21 +130,25 @@ public class StatusTab extends DatabaseTab<Status> {
 		LCheckBox btnKO = new LCheckBox(check);
 		btnKO.setText(Vocab.instance.KOLIKE);
 		btnKO.setHoverText(Tooltip.instance.KOLIKE);
+		btnKO.setExpand(true, false);
 		addControl(btnKO, "ko");
 
 		LCheckBox btnDeactivate = new LCheckBox(check);
 		btnDeactivate.setText(Vocab.instance.DEACTIVATE);
 		btnDeactivate.setHoverText(Tooltip.instance.DEACTIVATE);
+		btnDeactivate.setExpand(true, false);
 		addControl(btnDeactivate, "deactivate");
 
 		LCheckBox btnCumulative = new LCheckBox(check);
 		btnCumulative.setText(Vocab.instance.CUMULATIVE);
 		btnCumulative.setHoverText(Tooltip.instance.CUMULATIVE);
+		btnCumulative.setExpand(true, false);
 		addControl(btnCumulative, "cumulative");
 
 		// Durability
 
-		LFrame grpDurability = new LFrame(left, Vocab.instance.DURABILITY, 3, false);
+		LFrame grpDurability = new LFrame(left, Vocab.instance.DURABILITY);
+		grpDurability.setGridLayout(3);
 		grpDurability.setHoverText(Tooltip.instance.DURABILITY);
 		grpDurability.setExpand(true, false);
 		grpDurability.setMinimumWidth(200);
@@ -157,7 +165,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		btnBattleOnly.setHoverText(Tooltip.instance.BATTLEONLY);
 		addControl(btnBattleOnly, "battleOnly");
 
-		LPanel checkDurability = new LPanel(grpDurability, true, false);
+		LPanel checkDurability = new LPanel(grpDurability);
+		checkDurability.setSequentialLayout(true);
 		checkDurability.setExpand(true, false);
 		checkDurability.setSpread(2, 1);
 
@@ -173,7 +182,8 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Graphics
 
-		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS, 2, false);
+		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
+		grpGraphics.setGridLayout(2);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.setExpand(true, true);
 
@@ -199,7 +209,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Drain
 
-		LFrame grpDrain = new LFrame(right, Vocab.instance.DRAIN, 3, false);
+		LFrame grpDrain = new LFrame(right, Vocab.instance.DRAIN);
+		grpDrain.setGridLayout(3);
 		grpDrain.setHoverText(Tooltip.instance.DRAIN);
 		grpDrain.setExpand(true, false);
 		grpDrain.setMinimumWidth(200);
@@ -223,20 +234,24 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Effects
 
-		LPanel effects = new LPanel(right, 2, true);
+		LPanel effects = new LPanel(right);
+		effects.setGridLayout(2);
+		effects.setEqualCells(true, false);
 		effects.setExpand(true, true);
-
-		LFrame grpAtt = new LFrame(effects, Vocab.instance.ATTRIBUTES, true, true);
+		
+		LFrame grpAtt = new LFrame(effects, (String) Vocab.instance.ATTRIBUTES);
+		grpAtt.setFillLayout(true);
 		grpAtt.setHoverText(Tooltip.instance.STATUSATT);
 		grpAtt.setExpand(true, true);
 		AttributeList lstAttributes = new AttributeList(grpAtt);
 		lstAttributes.addMenu(grpAtt);
 		addChild(lstAttributes, "attributes");
-
-		LFrame grpBonuses = new LFrame(effects, Vocab.instance.PROPERTIES, true, true);
+		
+		LFrame grpBonuses = new LFrame(effects, (String) Vocab.instance.PROPERTIES);
+		grpBonuses.setFillLayout(true);
 		grpBonuses.setHoverText(Tooltip.instance.PROPERTIES);
 		grpBonuses.setExpand(true, true);
-		BonusList lstBonus = new BonusList(grpBonuses);
+		BonusList lstBonus = new BonusList(grpBonuses, Vocab.instance.PROPERTYSHELL);
 		lstBonus.addMenu(grpBonuses);
 		addChild(lstBonus, "bonuses");
 

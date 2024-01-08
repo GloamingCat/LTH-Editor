@@ -106,7 +106,8 @@ public class FieldTreeEditor extends LView {
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
 	public FieldTreeEditor(LContainer parent) {
-		super(parent, true, true);
+		super(parent, true);
+		setFillLayout(true);
 		FieldTreeEditor.instance = this;
 		
 		createMenuInterface();

@@ -41,9 +41,14 @@ public class PositionShell extends LObjectShell<Position> {
 	private LPath path = null;
 
 	public PositionShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.POSITIONSHELL);
 		setMinimumSize(640, 480);
-		content.setGridLayout(1, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		content.setGridLayout(1);
 
 		LSashPanel sashForm = new LSashPanel(content, true);
 		sashForm.setExpand(true, true);
@@ -73,10 +78,12 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		};
 
-		LPanel bottom = new LPanel(content, 4, false);
+		LPanel bottom = new LPanel(content);
+		bottom.setGridLayout(4);
 		bottom.setAlignment(LFlags.CENTER);
 		
-		LPanel coordinates = new LPanel(bottom, 6, false);
+		LPanel coordinates = new LPanel(bottom);
+		coordinates.setGridLayout(6);
 		coordinates.setAlignment(LFlags.CENTER);
 		coordinates.setExpand(true, false);
 		

@@ -25,7 +25,7 @@ public class IconButton extends LObjectButton<Icon> {
 		setShellFactory(new LShellFactory<Icon>() {
 			@Override
 			public IconShell createShell(LShell parent) {
-				return new IconShell(parent, optional);
+				return new IconShell(parent, IconShell.OPTIONAL);
 			}
 		});
 	}

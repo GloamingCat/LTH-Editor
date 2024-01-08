@@ -14,9 +14,14 @@ import project.Project;
 public class EquipStatusShell extends ObjectShell<EquipStatus> {
 
 	public EquipStatusShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.STATUSSHELL);
 		setMinimumSize(300, 250);
-		contentEditor.setGridLayout(1, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(1);
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
 		tree.setExpand(true, true);

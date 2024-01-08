@@ -60,7 +60,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 		// Rewards
 		
 		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
-		LPanel compositeReward = new LPanel(grpGeneral, 3, false);
+		LPanel compositeReward = new LPanel(grpGeneral);
+		compositeReward.setGridLayout(3);
 		compositeReward.setExpand(true, false);
 		LSpinner spnMoney = new LSpinner(compositeReward);
 		spnMoney.setMaximum(99999999);
@@ -76,10 +77,11 @@ public class TroopTab extends DatabaseTab<Troop> {
 		// AI
 		
 		LLabel lblAI = new LLabel(grpGeneral, Vocab.instance.AI, Tooltip.instance.AI);
-		LPanel select = new LPanel(grpGeneral, 2, false);
+		LPanel select = new LPanel(grpGeneral);
+		select.setGridLayout(2);
 		select.setAlignment(LFlags.CENTER);
 		LText txtAI = new LText(select, true);		
-		LuaButton btnAI = new LuaButton(select, true);
+		LuaButton btnAI = new LuaButton(select, Vocab.instance.TROOPSCRIPTSHELL, true);
 		btnAI.setPathWidget(txtAI);
 		btnAI.addMenu(lblAI);
 		btnAI.addMenu(txtAI);
@@ -87,8 +89,9 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		// Grid
 		
-		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID, true, true);
-		grpGrid.setHoverText(Tooltip.instance.GRID);
+		LFrame grpGrid = new LFrame(left, (String) Vocab.instance.GRID);
+		grpGrid.setFillLayout(true);
+		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
 		grpGrid.setExpand(true, true);
 		gridEditor = new UnitGrid(grpGrid);
 		gridEditor.getCollectionWidget().cellWidth = tWidth;
@@ -96,7 +99,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 		// Items
 		
-		LFrame grpItems = new LFrame(right, Vocab.instance.ITEMS, true, true);
+		LFrame grpItems = new LFrame(right, (String) Vocab.instance.ITEMS);
+		grpItems.setFillLayout(true);
 		grpItems.setHoverText(Tooltip.instance.INVENTORY);
 		grpItems.setExpand(true, true);
 		DropList lstItems = new DropList(grpItems);
@@ -105,7 +109,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 		// Units
 		
-		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS, 2, false);
+		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS);
+		grpMembers.setGridLayout(2);
 		grpMembers.setHoverText(Tooltip.instance.UNITS);
 		grpMembers.setExpand(true, false);
 		grpMembers.setSpread(2, 1);
@@ -115,7 +120,6 @@ public class TroopTab extends DatabaseTab<Troop> {
 		lstMembers.setIncludeID(false);
 		lstMembers.type = Unit.class;
 		lstMembers.setExpand(true, false);
-		lstMembers.setMinimumWidth(220);
 		lstMembers.addMenu(grpMembers);
 		addChild(lstMembers, "members");
 		

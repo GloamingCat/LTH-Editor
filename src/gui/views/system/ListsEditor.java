@@ -23,17 +23,23 @@ public class ListsEditor extends LObjectEditor<Object> {
 	 * @param parent
 	 */
 	public ListsEditor(LContainer parent) {
-		super(parent, false, true);
+		super(parent, true);
+		setFillLayout(false);
 
 		createMenuInterface();
 
-		LPanel top = new LPanel(this, true, true);
+		LPanel top = new LPanel(this);
+		top.setFillLayout(true);
+		top.setSpacing(5);
 		
-		LPanel bottom = new LPanel(this, true, true);
+		LPanel bottom = new LPanel(this);
+		bottom.setFillLayout(true);
+		bottom.setSpacing(5);
 		
 		// Elements
 		
-		LFrame grpElements = new LFrame(top, Vocab.instance.ELEMENTS, true, true);
+		LFrame grpElements = new LFrame(top, Vocab.instance.ELEMENTS);
+		grpElements.setFillLayout(true);
 		grpElements.setHoverText(Tooltip.instance.ELEMENTS);
 		lstElements = new ElementList(grpElements);
 		lstElements.setIncludeID(true);
@@ -41,21 +47,24 @@ public class ListsEditor extends LObjectEditor<Object> {
 		
 		// Regions
 		
-		LFrame grpRegions = new LFrame(top, Vocab.instance.REGIONS, true, true);
+		LFrame grpRegions = new LFrame(top, Vocab.instance.REGIONS);
+		grpRegions.setFillLayout(true);
 		grpRegions.setHoverText(Tooltip.instance.REGIONS);
 		lstRegions = new RegionList(grpRegions);
 		addChild(lstRegions, "regions");
 
 		// Attributes
 		
-		LFrame grpAttributes = new LFrame(top, Vocab.instance.ATTRIBUTES, true, true);
+		LFrame grpAttributes = new LFrame(top, Vocab.instance.ATTRIBUTES);
+		grpAttributes.setFillLayout(true);
 		grpAttributes.setHoverText(Tooltip.instance.ATTRIBUTES);
 		lstAttributes = new AttributeList(grpAttributes);
 		addChild(lstAttributes, "attributes");
 		
 		// Variables
 		
-		LFrame grpVariables = new LFrame(bottom, Vocab.instance.VARIABLES, true, true);
+		LFrame grpVariables = new LFrame(bottom, Vocab.instance.VARIABLES);
+		grpVariables.setFillLayout(true);
 		grpVariables.setHoverText(Tooltip.instance.VARIABLES);
 		lstVariables = new TagList(grpVariables);
 		lstVariables.setIncludeID(true);
@@ -63,14 +72,16 @@ public class ListsEditor extends LObjectEditor<Object> {
 		
 		// Equip types
 		
-		LFrame grpEquipTypes = new LFrame(bottom, Vocab.instance.EQUIPTYPES, true, true);
+		LFrame grpEquipTypes = new LFrame(bottom, Vocab.instance.EQUIPTYPES);
+		grpEquipTypes.setFillLayout(true);
 		grpEquipTypes.setHoverText(Tooltip.instance.EQUIPTYPES);
 		lstEquipTypes = new EquipTypeList(grpEquipTypes);
 		addChild(lstEquipTypes, "equipTypes");
 		
 		// Plug-ins
 		
-		LFrame grpPlugins = new LFrame(bottom, Vocab.instance.PLUGINS, true, true);
+		LFrame grpPlugins = new LFrame(bottom, Vocab.instance.PLUGINS);
+		grpPlugins.setFillLayout(true);
 		grpPlugins.setHoverText(Tooltip.instance.PLUGINS);
 		lstPlugins = new PluginList(grpPlugins);
 		addChild(lstPlugins, "plugins");

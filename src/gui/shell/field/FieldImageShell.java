@@ -39,10 +39,15 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	private LCheckBox btnGlued;
 	
 	public FieldImageShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.FIELDIMGSHELL);
 		setMinimumSize(400, 300);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
 
-		content.setGridLayout(2, false);
+		content.setGridLayout(2);
 		
 		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
 		
@@ -92,7 +97,8 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		});		
 		sashForm.setWeights(new int[] {1, 2});
 
-		LPanel options = new LPanel(content, 3, false);
+		LPanel options = new LPanel(content);
+		options.setGridLayout(3);
 		options.setExpand(true, false);
 		options.setSpread(2, 1);
 		

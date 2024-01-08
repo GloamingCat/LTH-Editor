@@ -14,9 +14,14 @@ import project.Project;
 public class JobStatusShell extends ObjectShell<Job.Status> {
 
 	public JobStatusShell(LShell parent) {
-		super(parent);
+		super(parent, Vocab.instance.STATUSSHELL);
 		setMinimumSize(300, 100);
-		contentEditor.setGridLayout(2, false);
+	}
+	
+	@Override
+	protected void createContent(int style) {
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
 		tree.setExpand(true, true);
