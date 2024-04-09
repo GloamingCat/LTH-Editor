@@ -1,11 +1,11 @@
 package project;
 
-import gson.project.GMultiSerializer;
-import lwt.LGlobals;
-import lwt.dataestructure.LPath;
+import lbase.data.LPath;
 import data.field.Field;
 import data.field.FieldNode;
 import data.field.FieldTree;
+import gson.GGlobals;
+import gson.GMultiSerializer;
 
 public class FieldTreeSerializer extends 
 	GMultiSerializer<FieldNode, Field, FieldTree> {
@@ -89,8 +89,8 @@ public class FieldTreeSerializer extends
 	}
 
 	public Field duplicateField(int id, Field original) {
-		String json = LGlobals.gson.toJson(original, Field.class);
-		Field newField = LGlobals.gson.fromJson(json, Field.class);
+		String json = GGlobals.gson.toJson(original, Field.class);
+		Field newField = GGlobals.gson.fromJson(json, Field.class);
 		newField.id = id;
 		return newField;
 	}

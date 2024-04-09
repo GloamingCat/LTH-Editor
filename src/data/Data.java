@@ -1,7 +1,7 @@
 package data;
 
-import lwt.dataestructure.LDataList;
-import lwt.dataestructure.LDataTree;
+import lbase.data.LDataList;
+import lbase.data.LDataTree;
 import data.subcontent.Tag;
 
 public class Data {

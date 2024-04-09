@@ -3,7 +3,9 @@ package data.field;
 import data.Data;
 import data.subcontent.Audio;
 import data.subcontent.Script;
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
+
+import java.util.ArrayList;
 
 public class Field {
 
@@ -54,6 +56,14 @@ public class Field {
 				maxH = Math.max(maxH, l.info.height);
 			return maxH;
 		}
+
+		public LDataList<LDataList<Layer>> asList() {
+			LDataList<LDataList<Layer>> allLayers = new LDataList<>();
+			allLayers.add(terrain);
+			allLayers.add(obstacle);
+			allLayers.add(region);
+			return allLayers;
+		}
 		
 	}
 	
@@ -64,5 +74,25 @@ public class Field {
 		}
 		return null;
 	}
+
+	public Layers resizeLayers(int width, int height, int x0, int y0) {
+		Layers layers = new Layers();
+		layers.terrain = resizeLayers(this.layers.terrain, width, height, x0, y0);
+		layers.obstacle = resizeLayers(this.layers.obstacle, width, height, x0, y0);
+		layers.region = resizeLayers(this.layers.region, width, height, x0, y0);
+		return layers;
+	}
+
+	public LDataList<Layer> resizeLayers(LDataList<Layer> layers, int width, int height, int x0, int y0) {
+		LDataList<Layer> newLayers = new LDataList<>();
+		for(Layer l : layers) {
+			Layer newLayer = new Layer(l, width, height, x0, y0);
+			newLayers.add(newLayer);
+			newLayer.info = l.info;
+			newLayer.visible = l.visible;
+		}
+		return newLayers;
+	}
+
 	
 }

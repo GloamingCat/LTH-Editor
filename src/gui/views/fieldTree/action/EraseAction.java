@@ -1,7 +1,7 @@
 package gui.views.fieldTree.action;
 
 import gui.views.fieldTree.FieldCanvas;
-import lwt.action.LAction;
+import lbase.action.LAction;
 
 public class EraseAction implements LAction {
 

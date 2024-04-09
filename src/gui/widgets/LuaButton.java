@@ -4,9 +4,9 @@ import java.lang.reflect.Type;
 
 import gui.shell.LuaShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -21,9 +21,9 @@ public class LuaButton extends LObjectButton<String> {
 	 */
 	public LuaButton(LContainer parent, String title, boolean optional) {
 		super(parent);
-		setShellFactory(new LShellFactory<String>() {
+		setShellFactory(new LWindowFactory<String>() {
 			@Override
-			public LObjectShell<String> createShell(LShell parent) {
+			public LObjectWindow<String> createWindow(LWindow parent) {
 				return new LuaShell(parent, title, optional ? LuaShell.OPTIONAL : 0);
 			}
 		});

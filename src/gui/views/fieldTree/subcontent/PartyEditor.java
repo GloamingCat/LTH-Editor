@@ -5,46 +5,45 @@ import gui.Vocab;
 import gui.shell.field.TroopSpawnShell;
 import gui.views.fieldTree.FieldEditor;
 import gui.views.fieldTree.FieldSideEditor;
+import gui.widgets.DirectionCombo;
 import gui.widgets.SimpleEditableList;
-
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
 import data.field.Party;
 import data.field.Party.TroopSpawn;
-import gson.editor.GDefaultObjectEditor;
-import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
+import lwt.gson.GDefaultObjectEditor;
+import lbase.event.LControlEvent;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 public class PartyEditor extends GDefaultObjectEditor<Party> {
 
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
+	public Consumer<Party> onChange;
+	public Consumer<String> onRename;
+
 	public PartyEditor(LContainer parent) {
 		super(parent, false);
 		setGridLayout(2);
 		
-		LPanel position = new LPanel(this);
-		position.setGridLayout(4);
-		position.setExpand(true, false);
-		position.setSpread(2, 1);
-		position.setAlignment(LFlags.CENTER);
-		
 		// Position
-		
-		new LLabel(position, Vocab.instance.POSITION, Tooltip.instance.PARTYPOS);
-		
+
+		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.PARTYPOS);
+		LPanel position = new LPanel(this);
+		position.setFillLayout(true);
+		position.setSpacing(5);
+		position.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
+
 		LSpinner spnX = new LSpinner(position);
 		spnX.setMinimum(1);
 		addControl(spnX, "x");
@@ -56,87 +55,64 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		LSpinner spnH = new LSpinner(position);
 		spnH.setMinimum(1);
 		addControl(spnH, "h");
-		
-		spnX.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
-		spnY.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
-		spnH.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
+
+		LControlListener<Integer> redrawListener = event -> {
+            if (event == null || event.oldValue == null || onChange == null) return;
+            onChange.accept(getObject());
+        };
+
+		spnX.addModifyListener(redrawListener);
+		spnY.addModifyListener(redrawListener);
+		spnH.addModifyListener(redrawListener);
 		
 		new LLabel(this, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
 		LText txtName = new LText(this);
-		addControl(txtName, "name");
-		txtName.addModifyListener(new LControlListener<String>() {
-			@Override
-			public void onModify(LControlEvent<String> event) {
-				FieldSideEditor.instance.updatePartyNames();
-			}
+		txtName.getCellData().setExpand(true, false);
+		txtName.addModifyListener(event -> {
+			if (onRename != null)
+				onRename.accept(event.newValue);
 		});
-		
+		addControl(txtName, "name");
+
 		new LLabel(this, Vocab.instance.DIRECTION, Tooltip.instance.PARTYDIR);
 		
-		LCombo cmbDir = new LCombo(this, true);
-		String[] d = new String[] {"0°", "90°", "180°", "270°"};
-		cmbDir.setIncludeID(false);
-		cmbDir.setOptional(false);
-		cmbDir.setItems(d);
+		DirectionCombo cmbDir = new DirectionCombo(this);
+		cmbDir.getCellData().setExpand(true, false);
+		cmbDir.addModifyListener(redrawListener);
 		addControl(cmbDir, "rotation");
-		cmbDir.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
-		
+
 		// Members
 		
 		new LLabel(this, Vocab.instance.PARTYGEN, Tooltip.instance.PARTYGEN);
 		
 		LCombo cmbGen = new LCombo(this, true);
-		String[] s = new String[] {
-			Vocab.instance.FIELDCHARS,
-			Vocab.instance.TROOPUNITS
-		};
+		cmbGen.getCellData().setExpand(true, false);
 		cmbGen.setIncludeID(false);
 		cmbGen.setOptional(false);
-		cmbGen.setItems(s);
+		cmbGen.setItems(new String[] {
+			Vocab.instance.FIELDCHARS,
+			Vocab.instance.TROOPUNITS
+		});
 		addControl(cmbGen, "memberGen");
-		LFrame frame = new LFrame(this, (String) Vocab.instance.TROOPS);
-		frame.setFillLayout(true);
-		
-		LFrame grpTroops = frame;
+
+		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS);;
+		grpTroops.setFillLayout(true);
 		grpTroops.setHoverText(Tooltip.instance.PARTYTROOPS);
-		grpTroops.setExpand(true, true);
-		grpTroops.setSpread(2, 1);
+		grpTroops.getCellData().setExpand(true, true);
+		grpTroops.getCellData().setSpread(2, 1);
 		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops);
 		lstTroops.type = TroopSpawn.class;
 		lstTroops.setIncludeID(false);
-		lstTroops.setShellFactory(new LShellFactory<TroopSpawn>() {
+		lstTroops.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<TroopSpawn> createShell(LShell parent) {
+			public LObjectWindow<TroopSpawn> createWindow(LWindow parent) {
 				return new TroopSpawnShell(parent);
 			}
 		});
 		addChild(lstTroops, "troopSpawn");
-		
+
+		Function<Integer, Boolean> f = (i) -> i%2==0;
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package data;
 import data.Battler.Drop;
 import data.config.Config;
 import project.Project;
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 
 public class Troop extends Data {
 

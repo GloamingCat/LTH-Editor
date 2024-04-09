@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.config.Attribute;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
@@ -13,7 +13,7 @@ import lwt.widget.LTextBox;
 
 public class AttributeShell extends ObjectShell<Attribute> {
 	
-	public AttributeShell(LShell parent) {
+	public AttributeShell(LWindow parent) {
 		super(parent, Vocab.instance.ATTRIBUTESHELL);
 	}
 	
@@ -53,9 +53,8 @@ public class AttributeShell extends ObjectShell<Attribute> {
 		new LLabel(contentEditor, Vocab.instance.FORMULA, Tooltip.instance.FORMULA);
 		//lblScript.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		LTextBox txtScript = new LTextBox(contentEditor, 1, 1);
-		txtScript.setMinimumWidth(200);
-		txtScript.setMinimumHeight(48);
+		LTextBox txtScript = new LTextBox(contentEditor);
+		txtScript.getCellData().setMinimumSize(200, 48);
 		addControl(txtScript, "script");
 		
 		pack();

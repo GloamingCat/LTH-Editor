@@ -3,7 +3,7 @@ package gui.shell.field;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.graphics.LRect;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
@@ -11,7 +11,7 @@ import lwt.widget.LSpinner;
 
 public class ResizeShell extends ObjectShell<LRect> {
 
-	public ResizeShell(LShell parent) {
+	public ResizeShell(LWindow parent) {
 		super(parent, Vocab.instance.RESIZESHELL);
 		setMinimumSize(240, 0);
 	}
@@ -49,6 +49,25 @@ public class ResizeShell extends ObjectShell<LRect> {
 		addControl(cmbY, "y");
 		
 		pack();
+	}
+
+	@Override
+	public LRect createResult(LRect initial) {
+		LRect rect = super.createResult(initial);
+		if (rect == null)
+			return null;
+		if (rect.x == 1) {
+			rect.x = (initial.width - rect.width) / 2;
+		} else if (rect.x == 2) {
+			rect.y = initial.width - rect.width;
+		}
+		// Y anchor
+		if (rect.y == 1) {
+			rect.y = (initial.height - rect.height) / 2;
+		} else if (rect.x == 2) {
+			rect.y = initial.height - rect.height;
+		}
+		return rect;
 	}
 
 }

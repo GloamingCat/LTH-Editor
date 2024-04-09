@@ -3,7 +3,7 @@ package data;
 import data.subcontent.Audio;
 import data.subcontent.Quad;
 import data.subcontent.Transform;
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 import lwt.graphics.LRect;
 
 public class Animation extends Data {

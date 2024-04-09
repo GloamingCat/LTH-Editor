@@ -4,7 +4,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
@@ -12,7 +12,7 @@ import data.subcontent.Tile;
 
 public class CharTileShell extends ObjectShell<Tile> {
 	
-	public CharTileShell(LShell parent) {
+	public CharTileShell(LWindow parent) {
 		super(parent, Vocab.instance.CHARTILESHELL);
 		setMinimumSize(200, 160);
 	}

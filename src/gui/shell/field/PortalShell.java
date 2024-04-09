@@ -4,22 +4,21 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.*;
-
-import lwt.LFlags;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
 import lwt.container.LScrollPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
 import lwt.graphics.LPainter;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import project.Project;
 import data.field.Field;
 import data.field.Transition.Portal;
 
-public class PortalShell extends LObjectShell<Portal> {
+public class PortalShell extends LObjectWindow<Portal> {
 
 	protected FieldCanvas canvas;
 	protected LSpinner spnH;
@@ -31,7 +30,7 @@ public class PortalShell extends LObjectShell<Portal> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public PortalShell(LShell parent, int fieldID) {
+	public PortalShell(LWindow parent, int fieldID) {
 		super(parent, Vocab.instance.PORTALSHELL);
 		this.fieldID = fieldID;
 		setMinimumSize(640, 480);
@@ -42,9 +41,9 @@ public class PortalShell extends LObjectShell<Portal> {
 		super.createContent(style);
 		content.setGridLayout(3);
 
-		scrolledComposite = new LScrollPanel(content, true);
-		scrolledComposite.setExpand(true, true);
-		scrolledComposite.setSpread(3, 1);
+		scrolledComposite = new LScrollPanel(content);
+		scrolledComposite.getCellData().setExpand(true, true);
+		scrolledComposite.getCellData().setSpread(3, 1);
 
 		canvas = new FieldCanvasOpenGL(scrolledComposite) {
 			public void onTileLeftDown() {
@@ -77,7 +76,7 @@ public class PortalShell extends LObjectShell<Portal> {
 				canvas.redraw();
 			}
 		});
-		lblPos = new LLabel(content, "(-99, -99)", LFlags.EXPAND);
+		lblPos = new LLabel(content, LFlags.EXPAND, "(-99, -99)");
 
 		pack();
 	}

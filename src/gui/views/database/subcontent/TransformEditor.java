@@ -2,14 +2,13 @@ package gui.views.database.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-
+import lbase.event.listener.LControlListener;
 import data.subcontent.Transform;
-import gson.editor.GDefaultObjectEditor;
 import lwt.container.LContainer;
 import lwt.container.LImage;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lbase.event.LControlEvent;
 import lwt.graphics.LPainter;
+import lwt.gson.GDefaultObjectEditor;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
@@ -58,6 +57,8 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblOffsetX = new LLabel(this, Vocab.instance.OFFSETX, Tooltip.instance.OFFSETX);
 		spnOffsetX = new LSpinner(this);
+		spnOffsetX.getCellData().setExpand(true, false);
+		spnOffsetX.getCellData().setExpand(true, false);
 		spnOffsetX.setMaximum(1024 * 4);
 		spnOffsetX.setMinimum(-1024 * 4);
 		spnOffsetX.addMenu(lblOffsetX);
@@ -66,6 +67,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblRed = new LLabel(this, Vocab.instance.RED, Tooltip.instance.RED);
 		LSpinner spnRed = new LSpinner(this);
+		spnRed.getCellData().setExpand(true, false);
 		spnRed.setMaximum(10000);
 		spnRed.setMinimum(0);
 		spnRed.addMenu(lblRed);
@@ -74,6 +76,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblOffsetY = new LLabel(this, Vocab.instance.OFFSETY, Tooltip.instance.OFFSETY);
 		spnOffsetY = new LSpinner(this);
+		spnOffsetY.getCellData().setExpand(true, false);
 		spnOffsetY.setMaximum(1024);
 		spnOffsetY.setMinimum(-1024);
 		spnOffsetY.addMenu(lblOffsetY);
@@ -82,6 +85,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblGreen = new LLabel(this, Vocab.instance.GREEN, Tooltip.instance.GREEN);
 		LSpinner spnGreen = new LSpinner(this);
+		spnGreen.getCellData().setExpand(true, false);
 		spnGreen.setMaximum(10000);
 		spnGreen.setMinimum(0);
 		spnGreen.addMenu(lblGreen);
@@ -90,6 +94,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblOffsetDepth = new LLabel(this, Vocab.instance.OFFSETDEPTH, Tooltip.instance.OFFSETDEPTH);
 		LSpinner spnOffsetDepth = new LSpinner(this);
+		spnOffsetDepth.getCellData().setExpand(true, false);
 		spnOffsetDepth.setMinimum(-1024);
 		spnOffsetDepth.setMaximum(1024);
 		spnOffsetDepth.addMenu(lblOffsetDepth);
@@ -97,6 +102,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblBlue = new LLabel(this, Vocab.instance.BLUE, Tooltip.instance.BLUE);
 		LSpinner spnBlue = new LSpinner(this);
+		spnBlue.getCellData().setExpand(true, false);
 		spnBlue.setMaximum(10000);
 		spnBlue.setMinimum(0);
 		spnBlue.addMenu(lblBlue);
@@ -105,6 +111,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblScaleX = new LLabel(this, Vocab.instance.SCALEX, Tooltip.instance.SCALEX);
 		spnScaleX = new LSpinner(this);
+		spnScaleX.getCellData().setExpand(true, false);
 		spnScaleX.setMaximum(10000);
 		spnScaleX.setMinimum(-10000);
 		spnScaleX.addMenu(lblScaleX);
@@ -113,6 +120,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblAlpha = new LLabel(this, Vocab.instance.ALPHA, Tooltip.instance.ALPHA);
 		LSpinner spnAlpha = new LSpinner(this);
+		spnAlpha.getCellData().setExpand(true, false);
 		spnAlpha.setMaximum(10000);
 		spnAlpha.setMinimum(0);
 		spnAlpha.addMenu(lblAlpha);
@@ -121,6 +129,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblScaleY = new LLabel(this, Vocab.instance.SCALEY, Tooltip.instance.SCALEY);
 		spnScaleY = new LSpinner(this);
+		spnScaleY.getCellData().setExpand(true, false);
 		spnScaleY.setMaximum(10000);
 		spnScaleY.setMinimum(-10000);
 		spnScaleY.addMenu(lblScaleY);
@@ -129,6 +138,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblHue = new LLabel(this, Vocab.instance.HUE, Tooltip.instance.HUE);
 		LSpinner spnHue = new LSpinner(this);
+		spnHue.getCellData().setExpand(true, false);
 		spnHue.setMaximum(360);
 		spnHue.setMinimum(-360);
 		spnHue.addMenu(lblHue);
@@ -137,6 +147,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblRotation = new LLabel(this, Vocab.instance.ROTATION, Tooltip.instance.ROTATION);
 		spnRotation = new LSpinner(this);
+		spnRotation.getCellData().setExpand(true, false);
 		spnRotation.setMaximum(360);
 		spnRotation.setMinimum(-360);
 		spnRotation.addMenu(lblRotation);
@@ -145,6 +156,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblSaturation = new LLabel(this, Vocab.instance.SATURATION, Tooltip.instance.SATURATION);
 		LSpinner spnSaturation = new LSpinner(this);
+		spnSaturation.getCellData().setExpand(true, false);
 		spnSaturation.setMaximum(10000);
 		spnSaturation.setMinimum(0);
 		spnSaturation.addMenu(lblSaturation);
@@ -155,6 +167,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		
 		LLabel lblBrightness = new LLabel(this, Vocab.instance.BRIGHTNESS, Tooltip.instance.BRIGHTNESS);
 		LSpinner spnBrightness = new LSpinner(this);
+		spnBrightness.getCellData().setExpand(true, false);
 		spnBrightness.setMaximum(10000);
 		spnBrightness.setMinimum(0);
 		spnBrightness.addMenu(lblBrightness);

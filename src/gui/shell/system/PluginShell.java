@@ -6,8 +6,8 @@ import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
-import lwt.dialog.LShell;
+import lwt.container.LFlexPanel;
+import lwt.dialog.LWindow;
 import lwt.widget.LFileSelector;
 import lwt.widget.LCheckBox;
 
@@ -21,7 +21,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public PluginShell(LShell parent) {
+	public PluginShell(LWindow parent) {
 		super(parent, Vocab.instance.PLUGINSHELL);
 	}
 	
@@ -29,7 +29,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 	protected void createContent(int style) {
 		super.createContent(style);
 		contentEditor.setFillLayout(true);
-		LSashPanel form = new LSashPanel(contentEditor, true);
+		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
@@ -41,7 +41,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 		
 		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
-		grpParameters.setExpand(true, true);
+		grpParameters.getCellData().setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
@@ -50,7 +50,7 @@ public class PluginShell extends ObjectShell<Plugin> {
 		btnON.setHoverText(Tooltip.instance.PLUGINON);
 		addControl(btnON, "on");
 		
-		form.setWeights(new int[] {1, 1});
+		form.setWeights(1, 1);
 	}
 	
 	public void open(Plugin initial) {

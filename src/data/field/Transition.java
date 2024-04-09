@@ -2,7 +2,7 @@ package data.field;
 
 import data.subcontent.Position;
 import data.subcontent.Tile;
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 
 public class Transition {
 

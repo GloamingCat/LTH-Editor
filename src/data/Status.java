@@ -5,8 +5,8 @@ import data.subcontent.Bonus;
 import data.subcontent.Icon;
 import data.subcontent.Rule;
 import data.subcontent.Transformation;
-import lwt.dataestructure.LDataList;
-import lwt.dataestructure.LDataTree;
+import lbase.data.LDataList;
+import lbase.data.LDataTree;
 
 public class Status extends Data {
 	

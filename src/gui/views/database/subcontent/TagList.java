@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Tag;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class TagList extends SimpleEditableList<Tag> {
 	
@@ -15,9 +15,9 @@ public class TagList extends SimpleEditableList<Tag> {
 		super(parent);
 		type = Tag.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Tag>() {
+		setShellFactory(new LWindowFactory<Tag>() {
 			@Override
-			public LObjectShell<Tag> createShell(LShell parent) {
+			public LObjectWindow<Tag> createWindow(LWindow parent) {
 				return new TagShell(parent);
 			}
 		});

@@ -1,10 +1,10 @@
 package gui.views.database.subcontent;
 
 import data.config.Attribute;
-import gson.editor.GGridForm;
 import project.Project;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataList;
+import lwt.gson.GGridForm;
+import lbase.data.LDataList;
 import lwt.widget.LControlWidget;
 import lwt.widget.LText;
 

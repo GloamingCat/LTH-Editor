@@ -4,15 +4,15 @@ import gui.Tooltip;
 import gui.Vocab;
 
 import data.subcontent.Property;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LShell;
+import lbase.data.LDataTree;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
 
 public abstract class PropertyShell extends ObjectShell<Property> {
 
-	public PropertyShell(LShell parent, String title) {
+	public PropertyShell(LWindow parent, String title) {
 		super(parent, title);
 		setMinimumSize(400, 320);
 	}
@@ -29,8 +29,8 @@ public abstract class PropertyShell extends ObjectShell<Property> {
 		addControl(spnValue, "value");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
-		tree.setExpand(true, true);
-		tree.setSpread(2, 1);
+		tree.getCellData().setExpand(true, true);
+		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(getTree());
 		addControl(tree, "id");
 		

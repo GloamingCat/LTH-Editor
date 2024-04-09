@@ -2,19 +2,19 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LMouseListener;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
-import lwt.LFlags;
 import lwt.container.LImage;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LScrollPanel;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LMouseEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LMouseListener;
+import lbase.data.LDataTree;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
+import lbase.event.LMouseEvent;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LText;
@@ -24,7 +24,7 @@ import data.GameCharacter.Portrait;
 
 import project.Project;
 
-public class PortraitShell extends LObjectShell<Portrait> {
+public class PortraitShell extends LObjectWindow<Portrait> {
 	
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
@@ -32,7 +32,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 	private LScrollPanel scroll;
 	private LText txtName;
 	
-	public PortraitShell(LShell parent) {
+	public PortraitShell(LWindow parent) {
 		super(parent, Vocab.instance.PORTRAITSHELL);
 		setMinimumSize(600, 400);
 	}
@@ -46,9 +46,9 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
 		txtName = new LText(content);
 
-		LSashPanel sashForm = new LSashPanel(content, true);
-		sashForm.setSpread(2, 1);
-		sashForm.setExpand(true, true);
+		LFlexPanel sashForm = new LFlexPanel(content, true);
+		sashForm.getCellData().setSpread(2, 1);
+		sashForm.getCellData().setExpand(true, true);
 		
 		tree = new LNodeSelector<Object>(sashForm, true);
 		tree.setCollection(getTree());
@@ -60,11 +60,11 @@ public class PortraitShell extends LObjectShell<Portrait> {
 			}
 		});
 		
-		scroll = new LScrollPanel(sashForm, true);
+		scroll = new LScrollPanel(sashForm);
 		
 		image = new LImage(scroll);
 		image.setBackground(new LColor(127, 127, 127));
-		image.setAlignment(LFlags.TOP & LFlags.LEFT);
+		image.getCellData().setAlignment(LFlags.TOP | LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
@@ -89,7 +89,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 				}
 			}
 		});		
-		sashForm.setWeights(new int[] {1, 2});
+		sashForm.setWeights(1, 2);
 
 		pack();
 	}
@@ -98,7 +98,7 @@ public class PortraitShell extends LObjectShell<Portrait> {
 		if (anim == null)
 			return;
 		image.setImage(anim.quad.fullPath());
-		scroll.refreshSize(anim.quad.width, anim.quad.height);
+		scroll.setContentSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}
 	

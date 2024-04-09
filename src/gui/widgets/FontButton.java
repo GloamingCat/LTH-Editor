@@ -2,9 +2,9 @@ package gui.widgets;
 
 import gui.shell.system.FontShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -23,9 +23,9 @@ public class FontButton extends LObjectButton<FontData> {
 	 */
 	public FontButton(LContainer parent) {
 		super(parent);
-		setShellFactory(new LShellFactory<FontData>() {
+		setShellFactory(new LWindowFactory<FontData>() {
 			@Override
-			public LObjectShell<FontData> createShell(LShell parent) {
+			public LObjectWindow<FontData> createWindow(LWindow parent) {
 				return new FontShell(parent);
 			}
 		});

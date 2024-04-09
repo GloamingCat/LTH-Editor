@@ -6,7 +6,7 @@ import gui.shell.ObjectShell;
 import gui.views.database.subcontent.NeighborEditor;
 
 import lwt.container.LFrame;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -20,7 +20,7 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 	private LCombo cmbMode;
 	private NeighborEditor neighborEditor;
 	
-	public ObstacleTileShell(LShell parent) {
+	public ObstacleTileShell(LWindow parent) {
 		super(parent, Vocab.instance.OBSTACLESHELL);
 	}
 	
@@ -33,7 +33,7 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
 		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
-		grpGeneral.setExpand(true, false);
+		grpGeneral.getCellData().setExpand(true, false);
 
 		new LLabel(grpGeneral, Vocab.instance.OFFSETX, Tooltip.instance.TILEX);
 		
@@ -67,7 +67,7 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 		addControl(cmbMode, "mode");
 		
 		neighborEditor = new NeighborEditor(contentEditor);
-		neighborEditor.setExpand(true, true);
+		neighborEditor.getCellData().setExpand(true, true);
 		addChild(neighborEditor, "neighbors");
 		
 		pack();

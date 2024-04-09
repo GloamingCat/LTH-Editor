@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Audio;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class SoundList extends SimpleEditableList<Audio.Node> {
 	
@@ -15,9 +15,9 @@ public class SoundList extends SimpleEditableList<Audio.Node> {
 		super(parent);
 		type = Audio.Node.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Audio.Node>() {
+		setShellFactory(new LWindowFactory<Audio.Node>() {
 			@Override
-			public LObjectShell<Audio.Node> createShell(LShell parent) {
+			public LObjectWindow<Audio.Node> createWindow(LWindow parent) {
 				return new AudioShell(parent, AudioShell.OPTIONAL);
 			}
 		});

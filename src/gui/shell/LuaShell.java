@@ -1,11 +1,11 @@
 package gui.shell;
 
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.widget.LFileSelector;
 import project.Project;
 
-public class LuaShell extends LObjectShell<String> {
+public class LuaShell extends LObjectWindow<String> {
 	
 	private LFileSelector selFile;
 	
@@ -14,8 +14,8 @@ public class LuaShell extends LObjectShell<String> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public LuaShell(LShell parent, String title, int style) {
-		super(parent, title, style);
+	public LuaShell(LWindow parent, String title, int style) {
+		super(parent, style, title);
 	}
 	
 	@Override

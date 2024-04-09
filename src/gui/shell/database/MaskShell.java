@@ -3,23 +3,23 @@ package gui.shell.database;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.helper.FieldHelper;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LMouseListener;
 import data.Skill.Mask;
-import lwt.LFlags;
 import lwt.container.LCanvas;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
-import lwt.graphics.LPoint;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LMouseEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LMouseListener;
+import lbase.data.LPoint;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
+import lbase.event.LMouseEvent;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 
-public class MaskShell extends LObjectShell<Mask> {
+public class MaskShell extends LObjectWindow<Mask> {
 
 	private LCanvas canvas;
 	private LSpinner spnMinH;
@@ -36,12 +36,8 @@ public class MaskShell extends LObjectShell<Mask> {
 	public LColor trueColor;
 	public LColor centerColor;
 	private LCombo cmbHeight;
-	
-	/**
-	 * Create the shell.
-	 * @param display
-	 */
-	public MaskShell(LShell parent) {
+
+	public MaskShell(LWindow parent) {
 		super(parent, Vocab.instance.MASKSHELL);
 	}
 	
@@ -163,8 +159,8 @@ public class MaskShell extends LObjectShell<Mask> {
 		new LLabel(content, 4, 1);
 		
 		canvas = new LCanvas(content);
-		canvas.setExpand(false, true);
-		canvas.setSpread(6, 1);
+		canvas.getCellData().setExpand(false, true);
+		canvas.getCellData().setSpread(6, 1);
 		
 		canvas.addPainter(new LPainter() {
 			@Override

@@ -4,7 +4,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.FileShell;
 import lwt.container.LPanel;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -20,13 +20,13 @@ public class FontShell extends FileShell<FontData> {
 	private LSpinner spnSize;
 	private LText txtFormat;
 	
-	public FontShell(LShell parent) {
+	public FontShell(LWindow parent) {
 		super(parent, Vocab.instance.FONTSHELL, 0);
 		setFolder("fonts/");
 		
 		LPanel composite = new LPanel(sashForm);
 		composite.setGridLayout(2);
-		composite.setExpand(true, true);
+		composite.getCellData().setExpand(true, true);
 		
 		LLabel lblLength = new LLabel(composite, Vocab.instance.LENGTH, Tooltip.instance.LENGTH);
 		

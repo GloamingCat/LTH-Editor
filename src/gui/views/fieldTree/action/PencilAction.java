@@ -1,22 +1,25 @@
 package gui.views.fieldTree.action;
 
+import gui.views.fieldTree.FieldCanvas;
 import gui.views.fieldTree.FieldEditor;
-import lwt.action.LAction;
+import lbase.action.LAction;
 
 public class PencilAction implements LAction {
 
-	private int x;
-	private int y;
-	private int[][] oldValues;
-	private int[][] newValues;
-	private int[][] grid;
+	private final int x;
+	private final int y;
+	private final int[][] oldValues;
+	private final int[][] newValues;
+	private final int[][] grid;
+	private final FieldCanvas canvas;
 
-	public PencilAction(int[][] grid, int x, int y, int[][] oldValues, int[][] newValues) {
+	public PencilAction(FieldCanvas canvas, int[][] grid, int x, int y, int[][] oldValues, int[][] newValues) {
 		this.grid = grid;
 		this.x = x;
 		this.y = y;
 		this.oldValues = oldValues;
 		this.newValues = newValues;
+		this.canvas = canvas;
 	}
 	
 	@Override
@@ -37,14 +40,14 @@ public class PencilAction implements LAction {
 					continue;
 				if (selection[i][j] != grid[x + i][y + j]) {
 					grid[x + i][y + j] = selection[i][j];
-					FieldEditor.instance.canvas.onTileChange(x + i,  y + j);
+					canvas.onTileChange(x + i,  y + j);
 					needsRedraw = true;
 				}
 			}
 		}
 		if (needsRedraw) {
-			FieldEditor.instance.canvas.redrawBuffer();
-			FieldEditor.instance.canvas.redraw();
+			canvas.redrawBuffer();
+			canvas.redraw();
 		}
 		return needsRedraw;
 	}

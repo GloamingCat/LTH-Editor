@@ -5,11 +5,11 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
-import lwt.LFlags;
+import lbase.LFlags;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
@@ -17,7 +17,7 @@ import data.config.Element;
 
 public class ElementShell extends ObjectShell<Element> {
 	
-	public ElementShell(LShell parent) {
+	public ElementShell(LWindow parent) {
 		super(parent, Vocab.instance.ELEMENTSHELL);
 	}
 	
@@ -36,23 +36,21 @@ public class ElementShell extends ObjectShell<Element> {
 		
 		LPanel icon = new LPanel(contentEditor);
 		icon.setGridLayout(2);
-		icon.setAlignment(LFlags.CENTER);
+		icon.getCellData().setAlignment(LFlags.CENTER);
 		
 		LImage imgIcon = new LImage(icon);
-		imgIcon.setExpand(true, false);
+		imgIcon.getCellData().setExpand(true, false);
 
 		IconButton btnIcon = new IconButton(icon, true);
 		btnIcon.setImageWidget(imgIcon);
 		addControl(btnIcon, "icon");
-		LFrame frame = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
-		frame.setFillLayout(true);
-		
-		LFrame grpTags = frame;
+
+		LFrame grpTags = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
+		grpTags.setFillLayout(true);
 		grpTags.setHoverText(Tooltip.instance.TAGS);
-		grpTags.setSpread(2, 1);
-		grpTags.setExpand(false, true);
-		grpTags.setMinimumWidth(150);
-		grpTags.setMinimumHeight(100);
+		grpTags.getCellData().setSpread(2, 1);
+		grpTags.getCellData().setExpand(false, true);
+		grpTags.getCellData().setMinimumSize(150, 100);
 		TagList lstTroops = new TagList(grpTags);
 		addChild(lstTroops, "tags");
 

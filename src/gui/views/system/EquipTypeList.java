@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.config.EquipType;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class EquipTypeList extends SimpleEditableList<EquipType> {
 
@@ -15,9 +15,9 @@ public class EquipTypeList extends SimpleEditableList<EquipType> {
 		super(parent);
 		type = EquipType.class;
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<EquipType>() {
+		setShellFactory(new LWindowFactory<EquipType>() {
 			@Override
-			public LObjectShell<EquipType> createShell(LShell parent) {
+			public LObjectWindow<EquipType> createWindow(LWindow parent) {
 				return new EquipTypeShell(parent);
 			}
 		});

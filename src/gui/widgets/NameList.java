@@ -2,9 +2,9 @@ package gui.widgets;
 
 import gui.shell.NameShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class NameList extends SimpleEditableList<String> {
 
@@ -12,9 +12,9 @@ public class NameList extends SimpleEditableList<String> {
 		super(parent);
 		type = String.class;
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<String>() {
+		setShellFactory(new LWindowFactory<String>() {
 			@Override
-			public LObjectShell<String> createShell(LShell parent) {
+			public LObjectWindow<String> createWindow(LWindow parent) {
 				return new NameShell(parent, title);
 			}
 		});

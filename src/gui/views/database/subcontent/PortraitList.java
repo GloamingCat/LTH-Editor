@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.GameCharacter.Portrait;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class PortraitList extends SimpleEditableList<Portrait> {
 	
@@ -15,9 +15,9 @@ public class PortraitList extends SimpleEditableList<Portrait> {
 		super(parent);
 		type = Portrait.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Portrait>() {
+		setShellFactory(new LWindowFactory<Portrait>() {
 			@Override
-			public LObjectShell<Portrait> createShell(LShell parent) {
+			public LObjectWindow<Portrait> createWindow(LWindow parent) {
 				return new PortraitShell(parent);
 			}
 		});

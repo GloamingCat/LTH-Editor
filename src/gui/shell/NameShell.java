@@ -3,16 +3,16 @@ package gui.shell;
 import gui.Tooltip;
 import gui.Vocab;
 
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 
-public class NameShell extends LObjectShell<String> {
+public class NameShell extends LObjectWindow<String> {
 	
 	private LText txtName;
 
-	public NameShell(LShell parent, String title) {
+	public NameShell(LWindow parent, String title) {
 		super(parent, title);
 		setMinimumSize(300, 120);
 	}

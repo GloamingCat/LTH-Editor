@@ -1,11 +1,11 @@
 package gui.shell;
 
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
+import lbase.data.LDataTree;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.widget.LNodeSelector;
 
-public abstract class IDShell extends LObjectShell<Integer> {
+public abstract class IDShell extends LObjectWindow<Integer> {
 	
 	protected LNodeSelector<Object> tree;
 	
@@ -14,8 +14,8 @@ public abstract class IDShell extends LObjectShell<Integer> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public IDShell(LShell parent, String title, int style) {
-		super(parent, title, style);
+	public IDShell(LWindow parent, String title, int style) {
+		super(parent, style, title);
 		setMinimumSize(350, 500);
 	}
 	

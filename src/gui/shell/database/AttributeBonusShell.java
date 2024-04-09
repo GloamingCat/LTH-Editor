@@ -1,6 +1,6 @@
 package gui.shell.database;
 
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
@@ -12,9 +12,8 @@ import data.Item.Attribute;
 
 public class AttributeBonusShell extends ObjectShell<Attribute> {
 
-	public AttributeBonusShell(LShell parent) {
+	public AttributeBonusShell(LWindow parent) {
 		super(parent, Vocab.instance.BUFFSHELL);
-		setMinimumSize(400, 100);
 	}
 	
 	@Override
@@ -40,7 +39,8 @@ public class AttributeBonusShell extends ObjectShell<Attribute> {
 		spnMul.setMaximum(999999);
 		spnMul.setMinimum(-999999);
 		addControl(spnMul, "mul");
-		
+
+		setMinimumSize(400, 100);
 		pack();
 	}
 	

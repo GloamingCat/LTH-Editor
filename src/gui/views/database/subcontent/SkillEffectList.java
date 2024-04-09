@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.Skill.Effect;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class SkillEffectList extends SimpleEditableList<Effect> {
 	
@@ -15,9 +15,9 @@ public class SkillEffectList extends SimpleEditableList<Effect> {
 		super(parent);
 		type = Effect.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Effect>() {
+		setShellFactory(new LWindowFactory<Effect>() {
 			@Override
-			public LObjectShell<Effect> createShell(LShell parent) {
+			public LObjectWindow<Effect> createWindow(LWindow parent) {
 				return new SkillEffectShell(parent);
 			}
 		});

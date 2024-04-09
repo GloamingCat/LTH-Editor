@@ -4,22 +4,22 @@ import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
 import gui.Vocab;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LMouseListener;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
-import lwt.LFlags;
 import lwt.container.LImage;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LScrollPanel;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LMouseEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LMouseListener;
+import lbase.data.LDataTree;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
+import lbase.event.LMouseEvent;
 import lwt.widget.LNodeSelector;
 
-public class IconShell extends LObjectShell<Icon> {
+public class IconShell extends LObjectWindow<Icon> {
 	
 	protected static LColor bg = new LColor(127, 127, 127);
 	protected LNodeSelector<Object> tree;
@@ -32,7 +32,7 @@ public class IconShell extends LObjectShell<Icon> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public IconShell(LShell parent, int style) {
+	public IconShell(LWindow parent, int style) {
 		super(parent, Vocab.instance.ICONSHELL);
 		setMinimumSize(600, 400);
 		setSize(800, 800);
@@ -41,7 +41,7 @@ public class IconShell extends LObjectShell<Icon> {
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		LSashPanel sashForm = new LSashPanel(content, true);
+		LFlexPanel sashForm = new LFlexPanel(content, true);
 		tree = new LNodeSelector<Object>(sashForm, (style & OPTIONAL) > 0);
 		tree.setCollection(getTree());
 		tree.addModifyListener(new LControlListener<Integer>() {
@@ -52,10 +52,10 @@ public class IconShell extends LObjectShell<Icon> {
 			}
 		});
 
-		scroll = new LScrollPanel(sashForm, true);
+		scroll = new LScrollPanel(sashForm);
 		image = new LImage(scroll);
 		image.setBackground(bg);
-		image.setAlignment(LFlags.TOP & LFlags.LEFT);
+		image.getCellData().setAlignment(LFlags.TOP & LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
@@ -89,7 +89,7 @@ public class IconShell extends LObjectShell<Icon> {
 		if (anim == null)
 			return;
 		image.setImage(anim.quad.fullPath());
-		scroll.refreshSize(anim.quad.width, anim.quad.height);
+		scroll.setContentSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}
 	

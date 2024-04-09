@@ -11,7 +11,7 @@ import data.config.Region;
 import data.field.CharTile;
 import data.subcontent.Transform;
 import lwt.graphics.LPainter;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import lwt.graphics.LRect;
 import lwt.graphics.LTexture;
 import project.Project;
@@ -77,7 +77,7 @@ public class TilePainter {
 					anim.transform.brightness / 100f);
 			terrainCache.put(key, img);
 		} catch (IllegalArgumentException e) {
-			System.out.print("Couldn't draw terrain image.");
+			System.err.print("Couldn't draw terrain image.");
 		}
 		return img;
 	}
@@ -125,7 +125,7 @@ public class TilePainter {
 				anim.transform.brightness / 100f * obj.transform.brightness / 100f);
 			obstacleCache.put(id, img);
 		} catch (IllegalArgumentException e) {
-			System.out.println("Couldn't draw obstacle image: " + id);
+			System.err.println("Couldn't draw obstacle image: " + id);
 		}
 		return img;
 	}

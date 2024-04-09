@@ -1,6 +1,6 @@
 package data.config;
 
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 import data.GameCharacter.Portrait;
 import data.subcontent.Audio;
 import data.subcontent.Node;

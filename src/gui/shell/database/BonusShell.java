@@ -3,13 +3,12 @@ package gui.shell.database;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
-
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
 import data.subcontent.Bonus;
-import lwt.LFlags;
 import lwt.container.LStack;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
 import lwt.widget.LWidget;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
@@ -24,7 +23,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 	protected LNodeSelector<Object> typeNode;
 	protected LCombo cmbType;
 	
-	public BonusShell(LShell parent, String title) {
+	public BonusShell(LWindow parent, String title) {
 		super(parent, title);
 		setMinimumSize(270, 100);
 	}
@@ -63,7 +62,7 @@ public class BonusShell extends ObjectShell<Bonus> {
 		typeLabel = new LLabel(contentEditor, LFlags.TOP, Vocab.instance.ELEMENT, Tooltip.instance.ELEMENTBONUS);
 		
 		final LStack stack = new LStack(contentEditor);
-		stack.setExpand(true, true);
+		stack.getCellData().setExpand(true, true);
 		
 		final LNodeSelector<Object> elementTree = new LNodeSelector<Object>(stack, false);
 		elementTree.setCollection(Project.current.elements.getList().toTree());

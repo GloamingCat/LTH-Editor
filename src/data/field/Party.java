@@ -1,7 +1,7 @@
 package data.field;
 
 import project.Project;
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 
 public class Party {
 

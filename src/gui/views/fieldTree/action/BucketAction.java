@@ -3,8 +3,8 @@ package gui.views.fieldTree.action;
 import java.util.ArrayList;
 
 import gui.views.fieldTree.FieldCanvas;
-import lwt.action.LAction;
-import lwt.graphics.LPoint;
+import lbase.action.LAction;
+import lbase.data.LPoint;
 
 public class BucketAction implements LAction {
 

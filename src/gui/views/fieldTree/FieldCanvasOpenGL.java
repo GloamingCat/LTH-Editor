@@ -8,8 +8,8 @@ import batching.BatchIterator;
 import batching.Scene;
 import gui.helper.FieldHelper;
 import gui.helper.SceneHelper;
-import lwt.container.LContainer;
-import lwt.graphics.LPoint;
+import lwt.container.LScrollPanel;
+import lbase.data.LPoint;
 import rendering.Renderer;
 import rendering.Screen;
 import rendering.ShaderProgram;
@@ -29,7 +29,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
-	public FieldCanvasOpenGL(LContainer parent) {
+	public FieldCanvasOpenGL(LScrollPanel parent) {
 		super(parent);
 		try {
 			initRenderer();

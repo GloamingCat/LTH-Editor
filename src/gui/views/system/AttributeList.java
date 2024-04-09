@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.config.Attribute;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class AttributeList extends SimpleEditableList<Attribute> {
 
@@ -15,9 +15,9 @@ public class AttributeList extends SimpleEditableList<Attribute> {
 		super(parent);
 		type = Attribute.class;
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<Attribute>() {
+		setShellFactory(new LWindowFactory<Attribute>() {
 			@Override
-			public LObjectShell<Attribute> createShell(LShell parent) {
+			public LObjectWindow<Attribute> createWindow(LWindow parent) {
 				return new AttributeShell(parent);
 			}
 		});

@@ -404,7 +404,7 @@ public class Vocab {
 	
 	// Party
 	public String PLAYERPARTY = "Player Party";
-	public String PARTYGEN = "Unit Generation";
+	public String PARTYGEN = "Generation";
 	public String TROOPUNITS = "Troop Units";
 	public String FIELDCHARS = "Field Characters";
 	public String MINLEVEL = "Min Level";

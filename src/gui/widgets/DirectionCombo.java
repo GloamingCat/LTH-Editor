@@ -4,17 +4,13 @@ import lwt.container.LContainer;
 import lwt.widget.LCombo;
 
 public class DirectionCombo extends LCombo {
-
-	public DirectionCombo(LContainer parent) {
-		this(parent, 1);
-	}
 	
-	public DirectionCombo(LContainer parent, int columns) {
-		super(parent, columns, true);
+	public DirectionCombo(LContainer parent) {
+		super(parent, true);
 		setIncludeID(false);
 		setOptional(false);
-		String[] d = new String[] {"0°", "45°", "90°", "135°", 
-				"180°", "225°", "270°", "315°"};
+		String[] d = new String[] {"0ï¿½", "45ï¿½", "90ï¿½", "135ï¿½", 
+				"180ï¿½", "225ï¿½", "270ï¿½", "315ï¿½"};
 		setItems(d);
 	}
 	

@@ -4,14 +4,14 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.widgets.AudioPlayer;
-import lwt.LFlags;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LSelectionListener;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LSelectionListener;
+import lwt.container.LFlexPanel;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
+import lbase.event.LSelectionEvent;
 import lwt.widget.LFileSelector;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
@@ -33,8 +33,8 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 	public static final int TIMED = 0x02;
 	public static final int BGM = 0x04;
 	
-	public AudioShell(LShell parent, int style) {
-		super(parent, Vocab.instance.AUDIOFILESHELL, style);
+	public AudioShell(LWindow parent, int style) {
+		super(parent, style, Vocab.instance.AUDIOFILESHELL);
 		setMinimumSize(400, 400);
 	}
 	
@@ -42,7 +42,7 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 	protected void createContent(int style) {
 		super.createContent(style);
 		contentEditor.setFillLayout(true);
-		LSashPanel form = new LSashPanel(contentEditor, true);
+		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { 
 			String name = f.getName();
@@ -52,7 +52,7 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 
 		LPanel composite = new LPanel(form);
 		composite.setGridLayout(2);
-		composite.setExpand(true, true);
+		composite.getCellData().setExpand(true, true);
 
 		new LLabel(composite, Vocab.instance.KEY, Tooltip.instance.KEY);
 		LText txtKey = new LText(composite);
@@ -84,9 +84,9 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 		loop.setValue(true);
 		
 		reproduction = new AudioPlayer(composite);
-		reproduction.setExpand(false, true);
-		reproduction.setSpread(2, 1);
-		reproduction.setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
+		reproduction.getCellData().setExpand(false, true);
+		reproduction.getCellData().setSpread(2, 1);
+		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
 		reproduction.loop = (style & BGM) > 0;
 		
 		selFile.addSelectionListener(new LSelectionListener() {
@@ -117,7 +117,7 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 			}
 		});
 		
-		form.setWeights(new int[] { 1, 1 });
+		form.setWeights(1, 1);
 		
 		pack();
 	}

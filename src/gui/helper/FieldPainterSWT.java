@@ -2,7 +2,7 @@ package gui.helper;
 
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import lwt.graphics.LRect;
 import lwt.graphics.LTexture;
 

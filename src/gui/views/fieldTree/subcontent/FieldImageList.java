@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.field.FieldImage;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class FieldImageList extends SimpleEditableList<FieldImage> {
 	
@@ -15,9 +15,9 @@ public class FieldImageList extends SimpleEditableList<FieldImage> {
 		super(parent);
 		type = FieldImage.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<FieldImage>() {
+		setShellFactory(new LWindowFactory<FieldImage>() {
 			@Override
-			public LObjectShell<FieldImage> createShell(LShell parent) {
+			public LObjectWindow<FieldImage> createWindow(LWindow parent) {
 				return new FieldImageShell(parent);
 			}
 		});

@@ -4,7 +4,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
 import lwt.widget.LSpinner;
@@ -14,7 +14,7 @@ import data.Battler.Drop;
 
 public class DropShell extends ObjectShell<Drop> {
 
-	public DropShell(LShell parent) {
+	public DropShell(LWindow parent) {
 		super(parent, Vocab.instance.DROPSHELL);
 		setMinimumSize(400, 200);
 	}
@@ -35,8 +35,8 @@ public class DropShell extends ObjectShell<Drop> {
 		addControl(spnCount, "count");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, false);
-		tree.setExpand(true, true);
-		tree.setSpread(2, 1);
+		tree.getCellData().setExpand(true, true);
+		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(Project.current.items.getTree());
 		addControl(tree, "id");
 		

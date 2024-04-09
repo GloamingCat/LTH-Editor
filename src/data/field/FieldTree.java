@@ -1,6 +1,6 @@
 package data.field;
 
-import lwt.dataestructure.LDataTree;
+import lbase.data.LDataTree;
 
 public class FieldTree extends LDataTree<FieldNode> {
 	

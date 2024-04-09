@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Bonus;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class BonusList extends SimpleEditableList<Bonus> {
 
@@ -15,9 +15,9 @@ public class BonusList extends SimpleEditableList<Bonus> {
 		super(parent);
 		type = Bonus.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Bonus>() {
+		setShellFactory(new LWindowFactory<Bonus>() {
 			@Override
-			public LObjectShell<Bonus> createShell(LShell parent) {
+			public LObjectWindow<Bonus> createWindow(LWindow parent) {
 				return new BonusShell(parent, title);
 			}
 		});

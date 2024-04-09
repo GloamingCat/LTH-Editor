@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.subcontent.Transformation;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
@@ -13,7 +13,7 @@ import lwt.widget.LSpinner;
 
 public class TransformationShell extends ObjectShell<Transformation> {
 
-	public TransformationShell(LShell parent) {
+	public TransformationShell(LWindow parent) {
 		super(parent, Vocab.instance.TRANSFORMSHELL);
 		setMinimumSize(270, 100);
 	}

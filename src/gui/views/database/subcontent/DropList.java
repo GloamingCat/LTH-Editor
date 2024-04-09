@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.Battler.Drop;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class DropList extends SimpleEditableList<Drop> {
 	
@@ -15,9 +15,9 @@ public class DropList extends SimpleEditableList<Drop> {
 		super(parent);
 		type = Drop.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Drop>() {
+		setShellFactory(new LWindowFactory<Drop>() {
 			@Override
-			public LObjectShell<Drop> createShell(LShell parent) {
+			public LObjectWindow<Drop> createWindow(LWindow parent) {
 				return new DropShell(parent);
 			}
 		});

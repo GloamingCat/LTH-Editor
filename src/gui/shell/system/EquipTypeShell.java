@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.config.EquipType;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -13,7 +13,7 @@ import lwt.widget.LText;
 
 public class EquipTypeShell extends ObjectShell<EquipType> {
 
-	public EquipTypeShell(LShell parent) {
+	public EquipTypeShell(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPTYPESHELL);
 		
 		setTitle(Vocab.instance.EQUIP);

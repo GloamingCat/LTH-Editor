@@ -1,8 +1,5 @@
 package project;
 
-import gson.project.GObjectListSerializer;
-import gson.project.GObjectSerializer;
-import gson.project.GObjectTreeSerializer;
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 
@@ -11,9 +8,12 @@ import java.util.Arrays;
 import data.*;
 import data.config.*;
 import data.subcontent.Tag;
-import lwt.dataestructure.LDataTree;
-import lwt.dataserialization.LFileManager;
-import lwt.dataserialization.LSerializer;
+import gson.GObjectListSerializer;
+import gson.GObjectSerializer;
+import gson.GObjectTreeSerializer;
+import lbase.data.LDataTree;
+import lbase.serialization.LFileManager;
+import lbase.serialization.LSerializer;
 
 public class Project implements LSerializer {
 	

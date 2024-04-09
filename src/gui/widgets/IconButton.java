@@ -4,8 +4,8 @@ import gui.shell.IconShell;
 import gui.views.database.subcontent.TransformEditor;
 import lwt.container.LContainer;
 import lwt.container.LImage;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -22,9 +22,9 @@ public class IconButton extends LObjectButton<Icon> {
 	
 	public IconButton(LContainer parent, boolean optional) {
 		super(parent);
-		setShellFactory(new LShellFactory<Icon>() {
+		setShellFactory(new LWindowFactory<Icon>() {
 			@Override
-			public IconShell createShell(LShell parent) {
+			public IconShell createWindow(LWindow parent) {
 				return new IconShell(parent, IconShell.OPTIONAL);
 			}
 		});

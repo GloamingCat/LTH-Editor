@@ -2,9 +2,9 @@ package gui.widgets;
 
 import gui.shell.ScriptShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -23,9 +23,9 @@ public class ScriptButton extends LObjectButton<Script> {
 	 */
 	public ScriptButton(LContainer parent, int style) {
 		super(parent);
-		setShellFactory(new LShellFactory<Script>() {
+		setShellFactory(new LWindowFactory<Script>() {
 			@Override
-			public LObjectShell<Script> createShell(LShell parent) {
+			public LObjectWindow<Script> createWindow(LWindow parent) {
 				return new ScriptShell(parent, style);
 			}
 		});

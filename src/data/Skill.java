@@ -6,8 +6,8 @@ import project.Project;
 import data.subcontent.Property;
 import data.subcontent.Icon;
 import data.subcontent.Tag;
-import lwt.dataestructure.LDataList;
-import lwt.dataestructure.LDataTree;
+import lbase.data.LDataList;
+import lbase.data.LDataTree;
 
 public class Skill extends Data {
 

@@ -3,32 +3,26 @@ package gui.views.database;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
-import gson.editor.GDefaultObjectEditor;
-import gson.editor.GDefaultTreeEditor;
-import gson.project.GObjectTreeSerializer;
+import gson.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.ImageButton;
+import lbase.LFlags;
+import lbase.event.listener.LCollectionListener;
 
 import com.google.gson.Gson;
 
-import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LControlView;
 import lwt.container.LFrame;
-import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LView;
-import lwt.dataestructure.LDataTree;
+import lbase.data.LDataTree;
 import lwt.editor.LEditor;
-import lwt.event.LControlEvent;
-import lwt.event.LInsertEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LCollectionListener;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LSelectionListener;
+import lwt.gson.GDefaultObjectEditor;
+import lwt.gson.GDefaultTreeEditor;
+import lbase.event.LInsertEvent;
 import lwt.widget.LControlWidget;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
@@ -46,7 +40,10 @@ public abstract class DatabaseTab<T> extends LView {
 	protected LLabel lblName;
 	protected LText txtName;
 	protected LPanel left, right;
-	
+
+	protected static final int LABELWIDTH = 80;
+	protected static final int TAGSHEIGHT = 140;
+
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
@@ -58,7 +55,7 @@ public abstract class DatabaseTab<T> extends LView {
 		
 		createMenuInterface();
 		
-		LSashPanel sashForm = new LSashPanel(this, true);
+		LFlexPanel sashForm = new LFlexPanel(this, true);
 		
 		listEditor = new DatabaseTreeEditor(sashForm);
 		listEditor.getCollectionWidget().setInsertNewEnabled(true);
@@ -73,63 +70,58 @@ public abstract class DatabaseTab<T> extends LView {
 		
 		contentEditor = new DatabaseContentEditor(sashForm, true);
 		contentEditor.setGridLayout(2);
-		contentEditor.setEqualCells(true, true);
+		contentEditor.setEqualCells(true, false);
 		
 		left = new LPanel(contentEditor);
 		left.setGridLayout(1);
-		left.setExpand(true, true);
+		left.getCellData().setExpand(true, true);
 		right = new LPanel(contentEditor);
 		right.setGridLayout(1);
-		right.setExpand(true, true);
+		right.getCellData().setExpand(true, true);
 		
 		grpGeneral = new LFrame(left, Vocab.instance.GENERAL);
 		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
-		grpGeneral.setExpand(true, false);
+		grpGeneral.getCellData().setExpand(true, false);
 		
 		LPanel compID = new LPanel(grpGeneral);
 		compID.setGridLayout(3);
-		compID.setExpand(true, false);
-		compID.setSpread(2, 1);
+		compID.getCellData().setExpand(true, false);
+		compID.getCellData().setSpread(2, 1);
 		lblID = new LLabel(compID, LFlags.EXPAND, "", Tooltip.instance.ID);
 		lblKey = new LLabel(compID, Vocab.instance.KEY, Tooltip.instance.KEY);
 		txtKey = new LText(compID);
-		txtKey.addModifyListener(new LControlListener<String>() {
-			@Override
-			public void onModify(LControlEvent<String> event) {
-				LDataTree<Object> node = listEditor.getDataCollection().getNode(listEditor.getCollectionWidget().getSelectedPath());
-				listEditor.getDataCollection().setKeyID(event.newValue, node.id);
-			}
-			
-		});
+		txtKey.addModifyListener(event -> {
+            LDataTree<Object> node = listEditor.getDataCollection().getNode(listEditor.getCollectionWidget().getSelectedPath());
+            listEditor.getDataCollection().setKeyID(event.newValue, node.id);
+        });
+		txtKey.getCellData().setExpand(true, false);
 		contentEditor.addControl(txtKey, "key");
 		
 		lblName = new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
-		lblName.setMinimumWidth(72);
-		
+		lblName.getCellData().setMinimumSize(LABELWIDTH, 0);
+
 		txtName = new LText(grpGeneral);
+		txtName.getCellData().setExpand(true, false);
 		contentEditor.addControl(txtName, "name");
-		LFrame frame = new LFrame(right, (String) Vocab.instance.TAGS);
-		frame.setFillLayout(true);
-		
+
 		// Tags
-		
-		grpTags = frame;
-		grpTags.setExpand(true, false);
-		grpTags.setMinimumHeight(140);
+
+		grpTags = new LFrame(right, Vocab.instance.TAGS);
+		grpTags.setFillLayout(true);
+		grpTags.getCellData().setExpand(true, false);
+		grpTags.getCellData().setMinimumSize(0, TAGSHEIGHT);
+		grpTags.getCellData().setPreferredSize(-1, TAGSHEIGHT);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 		
 		listEditor.addChild(contentEditor);
-		listEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				if (event.data != null) {
-					LDataTree<Object> node = getSerializer().getTree().getNode(event.path);
-					lblID.setText("ID " + node.id);
-				}
-			}
-		});
+		listEditor.getCollectionWidget().addSelectionListener(event -> {
+            if (event.data != null) {
+                LDataTree<Object> node = getSerializer().getTree().getNode(event.path);
+                lblID.setText("ID " + node.id);
+            }
+        });
 		listEditor.getCollectionWidget().addInsertListener(new LCollectionListener<Object>() {
 			@Override
 			public void onInsert(LInsertEvent<Object> event) {
@@ -146,7 +138,7 @@ public abstract class DatabaseTab<T> extends LView {
 			}
 		});
 		
-		sashForm.setWeights(new int[] {1, 3});
+		sashForm.setWeights(1, 3);
 	}
 	
 	protected abstract GObjectTreeSerializer getSerializer();
@@ -166,13 +158,7 @@ public abstract class DatabaseTab<T> extends LView {
 	protected void addControl(LControlView<?> view, String attName) {
 		contentEditor.addControl(view, attName);
 	}
-	
-	protected void addImageButton(ImageButton button, LImage label, LText text, String attName) {
-		button.setLabel(label);
-		button.setNameWidget(text);
-		addControl(button, attName);
-	}
-	
+
 	private class DatabaseTreeEditor extends GDefaultTreeEditor<Object> {
 		public DatabaseTreeEditor(LContainer parent) {
 			super(parent);

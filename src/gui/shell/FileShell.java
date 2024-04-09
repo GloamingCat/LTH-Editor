@@ -3,15 +3,15 @@ package gui.shell;
 import java.io.File;
 import java.util.ArrayList;
 
-import lwt.container.LSashPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
+import lwt.container.LFlexPanel;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.widget.LFlatList;
 
-public abstract class FileShell<T> extends LObjectShell<T> {
+public abstract class FileShell<T> extends LObjectWindow<T> {
 
 	protected String folder;
-	protected LSashPanel sashForm;
+	protected LFlexPanel sashForm;
 	protected LFlatList list;
 	protected boolean optional;
 	
@@ -20,8 +20,8 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public FileShell(LShell parent, String title, int style) {
-		super(parent, title, style);
+	public FileShell(LWindow parent, String title, int style) {
+		super(parent, style, title);
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public abstract class FileShell<T> extends LObjectShell<T> {
 		super.createContent(style);
 		this.optional = (style & OPTIONAL) > 0;
 		content.setFillLayout(true);
-		sashForm = new LSashPanel(content, true);
+		sashForm = new LFlexPanel(content, true);
 		list = new LFlatList(sashForm, optional);
 	}
 	

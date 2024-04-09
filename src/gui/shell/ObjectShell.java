@@ -1,9 +1,10 @@
 package gui.shell;
 
 import lwt.container.LControlView;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.editor.LEditor;
+import lwt.gson.GDefaultObjectEditor;
 import lwt.widget.LControlWidget;
 
 import java.lang.reflect.Type;
@@ -11,26 +12,24 @@ import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import gson.editor.GDefaultObjectEditor;
-
-public class ObjectShell<T> extends LObjectShell<T> {
+public class ObjectShell<T> extends LObjectWindow<T> {
 	
 	public GDefaultObjectEditor<T> contentEditor;
-	private static Gson gson = new Gson();
+	private static final Gson gson = new Gson();
 
-	public ObjectShell(LShell parent, String title, int style) {
-		super(parent, title, style);
-		content.setExpand(true, true);
+	public ObjectShell(LWindow parent, int style, String title) {
+		super(parent, style, title);
+		content.getCellData().setExpand(true, true);
 	}
 
-	public ObjectShell(LShell parent, String title) {
-		this(parent, title, 0);
+	public ObjectShell(LWindow parent, String title) {
+		this(parent, 0, title);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		contentEditor = new GDefaultObjectEditor<T>(content, false) {
+		contentEditor = new GDefaultObjectEditor<>(content, false) {
 			@Override
 			public Type getType() {
 				return null;
@@ -52,7 +51,7 @@ public class ObjectShell<T> extends LObjectShell<T> {
 		JsonElement i = gson.toJsonTree(initial);
 		if (i.equals(c))
 			return null;
-		return (T) contentEditor.getObject();
+		return contentEditor.getObject();
 	}
 	
 	public void addChild(LEditor editor) {

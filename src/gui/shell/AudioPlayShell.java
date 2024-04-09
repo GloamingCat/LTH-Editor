@@ -3,17 +3,17 @@ package gui.shell;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.AudioPlayer;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LSelectionListener;
 
 import java.util.ArrayList;
 
-import lwt.LFlags;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LSelectionListener;
+import lwt.container.LFlexPanel;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
+import lbase.event.LSelectionEvent;
 import lwt.widget.LFileSelector;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
@@ -39,8 +39,8 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
 	 */
-	public AudioPlayShell(LShell parent, int style) {
-		super(parent, Vocab.instance.AUDIOSHELL, style);
+	public AudioPlayShell(LWindow parent, int style) {
+		super(parent, style, Vocab.instance.AUDIOSHELL);
 		setMinimumSize(400, 400);
 	}
 	
@@ -48,7 +48,7 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 	protected void createContent(int style) {
 		super.createContent(style);
 		contentEditor.setFillLayout(true);
-		LSashPanel form = new LSashPanel(contentEditor, true);
+		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		LPanel sound = new LPanel(form);
 		sound.setGridLayout(1);
 		selFile = new LFileSelector(sound, (style & OPTIONAL) > 0);
@@ -57,7 +57,7 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
 		} );
 		selFile.setFolder(Project.current.audioPath());
-		selFile.setExpand(true, true);
+		selFile.getCellData().setExpand(true, true);
 		cmbSound = new LCombo(sound, true);
 		cmbSound.setOptional(true);
 		cmbSound.setIncludeID(false);
@@ -78,7 +78,7 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 
 		LPanel composite = new LPanel(form);
 		composite.setGridLayout(2);
-		composite.setExpand(true, true);
+		composite.getCellData().setExpand(true, true);
 		
 		new LLabel(composite, Vocab.instance.VOLUME, Tooltip.instance.VOLUME);
 		LSpinner spnVolume = new LSpinner(composite);
@@ -100,9 +100,9 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 		}
 		
 		AudioPlayer reproduction = new AudioPlayer(composite);
-		reproduction.setExpand(false, true);
-		reproduction.setSpread(2, 1);
-		reproduction.setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
+		reproduction.getCellData().setExpand(false, true);
+		reproduction.getCellData().setSpread(2, 1);
+		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
 		reproduction.loop = (style & BGM) > 0;
 		
 		selFile.addSelectionListener(new LSelectionListener() {
@@ -131,7 +131,7 @@ public class AudioPlayShell extends ObjectShell<Audio> {
 			}
 		});
 		
-		form.setWeights(new int[] { 1, 1 });
+		form.setWeights(1, 1);
 		
 		pack();
 	}

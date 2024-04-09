@@ -4,20 +4,19 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.fieldTree.*;
 import gui.widgets.DirectionCombo;
-
-import lwt.LFlags;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LSelectionListener;
 import lwt.container.LContainer;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LScrollPanel;
-import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LSelectionListener;
+import lbase.data.LDataTree;
+import lbase.data.LPath;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lbase.event.LControlEvent;
+import lbase.event.LSelectionEvent;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -27,7 +26,7 @@ import data.field.FieldNode;
 import data.subcontent.Position;
 import project.Project;
 
-public class PositionShell extends LObjectShell<Position> {
+public class PositionShell extends LObjectWindow<Position> {
 	
 	private FieldSelector tree;
 	private FieldCanvas canvas;
@@ -40,7 +39,7 @@ public class PositionShell extends LObjectShell<Position> {
 	
 	private LPath path = null;
 
-	public PositionShell(LShell parent) {
+	public PositionShell(LWindow parent) {
 		super(parent, Vocab.instance.POSITIONSHELL);
 		setMinimumSize(640, 480);
 	}
@@ -50,8 +49,8 @@ public class PositionShell extends LObjectShell<Position> {
 		super.createContent(style);
 		content.setGridLayout(1);
 
-		LSashPanel sashForm = new LSashPanel(content, true);
-		sashForm.setExpand(true, true);
+		LFlexPanel sashForm = new LFlexPanel(content, true);
+		sashForm.getCellData().setExpand(true, true);
 		
 		tree = new FieldSelector(sashForm);
 		tree.setDragEnabled(false);
@@ -63,7 +62,7 @@ public class PositionShell extends LObjectShell<Position> {
 			}
 		});
 		
-		scrolledComposite = new LScrollPanel(sashForm, true);
+		scrolledComposite = new LScrollPanel(sashForm);
 
 		canvas = new FieldCanvasOpenGL(scrolledComposite) {
 			public void onTileLeftDown() {
@@ -80,12 +79,12 @@ public class PositionShell extends LObjectShell<Position> {
 
 		LPanel bottom = new LPanel(content);
 		bottom.setGridLayout(4);
-		bottom.setAlignment(LFlags.CENTER);
+		bottom.getCellData().setAlignment(LFlags.CENTER);
 		
 		LPanel coordinates = new LPanel(bottom);
 		coordinates.setGridLayout(6);
-		coordinates.setAlignment(LFlags.CENTER);
-		coordinates.setExpand(true, false);
+		coordinates.getCellData().setAlignment(LFlags.CENTER);
+		coordinates.getCellData().setExpand(true, false);
 		
 		LControlListener<Integer> redraw = new LControlListener<Integer>() {
 			@Override
@@ -118,7 +117,7 @@ public class PositionShell extends LObjectShell<Position> {
 		
 		lblPos = new LLabel(bottom, "(-99, -99)");
 		
-		sashForm.setWeights(new int[] {1, 3});
+		sashForm.setWeights(1, 3);
 		
 		pack();
 	}
@@ -132,7 +131,7 @@ public class PositionShell extends LObjectShell<Position> {
 		spnY.setMaximum(field.sizeY);
 		canvas.setField(field);
 		updateClickPoint();
-		scrolledComposite.refreshSize(canvas.getCurrentSize());
+		scrolledComposite.setContentSize(canvas.getCurrentSize());
 	}
 	
 	private void updateClickPoint() {

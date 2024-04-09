@@ -2,17 +2,17 @@ package gui.views.database.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
+import lbase.event.listener.LControlListener;
 
 import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
 
-import gson.editor.GDefaultObjectEditor;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lwt.gson.GDefaultObjectEditor;
+import lbase.event.LControlEvent;
 import lwt.widget.LActionButton;
 import lwt.widget.LLabel;
 import lwt.widget.LToggleButton;
@@ -31,16 +31,16 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		
 		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
 		btnNone.addModifyListener(allAction(false));
-		btnNone.setExpand(true, false);
+		btnNone.getCellData().setExpand(true, false);
 		
 		LActionButton btnAll = new LActionButton(group, Vocab.instance.ALL);
 		btnAll.addModifyListener(allAction(true));
-		btnAll.setExpand(true, false);
+		btnAll.getCellData().setExpand(true, false);
 		
 		LPanel composite = new LPanel(group);
 		composite.setGridLayout(3);
-		composite.setExpand(true, true);
-		composite.setSpread(2, 1);
+		composite.getCellData().setExpand(true, true);
+		composite.getCellData().setSpread(2, 1);
 		
 		LToggleButton arrow135 = new LToggleButton(composite, "/img/arrow_135.png", "/img/falsearrow_135.png");
 		
@@ -62,7 +62,7 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		
 		labels = new LToggleButton [] {arrow0, arrow45, arrow90, arrow135, arrow180, arrow225, arrow270, arrow315};
 		for (LToggleButton btn : labels) {
-			btn.setExpand(true, true);
+			btn.getCellData().setExpand(true, true);
 		}
 		
 	}

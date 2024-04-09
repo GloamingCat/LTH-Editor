@@ -2,7 +2,7 @@ package data;
 
 import data.subcontent.Audio;
 import data.subcontent.Property;
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 
 public class Terrain extends Data {
 

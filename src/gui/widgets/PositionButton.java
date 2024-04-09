@@ -2,9 +2,9 @@ package gui.widgets;
 
 import gui.shell.PositionShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -23,9 +23,9 @@ public class PositionButton extends LObjectButton<Position> {
 	 */
 	public PositionButton(LContainer parent) {
 		super(parent);
-		setShellFactory(new LShellFactory<Position>() {
+		setShellFactory(new LWindowFactory<Position>() {
 			@Override
-			public LObjectShell<Position> createShell(LShell parent) {
+			public LObjectWindow<Position> createWindow(LWindow parent) {
 				return new PositionShell(parent);
 			}
 		});

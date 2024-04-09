@@ -1,6 +1,5 @@
 package gui.views.database.content;
 
-import gson.project.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.RuleShell;
@@ -12,14 +11,14 @@ import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
-import lwt.LFlags;
+import lbase.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -28,11 +27,12 @@ import lwt.widget.LText;
 import data.Status;
 import data.subcontent.Rule;
 import data.subcontent.Transformation;
+import gson.GObjectTreeSerializer;
 import project.Project;
 
 public class StatusTab extends DatabaseTab<Status> {
 
-	private IDList lstCancel;
+	private final IDList lstCancel;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -46,12 +46,12 @@ public class StatusTab extends DatabaseTab<Status> {
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral);
 		compositeIcon.setGridLayout(2);
-		compositeIcon.setExpand(false, false);
+		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		imgIcon.setAlignment(LFlags.CENTER);
-		imgIcon.setExpand(true, true);
-		imgIcon.setMinimumHeight(48);
+		imgIcon.getCellData().setExpand(true, true);
+		imgIcon.getCellData().setMinimumSize(0, 48);
+		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		IconButton btnSelectIcon = new IconButton(compositeIcon, true);
 		btnSelectIcon.setImageWidget(imgIcon);
 		btnSelectIcon.addMenu(lblIcon);
@@ -63,8 +63,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		LLabel lblCancel = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL,
 				Tooltip.instance.STATUSCANCEL);
 		lstCancel = new IDList(grpGeneral, Vocab.instance.STATUSSHELL);
-		lstCancel.setExpand(true, true);
-		lstCancel.setMinimumHeight(70);
+		lstCancel.getCellData().setExpand(true, true);
+		lstCancel.getCellData().setMinimumSize(0, 70);
 		lstCancel.addMenu(lblCancel);
 		addChild(lstCancel, "cancel");
 
@@ -72,14 +72,14 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		LLabel lblBehavior = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.BEHAVIOR,
 				Tooltip.instance.BEHAVIOR);
-		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpGeneral);
-		lstRules.setExpand(true, true);
-		lstRules.setMinimumHeight(70);
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<>(grpGeneral);
+		lstRules.getCellData().setExpand(true, true);
+		lstRules.getCellData().setMinimumSize(0, 70);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
-		lstRules.setShellFactory(new LShellFactory<Rule>() {
+		lstRules.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<Rule> createShell(LShell parent) {
+			public LObjectWindow<Rule> createWindow(LWindow parent) {
 				return new RuleShell(parent);
 			}
 		});
@@ -91,9 +91,10 @@ public class StatusTab extends DatabaseTab<Status> {
 		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
 		LPanel compositeScript = new LPanel(grpGeneral);
 		compositeScript.setGridLayout(2);
-		compositeScript.setExpand(false, false);
-		compositeScript.setAlignment(LFlags.CENTER);
+		compositeScript.getCellData().setExpand(true, false);
 		LText txtScript = new LText(compositeScript, true);
+		txtScript.getCellData().setExpand(true, false);
+		txtScript.getCellData().setAlignment(LFlags.MIDDLE);
 		LuaButton btnSelectScript = new LuaButton(compositeScript, Vocab.instance.STATUSSCRIPTSHELL, true);
 		btnSelectScript.setPathWidget(txtScript);
 		btnSelectScript.addMenu(lblScript);
@@ -105,10 +106,10 @@ public class StatusTab extends DatabaseTab<Status> {
 		LLabel lblPriority = new LLabel(grpGeneral, Vocab.instance.PRIORITY, Tooltip.instance.PRIORITY);
 		LPanel compositeVisible = new LPanel(grpGeneral);
 		compositeVisible.setGridLayout(2);
-		compositeVisible.setExpand(false, false);
-		compositeVisible.setAlignment(LFlags.CENTER);
+		compositeVisible.getCellData().setExpand(true, false);
 		
 		LSpinner spnPriority = new LSpinner(compositeVisible);
+		spnPriority.getCellData().setExpand(true, false);
 		spnPriority.setMinimum(0);
 		spnPriority.setMaximum(200);
 		spnPriority.addMenu(lblPriority);
@@ -117,32 +118,31 @@ public class StatusTab extends DatabaseTab<Status> {
 		LCheckBox btnVisible = new LCheckBox(compositeVisible);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		btnVisible.setHoverText(Tooltip.instance.VISIBLE);
+		btnVisible.getCellData().setAlignment(LFlags.MIDDLE);
 		addControl(btnVisible, "visible");
 		
 		// Other properties
 		
 		LPanel check = new LPanel(grpGeneral);
-		check.setGridLayout(3);
-		check.setSpread(2, 1);
-		check.setExpand(false, false);
-		check.setAlignment(LFlags.CENTER);
+		check.setSequentialLayout(true);
+		check.setEqualCells(true);
+		check.getCellData().setSpread(2, 1);
+		check.getCellData().setExpand(false, false);
+		check.getCellData().setAlignment(LFlags.LEFT);
 
 		LCheckBox btnKO = new LCheckBox(check);
 		btnKO.setText(Vocab.instance.KOLIKE);
 		btnKO.setHoverText(Tooltip.instance.KOLIKE);
-		btnKO.setExpand(true, false);
 		addControl(btnKO, "ko");
 
 		LCheckBox btnDeactivate = new LCheckBox(check);
 		btnDeactivate.setText(Vocab.instance.DEACTIVATE);
 		btnDeactivate.setHoverText(Tooltip.instance.DEACTIVATE);
-		btnDeactivate.setExpand(true, false);
 		addControl(btnDeactivate, "deactivate");
 
 		LCheckBox btnCumulative = new LCheckBox(check);
 		btnCumulative.setText(Vocab.instance.CUMULATIVE);
 		btnCumulative.setHoverText(Tooltip.instance.CUMULATIVE);
-		btnCumulative.setExpand(true, false);
 		addControl(btnCumulative, "cumulative");
 
 		// Durability
@@ -150,11 +150,12 @@ public class StatusTab extends DatabaseTab<Status> {
 		LFrame grpDurability = new LFrame(left, Vocab.instance.DURABILITY);
 		grpDurability.setGridLayout(3);
 		grpDurability.setHoverText(Tooltip.instance.DURABILITY);
-		grpDurability.setExpand(true, false);
-		grpDurability.setMinimumWidth(200);
+		grpDurability.getCellData().setExpand(true, false);
+		grpDurability.getCellData().setMinimumSize(200, 0);
 
 		LLabel lblTurns = new LLabel(grpDurability, Vocab.instance.TURNS, Tooltip.instance.TURNS);
 		LSpinner spnTurns = new LSpinner(grpDurability);
+		spnTurns.getCellData().setExpand(true, false);
 		spnTurns.setMaximum(999999);
 		spnTurns.setMinimum(-1);
 		spnTurns.addMenu(lblTurns);
@@ -163,12 +164,15 @@ public class StatusTab extends DatabaseTab<Status> {
 		LCheckBox btnBattleOnly = new LCheckBox(grpDurability);
 		btnBattleOnly.setText(Vocab.instance.BATTLEONLY);
 		btnBattleOnly.setHoverText(Tooltip.instance.BATTLEONLY);
+		btnBattleOnly.getCellData().setAlignment(LFlags.MIDDLE);
 		addControl(btnBattleOnly, "battleOnly");
 
 		LPanel checkDurability = new LPanel(grpDurability);
 		checkDurability.setSequentialLayout(true);
-		checkDurability.setExpand(true, false);
-		checkDurability.setSpread(2, 1);
+		checkDurability.setEqualCells(true);
+		checkDurability.getCellData().setSpread(2, 1);
+		checkDurability.getCellData().setExpand(false, false);
+		checkDurability.getCellData().setAlignment(LFlags.LEFT);
 
 		LCheckBox btnRemoveOnKO = new LCheckBox(checkDurability);
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
@@ -185,21 +189,23 @@ public class StatusTab extends DatabaseTab<Status> {
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
 		grpGraphics.setGridLayout(2);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
-		grpGraphics.setExpand(true, true);
+		grpGraphics.getCellData().setExpand(true, true);
 
 		LLabel lblAnim = new LLabel(grpGraphics, Vocab.instance.CHARANIM, Tooltip.instance.CHARANIM);
 		LText txtCharAnim = new LText(grpGraphics);
+		txtCharAnim.getCellData().setExpand(true, false);
 		txtCharAnim.addMenu(lblAnim);
 		addControl(txtCharAnim, "charAnim");
 
-		LLabel lblTransform = new LLabel(grpGraphics, LFlags.TOP, Vocab.instance.TRANSFORMATIONS,
+		LLabel lblTransform = new LLabel(grpGraphics, LFlags.TOP,
+				Vocab.instance.TRANSFORMATIONS,
 				Tooltip.instance.TRANSFORMATIONS);
 		SimpleEditableList<Transformation> lstTransformations = new SimpleEditableList<>(grpGraphics);
 		lstTransformations.type = Transformation.class;
-		lstTransformations.setExpand(true, true);
-		lstTransformations.setShellFactory(new LShellFactory<Transformation>() {
+		lstTransformations.getCellData().setExpand(true, true);
+		lstTransformations.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<Transformation> createShell(LShell parent) {
+			public LObjectWindow<Transformation> createWindow(LWindow parent) {
 				return new TransformationShell(parent);
 			}
 		});
@@ -212,16 +218,19 @@ public class StatusTab extends DatabaseTab<Status> {
 		LFrame grpDrain = new LFrame(right, Vocab.instance.DRAIN);
 		grpDrain.setGridLayout(3);
 		grpDrain.setHoverText(Tooltip.instance.DRAIN);
-		grpDrain.setExpand(true, false);
-		grpDrain.setMinimumWidth(200);
+		grpDrain.getCellData().setExpand(true, false);
+		grpDrain.getCellData().setMinimumSize(200, 0);
 
 		LLabel lblDrainAtt = new LLabel(grpDrain, Vocab.instance.DRAINATT, Tooltip.instance.DRAINATT);
-		LText txtDrainAtt = new LText(grpDrain, 2);
+		LText txtDrainAtt = new LText(grpDrain);
+		txtDrainAtt.getCellData().setSpread(2, 1);
+		txtDrainAtt.getCellData().setExpand(true, false);
 		txtDrainAtt.addMenu(lblDrainAtt);
 		addControl(txtDrainAtt, "drainAtt");
 
 		LLabel lblDrain = new LLabel(grpDrain, Vocab.instance.DRAINVALUE, Tooltip.instance.DRAINVALUE);
 		LSpinner spnDrain = new LSpinner(grpDrain);
+		spnDrain.getCellData().setExpand(true, false);
 		spnDrain.setMaximum(999999);
 		spnDrain.setMinimum(0);
 		spnDrain.addMenu(lblDrain);
@@ -229,7 +238,7 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		LCheckBox btnPercentage = new LCheckBox(grpDrain);
 		btnPercentage.setText(Vocab.instance.PERCENTAGE);
-		btnPercentage.setText(Tooltip.instance.PERCENTAGE);
+		btnPercentage.setToolTipText(Tooltip.instance.PERCENTAGE);
 		addControl(btnPercentage, "percentage");
 		
 		// Effects
@@ -237,20 +246,20 @@ public class StatusTab extends DatabaseTab<Status> {
 		LPanel effects = new LPanel(right);
 		effects.setGridLayout(2);
 		effects.setEqualCells(true, false);
-		effects.setExpand(true, true);
+		effects.getCellData().setExpand(true, true);
 		
-		LFrame grpAtt = new LFrame(effects, (String) Vocab.instance.ATTRIBUTES);
+		LFrame grpAtt = new LFrame(effects, Vocab.instance.ATTRIBUTES);
 		grpAtt.setFillLayout(true);
 		grpAtt.setHoverText(Tooltip.instance.STATUSATT);
-		grpAtt.setExpand(true, true);
+		grpAtt.getCellData().setExpand(true, true);
 		AttributeList lstAttributes = new AttributeList(grpAtt);
 		lstAttributes.addMenu(grpAtt);
 		addChild(lstAttributes, "attributes");
 		
-		LFrame grpBonuses = new LFrame(effects, (String) Vocab.instance.PROPERTIES);
+		LFrame grpBonuses = new LFrame(effects, Vocab.instance.PROPERTIES);
 		grpBonuses.setFillLayout(true);
 		grpBonuses.setHoverText(Tooltip.instance.PROPERTIES);
-		grpBonuses.setExpand(true, true);
+		grpBonuses.getCellData().setExpand(true, true);
 		BonusList lstBonus = new BonusList(grpBonuses, Vocab.instance.PROPERTYSHELL);
 		lstBonus.addMenu(grpBonuses);
 		addChild(lstBonus, "bonuses");

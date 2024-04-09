@@ -5,12 +5,12 @@ import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Property;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
-import lwt.event.LEditEvent;
+import lbase.data.LDataTree;
+import lbase.data.LPath;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
+import lbase.event.LEditEvent;
 import lwt.widget.LList;
 
 public class PropertyList extends SimpleEditableList<Property> {
@@ -21,9 +21,9 @@ public class PropertyList extends SimpleEditableList<Property> {
 		super(parent);
 		type = Property.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Property>() {
+		setShellFactory(new LWindowFactory<Property>() {
 			@Override
-			public LObjectShell<Property> createShell(LShell parent) {
+			public LObjectWindow<Property> createWindow(LWindow parent) {
 				return new PropertyShell(parent, title) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();

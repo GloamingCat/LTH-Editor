@@ -2,9 +2,9 @@ package gui.widgets;
 
 import gui.shell.AudioPlayShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -23,9 +23,9 @@ public class AudioButton extends LObjectButton<Audio> {
 	 */
 	public AudioButton(LContainer parent, boolean optional) {
 		super(parent);
-		setShellFactory(new LShellFactory<Audio>() {
+		setShellFactory(new LWindowFactory<Audio>() {
 			@Override
-			public LObjectShell<Audio> createShell(LShell parent) {
+			public LObjectWindow<Audio> createWindow(LWindow parent) {
 				return new AudioPlayShell(parent, AudioPlayShell.OPTIONAL);
 			}
 		});

@@ -2,16 +2,15 @@ package gui.views.fieldTree.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.views.fieldTree.FieldEditor;
 import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
-import lwt.LFlags;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.dataestructure.LDataTree;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lwt.gson.GDefaultObjectEditor;
+import lbase.data.LDataTree;
 import lwt.widget.LCheckBox;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
@@ -22,32 +21,33 @@ import project.Project;
 
 import data.field.CharTile;
 import data.field.Field;
-import gson.editor.GDefaultObjectEditor;
+
+import java.util.function.Consumer;
 
 public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
-	private LCombo cmbParty;
-	private LSpinner spnX;
-	private LSpinner spnY;
-	private LSpinner spnH;
-	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
+	public record PositionEvent(int x, int y, int h, int newValue) {}
+	public Consumer<PositionEvent> onChangeX;
+	public Consumer<PositionEvent> onChangeY;
+	public Consumer<PositionEvent> onChangeH;
+	public Consumer<PositionEvent> onChangeSprite;
+
+	private final LCombo cmbParty;
+	private final LSpinner spnX;
+	private final LSpinner spnY;
+	private final LSpinner spnH;
+
 	public CharTileEditor(LContainer parent) {
 		super(parent, false);
-		setGridLayout(4);
+		setGridLayout(3);
 		
+		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.CHARPOS);
 		LPanel position = new LPanel(this);
-		position.setGridLayout(4);
-		position.setExpand(true, false);
-		position.setSpread(4, 1);
-		position.setAlignment(LFlags.CENTER);
-		
-		new LLabel(position, Vocab.instance.POSITION, Tooltip.instance.CHARPOS);
-		
+		position.setFillLayout(true);
+		position.setSpacing(5, 0);
+		position.getCellData().setExpand(true, false);
+		position.getCellData().setSpread(2, 1);
+
 		spnX = new LSpinner(position);
 		spnX.setMinimum(1);
 		addControl(spnX, "x");
@@ -60,71 +60,55 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		spnH.setMinimum(1);
 		addControl(spnH, "h");
 		
-		spnX.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.onTileChange(event.oldValue - 1, spnY.getValue() - 1);
-				FieldEditor.instance.canvas.onTileChange(event.newValue - 1, spnY.getValue() - 1);
-				FieldEditor.instance.canvas.redrawBuffer();
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
-		spnY.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, event.oldValue - 1);
-				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, event.newValue - 1);
-				FieldEditor.instance.canvas.redrawBuffer();
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
-		spnH.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.setHeight(spnH.getValue() - 1);
-				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, spnY.getValue() - 1);
-				FieldEditor.instance.canvas.redrawBuffer();
-				FieldEditor.instance.canvas.redraw();
-			}
-		});
+		spnX.addModifyListener(event -> {
+            if (event == null || event.oldValue == null || onChangeX == null) return;
+			onChangeX.accept(new PositionEvent(
+					event.oldValue - 1,
+					spnY.getValue() - 1,
+					spnH.getValue() - 1,
+					event.newValue - 1));
+        });
+		spnY.addModifyListener(event -> {
+            if (event == null || event.oldValue == null) return;
+			onChangeY.accept(new PositionEvent(
+					spnX.getValue() - 1,
+					event.oldValue - 1,
+					spnH.getValue() - 1,
+					event.newValue - 1));
+        });
+		spnH.addModifyListener(event -> {
+            if (event == null || event.oldValue == null) return;
+			onChangeH.accept(new PositionEvent(
+					spnX.getValue() - 1,
+					spnY.getValue() - 1,
+					event.oldValue - 1,
+					event.newValue - 1));
+        });
 		
 		// General
 		
 		new LLabel(this, Vocab.instance.KEY, Tooltip.instance.KEY);
 		
-		LText txtKey = new LText(this, 3);
+		LText txtKey = new LText(this);
+		txtKey.getCellData().setSpread(2, 1);
+		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
-		
-		LPanel compOptions = new LPanel(this);
-		compOptions.setGridLayout(3);
-		compOptions.setSpread(4, 1);
-		compOptions.setAlignment(LFlags.CENTER);
 
-		LCheckBox btnPersistent = new LCheckBox(compOptions);
-		btnPersistent.setText(Vocab.instance.PERSISTENT);
-		btnPersistent.setHoverText(Tooltip.instance.CHARPERSISTENT);
-		btnPersistent.setExpand(true, false);
-		addControl(btnPersistent, "persistent");
-		
-		LCheckBox btnPassable = new LCheckBox(compOptions);
-		btnPassable.setText(Vocab.instance.PASSABLE);
-		btnPassable.setHoverText(Tooltip.instance.CHARPASSABLE);
-		btnPassable.setExpand(true, false);
-		addControl(btnPassable, "passable");
-		
-		LCheckBox btnVisible = new LCheckBox(compOptions);
-		btnVisible.setText(Vocab.instance.VISIBLE);
-		btnVisible.setHoverText(Tooltip.instance.CHARVISIBLE);
-		btnVisible.setExpand(true, false);
-		addControl(btnVisible, "visible");
-		
 		// Char
-		
+
+		LControlListener<Integer> updateCharSprite = event -> {
+            if (event == null || event.oldValue == null || onChangeSprite == null) return;
+			onChangeSprite.accept(new PositionEvent(
+					spnX.getValue() - 1,
+					spnY.getValue() - 1,
+					spnH.getValue() - 1,
+					event.newValue
+			));
+        };
+
 		new LLabel(this, Vocab.instance.CHARACTER, Tooltip.instance.CHARACTER);
-		LText txtChar = new LText(this, 2, true);
+		LText txtChar = new LText(this, true);
+		txtChar.getCellData().setExpand(true, false);
 		IDButton btnChar = new IDButton(this, Vocab.instance.CHARSHELL, true) {
 			@Override
 			public LDataTree<Object> getDataTree() {
@@ -132,54 +116,57 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 			}
 		};
 		btnChar.setNameWidget(txtChar);
+		btnChar.addModifyListener(updateCharSprite);
 		addControl(btnChar, "charID");
 		
 		new LLabel(this, Vocab.instance.SPEED, Tooltip.instance.SPEED);
-		LSpinner spnSpeed = new LSpinner(this, 3);
+		LSpinner spnSpeed = new LSpinner(this);
+		spnSpeed.getCellData().setExpand(true, false);
 		spnSpeed.setMaximum(9999);
+		new LLabel(this, "%");
 		addControl(spnSpeed, "defaultSpeed");
 		
 		// Animation
-		
-		LControlListener<Integer> listener = new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event == null || event.oldValue == null) return;
-				FieldEditor.instance.canvas.onTileChange(spnX.getValue() - 1, spnY.getValue() - 1);
-				FieldEditor.instance.canvas.redrawBuffer();
-				FieldEditor.instance.canvas.redraw();
-			}
-		};
-		
+
 		new LLabel(this, Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR);
-		DirectionCombo cmbDir = new DirectionCombo(this);
-		addControl(cmbDir, "direction");
-		cmbDir.addModifyListener(listener);
-		
-		new LLabel(this, LFlags.BOTTOM, Vocab.instance.FRAME, 2);
-		
+		LPanel animation = new LPanel(this);
+		animation.setGridLayout(2);
+		animation.setEqualCells(true);
+		animation.getCellData().setSpread(2, 2);
+		animation.getCellData().setExpand(true, false);
 		new LLabel(this, Vocab.instance.ANIMATION, Tooltip.instance.ANIMATION);
-		LText txtAnim = new LText(this);
+
+		DirectionCombo cmbDir = new DirectionCombo(animation);
+		cmbDir.getCellData().setExpand(true, false);
+		cmbDir.addModifyListener(updateCharSprite);
+		addControl(cmbDir, "direction");
+
+		LLabel lblFrame = new LLabel(animation, LFlags.BOTTOM | LFlags.LEFT, Vocab.instance.FRAME, Tooltip.instance.FRAME);
+
+		LText txtAnim = new LText(animation);
+		txtAnim.getCellData().setExpand(true, false);
+		txtAnim.getCellData().setMinimumSize(lblFrame.getTargetSize());
 		addControl(txtAnim, "animation");
-		
-		btnChar.addModifyListener(listener);
-		
-		LSpinner spnFrame = new LSpinner(this, 2);
-		spnFrame.setMinimumWidth(36);
+
+		LSpinner spnFrame = new LSpinner(animation);
+		spnFrame.getCellData().setExpand(true, false);
+		spnFrame.getCellData().setAlignment(LFlags.MIDDLE);
+		spnFrame.getCellData().setMinimumSize(36, 0);
 		addControl(spnFrame, "frame");
 		
 		// Battle
 		
 		new LLabel(this, Vocab.instance.PARTY, Tooltip.instance.CHARPARTY);
-		
-		cmbParty = new LCombo(this, 3, true);
+		cmbParty = new LCombo(this, true);
+		cmbParty.getCellData().setSpread(2, 1);
+		cmbParty.getCellData().setExpand(true, false);
 		cmbParty.setIncludeID(false);
 		cmbParty.setOptional(true);
 		addControl(cmbParty, "party");
 		
 		new LLabel(this, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
-		
-		LText txtBattler = new LText(this, 2, true);		
+		LText txtBattler = new LText(this, true);
+		txtBattler.getCellData().setExpand(true, false);
 		IDButton btnBattler = new IDButton(this, Vocab.instance.BATTLERSHELL, false) {
 			@Override
 			public LDataTree<Object> getDataTree() {
@@ -188,14 +175,38 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		};
 		btnBattler.setNameWidget(txtBattler);
 		addControl(btnBattler, "battlerID");
-		
+
+		// Properties
+
+		LPanel compOptions = new LPanel(this);
+		compOptions.setSequentialLayout(true);
+		compOptions.getCellData().setSpread(4, 1);
+		compOptions.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
+
+		LCheckBox btnPersistent = new LCheckBox(compOptions);
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		btnPersistent.setHoverText(Tooltip.instance.CHARPERSISTENT);
+		addControl(btnPersistent, "persistent");
+
+		LCheckBox btnPassable = new LCheckBox(compOptions);
+		btnPassable.setText(Vocab.instance.PASSABLE);
+		btnPassable.setHoverText(Tooltip.instance.CHARPASSABLE);
+		addControl(btnPassable, "passable");
+
+		LCheckBox btnVisible = new LCheckBox(compOptions);
+		btnVisible.setText(Vocab.instance.VISIBLE);
+		btnVisible.setHoverText(Tooltip.instance.CHARVISIBLE);
+		addControl(btnVisible, "visible");
+
+		// Scripts
+
 		LFrame grpScripts = new LFrame(this, Vocab.instance.SCRIPTS);
 		grpScripts.setGridLayout(1);
-		grpScripts.setSpread(4, 1);
-		grpScripts.setExpand(false, true);
+		grpScripts.getCellData().setSpread(4, 1);
+		grpScripts.getCellData().setExpand(true, true);
 		
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
-		lstScripts.setExpand(true, true);
+		lstScripts.getCellData().setExpand(true, true);
 		addChild(lstScripts, "scripts");
 		
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
@@ -208,7 +219,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 	public void setField(Field field) {
 		if (field == null)
 			return;
-		cmbParty.setItems(FieldEditor.instance.canvas.field.parties);
+		cmbParty.setItems(field.parties);
 		spnX.setMaximum(field.sizeX);
 		spnY.setMaximum(field.sizeY);
 	}

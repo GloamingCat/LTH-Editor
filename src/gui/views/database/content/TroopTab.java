@@ -1,23 +1,18 @@
 package gui.views.database.content;
 
-import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.dataestructure.LDataList;
-import lwt.dataestructure.LPath;
+import lbase.data.LDataList;
+import lbase.data.LPath;
 import lwt.editor.LGridEditor;
-import lwt.event.*;
-import lwt.event.listener.LCollectionListener;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LSelectionListener;
-import lwt.graphics.LPoint;
+import lbase.event.*;
+import lbase.data.LPoint;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
 import lwt.widget.LText;
-import gson.project.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
@@ -25,13 +20,17 @@ import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.UnitEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
-
+import lbase.LFlags;
+import lbase.event.listener.LCollectionListener;
+import lbase.event.listener.LControlListener;
+import lbase.event.listener.LSelectionListener;
 import data.Animation;
 import data.GameCharacter;
 import data.Troop;
 import data.Troop.Unit;
 import data.config.Config;
 import data.subcontent.Icon;
+import gson.GObjectTreeSerializer;
 import project.Project;
 
 public class TroopTab extends DatabaseTab<Troop> {
@@ -39,8 +38,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 	public static int tWidth = 32;
 	public static int tHeight = 48;
 	
-	private LGridEditor<LPoint, LPoint> gridEditor;
-	private LDataList<LPoint> points = new LDataList<LPoint>();
+	private final LGridEditor<LPoint, LPoint> gridEditor;
+	private final LDataList<LPoint> points = new LDataList<>();
 
 	/**
 	 * @wbp.parser.constructor
@@ -49,27 +48,22 @@ public class TroopTab extends DatabaseTab<Troop> {
 	public TroopTab(LContainer parent) {
 		super(parent);
 		
-		// General
-		
-		new LLabel(grpGeneral, 1, 1);
-		LCheckBox btnPersistent = new LCheckBox(grpGeneral);
-		btnPersistent.setText(Vocab.instance.PERSISTENT);
-		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
-		addControl(btnPersistent, "persistent");
-		
 		// Rewards
 		
 		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
 		LPanel compositeReward = new LPanel(grpGeneral);
 		compositeReward.setGridLayout(3);
-		compositeReward.setExpand(true, false);
+		compositeReward.getCellData().setExpand(true, false);
 		LSpinner spnMoney = new LSpinner(compositeReward);
+		spnMoney.getCellData().setExpand(true, false);
 		spnMoney.setMaximum(99999999);
 		spnMoney.addMenu(lblMoney);
 		addControl(spnMoney, "money");
 		
 		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP, Tooltip.instance.EXP);
+		lblExp.getCellData().setMinimumSize(LABELWIDTH, 0);
 		LSpinner spnEXP = new LSpinner(compositeReward);
+		spnEXP.getCellData().setExpand(true, false);
 		spnEXP.setMaximum(99999999);
 		spnEXP.addMenu(lblExp);
 		addControl(spnEXP, "exp");
@@ -79,30 +73,43 @@ public class TroopTab extends DatabaseTab<Troop> {
 		LLabel lblAI = new LLabel(grpGeneral, Vocab.instance.AI, Tooltip.instance.AI);
 		LPanel select = new LPanel(grpGeneral);
 		select.setGridLayout(2);
-		select.setAlignment(LFlags.CENTER);
-		LText txtAI = new LText(select, true);		
+		select.getCellData().setExpand(true, false);
+		LText txtAI = new LText(select, true);
+		txtAI.getCellData().setExpand(true, false);
 		LuaButton btnAI = new LuaButton(select, Vocab.instance.TROOPSCRIPTSHELL, true);
 		btnAI.setPathWidget(txtAI);
 		btnAI.addMenu(lblAI);
 		btnAI.addMenu(txtAI);
 		addControl(btnAI, "ai");
-		
+
+		// Properties
+
+		LPanel check = new LPanel(grpGeneral);
+		check.setGridLayout(2);
+		check.getCellData().setExpand(true, false);
+		check.getCellData().setAlignment(LFlags.LEFT);
+		check.getCellData().setSpread(2, 1);
+
+		LCheckBox btnPersistent = new LCheckBox(check);
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
+		btnPersistent.getCellData().setExpand(true, false);
+		addControl(btnPersistent, "persistent");
+
 		// Grid
 		
-		LFrame grpGrid = new LFrame(left, (String) Vocab.instance.GRID);
+		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID);
 		grpGrid.setFillLayout(true);
 		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
-		grpGrid.setExpand(true, true);
+		grpGrid.getCellData().setExpand(true, true);
 		gridEditor = new UnitGrid(grpGrid);
-		gridEditor.getCollectionWidget().cellWidth = tWidth;
-		gridEditor.getCollectionWidget().cellHeight = tHeight;
 
 		// Items
 		
-		LFrame grpItems = new LFrame(right, (String) Vocab.instance.ITEMS);
+		LFrame grpItems = new LFrame(right, Vocab.instance.ITEMS);
 		grpItems.setFillLayout(true);
 		grpItems.setHoverText(Tooltip.instance.INVENTORY);
-		grpItems.setExpand(true, true);
+		grpItems.getCellData().setExpand(true, true);
 		DropList lstItems = new DropList(grpItems);
 		lstItems.addMenu(grpItems);
 		addChild(lstItems, "items");
@@ -110,28 +117,22 @@ public class TroopTab extends DatabaseTab<Troop> {
 		// Units
 		
 		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS);
-		grpMembers.setGridLayout(2);
+		grpMembers.setFillLayout(true);
+		grpMembers.setSpacing(5);
 		grpMembers.setHoverText(Tooltip.instance.UNITS);
-		grpMembers.setExpand(true, false);
-		grpMembers.setSpread(2, 1);
+		grpMembers.getCellData().setExpand(true, false);
+		grpMembers.getCellData().setSpread(2, 1);
 		
 		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers);
 		lstMembers.getCollectionWidget().setEditEnabled(false);
 		lstMembers.setIncludeID(false);
 		lstMembers.type = Unit.class;
-		lstMembers.setExpand(true, false);
 		lstMembers.addMenu(grpMembers);
 		addChild(lstMembers, "members");
 		
 		UnitEditor unitEditor = new UnitEditor(grpMembers);
-		unitEditor.setExpand(true, false);
 		lstMembers.addChild(unitEditor);
-		unitEditor.addModifyListener(new LControlListener<Troop.Unit>() {
-			@Override
-			public void onModify(LControlEvent<Unit> event) {
-				refreshUnit(event.newValue);
-			}
-		});
+		unitEditor.addModifyListener(event -> refreshUnit(event.newValue));
 		
 		LCollectionListener<Unit> modifyListener = new LCollectionListener<Unit>() {
 			public void onEdit(LEditEvent<Unit> e) {
@@ -143,44 +144,33 @@ public class TroopTab extends DatabaseTab<Troop> {
 			public void onDelete(LDeleteEvent<Unit> e) {
 				refreshUnit(e.node.data);
 			}
-			public void onMove(LMoveEvent<Unit> e) {}
 		};
 		lstMembers.getCollectionWidget().addEditListener(modifyListener);
 		lstMembers.getCollectionWidget().addInsertListener(modifyListener);
 		lstMembers.getCollectionWidget().addDeleteListener(modifyListener);
 		lstMembers.getCollectionWidget().addMoveListener(modifyListener);
-		lstMembers.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			public void onSelect(LSelectionEvent event) {
-				Unit u = (Unit) event.data;
-				if (u != null) {
-					Config.Troop conf = Project.current.config.getData().troop;
-					int i = (u.y - 1) * conf.width + (u.x - 1);
-					gridEditor.getCollectionWidget().select(new LPath(i));
-				}
-			}
-		});
-		gridEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				Troop troop = contentEditor.getObject();
-				if (troop == null)
-					return;
-				LPoint p = (LPoint) event.data;
-				if (p != null) {
-					int i = troop.find(p.x, p.y);
-					if (i != -1) {
-						lstMembers.getCollectionWidget().select(new LPath(i));
-					}
-				}
-			}
-		});
+		lstMembers.getCollectionWidget().addSelectionListener(event -> {
+            Unit u = (Unit) event.data;
+            if (u != null) {
+                Config.Troop conf = Project.current.config.getData().troop;
+                int i = (u.y - 1) * conf.width + (u.x - 1);
+                gridEditor.getCollectionWidget().select(new LPath(i));
+            }
+        });
+		gridEditor.getCollectionWidget().addSelectionListener(event -> {
+            Troop troop = contentEditor.getObject();
+            if (troop == null)
+                return;
+            LPoint p = (LPoint) event.data;
+            if (p != null) {
+                int i = troop.find(p.x, p.y);
+                if (i != -1) {
+                    lstMembers.getCollectionWidget().select(new LPath(i));
+                }
+            }
+        });
 		
-		LSelectionListener selectionListener = new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				gridEditor.getCollectionWidget().setDataCollection(points);
-			}
-		};
+		LSelectionListener selectionListener = event -> gridEditor.getCollectionWidget().setDataCollection(points);
 		listEditor.getCollectionWidget().addSelectionListener(selectionListener);
 		unitEditor.addSelectionListener(selectionListener);
 		
@@ -243,6 +233,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		public UnitGrid(LContainer parent) {
 			super(parent);
+			getCollectionWidget().cellWidth = tWidth;
+			getCollectionWidget().cellHeight = tHeight;
 		}
 		
 		@Override

@@ -1,6 +1,6 @@
 package data;
 
-import lwt.dataestructure.LDataList;
+import lbase.data.LDataList;
 import project.Project;
 
 public class Job extends Data {

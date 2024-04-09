@@ -1,6 +1,6 @@
 package gui.views.database.content;
 
-import gson.project.GObjectTreeSerializer;
+import lbase.LFlags;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.ObstacleTileShell;
@@ -8,20 +8,17 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
-import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LSelectionListener;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LLabel;
-
 import data.Animation;
 import data.Obstacle;
 import data.Obstacle.ObstacleTile;
+import gson.GObjectTreeSerializer;
 import project.Project;
 
 public class ObstacleTab extends DatabaseTab<Obstacle> {
@@ -35,17 +32,17 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 
 		LLabel lblTiles = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES,
 				Tooltip.instance.COLLIDERTILES);
-		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<ObstacleTile>(grpGeneral);
+		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<>(grpGeneral);
 		tileList.type = ObstacleTile.class;
 		tileList.setIncludeID(false);
-		tileList.setShellFactory(new LShellFactory<ObstacleTile>() {
+		tileList.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<ObstacleTile> createShell(LShell parent) {
+			public LObjectWindow<ObstacleTile> createWindow(LWindow parent) {
 				return new ObstacleTileShell(parent);
 			}
 		});
-		tileList.setExpand(true, true);
-		tileList.setMinimumHeight(60);
+		tileList.getCellData().setExpand(true, true);
+		tileList.getCellData().setMinimumSize(0, 60);
 		tileList.addMenu(lblTiles);
 		addChild(tileList, "tiles");
 		
@@ -54,42 +51,37 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
 		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
-		grpGraphics.setExpand(true, true);
+		grpGraphics.getCellData().setExpand(true, true);
 		LImage imgGraphics = new LImage(grpGraphics);
-		imgGraphics.setExpand(true, true);
-		imgGraphics.setAlignment(LFlags.TOP & LFlags.LEFT);
+		imgGraphics.getCellData().setExpand(true, true);
+		imgGraphics.setAlignment(LFlags.TOP | LFlags.LEFT);
 		IconButton btnGraphics = new IconButton(grpGraphics, false);
 		btnGraphics.addMenu(grpGraphics);
 		btnGraphics.addMenu(imgGraphics);
+		btnGraphics.setImageWidget(imgGraphics);
 		addControl(btnGraphics, "image");
-		LFrame frame = new LFrame(right, (String) Vocab.instance.TRANSFORM);
-		frame.setFillLayout(true);
-		
+
 		// Transform
-		
-		LFrame grpTransform = frame;
+
+		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM);
+		grpTransform.setFillLayout(true);
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
-		grpTransform.setExpand(true, false);
+		grpTransform.getCellData().setExpand(true, false);
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		transformEditor.addMenu(grpTransform);
 		addChild(transformEditor, "transform");
-		transformEditor.addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				Obstacle o = (Obstacle) contentEditor.getObject();
-				if (o == null)
-					return;
-				Animation a = (Animation) Project.current.animations.getData().get(o.image.id);
-				if (a == null)
-					return;
-				transformEditor.secondaryTransform = a.transform;
-			}
-		});
-
-		btnGraphics.setImageWidget(imgGraphics);
-		btnGraphics.setTransform(transformEditor);
+		transformEditor.addSelectionListener(event -> {
+            Obstacle o = contentEditor.getObject();
+            if (o == null)
+                return;
+            Animation a = (Animation) Project.current.animations.getData().get(o.image.id);
+            if (a == null)
+                return;
+            transformEditor.secondaryTransform = a.transform;
+        });
 		transformEditor.setImage(imgGraphics);
-		
+		btnGraphics.setTransform(transformEditor);
+
 		new LLabel(right, 1, 1);
 	}
 

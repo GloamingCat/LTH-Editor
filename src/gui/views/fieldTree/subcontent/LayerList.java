@@ -2,45 +2,44 @@ package gui.views.fieldTree.subcontent;
 
 import gui.shell.field.LayerShell;
 import gui.views.fieldTree.FieldEditor;
-import gui.views.fieldTree.FieldSideEditor;
 import gui.views.fieldTree.FieldTreeEditor;
-import lwt.LGlobals;
+import lbase.event.listener.LCollectionListener;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataList;
-import lwt.dataestructure.LPath;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lbase.data.LDataList;
+import lbase.data.LPath;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.editor.LListEditor;
-import lwt.event.LEditEvent;
-import lwt.event.LInsertEvent;
-import lwt.event.LMoveEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LCollectionListener;
-import lwt.event.listener.LSelectionListener;
-
-import project.Project;
+import lbase.event.LEditEvent;
+import lbase.event.LInsertEvent;
+import lbase.event.LMoveEvent;
 import data.field.Field;
 import data.field.Layer;
 import data.field.Layer.Info;
+import gson.GGlobals;
 
-public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
-	
-	private FieldSideEditor editor;
-	private int type;
-	
+import java.util.function.Consumer;
+
+public class LayerList extends LListEditor<Layer, Layer.Info> {
+
+	public Consumer<Info> onEdit;
+	public Consumer<Integer> onSelect;
+	public Consumer<Layer> onCheck;
+
+	private int fieldWidth, fieldHeight, maxHeight;
+
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 * @wbp.eval.method.parameter type 0
 	 */
-	public LayerList(LContainer parent, int type) {
+	public LayerList(LContainer parent) {
 		super(parent, true);
-		this.type = type;
-		setShellFactory(new LShellFactory<Info>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<Info> createShell(LShell parent) {
-				return new LayerShell(parent);
+			public LObjectWindow<Info> createWindow(LWindow parent) {
+				return new LayerShell(parent, maxHeight);
 			}
 		});
 		getCollectionWidget().setEditEnabled(true);
@@ -50,69 +49,59 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 		getCollectionWidget().setDragEnabled(true);
 		getCollectionWidget().setCopyEnabled(true);
 		getCollectionWidget().setPasteEnabled(true);
-		getCollectionWidget().addEditListener(new LCollectionListener<Info>() {
+		getCollectionWidget().addEditListener(new LCollectionListener<>() {
 			public void onEdit(LEditEvent<Info> e) {
-				FieldEditor.instance.canvas.refresh();
+				if (onEdit != null)
+					onEdit.accept(e.newData);
 			}
 		});
-		getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				Layer l = (Layer) event.data;
-				if (event.check) { 
-					l.visible = !l.visible;
-					FieldEditor.instance.canvas.refresh();
-				} else {
-					editor.selectLayer(l);
-					if (editor.field == null || event.path == null)
-						return;
-					Project.current.fieldTree.getData().
-						setLastLayer(editor.field.id, event.path.index, type);
-				}
-			}
-		});
-		LCollectionListener<Layer> listener = new LCollectionListener<Layer>() {
+		getCollectionWidget().addSelectionListener(event -> {
+            Layer l = (Layer) event.data;
+            if (event.check) {
+                l.visible = !l.visible;
+				if (onCheck != null)
+					onCheck.accept(l);
+            } else {
+				if (onSelect != null)
+					onSelect.accept(event.path == null ? -1 : event.path.index);
+            }
+        });
+		LCollectionListener<Layer> listener = new LCollectionListener<>() {
 			public void onInsert(LInsertEvent<Layer> event) {
 				getCollectionWidget().setChecked(new LPath(event.index), 
 					event.node.data.visible);
 			}
 			public void onMove(LMoveEvent<Layer> event) {
-				int index = event.destIndex == -1 ? getLayerList(editor.field).size() - 1 : event.destIndex;
+				int index = event.destIndex == -1 ? getDataCollection().size() - 1 : event.destIndex;
 				getCollectionWidget().setChecked(new LPath(index), 
 						event.sourceNode.data.visible);
 			}
 		};
 		getCollectionWidget().addInsertListener(listener);
 		getCollectionWidget().addMoveListener(listener);
-		if (FieldTreeEditor.instance != null)
-			setMenuInterface(FieldTreeEditor.instance.getMenuInterface());
 	}
-	
-	public void setEditor(FieldSideEditor parent) {
-		this.editor = parent;
-	}
-	
-	public void setField(Field field) {
+
+	public void setField(Field field, int lastLayer) {
 		if (field == null) {
 			setObject(null);
 		} else {
-			LDataList<Layer> layers = getLayerList(field);
-			setObject(layers);
-			int layer = Project.current.fieldTree.getData().getLastLayer(field.id, type);
-			if (layer >= 0)
-				getCollectionWidget().select(new LPath(layer));
-			for (LPath path = new LPath(0); path.index < layers.size(); path.index++)
-				getCollectionWidget().setChecked(path, layers.get(path.index).visible);
+			fieldWidth = field.sizeX;
+			fieldHeight = field.sizeY;
+			maxHeight = field.prefs.maxHeight;
+			if (lastLayer >= 0)
+				getCollectionWidget().select(new LPath(lastLayer));
+			for (LPath path = new LPath(0); path.index < getDataCollection().size(); path.index++)
+				getCollectionWidget().setChecked(path, getDataCollection().get(path.index).visible);
 		}
 	}
 	
 	@Override
 	protected LDataList<Layer> getDataCollection() {
-		return editor.field == null ? null : getLayerList(editor.field);
+		return (LDataList<Layer>) currentObject;
 	}
 	@Override
 	protected Layer createNewElement() {
-		return new Layer(editor.field.sizeX, editor.field.sizeY);
+		return new Layer(fieldWidth, fieldHeight);
 	}
 	@Override
 	protected Layer duplicateElement(Layer original) {
@@ -120,11 +109,11 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	}
 	@Override
 	protected String encodeElement(Layer data) {
-		return LGlobals.gson.toJson(data);
+		return GGlobals.gson.toJson(data);
 	}
 	@Override
 	protected Layer decodeElement(String str) {
-		return LGlobals.gson.fromJson(str, Layer.class);
+		return GGlobals.gson.fromJson(str, Layer.class);
 	}
 	@Override
 	public boolean canDecode(String str) {
@@ -133,17 +122,15 @@ public abstract class LayerList extends LListEditor<Layer, Layer.Info> {
 	
 	@Override
 	protected Info getEditableData(LPath path) {
-		return getLayerList(editor.field).get(path.index).info;
+		return getDataCollection().get(path.index).info;
 	}
 	@Override
 	protected void setEditableData(LPath path, Info newData) {
-		getLayerList(editor.field).get(path.index).info = newData;
+		getDataCollection().get(path.index).info = newData;
 	}
 	
 	public Layer getLayer() {
 		return getCollectionWidget().getSelectedObject();
 	}
-	
-	public abstract LDataList<Layer> getLayerList(Field field);
 
 }

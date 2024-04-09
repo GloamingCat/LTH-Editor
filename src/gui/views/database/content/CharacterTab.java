@@ -1,8 +1,8 @@
 package gui.views.database.content;
 
-import gson.project.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.shell.ScriptShell;
 import gui.shell.database.CharTileShell;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
@@ -12,17 +12,16 @@ import gui.views.fieldTree.subcontent.ScriptList;
 import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
+import lbase.LFlags;
+import lbase.event.listener.LCollectionListener;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
-import lwt.event.LEditEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LCollectionListener;
-import lwt.event.listener.LSelectionListener;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
+import lbase.event.LEditEvent;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -33,12 +32,16 @@ import data.GameCharacter;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
 import data.subcontent.Tile;
+import gson.GObjectTreeSerializer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.wb.swt.SWTResourceManager;
 import project.Project;
 
 public class CharacterTab extends DatabaseTab<GameCharacter> {
 
-	private IDButton btnBattler;
-	private NodeList lstAnim;
+	private final IDButton btnBattler;
+	private final NodeList lstAnim;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -50,8 +53,9 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LLabel lblBattler = new LLabel(grpGeneral, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
 		LPanel battler = new LPanel(grpGeneral);
 		battler.setGridLayout(2);
-		battler.setExpand(true, false);
+		battler.getCellData().setExpand(true, false);
 		LText txtBattler = new LText(battler, true);
+		txtBattler.getCellData().setExpand(true, false);
 		btnBattler = new IDButton(battler, Vocab.instance.BATTLERSHELL, true);
 		btnBattler.setNameWidget(txtBattler);
 		btnBattler.addMenu(lblBattler);
@@ -63,108 +67,115 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LLabel lblShadow = new LLabel(grpGeneral, Vocab.instance.SHADOW, Tooltip.instance.SHADOW);
 		LPanel shadow = new LPanel(grpGeneral);
 		shadow.setGridLayout(2);
-		shadow.setExpand(true, false);
-		LText txtShadow = new LText(shadow, true);	
+		shadow.getCellData().setExpand(true, false);
+		LText txtShadow = new LText(shadow, true);
+		txtShadow.getCellData().setExpand(true, false);
 		ImageButton btnShadow = new ImageButton(shadow, true);
 		btnShadow.setNameWidget(txtShadow);
 		btnShadow.addMenu(lblShadow);
 		btnShadow.addMenu(txtShadow);
 		addControl(btnShadow, "shadowID");
-		
-		// Tiles
-		
+
+		// Transform
+
+		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM);
+		grpTransform.setFillLayout(true);
+		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
+		grpTransform.getCellData().setExpand(true, false);
+		grpTransform.getCellData().setAlignment(LFlags.FILL);
+		TransformEditor transform = new TransformEditor(grpTransform);
+		transform.addMenu(grpTransform);
+		addChild(transform, "transform");
+
+		// Tiles + Scripts
+
 		LPanel middle = new LPanel(left);
 		middle.setFillLayout(true);
 		middle.setSpacing(5);
-		middle.setExpand(true, true);
-		LFrame grpTiles = new LFrame(middle, (String) Vocab.instance.COLLIDERTILES);
+		middle.getCellData().setExpand(true, true);
+
+		// Tiles
+
+		LFrame grpTiles = new LFrame(middle, Vocab.instance.COLLIDERTILES);
 		grpTiles.setFillLayout(true);
 		grpTiles.setHoverText(Tooltip.instance.COLLIDERTILES);
-		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<Tile>(grpTiles);
+		SimpleEditableList<Tile> lstTiles = new SimpleEditableList<>(grpTiles);
+		lstTiles.setFillLayout(true);
 		lstTiles.type = Tile.class;
 		lstTiles.setIncludeID(false);
-		lstTiles.setShellFactory(new LShellFactory<Tile>() {
+		lstTiles.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<Tile> createShell(LShell parent) {
+			public LObjectWindow<Tile> createWindow(LWindow parent) {
 				return new CharTileShell(parent);
 			}
 		});
 		lstTiles.addMenu(grpTiles);
 		addChild(lstTiles, "tiles");
-		
+
 		// Scripts
-		
+
 		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS);
 		grpScripts.setGridLayout(1);
 		grpScripts.setHoverText(Tooltip.instance.SCRIPTS);
-		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
-		lstScripts.setExpand(true, true);
+		ScriptList lstScripts = new ScriptList(grpScripts,
+				ScriptShell.ONLOAD | ScriptShell.ONCOLLIDE | ScriptShell.ONINTERACT);
+		lstScripts.getCellData().setExpand(true, true);
+		lstScripts.getCellData().setAlignment(LFlags.FILL);
 		lstScripts.addMenu(grpScripts);
 		addChild(lstScripts, "scripts");
-		
+
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
 		addControl(btnRepeat, "repeatCollisions");
-		
+
 		// KO
-		
+
 		LFrame grpKO = new LFrame(left, Vocab.instance.KOEFFECT);
 		grpKO.setGridLayout(3);
 		grpKO.setHoverText(Tooltip.instance.KOEFFECT);
-		grpKO.setExpand(true, false);
-		
+		grpKO.getCellData().setExpand(true, false);
+		grpKO.getCellData().setAlignment(LFlags.FILL);
+
 		LLabel lblKO = new LLabel(grpKO, Vocab.instance.ANIMATION, Tooltip.instance.KOANIM);
-		LText txtKO = new LText(grpKO, true);		
+		LText txtKO = new LText(grpKO, true);
+		txtKO.getCellData().setExpand(true, false);
 		ImageButton btnKO = new ImageButton(grpKO, true);
 		btnKO.setNameWidget(txtKO);
 		btnKO.addMenu(lblKO);
 		addControl(btnKO, "koAnimID");
-		
+
 		LLabel lblFade = new LLabel(grpKO, Vocab.instance.FADEOUT, Tooltip.instance.KOFADE);
-		LSpinner spnFade = new LSpinner(grpKO, 2);
+		LSpinner spnFade = new LSpinner(grpKO);
+		spnFade.getCellData().setExpand(true, false);
+		spnFade.getCellData().setSpread(2, 1);
 		spnFade.setMinimum(-1);
 		spnFade.setMaximum(999);
 		spnFade.addMenu(lblFade);
 		addControl(spnFade, "koFadeout");
-		
-		// Transform
-		
-		LFrame grpTransform = new LFrame(right, (String) Vocab.instance.TRANSFORM);
-		grpTransform.setFillLayout(true);
-		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
-		grpTransform.setExpand(true, false);
-		TransformEditor transform = new TransformEditor(grpTransform);
-		transform.addMenu(grpTransform);
-		addChild(transform, "transform");
-		
+
 		// Animations
 		
 		LPanel graphics = new LPanel(contentEditor);
-		graphics.setGridLayout(2);
-		graphics.setEqualCells(true, false);
-		graphics.setExpand(true, true);
-		graphics.setSpread(2, 1);
+		graphics.setFillLayout(true);
+		graphics.setSpacing(5, 0);
+		graphics.getCellData().setExpand(true, true);
+		graphics.getCellData().setSpread(2, 2);
 		
 		LFrame grpAnimations = new LFrame(graphics, Vocab.instance.ANIMATIONS);
 		grpAnimations.setGridLayout(2);
 		grpAnimations.setHoverText(Tooltip.instance.CHARANIMS);
-		grpAnimations.setExpand(true, true);
 		lstAnim = new NodeList(grpAnimations, Vocab.instance.ANIMSHELL);
 		lstAnim.getCollectionWidget().setIncludeID(false);
-		lstAnim.setMinimumWidth(128);
-		lstAnim.setExpand(false, true);
+		lstAnim.getCellData().setMinimumSize(128, 0);
+		lstAnim.getCellData().setExpand(false, true);
 		lstAnim.addMenu(grpAnimations);
 		addChild(lstAnim, "animations");
 		LImage imgAnim = new LImage(grpAnimations);
-		imgAnim.setExpand(true, true);
-		lstAnim.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				updateAnim(imgAnim, (Node) event.data); 
-			}
-		});
-		lstAnim.getCollectionWidget().addEditListener(new LCollectionListener<Node>() {
+		imgAnim.getCellData().setExpand(true, true);
+		imgAnim.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
+		lstAnim.getCollectionWidget().addSelectionListener(event -> updateAnim(imgAnim, (Node) event.data));
+		lstAnim.getCollectionWidget().addEditListener(new LCollectionListener<>() {
 			@Override
 			public void onEdit(LEditEvent<Node> e) {
 				updateAnim(imgAnim, e.newData);
@@ -174,30 +185,26 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LFrame grpPortraits = new LFrame(graphics, Vocab.instance.PORTRAITS);
 		grpPortraits.setGridLayout(2);
 		grpPortraits.setHoverText(Tooltip.instance.CHARICONS);
-		grpPortraits.setExpand(true, true);
 		PortraitList lstPortraits = new PortraitList(grpPortraits);
-		lstPortraits.setMinimumWidth(128);
-		lstPortraits.setExpand(false, true);
+		lstPortraits.getCellData().setMinimumSize(128, 0);
+		lstPortraits.getCellData().setExpand(false, true);
 		lstPortraits.addMenu(grpPortraits);
 		addChild(lstPortraits, "portraits");
-		LImage imgPotrait = new LImage(grpPortraits);
-		imgPotrait.setExpand(true, true);
-		lstPortraits.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				updatePortrait(imgPotrait, (Portrait) event.data);
-			}
-		});
+		LImage imgPortrait = new LImage(grpPortraits);
+		imgPortrait.getCellData().setExpand(true, true);
+		imgPortrait.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
+		lstPortraits.getCollectionWidget().addSelectionListener(event -> updatePortrait(imgPortrait, (Portrait) event.data));
 		lstPortraits.getCollectionWidget().addEditListener(new LCollectionListener<Portrait>() {
 			@Override
 			public void onEdit(LEditEvent<Portrait> e) {
-				updatePortrait(imgPotrait, e.newData);
+				updatePortrait(imgPortrait, e.newData);
 			}
 		});
-		
-		left.setExpand(true, false);
-		right.setExpand(true, false);
-		
+
+		right.getCellData().setExpand(true, false);
+		right.getCellData().setAlignment(LFlags.FILL);
+		left.getCellData().setExpand(true, false);
+		left.getCellData().setAlignment(LFlags.FILL);
 	}
 	
 	private void updateAnim(LImage img, Node node) {

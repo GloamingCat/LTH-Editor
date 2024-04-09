@@ -1,34 +1,36 @@
 package gui.views.fieldTree;
 
+import data.field.CharTile;
+import data.field.Field;
 import gui.Vocab;
 import gui.shell.field.ResizeShell;
 import gui.views.fieldTree.action.ResizeAction;
 
 import java.util.function.Consumer;
 
-import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LToolBar;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.graphics.LRect;
 
 public class FieldToolBar extends LToolBar {
 
-	// External
-	public static FieldToolBar instance;
+	public Consumer<Integer> onSelectTool;
+	public Consumer<Integer> onSelectEditor;
+	public Consumer<Boolean> onShowGrid;
+
+	public Consumer<LRect> onResize;
+
+	private Field field;
 
 	public FieldToolBar(LContainer parent) {
 		super(parent);
-		instance = this;
-		setCurrentSize(440, 0);
 
-		Consumer<Integer> selectTool = new Consumer<Integer>() {
-			@Override
-			public void accept(Integer t) {
-				onSelectTool(t);
-			}
+		Consumer<Integer> selectTool = i -> {
+			if (onSelectTool != null)
+				onSelectTool.accept(i);
 		};
 
 		addItem(selectTool, 0, "/img/pencil.png", true);
@@ -37,11 +39,9 @@ public class FieldToolBar extends LToolBar {
 
 		addSeparator();
 
-		Consumer<Integer> selectEditor = new Consumer<Integer>() {
-			@Override
-			public void accept(Integer t) {
-				onSelectEditor(t);
-			}
+		Consumer<Integer> selectEditor = i -> {
+			if (onSelectEditor != null)
+				onSelectEditor.accept(i);
 		};
 
 		addItem(selectEditor, 0, "/img/terrain.png", true);
@@ -52,60 +52,60 @@ public class FieldToolBar extends LToolBar {
 
 		addSeparator();
 
-		Consumer<Boolean> showGrid = new Consumer<Boolean>() {
-			@Override
-			public void accept(Boolean v) {
-				onShowGrid(v);
-			}
+		Consumer<Boolean> showGrid = v -> {
+			if (onShowGrid != null)
+				onShowGrid.accept(v);
 		};
 
 		addCheckItem(showGrid, Vocab.instance.SHOWGRID, true);
 
 		addSeparator();
-		
-		Consumer<Object> resize = new Consumer<Object>() {
-			@Override
-			public void accept(Object v) {
-				onResize();
-			}
+
+		Consumer<Boolean> resizeField = v -> {
+			if (field != null)
+				resizeField();
 		};
 
-		addButtonItem(resize, null, Vocab.instance.RESIZE);
+		addButtonItem(resizeField, null, Vocab.instance.RESIZE);
 
 		pack();
 	}
 
-	public void onSelectEditor(int i) {
-		FieldSideEditor.instance.selectEditor(i);
-	}
-
-	public void onSelectTool(int i) {
-		FieldEditor.instance.canvas.setTool(i);
-	}
-
-	public void onShowGrid(boolean i) {
-		FieldEditor.instance.canvas.setShowGrid(i);
-	}
-
-	public void onResize() {
-		LRect size = new LRect(LFlags.LEFT, LFlags.TOP, FieldSideEditor.instance.field.sizeX,
-				FieldSideEditor.instance.field.sizeY);
-		LShellFactory<LRect> factory = new LShellFactory<LRect>() {
+	public void resizeField() {
+		LRect size = new LRect(0, 0, field.sizeX,
+				field.sizeY);
+		LWindowFactory<LRect> factory = new LWindowFactory<>() {
 			@Override
-			public LObjectShell<LRect> createShell(LShell parent) {
+			public LObjectWindow<LRect> createWindow(LWindow parent) {
 				return new ResizeShell(parent);
 			}
 		};
-		size = factory.openShell(getShell(), size);
+		size = factory.openWindow(getWindow(), size);
 		if (size != null) {
-			resizeField(size);
+			LRect oldSize = new LRect(-size.x, -size.y, field.sizeX, field.sizeY);
+			Field.Layers layers = field.resizeLayers(size.width, size.height, size.x, size.y);
+			ResizeAction action = new ResizeAction(this, oldSize, field.layers, size, layers);
+			getActionStack().newAction(action);
+			resizeField(size, layers);
 		}
 	}
 
-	private void resizeField(LRect size) {
-		ResizeAction action = new ResizeAction(size.width, size.height, size.x, size.y);
-		FieldEditor.instance.canvas.getActionStack().newAction(action);
-		action.redo();
+	public void resizeField(LRect newSize, Field.Layers newLayers) {
+		//FieldTreeEditor.instance.fieldTree.forceSelection(null);
+		field.sizeX = newSize.width;
+		field.sizeY = newSize.height;
+		field.layers = newLayers;
+		for (CharTile t : field.characters) {
+			t.x -= newSize.x;
+			t.y -= newSize.y;
+		}
+		if (onResize != null)
+			onResize.accept(newSize);
+		//FieldTreeEditor.instance.fieldTree.forceSelection(path);
+	}
+
+	public void setField(Field field) {
+		this.field = field;
 	}
 
 }

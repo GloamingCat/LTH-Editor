@@ -5,7 +5,7 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.Item.EquipStatus;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCheckBox;
 import lwt.widget.LNodeSelector;
 
@@ -13,7 +13,7 @@ import project.Project;
 
 public class EquipStatusShell extends ObjectShell<EquipStatus> {
 
-	public EquipStatusShell(LShell parent) {
+	public EquipStatusShell(LWindow parent) {
 		super(parent, Vocab.instance.STATUSSHELL);
 		setMinimumSize(300, 250);
 	}
@@ -24,7 +24,7 @@ public class EquipStatusShell extends ObjectShell<EquipStatus> {
 		contentEditor.setGridLayout(1);
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
-		tree.setExpand(true, true);
+		tree.getCellData().setExpand(true, true);
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "id");
 		

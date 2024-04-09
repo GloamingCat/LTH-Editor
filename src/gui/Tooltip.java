@@ -350,7 +350,8 @@ public class Tooltip {
 	public String STATUSATT = "Bonus or debuff applied to an attribute.";
 
 	// Terrain
-	public String MOVECOST = "The default cost in steps to move to this tile.";
+	public String MOVECOST = "Cost in steps to move to this tile.";
+	public String DEFAULTCOST = "The default cost in steps to move to this tile.";
 	public String JOBMOVECOST = "Specific move costs according to the character's job.";
 	public String PASSABLE = "If unchecked, no character can move to this terrain.";
 	public String TERRAINSTATUS = "The status added to a battle character each tile it steps on this terrain.";

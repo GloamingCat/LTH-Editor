@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import gui.shell.field.FieldPrefShell;
-
+import lbase.event.listener.LCollectionListener;
 import project.Project;
 
 import com.google.gson.Gson;
@@ -13,21 +13,18 @@ import com.google.gson.Gson;
 import data.field.Field;
 import data.field.Field.Prefs;
 import data.field.FieldNode;
-import lwt.LGlobals;
+import gson.GGlobals;
 import lwt.container.LContainer;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LView;
-import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lbase.data.LDataTree;
+import lbase.data.LPath;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.editor.LTreeEditor;
-import lwt.event.LEditEvent;
-import lwt.event.LInsertEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LCollectionListener;
-import lwt.event.listener.LSelectionListener;
+import lbase.event.LEditEvent;
+import lbase.event.LInsertEvent;
 import lwt.widget.LTree;
 
 public class FieldTreeEditor extends LView {
@@ -56,12 +53,12 @@ public class FieldTreeEditor extends LView {
 		@Override
 		protected String encodeElement(FieldNode data) {
 			Field field = Project.current.fieldTree.loadField(data);
-			return LGlobals.gson.toJson(field);
+			return GGlobals.gson.toJson(field);
 		}
 
 		@Override
 		protected FieldNode decodeElement(String str) {
-			Field field = LGlobals.gson.fromJson(str, Field.class);
+			Field field = GGlobals.gson.fromJson(str, Field.class);
 			return Project.current.fieldTree.addField(field);
 		}
 
@@ -96,7 +93,6 @@ public class FieldTreeEditor extends LView {
 
 	}
 
-	public static FieldTreeEditor instance;
 	protected static Gson gson = new Gson();
 	
 	public LTree<FieldNode, Field.Prefs> fieldTree;
@@ -108,52 +104,50 @@ public class FieldTreeEditor extends LView {
 	public FieldTreeEditor(LContainer parent) {
 		super(parent, true);
 		setFillLayout(true);
-		FieldTreeEditor.instance = this;
 		
 		createMenuInterface();
 		
-		LSashPanel sashForm = new LSashPanel(this, true);
+		LFlexPanel sashForm = new LFlexPanel(this, true);
 		
 		LTreeEditor<FieldNode, Field.Prefs> treeEditor = new FieldTree(sashForm);
-		treeEditor.getCollectionWidget().setInsertNewEnabled(true);
-		treeEditor.getCollectionWidget().setEditEnabled(true);
-		treeEditor.getCollectionWidget().setDuplicateEnabled(true);
-		treeEditor.getCollectionWidget().setDragEnabled(true);
-		treeEditor.getCollectionWidget().setDeleteEnabled(true);
-		treeEditor.getCollectionWidget().setCopyEnabled(true);
-		treeEditor.getCollectionWidget().setPasteEnabled(true);
-		treeEditor.setShellFactory(new LShellFactory<Prefs>() {
+		fieldTree = treeEditor.getCollectionWidget();
+		fieldTree.setInsertNewEnabled(true);
+		fieldTree.setEditEnabled(true);
+		fieldTree.setDuplicateEnabled(true);
+		fieldTree.setDragEnabled(true);
+		fieldTree.setDeleteEnabled(true);
+		fieldTree.setCopyEnabled(true);
+		fieldTree.setPasteEnabled(true);
+		treeEditor.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<Prefs> createShell(LShell parent) {
-				FieldNode n = treeEditor.getCollectionWidget().getSelectedObject();
+			public LObjectWindow<Prefs> createWindow(LWindow parent) {
+				FieldNode n = fieldTree.getSelectedObject();
 				return new FieldPrefShell(parent, n);
 			}
 		});
 		addChild(treeEditor);
-		fieldTree = treeEditor.getCollectionWidget();
 
-		FieldEditor fieldEditor = new FieldEditor(sashForm);		
+		LFlexPanel sashForm2 = new LFlexPanel(sashForm, true);
+
+		FieldEditor fieldEditor = new FieldEditor(sashForm2);		
 		treeEditor.addChild(fieldEditor);
 		
-		FieldSideEditor sideEditor = new FieldSideEditor(sashForm);
+		FieldSideEditor sideEditor = new FieldSideEditor(sashForm2);
 		fieldEditor.addChild(sideEditor);
-		
-		treeEditor.getCollectionWidget().addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				Project.current.fieldTree.getData().lastField = event.id;
-				System.gc();
-			}
-		});
-		treeEditor.getCollectionWidget().addEditListener(new LCollectionListener<Prefs>() {
+
+		fieldTree.addSelectionListener(event -> {
+            Project.current.fieldTree.getData().lastField = event.id;
+            System.gc();
+        });
+		fieldTree.addEditListener(new LCollectionListener<>() {
 			public void onEdit(LEditEvent<Prefs> e) {
 				LDataTree<FieldNode> node = Project.current.fieldTree.getData().getNode(e.path);
 				node.data.name = e.newData.name;
-				treeEditor.getCollectionWidget().refreshObject(e.path);
+				fieldTree.refreshObject(e.path);
 				fieldEditor.canvas.redraw();
 			}
 		});
-		treeEditor.getCollectionWidget().addInsertListener(new LCollectionListener<FieldNode>() {
+		fieldTree.addInsertListener(new LCollectionListener<>() {
 			@Override
 			public void onInsert(LInsertEvent<FieldNode> event) {
 				LinkedList<LDataTree<FieldNode>> nodes = new LinkedList <>();
@@ -161,14 +155,76 @@ public class FieldTreeEditor extends LView {
 				while (!nodes.isEmpty()) {
 					int id = treeEditor.getDataCollection().findID();
 					nodes.peek().initID(id);
-					for (LDataTree<FieldNode> child : nodes.poll().children) {
-						nodes.add(child);
-					}
+                    nodes.addAll(nodes.poll().children);
 				}
 			}
 		});
-		
-		sashForm.setWeights(new int[] {1, 3, 1});
+
+		fieldEditor.canvas.onMoveCharacter = sideEditor::onMoveCharacter;
+		fieldEditor.canvas.onSelectArea = selection -> {
+			if (selection.length == 1 && selection[0].length == 1)
+				sideEditor.selectTile(selection[0][0]);
+			else
+				sideEditor.unselectTiles();
+		};
+
+		fieldEditor.toolBar.onSelectEditor = sideEditor::selectEditor;
+		fieldEditor.toolBar.onResize = newSize -> {
+			fieldTree.refreshObject(fieldTree.getSelectedPath());
+			fieldEditor.canvas.redrawBuffer();
+			fieldEditor.canvas.redraw();
+		};
+
+		sideEditor.charEditor.onChangeX = event -> {
+            fieldEditor.canvas.onTileChange(event.x(), event.y());
+            fieldEditor.canvas.onTileChange(event.newValue(), event.y());
+            fieldEditor.canvas.redrawBuffer();
+            fieldEditor.canvas.redraw();
+        };
+		sideEditor.charEditor.onChangeY = event -> {
+            fieldEditor.canvas.onTileChange(event.x(), event.y());
+            fieldEditor.canvas.onTileChange(event.x(), event.newValue());
+            fieldEditor.canvas.redrawBuffer();
+            fieldEditor.canvas.redraw();
+        };
+		sideEditor.charEditor.onChangeH = event -> {
+            fieldEditor.canvas.setHeight(event.newValue());
+            fieldEditor.canvas.onTileChange(event.x(), event.y());
+            fieldEditor.canvas.redrawBuffer();
+            fieldEditor.canvas.redraw();
+        };
+		sideEditor.charEditor.onChangeSprite = event -> {
+			fieldEditor.canvas.onTileChange(event.x(), event.y());
+            fieldEditor.canvas.redrawBuffer();
+            fieldEditor.canvas.redraw();
+		};
+		sideEditor.partyEditor.onChange = p -> fieldEditor.canvas.redraw();
+		sideEditor.onSelectChar = fieldEditor.canvas::setCharacter;
+		sideEditor.onSelectTile = fieldEditor.canvas::setSelection;
+		sideEditor.onSelectParty = fieldEditor.canvas::setParty;
+		sideEditor.onNewChar = sideEditor.onDeleteChar = tile -> {
+			fieldEditor.canvas.onTileChange(tile.x - 1, tile.y - 1);
+			fieldEditor.canvas.redrawBuffer();
+			fieldEditor.canvas.redraw();
+		};
+		sideEditor.onLayerEdit = fieldEditor::refresh;
+		sideEditor.onSelectLayer = fieldEditor::selectLayer;
+		sideEditor.onSelectEditor = i -> {
+			if (i == FieldSideEditor.CHAR ) {
+				fieldEditor.canvas.setParty(null);
+				fieldEditor.canvas.setMode(1);
+			} else if (i == FieldSideEditor.PARTY) {
+				fieldEditor.canvas.setCharacter(null);
+				fieldEditor.canvas.setMode(2);
+			} else {
+				fieldEditor.canvas.setParty(null);
+				fieldEditor.canvas.setCharacter(null);
+				fieldEditor.canvas.setMode(0);
+			}
+		};
+
+		sashForm.setWeights(1, 4);
+		sashForm2.setWeights(3, 1);
 	}
 	
 	public void onVisible() {

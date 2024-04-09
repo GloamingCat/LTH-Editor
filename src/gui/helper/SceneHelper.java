@@ -19,7 +19,7 @@ import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Icon;
 import lwt.graphics.LColor;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import lwt.graphics.LTexture;
 import project.Project;
 import rendering.Context;

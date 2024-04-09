@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.Battler.Equip;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class EquipList extends SimpleEditableList<Equip> {
 	
@@ -15,9 +15,9 @@ public class EquipList extends SimpleEditableList<Equip> {
 		super(parent);
 		type = Equip.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Equip>() {
+		setShellFactory(new LWindowFactory<Equip>() {
 			@Override
-			public LObjectShell<Equip> createShell(LShell parent) {
+			public LObjectWindow<Equip> createWindow(LWindow parent) {
 				return new EquipShell(parent);
 			}
 		});

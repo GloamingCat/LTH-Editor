@@ -1,6 +1,5 @@
 package gui.views.database.content;
 
-import gson.project.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.RuleShell;
@@ -13,14 +12,14 @@ import gui.widgets.IDButton;
 import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
-import lwt.LFlags;
+import lbase.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -30,6 +29,7 @@ import lwt.widget.LTextBox;
 import project.Project;
 import data.Battler;
 import data.subcontent.Rule;
+import gson.GObjectTreeSerializer;
 
 public class BattlerTab extends DatabaseTab<Battler> {
 	
@@ -47,23 +47,23 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		LPanel middle = new LPanel(left);
 		middle.setGridLayout(2);
-		middle.setExpand(true, true);
+		middle.getCellData().setExpand(true, true);
 		LPanel bottom = new LPanel(left);
 		bottom.setGridLayout(2);
 		bottom.setEqualCells(true, false);
-		bottom.setExpand(true, true);
+		bottom.getCellData().setExpand(true, true);
 		
 		// Icon
 		
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral);
 		compositeIcon.setGridLayout(2);
-		compositeIcon.setAlignment(LFlags.CENTER);
+		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
-		imgIcon.setMinimumWidth(48);
-		imgIcon.setMinimumHeight(48);
-		imgIcon.setExpand(true, true);
+		imgIcon.getCellData().setMinimumSize(48, 48);
+		imgIcon.getCellData().setExpand(true, true);
+		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		IconButton btnGraphics = new IconButton(compositeIcon, false);
 		btnGraphics.setImageWidget(imgIcon);
 		btnGraphics.addMenu(lblIcon);
@@ -73,77 +73,91 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 			Tooltip.instance.DESCRIPTION);
-		
-		LTextBox txtDescription = new LTextBox(grpGeneral, 1, 1);
-		txtDescription.setMinimumHeight(60);
+		LTextBox txtDescription = new LTextBox(grpGeneral);
+		txtDescription.getCellData().setExpand(true, false);
+		txtDescription.getCellData().setMinimumSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
-		
-		// Properties
-		
-		new LLabel(grpGeneral, 1, 1);
-		LPanel check = new LPanel(grpGeneral);
-		check.setGridLayout(2);
-		check.setExpand(true, false);
-		check.setAlignment(LFlags.CENTER);
-		
-		LCheckBox btnPersistent = new LCheckBox(check);
-		btnPersistent.setText(Vocab.instance.PERSISTENT);
-		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
-		btnPersistent.setExpand(true, false);
-		addControl(btnPersistent, "persistent");
-		
-		LCheckBox btnRecruit = new LCheckBox(check);
-		btnRecruit.setText(Vocab.instance.RECRUIT);
-		btnRecruit.setHoverText(Tooltip.instance.RECRUIT);
-		btnRecruit.setExpand(true, false);
-		addControl(btnRecruit, "persistent");
-		
+
+		// Rewards + Job
+
+		LPanel other = new LPanel(grpGeneral);
+		other.setGridLayout(4);
+		other.getCellData().setExpand(true, false);
+		other.getCellData().setSpread(2, 1);
+
 		// Rewards
 		
-		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
+		LLabel lblMoney = new LLabel(other, Vocab.instance.MONEY, Tooltip.instance.MONEY);
+		lblMoney.getCellData().setMinimumSize(LABELWIDTH, 0);
+
 		
-		LPanel compositeReward = new LPanel(grpGeneral);
-		compositeReward.setGridLayout(3);
-		compositeReward.setExpand(true, false);
-		
-		LSpinner spnMoney = new LSpinner(compositeReward);
+		LSpinner spnMoney = new LSpinner(other);
+		spnMoney.getCellData().setExpand(true, false);
 		spnMoney.setMaximum(99999999);
 		spnMoney.addMenu(lblMoney);
 		addControl(spnMoney, "money");
 		
-		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP, Tooltip.instance.EXP);
-		LSpinner spnEXP = new LSpinner(compositeReward);
+		LLabel lblExp = new LLabel(other, Vocab.instance.EXP, Tooltip.instance.EXP);
+		lblExp.getCellData().setMinimumSize(LABELWIDTH, 0);
+		LSpinner spnEXP = new LSpinner(other);
+		spnEXP.getCellData().setExpand(true, false);
 		spnEXP.setMaximum(99999999);
 		spnEXP.addMenu(lblExp);
 		addControl(spnEXP, "exp");
 		
 		// Job
 		
-		LLabel lblJob = new LLabel(grpGeneral, Vocab.instance.JOB, Tooltip.instance.JOB);
-		LPanel job = new LPanel(grpGeneral);
-		job.setGridLayout(4);
-		job.setExpand(true, false);
-		job.setAlignment(LFlags.CENTER);
+		LLabel lblJob = new LLabel(other, Vocab.instance.JOB, Tooltip.instance.JOB);
+		LPanel job = new LPanel(other);
+		job.setGridLayout(2);
+		job.getCellData().setSpread(2, 1);
+		job.getCellData().setAlignment(LFlags.FILL);
 		LText txtJob = new LText(job, true);
+		txtJob.getCellData().setExpand(true, false);
 		btnJob = new IDButton(job, Vocab.instance.JOBSHELL, false);
 		btnJob.setNameWidget(txtJob);
 		btnJob.addMenu(lblJob);
 		btnJob.addMenu(txtJob);
 		addControl(btnJob, "jobID");
-		
-		LLabel lblLevel = new LLabel(job, Vocab.instance.LEVEL, Tooltip.instance.LEVEL);
-		LSpinner spnLevel = new LSpinner(job);
+
+		LPanel level = new LPanel(other);
+		level.setGridLayout(2);
+		level.getCellData().setAlignment(LFlags.FILL);
+		LLabel lblLevel = new LLabel(level, Vocab.instance.LEVEL, Tooltip.instance.LEVEL);
+		lblLevel.getCellData().setMinimumSize(LABELWIDTH / 2, 0);
+		LSpinner spnLevel = new LSpinner(level);
+		spnLevel.getCellData().setExpand(true, false);
 		spnLevel.addMenu(lblLevel);
 		addControl(spnLevel, "level");
-		
+
+		// Properties
+
+		LPanel check = new LPanel(grpGeneral);
+		check.setGridLayout(2);
+		check.getCellData().setExpand(true, false);
+		check.getCellData().setAlignment(LFlags.LEFT);
+		check.getCellData().setSpread(2, 1);
+
+		LCheckBox btnPersistent = new LCheckBox(check);
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
+		btnPersistent.getCellData().setExpand(true, false);
+		addControl(btnPersistent, "persistent");
+
+		LCheckBox btnRecruit = new LCheckBox(check);
+		btnRecruit.setText(Vocab.instance.RECRUIT);
+		btnRecruit.setHoverText(Tooltip.instance.RECRUIT);
+		btnRecruit.getCellData().setExpand(true, false);
+		addControl(btnRecruit, "persistent");
+
 		// Attributes
 		
-		LFrame grpAtt = new LFrame(middle, (String) Vocab.instance.ATTRIBUTES);
+		LFrame grpAtt = new LFrame(middle, Vocab.instance.ATTRIBUTES);
 		grpAtt.setFillLayout(true);
 		grpAtt.setHoverText(Tooltip.instance.BATTLERATT);
-		grpAtt.setExpand(true, true);
-		grpAtt.setMinimumWidth(220);
+		grpAtt.getCellData().setExpand(true, true);
+		grpAtt.getCellData().setMinimumSize(220, 0);
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, 2);
 		attEditor.addMenu(grpAtt);
 		addChild(attEditor, "attributes");
@@ -153,7 +167,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LFrame grpElements = new LFrame(middle, (String) Vocab.instance.ELEMENTS);
 		grpElements.setFillLayout(true);
 		grpElements.setHoverText(Tooltip.instance.ELEMENTDEF);
-		grpElements.setExpand(true, true);
+		grpElements.getCellData().setExpand(true, true);
 		lstElements = new PropertyList(grpElements, Vocab.instance.BATTLERELEMENTSHELL);
 		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
@@ -163,7 +177,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LFrame grpSkills = new LFrame(bottom, (String) Vocab.instance.INITSKILLS);
 		grpSkills.setFillLayout(true);
 		grpSkills.setHoverText(Tooltip.instance.INITSKILLS);
-		grpSkills.setExpand(true, true);
+		grpSkills.getCellData().setExpand(true, true);
 		lstSkills = new IDList(grpSkills, Vocab.instance.SKILLSHELL);
 		lstSkills.addMenu(grpSkills);
 		addChild(lstSkills, "skills");
@@ -173,7 +187,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LFrame grpStatus = new LFrame(bottom, (String) Vocab.instance.INITSTATUS);
 		grpStatus.setFillLayout(true);
 		grpStatus.setHoverText(Tooltip.instance.INITSTATUS);
-		grpStatus.setExpand(true, true);
+		grpStatus.getCellData().setExpand(true, true);
 		lstStatus = new IDList(grpStatus, Vocab.instance.STATUSSHELL);
 		lstStatus.addMenu(grpStatus);
 		addChild(lstStatus, "status");
@@ -183,7 +197,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LFrame grpEquip = new LFrame(right, (String) Vocab.instance.INITEQUIP);
 		grpEquip.setFillLayout(true);
 		grpEquip.setHoverText(Tooltip.instance.INITEQUIP);
-		grpEquip.setExpand(true, true);
+		grpEquip.getCellData().setExpand(true, true);
 		EquipList lstEquip = new EquipList(grpEquip);
 		lstEquip.addMenu(grpEquip);
 		addChild(lstEquip, "equip");
@@ -193,7 +207,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LFrame grpDrop = new LFrame(right, (String) Vocab.instance.DROP);
 		grpDrop.setFillLayout(true);
 		grpDrop.setHoverText(Tooltip.instance.DROP);
-		grpDrop.setExpand(true, true);
+		grpDrop.getCellData().setExpand(true, true);
 		DropList lstDrop = new DropList(grpDrop);
 		lstDrop.addMenu(grpDrop);
 		addChild(lstDrop, "items");
@@ -203,13 +217,13 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LFrame grpAI = new LFrame(right, (String) Vocab.instance.RULES);
 		grpAI.setFillLayout(true);
 		grpAI.setHoverText(Tooltip.instance.RULES);
-		grpAI.setExpand(true, true);
+		grpAI.getCellData().setExpand(true, true);
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
-		lstRules.setShellFactory(new LShellFactory<Rule>() {
+		lstRules.setShellFactory(new LWindowFactory<Rule>() {
 			@Override
-			public LObjectShell<Rule> createShell(LShell parent) {
+			public LObjectWindow<Rule> createWindow(LWindow parent) {
 				return new RuleShell(parent);
 			}
 		});

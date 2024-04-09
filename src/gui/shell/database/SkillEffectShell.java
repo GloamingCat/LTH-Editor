@@ -6,7 +6,7 @@ import gui.shell.ObjectShell;
 
 import data.Skill.Effect;
 import lwt.container.LFrame;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LNodeSelector;
@@ -15,7 +15,7 @@ import project.Project;
 
 public class SkillEffectShell extends ObjectShell<Effect> {
 
-	public SkillEffectShell(LShell parent) {
+	public SkillEffectShell(LWindow parent) {
 		super(parent, Vocab.instance.EFFECTSHELL);
 		setMinimumSize(300, 100);
 	}
@@ -54,8 +54,8 @@ public class SkillEffectShell extends ObjectShell<Effect> {
 		
 		LFrame grpStatus = frame;
 		grpStatus.setHoverText(Tooltip.instance.EFFECTSTATUS);
-		grpStatus.setExpand(true, true);
-		grpStatus.setSpread(2, 1);
+		grpStatus.getCellData().setExpand(true, true);
+		grpStatus.getCellData().setSpread(2, 1);
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(grpStatus, true);
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "statusID");

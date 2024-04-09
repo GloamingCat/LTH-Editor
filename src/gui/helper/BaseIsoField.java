@@ -3,7 +3,7 @@ package gui.helper;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 
 public abstract class BaseIsoField extends FieldMath {
 	

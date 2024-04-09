@@ -2,18 +2,14 @@ package gui.shell.field;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lwt.LFlags;
+import lbase.LFlags;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LScrollPanel;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LMouseEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LMouseListener;
+import lbase.data.LDataTree;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.graphics.LColor;
 import lwt.graphics.LPainter;
 import lwt.widget.LCheckBox;
@@ -27,7 +23,7 @@ import data.field.FieldImage;
 import project.Project;
 
 
-public class FieldImageShell extends LObjectShell<FieldImage> {
+public class FieldImageShell extends LObjectWindow<FieldImage> {
 	
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
@@ -38,7 +34,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 	private LCheckBox btnForeground;
 	private LCheckBox btnGlued;
 	
-	public FieldImageShell(LShell parent) {
+	public FieldImageShell(LWindow parent) {
 		super(parent, Vocab.instance.FIELDIMGSHELL);
 		setMinimumSize(400, 300);
 	}
@@ -53,25 +49,22 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		
 		txtName = new LText(content);
 
-		LSashPanel sashForm = new LSashPanel(content, true);
-		sashForm.setExpand(true, true);
-		sashForm.setSpread(2, 1);
+		LFlexPanel sashForm = new LFlexPanel(content, true);
+		sashForm.getCellData().setExpand(true, true);
+		sashForm.getCellData().setSpread(2, 1);
 		
-		tree = new LNodeSelector<Object>(sashForm, false);
+		tree = new LNodeSelector<>(sashForm, false);
 		tree.setCollection(getTree());
-		tree.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				Animation anim = (Animation) tree.getSelectedObject();
-				setImage(anim);
-			}
-		});
+		tree.addModifyListener(event -> {
+            Animation anim = (Animation) tree.getSelectedObject();
+            setImage(anim);
+        });
 		
-		scroll = new LScrollPanel(sashForm, true);
+		scroll = new LScrollPanel(sashForm);
 		
 		image = new LImage(scroll);
 		image.setBackground(new LColor(100, 100, 100));
-		image.setAlignment(LFlags.TOP & LFlags.LEFT);
+		image.getCellData().setAlignment(LFlags.TOP | LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
@@ -82,25 +75,22 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 				}
 			}
 		});
-		image.addMouseListener(new LMouseListener() {
-			@Override
-			public void onMouseChange(LMouseEvent e) {
-				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
-					Animation anim = (Animation) tree.getSelectedObject();
-					if (anim != null) {
-						col = (int) (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
-						row = (int) (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
-						image.redraw();
-					}
-				}
-			}
-		});		
-		sashForm.setWeights(new int[] {1, 2});
+		image.addMouseListener(e -> {
+            if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+                Animation anim = (Animation) tree.getSelectedObject();
+                if (anim != null) {
+                    col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
+                    row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+                    image.redraw();
+                }
+            }
+        });
+		sashForm.setWeights(1, 2);
 
 		LPanel options = new LPanel(content);
 		options.setGridLayout(3);
-		options.setExpand(true, false);
-		options.setSpread(2, 1);
+		options.getCellData().setExpand(true, false);
+		options.getCellData().setSpread(2, 1);
 		
 		btnVisible = new LCheckBox(options);
 		btnVisible.setText(Vocab.instance.VISIBLE);
@@ -121,7 +111,7 @@ public class FieldImageShell extends LObjectShell<FieldImage> {
 		if (anim == null)
 			return;
 		image.setImage(anim.quad.fullPath());
-		scroll.refreshSize(anim.quad.width, anim.quad.height);
+		scroll.setContentSize(anim.quad.width, anim.quad.height);
 		image.redraw();
 	}
 	

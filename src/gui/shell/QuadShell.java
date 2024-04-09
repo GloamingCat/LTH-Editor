@@ -2,6 +2,8 @@ package gui.shell;
 
 import gui.Tooltip;
 import gui.Vocab;
+import lbase.LFlags;
+import lbase.event.listener.LControlListener;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,19 +11,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import lwt.LFlags;
 import lwt.container.LImage;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
+import lwt.container.LFlexPanel;
 import lwt.container.LScrollPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.event.LControlEvent;
-import lwt.event.LSelectionEvent;
-import lwt.event.listener.LControlListener;
-import lwt.event.listener.LSelectionListener;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
 import lwt.graphics.LPainter;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import lwt.widget.LFileSelector;
 import lwt.widget.LActionButton;
 import lwt.widget.LLabel;
@@ -30,7 +27,7 @@ import lwt.widget.LSpinner;
 import data.subcontent.Quad;
 import project.Project;
 
-public class QuadShell extends LObjectShell<Quad> {
+public class QuadShell extends LObjectWindow<Quad> {
 
 	private LFileSelector selFile;
 	private LImage imgQuad;
@@ -45,8 +42,8 @@ public class QuadShell extends LObjectShell<Quad> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public QuadShell(LShell parent, int style) {
-		super(parent, Vocab.instance.QUADSHELL, style);
+	public QuadShell(LWindow parent, int style) {
+		super(parent, style, Vocab.instance.QUADSHELL);
 		setMinimumSize(600, 400);
 	}
 	
@@ -54,24 +51,24 @@ public class QuadShell extends LObjectShell<Quad> {
 	protected void createContent(int style) {
 		super.createContent(style);
 
-		LSashPanel form = new LSashPanel(content, true);
+		LFlexPanel form = new LFlexPanel(content, true);
 		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
-		selFile.addFileRestriction( (f) -> { return isImage(f); } );
+		selFile.addFileRestriction(this::isImage);
 		selFile.setFolder(Project.current.imagePath());
 
 		LPanel quad = new LPanel(form);
 		quad.setGridLayout(1);
 
 		scroll = new LScrollPanel(quad);
-		scroll.setExpand(true, true);
+		scroll.getCellData().setExpand(true, true);
 
 		imgQuad = new LImage(scroll);
-		imgQuad.setAlignment(LFlags.TOP & LFlags.LEFT);
+		imgQuad.getCellData().setAlignment(LFlags.TOP | LFlags.LEFT);
 
 		LPanel spinners = new LPanel(quad);
 		spinners.setGridLayout(4);
-		spinners.setExpand(true, false);
-		spinners.setAlignment(LFlags.CENTER);
+		spinners.getCellData().setExpand(true, false);
+		spinners.getCellData().setAlignment(LFlags.CENTER);
 
 		new LLabel(spinners, Vocab.instance.QUADX, Tooltip.instance.QUADX);
 
@@ -96,17 +93,14 @@ public class QuadShell extends LObjectShell<Quad> {
 		spnHeight.setMinimum(1);
 
 		LActionButton btnFullImage = new LActionButton(quad, Vocab.instance.FULLIMAGE);
-		btnFullImage.addModifyListener(new LControlListener<Object>() {
-			@Override
-			public void onModify(LControlEvent<Object> e) {
-				LPoint size = imgQuad.getImageSize();
-				spnX.setValue(0);
-				spnY.setValue(0);
-				spnWidth.setValue(size.x);
-				spnHeight.setValue(size.y);
-				imgQuad.redraw();
-			}
-		});
+		btnFullImage.addModifyListener(e -> {
+            LPoint size = imgQuad.getImageSize();
+            spnX.setValue(0);
+            spnY.setValue(0);
+            spnWidth.setValue(size.x);
+            spnHeight.setValue(size.y);
+            imgQuad.redraw();
+        });
 
 		imgQuad.addPainter(new LPainter() {
 			@Override
@@ -119,19 +113,9 @@ public class QuadShell extends LObjectShell<Quad> {
 			}
 		});
 
-		selFile.addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				resetImage();
-			}
-		});
+		selFile.addSelectionListener(event -> resetImage());
 
-		LControlListener<Integer> redrawListener = new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				imgQuad.redraw();
-			}
-		};
+		LControlListener<Integer> redrawListener = event -> imgQuad.redraw();
 
 		spnX.addModifyListener(redrawListener);
 		spnY.addModifyListener(redrawListener);
@@ -183,7 +167,7 @@ public class QuadShell extends LObjectShell<Quad> {
 	protected void resetImage() {
 		String path = selFile.getRootFolder() + selFile.getSelectedFile();
 		imgQuad.setImage(path);
-		scroll.refreshSize(imgQuad.getCurrentSize());
+		scroll.setContentSize(imgQuad.getCurrentSize());
 		imgQuad.redraw();
 	}
 

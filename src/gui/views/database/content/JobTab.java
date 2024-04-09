@@ -1,15 +1,13 @@
 package gui.views.database.content;
 
-import lwt.LFlags;
 import lwt.container.LContainer;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
-import gson.project.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.JobSkillShell;
@@ -18,8 +16,9 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
 import gui.widgets.IDButton;
 import gui.widgets.SimpleEditableList;
-
+import lbase.LFlags;
 import data.Job;
+import gson.GObjectTreeSerializer;
 import project.Project;
 
 public class JobTab extends DatabaseTab<Job> {
@@ -36,6 +35,7 @@ public class JobTab extends DatabaseTab<Job> {
 		
 		LLabel lblExp = new LLabel(grpGeneral, Vocab.instance.EXPCURVE, Tooltip.instance.EXPCURVE);
 		LText txtCurve = new LText(grpGeneral);
+		txtCurve.getCellData().setExpand(true, false);
 		txtCurve.addMenu(lblExp);
 		addControl(txtCurve, "expCurve");
 		
@@ -44,10 +44,10 @@ public class JobTab extends DatabaseTab<Job> {
 		LLabel lblAtk = new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL, Tooltip.instance.ATTACKSKILL);
 		LPanel attackSkill = new LPanel(grpGeneral);
 		attackSkill.setGridLayout(2);
-		attackSkill.setExpand(true, false);
-		attackSkill.setAlignment(LFlags.CENTER);
+		attackSkill.getCellData().setExpand(true, false);
 		
 		LText txtAttack = new LText(attackSkill, true);
+		txtAttack.getCellData().setExpand(true, false);
 		btnAttack = new IDButton(attackSkill, Vocab.instance.SKILLSHELL, false);
 		btnAttack.setNameWidget(txtAttack);
 		btnAttack.addMenu(lblAtk);
@@ -57,7 +57,7 @@ public class JobTab extends DatabaseTab<Job> {
 		LFrame grpBuild = new LFrame(left, (String) Vocab.instance.BUILD);
 		grpBuild.setFillLayout(true);
 		grpBuild.setHoverText(Tooltip.instance.BUILD);
-		grpBuild.setExpand(true, true);
+		grpBuild.getCellData().setExpand(true, true);
 		BuildEditor buildEditor = new BuildEditor(grpBuild, 1);
 		buildEditor.addMenu(grpBuild);
 		addChild(buildEditor, "build");
@@ -65,7 +65,7 @@ public class JobTab extends DatabaseTab<Job> {
 		LPanel nodes = new LPanel(right);
 		nodes.setFillLayout(false);
 		nodes.setSpacing(5);
-		nodes.setExpand(true, true);
+		nodes.getCellData().setExpand(true, true);
 
 		LFrame grpSkillNodes = new LFrame(nodes, (String) Vocab.instance.SKILLNODES);
 		grpSkillNodes.setFillLayout(true);
@@ -76,9 +76,9 @@ public class JobTab extends DatabaseTab<Job> {
 		lstSkills.type = Job.Skill.class;
 		lstSkills.addMenu(grpSkillNodes);
 		addChild(lstSkills, "skills");
-		lstSkills.setShellFactory(new LShellFactory<Job.Skill>() {
+		lstSkills.setShellFactory(new LWindowFactory<Job.Skill>() {
 			@Override
-			public LObjectShell<Job.Skill> createShell(LShell parent) {
+			public LObjectWindow<Job.Skill> createWindow(LWindow parent) {
 				return new JobSkillShell(parent);
 			}
 		});
@@ -92,9 +92,9 @@ public class JobTab extends DatabaseTab<Job> {
 		lstStatuses.type = Job.Status.class;
 		lstStatuses.addMenu(grpStatusNodes);
 		addChild(lstStatuses, "statuses");
-		lstStatuses.setShellFactory(new LShellFactory<Job.Status>() {
+		lstStatuses.setShellFactory(new LWindowFactory<Job.Status>() {
 			@Override
-			public LObjectShell<Job.Status> createShell(LShell parent) {
+			public LObjectWindow<Job.Status> createWindow(LWindow parent) {
 				return new JobStatusShell(parent);
 			}
 		});

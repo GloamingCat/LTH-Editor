@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.config.Plugin;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class PluginList extends SimpleEditableList<Plugin> {
 	
@@ -15,9 +15,9 @@ public class PluginList extends SimpleEditableList<Plugin> {
 		super(parent);
 		type = Plugin.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Plugin>() {
+		setShellFactory(new LWindowFactory<Plugin>() {
 			@Override
-			public LObjectShell<Plugin> createShell(LShell parent) {
+			public LObjectWindow<Plugin> createWindow(LWindow parent) {
 				return new PluginShell(parent);
 			}
 		});

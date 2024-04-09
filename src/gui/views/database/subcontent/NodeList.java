@@ -5,10 +5,10 @@ import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Node;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lbase.data.LDataTree;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class NodeList extends SimpleEditableList<Node> {
 
@@ -18,9 +18,9 @@ public class NodeList extends SimpleEditableList<Node> {
 		super(parent);
 		type = Node.class;
 		setIncludeID(true);
-		setShellFactory(new LShellFactory<Node>() {
+		setShellFactory(new LWindowFactory<Node>() {
 			@Override
-			public LObjectShell<Node> createShell(LShell parent) {
+			public LObjectWindow<Node> createWindow(LWindow parent) {
 				return new NodeShell(parent, title) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();

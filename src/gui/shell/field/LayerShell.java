@@ -4,9 +4,9 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
-import gui.views.fieldTree.FieldSideEditor;
+import lbase.data.LPoint;
 import lwt.container.LFrame;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
 import lwt.widget.LSpinner;
@@ -16,46 +16,51 @@ import data.field.Layer.Info;
 
 public class LayerShell extends ObjectShell<Info> {
 
-	public LayerShell(LShell parent) {
-		super(parent, Vocab.instance.LAYERSHELL);
+
+	public LayerShell(LWindow parent, int maxHeight) {
+		super(parent, maxHeight, Vocab.instance.LAYERSHELL);
 	}
 	
 	@Override
-	protected void createContent(int style) {
-		super.createContent(style);
+	protected void createContent(int maxHeight) {
+		super.createContent(0);
 
 		contentEditor.setGridLayout(2);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
 		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
-		grpGeneral.setExpand(true, true);
+		grpGeneral.getCellData().setExpand(true, true);
+		grpGeneral.getCellData().setMinimumSize(200, 0);
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
 		LText txtName = new LText(grpGeneral);
+		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
 		
 		new LLabel(grpGeneral, Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH);
 		
 		LSpinner spnHeight = new LSpinner(grpGeneral);
+		spnHeight.getCellData().setExpand(true, false);
 		spnHeight.setMinimum(1);
-		spnHeight.setMaximum(FieldSideEditor.instance.field.prefs.maxHeight);
+		spnHeight.setMaximum(maxHeight);
 		addControl(spnHeight, "height");
 		
 		LCheckBox btnNoAuto = new LCheckBox(grpGeneral, 2);
 		btnNoAuto.setText(Vocab.instance.NOAUTO);
 		addControl(btnNoAuto, "noAuto");
-		LFrame frame = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
-		frame.setFillLayout(true);
-		
-		LFrame grpTags = frame;
+
+		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);;
+		grpTags.setFillLayout(true);
 		grpTags.setHoverText(Tooltip.instance.TAGS);
-		grpTags.setExpand(true, true);
+		grpTags.getCellData().setExpand(true, true);
+		grpTags.getCellData().setMinimumSize(100, 0);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
-		
-		pack();
+
+		LPoint size = getTargetSize();
+		setMinimumSize(size.x, size.y);
 	}
 	
 }

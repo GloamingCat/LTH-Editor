@@ -2,9 +2,9 @@ package gui.widgets;
 
 import gui.shell.field.PortalShell;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -23,9 +23,9 @@ public class PortalButton extends LObjectButton<Portal> {
 	 */
 	public PortalButton(LContainer parent, int fieldID) {
 		super(parent);
-		setShellFactory(new LShellFactory<Portal>() {
+		setShellFactory(new LWindowFactory<Portal>() {
 			@Override
-			public LObjectShell<Portal> createShell(LShell parent) {
+			public LObjectWindow<Portal> createWindow(LWindow parent) {
 				return new PortalShell(parent, fieldID);
 			}
 		});

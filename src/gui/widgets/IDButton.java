@@ -3,10 +3,10 @@ package gui.widgets;
 import gui.shell.IDShell;
 import lwt.container.LContainer;
 import lwt.container.LImage;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lbase.data.LDataTree;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 import lwt.widget.LText;
 
@@ -29,9 +29,9 @@ public class IDButton extends LObjectButton<Integer> {
 	 */
 	public IDButton(LContainer parent, String title, boolean optional) {
 		super(parent);
-		setShellFactory(new LShellFactory<Integer>() {
+		setShellFactory(new LWindowFactory<Integer>() {
 			@Override
-			public LObjectShell<Integer> createShell(LShell parent) {
+			public LObjectWindow<Integer> createWindow(LWindow parent) {
 				IDShell shell = new IDShell(parent, title, optional ? IDShell.OPTIONAL : 0) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 

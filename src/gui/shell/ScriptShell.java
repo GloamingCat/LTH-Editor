@@ -3,11 +3,11 @@ package gui.shell;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
-import lwt.LFlags;
+import lbase.LFlags;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
-import lwt.dialog.LShell;
+import lwt.container.LFlexPanel;
+import lwt.dialog.LWindow;
 import lwt.widget.LFileSelector;
 import lwt.widget.LCheckBox;
 import lwt.widget.LLabel;
@@ -25,8 +25,8 @@ public class ScriptShell extends ObjectShell<Script> {
 	public static final int ONCOLLIDE = 0x001;
 	public static final int ONINTERACT = 0x0001;
 	
-	public ScriptShell(LShell parent, int style) {
-		super(parent, Vocab.instance.SCRIPTSHELL, style);
+	public ScriptShell(LWindow parent, int style) {
+		super(parent, style, Vocab.instance.SCRIPTSHELL);
 	}
 	
 	@Override
@@ -40,9 +40,9 @@ public class ScriptShell extends ObjectShell<Script> {
 		LText txtDescription = new LText(contentEditor);
 		addControl(txtDescription, "description");
 		
-		LSashPanel form = new LSashPanel(contentEditor, true);
-		form.setExpand(true, true);
-		form.setSpread(2, 1);
+		LFlexPanel form = new LFlexPanel(contentEditor, true);
+		form.getCellData().setExpand(true, true);
+		form.getCellData().setSpread(2, 1);
 		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.scriptPath());
@@ -54,13 +54,13 @@ public class ScriptShell extends ObjectShell<Script> {
 		
 		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
-		grpParameters.setExpand(true, true);
+		grpParameters.getCellData().setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
 		LPanel options = new LPanel(composite);
 		options.setGridLayout(3);
-		options.setAlignment(LFlags.CENTER);
+		options.getCellData().setAlignment(LFlags.CENTER);
 		
 		LCheckBox btnGlobal = new LCheckBox(options);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
@@ -95,7 +95,7 @@ public class ScriptShell extends ObjectShell<Script> {
 		addControl(btnInteract, "onInteract");
 		btnInteract.setEnabled((style & ONINTERACT) > 0);
 		
-		form.setWeights(new int[] {1, 2});
+		form.setWeights(1, 2);
 	}
 	
 	public void open(Script initial) {

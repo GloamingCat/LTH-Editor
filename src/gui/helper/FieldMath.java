@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import data.config.Config.Grid;
 import data.field.Layer;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 
 public abstract class FieldMath {
 

@@ -2,9 +2,9 @@ package gui.views.fieldTree;
 
 import gui.helper.FieldHelper;
 import gui.helper.FieldPainterSWT;
-import lwt.container.LContainer;
+import lwt.container.LScrollPanel;
 import lwt.graphics.LPainter;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import lwt.graphics.LTexture;
 import project.Project;
 
@@ -23,7 +23,7 @@ public class FieldCanvasSWT extends FieldCanvas {
 	public LTexture[][] tileImages;
 	public FieldPainterSWT painter;
 
-	public FieldCanvasSWT(LContainer parent) {
+	public FieldCanvasSWT(LScrollPanel parent) {
 		super(parent);
 		painter = new FieldPainterSWT();
 	}

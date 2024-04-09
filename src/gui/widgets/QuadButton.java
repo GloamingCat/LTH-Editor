@@ -4,9 +4,9 @@ import gui.shell.QuadShell;
 import gui.views.database.subcontent.TransformEditor;
 import lwt.container.LContainer;
 import lwt.container.LImage;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 import lwt.widget.LObjectButton;
 
 import java.lang.reflect.Type;
@@ -20,9 +20,9 @@ public class QuadButton extends LObjectButton<Quad> {
 	
 	public QuadButton(LContainer parent, boolean optional) {
 		super(parent);
-		setShellFactory(new LShellFactory<Quad>() {
+		setShellFactory(new LWindowFactory<Quad>() {
 			@Override
-			public LObjectShell<Quad> createShell(LShell parent) {
+			public LObjectWindow<Quad> createWindow(LWindow parent) {
 				return new QuadShell(parent, optional ? QuadShell.OPTIONAL : 0);
 			}
 		});

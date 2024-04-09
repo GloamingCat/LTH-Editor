@@ -2,10 +2,9 @@ package gui.shell;
 
 import gui.Tooltip;
 import gui.Vocab;
-
+import lbase.LFlags;
 import data.subcontent.Tag;
-import lwt.LFlags;
-import lwt.dialog.LShell;
+import lwt.dialog.LWindow;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
 import lwt.widget.LTextBox;
@@ -15,7 +14,7 @@ public class TagShell extends ObjectShell<Tag> {
 	private LText txtKey;
 	private LTextBox txtValue;
 
-	public TagShell(LShell parent) {
+	public TagShell(LWindow parent) {
 		super(parent, Vocab.instance.TAGSHELL);
 		setMinimumSize(400, 300);
 	}
@@ -33,9 +32,8 @@ public class TagShell extends ObjectShell<Tag> {
 		
 		new LLabel(contentEditor, LFlags.TOP, Vocab.instance.VALUE, Tooltip.instance.JSON);
 		
-		txtValue = new LTextBox(contentEditor, 1, 1);
-		txtValue.setMinimumWidth(170);
-		txtValue.setMinimumHeight(75);
+		txtValue = new LTextBox(contentEditor);
+		txtValue.getCellData().setMinimumSize(170, 75);
 		addControl(txtValue, "value");
 		
 		pack();

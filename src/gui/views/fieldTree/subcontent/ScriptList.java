@@ -5,9 +5,9 @@ import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Script;
 import lwt.container.LContainer;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
 
 public class ScriptList extends SimpleEditableList<Script> {
 	
@@ -15,9 +15,9 @@ public class ScriptList extends SimpleEditableList<Script> {
 		super(parent);
 		type = Script.class;
 		setIncludeID(false);
-		setShellFactory(new LShellFactory<Script>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectShell<Script> createShell(LShell parent) {
+			public LObjectWindow<Script> createWindow(LWindow parent) {
 				return new ScriptShell(parent, style);
 			}
 		});

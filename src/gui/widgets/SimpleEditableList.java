@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import gson.editor.GDefaultListEditor;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataList;
+import lwt.gson.GDefaultListEditor;
+import lbase.data.LDataList;
 
 public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 
@@ -17,7 +17,6 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		getCollectionWidget().setDragEnabled(true);
 		getCollectionWidget().setCopyEnabled(true);
 		getCollectionWidget().setPasteEnabled(true);
-		pack();
 	}
 	
 	public SimpleEditableList(LContainer parent, Class<?> type) {

@@ -6,8 +6,8 @@ import gui.shell.ObjectShell;
 import gui.widgets.IDButton;
 
 import data.Battler.Equip;
-import lwt.dataestructure.LDataTree;
-import lwt.dialog.LShell;
+import lbase.data.LDataTree;
+import lwt.dialog.LWindow;
 import lwt.widget.LCombo;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
@@ -16,7 +16,7 @@ import project.Project;
 
 public class EquipShell extends ObjectShell<Equip> {
 
-	public EquipShell(LShell parent) {
+	public EquipShell(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPSHELL);
 	}
 	
@@ -27,12 +27,14 @@ public class EquipShell extends ObjectShell<Equip> {
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
 
-		LText txtKey = new LText(contentEditor, 2);
+		LText txtKey = new LText(contentEditor);
+		txtKey.getCellData().setSpread(2, 1);
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, Vocab.instance.STATE, Tooltip.instance.STATE);
 		
-		LCombo cmbState = new LCombo(contentEditor, 2);
+		LCombo cmbState = new LCombo(contentEditor, true);
+		cmbState.getCellData().setSpread(2, 1);
 		cmbState.setIncludeID(false);
 		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {

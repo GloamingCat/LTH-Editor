@@ -1,7 +1,7 @@
 package gui.helper;
 
 import data.config.Config;
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 import project.Project;
 
 public class FieldHelper {

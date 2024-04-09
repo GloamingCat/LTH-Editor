@@ -2,7 +2,7 @@ package gui.helper;
 
 import java.util.ArrayList;
 
-import lwt.graphics.LPoint;
+import lbase.data.LPoint;
 
 public class HexField extends BaseIsoField {
 

@@ -6,8 +6,8 @@ import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import lwt.container.LFrame;
 import lwt.container.LPanel;
-import lwt.container.LSashPanel;
-import lwt.dialog.LShell;
+import lwt.container.LFlexPanel;
+import lwt.dialog.LWindow;
 import lwt.widget.LFileSelector;
 import lwt.widget.LLabel;
 import lwt.widget.LText;
@@ -19,7 +19,7 @@ public class RuleShell extends ObjectShell<Rule> {
 	
 	private LFileSelector selFile;
 	
-	public RuleShell(LShell parent) {
+	public RuleShell(LWindow parent) {
 		super(parent, Vocab.instance.RULESHELL);
 	}
 	
@@ -27,7 +27,7 @@ public class RuleShell extends ObjectShell<Rule> {
 	protected void createContent(int style) {
 		super.createContent(style);
 		contentEditor.setFillLayout(true);
-		LSashPanel form = new LSashPanel(contentEditor, true);
+		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
 		selFile.setFolder(Project.current.rulePath());
@@ -39,8 +39,8 @@ public class RuleShell extends ObjectShell<Rule> {
 		
 		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
-		grpParameters.setExpand(true, true);
-		grpParameters.setSpread(2, 1);
+		grpParameters.getCellData().setExpand(true, true);
+		grpParameters.getCellData().setSpread(2, 1);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
@@ -49,7 +49,7 @@ public class RuleShell extends ObjectShell<Rule> {
 		LText txtCondition = new LText(composite);
 		addControl(txtCondition, "condition");
 		
-		form.setWeights(new int[] {1, 1});
+		form.setWeights(1, 1);
 	}
 	
 	public void open(Rule initial) {

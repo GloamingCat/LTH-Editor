@@ -1,33 +1,21 @@
 package gui.views.fieldTree.subcontent;
 
-import gui.views.fieldTree.FieldEditor;
+import lbase.action.LState;
 import lwt.container.LContainer;
 import lwt.container.LView;
-import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
-import lwt.editor.LState;
-import lwt.event.LControlEvent;
-import lwt.event.listener.LControlListener;
+import lbase.data.LDataTree;
+import lbase.data.LPath;
 import lwt.widget.LNodeSelector;
 
 public abstract class TileTree extends LView {
 
 	public final LNodeSelector<Object> selector;
-	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
+
+
 	public TileTree(LContainer parent) {
 		super(parent, false);
 		setFillLayout(true);
 		selector = new LNodeSelector<>(this, false);
-		selector.addModifyListener(new LControlListener<Integer>() {
-			public void onModify(LControlEvent<Integer> event) {
-				FieldEditor.instance.canvas.setSelection(event.newValue);
-			}
-		});
 	}
 	
 	public void setTile(int id) {
@@ -51,12 +39,7 @@ public abstract class TileTree extends LView {
 	
 	public LState getState() {
 		final Integer id = selector.getValue();
-		return new LState() {
-			@Override
-			public void reset() {
-				selector.setValue(id);
-			}
-		};
+		return () -> selector.setValue(id);
 	}
 	
 	public void updateCollection() {

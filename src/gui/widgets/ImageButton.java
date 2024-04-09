@@ -2,7 +2,7 @@ package gui.widgets;
 
 import lwt.container.LContainer;
 import lwt.container.LImage;
-import lwt.dataestructure.LDataTree;
+import lbase.data.LDataTree;
 import data.Animation;
 import gui.Vocab;
 import project.Project;

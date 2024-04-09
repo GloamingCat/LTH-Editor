@@ -2,12 +2,12 @@ package gui.widgets;
 
 import gui.shell.IDShell;
 import lwt.container.LContainer;
-import lwt.dataestructure.LDataTree;
-import lwt.dataestructure.LPath;
-import lwt.dialog.LObjectShell;
-import lwt.dialog.LShell;
-import lwt.dialog.LShellFactory;
-import lwt.event.LEditEvent;
+import lbase.data.LDataTree;
+import lbase.data.LPath;
+import lwt.dialog.LObjectWindow;
+import lwt.dialog.LWindow;
+import lwt.dialog.LWindowFactory;
+import lbase.event.LEditEvent;
 import lwt.widget.LList;
 
 public class IDList extends SimpleEditableList<Integer> {
@@ -17,9 +17,9 @@ public class IDList extends SimpleEditableList<Integer> {
 	public IDList(LContainer parent, String title) {
 		super(parent);
 		type = Integer.class;
-		setShellFactory(new LShellFactory<Integer>() {
+		setShellFactory(new LWindowFactory<Integer>() {
 			@Override
-			public LObjectShell<Integer> createShell(LShell parent) {
+			public LObjectWindow<Integer> createWindow(LWindow parent) {
 				IDShell shell = new IDShell(parent, title, 0) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
