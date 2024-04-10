@@ -5,7 +5,7 @@ import gui.widgets.SimpleEditableList;
 
 import data.field.FieldImage;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,7 +17,7 @@ public class FieldImageList extends SimpleEditableList<FieldImage> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<FieldImage>() {
 			@Override
-			public LObjectWindow<FieldImage> createWindow(LWindow parent) {
+			public LObjectDialog<FieldImage> createWindow(LWindow parent) {
 				return new FieldImageShell(parent);
 			}
 		});

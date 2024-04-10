@@ -19,7 +19,7 @@ import lui.container.LImage;
 import lui.container.LPanel;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.base.event.LControlEvent;
@@ -41,7 +41,7 @@ import gson.GObjectTreeSerializer;
 public class SkillTab extends DatabaseTab<Skill> {
 
 
-	private PropertyList lstElements;
+	private final PropertyList lstElements;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -223,7 +223,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
 		
-		LCheckBox btnUserElements = new LCheckBox(grpElements, 1);
+		LCheckBox btnUserElements = new LCheckBox(grpElements);
 		btnUserElements.getCellData().setAlignment(LFlags.TOP);
 		btnUserElements.setText(Vocab.instance.USERELEMENTS);
 		addControl(btnUserElements, "userElements");
@@ -250,7 +250,8 @@ public class SkillTab extends DatabaseTab<Skill> {
 		effectMask.setMenu(btnEffectMask.getMenu());
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
-		LCheckBox btnRotate = new LCheckBox(grpEffect, 2);
+		LCheckBox btnRotate = new LCheckBox(grpEffect);
+		btnRotate.getCellData().setSpread(2, 1);
 		btnRotate.setText(Vocab.instance.ROTATE);
 		btnRotate.addMenu();
 		addControl(btnRotate, "rotateEffect");
@@ -298,7 +299,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 	private void addMaskButton(LObjectButton<Mask> button, LCanvas mask, LColor trueColor) {
 		button.setShellFactory(new LWindowFactory<Mask>() {
 			@Override
-			public LObjectWindow<Mask> createWindow(LWindow parent) {
+			public LObjectDialog<Mask> createWindow(LWindow parent) {
 				MaskShell shell = new MaskShell(parent);
 				shell.trueColor = trueColor;
 				shell.falseColor = falseColor;

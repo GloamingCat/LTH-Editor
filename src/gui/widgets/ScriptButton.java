@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import gui.shell.ScriptShell;
+import gui.shell.ScriptDialog;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -25,8 +25,8 @@ public class ScriptButton extends LObjectButton<Script> {
 		super(parent);
 		setShellFactory(new LWindowFactory<Script>() {
 			@Override
-			public LObjectWindow<Script> createWindow(LWindow parent) {
-				return new ScriptShell(parent, style);
+			public LObjectDialog<Script> createWindow(LWindow parent) {
+				return new ScriptDialog(parent, style);
 			}
 		});
 	}

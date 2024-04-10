@@ -2,8 +2,8 @@ package gui.views.database.content;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.database.RuleShell;
-import gui.shell.database.TransformationShell;
+import gui.shell.database.RuleDialog;
+import gui.shell.database.TransformationDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
@@ -16,7 +16,7 @@ import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LCheckBox;
@@ -79,8 +79,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		lstRules.setIncludeID(false);
 		lstRules.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Rule> createWindow(LWindow parent) {
-				return new RuleShell(parent);
+			public LObjectDialog<Rule> createWindow(LWindow parent) {
+				return new RuleDialog(parent);
 			}
 		});
 		lstRules.addMenu(lblBehavior);
@@ -205,8 +205,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		lstTransformations.getCellData().setExpand(true, true);
 		lstTransformations.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Transformation> createWindow(LWindow parent) {
-				return new TransformationShell(parent);
+			public LObjectDialog<Transformation> createWindow(LWindow parent) {
+				return new TransformationDialog(parent);
 			}
 		});
 		lstTransformations.setIncludeID(false);

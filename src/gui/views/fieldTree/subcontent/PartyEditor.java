@@ -2,7 +2,7 @@ package gui.views.fieldTree.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.field.TroopSpawnShell;
+import gui.shell.field.TroopSpawnDialog;
 import gui.widgets.DirectionCombo;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
@@ -12,7 +12,7 @@ import data.field.Party.TroopSpawn;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.gson.GDefaultObjectEditor;
@@ -103,8 +103,8 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		lstTroops.setIncludeID(false);
 		lstTroops.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<TroopSpawn> createWindow(LWindow parent) {
-				return new TroopSpawnShell(parent);
+			public LObjectDialog<TroopSpawn> createWindow(LWindow parent) {
+				return new TroopSpawnDialog(parent);
 			}
 		});
 		addChild(lstTroops, "troopSpawn");

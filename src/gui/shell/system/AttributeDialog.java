@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import data.config.Attribute;
 import lui.dialog.LWindow;
@@ -11,9 +11,9 @@ import lui.widget.LLabel;
 import lui.widget.LText;
 import lui.widget.LTextBox;
 
-public class AttributeShell extends ObjectShell<Attribute> {
+public class AttributeDialog extends ObjectEditorDialog<Attribute> {
 	
-	public AttributeShell(LWindow parent) {
+	public AttributeDialog(LWindow parent) {
 		super(parent, Vocab.instance.ATTRIBUTESHELL);
 	}
 	

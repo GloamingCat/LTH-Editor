@@ -11,7 +11,7 @@ import lui.container.LCanvas;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import lui.base.data.LPoint;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.base.event.LControlEvent;
 import lui.base.event.LMouseEvent;
@@ -19,7 +19,7 @@ import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 
-public class MaskShell extends LObjectWindow<Mask> {
+public class MaskShell extends LObjectDialog<Mask> {
 
 	private LCanvas canvas;
 	private LSpinner spnMinH;

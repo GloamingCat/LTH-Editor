@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import gui.shell.PositionShell;
+import gui.shell.PositionDialog;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -15,18 +15,13 @@ import data.subcontent.Position;
 public class PositionButton extends LObjectButton<Position> {
 
 	private LText text;
-	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
-	public PositionButton(LContainer parent) {
+
+	public PositionButton(LContainer parent, int fieldID) {
 		super(parent);
-		setShellFactory(new LWindowFactory<Position>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Position> createWindow(LWindow parent) {
-				return new PositionShell(parent);
+			public LObjectDialog<Position> createWindow(LWindow parent) {
+				return new PositionDialog(parent, fieldID);
 			}
 		});
 	}
@@ -37,19 +32,15 @@ public class PositionButton extends LObjectButton<Position> {
 
 	@Override
 	public void setValue(Object value) {
-		if (value != null) {
-			setEnabled(true);
-			Position s = (Position) value;
-			if (text != null) {
-				text.setValue(s.toString());
-			}
-			currentValue = s;
-		} else {
-			setEnabled(false);
-			if (text != null) {
+		super.setValue(value);
+		if (text != null) {
+			if (currentValue != null) {
+				text.setValue(currentValue.toString());
+				text.setEnabled(true);
+			} else {
 				text.setValue("");
+				text.setEnabled(false);
 			}
-			currentValue = null;
 		}
 	}
 

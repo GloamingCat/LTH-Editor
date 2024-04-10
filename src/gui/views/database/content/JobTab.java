@@ -3,15 +3,15 @@ package gui.views.database.content;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LLabel;
 import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.database.JobSkillShell;
-import gui.shell.database.JobStatusShell;
+import gui.shell.database.JobSkillDialog;
+import gui.shell.database.JobStatusDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.BuildEditor;
 import gui.widgets.IDButton;
@@ -77,8 +77,8 @@ public class JobTab extends DatabaseTab<Job> {
 		addChild(lstSkills, "skills");
 		lstSkills.setShellFactory(new LWindowFactory<Job.Skill>() {
 			@Override
-			public LObjectWindow<Job.Skill> createWindow(LWindow parent) {
-				return new JobSkillShell(parent);
+			public LObjectDialog<Job.Skill> createWindow(LWindow parent) {
+				return new JobSkillDialog(parent);
 			}
 		});
 		
@@ -93,8 +93,8 @@ public class JobTab extends DatabaseTab<Job> {
 		addChild(lstStatuses, "statuses");
 		lstStatuses.setShellFactory(new LWindowFactory<Job.Status>() {
 			@Override
-			public LObjectWindow<Job.Status> createWindow(LWindow parent) {
-				return new JobStatusShell(parent);
+			public LObjectDialog<Job.Status> createWindow(LWindow parent) {
+				return new JobStatusDialog(parent);
 			}
 		});
 

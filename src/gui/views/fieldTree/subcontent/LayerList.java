@@ -1,11 +1,11 @@
 package gui.views.fieldTree.subcontent;
 
-import gui.shell.field.LayerShell;
+import gui.shell.field.LayerDialog;
 import lui.base.event.listener.LCollectionListener;
 import lui.container.LContainer;
 import lui.base.data.LDataList;
 import lui.base.data.LPath;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.editor.LListEditor;
@@ -36,8 +36,8 @@ public class LayerList extends LListEditor<Layer, Layer.Info> {
 		super(parent, true);
 		setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Info> createWindow(LWindow parent) {
-				return new LayerShell(parent, maxHeight);
+			public LObjectDialog<Info> createWindow(LWindow parent) {
+				return new LayerDialog(parent, maxHeight);
 			}
 		});
 		getCollectionWidget().setEditEnabled(true);

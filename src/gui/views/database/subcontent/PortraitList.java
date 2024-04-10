@@ -5,7 +5,7 @@ import gui.widgets.SimpleEditableList;
 
 import data.GameCharacter.Portrait;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,7 +17,7 @@ public class PortraitList extends SimpleEditableList<Portrait> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Portrait>() {
 			@Override
-			public LObjectWindow<Portrait> createWindow(LWindow parent) {
+			public LObjectDialog<Portrait> createWindow(LWindow parent) {
 				return new PortraitShell(parent);
 			}
 		});

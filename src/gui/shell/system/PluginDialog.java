@@ -1,26 +1,28 @@
-package gui.shell.database;
+package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.views.database.subcontent.TagList;
 import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.dialog.LWindow;
 import lui.widget.LFileSelector;
-import lui.widget.LLabel;
-import lui.widget.LText;
+import lui.widget.LCheckBox;
 
-import data.subcontent.Rule;
+import data.config.Plugin;
 import project.Project;
 
-public class RuleShell extends ObjectShell<Rule> {
+public class PluginDialog extends ObjectEditorDialog<Plugin> {
 	
 	private LFileSelector selFile;
 	
-	public RuleShell(LWindow parent) {
-		super(parent, Vocab.instance.RULESHELL);
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public PluginDialog(LWindow parent) {
+		super(parent, Vocab.instance.PLUGINSHELL);
 	}
 	
 	@Override
@@ -30,36 +32,35 @@ public class RuleShell extends ObjectShell<Rule> {
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
-		selFile.setFolder(Project.current.rulePath());
+		selFile.setFolder(Project.current.scriptPath());
 		
 		LPanel composite = new LPanel(form);
-		composite.setGridLayout(2);
+		composite.setGridLayout(1);
 		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
 		frame.setFillLayout(true);
 		
 		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.getCellData().setExpand(true, true);
-		grpParameters.getCellData().setSpread(2, 1);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
-		new LLabel(composite, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
-		
-		LText txtCondition = new LText(composite);
-		addControl(txtCondition, "condition");
+		LCheckBox btnON = new LCheckBox(composite);
+		btnON.setText(Vocab.instance.PLUGINON);
+		btnON.setHoverText(Tooltip.instance.PLUGINON);
+		addControl(btnON, "on");
 		
 		form.setWeights(1, 1);
 	}
 	
-	public void open(Rule initial) {
+	public void open(Plugin initial) {
 		super.open(initial);
 		selFile.setSelectedFile(initial.name);
 	}
 	
 	@Override
-	protected Rule createResult(Rule initial) {
-		Rule script = (Rule) contentEditor.getObject();
+	protected Plugin createResult(Plugin initial) {
+		Plugin script = (Plugin) contentEditor.getObject();
 		script.name = selFile.getSelectedFile();
 		if (script.name == null)
 			script.name = "";

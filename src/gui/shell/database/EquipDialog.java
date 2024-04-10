@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.widgets.IDButton;
 
 import data.Battler.Equip;
@@ -14,9 +14,9 @@ import lui.widget.LText;
 
 import project.Project;
 
-public class EquipShell extends ObjectShell<Equip> {
+public class EquipDialog extends ObjectEditorDialog<Equip> {
 
-	public EquipShell(LWindow parent) {
+	public EquipDialog(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPSHELL);
 	}
 	

@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import gui.shell.database.AttributeBonusShell;
+import gui.shell.database.AttributeBonusDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.Item.Attribute;
@@ -16,8 +16,8 @@ public class AttributeList extends SimpleEditableList<Attribute> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Attribute>() {
 			@Override
-			public AttributeBonusShell createWindow(LWindow parent) {
-				return new AttributeBonusShell(parent);
+			public AttributeBonusDialog createWindow(LWindow parent) {
+				return new AttributeBonusDialog(parent);
 			}
 		});
 	}

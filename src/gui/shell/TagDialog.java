@@ -9,12 +9,12 @@ import lui.widget.LLabel;
 import lui.widget.LText;
 import lui.widget.LTextBox;
 
-public class TagShell extends ObjectShell<Tag> {
+public class TagDialog extends ObjectEditorDialog<Tag> {
 	
 	private LText txtKey;
 	private LTextBox txtValue;
 
-	public TagShell(LWindow parent) {
+	public TagDialog(LWindow parent) {
 		super(parent, Vocab.instance.TAGSHELL);
 		setMinimumSize(400, 300);
 	}

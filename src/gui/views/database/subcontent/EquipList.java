@@ -1,11 +1,11 @@
 package gui.views.database.subcontent;
 
-import gui.shell.database.EquipShell;
+import gui.shell.database.EquipDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.Battler.Equip;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class EquipList extends SimpleEditableList<Equip> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Equip>() {
 			@Override
-			public LObjectWindow<Equip> createWindow(LWindow parent) {
-				return new EquipShell(parent);
+			public LObjectDialog<Equip> createWindow(LWindow parent) {
+				return new EquipDialog(parent);
 			}
 		});
 	}

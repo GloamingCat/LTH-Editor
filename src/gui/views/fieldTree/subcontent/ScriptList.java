@@ -1,11 +1,11 @@
 package gui.views.fieldTree.subcontent;
 
-import gui.shell.ScriptShell;
+import gui.shell.ScriptDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Script;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class ScriptList extends SimpleEditableList<Script> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Script> createWindow(LWindow parent) {
-				return new ScriptShell(parent, style);
+			public LObjectDialog<Script> createWindow(LWindow parent) {
+				return new ScriptDialog(parent, style);
 			}
 		});
 	}

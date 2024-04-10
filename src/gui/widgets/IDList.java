@@ -4,7 +4,7 @@ import gui.shell.IDShell;
 import lui.container.LContainer;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.base.event.LEditEvent;
@@ -19,7 +19,7 @@ public class IDList extends SimpleEditableList<Integer> {
 		type = Integer.class;
 		setShellFactory(new LWindowFactory<Integer>() {
 			@Override
-			public LObjectWindow<Integer> createWindow(LWindow parent) {
+			public LObjectDialog<Integer> createWindow(LWindow parent) {
 				IDShell shell = new IDShell(parent, title, 0) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();

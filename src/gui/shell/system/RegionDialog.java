@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.widgets.IDList;
 import lui.base.LFlags;
 import lui.container.LFrame;
@@ -17,9 +17,9 @@ import project.Project;
 
 import data.config.Region;
 
-public class RegionShell extends ObjectShell<Region> {
+public class RegionDialog extends ObjectEditorDialog<Region> {
 	
-	public RegionShell(LWindow parent) {
+	public RegionDialog(LWindow parent) {
 		super(parent, Vocab.instance.REGIONSHELL);
 	}
 	

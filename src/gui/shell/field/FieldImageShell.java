@@ -8,7 +8,7 @@ import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.container.LScrollPanel;
 import lui.base.data.LDataTree;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
@@ -23,7 +23,7 @@ import data.field.FieldImage;
 import project.Project;
 
 
-public class FieldImageShell extends LObjectWindow<FieldImage> {
+public class FieldImageShell extends LObjectDialog<FieldImage> {
 	
 	protected LNodeSelector<Object> tree;
 	protected LImage image;

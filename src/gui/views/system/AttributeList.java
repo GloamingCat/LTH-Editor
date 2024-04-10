@@ -1,11 +1,11 @@
 package gui.views.system;
 
-import gui.shell.system.AttributeShell;
+import gui.shell.system.AttributeDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.config.Attribute;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class AttributeList extends SimpleEditableList<Attribute> {
 		setIncludeID(true);
 		setShellFactory(new LWindowFactory<Attribute>() {
 			@Override
-			public LObjectWindow<Attribute> createWindow(LWindow parent) {
-				return new AttributeShell(parent);
+			public LObjectDialog<Attribute> createWindow(LWindow parent) {
+				return new AttributeDialog(parent);
 			}
 		});
 	}

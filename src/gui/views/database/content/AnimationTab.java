@@ -2,7 +2,7 @@ package gui.views.database.content;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.AudioPlayShell;
+import gui.shell.AudioPlayDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
@@ -13,7 +13,7 @@ import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LActionButton;
@@ -95,8 +95,8 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		lstAudio.setIncludeID(false);
 		lstAudio.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Audio> createWindow(LWindow parent) {
-				return new AudioPlayShell(parent, AudioPlayShell.TIMED);
+			public LObjectDialog<Audio> createWindow(LWindow parent) {
+				return new AudioPlayDialog(parent, AudioPlayDialog.TIMED);
 			}
 		});
 		lstAudio.addMenu(grpAudio);

@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import lui.container.LFlexPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LFlatList;
 
-public abstract class FileShell<T> extends LObjectWindow<T> {
+public abstract class FileShell<T> extends LObjectDialog<T> {
 
 	protected String folder;
 	protected LFlexPanel sashForm;

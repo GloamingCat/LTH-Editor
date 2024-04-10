@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import gui.shell.field.PortalShell;
+import gui.shell.field.PortalDialog;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -15,18 +15,13 @@ import data.field.Transition.Portal;
 public class PortalButton extends LObjectButton<Portal> {
 
 	private LText text;
-	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
+
 	public PortalButton(LContainer parent, int fieldID) {
 		super(parent);
-		setShellFactory(new LWindowFactory<Portal>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Portal> createWindow(LWindow parent) {
-				return new PortalShell(parent, fieldID);
+			public LObjectDialog<Portal> createWindow(LWindow parent) {
+				return new PortalDialog(parent, fieldID);
 			}
 		});
 	}
@@ -41,19 +36,15 @@ public class PortalButton extends LObjectButton<Portal> {
 
 	@Override
 	public void setValue(Object value) {
-		if (value != null) {
-			setEnabled(true);
-			Portal s = (Portal) value;
-			if (text != null) {
-				text.setValue(s.toString());
-			}
-			currentValue = s;
-		} else {
-			setEnabled(false);
-			if (text != null) {
+		super.setValue(value);
+		if (text != null) {
+			if (currentValue != null) {
+				text.setValue(currentValue.toString());
+				text.setEnabled(true);
+			} else {
 				text.setValue("");
+				text.setEnabled(false);
 			}
-			currentValue = null;
 		}
 	}
 

@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
 import lui.base.LFlags;
@@ -15,9 +15,9 @@ import lui.widget.LText;
 
 import data.config.Element;
 
-public class ElementShell extends ObjectShell<Element> {
+public class ElementDialog extends ObjectEditorDialog<Element> {
 	
-	public ElementShell(LWindow parent) {
+	public ElementDialog(LWindow parent) {
 		super(parent, Vocab.instance.ELEMENTSHELL);
 	}
 	

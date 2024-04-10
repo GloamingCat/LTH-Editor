@@ -347,6 +347,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lblTitle.setText(titles[i]);
 		lblTitle.setHoverText(tooltips[i]);
 		stack.setTop(editors[i]);
+		layout();
 	}
 	
 	public void selectTile(int i) {

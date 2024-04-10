@@ -10,9 +10,9 @@ import lui.widget.LLabel;
 import lui.widget.LNodeSelector;
 import lui.widget.LSpinner;
 
-public abstract class PropertyShell extends ObjectShell<Property> {
+public abstract class PropertyDialog extends ObjectEditorDialog<Property> {
 
-	public PropertyShell(LWindow parent, String title) {
+	public PropertyDialog(LWindow parent, String title) {
 		super(parent, title);
 		setMinimumSize(400, 320);
 	}

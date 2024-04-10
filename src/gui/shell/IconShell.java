@@ -13,13 +13,13 @@ import lui.container.LImage;
 import lui.container.LFlexPanel;
 import lui.container.LScrollPanel;
 import lui.base.data.LDataTree;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.base.event.LControlEvent;
 import lui.base.event.LMouseEvent;
 import lui.widget.LNodeSelector;
 
-public class IconShell extends LObjectWindow<Icon> {
+public class IconShell extends LObjectDialog<Icon> {
 	
 	protected static LColor bg = new LColor(127, 127, 127);
 	protected LNodeSelector<Object> tree;

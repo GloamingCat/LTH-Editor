@@ -267,7 +267,7 @@ public class ConfigEditor extends LView {
 		
 		LText txtPos = new LText(playerEditor, true);
 		txtPos.getCellData().setExpand(true, false);
-		PositionButton btnStartPos = new PositionButton(playerEditor);
+		PositionButton btnStartPos = new PositionButton(playerEditor, -1);
 		btnStartPos.setTextWidget(txtPos);
 		playerEditor.addControl(btnStartPos, "startPos");
 		

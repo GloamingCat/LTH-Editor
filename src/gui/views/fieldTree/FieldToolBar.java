@@ -3,14 +3,14 @@ package gui.views.fieldTree;
 import data.field.CharTile;
 import data.field.Field;
 import gui.Vocab;
-import gui.shell.field.ResizeShell;
+import gui.shell.field.ResizeDialog;
 import gui.views.fieldTree.action.ResizeAction;
 
 import java.util.function.Consumer;
 
 import lui.container.LContainer;
 import lui.container.LToolBar;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.graphics.LRect;
@@ -76,8 +76,8 @@ public class FieldToolBar extends LToolBar {
 				field.sizeY);
 		LWindowFactory<LRect> factory = new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<LRect> createWindow(LWindow parent) {
-				return new ResizeShell(parent);
+			public LObjectDialog<LRect> createWindow(LWindow parent) {
+				return new ResizeDialog(parent);
 			}
 		};
 		size = factory.openWindow(getWindow(), size);

@@ -1,11 +1,11 @@
 package gui.views.database.subcontent;
 
-import gui.shell.database.EquipStatusShell;
+import gui.shell.database.EquipStatusDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.Item.EquipStatus;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class EquipStatusList extends SimpleEditableList<EquipStatus> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<EquipStatus>() {
 			@Override
-			public LObjectWindow<EquipStatus> createWindow(LWindow parent) {
-				return new EquipStatusShell(parent);
+			public LObjectDialog<EquipStatus> createWindow(LWindow parent) {
+				return new EquipStatusDialog(parent);
 			}
 		});
 	}

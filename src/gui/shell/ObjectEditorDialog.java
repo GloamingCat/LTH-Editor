@@ -1,7 +1,7 @@
 package gui.shell;
 
 import lui.container.LControlView;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.editor.LEditor;
 import lui.gson.GDefaultObjectEditor;
@@ -12,17 +12,18 @@ import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-public class ObjectShell<T> extends LObjectWindow<T> {
+public class ObjectEditorDialog<T> extends LObjectDialog<T> {
 	
 	public GDefaultObjectEditor<T> contentEditor;
 	private static final Gson gson = new Gson();
 
-	public ObjectShell(LWindow parent, int style, String title) {
+	public ObjectEditorDialog(LWindow parent, int style, String title) {
 		super(parent, style, title);
 		content.getCellData().setExpand(true, true);
+		content.setFillLayout(true);
 	}
 
-	public ObjectShell(LWindow parent, String title) {
+	public ObjectEditorDialog(LWindow parent, String title) {
 		this(parent, 0, title);
 	}
 	

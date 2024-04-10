@@ -1,11 +1,11 @@
 package gui.views.system;
 
-import gui.shell.system.EquipTypeShell;
+import gui.shell.system.EquipTypeDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.config.EquipType;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class EquipTypeList extends SimpleEditableList<EquipType> {
 		setIncludeID(true);
 		setShellFactory(new LWindowFactory<EquipType>() {
 			@Override
-			public LObjectWindow<EquipType> createWindow(LWindow parent) {
-				return new EquipTypeShell(parent);
+			public LObjectDialog<EquipType> createWindow(LWindow parent) {
+				return new EquipTypeDialog(parent);
 			}
 		});
 	}

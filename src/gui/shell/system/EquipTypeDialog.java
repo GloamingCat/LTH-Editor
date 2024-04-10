@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import data.config.EquipType;
 import lui.dialog.LWindow;
@@ -11,9 +11,9 @@ import lui.widget.LLabel;
 import lui.widget.LSpinner;
 import lui.widget.LText;
 
-public class EquipTypeShell extends ObjectShell<EquipType> {
+public class EquipTypeDialog extends ObjectEditorDialog<EquipType> {
 
-	public EquipTypeShell(LWindow parent) {
+	public EquipTypeDialog(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPTYPESHELL);
 		
 		setTitle(Vocab.instance.EQUIP);

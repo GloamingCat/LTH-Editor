@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import gui.shell.AudioPlayShell;
+import gui.shell.AudioPlayDialog;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -25,8 +25,8 @@ public class AudioButton extends LObjectButton<Audio> {
 		super(parent);
 		setShellFactory(new LWindowFactory<Audio>() {
 			@Override
-			public LObjectWindow<Audio> createWindow(LWindow parent) {
-				return new AudioPlayShell(parent, AudioPlayShell.OPTIONAL);
+			public LObjectDialog<Audio> createWindow(LWindow parent) {
+				return new AudioPlayDialog(parent, AudioPlayDialog.OPTIONAL);
 			}
 		});
 	}

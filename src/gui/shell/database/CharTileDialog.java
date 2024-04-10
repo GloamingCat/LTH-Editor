@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
@@ -10,9 +10,9 @@ import lui.widget.LSpinner;
 
 import data.subcontent.Tile;
 
-public class CharTileShell extends ObjectShell<Tile> {
+public class CharTileDialog extends ObjectEditorDialog<Tile> {
 	
-	public CharTileShell(LWindow parent) {
+	public CharTileDialog(LWindow parent) {
 		super(parent, Vocab.instance.CHARTILESHELL);
 		setMinimumSize(200, 160);
 	}

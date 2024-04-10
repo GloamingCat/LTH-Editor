@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import data.Skill.Effect;
 import lui.container.LFrame;
@@ -13,9 +13,9 @@ import lui.widget.LNodeSelector;
 import lui.widget.LText;
 import project.Project;
 
-public class SkillEffectShell extends ObjectShell<Effect> {
+public class SkillEffectDialog extends ObjectEditorDialog<Effect> {
 
-	public SkillEffectShell(LWindow parent) {
+	public SkillEffectDialog(LWindow parent) {
 		super(parent, Vocab.instance.EFFECTSHELL);
 		setMinimumSize(300, 100);
 	}

@@ -1,11 +1,11 @@
 package gui.shell;
 
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LFileSelector;
 import project.Project;
 
-public class LuaShell extends LObjectWindow<String> {
+public class LuaShell extends LObjectDialog<String> {
 	
 	private LFileSelector selFile;
 	

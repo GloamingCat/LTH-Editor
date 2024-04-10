@@ -237,7 +237,7 @@ public class FieldCanvasSWT extends FieldCanvas {
 			}
 			currentChar = tile;
 			if (tile != null) {
-				height = tile.h - 1;
+				currentTile.height = tile.h - 1;
 				updateTileImage(tile.x - 1, tile.y - 1, false);
 			}
 			redrawBuffer();

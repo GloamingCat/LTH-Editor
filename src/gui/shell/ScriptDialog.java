@@ -16,7 +16,7 @@ import lui.widget.LText;
 import data.subcontent.Script;
 import project.Project;
 
-public class ScriptShell extends ObjectShell<Script> {
+public class ScriptDialog extends ObjectEditorDialog<Script> {
 	
 	private LFileSelector selFile;
 	
@@ -25,7 +25,7 @@ public class ScriptShell extends ObjectShell<Script> {
 	public static final int ONCOLLIDE = 0x001;
 	public static final int ONINTERACT = 0x0001;
 	
-	public ScriptShell(LWindow parent, int style) {
+	public ScriptDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.SCRIPTSHELL);
 	}
 	

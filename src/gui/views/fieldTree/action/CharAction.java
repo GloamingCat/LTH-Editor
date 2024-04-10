@@ -27,12 +27,12 @@ public class CharAction implements LAction {
 	
 	@Override
 	public void undo() {
-		canvas.moveCharacter(tile, x0, y0, h0);
+		canvas.setCharacterTile(tile, x0, y0, h0);
 	}
 
 	@Override
 	public void redo() {
-		canvas.moveCharacter(tile, x, y, h);
+		canvas.setCharacterTile(tile, x, y, h);
 	}
 
 }

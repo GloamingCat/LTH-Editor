@@ -11,7 +11,7 @@ import lui.container.LImage;
 import lui.container.LFlexPanel;
 import lui.container.LScrollPanel;
 import lui.base.data.LDataTree;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.base.event.LControlEvent;
 import lui.base.event.LMouseEvent;
@@ -24,7 +24,7 @@ import data.GameCharacter.Portrait;
 
 import project.Project;
 
-public class PortraitShell extends LObjectWindow<Portrait> {
+public class PortraitShell extends LObjectDialog<Portrait> {
 	
 	protected LNodeSelector<Object> tree;
 	protected LImage image;

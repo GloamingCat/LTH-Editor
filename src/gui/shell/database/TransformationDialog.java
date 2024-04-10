@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import data.subcontent.Transformation;
 import lui.dialog.LWindow;
@@ -11,9 +11,9 @@ import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 
-public class TransformationShell extends ObjectShell<Transformation> {
+public class TransformationDialog extends ObjectEditorDialog<Transformation> {
 
-	public TransformationShell(LWindow parent) {
+	public TransformationDialog(LWindow parent) {
 		super(parent, Vocab.instance.TRANSFORMSHELL);
 		setMinimumSize(270, 100);
 	}
@@ -39,7 +39,8 @@ public class TransformationShell extends ObjectShell<Transformation> {
 		spnValue.setMaximum(10000);
 		addControl(spnValue, "value");
 		
-		LCheckBox btnOverride = new LCheckBox(contentEditor, 2);
+		LCheckBox btnOverride = new LCheckBox(contentEditor);
+		btnOverride.getCellData().setSpread(2, 1);
 		btnOverride.setText(Vocab.instance.OVERRIDETRANSFORM);
 		btnOverride.setHoverText(Tooltip.instance.OVERRIDETRANSFORM);
 		addControl(btnOverride, "override");

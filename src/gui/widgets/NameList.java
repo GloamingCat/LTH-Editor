@@ -2,7 +2,7 @@ package gui.widgets;
 
 import gui.shell.NameShell;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -14,7 +14,7 @@ public class NameList extends SimpleEditableList<String> {
 		setIncludeID(true);
 		setShellFactory(new LWindowFactory<String>() {
 			@Override
-			public LObjectWindow<String> createWindow(LWindow parent) {
+			public LObjectDialog<String> createWindow(LWindow parent) {
 				return new NameShell(parent, title);
 			}
 		});

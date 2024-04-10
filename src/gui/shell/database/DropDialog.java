@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
@@ -12,9 +12,9 @@ import lui.widget.LSpinner;
 import project.Project;
 import data.Battler.Drop;
 
-public class DropShell extends ObjectShell<Drop> {
+public class DropDialog extends ObjectEditorDialog<Drop> {
 
-	public DropShell(LWindow parent) {
+	public DropDialog(LWindow parent) {
 		super(parent, Vocab.instance.DROPSHELL);
 		setMinimumSize(400, 200);
 	}

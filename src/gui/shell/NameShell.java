@@ -3,12 +3,12 @@ package gui.shell;
 import gui.Tooltip;
 import gui.Vocab;
 
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
 import lui.widget.LText;
 
-public class NameShell extends LObjectWindow<String> {
+public class NameShell extends LObjectDialog<String> {
 	
 	private LText txtName;
 

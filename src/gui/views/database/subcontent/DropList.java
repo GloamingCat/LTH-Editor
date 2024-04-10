@@ -1,11 +1,11 @@
 package gui.views.database.subcontent;
 
-import gui.shell.database.DropShell;
+import gui.shell.database.DropDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.Battler.Drop;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class DropList extends SimpleEditableList<Drop> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Drop>() {
 			@Override
-			public LObjectWindow<Drop> createWindow(LWindow parent) {
-				return new DropShell(parent);
+			public LObjectDialog<Drop> createWindow(LWindow parent) {
+				return new DropDialog(parent);
 			}
 		});
 	}

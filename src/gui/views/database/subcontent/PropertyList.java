@@ -1,13 +1,13 @@
 package gui.views.database.subcontent;
 
-import gui.shell.PropertyShell;
+import gui.shell.PropertyDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Property;
 import lui.container.LContainer;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.base.event.LEditEvent;
@@ -23,8 +23,8 @@ public class PropertyList extends SimpleEditableList<Property> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Property>() {
 			@Override
-			public LObjectWindow<Property> createWindow(LWindow parent) {
-				return new PropertyShell(parent, title) {
+			public LObjectDialog<Property> createWindow(LWindow parent) {
+				return new PropertyDialog(parent, title) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					};

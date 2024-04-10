@@ -2,7 +2,7 @@ package gui.widgets;
 
 import gui.shell.system.FontShell;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -25,7 +25,7 @@ public class FontButton extends LObjectButton<FontData> {
 		super(parent);
 		setShellFactory(new LWindowFactory<FontData>() {
 			@Override
-			public LObjectWindow<FontData> createWindow(LWindow parent) {
+			public LObjectDialog<FontData> createWindow(LWindow parent) {
 				return new FontShell(parent);
 			}
 		});

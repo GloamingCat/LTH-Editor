@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.views.database.subcontent.NeighborEditor;
 
 import lui.container.LFrame;
@@ -12,7 +12,7 @@ import lui.widget.LLabel;
 import lui.widget.LSpinner;
 import data.Obstacle.ObstacleTile;
 
-public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
+public class ObstacleTileDialog extends ObjectEditorDialog<ObstacleTile> {
 	
 	private LSpinner spnX;
 	private LSpinner spnY;
@@ -20,7 +20,7 @@ public class ObstacleTileShell extends ObjectShell<ObstacleTile> {
 	private LCombo cmbMode;
 	private NeighborEditor neighborEditor;
 	
-	public ObstacleTileShell(LWindow parent) {
+	public ObstacleTileDialog(LWindow parent) {
 		super(parent, Vocab.instance.OBSTACLESHELL);
 	}
 	

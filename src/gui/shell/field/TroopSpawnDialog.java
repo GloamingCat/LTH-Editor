@@ -3,7 +3,7 @@ package gui.shell.field;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import data.field.Party.TroopSpawn;
 import lui.dialog.LWindow;
@@ -12,9 +12,9 @@ import lui.widget.LNodeSelector;
 import lui.widget.LSpinner;
 import project.Project;
 
-public class TroopSpawnShell extends ObjectShell<TroopSpawn> {
+public class TroopSpawnDialog extends ObjectEditorDialog<TroopSpawn> {
 
-	public TroopSpawnShell(LWindow parent) {
+	public TroopSpawnDialog(LWindow parent) {
 		super(parent, Vocab.instance.TROOPSHELL);
 		setMinimumSize(360, 320);
 	}

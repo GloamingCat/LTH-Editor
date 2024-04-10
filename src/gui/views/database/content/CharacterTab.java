@@ -2,8 +2,8 @@ package gui.views.database.content;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ScriptShell;
-import gui.shell.database.CharTileShell;
+import gui.shell.ScriptDialog;
+import gui.shell.database.CharTileDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
@@ -18,7 +18,7 @@ import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.base.event.LEditEvent;
@@ -102,8 +102,8 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		lstTiles.setIncludeID(false);
 		lstTiles.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Tile> createWindow(LWindow parent) {
-				return new CharTileShell(parent);
+			public LObjectDialog<Tile> createWindow(LWindow parent) {
+				return new CharTileDialog(parent);
 			}
 		});
 		lstTiles.addMenu(grpTiles);
@@ -115,7 +115,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		grpScripts.setGridLayout(1);
 		grpScripts.setHoverText(Tooltip.instance.SCRIPTS);
 		ScriptList lstScripts = new ScriptList(grpScripts,
-				ScriptShell.ONLOAD | ScriptShell.ONCOLLIDE | ScriptShell.ONINTERACT);
+				ScriptDialog.ONLOAD | ScriptDialog.ONCOLLIDE | ScriptDialog.ONINTERACT);
 		lstScripts.getCellData().setExpand(true, true);
 		lstScripts.getCellData().setAlignment(LFlags.FILL);
 		lstScripts.addMenu(grpScripts);

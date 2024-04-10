@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import gui.shell.LuaShell;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -23,7 +23,7 @@ public class LuaButton extends LObjectButton<String> {
 		super(parent);
 		setShellFactory(new LWindowFactory<String>() {
 			@Override
-			public LObjectWindow<String> createWindow(LWindow parent) {
+			public LObjectDialog<String> createWindow(LWindow parent) {
 				return new LuaShell(parent, title, optional ? LuaShell.OPTIONAL : 0);
 			}
 		});

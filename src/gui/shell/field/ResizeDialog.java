@@ -2,18 +2,21 @@ package gui.shell.field;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
+import lui.base.data.LPoint;
 import lui.dialog.LWindow;
 import lui.graphics.LRect;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 
-public class ResizeShell extends ObjectShell<LRect> {
+public class ResizeDialog extends ObjectEditorDialog<LRect> {
 
-	public ResizeShell(LWindow parent) {
+	public ResizeDialog(LWindow parent) {
 		super(parent, Vocab.instance.RESIZESHELL);
-		setMinimumSize(240, 0);
+		LPoint size = getTargetSize();
+		setMinimumSize(size.x, size.y);
+		setSize(200, size.y);
 	}
 	
 	@Override
@@ -25,16 +28,19 @@ public class ResizeShell extends ObjectShell<LRect> {
 		new LLabel(contentEditor, Vocab.instance.SIZEX, Tooltip.instance.SIZEX);
 		
 		LSpinner spnW = new LSpinner(contentEditor);
+		spnW.getCellData().setExpand(true, false);
 		addControl(spnW, "width");
 		
 		new LLabel(contentEditor, Vocab.instance.SIZEY, Tooltip.instance.SIZEY);
 		
 		LSpinner spnH = new LSpinner(contentEditor);
+		spnH.getCellData().setExpand(true, false);
 		addControl(spnH, "height");
 		
 		new LLabel(contentEditor, Vocab.instance.ALIGNX, Tooltip.instance.ALIGNX);
 		
 		LCombo cmbX = new LCombo(contentEditor, true);
+		cmbX.getCellData().setExpand(true, false);
 		cmbX.setOptional(false);
 		cmbX.setIncludeID(false);
 		cmbX.setItems(new String[] { Vocab.instance.LEFT, Vocab.instance.CENTER, Vocab.instance.RIGHT });
@@ -43,12 +49,11 @@ public class ResizeShell extends ObjectShell<LRect> {
 		new LLabel(contentEditor, Vocab.instance.ALIGNY, Tooltip.instance.ALIGNY);
 		
 		LCombo cmbY = new LCombo(contentEditor, true);
+		cmbY.getCellData().setExpand(true, false);
 		cmbY.setIncludeID(false);
 		cmbY.setOptional(false);
 		cmbY.setItems(new String[] { Vocab.instance.TOP, Vocab.instance.CENTER, Vocab.instance.BOTTOM });
 		addControl(cmbY, "y");
-		
-		pack();
 	}
 
 	@Override

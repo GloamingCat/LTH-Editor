@@ -9,8 +9,8 @@ public class DirectionCombo extends LCombo {
 		super(parent, true);
 		setIncludeID(false);
 		setOptional(false);
-		String[] d = new String[] {"0�", "45�", "90�", "135�", 
-				"180�", "225�", "270�", "315�"};
+		String[] d = new String[] {"0º", "45º", "90º", "135º",
+				"180º", "225º", "270º", "315º"};
 		setItems(d);
 	}
 	

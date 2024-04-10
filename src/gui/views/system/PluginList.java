@@ -1,11 +1,11 @@
 package gui.views.system;
 
-import gui.shell.system.PluginShell;
+import gui.shell.system.PluginDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.config.Plugin;
 import lui.container.LContainer;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
@@ -17,8 +17,8 @@ public class PluginList extends SimpleEditableList<Plugin> {
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Plugin>() {
 			@Override
-			public LObjectWindow<Plugin> createWindow(LWindow parent) {
-				return new PluginShell(parent);
+			public LObjectDialog<Plugin> createWindow(LWindow parent) {
+				return new PluginDialog(parent);
 			}
 		});
 	}

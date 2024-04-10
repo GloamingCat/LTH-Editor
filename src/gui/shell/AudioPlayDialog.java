@@ -1,40 +1,46 @@
-package gui.shell.system;
+package gui.shell;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
 import gui.widgets.AudioPlayer;
 import lui.base.LFlags;
 import lui.base.event.listener.LControlListener;
 import lui.base.event.listener.LSelectionListener;
+
+import java.util.ArrayList;
+
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.dialog.LWindow;
 import lui.base.event.LControlEvent;
 import lui.base.event.LSelectionEvent;
 import lui.widget.LFileSelector;
-import lui.widget.LCheckBox;
+import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
-import lui.widget.LText;
 
 import project.Project;
 
 import data.subcontent.Audio;
 
-public class AudioShell extends ObjectShell<Audio.Node> {
+public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 	
+	protected LCombo cmbSound;
 	protected LFileSelector selFile;
-	protected AudioPlayer reproduction;
-	protected LSpinner spnVolume;
-	protected LSpinner spnPitch;
+	protected Audio comboAudio = null;
 	
 	public static final int OPTIONAL = 0x01;
 	public static final int TIMED = 0x02;
 	public static final int BGM = 0x04;
 	
-	public AudioShell(LWindow parent, int style) {
-		super(parent, style, Vocab.instance.AUDIOFILESHELL);
+	protected boolean optional = false;
+
+	/**
+	 * @wbp.parser.constructor
+	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
+	 */
+	public AudioPlayDialog(LWindow parent, int style) {
+		super(parent, style, Vocab.instance.AUDIOSHELL);
 		setMinimumSize(400, 400);
 	}
 	
@@ -43,28 +49,44 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 		super.createContent(style);
 		contentEditor.setFillLayout(true);
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
-		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
+		LPanel sound = new LPanel(form);
+		sound.setGridLayout(1);
+		selFile = new LFileSelector(sound, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction( (f) -> { 
 			String name = f.getName();
 			return name.endsWith(".ogg") || name.endsWith(".mp3") || name.endsWith(".wav");
 		} );
 		selFile.setFolder(Project.current.audioPath());
+		selFile.getCellData().setExpand(true, true);
+		cmbSound = new LCombo(sound, true);
+		cmbSound.setOptional(true);
+		cmbSound.setIncludeID(false);
+		selFile.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				cmbSound.setValue(-1);
+			}
+		});
+		cmbSound.addModifyListener(new LControlListener<Integer>() {
+			@Override
+			public void onModify(LControlEvent<Integer> event) {
+				selFile.setValue(-1);
+				ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
+				comboAudio = list.get(cmbSound.getValue());
+			}
+		});
 
 		LPanel composite = new LPanel(form);
 		composite.setGridLayout(2);
 		composite.getCellData().setExpand(true, true);
-
-		new LLabel(composite, Vocab.instance.KEY, Tooltip.instance.KEY);
-		LText txtKey = new LText(composite);
-		addControl(txtKey, "key");
 		
 		new LLabel(composite, Vocab.instance.VOLUME, Tooltip.instance.VOLUME);
-		spnVolume = new LSpinner(composite);
+		LSpinner spnVolume = new LSpinner(composite);
 		spnVolume.setMaximum(1000);
 		addControl(spnVolume, "volume");
 		
 		new LLabel(composite, Vocab.instance.PITCH, Tooltip.instance.PITCH);
-		spnPitch = new LSpinner(composite);
+		LSpinner spnPitch = new LSpinner(composite);
 		spnPitch.setMaximum(1000);
 		spnPitch.setMinimum(1);
 		addControl(spnPitch, "pitch");
@@ -77,13 +99,7 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 			addControl(spnTime, "time");
 		}
 		
-		new LLabel(composite, 1, 1);
-		LCheckBox loop = new LCheckBox(composite);
-		loop.setText(Vocab.instance.LOOP);
-		loop.setHoverText(Tooltip.instance.LOOPAUDIO);
-		loop.setValue(true);
-		
-		reproduction = new AudioPlayer(composite);
+		AudioPlayer reproduction = new AudioPlayer(composite);
 		reproduction.getCellData().setExpand(false, true);
 		reproduction.getCellData().setSpread(2, 1);
 		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
@@ -92,28 +108,26 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 		selFile.addSelectionListener(new LSelectionListener() {
 			@Override
 			public void onSelect(LSelectionEvent event) {
-				String file = selFile.getSelectedFile();
-				reproduction.filename = file != null ? file : "";
+				reproduction.filename = 
+						comboAudio != null ? comboAudio.name :
+						event.data != null ? event.data.toString() : 
+						"";
 			}
 		});
 		spnVolume.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
-				reproduction.volume = event.newValue;
+				reproduction.volume = event.newValue *
+						(comboAudio == null ? 1 : comboAudio.volume * 0.01f);
 				reproduction.refresh();
 			}
 		});
 		spnPitch.addModifyListener(new LControlListener<Integer>() {
 			@Override
 			public void onModify(LControlEvent<Integer> event) {
-				reproduction.pitch = event.newValue;
+				reproduction.pitch = event.newValue *
+						(comboAudio == null ? 1 : comboAudio.pitch * 0.01f);
 				reproduction.refresh();
-			}
-		});
-		loop.addModifyListener(new LControlListener<Boolean>() {
-			@Override
-			public void onModify(LControlEvent<Boolean> event) {
-				reproduction.loop = event.newValue;
 			}
 		});
 		
@@ -122,19 +136,32 @@ public class AudioShell extends ObjectShell<Audio.Node> {
 		pack();
 	}
 	
-	public void open(Audio.Node initial) {
+	public void open(Audio initial) {
 		super.open(initial);
+		ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
+		cmbSound.setItems(list);
 		selFile.setSelectedFile(initial.name);
-		reproduction.volume = spnVolume.getValue();
-		reproduction.pitch = spnPitch.getValue();
+		if (selFile.getValue() == null) {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).key.equals(initial.name)) {
+					cmbSound.setSelectionIndex(i);
+					return;
+				}
+			}
+		}
+		cmbSound.setValue(-1);
 	}
 
 	@Override
-	protected Audio.Node createResult(Audio.Node initial) {
+	protected Audio createResult(Audio initial) {
 		Audio audio = (Audio) contentEditor.getObject();
 		audio.name = selFile.getSelectedFile();
-		if (audio.name == null) {
+		if (audio.name == null)
 			audio.name = "";
+		int i = cmbSound.getSelectionIndex();
+		if (i >= 0) {
+			Audio.Node node = (Audio.Node) Project.current.config.getData().sounds.get(i);
+			audio.name = node.key;
 		}
 		return super.createResult(initial);
 	}

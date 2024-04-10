@@ -4,8 +4,9 @@ import java.util.LinkedList;
 
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
-import gui.shell.field.FieldPrefShell;
+import gui.shell.field.FieldPrefDialog;
 import lui.base.event.listener.LCollectionListener;
+import lui.dialog.LObjectDialog;
 import project.Project;
 
 import com.google.gson.Gson;
@@ -19,7 +20,6 @@ import lui.container.LFlexPanel;
 import lui.container.LView;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
-import lui.dialog.LObjectWindow;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.editor.LTreeEditor;
@@ -120,16 +120,16 @@ public class FieldTreeEditor extends LView {
 		fieldTree.setPasteEnabled(true);
 		treeEditor.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<Prefs> createWindow(LWindow parent) {
+			public LObjectDialog<Prefs> createWindow(LWindow parent) {
 				FieldNode n = fieldTree.getSelectedObject();
-				return new FieldPrefShell(parent, n);
+				return new FieldPrefDialog(parent, n);
 			}
 		});
 		addChild(treeEditor);
 
 		LFlexPanel sashForm2 = new LFlexPanel(sashForm, true);
 
-		FieldEditor fieldEditor = new FieldEditor(sashForm2);		
+		FieldEditor fieldEditor = new FieldEditor(sashForm2);
 		treeEditor.addChild(fieldEditor);
 		
 		FieldSideEditor sideEditor = new FieldSideEditor(sashForm2);

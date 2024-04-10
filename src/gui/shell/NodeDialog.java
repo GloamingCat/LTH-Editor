@@ -11,14 +11,14 @@ import lui.widget.LLabel;
 import lui.widget.LNodeSelector;
 import lui.widget.LText;
 
-public abstract class NodeShell extends ObjectShell<Node> {
+public abstract class NodeDialog extends ObjectEditorDialog<Node> {
 
-	public NodeShell(LWindow parent, String title, int style) {
+	public NodeDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
 		setMinimumSize(400, 400);
 	}
 	
-	public NodeShell(LWindow parent, String title) {
+	public NodeDialog(LWindow parent, String title) {
 		this(parent, title, 0);
 	}
 	

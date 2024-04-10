@@ -1,28 +1,26 @@
-package gui.shell.system;
+package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.views.database.subcontent.TagList;
 import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.dialog.LWindow;
 import lui.widget.LFileSelector;
-import lui.widget.LCheckBox;
+import lui.widget.LLabel;
+import lui.widget.LText;
 
-import data.config.Plugin;
+import data.subcontent.Rule;
 import project.Project;
 
-public class PluginShell extends ObjectShell<Plugin> {
+public class RuleDialog extends ObjectEditorDialog<Rule> {
 	
 	private LFileSelector selFile;
 	
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public PluginShell(LWindow parent) {
-		super(parent, Vocab.instance.PLUGINSHELL);
+	public RuleDialog(LWindow parent) {
+		super(parent, Vocab.instance.RULESHELL);
 	}
 	
 	@Override
@@ -32,35 +30,36 @@ public class PluginShell extends ObjectShell<Plugin> {
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
 		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
-		selFile.setFolder(Project.current.scriptPath());
+		selFile.setFolder(Project.current.rulePath());
 		
 		LPanel composite = new LPanel(form);
-		composite.setGridLayout(1);
+		composite.setGridLayout(2);
 		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
 		frame.setFillLayout(true);
 		
 		LFrame grpParameters = frame;
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.getCellData().setExpand(true, true);
+		grpParameters.getCellData().setSpread(2, 1);
 		TagList lstParam = new TagList(grpParameters);
 		addChild(lstParam, "tags");
 		
-		LCheckBox btnON = new LCheckBox(composite);
-		btnON.setText(Vocab.instance.PLUGINON);
-		btnON.setHoverText(Tooltip.instance.PLUGINON);
-		addControl(btnON, "on");
+		new LLabel(composite, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
+		
+		LText txtCondition = new LText(composite);
+		addControl(txtCondition, "condition");
 		
 		form.setWeights(1, 1);
 	}
 	
-	public void open(Plugin initial) {
+	public void open(Rule initial) {
 		super.open(initial);
 		selFile.setSelectedFile(initial.name);
 	}
 	
 	@Override
-	protected Plugin createResult(Plugin initial) {
-		Plugin script = (Plugin) contentEditor.getObject();
+	protected Rule createResult(Rule initial) {
+		Rule script = (Rule) contentEditor.getObject();
 		script.name = selFile.getSelectedFile();
 		if (script.name == null)
 			script.name = "";

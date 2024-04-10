@@ -1,11 +1,11 @@
 package gui.shell;
 
 import lui.base.data.LDataTree;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LNodeSelector;
 
-public abstract class IDShell extends LObjectWindow<Integer> {
+public abstract class IDShell extends LObjectDialog<Integer> {
 	
 	protected LNodeSelector<Object> tree;
 	

@@ -3,7 +3,7 @@ package gui.views.database.content;
 import lui.base.LFlags;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.database.ObstacleTileShell;
+import gui.shell.database.ObstacleTileDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IconButton;
@@ -11,7 +11,7 @@ import gui.widgets.SimpleEditableList;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LLabel;
@@ -37,8 +37,8 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		tileList.setIncludeID(false);
 		tileList.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectWindow<ObstacleTile> createWindow(LWindow parent) {
-				return new ObstacleTileShell(parent);
+			public LObjectDialog<ObstacleTile> createWindow(LWindow parent) {
+				return new ObstacleTileDialog(parent);
 			}
 		});
 		tileList.getCellData().setExpand(true, true);

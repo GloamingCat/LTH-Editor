@@ -6,13 +6,13 @@ import lui.widget.LSpinner;
 import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 
 import data.Item.Attribute;
 
-public class AttributeBonusShell extends ObjectShell<Attribute> {
+public class AttributeBonusDialog extends ObjectEditorDialog<Attribute> {
 
-	public AttributeBonusShell(LWindow parent) {
+	public AttributeBonusDialog(LWindow parent) {
 		super(parent, Vocab.instance.BUFFSHELL);
 	}
 	

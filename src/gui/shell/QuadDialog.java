@@ -15,7 +15,7 @@ import lui.container.LImage;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.container.LScrollPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.graphics.LPainter;
 import lui.base.data.LPoint;
@@ -27,7 +27,7 @@ import lui.widget.LSpinner;
 import data.subcontent.Quad;
 import project.Project;
 
-public class QuadShell extends LObjectWindow<Quad> {
+public class QuadDialog extends LObjectDialog<Quad> {
 
 	private LFileSelector selFile;
 	private LImage imgQuad;
@@ -42,7 +42,7 @@ public class QuadShell extends LObjectWindow<Quad> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public QuadShell(LWindow parent, int style) {
+	public QuadDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.QUADSHELL);
 		setMinimumSize(600, 400);
 	}

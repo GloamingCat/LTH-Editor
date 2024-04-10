@@ -46,8 +46,6 @@ public class Transition {
 	}
 	
 	public static class Portal extends LDataList<Tile> {
-		
-		private static final long serialVersionUID = -8436984653173379845L;
 		public Portal() {}
 		
 		public Portal(boolean[][][] mask) {

@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import lui.base.LFlags;
 import lui.base.event.listener.LControlListener;
 import data.subcontent.Bonus;
@@ -17,13 +17,13 @@ import lui.widget.LSpinner;
 
 import project.Project;
 
-public class BonusShell extends ObjectShell<Bonus> {
+public class BonusDialog extends ObjectEditorDialog<Bonus> {
 
 	protected LLabel typeLabel;
 	protected LNodeSelector<Object> typeNode;
 	protected LCombo cmbType;
 	
-	public BonusShell(LWindow parent, String title) {
+	public BonusDialog(LWindow parent, String title) {
 		super(parent, title);
 		setMinimumSize(270, 100);
 	}

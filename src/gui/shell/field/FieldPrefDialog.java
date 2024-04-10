@@ -1,11 +1,10 @@
 package gui.shell.field;
 
-import lui.container.LContainer;
+import gui.views.fieldTree.subcontent.TransitionEditor;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
 import lui.dialog.LWindow;
-import lui.gson.GDefaultObjectEditor;
 import lui.base.event.LEditEvent;
 import lui.widget.LCheckBox;
 import lui.widget.LCombo;
@@ -14,18 +13,14 @@ import lui.widget.LSpinner;
 import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectShell;
+import gui.shell.ObjectEditorDialog;
 import gui.views.database.subcontent.TagList;
 import gui.views.fieldTree.subcontent.FieldImageList;
 import gui.widgets.AudioButton;
-import gui.widgets.PortalButton;
-import gui.widgets.PositionButton;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
 import lui.base.event.listener.LCollectionListener;
-
-import java.lang.reflect.Type;
 
 import data.Animation;
 import data.field.Field;
@@ -34,11 +29,11 @@ import data.field.FieldNode;
 import data.field.Transition;
 import project.Project;
 
-public class FieldPrefShell extends ObjectShell<Field.Prefs> {
+public class FieldPrefDialog extends ObjectEditorDialog<Field.Prefs> {
 
 	protected int id;
 	
-	public FieldPrefShell(LWindow parent, FieldNode n) {
+	public FieldPrefDialog(LWindow parent, FieldNode n) {
 		super(parent,  Project.current.fieldTree.getData().findNode(n).id, "");
 		setTitle(String.format("[%03d] ", id) + n.name);
 		setMinimumSize(600, 400);
@@ -49,6 +44,7 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		super.createContent(0);
 		this.id = id;
 		contentEditor.setGridLayout(3);
+		contentEditor.setEqualCells(true);
 		
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
 		grpGeneral.setGridLayout(3);
@@ -66,22 +62,19 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(key, Vocab.instance.KEY, Tooltip.instance.KEY);
 		LText txtKey = new LText(key);
+		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
 		LText txtName = new LText(grpGeneral);
 		txtName.getCellData().setSpread(2, 1);
+		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
-		
-		new LLabel(grpGeneral, 1, 1);
-		LCheckBox btnPersistent = new LCheckBox(grpGeneral, 2);
-		btnPersistent.setText(Vocab.instance.PERSISTENT);
-		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
-		addControl(btnPersistent, "persistent");
 		
 		new LLabel(grpGeneral, Vocab.instance.DEFAULTREGION, Tooltip.instance.DEFAULTREGION);
 		LCombo cmbRegion = new LCombo(grpGeneral, true);
 		cmbRegion.getCellData().setSpread(2, 1);
+		cmbRegion.getCellData().setExpand(true, false);
 		cmbRegion.setItems(Project.current.regions.getData());
 		addControl(cmbRegion, "defaultRegion");
 		
@@ -95,16 +88,28 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		
 		new LLabel(grpGeneral, Vocab.instance.BGM, Tooltip.instance.BGM);
 		LText txtBGM = new LText(grpGeneral, true);
+		txtBGM.getCellData().setExpand(true, false);
+		txtBGM.getCellData().setAlignment(LFlags.MIDDLE);
 		AudioButton btnBGM = new AudioButton(grpGeneral, true);
 		btnBGM.setTextWidget(txtBGM);
 		addControl(btnBGM, "bgm");
-		
+
 		new LLabel(grpGeneral, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
 		LText txtScript = new LText(grpGeneral, true);
-		
+		txtScript.getCellData().setExpand(true, false);
+		txtScript.getCellData().setAlignment(LFlags.MIDDLE);
 		ScriptButton btnScript = new ScriptButton(grpGeneral, 1);
 		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "loadScript");
+
+		LPanel check = new LPanel(grpGeneral);
+		check.getCellData().setSpread(3, 1);
+		check.setSequentialLayout(true);
+
+		LCheckBox btnPersistent = new LCheckBox(check);
+		btnPersistent.setText(Vocab.instance.PERSISTENT);
+		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
+		addControl(btnPersistent, "persistent");
 		
 		// Images
 		
@@ -148,37 +153,11 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		lstTransitions.getCellData().setExpand(true, true);
 		addChild(lstTransitions, "transitions");
 		
-		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, false);
+		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, id);
 		transitionEditor.setGridLayout(3);
 		transitionEditor.getCellData().setExpand(true, false);
-		transitionEditor.getCellData().setAlignment(LFlags.CENTER);
 		lstTransitions.addChild(transitionEditor);
-		
-		// Destination
-		
-		new LLabel(transitionEditor, Vocab.instance.DESTINATION, Tooltip.instance.DESTINATION);
-		LText txtDest = new LText(transitionEditor, true);
-		PositionButton btnDest = new PositionButton(transitionEditor);
-		btnDest.setTextWidget(txtDest);
-		transitionEditor.addControl(btnDest, "destination");
-		
-		// Origin Tiles
-		
-		new LLabel(transitionEditor, Vocab.instance.ORIGTILES, Tooltip.instance.ORIGTILES);
-		LText txtOrigin = new LText(transitionEditor, true);
-		PortalButton btnOrigin = new PortalButton(transitionEditor, id);
-		btnOrigin.setTextWidget(txtOrigin);
-		transitionEditor.addControl(btnOrigin, "origin");
-		
-		// Fade
-		
-		new LLabel(transitionEditor, Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT);
-		LSpinner spnFade = new LSpinner(transitionEditor);
-		spnFade.setMinimum(-1);
-		spnFade.setMaximum(99999);
-		transitionEditor.addControl(spnFade, "fade");
-		new LLabel(transitionEditor, 1, 1);
-		
+
 	}
 
 	private void updateImage(LImage img, FieldImage p) {
@@ -206,16 +185,5 @@ public class FieldPrefShell extends ObjectShell<Field.Prefs> {
 		}
 		super.open(initial);
 	}
-	
-	private static class TransitionEditor extends GDefaultObjectEditor<Transition> {
-		public TransitionEditor(LContainer parent, boolean doubleBuffered) {
-			super(parent, doubleBuffered);
-		}
-		@Override
-		public Type getType() {
-			return Transition.class;
-		}
-		
-	}
-	
+
 }

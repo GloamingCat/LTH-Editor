@@ -1,10 +1,10 @@
 package gui.widgets;
 
-import gui.shell.QuadShell;
+import gui.shell.QuadDialog;
 import gui.views.database.subcontent.TransformEditor;
 import lui.container.LContainer;
 import lui.container.LImage;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LObjectButton;
@@ -22,8 +22,8 @@ public class QuadButton extends LObjectButton<Quad> {
 		super(parent);
 		setShellFactory(new LWindowFactory<Quad>() {
 			@Override
-			public LObjectWindow<Quad> createWindow(LWindow parent) {
-				return new QuadShell(parent, optional ? QuadShell.OPTIONAL : 0);
+			public LObjectDialog<Quad> createWindow(LWindow parent) {
+				return new QuadDialog(parent, optional ? QuadDialog.OPTIONAL : 0);
 			}
 		});
 	}

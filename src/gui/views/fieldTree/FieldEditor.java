@@ -22,6 +22,8 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 
 	private final LScrollPanel scrolledComposite;
 
+	private final LLabel lblId;
+
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
@@ -36,7 +38,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		toolBar.getCellData().setMinimumSize(440, 0);
 		addChild(toolBar);
 		
-		LLabel lblId = new LLabel(this, "ID: 9999", Tooltip.instance.ID);
+		lblId = new LLabel(this, "ID: 9999", Tooltip.instance.ID);
 		
 		scrolledComposite = new LScrollPanel(this);
 		scrolledComposite.getCellData().setExpand(true, true);
@@ -50,39 +52,41 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		bottom.getCellData().setSpread(2, 1);
 		bottom.getCellData().setExpand(true, false);
 
-		LLabel tileCoord = new LLabel(bottom, "(-99, -99, -99)");
-		tileCoord.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
-
 		LPanel scale = new LPanel(bottom);
-		scale.setGridLayout(3);
-		scale.getCellData().setExpand(true, false);
-		scale.getCellData().setAlignment(LFlags.RIGHT | LFlags.MIDDLE);
+		scale.setFillLayout(true);
+		scale.setSpacing(5);
+		scale.getCellData().setMinimumSize(100, 0);
+		scale.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 
 		LActionButton btn50 = new LActionButton(scale, "1:2");
-		btn50.getCellData().setExpand(true, false);
 		btn50.addModifyListener(event -> {
             canvas.rescale(0.5f);
             scrolledComposite.setContentSize(canvas.getCurrentSize());
         });
 
 		LActionButton btn100 = new LActionButton(scale, "1:1");
-		btn100.getCellData().setExpand(true, false);
 		btn100.addModifyListener(event -> {
             canvas.rescale(1);
             scrolledComposite.setContentSize(canvas.getCurrentSize());
         });
 
 		LActionButton btn200 = new LActionButton(scale, "2:1");
-		btn200.getCellData().setExpand(true, false);
 		btn200.addModifyListener(event -> {
             canvas.rescale(2);
             scrolledComposite.setContentSize(canvas.getCurrentSize());
         });
 
+		LLabel tileCoord = new LLabel(bottom, "(-99, -99, -99)");
+		tileCoord.getCellData().setExpand(true, false);
+		tileCoord.getCellData().setAlignment(LFlags.RIGHT | LFlags.MIDDLE);
+
 		toolBar.onSelectTool = canvas::setTool;
 		toolBar.onShowGrid = canvas::setShowGrid;
 		canvas.lblId = lblId;
-		canvas.lblCoords = tileCoord;
+		canvas.onTileEnter = t -> {
+			tileCoord.setText("(" + (t.dx + 1) + "," + (t.dy + 1) + "," + (t.height + 1) + ")");
+			bottom.layout();
+		};
 
 	}
 
@@ -91,6 +95,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	}
 
 	public void selectField(Field field) {
+		lblId.setText("ID: " + (field == null ? -1 : field.id));
 		canvas.setField(field);
 		toolBar.setField(field);
 		scrolledComposite.setContentSize(canvas.getCurrentSize());

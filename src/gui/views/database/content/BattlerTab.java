@@ -2,7 +2,7 @@ package gui.views.database.content;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.database.RuleShell;
+import gui.shell.database.RuleDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.PropertyList;
@@ -17,7 +17,7 @@ import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
-import lui.dialog.LObjectWindow;
+import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.widget.LCheckBox;
@@ -223,8 +223,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		lstRules.setIncludeID(false);
 		lstRules.setShellFactory(new LWindowFactory<Rule>() {
 			@Override
-			public LObjectWindow<Rule> createWindow(LWindow parent) {
-				return new RuleShell(parent);
+			public LObjectDialog<Rule> createWindow(LWindow parent) {
+				return new RuleDialog(parent);
 			}
 		});
 		lstRules.addMenu(grpAI);

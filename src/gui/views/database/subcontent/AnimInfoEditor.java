@@ -89,7 +89,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		txtUserCast.addMenu(lblUserCast);
 		addControl(txtUserCast, "userCast");
 		
-		LCheckBox btnStep = new LCheckBox(user, 2);
+		LCheckBox btnStep = new LCheckBox(user);
 		btnStep.getCellData().setSpread(2, 1);
 		btnStep.setText(Vocab.instance.STEPONCAST);
 		btnStep.addMenu();
@@ -146,7 +146,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 
 		new LLabel(animOptions,2, 1);
 		
-		LCheckBox btnDamage = new LCheckBox(animOptions, 2);
+		LCheckBox btnDamage = new LCheckBox(animOptions);
 		btnDamage.setText(Vocab.instance.DAMAGEANIM);
 		btnDamage.getCellData().setSpread(4, 1);
 		btnDamage.addMenu();
