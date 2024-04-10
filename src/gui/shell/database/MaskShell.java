@@ -3,21 +3,21 @@ package gui.shell.database;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.helper.FieldHelper;
-import lbase.LFlags;
-import lbase.event.listener.LControlListener;
-import lbase.event.listener.LMouseListener;
+import lui.base.LFlags;
+import lui.base.event.listener.LControlListener;
+import lui.base.event.listener.LMouseListener;
 import data.Skill.Mask;
-import lwt.container.LCanvas;
-import lwt.graphics.LColor;
-import lwt.graphics.LPainter;
-import lbase.data.LPoint;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lbase.event.LControlEvent;
-import lbase.event.LMouseEvent;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.container.LCanvas;
+import lui.graphics.LColor;
+import lui.graphics.LPainter;
+import lui.base.data.LPoint;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.base.event.LControlEvent;
+import lui.base.event.LMouseEvent;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 public class MaskShell extends LObjectWindow<Mask> {
 

@@ -4,10 +4,10 @@ import gui.shell.database.PortraitShell;
 import gui.widgets.SimpleEditableList;
 
 import data.GameCharacter.Portrait;
-import lwt.container.LContainer;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class PortraitList extends SimpleEditableList<Portrait> {
 	

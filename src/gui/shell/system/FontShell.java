@@ -3,11 +3,11 @@ package gui.shell.system;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.FileShell;
-import lwt.container.LPanel;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.container.LPanel;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 
 import java.io.File;
 

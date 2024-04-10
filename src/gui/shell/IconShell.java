@@ -4,20 +4,20 @@ import project.Project;
 import data.Animation;
 import data.subcontent.Icon;
 import gui.Vocab;
-import lbase.LFlags;
-import lbase.event.listener.LControlListener;
-import lbase.event.listener.LMouseListener;
-import lwt.graphics.LColor;
-import lwt.graphics.LPainter;
-import lwt.container.LImage;
-import lwt.container.LFlexPanel;
-import lwt.container.LScrollPanel;
-import lbase.data.LDataTree;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lbase.event.LControlEvent;
-import lbase.event.LMouseEvent;
-import lwt.widget.LNodeSelector;
+import lui.base.LFlags;
+import lui.base.event.listener.LControlListener;
+import lui.base.event.listener.LMouseListener;
+import lui.graphics.LColor;
+import lui.graphics.LPainter;
+import lui.container.LImage;
+import lui.container.LFlexPanel;
+import lui.container.LScrollPanel;
+import lui.base.data.LDataTree;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.base.event.LControlEvent;
+import lui.base.event.LMouseEvent;
+import lui.widget.LNodeSelector;
 
 public class IconShell extends LObjectWindow<Icon> {
 	

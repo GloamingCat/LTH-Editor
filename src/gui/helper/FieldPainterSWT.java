@@ -1,10 +1,10 @@
 package gui.helper;
 
-import lwt.graphics.LColor;
-import lwt.graphics.LPainter;
-import lbase.data.LPoint;
-import lwt.graphics.LRect;
-import lwt.graphics.LTexture;
+import lui.graphics.LColor;
+import lui.graphics.LPainter;
+import lui.base.data.LPoint;
+import lui.graphics.LRect;
+import lui.graphics.LTexture;
 
 import data.Animation;
 import data.GameCharacter;

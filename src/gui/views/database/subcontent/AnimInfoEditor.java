@@ -6,14 +6,14 @@ import data.Skill.AnimInfo;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.ImageButton;
-import lwt.container.LContainer;
-import lwt.container.LPanel;
-import lwt.container.LViewFolder;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.widget.LCheckBox;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.container.LContainer;
+import lui.container.LPanel;
+import lui.container.LViewFolder;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LCheckBox;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 
 public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 

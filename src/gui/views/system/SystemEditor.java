@@ -1,8 +1,8 @@
 package gui.views.system;
 
 import gui.Vocab;
-import lwt.container.LContainer;
-import lwt.container.LViewFolder;
+import lui.container.LContainer;
+import lui.container.LViewFolder;
 
 public class SystemEditor extends LViewFolder {
 

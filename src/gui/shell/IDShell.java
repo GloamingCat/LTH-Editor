@@ -1,9 +1,9 @@
 package gui.shell;
 
-import lbase.data.LDataTree;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.widget.LNodeSelector;
+import lui.base.data.LDataTree;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.widget.LNodeSelector;
 
 public abstract class IDShell extends LObjectWindow<Integer> {
 	

@@ -4,10 +4,10 @@ import gui.shell.ScriptShell;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Script;
-import lwt.container.LContainer;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class ScriptList extends SimpleEditableList<Script> {
 	

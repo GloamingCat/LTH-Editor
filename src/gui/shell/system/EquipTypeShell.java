@@ -5,11 +5,11 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.config.EquipType;
-import lwt.dialog.LWindow;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.dialog.LWindow;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 
 public class EquipTypeShell extends ObjectShell<EquipType> {
 

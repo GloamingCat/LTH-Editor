@@ -1,6 +1,6 @@
 package data.config;
 
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 import data.GameCharacter.Portrait;
 import data.subcontent.Audio;
 import data.subcontent.Node;

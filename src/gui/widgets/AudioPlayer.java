@@ -1,10 +1,10 @@
 package gui.widgets;
 
 import gui.Vocab;
-import lwt.LSoundPlayer;
-import lwt.container.LContainer;
-import lwt.container.LPanel;
-import lwt.widget.LCommandButton;
+import lui.LSoundPlayer;
+import lui.container.LContainer;
+import lui.container.LPanel;
+import lui.widget.LCommandButton;
 import project.Project;
 
 public class AudioPlayer extends LPanel {

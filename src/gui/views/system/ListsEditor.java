@@ -3,10 +3,10 @@ package gui.views.system;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LPanel;
-import lwt.editor.LObjectEditor;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LPanel;
+import lui.editor.LObjectEditor;
 import project.Project;
 
 public class ListsEditor extends LObjectEditor<Object> {

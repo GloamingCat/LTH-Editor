@@ -4,13 +4,13 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
-import lbase.data.LPoint;
-import lwt.container.LFrame;
-import lwt.dialog.LWindow;
-import lwt.widget.LCheckBox;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.base.data.LPoint;
+import lui.container.LFrame;
+import lui.dialog.LWindow;
+import lui.widget.LCheckBox;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 
 import data.field.Layer.Info;
 

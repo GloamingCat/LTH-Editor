@@ -1,6 +1,6 @@
 package data;
 
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 import project.Project;
 
 public class Job extends Data {

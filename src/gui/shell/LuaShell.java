@@ -1,8 +1,8 @@
 package gui.shell;
 
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.widget.LFileSelector;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.widget.LFileSelector;
 import project.Project;
 
 public class LuaShell extends LObjectWindow<String> {

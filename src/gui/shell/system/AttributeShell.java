@@ -5,11 +5,11 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.config.Attribute;
-import lwt.dialog.LWindow;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
-import lwt.widget.LTextBox;
+import lui.dialog.LWindow;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LText;
+import lui.widget.LTextBox;
 
 public class AttributeShell extends ObjectShell<Attribute> {
 	

@@ -3,11 +3,11 @@ package gui.shell.field;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
-import lwt.dialog.LWindow;
-import lwt.graphics.LRect;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.dialog.LWindow;
+import lui.graphics.LRect;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 public class ResizeShell extends ObjectShell<LRect> {
 

@@ -4,9 +4,9 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 import data.subcontent.Tile;
 

@@ -1,8 +1,8 @@
 package data.config;
 
 import data.Data;
-import lbase.data.LDataList;
-import lwt.graphics.LColor;
+import lui.base.data.LDataList;
+import lui.graphics.LColor;
 
 public class Region extends Data {
 	

@@ -3,17 +3,17 @@ package gui.shell.database;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
-import lbase.LFlags;
-import lbase.event.listener.LControlListener;
+import lui.base.LFlags;
+import lui.base.event.listener.LControlListener;
 import data.subcontent.Bonus;
-import lwt.container.LStack;
-import lwt.dialog.LWindow;
-import lbase.event.LControlEvent;
-import lwt.widget.LWidget;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LNodeSelector;
-import lwt.widget.LSpinner;
+import lui.container.LStack;
+import lui.dialog.LWindow;
+import lui.base.event.LControlEvent;
+import lui.widget.LWidget;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LNodeSelector;
+import lui.widget.LSpinner;
 
 import project.Project;
 

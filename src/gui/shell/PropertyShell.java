@@ -4,11 +4,11 @@ import gui.Tooltip;
 import gui.Vocab;
 
 import data.subcontent.Property;
-import lbase.data.LDataTree;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LNodeSelector;
-import lwt.widget.LSpinner;
+import lui.base.data.LDataTree;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LNodeSelector;
+import lui.widget.LSpinner;
 
 public abstract class PropertyShell extends ObjectShell<Property> {
 

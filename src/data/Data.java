@@ -1,7 +1,7 @@
 package data;
 
-import lbase.data.LDataList;
-import lbase.data.LDataTree;
+import lui.base.data.LDataList;
+import lui.base.data.LDataTree;
 import data.subcontent.Tag;
 
 public class Data {

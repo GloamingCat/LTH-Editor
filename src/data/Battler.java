@@ -4,7 +4,7 @@ import project.Project;
 import data.subcontent.Property;
 import data.subcontent.Icon;
 import data.subcontent.Rule;
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 
 public class Battler extends Data {
 

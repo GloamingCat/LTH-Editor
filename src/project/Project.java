@@ -11,9 +11,9 @@ import data.subcontent.Tag;
 import gson.GObjectListSerializer;
 import gson.GObjectSerializer;
 import gson.GObjectTreeSerializer;
-import lbase.data.LDataTree;
-import lbase.serialization.LFileManager;
-import lbase.serialization.LSerializer;
+import lui.base.data.LDataTree;
+import lui.base.serialization.LFileManager;
+import lui.base.serialization.LSerializer;
 
 public class Project implements LSerializer {
 	

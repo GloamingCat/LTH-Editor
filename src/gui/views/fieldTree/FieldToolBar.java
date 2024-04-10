@@ -8,12 +8,12 @@ import gui.views.fieldTree.action.ResizeAction;
 
 import java.util.function.Consumer;
 
-import lwt.container.LContainer;
-import lwt.container.LToolBar;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
-import lwt.graphics.LRect;
+import lui.container.LContainer;
+import lui.container.LToolBar;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
+import lui.graphics.LRect;
 
 public class FieldToolBar extends LToolBar {
 

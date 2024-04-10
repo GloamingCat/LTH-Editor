@@ -6,7 +6,7 @@ import data.subcontent.Node;
 import data.subcontent.Script;
 import data.subcontent.Tile;
 import data.subcontent.Transform;
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 
 public class GameCharacter extends Data {
 

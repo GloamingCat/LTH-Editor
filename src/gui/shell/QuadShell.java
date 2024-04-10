@@ -2,8 +2,8 @@ package gui.shell;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lbase.LFlags;
-import lbase.event.listener.LControlListener;
+import lui.base.LFlags;
+import lui.base.event.listener.LControlListener;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,18 +11,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.container.LFlexPanel;
-import lwt.container.LScrollPanel;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.graphics.LPainter;
-import lbase.data.LPoint;
-import lwt.widget.LFileSelector;
-import lwt.widget.LActionButton;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.container.LImage;
+import lui.container.LPanel;
+import lui.container.LFlexPanel;
+import lui.container.LScrollPanel;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.graphics.LPainter;
+import lui.base.data.LPoint;
+import lui.widget.LFileSelector;
+import lui.widget.LActionButton;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 import data.subcontent.Quad;
 import project.Project;

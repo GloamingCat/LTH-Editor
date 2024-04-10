@@ -2,14 +2,14 @@ package gui.shell;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lbase.LFlags;
+import lui.base.LFlags;
 import data.subcontent.Node;
-import lwt.container.LPanel;
-import lbase.data.LDataTree;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LNodeSelector;
-import lwt.widget.LText;
+import lui.container.LPanel;
+import lui.base.data.LDataTree;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LNodeSelector;
+import lui.widget.LText;
 
 public abstract class NodeShell extends ObjectShell<Node> {
 

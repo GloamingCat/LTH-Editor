@@ -3,8 +3,8 @@ package data;
 import data.subcontent.Audio;
 import data.subcontent.Quad;
 import data.subcontent.Transform;
-import lbase.data.LDataList;
-import lwt.graphics.LRect;
+import lui.base.data.LDataList;
+import lui.graphics.LRect;
 
 public class Animation extends Data {
 	

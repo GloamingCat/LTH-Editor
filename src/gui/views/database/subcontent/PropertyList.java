@@ -4,14 +4,14 @@ import gui.shell.PropertyShell;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Property;
-import lwt.container.LContainer;
-import lbase.data.LDataTree;
-import lbase.data.LPath;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
-import lbase.event.LEditEvent;
-import lwt.widget.LList;
+import lui.container.LContainer;
+import lui.base.data.LDataTree;
+import lui.base.data.LPath;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
+import lui.base.event.LEditEvent;
+import lui.widget.LList;
 
 public class PropertyList extends SimpleEditableList<Property> {
 

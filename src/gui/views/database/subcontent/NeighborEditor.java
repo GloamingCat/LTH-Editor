@@ -2,20 +2,20 @@ package gui.views.database.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lbase.event.listener.LControlListener;
+import lui.base.event.listener.LControlListener;
 
 import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
 
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LPanel;
-import lwt.gson.GDefaultObjectEditor;
-import lbase.event.LControlEvent;
-import lwt.widget.LActionButton;
-import lwt.widget.LLabel;
-import lwt.widget.LToggleButton;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LPanel;
+import lui.gson.GDefaultObjectEditor;
+import lui.base.event.LControlEvent;
+import lui.widget.LActionButton;
+import lui.widget.LLabel;
+import lui.widget.LToggleButton;
 
 public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 

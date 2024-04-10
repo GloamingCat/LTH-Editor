@@ -3,10 +3,10 @@ package gui;
 import gui.views.database.DatabaseEditor;
 import gui.views.fieldTree.FieldTreeEditor;
 import gui.views.system.SystemEditor;
-import lbase.serialization.LFileManager;
-import lbase.serialization.LSerializer;
+import lui.base.serialization.LFileManager;
+import lui.base.serialization.LSerializer;
 import project.Project;
-import lwt.LApplicationWindow;
+import lui.LApplicationWindow;
 
 public class ApplicationWindow extends LApplicationWindow {
 

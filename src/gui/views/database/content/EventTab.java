@@ -6,13 +6,13 @@ import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.SimpleEditableList;
-import lbase.LFlags;
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
-import lwt.widget.LTextBox;
+import lui.base.LFlags;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LLabel;
+import lui.widget.LText;
+import lui.widget.LTextBox;
 
 import java.lang.reflect.Type;
 

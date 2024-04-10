@@ -1,8 +1,7 @@
 package gui.views.fieldTree.action;
 
 import gui.views.fieldTree.FieldCanvas;
-import gui.views.fieldTree.FieldEditor;
-import lbase.action.LAction;
+import lui.base.action.LAction;
 
 public class PencilAction implements LAction {
 

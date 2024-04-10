@@ -1,12 +1,12 @@
 package gui.widgets;
 
 import gui.shell.ScriptShell;
-import lwt.container.LContainer;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
-import lwt.widget.LObjectButton;
-import lwt.widget.LText;
+import lui.container.LContainer;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
+import lui.widget.LObjectButton;
+import lui.widget.LText;
 
 import java.lang.reflect.Type;
 

@@ -2,11 +2,11 @@ package gui.views.database.subcontent;
 
 import data.config.Attribute;
 import project.Project;
-import lwt.container.LContainer;
-import lwt.gson.GGridForm;
-import lbase.data.LDataList;
-import lwt.widget.LControlWidget;
-import lwt.widget.LText;
+import lui.container.LContainer;
+import lui.gson.GGridForm;
+import lui.base.data.LDataList;
+import lui.widget.LControlWidget;
+import lui.widget.LText;
 
 public class BuildEditor extends GGridForm<String> {
 

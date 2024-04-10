@@ -2,8 +2,8 @@ package gui.views.database;
 
 import gui.Vocab;
 import gui.views.database.content.*;
-import lwt.container.LContainer;
-import lwt.container.LViewFolder;
+import lui.container.LContainer;
+import lui.container.LViewFolder;
 
 public class DatabaseEditor extends LViewFolder {
 

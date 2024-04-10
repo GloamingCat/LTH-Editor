@@ -3,10 +3,10 @@ package gui.shell;
 import gui.Tooltip;
 import gui.Vocab;
 
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LText;
 
 public class NameShell extends LObjectWindow<String> {
 	

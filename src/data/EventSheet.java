@@ -1,7 +1,7 @@
 package data;
 
 import data.subcontent.Tag;
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 
 public class EventSheet extends Data {
 	

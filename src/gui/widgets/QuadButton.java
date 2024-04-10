@@ -2,12 +2,12 @@ package gui.widgets;
 
 import gui.shell.QuadShell;
 import gui.views.database.subcontent.TransformEditor;
-import lwt.container.LContainer;
-import lwt.container.LImage;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
-import lwt.widget.LObjectButton;
+import lui.container.LContainer;
+import lui.container.LImage;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
+import lui.widget.LObjectButton;
 
 import java.lang.reflect.Type;
 

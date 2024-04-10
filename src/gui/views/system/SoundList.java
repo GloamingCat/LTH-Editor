@@ -4,10 +4,10 @@ import gui.shell.system.AudioShell;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Audio;
-import lwt.container.LContainer;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class SoundList extends SimpleEditableList<Audio.Node> {
 	

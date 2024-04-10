@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import lwt.container.LContainer;
-import lwt.gson.GDefaultListEditor;
-import lbase.data.LDataList;
+import lui.container.LContainer;
+import lui.gson.GDefaultListEditor;
+import lui.base.data.LDataList;
 
 public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 

@@ -7,25 +7,25 @@ import gson.GObjectTreeSerializer;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
-import lbase.LFlags;
-import lbase.event.listener.LCollectionListener;
+import lui.base.LFlags;
+import lui.base.event.listener.LCollectionListener;
 
 import com.google.gson.Gson;
 
-import lwt.container.LContainer;
-import lwt.container.LControlView;
-import lwt.container.LFrame;
-import lwt.container.LPanel;
-import lwt.container.LFlexPanel;
-import lwt.container.LView;
-import lbase.data.LDataTree;
-import lwt.editor.LEditor;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.gson.GDefaultTreeEditor;
-import lbase.event.LInsertEvent;
-import lwt.widget.LControlWidget;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
+import lui.container.LContainer;
+import lui.container.LControlView;
+import lui.container.LFrame;
+import lui.container.LPanel;
+import lui.container.LFlexPanel;
+import lui.container.LView;
+import lui.base.data.LDataTree;
+import lui.editor.LEditor;
+import lui.gson.GDefaultObjectEditor;
+import lui.gson.GDefaultTreeEditor;
+import lui.base.event.LInsertEvent;
+import lui.widget.LControlWidget;
+import lui.widget.LLabel;
+import lui.widget.LText;
 
 public abstract class DatabaseTab<T> extends LView {
 

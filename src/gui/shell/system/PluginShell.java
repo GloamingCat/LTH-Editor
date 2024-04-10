@@ -4,12 +4,12 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
-import lwt.container.LFrame;
-import lwt.container.LPanel;
-import lwt.container.LFlexPanel;
-import lwt.dialog.LWindow;
-import lwt.widget.LFileSelector;
-import lwt.widget.LCheckBox;
+import lui.container.LFrame;
+import lui.container.LPanel;
+import lui.container.LFlexPanel;
+import lui.dialog.LWindow;
+import lui.widget.LFileSelector;
+import lui.widget.LCheckBox;
 
 import data.config.Plugin;
 import project.Project;

@@ -3,7 +3,7 @@ package data;
 import data.subcontent.Icon;
 import data.subcontent.Tile;
 import data.subcontent.Transform;
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 
 public class Obstacle extends Data {
 

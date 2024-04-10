@@ -1,6 +1,6 @@
 package data.subcontent;
 
-import lwt.graphics.LRect;
+import lui.graphics.LRect;
 import project.Project;
 
 public class Quad {

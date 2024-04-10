@@ -1,10 +1,10 @@
 package gui.widgets;
 
 import gui.shell.NameShell;
-import lwt.container.LContainer;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class NameList extends SimpleEditableList<String> {
 

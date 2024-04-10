@@ -7,17 +7,17 @@ import gui.views.database.subcontent.PortraitList;
 import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.PositionButton;
-import lbase.LFlags;
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LPanel;
-import lwt.container.LView;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.widget.LCheckBox;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.base.LFlags;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LPanel;
+import lui.container.LView;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LCheckBox;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 
 import java.lang.reflect.Type;
 

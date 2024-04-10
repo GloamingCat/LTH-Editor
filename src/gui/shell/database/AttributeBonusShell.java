@@ -1,9 +1,9 @@
 package gui.shell.database;
 
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;

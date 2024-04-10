@@ -3,10 +3,10 @@ package gui.shell;
 import java.io.File;
 import java.util.ArrayList;
 
-import lwt.container.LFlexPanel;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.widget.LFlatList;
+import lui.container.LFlexPanel;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.widget.LFlatList;
 
 public abstract class FileShell<T> extends LObjectWindow<T> {
 

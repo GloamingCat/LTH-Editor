@@ -10,16 +10,16 @@ import gui.views.database.subcontent.EquipStatusList;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
-import lbase.LFlags;
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.widget.LCheckBox;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
-import lwt.widget.LTextBox;
+import lui.base.LFlags;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LImage;
+import lui.container.LPanel;
+import lui.widget.LCheckBox;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
+import lui.widget.LTextBox;
 
 import project.Project;
 

@@ -10,10 +10,10 @@ import data.config.Config;
 import data.config.Region;
 import data.field.CharTile;
 import data.subcontent.Transform;
-import lwt.graphics.LPainter;
-import lbase.data.LPoint;
-import lwt.graphics.LRect;
-import lwt.graphics.LTexture;
+import lui.graphics.LPainter;
+import lui.base.data.LPoint;
+import lui.graphics.LRect;
+import lui.graphics.LTexture;
 import project.Project;
 
 public class TilePainter {

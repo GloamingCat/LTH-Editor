@@ -1,6 +1,6 @@
 package gui.views.database.content;
 
-import lbase.LFlags;
+import lui.base.LFlags;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.ObstacleTileShell;
@@ -8,13 +8,13 @@ import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LImage;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
-import lwt.widget.LLabel;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LImage;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
+import lui.widget.LLabel;
 import data.Animation;
 import data.Obstacle;
 import data.Obstacle.ObstacleTile;

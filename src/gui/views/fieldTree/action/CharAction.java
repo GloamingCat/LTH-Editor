@@ -2,7 +2,7 @@ package gui.views.fieldTree.action;
 
 import data.field.CharTile;
 import gui.views.fieldTree.FieldCanvas;
-import lbase.action.LAction;
+import lui.base.action.LAction;
 
 public class CharAction implements LAction {
 

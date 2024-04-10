@@ -5,12 +5,12 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.Skill.Effect;
-import lwt.container.LFrame;
-import lwt.dialog.LWindow;
-import lwt.widget.LCheckBox;
-import lwt.widget.LLabel;
-import lwt.widget.LNodeSelector;
-import lwt.widget.LText;
+import lui.container.LFrame;
+import lui.dialog.LWindow;
+import lui.widget.LCheckBox;
+import lui.widget.LLabel;
+import lui.widget.LNodeSelector;
+import lui.widget.LText;
 import project.Project;
 
 public class SkillEffectShell extends ObjectShell<Effect> {

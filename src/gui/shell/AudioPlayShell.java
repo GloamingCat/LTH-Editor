@@ -3,21 +3,21 @@ package gui.shell;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.AudioPlayer;
-import lbase.LFlags;
-import lbase.event.listener.LControlListener;
-import lbase.event.listener.LSelectionListener;
+import lui.base.LFlags;
+import lui.base.event.listener.LControlListener;
+import lui.base.event.listener.LSelectionListener;
 
 import java.util.ArrayList;
 
-import lwt.container.LPanel;
-import lwt.container.LFlexPanel;
-import lwt.dialog.LWindow;
-import lbase.event.LControlEvent;
-import lbase.event.LSelectionEvent;
-import lwt.widget.LFileSelector;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.container.LPanel;
+import lui.container.LFlexPanel;
+import lui.dialog.LWindow;
+import lui.base.event.LControlEvent;
+import lui.base.event.LSelectionEvent;
+import lui.widget.LFileSelector;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 import project.Project;
 

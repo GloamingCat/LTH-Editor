@@ -1,7 +1,7 @@
 package data.field;
 
 import project.Project;
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 
 public class Party {
 

@@ -3,17 +3,17 @@ package gui.views.database.subcontent;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.IDButton;
-import lbase.LFlags;
+import lui.base.LFlags;
 import data.Troop.Unit;
 import project.Project;
-import lwt.container.LContainer;
-import lwt.container.LPanel;
-import lwt.gson.GDefaultObjectEditor;
-import lbase.data.LDataTree;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.container.LContainer;
+import lui.container.LPanel;
+import lui.gson.GDefaultObjectEditor;
+import lui.base.data.LDataTree;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 
 public class UnitEditor extends GDefaultObjectEditor<Unit> {
 

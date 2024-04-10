@@ -5,9 +5,9 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.Item.EquipStatus;
-import lwt.dialog.LWindow;
-import lwt.widget.LCheckBox;
-import lwt.widget.LNodeSelector;
+import lui.dialog.LWindow;
+import lui.widget.LCheckBox;
+import lui.widget.LNodeSelector;
 
 import project.Project;
 

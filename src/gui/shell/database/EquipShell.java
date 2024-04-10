@@ -6,11 +6,11 @@ import gui.shell.ObjectShell;
 import gui.widgets.IDButton;
 
 import data.Battler.Equip;
-import lbase.data.LDataTree;
-import lwt.dialog.LWindow;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
+import lui.base.data.LDataTree;
+import lui.dialog.LWindow;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LText;
 
 import project.Project;
 

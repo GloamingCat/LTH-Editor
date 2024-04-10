@@ -4,8 +4,8 @@ import project.Project;
 import data.Skill.Effect;
 import data.subcontent.Bonus;
 import data.subcontent.Icon;
-import lbase.data.LDataList;
-import lbase.data.LDataTree;
+import lui.base.data.LDataList;
+import lui.base.data.LDataTree;
 
 public class Item extends Data {
 

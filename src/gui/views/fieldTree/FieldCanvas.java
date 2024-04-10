@@ -1,17 +1,17 @@
 package gui.views.fieldTree;
 
-import lwt.container.LCanvas;
-import lwt.container.LScrollPanel;
-import lwt.graphics.LColor;
-import lwt.graphics.LPainter;
-import lbase.data.LPoint;
-import lwt.widget.LLabel;
+import lui.container.LCanvas;
+import lui.container.LScrollPanel;
+import lui.graphics.LColor;
+import lui.graphics.LPainter;
+import lui.base.data.LPoint;
+import lui.widget.LLabel;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.action.BucketAction;
 import gui.views.fieldTree.action.CharAction;
 import gui.views.fieldTree.action.EraseAction;
 import gui.views.fieldTree.action.PencilAction;
-import lbase.LFlags;
+import lui.base.LFlags;
 
 import java.util.ArrayList;
 import java.util.Stack;

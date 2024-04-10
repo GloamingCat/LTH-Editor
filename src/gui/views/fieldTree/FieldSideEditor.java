@@ -1,10 +1,10 @@
 package gui.views.fieldTree;
 
-import lbase.data.LDataTree;
-import lbase.event.LDeleteEvent;
-import lbase.event.LInsertEvent;
-import lbase.event.listener.LCollectionListener;
-import lbase.LFlags;
+import lui.base.data.LDataTree;
+import lui.base.event.LDeleteEvent;
+import lui.base.event.LInsertEvent;
+import lui.base.event.listener.LCollectionListener;
+import lui.base.LFlags;
 
 import gui.Tooltip;
 import gui.Vocab;
@@ -13,16 +13,16 @@ import gui.views.fieldTree.subcontent.LayerList;
 import gui.views.fieldTree.subcontent.PartyEditor;
 import gui.views.fieldTree.subcontent.TileTree;
 import gui.widgets.SimpleEditableList;
-import lwt.LMenuInterface;
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.container.LFlexPanel;
-import lwt.container.LStack;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
+import lui.LMenuInterface;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LImage;
+import lui.container.LPanel;
+import lui.container.LFlexPanel;
+import lui.container.LStack;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
 
 import project.Project;
 import data.Animation;

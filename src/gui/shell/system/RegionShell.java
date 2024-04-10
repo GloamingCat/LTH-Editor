@@ -4,14 +4,14 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.widgets.IDList;
-import lbase.LFlags;
-import lwt.container.LFrame;
-import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.dialog.LWindow;
-import lwt.graphics.LColor;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
+import lui.base.LFlags;
+import lui.container.LFrame;
+import lui.container.LImage;
+import lui.container.LPanel;
+import lui.dialog.LWindow;
+import lui.graphics.LColor;
+import lui.widget.LLabel;
+import lui.widget.LText;
 
 import project.Project;
 

@@ -4,10 +4,10 @@ import gui.shell.system.RegionShell;
 import gui.widgets.SimpleEditableList;
 
 import data.config.Region;
-import lwt.container.LContainer;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class RegionList extends SimpleEditableList<Region> {
 

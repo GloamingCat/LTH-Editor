@@ -4,9 +4,9 @@ import gui.shell.database.AttributeBonusShell;
 import gui.widgets.SimpleEditableList;
 
 import data.Item.Attribute;
-import lwt.container.LContainer;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class AttributeList extends SimpleEditableList<Attribute> {
 	

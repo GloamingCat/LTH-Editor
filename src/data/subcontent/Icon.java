@@ -1,7 +1,7 @@
 package data.subcontent;
 
 import data.Animation;
-import lwt.graphics.LRect;
+import lui.graphics.LRect;
 import project.Project;
 
 public class Icon {

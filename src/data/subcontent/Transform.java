@@ -1,6 +1,6 @@
 package data.subcontent;
 
-import lwt.container.LImage;
+import lui.container.LImage;
 
 public class Transform {
 

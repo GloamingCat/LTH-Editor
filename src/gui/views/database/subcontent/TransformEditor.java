@@ -2,15 +2,15 @@ package gui.views.database.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lbase.event.listener.LControlListener;
+import lui.base.event.listener.LControlListener;
 import data.subcontent.Transform;
-import lwt.container.LContainer;
-import lwt.container.LImage;
-import lbase.event.LControlEvent;
-import lwt.graphics.LPainter;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.container.LContainer;
+import lui.container.LImage;
+import lui.base.event.LControlEvent;
+import lui.graphics.LPainter;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	

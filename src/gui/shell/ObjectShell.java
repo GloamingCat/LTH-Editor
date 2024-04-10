@@ -1,11 +1,11 @@
 package gui.shell;
 
-import lwt.container.LControlView;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.editor.LEditor;
-import lwt.gson.GDefaultObjectEditor;
-import lwt.widget.LControlWidget;
+import lui.container.LControlView;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.editor.LEditor;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LControlWidget;
 
 import java.lang.reflect.Type;
 

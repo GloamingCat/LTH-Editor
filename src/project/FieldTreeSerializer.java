@@ -1,6 +1,6 @@
 package project;
 
-import lbase.data.LPath;
+import lui.base.data.LPath;
 import data.field.Field;
 import data.field.FieldNode;
 import data.field.FieldTree;

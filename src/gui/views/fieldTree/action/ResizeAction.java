@@ -1,11 +1,8 @@
 package gui.views.fieldTree.action;
 
 import gui.views.fieldTree.FieldToolBar;
-import gui.views.fieldTree.FieldTreeEditor;
-import lwt.graphics.LRect;
-import project.Project;
-import lbase.action.LAction;
-import data.field.CharTile;
+import lui.graphics.LRect;
+import lui.base.action.LAction;
 import data.field.Field;
 
 public class ResizeAction implements LAction {

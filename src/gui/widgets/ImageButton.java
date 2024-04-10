@@ -1,8 +1,8 @@
 package gui.widgets;
 
-import lwt.container.LContainer;
-import lwt.container.LImage;
-import lbase.data.LDataTree;
+import lui.container.LContainer;
+import lui.container.LImage;
+import lui.base.data.LDataTree;
 import data.Animation;
 import gui.Vocab;
 import project.Project;

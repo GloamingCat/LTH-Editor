@@ -5,11 +5,11 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.NeighborEditor;
 
-import lwt.container.LFrame;
-import lwt.dialog.LWindow;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.container.LFrame;
+import lui.dialog.LWindow;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 import data.Obstacle.ObstacleTile;
 
 public class ObstacleTileShell extends ObjectShell<ObstacleTile> {

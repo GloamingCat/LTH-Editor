@@ -4,11 +4,11 @@ import gui.shell.NodeShell;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Node;
-import lwt.container.LContainer;
-import lbase.data.LDataTree;
-import lwt.dialog.LObjectWindow;
-import lwt.dialog.LWindow;
-import lwt.dialog.LWindowFactory;
+import lui.container.LContainer;
+import lui.base.data.LDataTree;
+import lui.dialog.LObjectWindow;
+import lui.dialog.LWindow;
+import lui.dialog.LWindowFactory;
 
 public class NodeList extends SimpleEditableList<Node> {
 

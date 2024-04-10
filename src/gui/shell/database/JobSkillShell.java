@@ -5,10 +5,10 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.Job;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LNodeSelector;
-import lwt.widget.LSpinner;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LNodeSelector;
+import lui.widget.LSpinner;
 import project.Project;
 
 public class JobSkillShell extends ObjectShell<Job.Skill> {

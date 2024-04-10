@@ -5,13 +5,13 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
-import lbase.LFlags;
-import lwt.container.LFrame;
-import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
+import lui.base.LFlags;
+import lui.container.LFrame;
+import lui.container.LImage;
+import lui.container.LPanel;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LText;
 
 import data.config.Element;
 

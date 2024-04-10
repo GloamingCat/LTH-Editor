@@ -1,6 +1,6 @@
 package data.field;
 
-import lbase.data.LDataTree;
+import lui.base.data.LDataTree;
 
 public class FieldTree extends LDataTree<FieldNode> {
 	

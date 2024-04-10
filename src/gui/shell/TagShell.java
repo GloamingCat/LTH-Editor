@@ -2,12 +2,12 @@ package gui.shell;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lbase.LFlags;
+import lui.base.LFlags;
 import data.subcontent.Tag;
-import lwt.dialog.LWindow;
-import lwt.widget.LLabel;
-import lwt.widget.LText;
-import lwt.widget.LTextBox;
+import lui.dialog.LWindow;
+import lui.widget.LLabel;
+import lui.widget.LText;
+import lui.widget.LTextBox;
 
 public class TagShell extends ObjectShell<Tag> {
 	

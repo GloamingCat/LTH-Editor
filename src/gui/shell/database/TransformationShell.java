@@ -5,11 +5,11 @@ import gui.Vocab;
 import gui.shell.ObjectShell;
 
 import data.subcontent.Transformation;
-import lwt.dialog.LWindow;
-import lwt.widget.LCheckBox;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
+import lui.dialog.LWindow;
+import lui.widget.LCheckBox;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
 
 public class TransformationShell extends ObjectShell<Transformation> {
 

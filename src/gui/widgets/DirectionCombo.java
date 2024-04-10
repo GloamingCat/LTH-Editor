@@ -1,7 +1,7 @@
 package gui.widgets;
 
-import lwt.container.LContainer;
-import lwt.widget.LCombo;
+import lui.container.LContainer;
+import lui.widget.LCombo;
 
 public class DirectionCombo extends LCombo {
 	

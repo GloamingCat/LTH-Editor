@@ -1,17 +1,17 @@
 package gui.shell.field;
 
-import lwt.container.LContainer;
-import lwt.container.LFrame;
-import lwt.container.LImage;
-import lwt.container.LPanel;
-import lwt.dialog.LWindow;
-import lwt.gson.GDefaultObjectEditor;
-import lbase.event.LEditEvent;
-import lwt.widget.LCheckBox;
-import lwt.widget.LCombo;
-import lwt.widget.LLabel;
-import lwt.widget.LSpinner;
-import lwt.widget.LText;
+import lui.container.LContainer;
+import lui.container.LFrame;
+import lui.container.LImage;
+import lui.container.LPanel;
+import lui.dialog.LWindow;
+import lui.gson.GDefaultObjectEditor;
+import lui.base.event.LEditEvent;
+import lui.widget.LCheckBox;
+import lui.widget.LCombo;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.ObjectShell;
@@ -22,8 +22,8 @@ import gui.widgets.PortalButton;
 import gui.widgets.PositionButton;
 import gui.widgets.ScriptButton;
 import gui.widgets.SimpleEditableList;
-import lbase.LFlags;
-import lbase.event.listener.LCollectionListener;
+import lui.base.LFlags;
+import lui.base.event.listener.LCollectionListener;
 
 import java.lang.reflect.Type;
 

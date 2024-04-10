@@ -1,6 +1,6 @@
 package data.field;
 
-import lbase.data.LDataList;
+import lui.base.data.LDataList;
 import data.subcontent.Script;
 
 public class CharTile {
