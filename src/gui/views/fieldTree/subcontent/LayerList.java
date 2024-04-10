@@ -126,6 +126,10 @@ public class LayerList extends LListEditor<Layer, Layer.Info> {
 	protected void setEditableData(LPath path, Info newData) {
 		getDataCollection().get(path.index).info = newData;
 	}
+	@Override
+	protected boolean isChecked(Layer data) {
+		return data.visible;
+	}
 	
 	public Layer getLayer() {
 		return getCollectionWidget().getSelectedObject();

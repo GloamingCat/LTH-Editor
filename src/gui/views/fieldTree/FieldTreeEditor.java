@@ -207,7 +207,7 @@ public class FieldTreeEditor extends LView {
 			fieldEditor.canvas.redrawBuffer();
 			fieldEditor.canvas.redraw();
 		};
-		sideEditor.onLayerEdit = fieldEditor::refresh;
+		sideEditor.onLayerEdit = fieldEditor.canvas::refresh;
 		sideEditor.onSelectLayer = fieldEditor::selectLayer;
 		sideEditor.onSelectEditor = i -> {
 			if (i == FieldSideEditor.CHAR ) {

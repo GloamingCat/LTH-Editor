@@ -340,7 +340,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		} else {                 // Terrain, Obstacle, Region
 			lists[i].onVisible();
 			if (onSelectLayer != null)
-				onSelectLayer.accept(null);
+				onSelectLayer.accept(lists[i].getLayer());
 		}
 		if (onSelectEditor != null)
 			onSelectEditor.accept(i);
