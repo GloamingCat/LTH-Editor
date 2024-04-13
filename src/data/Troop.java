@@ -27,7 +27,7 @@ public class Troop extends Data {
 		return new int[] {x, y};
 	}
 	
-	public class Unit {
+	public static class Unit {
 		
 		public String key = "Key";
 		public int charID = 0;

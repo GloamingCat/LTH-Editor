@@ -1,5 +1,11 @@
 package gui.views.database.content;
 
+import lui.base.LFlags;
+import lui.base.data.LDataList;
+import lui.base.data.LPath;
+import lui.base.data.LPoint;
+import lui.base.event.listener.LCollectionListener;
+import lui.base.event.listener.LSelectionListener;
 import lui.base.event.LDeleteEvent;
 import lui.base.event.LEditEvent;
 import lui.base.event.LInsertEvent;
@@ -7,10 +13,8 @@ import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
-import lui.base.data.LDataList;
-import lui.base.data.LPath;
 import lui.editor.LGridEditor;
-import lui.base.data.LPoint;
+import lui.graphics.LColor;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
@@ -22,9 +26,6 @@ import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.UnitEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
-import lui.base.LFlags;
-import lui.base.event.listener.LCollectionListener;
-import lui.base.event.listener.LSelectionListener;
 import data.Animation;
 import data.GameCharacter;
 import data.Troop;
@@ -135,7 +136,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		lstMembers.addChild(unitEditor);
 		unitEditor.addModifyListener(event -> refreshUnit(event.newValue));
 		
-		LCollectionListener<Unit> modifyListener = new LCollectionListener<Unit>() {
+		LCollectionListener<Unit> modifyListener = new LCollectionListener<>() {
 			public void onEdit(LEditEvent<Unit> e) {
 				refreshUnit(e.newData);
 			}
@@ -190,14 +191,14 @@ public class TroopTab extends DatabaseTab<Troop> {
 		super.onVisible();
 	}
 	
-	protected void refreshUnit(LImage img, int i) {
+	protected void refreshUnit(LImage img) {
 		LPoint p = (LPoint) img.getData();
 		Troop troop = contentEditor.getObject();
 		if (troop == null) {
 			img.setImage((String) null);
 			return;
 		}
-		i = troop.find(p.x, p.y);
+		int i = troop.find(p.x, p.y);
 		Unit u = i >= 0 ? troop.members.get(i) : null;
 		refreshUnit(img, u);
 	}
@@ -212,14 +213,16 @@ public class TroopTab extends DatabaseTab<Troop> {
 	protected void refreshUnit(LImage img, Unit u) {
 		if (u != null) {
 			GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
-			int animID = c == null ? -1 : c.defaultAnimationID();
-			Animation anim = (Animation) Project.current.animations.getData().get(animID);
-			if (anim != null && anim.cols > 0 && anim.rows > 0) {
-				Icon icon = new Icon(animID, anim.getFrame(0), 270 / 45);
-				anim.transform.setColorTransform(img, c.transform);
-				img.setScale(anim.transform.scaleX * c.transform.scaleX / 10000f, anim.transform.scaleY * c.transform.scaleY / 10000f);
-				img.setImage(icon.fullPath(), icon.getRectangle());
-				return;
+			if (c != null) {
+				int animID = c.defaultAnimationID();
+				Animation anim = (Animation) Project.current.animations.getData().get(animID);
+				if (anim != null && anim.cols > 0 && anim.rows > 0) {
+					Icon icon = new Icon(animID, anim.getFrame(0), 270 / 45);
+					anim.transform.setColorTransform(img, c.transform);
+					img.setScale(anim.transform.scaleX * c.transform.scaleX / 10000f, anim.transform.scaleY * c.transform.scaleY / 10000f);
+					img.setImage(icon.fullPath(), icon.getRectangle());
+					return;
+				}
 			}
 		}
 		img.setImage((String) null);
@@ -236,6 +239,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 			super(parent);
 			getCollectionWidget().cellWidth = tWidth;
 			getCollectionWidget().cellHeight = tHeight;
+			setBackground(new LColor(255, 0, 255).convert());
 		}
 		
 		@Override
@@ -243,8 +247,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 		@Override
 		protected LPoint duplicateElement(LPoint original) { return null; }
 		@Override
-		protected void setImage(LImage label, int i) {
-			refreshUnit(label, i);
+		protected void setImage(LImage img, int i) {
+			refreshUnit(img);
 		}
 		@Override
 		protected LDataList<LPoint> getDataCollection() {
