@@ -28,11 +28,15 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 	public LDataList<T> getDataCollection() {
 		return (LDataList<T>) currentObject;
 	}
-	
+
+	@Override
 	public void refreshDataCollection() {}
-	
+
+	@Override
 	public Class<?> getType() {
 		return type;
 	}
+	@Override
+	public void setChecked(T c, boolean checked) {}
 	
 }

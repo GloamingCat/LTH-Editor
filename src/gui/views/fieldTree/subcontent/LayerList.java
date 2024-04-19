@@ -53,30 +53,16 @@ public class LayerList extends LListEditor<Layer, Layer.Info> {
 					onEdit.accept(e.newData);
 			}
 		});
+		getCollectionWidget().addCheckListener(event -> {
+			if (onCheck != null) {
+				Layer l = (Layer) event.data;
+				onCheck.accept(l);
+			}
+		});
 		getCollectionWidget().addSelectionListener(event -> {
-            Layer l = (Layer) event.data;
-            if (event.check) {
-                l.visible = !l.visible;
-				if (onCheck != null)
-					onCheck.accept(l);
-            } else {
-				if (onSelect != null)
-					onSelect.accept(event.path == null ? -1 : event.path.index);
-            }
+           if (onSelect != null)
+			   onSelect.accept(event.path == null ? -1 : event.path.index);
         });
-		LCollectionListener<Layer> listener = new LCollectionListener<>() {
-			public void onInsert(LInsertEvent<Layer> event) {
-				getCollectionWidget().setChecked(new LPath(event.index), 
-					event.node.data.visible);
-			}
-			public void onMove(LMoveEvent<Layer> event) {
-				int index = event.destIndex == -1 ? getDataCollection().size() - 1 : event.destIndex;
-				getCollectionWidget().setChecked(new LPath(index), 
-						event.sourceNode.data.visible);
-			}
-		};
-		getCollectionWidget().addInsertListener(listener);
-		getCollectionWidget().addMoveListener(listener);
 	}
 
 	public void setField(Field field, int lastLayer) {
@@ -88,8 +74,6 @@ public class LayerList extends LListEditor<Layer, Layer.Info> {
 			maxHeight = field.prefs.maxHeight;
 			if (lastLayer >= 0)
 				getCollectionWidget().select(new LPath(lastLayer));
-			for (LPath path = new LPath(0); path.index < getDataCollection().size(); path.index++)
-				getCollectionWidget().setChecked(path, getDataCollection().get(path.index).visible);
 		}
 	}
 	
@@ -117,7 +101,11 @@ public class LayerList extends LListEditor<Layer, Layer.Info> {
 	public boolean canDecode(String str) {
 		return true;
 	}
-	
+
+	@Override
+	public void setChecked(Layer c, boolean checked) {
+		c.visible = checked;
+	}
 	@Override
 	protected Info getEditableData(LPath path) {
 		return getDataCollection().get(path.index).info;
