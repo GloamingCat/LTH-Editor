@@ -1,5 +1,6 @@
 package gui.views.fieldTree;
 
+import lui.base.LPrefs;
 import lui.base.data.LDataTree;
 import lui.base.event.LDeleteEvent;
 import lui.base.event.LInsertEvent;
@@ -214,7 +215,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 
 		lstChars = new SimpleEditableList<>(character);
-		lstChars.setMargins(5, 5);
+		lstChars.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		lstChars.getCellData().setExpand(true, true);
 		lstChars.getCollectionWidget().setEditEnabled(false);
 		lstChars.setIncludeID(false);
@@ -222,7 +223,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		addChild(lstChars, "characters");
 
 		charEditor = new CharTileEditor(character);
-		charEditor.setMargins(5, 5);
+		charEditor.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		charEditor.getCellData().setExpand(true, false);
 		lstChars.addChild(charEditor);
 		lstChars.getCollectionWidget().addInsertListener(charListener);
@@ -240,8 +241,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		party.setGridLayout(2);
 		party.getCellData().setAlignment(LFlags.CENTER);
 		party.getCellData().setExpand(true, false);
-		party.setMargins(5, 5);
-		party.setSpacing(5, 0);
+		party.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
+		party.setSpacing(LPrefs.GRIDSPACING, 0);
 
 		new LLabel(party, Vocab.instance.PLAYERPARTY, Tooltip.instance.PLAYERPARTY);
 
@@ -267,7 +268,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 
 		lstParties = new SimpleEditableList<>(partylist);
-		lstParties.setMargins(0, 5);
+		lstParties.setMargins(0, LPrefs.GRIDSPACING);
 		lstParties.getCollectionWidget().setEditEnabled(false);
 		lstParties.setIncludeID(true);
 		lstParties.type = Party.class;

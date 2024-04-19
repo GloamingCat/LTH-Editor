@@ -21,7 +21,7 @@ public class PropertyList extends SimpleEditableList<Property> {
 		super(parent);
 		type = Property.class;
 		setIncludeID(false);
-		setShellFactory(new LWindowFactory<Property>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Property> createWindow(LWindow parent) {
 				return new PropertyDialog(parent, title) {
@@ -35,8 +35,7 @@ public class PropertyList extends SimpleEditableList<Property> {
 	
 	@Override
 	protected LList<Property, Property> createList(boolean check) {
-		PropertyList self = this;
-		return new LList<Property, Property>(this, check) {
+		return new LList<>(this, check) {
 			@Override
 			public LEditEvent<Property> edit(LPath path) {
 				return onEditItem(path);
@@ -45,40 +44,40 @@ public class PropertyList extends SimpleEditableList<Property> {
 			public Property toObject(LPath path) {
 				if (path == null)
 					return null;
-				return self.getDataCollection().get(path.index);
+				return PropertyList.this.getDataCollection().get(path.index);
 			}
 			@Override
 			public LDataTree<Property> toNode(LPath path) {
 				Property i = toObject(path);
-				return new LDataTree<Property> (i);
+				return new LDataTree<> (i);
 			}
 			@Override
 			public LDataTree<Property> emptyNode() {
-				return new LDataTree<Property>(new Property());
+				return new LDataTree<>(new Property());
 			}
 			@Override
 			public LDataTree<Property> duplicateNode(LDataTree<Property> node) {
 				Property copy = new Property(node.data);
-				return new LDataTree<Property> (copy);
+				return new LDataTree<> (copy);
 			}
 			@Override
 			protected String dataToString(Property item) {
-				Object obj = self.getDataTree().get(item.id);
+				Object obj = PropertyList.this.getDataTree().get(item.id);
 				String id = includeID ? stringID(item.id) : "";
 				String name = obj != null ? obj.toString() : ("NULL " + item.id);
 				return id + name + ": " + item.value;
 			}
 			@Override
 			protected String encodeNode(LDataTree<Property> node) {
-				return self.encodeData(node);
+				return PropertyList.this.encodeData(node);
 			}
 			@Override
 			protected LDataTree<Property> decodeNode(String str) {
-				return self.decodeData(str);
+				return PropertyList.this.decodeData(str);
 			}
 			@Override
 			public boolean canDecode(String str) {
-				return self.canDecode(str);
+				return PropertyList.this.canDecode(str);
 			}
 		};
 	}

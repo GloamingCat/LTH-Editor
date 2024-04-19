@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
@@ -63,10 +64,10 @@ public class JobTab extends DatabaseTab<Job> {
 		
 		LPanel nodes = new LPanel(right);
 		nodes.setFillLayout(false);
-		nodes.setSpacing(5);
+		nodes.setSpacing(LPrefs.FRAMEMARGIN);
 		nodes.getCellData().setExpand(true, true);
 
-		LFrame grpSkillNodes = new LFrame(nodes, (String) Vocab.instance.SKILLNODES);
+		LFrame grpSkillNodes = new LFrame(nodes, Vocab.instance.SKILLNODES);
 		grpSkillNodes.setFillLayout(true);
 		grpSkillNodes.setHoverText(Tooltip.instance.SKILLNODES);
 		SimpleEditableList<Job.Skill> lstSkills = new SimpleEditableList<>(grpSkillNodes);
@@ -82,7 +83,7 @@ public class JobTab extends DatabaseTab<Job> {
 			}
 		});
 		
-		LFrame grpStatusNodes = new LFrame(nodes, (String) Vocab.instance.STATUSNODES);
+		LFrame grpStatusNodes = new LFrame(nodes, Vocab.instance.STATUSNODES);
 		grpStatusNodes.setFillLayout(true);
 		grpStatusNodes.setHoverText(Tooltip.instance.STATUSNODES);
 		SimpleEditableList<Job.Status> lstStatuses = new SimpleEditableList<>(grpStatusNodes);

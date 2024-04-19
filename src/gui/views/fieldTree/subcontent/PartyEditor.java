@@ -6,6 +6,7 @@ import gui.shell.field.TroopSpawnDialog;
 import gui.widgets.DirectionCombo;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.event.listener.LControlListener;
 import data.field.Party;
 import data.field.Party.TroopSpawn;
@@ -38,7 +39,7 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.PARTYPOS);
 		LPanel position = new LPanel(this);
 		position.setFillLayout(true);
-		position.setSpacing(5);
+		position.setSpacing(LPrefs.GRIDSPACING);
 		position.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 
 		LSpinner spnX = new LSpinner(position);

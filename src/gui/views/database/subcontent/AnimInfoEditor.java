@@ -6,6 +6,7 @@ import data.Skill.AnimInfo;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.ImageButton;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.container.LViewFolder;
@@ -29,7 +30,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 
 		LPanel battle = new LPanel(tab);
 		battle.setGridLayout(3);
-		battle.setMargins(5, 5);
+		battle.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		tab.addTab(Vocab.instance.BATTLE, battle);
 		
 		LLabel lblLoad = new LLabel(battle, Vocab.instance.LOAD, Tooltip.instance.LOAD);
@@ -72,7 +73,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		
 		LPanel user = new LPanel(tab);
 		user.setGridLayout(2);
-		user.setMargins(5, 5);
+		user.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		user.getCellData().setExpand(true, false);
 		tab.addTab(Vocab.instance.USER, user);
 		
@@ -99,7 +100,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		
 		LPanel animOptions = new LPanel(tab);
 		animOptions.setGridLayout(4);
-		animOptions.setMargins(5, 5);
+		animOptions.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		tab.addTab(Vocab.instance.OPTIONS, animOptions);
 		
 		LLabel lblIntroTime = new LLabel(animOptions, Vocab.instance.INTROTIME, Tooltip.instance.INTROTIME);

@@ -13,6 +13,7 @@ import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.event.listener.LCollectionListener;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -88,7 +89,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 		LPanel middle = new LPanel(left);
 		middle.setFillLayout(true);
-		middle.setSpacing(5);
+		middle.setSpacing(LPrefs.FRAMEMARGIN);
 		middle.getCellData().setExpand(true, true);
 
 		// Tiles
@@ -155,7 +156,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		LPanel graphics = new LPanel(contentEditor);
 		graphics.setFillLayout(true);
-		graphics.setSpacing(5, 0);
+		graphics.setSpacing(LPrefs.FRAMEMARGIN, 0);
 		graphics.getCellData().setExpand(true, true);
 		graphics.getCellData().setSpread(2, 2);
 		

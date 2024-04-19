@@ -3,6 +3,7 @@ package gui.views.fieldTree;
 import gui.Tooltip;
 import gui.helper.TilePainter;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.container.LScrollPanel;
@@ -54,7 +55,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 
 		LPanel scale = new LPanel(bottom);
 		scale.setFillLayout(true);
-		scale.setSpacing(5);
+		scale.setSpacing(LPrefs.GRIDSPACING);
 		scale.getCellData().setMinimumSize(100, 0);
 		scale.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 

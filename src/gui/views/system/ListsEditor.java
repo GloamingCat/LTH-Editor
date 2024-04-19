@@ -3,6 +3,7 @@ package gui.views.system;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
@@ -30,11 +31,11 @@ public class ListsEditor extends LObjectEditor<Object> {
 
 		LPanel top = new LPanel(this);
 		top.setFillLayout(true);
-		top.setSpacing(5);
+		top.setSpacing(LPrefs.GRIDSPACING);
 		
 		LPanel bottom = new LPanel(this);
 		bottom.setFillLayout(true);
-		bottom.setSpacing(5);
+		bottom.setSpacing(LPrefs.GRIDSPACING);
 		
 		// Elements
 		

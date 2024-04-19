@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LPath;
 import lui.base.data.LPoint;
@@ -120,7 +121,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS);
 		grpMembers.setFillLayout(true);
-		grpMembers.setSpacing(5);
+		grpMembers.setSpacing(LPrefs.FRAMEMARGIN);
 		grpMembers.setHoverText(Tooltip.instance.UNITS);
 		grpMembers.getCellData().setExpand(true, false);
 		grpMembers.getCellData().setSpread(2, 1);

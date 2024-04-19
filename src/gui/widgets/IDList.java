@@ -17,23 +17,21 @@ public class IDList extends SimpleEditableList<Integer> {
 	public IDList(LContainer parent, String title) {
 		super(parent);
 		type = Integer.class;
-		setShellFactory(new LWindowFactory<Integer>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Integer> createWindow(LWindow parent) {
-				IDShell shell = new IDShell(parent, title, 0) {
+                return new IDShell(parent, title, 0) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}
 				};
-				return shell;
 			}
 		});
 		list.setIncludeID(false);
 	}
 	
 	protected LList<Integer, Integer> createList(boolean check) {
-		IDList self = this;
-		return new LList<Integer, Integer>(this, check) {
+		return new LList<>(this, check) {
 			@Override
 			public LEditEvent<Integer> edit(LPath path) {
 				return onEditItem(path);
@@ -42,28 +40,28 @@ public class IDList extends SimpleEditableList<Integer> {
 			public Integer toObject(LPath path) {
 				if (path == null)
 					return null;
-				return self.getDataCollection().get(path.index);
+				return IDList.this.getDataCollection().get(path.index);
 			}
 			@Override
 			public LDataTree<Integer> toNode(LPath path) {
 				Integer i = toObject(path);
-				return new LDataTree<Integer> (i);
+				return new LDataTree<> (i);
 			}
 			@Override
 			public LDataTree<Integer> emptyNode() {
-				return new LDataTree<Integer>(0);
+				return new LDataTree<>(0);
 			}
 			@Override
 			public LDataTree<Integer> duplicateNode(LDataTree<Integer> node) {
-				return new LDataTree<Integer>(node.data);
+				return new LDataTree<>(node.data);
 			}
 			@Override
 			protected String dataToString(Integer id) {
-				Object obj = self.getDataTree().get(id);
-				String idstr = includeID ? stringID(id) : "";
+				Object obj = IDList.this.getDataTree().get(id);
+				String str = includeID ? stringID(id) : "";
 				if (obj == null)
-					return idstr + "    ";
-				return idstr + obj.toString();
+					return str + "    ";
+				return str + obj;
 			}
 			@Override
 			protected String encodeNode(LDataTree<Integer> node) {
@@ -71,7 +69,7 @@ public class IDList extends SimpleEditableList<Integer> {
 			}
 			@Override
 			protected LDataTree<Integer> decodeNode(String str) {
-				return new LDataTree<Integer>(Integer.parseInt(str));
+				return new LDataTree<>(Integer.parseInt(str));
 			}
 			@Override
 			public boolean canDecode(String str) {

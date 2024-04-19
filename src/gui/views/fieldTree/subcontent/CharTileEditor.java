@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.event.listener.LControlListener;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -44,7 +45,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.CHARPOS);
 		LPanel position = new LPanel(this);
 		position.setFillLayout(true);
-		position.setSpacing(5, 0);
+		position.setSpacing(LPrefs.GRIDSPACING, 0);
 		position.getCellData().setExpand(true, false);
 		position.getCellData().setSpread(2, 1);
 
