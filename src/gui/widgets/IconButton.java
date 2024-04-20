@@ -1,6 +1,6 @@
 package gui.widgets;
 
-import gui.shell.IconShell;
+import gui.shell.IconDialog;
 import gui.views.database.subcontent.TransformEditor;
 import lui.container.LContainer;
 import lui.container.LImage;
@@ -24,8 +24,8 @@ public class IconButton extends LObjectButton<Icon> {
 		super(parent);
 		setShellFactory(new LWindowFactory<Icon>() {
 			@Override
-			public IconShell createWindow(LWindow parent) {
-				return new IconShell(parent, IconShell.OPTIONAL);
+			public IconDialog createWindow(LWindow parent) {
+				return new IconDialog(parent, IconDialog.OPTIONAL);
 			}
 		});
 	}

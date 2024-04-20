@@ -17,6 +17,7 @@ public class TroopSpawnDialog extends ObjectEditorDialog<TroopSpawn> {
 	public TroopSpawnDialog(LWindow parent) {
 		super(parent, Vocab.instance.TROOPSHELL);
 		setMinimumSize(360, 320);
+		setSize(360, 320);
 	}
 	
 	@Override
@@ -26,13 +27,15 @@ public class TroopSpawnDialog extends ObjectEditorDialog<TroopSpawn> {
 		
 		new LLabel(contentEditor, Vocab.instance.MINLEVEL, Tooltip.instance.MINLEVEL);
 		LSpinner spnMin = new LSpinner(contentEditor);
+		spnMin.getCellData().setExpand(true, false);
 		spnMin.setMinimum(0);
 		spnMin.setMaximum(100000);
 		spnMin.setValue(1);
 		addControl(spnMin, "minLevel");
-		
+
 		new LLabel(contentEditor, Vocab.instance.MAXLEVEL, Tooltip.instance.MAXLEVEL);
 		LSpinner spnMax = new LSpinner(contentEditor);
+		spnMax.getCellData().setExpand(true, false);
 		spnMax.setMinimum(0);
 		spnMax.setMaximum(100000);
 		spnMax.setValue(100);
@@ -43,8 +46,6 @@ public class TroopSpawnDialog extends ObjectEditorDialog<TroopSpawn> {
 		tree.getCellData().setExpand(true, true);
 		tree.setCollection(Project.current.troops.getTree());
 		addControl(tree, "id");
-		
-		pack();
 	}
 	
 }

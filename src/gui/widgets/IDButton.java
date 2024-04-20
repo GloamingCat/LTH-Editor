@@ -1,6 +1,6 @@
 package gui.widgets;
 
-import gui.shell.IDShell;
+import gui.shell.IDDialog;
 import lui.container.LContainer;
 import lui.container.LImage;
 import lui.base.data.LDataTree;
@@ -32,7 +32,7 @@ public class IDButton extends LObjectButton<Integer> {
 		setShellFactory(new LWindowFactory<Integer>() {
 			@Override
 			public LObjectDialog<Integer> createWindow(LWindow parent) {
-				IDShell shell = new IDShell(parent, title, optional ? IDShell.OPTIONAL : 0) {
+				IDDialog shell = new IDDialog(parent, title, optional ? IDDialog.OPTIONAL : 0) {
 					protected LDataTree<Object> getTree() { 
 						return getDataTree(); 
 					}

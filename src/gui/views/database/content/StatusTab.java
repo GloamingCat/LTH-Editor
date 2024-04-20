@@ -12,6 +12,7 @@ import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
@@ -222,6 +223,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		grpDrain.getCellData().setMinimumSize(200, 0);
 
 		LLabel lblDrainAtt = new LLabel(grpDrain, Vocab.instance.DRAINATT, Tooltip.instance.DRAINATT);
+		lblDrainAtt.getCellData().setMinimumSize(LPrefs.LABELWIDTH, LPrefs.WIDGETHEIGHT);
 		LText txtDrainAtt = new LText(grpDrain);
 		txtDrainAtt.getCellData().setSpread(2, 1);
 		txtDrainAtt.getCellData().setExpand(true, false);

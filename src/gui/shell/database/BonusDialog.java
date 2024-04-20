@@ -25,7 +25,8 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
 	
 	public BonusDialog(LWindow parent, String title) {
 		super(parent, title);
-		setMinimumSize(270, 100);
+		setMinimumSize(300, 200);
+		setSize(300, 200);
 	}
 	
 	@Override
@@ -34,10 +35,9 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
 		contentEditor.setGridLayout(2);
 		
 		// Type of bonus
-		
 		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.BONUSTYPE);
-		
 		cmbType = new LCombo(contentEditor, true);
+		cmbType.getCellData().setExpand(true, false);
 		cmbType.setOptional(false);
 		cmbType.setIncludeID(false);
 		cmbType.setItems(new String[] {
@@ -47,18 +47,16 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
 				Vocab.instance.STATUSDEF
 		});
 		addControl(cmbType, "type");
-		
+
 		// Value of bonus
-		
 		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.BONUSVALUE);
-		
 		LSpinner spnValue = new LSpinner(contentEditor);
+		spnValue.getCellData().setExpand(true, false);
 		spnValue.setMinimum(-10000);
 		spnValue.setMaximum(10000);
 		addControl(spnValue, "value");
 		
 		// ID
-		
 		typeLabel = new LLabel(contentEditor, LFlags.TOP, Vocab.instance.ELEMENT, Tooltip.instance.ELEMENTBONUS);
 		
 		final LStack stack = new LStack(contentEditor);
@@ -70,30 +68,25 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
 		final LNodeSelector<Object> statusTree = new LNodeSelector<Object>(stack, false);
 		statusTree.setCollection(Project.current.status.getTree());
 		
-		cmbType.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event.newValue == 3) {
-					// Status
-					typeLabel.setText(Vocab.instance.STATUS);
-					typeLabel.setHoverText(Tooltip.instance.STATUSBONUS);
-					typeNode = statusTree;
-					stack.setTop((LWidget) typeNode);
-					removeControl(elementTree);
-					addControl(typeNode, "id");
-				} else {
-					// Element
-					typeLabel.setText(Vocab.instance.ELEMENT);
-					typeLabel.setHoverText(Tooltip.instance.ELEMENTBONUS);
-					typeNode = elementTree;
-					stack.setTop((LWidget) typeNode);	
-					removeControl(statusTree);
-					addControl(typeNode, "id");
-				}
-			}
-		});
-		
-		pack();
+		cmbType.addModifyListener(event -> {
+            if (event.newValue == 3) {
+                // Status
+                typeLabel.setText(Vocab.instance.STATUS);
+                typeLabel.setHoverText(Tooltip.instance.STATUSBONUS);
+                typeNode = statusTree;
+                stack.setTop((LWidget) typeNode);
+                removeControl(elementTree);
+                addControl(typeNode, "id");
+            } else {
+                // Element
+                typeLabel.setText(Vocab.instance.ELEMENT);
+                typeLabel.setHoverText(Tooltip.instance.ELEMENTBONUS);
+                typeNode = elementTree;
+                stack.setTop((LWidget) typeNode);
+                removeControl(statusTree);
+                addControl(typeNode, "id");
+            }
+        });
 	}
 	
 	public void open(Bonus initial) {

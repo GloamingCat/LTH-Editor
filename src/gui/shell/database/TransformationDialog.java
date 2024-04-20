@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.shell.ObjectEditorDialog;
 
 import data.subcontent.Transformation;
+import lui.base.data.LPoint;
 import lui.dialog.LWindow;
 import lui.widget.LCheckBox;
 import lui.widget.LCombo;
@@ -15,26 +16,27 @@ public class TransformationDialog extends ObjectEditorDialog<Transformation> {
 
 	public TransformationDialog(LWindow parent) {
 		super(parent, Vocab.instance.TRANSFORMSHELL);
-		setMinimumSize(270, 100);
+		LPoint size = getTargetSize();
+		setSize(200, size.y);
+		setMinimumSize(200, size.y);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.TRANSFORMTYPE);
-		
 		LCombo cmbType = new LCombo(contentEditor, true);
+		cmbType.getCellData().setExpand(true, false);
 		cmbType.setOptional(false);
 		cmbType.setIncludeID(false);
 		cmbType.setItems(Transformation.types);
 		addControl(cmbType, "type");
-		
+
 		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.TRANSFORMVALUE);
-		
 		LSpinner spnValue = new LSpinner(contentEditor);
+		spnValue.getCellData().setExpand(true, false);
 		spnValue.setMinimum(-10000);
 		spnValue.setMaximum(10000);
 		addControl(spnValue, "value");
@@ -44,8 +46,6 @@ public class TransformationDialog extends ObjectEditorDialog<Transformation> {
 		btnOverride.setText(Vocab.instance.OVERRIDETRANSFORM);
 		btnOverride.setHoverText(Tooltip.instance.OVERRIDETRANSFORM);
 		addControl(btnOverride, "override");
-		
-		pack();
 	}
 	
 }

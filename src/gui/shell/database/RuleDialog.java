@@ -29,26 +29,22 @@ public class RuleDialog extends ObjectEditorDialog<Rule> {
 		contentEditor.setFillLayout(true);
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
-		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
+		selFile.addFileRestriction(f -> f.getName().endsWith(".lua"));
 		selFile.setFolder(Project.current.rulePath());
 		
-		LPanel composite = new LPanel(form);
-		composite.setGridLayout(2);
-		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
-		frame.setFillLayout(true);
-		
-		LFrame grpParameters = frame;
-		grpParameters.setHoverText(Tooltip.instance.PARAM);
-		grpParameters.getCellData().setExpand(true, true);
-		grpParameters.getCellData().setSpread(2, 1);
-		TagList lstParam = new TagList(grpParameters);
-		addChild(lstParam, "tags");
-		
-		new LLabel(composite, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
-		
-		LText txtCondition = new LText(composite);
+		LFrame opts = new LFrame(form, Vocab.instance.OPTIONS);
+		opts.setGridLayout(2);
+
+		new LLabel(opts, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
+		LText txtCondition = new LText(opts);
+		txtCondition.getCellData().setExpand(true, false);
 		addControl(txtCondition, "condition");
-		
+
+		new LLabel(opts, Vocab.instance.PARAM, Tooltip.instance.PARAM);
+		TagList lstParam = new TagList(opts);
+		lstParam.getCellData().setExpand(true, true);
+		addChild(lstParam, "tags");
+
 		form.setWeights(1, 1);
 	}
 	

@@ -209,7 +209,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		if (node != null) {
 			Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
 			if (anim != null) {
-				GameCharacter c = (GameCharacter) contentEditor.getObject();
+				GameCharacter c = contentEditor.getObject();
 				anim.transform.setColorTransform(img, c.transform);
 				img.setImage(anim.quad.fullPath(), anim.quad.getRect());
 			} else {

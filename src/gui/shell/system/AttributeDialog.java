@@ -15,49 +15,48 @@ public class AttributeDialog extends ObjectEditorDialog<Attribute> {
 	
 	public AttributeDialog(LWindow parent) {
 		super(parent, Vocab.instance.ATTRIBUTESHELL);
+		setMinimumSize(300, 300);
+		setSize(300, 300);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
-		
 		LText txtKey = new LText(contentEditor);
+		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
-		
+
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
-		
 		LText txtName = new LText(contentEditor);
+		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
-		
+
 		new LLabel(contentEditor, Vocab.instance.SHORTNAME, Tooltip.instance.SHORTNAME);
-		
 		LText txtShortName = new LText(contentEditor);
+		txtShortName.getCellData().setExpand(true, false);
 		addControl(txtShortName, "shortName");
 
 		new LLabel(contentEditor, Vocab.instance.VISIBILITY, Tooltip.instance.VISIBILITY);
-		
-		LCombo cmbVisibliy = new LCombo(contentEditor, true);
-		cmbVisibliy.setOptional(false);
-		cmbVisibliy.setIncludeID(false);
-		cmbVisibliy.setItems(new String [] {
+		LCombo cmbVisibility = new LCombo(contentEditor, true);
+		cmbVisibility.getCellData().setExpand(true, false);
+		cmbVisibility.setOptional(false);
+		cmbVisibility.setIncludeID(false);
+		cmbVisibility.setItems(new String [] {
 			Vocab.instance.NOTVISIBLE,
 			Vocab.instance.PRIMARY,
 			Vocab.instance.SECONDARY
 		});
-		addControl(cmbVisibliy, "visibility");
-		
+		addControl(cmbVisibility, "visibility");
+
 		new LLabel(contentEditor, Vocab.instance.FORMULA, Tooltip.instance.FORMULA);
-		//lblScript.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
 		LTextBox txtScript = new LTextBox(contentEditor);
+		txtScript.getCellData().setExpand(true, true);
 		txtScript.getCellData().setMinimumSize(200, 48);
 		addControl(txtScript, "script");
-		
-		pack();
+
 	}
 	
 }

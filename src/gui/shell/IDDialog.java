@@ -5,7 +5,7 @@ import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LNodeSelector;
 
-public abstract class IDShell extends LObjectDialog<Integer> {
+public abstract class IDDialog extends LObjectDialog<Integer> {
 	
 	protected LNodeSelector<Object> tree;
 	
@@ -14,9 +14,10 @@ public abstract class IDShell extends LObjectDialog<Integer> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public IDShell(LWindow parent, String title, int style) {
+	public IDDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
 		setMinimumSize(350, 500);
+		setSize(350, 500);
 	}
 	
 	@Override
@@ -25,7 +26,6 @@ public abstract class IDShell extends LObjectDialog<Integer> {
 		content.setFillLayout(true);
 		tree = new LNodeSelector<>(content, (style & OPTIONAL) > 0);
 		tree.setCollection(getTree());
-		pack();
 	}
 	
 	@Override

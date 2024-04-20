@@ -197,6 +197,7 @@ public class Vocab {
 	public String BATTLEONLY = "Battle Only";
 	public String FIELDONLY = "Field Only";
 	public String COSTS = "Costs";
+	public String COST = "Skill use cost";
 	public String USECONDITION = "Use Condition";
 	public String CASTMASK = "Range Mask";
 	public String EFFECTMASK = "Effect Mask";
@@ -331,6 +332,8 @@ public class Vocab {
 
 	// Script / Rule
 	public String PARAM = "Parameters";
+	public String SYNC = "Synchronization";
+	public String TRIGGER = "Triggers";
 	public String GLOBAL = "Global";
 	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
@@ -407,8 +410,8 @@ public class Vocab {
 	public String PARTYGEN = "Generation";
 	public String TROOPUNITS = "Troop Units";
 	public String FIELDCHARS = "Field Characters";
-	public String MINLEVEL = "Min Level";
-	public String MAXLEVEL = "Max Level";
+	public String MINLEVEL = "Minimum Level";
+	public String MAXLEVEL = "Maximum Level";
 	
 	// Position
 	public String POSITION = "Position";

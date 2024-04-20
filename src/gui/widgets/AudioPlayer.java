@@ -2,6 +2,7 @@ package gui.widgets;
 
 import gui.Vocab;
 import lui.LSoundPlayer;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.widget.LCommandButton;
@@ -17,8 +18,9 @@ public class AudioPlayer extends LPanel {
 	public AudioPlayer(LContainer parent) {
 		super(parent);
 		setGridLayout(2);
+		setEqualCells(true);
 
-		new LCommandButton(this, Vocab.instance.PLAY) {
+		LCommandButton play = new LCommandButton(this, Vocab.instance.PLAY) {
 			@Override
 			protected void execute() {
 				if (filename == null)
@@ -34,13 +36,15 @@ public class AudioPlayer extends LPanel {
 					LSoundPlayer.playSFX(path, volume * 0.01f, pitch * 0.01f);
 			}
 		};
-		
-		new LCommandButton(this, Vocab.instance.STOP) {
+		play.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
+
+		LCommandButton stop = new LCommandButton(this, Vocab.instance.STOP) {
 			@Override
 			protected void execute() {
 				LSoundPlayer.stop();
 			}
 		};
+		stop.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 		
 	}
 	

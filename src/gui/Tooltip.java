@@ -428,6 +428,11 @@ public class Tooltip {
 	public String PARAM = "Parameters to the script's execution. \n"
 			+ "Like tags, the value of each parameters is interpreted as a JSON value.\n"
 			+ "If the JSON code is not valid, it is interpreted as a raw string.";
+	public String SCRIPTTRIGGER = "When the script will be executed.";
+	public String SCRIPTSYNC = "Options to synchronize the script with other game elements.";
+	public String ONLOAD = "Run this script on initialization.";
+	public String ONCOLLIDE = "Run this script on collision with player or another character.";
+	public String ONINTERACT = "Run this script when player interacts with this character.";
 	public String GLOBAL = "When checked, the script is executed globally.\n"
 			+ "If unchecked, it stops running if the character is deleted or the field is unloaded.";
 	public String WAIT = "When checked, the thread executing will only execute the next script when this script ends its execution.\n"
@@ -511,9 +516,6 @@ public class Tooltip {
 			+ "Usually 'Idle'.";
 	public String FRAME = "The initial frame of the animation. \n"
 			+ "It's an index in the animation's pattern (not a column number).";
-	public String ONLOAD = "Run this script on initialization.";
-	public String ONCOLLIDE = "Run this script on collision with player or another character.";
-	public String ONINTERACT = "Run this script when player interacts with this character.";
 	public String SPEED = "Speed";
 	public String CHARPERSISTENT = "When checked, the changed data will be saved in the field's save if the field is also persistent.";
 	public String CHARPASSABLE = "When checked, the player and other characters can overpass it.";

@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.shell.ObjectEditorDialog;
 
 import data.config.EquipType;
+import lui.base.data.LPoint;
 import lui.dialog.LWindow;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
@@ -15,8 +16,9 @@ public class EquipTypeDialog extends ObjectEditorDialog<EquipType> {
 
 	public EquipTypeDialog(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPTYPESHELL);
-		
-		setTitle(Vocab.instance.EQUIP);
+		LPoint size = getTargetSize();
+		setMinimumSize(200, size.y);
+		setSize(200, size.y);
 	}
 	
 	@Override
@@ -25,18 +27,18 @@ public class EquipTypeDialog extends ObjectEditorDialog<EquipType> {
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
-
 		LText txtName = new LText(contentEditor);
+		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
 		
 		new LLabel(contentEditor, Vocab.instance.KEY, Tooltip.instance.KEY);
-
 		LText txtKey = new LText(contentEditor);
+		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, Vocab.instance.STATE, Tooltip.instance.STATE);
-		
 		LCombo cmbState = new LCombo(contentEditor, true);
+		cmbState.getCellData().setExpand(true, false);
 		cmbState.setIncludeID(false);
 		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {
@@ -47,13 +49,11 @@ public class EquipTypeDialog extends ObjectEditorDialog<EquipType> {
 		addControl(cmbState, "state");
 		
 		new LLabel(contentEditor, Vocab.instance.COUNT, Tooltip.instance.SLOTSIZE);
-		
 		LSpinner spnCount = new LSpinner(contentEditor);
+		spnCount.getCellData().setExpand(true, false);
 		spnCount.setMinimum(1);
 		spnCount.setMaximum(99);
 		addControl(spnCount, "count");
-		
-		pack();
 	}
 	
 }

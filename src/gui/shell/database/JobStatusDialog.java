@@ -15,7 +15,8 @@ public class JobStatusDialog extends ObjectEditorDialog<Job.Status> {
 
 	public JobStatusDialog(LWindow parent) {
 		super(parent, Vocab.instance.STATUSSHELL);
-		setMinimumSize(300, 100);
+		setMinimumSize(300, 200);
+		setSize(300, 200);
 	}
 	
 	@Override
@@ -31,9 +32,8 @@ public class JobStatusDialog extends ObjectEditorDialog<Job.Status> {
 		
 		new LLabel(contentEditor, Vocab.instance.MINLEVEL, Tooltip.instance.STATUSLEVEL);
 		LSpinner spnLevel = new LSpinner(contentEditor);
+		spnLevel.getCellData().setExpand(true, false);
 		addControl(spnLevel, "level");
-
-		pack();
 	}
 	
 }

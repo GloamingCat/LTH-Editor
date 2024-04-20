@@ -5,7 +5,7 @@ import lui.dialog.LWindow;
 import lui.widget.LFileSelector;
 import project.Project;
 
-public class LuaShell extends LObjectDialog<String> {
+public class LuaDialog extends LObjectDialog<String> {
 	
 	private LFileSelector selFile;
 	
@@ -14,8 +14,9 @@ public class LuaShell extends LObjectDialog<String> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public LuaShell(LWindow parent, String title, int style) {
+	public LuaDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
+		setSize(300, 300);
 	}
 	
 	@Override

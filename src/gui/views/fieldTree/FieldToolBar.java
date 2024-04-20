@@ -67,8 +67,6 @@ public class FieldToolBar extends LToolBar {
 		};
 
 		addButtonItem(resizeField, null, Vocab.instance.RESIZE);
-
-		pack();
 	}
 
 	public void resizeField() {

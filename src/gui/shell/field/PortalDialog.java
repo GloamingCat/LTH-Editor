@@ -32,6 +32,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		super(parent, Vocab.instance.PORTALSHELL);
 		this.fieldID = fieldID;
 		setMinimumSize(640, 480);
+		setSize(640, 480);
 	}
 
 	@Override
@@ -82,7 +83,6 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		spnH.setMaximum(maxHeight);
 		canvas.setField(field);
 		canvas.setHeight(spnH.getValue() - 1);
-		pack();
 	}
 
 	@Override

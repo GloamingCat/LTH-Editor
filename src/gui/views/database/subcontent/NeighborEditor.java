@@ -2,6 +2,7 @@ package gui.views.database.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
+import lui.base.LPrefs;
 import lui.base.event.listener.LControlListener;
 
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ import lui.widget.LToggleButton;
 
 public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 
-	private LToggleButton[] labels;
+	private final LToggleButton[] labels;
 	
 	public NeighborEditor(LContainer parent) {
 		super(parent, false);
@@ -32,10 +33,12 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
 		btnNone.addModifyListener(allAction(false));
 		btnNone.getCellData().setExpand(true, false);
+		btnNone.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, 0);
 		
 		LActionButton btnAll = new LActionButton(group, Vocab.instance.ALL);
 		btnAll.addModifyListener(allAction(true));
 		btnAll.getCellData().setExpand(true, false);
+		btnAll.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, 0);
 		
 		LPanel composite = new LPanel(group);
 		composite.setGridLayout(3);
@@ -68,14 +71,11 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 	}
 	
 	private LControlListener<Object> allAction(final boolean newValue) {
-		return new LControlListener<Object>() {
-			@Override
-			public void onModify(LControlEvent<Object> event) {
-				for(int i = 0; i < 8; i++) {
-					labels[i].setValue(newValue);
-				}
-			}
-		};
+		return event -> {
+            for (int i = 0; i < 8; i++) {
+                labels[i].setValue(newValue);
+            }
+        };
 	}
 	
 	public void setObject(Object obj) {

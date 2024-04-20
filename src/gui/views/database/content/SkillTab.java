@@ -55,7 +55,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
 		LPanel compositeIcon = new LPanel(grpGeneral);
 		compositeIcon.setGridLayout(2);
-		compositeIcon.getCellData().setExpand(true, true);
+		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.getCellData().setExpand(true, true);
@@ -100,12 +100,12 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LFrame grpRestrictions = new LFrame(left, Vocab.instance.RESTRICTIONS);
 		grpRestrictions.setGridLayout(2);
 		grpRestrictions.setHoverText(Tooltip.instance.RESTRICTIONS);
-		grpRestrictions.getCellData().setExpand(true, false);
+		grpRestrictions.getCellData().setExpand(true, true);
 		
 		LLabel lblCosts = new LLabel(grpRestrictions, Vocab.instance.COSTS, Tooltip.instance.COSTS);
 		lblCosts.getCellData().setMinimumSize(LABELWIDTH, 0);
-		TagList lstCosts = new TagList(grpRestrictions);
-		lstCosts.getCellData().setExpand(true, false);
+		TagList lstCosts = new TagList(grpRestrictions, Vocab.instance.COST);
+		lstCosts.getCellData().setExpand(true, true);
 		lstCosts.getCellData().setMinimumSize(0, 60);
 		lstCosts.addMenu(lblCosts);
 		addChild(lstCosts, "costs");
@@ -137,6 +137,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		grpEffects.getCellData().setExpand(true, true);
 		SkillEffectList lstEffects = new SkillEffectList(grpEffects);
 		lstEffects.getCellData().setExpand(true, true);
+		lstEffects.getCellData().setMinimumSize(0, 60);
 		lstEffects.getCellData().setSpread(2, 1);
 		lstEffects.addMenu(grpEffects);
 		addChild(lstEffects, "effects");

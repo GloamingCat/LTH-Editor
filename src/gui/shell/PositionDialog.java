@@ -40,6 +40,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 		super(parent, fieldId, Vocab.instance.POSITIONSHELL);
 		this.fieldId = fieldId;
 		setMinimumSize(640, 480);
+		setSize(640, 480);
 	}
 	
 	@Override
@@ -148,7 +149,6 @@ public class PositionDialog extends LObjectDialog<Position> {
 			}
 		}
 		updateClickPoint();
-		pack();
 	}
 	
 	private LPath findPath(int id) {

@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import gui.shell.database.PortraitShell;
+import gui.shell.database.PortraitDialog;
 import gui.widgets.SimpleEditableList;
 
 import data.GameCharacter.Portrait;
@@ -15,10 +15,10 @@ public class PortraitList extends SimpleEditableList<Portrait> {
 		super(parent);
 		type = Portrait.class;
 		setIncludeID(false);
-		setShellFactory(new LWindowFactory<Portrait>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Portrait> createWindow(LWindow parent) {
-				return new PortraitShell(parent);
+				return new PortraitDialog(parent);
 			}
 		});
 	}

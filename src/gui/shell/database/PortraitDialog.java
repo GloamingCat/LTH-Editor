@@ -3,8 +3,6 @@ package gui.shell.database;
 import gui.Tooltip;
 import gui.Vocab;
 import lui.base.LFlags;
-import lui.base.event.listener.LControlListener;
-import lui.base.event.listener.LMouseListener;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import lui.container.LImage;
@@ -13,8 +11,6 @@ import lui.container.LScrollPanel;
 import lui.base.data.LDataTree;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
-import lui.base.event.LControlEvent;
-import lui.base.event.LMouseEvent;
 import lui.widget.LLabel;
 import lui.widget.LNodeSelector;
 import lui.widget.LText;
@@ -24,7 +20,7 @@ import data.GameCharacter.Portrait;
 
 import project.Project;
 
-public class PortraitShell extends LObjectDialog<Portrait> {
+public class PortraitDialog extends LObjectDialog<Portrait> {
 	
 	protected LNodeSelector<Object> tree;
 	protected LImage image;
@@ -32,33 +28,31 @@ public class PortraitShell extends LObjectDialog<Portrait> {
 	private LScrollPanel scroll;
 	private LText txtName;
 	
-	public PortraitShell(LWindow parent) {
+	public PortraitDialog(LWindow parent) {
 		super(parent, Vocab.instance.PORTRAITSHELL);
 		setMinimumSize(600, 400);
+		setSize(600, 400);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-
 		content.setGridLayout(2);
 		
 		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
 		txtName = new LText(content);
+		txtName.getCellData().setExpand(true, false);
 
 		LFlexPanel sashForm = new LFlexPanel(content, true);
 		sashForm.getCellData().setSpread(2, 1);
 		sashForm.getCellData().setExpand(true, true);
 		
-		tree = new LNodeSelector<Object>(sashForm, true);
+		tree = new LNodeSelector<>(sashForm, true);
 		tree.setCollection(getTree());
-		tree.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				Animation anim = (Animation) tree.getSelectedObject();
-				setImage(anim);
-			}
-		});
+		tree.addModifyListener(event -> {
+            Animation anim = (Animation) tree.getSelectedObject();
+            setImage(anim);
+        });
 		
 		scroll = new LScrollPanel(sashForm);
 		
@@ -75,23 +69,17 @@ public class PortraitShell extends LObjectDialog<Portrait> {
 				}
 			}
 		});
-		image.addMouseListener(new LMouseListener() {
-			
-			@Override
-			public void onMouseChange(LMouseEvent e) {
-				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
-					Animation anim = (Animation) tree.getSelectedObject();
-					if (anim != null) {
-						col = (int) (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
-						row = (int) (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
-						image.redraw();
-					}
-				}
-			}
-		});		
+		image.addMouseListener(e -> {
+            if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+                Animation anim = (Animation) tree.getSelectedObject();
+                if (anim != null) {
+                    col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
+                    row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+                    image.redraw();
+                }
+            }
+        });
 		sashForm.setWeights(1, 2);
-
-		pack();
 	}
 	
 	private void setImage(Animation anim) {

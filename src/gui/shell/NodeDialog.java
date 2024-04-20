@@ -15,7 +15,8 @@ public abstract class NodeDialog extends ObjectEditorDialog<Node> {
 
 	public NodeDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
-		setMinimumSize(400, 400);
+		setMinimumSize(600, 400);
+		setSize(600, 400);
 	}
 	
 	public NodeDialog(LWindow parent, String title) {
@@ -24,24 +25,19 @@ public abstract class NodeDialog extends ObjectEditorDialog<Node> {
 	
 	@Override
 	protected void createContent(int style) {
-		contentEditor.setGridLayout(1);
+		super.createContent(style);
+		contentEditor.setGridLayout(2);
 		
-		LPanel name = new LPanel(contentEditor);
-		name.setGridLayout(2);
-		name.getCellData().setExpand(true, false);
-		name.getCellData().setAlignment(LFlags.CENTER);
-		
-		new LLabel(name, Vocab.instance.NAME, Tooltip.instance.KEY);
-		
-		LText txtName = new LText(name);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.KEY);
+		LText txtName = new LText(contentEditor);
+		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		tree.getCellData().setSpread(2, 1);
 		tree.getCellData().setExpand(true, true);
 		tree.setCollection(getTree());
 		addControl(tree, "id");
-		
-		pack();
 	}
 	
 	protected abstract LDataTree<Object> getTree();

@@ -37,17 +37,17 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 	public FieldImageShell(LWindow parent) {
 		super(parent, Vocab.instance.FIELDIMGSHELL);
 		setMinimumSize(400, 300);
+		setSize(600, 400);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-
 		content.setGridLayout(2);
 		
 		new LLabel(content, Vocab.instance.NAME, Tooltip.instance.KEY);
-		
 		txtName = new LText(content);
+		txtName.getCellData().setExpand(true, false);
 
 		LFlexPanel sashForm = new LFlexPanel(content, true);
 		sashForm.getCellData().setExpand(true, true);
@@ -64,7 +64,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 		
 		image = new LImage(scroll);
 		image.setBackground(new LColor(100, 100, 100));
-		image.getCellData().setAlignment(LFlags.TOP | LFlags.LEFT);
+		image.setAlignment(LFlags.TOP | LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
@@ -103,8 +103,6 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 		btnGlued = new LCheckBox(options);
 		btnGlued.setText(Vocab.instance.GLUED);
 		btnGlued.setHoverText(Tooltip.instance.GLUED);
-		
-		pack();
 	}
 	
 	private void setImage(Animation anim) {

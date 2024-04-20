@@ -16,6 +16,7 @@ public class EquipStatusDialog extends ObjectEditorDialog<EquipStatus> {
 	public EquipStatusDialog(LWindow parent) {
 		super(parent, Vocab.instance.STATUSSHELL);
 		setMinimumSize(300, 250);
+		setSize(300, 250);
 	}
 	
 	@Override
@@ -32,8 +33,6 @@ public class EquipStatusDialog extends ObjectEditorDialog<EquipStatus> {
 		btnBattle.setText(Vocab.instance.ADDONBATTLE);
 		btnBattle.setHoverText(Tooltip.instance.ADDONBATTLE);
 		addControl(btnBattle, "battle");
-		
-		pack();
 	}
 	
 }

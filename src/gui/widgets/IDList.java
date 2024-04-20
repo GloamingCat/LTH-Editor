@@ -1,6 +1,6 @@
 package gui.widgets;
 
-import gui.shell.IDShell;
+import gui.shell.IDDialog;
 import lui.container.LContainer;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
@@ -20,7 +20,7 @@ public class IDList extends SimpleEditableList<Integer> {
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Integer> createWindow(LWindow parent) {
-                return new IDShell(parent, title, 0) {
+                return new IDDialog(parent, title, 0) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}

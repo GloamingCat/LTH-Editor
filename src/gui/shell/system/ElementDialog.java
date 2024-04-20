@@ -19,6 +19,8 @@ public class ElementDialog extends ObjectEditorDialog<Element> {
 	
 	public ElementDialog(LWindow parent) {
 		super(parent, Vocab.instance.ELEMENTSHELL);
+		setMinimumSize(300, 300);
+		setSize(300, 300);
 	}
 	
 	@Override
@@ -28,33 +30,34 @@ public class ElementDialog extends ObjectEditorDialog<Element> {
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
-		
 		LText txtName = new LText(contentEditor);
+		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
-		
-		new LLabel(contentEditor, Vocab.instance.ICON, Tooltip.instance.ICON);
-		
-		LPanel icon = new LPanel(contentEditor);
-		icon.setGridLayout(2);
-		icon.getCellData().setAlignment(LFlags.CENTER);
-		
-		LImage imgIcon = new LImage(icon);
-		imgIcon.getCellData().setExpand(true, false);
 
-		IconButton btnIcon = new IconButton(icon, true);
-		btnIcon.setImageWidget(imgIcon);
-		addControl(btnIcon, "icon");
+		LLabel lblIcon = new LLabel(contentEditor, Vocab.instance.ICON, Tooltip.instance.ICON);
+		LPanel compositeIcon = new LPanel(contentEditor);
+		compositeIcon.setGridLayout(2);
+		compositeIcon.getCellData().setExpand(true, false);
+		LImage imgIcon = new LImage(compositeIcon);
+		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
+		imgIcon.getCellData().setExpand(true, true);
+		imgIcon.getCellData().setMinimumSize(0, 48);
+		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 
-		LFrame grpTags = new LFrame(contentEditor, (String) Vocab.instance.TAGS);
+		IconButton btnGraphics = new IconButton(compositeIcon, true);
+		btnGraphics.setImageWidget(imgIcon);
+		btnGraphics.addMenu(lblIcon);
+		btnGraphics.addMenu(imgIcon);
+		addControl(btnGraphics, "icon");
+
+		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);
 		grpTags.setFillLayout(true);
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.getCellData().setSpread(2, 1);
-		grpTags.getCellData().setExpand(false, true);
+		grpTags.getCellData().setExpand(true, true);
 		grpTags.getCellData().setMinimumSize(150, 100);
 		TagList lstTroops = new TagList(grpTags);
 		addChild(lstTroops, "tags");
-
-		pack();
 	}
 
 }

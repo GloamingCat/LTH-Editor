@@ -15,7 +15,8 @@ public class JobSkillDialog extends ObjectEditorDialog<Job.Skill> {
 
 	public JobSkillDialog(LWindow parent) {
 		super(parent, Vocab.instance.SKILLSHELL);
-		setMinimumSize(300, 100);
+		setMinimumSize(300, 200);
+		setSize(300, 200);
 	}
 	
 	@Override
@@ -31,9 +32,10 @@ public class JobSkillDialog extends ObjectEditorDialog<Job.Skill> {
 		
 		new LLabel(contentEditor, Vocab.instance.MINLEVEL, Tooltip.instance.SKILLLEVEL);
 		LSpinner spnLevel = new LSpinner(contentEditor);
+		spnLevel.getCellData().setExpand(true, false);
+		spnLevel.setMinimum(0);
+		spnLevel.setMaximum(9999);
 		addControl(spnLevel, "level");
-
-		pack();
 	}
 	
 }

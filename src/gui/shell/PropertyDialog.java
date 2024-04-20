@@ -15,6 +15,7 @@ public abstract class PropertyDialog extends ObjectEditorDialog<Property> {
 	public PropertyDialog(LWindow parent, String title) {
 		super(parent, title);
 		setMinimumSize(400, 320);
+		setSize(400, 320);
 	}
 	
 	@Override
@@ -24,6 +25,7 @@ public abstract class PropertyDialog extends ObjectEditorDialog<Property> {
 		
 		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.VALUE);
 		LSpinner spnValue = new LSpinner(contentEditor);
+		spnValue.getCellData().setExpand(true, false);
 		spnValue.setMinimum(-100000);
 		spnValue.setMaximum(100000);
 		addControl(spnValue, "value");
@@ -33,8 +35,7 @@ public abstract class PropertyDialog extends ObjectEditorDialog<Property> {
 		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(getTree());
 		addControl(tree, "id");
-		
-		pack();
+
 	}
 	
 	protected abstract LDataTree<Object> getTree();

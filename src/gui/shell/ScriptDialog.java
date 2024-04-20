@@ -4,6 +4,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
@@ -36,65 +37,67 @@ public class ScriptDialog extends ObjectEditorDialog<Script> {
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.DESCRIPTION, Tooltip.instance.DESCRIPTION);
-		
 		LText txtDescription = new LText(contentEditor);
+		txtDescription.getCellData().setExpand(true, false);
 		addControl(txtDescription, "description");
 		
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		form.getCellData().setExpand(true, true);
 		form.getCellData().setSpread(2, 1);
 		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
-		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
+		selFile.addFileRestriction(f ->f.getName().endsWith(".lua"));
 		selFile.setFolder(Project.current.scriptPath());
-		
-		LPanel composite = new LPanel(form);
-		composite.setGridLayout(1);
-		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
-		frame.setFillLayout(true);
-		
-		LFrame grpParameters = frame;
-		grpParameters.setHoverText(Tooltip.instance.PARAM);
-		grpParameters.getCellData().setExpand(true, true);
-		TagList lstParam = new TagList(grpParameters);
-		addChild(lstParam, "tags");
-		
-		LPanel options = new LPanel(composite);
-		options.setGridLayout(3);
-		options.getCellData().setAlignment(LFlags.CENTER);
-		
-		LCheckBox btnGlobal = new LCheckBox(options);
+
+		LFrame grpOpts = new LFrame(form, Vocab.instance.OPTIONS);
+		grpOpts.setGridLayout(2);
+		grpOpts.getCellData().setExpand(true, true);
+
+		new LLabel(grpOpts, Vocab.instance.SYNC, Tooltip.instance.SCRIPTSYNC);
+		LPanel checks = new LPanel(grpOpts);
+		checks.getCellData().setSpread(1, 2);
+		checks.setGridLayout(3);
+		checks.getCellData().setAlignment(LFlags.LEFT);
+		new LLabel(grpOpts, Vocab.instance.TRIGGER, Tooltip.instance.SCRIPTTRIGGER);
+
+		LCheckBox btnGlobal = new LCheckBox(checks);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
 		btnGlobal.setHoverText(Tooltip.instance.GLOBAL);
 		addControl(btnGlobal, "global");
 		
-		LCheckBox btnWait = new LCheckBox(options);
+		LCheckBox btnWait = new LCheckBox(checks);
 		btnWait.setText(Vocab.instance.WAIT);
 		btnWait.setHoverText(Tooltip.instance.WAIT);
 		addControl(btnWait, "wait");
 		
-		LCheckBox btnBlock = new LCheckBox(options);
+		LCheckBox btnBlock = new LCheckBox(checks);
 		btnBlock.setText(Vocab.instance.BLOCKPLAYER);
 		btnBlock.setHoverText(Tooltip.instance.BLOCKPLAYER);
 		addControl(btnBlock, "block");
 		
-		LCheckBox btnLoad = new LCheckBox(options);
+		LCheckBox btnLoad = new LCheckBox(checks);
 		btnLoad.setText(Vocab.instance.ONLOAD);
 		btnLoad.setHoverText(Tooltip.instance.ONLOAD);
 		addControl(btnLoad, "onLoad");
 		btnLoad.setEnabled((style & ONLOAD) > 0);
 	
-		LCheckBox btnCollide = new LCheckBox(options);
+		LCheckBox btnCollide = new LCheckBox(checks);
 		btnCollide.setText(Vocab.instance.ONCOLLIDE);
 		btnCollide.setHoverText(Tooltip.instance.ONCOLLIDE);
 		addControl(btnCollide, "onCollide");
 		btnCollide.setEnabled((style & ONCOLLIDE) > 0);
 		
-		LCheckBox btnInteract = new LCheckBox(options);
+		LCheckBox btnInteract = new LCheckBox(checks);
 		btnInteract.setText(Vocab.instance.ONINTERACT);
 		btnInteract.setHoverText(Tooltip.instance.ONINTERACT);
 		addControl(btnInteract, "onInteract");
 		btnInteract.setEnabled((style & ONINTERACT) > 0);
-		
+
+		LLabel lblParam = new LLabel(grpOpts, Vocab.instance.PARAM, Tooltip.instance.PARAM);
+		lblParam.getCellData().setMinimumSize(LPrefs.LABELWIDTH + 20, LPrefs.WIDGETHEIGHT);
+		TagList lstParam = new TagList(grpOpts, Vocab.instance.PARAM);
+		lstParam.getCellData().setExpand(true, true);
+		addChild(lstParam, "tags");
+
 		form.setWeights(1, 2);
 	}
 	
@@ -105,7 +108,7 @@ public class ScriptDialog extends ObjectEditorDialog<Script> {
 	
 	@Override
 	protected Script createResult(Script initial) {
-		Script script = (Script) contentEditor.getObject();
+		Script script = contentEditor.getObject();
 		script.name = selFile.getSelectedFile();
 		if (script.name == null)
 			script.name = "";

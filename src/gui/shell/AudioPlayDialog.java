@@ -42,6 +42,7 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 	public AudioPlayDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.AUDIOSHELL);
 		setMinimumSize(400, 400);
+		setSize(400, 400);
 	}
 	
 	@Override
@@ -58,23 +59,17 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 		} );
 		selFile.setFolder(Project.current.audioPath());
 		selFile.getCellData().setExpand(true, true);
+
 		cmbSound = new LCombo(sound, true);
+		cmbSound.getCellData().setExpand(true, false);
 		cmbSound.setOptional(true);
 		cmbSound.setIncludeID(false);
-		selFile.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				cmbSound.setValue(-1);
-			}
-		});
-		cmbSound.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				selFile.setValue(-1);
-				ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
-				comboAudio = list.get(cmbSound.getValue());
-			}
-		});
+		cmbSound.addModifyListener(event -> {
+            selFile.setValue(-1);
+            ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
+            comboAudio = list.get(cmbSound.getValue());
+        });
+		selFile.addModifyListener(event -> cmbSound.setValue(-1));
 
 		LPanel composite = new LPanel(form);
 		composite.setGridLayout(2);
@@ -82,11 +77,13 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 		
 		new LLabel(composite, Vocab.instance.VOLUME, Tooltip.instance.VOLUME);
 		LSpinner spnVolume = new LSpinner(composite);
+		spnVolume.getCellData().setExpand(true, false);
 		spnVolume.setMaximum(1000);
 		addControl(spnVolume, "volume");
-		
+
 		new LLabel(composite, Vocab.instance.PITCH, Tooltip.instance.PITCH);
 		LSpinner spnPitch = new LSpinner(composite);
+		spnPitch.getCellData().setExpand(true, false);
 		spnPitch.setMaximum(1000);
 		spnPitch.setMinimum(1);
 		addControl(spnPitch, "pitch");
@@ -94,6 +91,7 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 		if ((style & TIMED) > 0) {
 			new LLabel(composite, Vocab.instance.TIME, Tooltip.instance.TIME);
 			LSpinner spnTime = new LSpinner(composite);
+			spnTime.getCellData().setExpand(true, false);
 			spnTime.setMaximum(10000);
 			spnTime.setMinimum(0);
 			addControl(spnTime, "time");
@@ -102,38 +100,25 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 		AudioPlayer reproduction = new AudioPlayer(composite);
 		reproduction.getCellData().setExpand(false, true);
 		reproduction.getCellData().setSpread(2, 1);
-		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.BOTTOM);
+		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.TOP);
 		reproduction.loop = (style & BGM) > 0;
 		
-		selFile.addSelectionListener(new LSelectionListener() {
-			@Override
-			public void onSelect(LSelectionEvent event) {
-				reproduction.filename = 
-						comboAudio != null ? comboAudio.name :
-						event.data != null ? event.data.toString() : 
-						"";
-			}
-		});
-		spnVolume.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				reproduction.volume = event.newValue *
-						(comboAudio == null ? 1 : comboAudio.volume * 0.01f);
-				reproduction.refresh();
-			}
-		});
-		spnPitch.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				reproduction.pitch = event.newValue *
-						(comboAudio == null ? 1 : comboAudio.pitch * 0.01f);
-				reproduction.refresh();
-			}
-		});
+		selFile.addSelectionListener(event -> reproduction.filename =
+                comboAudio != null ? comboAudio.name :
+                event.data != null ? event.data.toString() :
+                "");
+		spnVolume.addModifyListener(event -> {
+            reproduction.volume = event.newValue *
+                    (comboAudio == null ? 1 : comboAudio.volume * 0.01f);
+            reproduction.refresh();
+        });
+		spnPitch.addModifyListener(event -> {
+            reproduction.pitch = event.newValue *
+                    (comboAudio == null ? 1 : comboAudio.pitch * 0.01f);
+            reproduction.refresh();
+        });
 		
 		form.setWeights(1, 1);
-		
-		pack();
 	}
 	
 	public void open(Audio initial) {

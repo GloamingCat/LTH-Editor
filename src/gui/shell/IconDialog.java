@@ -5,8 +5,6 @@ import data.Animation;
 import data.subcontent.Icon;
 import gui.Vocab;
 import lui.base.LFlags;
-import lui.base.event.listener.LControlListener;
-import lui.base.event.listener.LMouseListener;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import lui.container.LImage;
@@ -15,11 +13,9 @@ import lui.container.LScrollPanel;
 import lui.base.data.LDataTree;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
-import lui.base.event.LControlEvent;
-import lui.base.event.LMouseEvent;
 import lui.widget.LNodeSelector;
 
-public class IconShell extends LObjectDialog<Icon> {
+public class IconDialog extends LObjectDialog<Icon> {
 	
 	protected static LColor bg = new LColor(127, 127, 127);
 	protected LNodeSelector<Object> tree;
@@ -32,8 +28,8 @@ public class IconShell extends LObjectDialog<Icon> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public IconShell(LWindow parent, int style) {
-		super(parent, Vocab.instance.ICONSHELL);
+	public IconDialog(LWindow parent, int style) {
+		super(parent, style, Vocab.instance.ICONSHELL);
 		setMinimumSize(600, 400);
 		setSize(800, 800);
 	}
@@ -41,21 +37,19 @@ public class IconShell extends LObjectDialog<Icon> {
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
+		content.setFillLayout(true);
 		LFlexPanel sashForm = new LFlexPanel(content, true);
-		tree = new LNodeSelector<Object>(sashForm, (style & OPTIONAL) > 0);
+		tree = new LNodeSelector<>(sashForm, (style & OPTIONAL) > 0);
 		tree.setCollection(getTree());
-		tree.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				Animation anim = (Animation) tree.getSelectedObject();
-				setImage(anim);
-			}
-		});
+		tree.addModifyListener(event -> {
+            Animation anim = (Animation) tree.getSelectedObject();
+            setImage(anim);
+        });
 
 		scroll = new LScrollPanel(sashForm);
 		image = new LImage(scroll);
 		image.setBackground(bg);
-		image.getCellData().setAlignment(LFlags.TOP & LFlags.LEFT);
+		image.setAlignment(LFlags.TOP | LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {
 				Animation anim = (Animation) tree.getSelectedObject();
@@ -66,23 +60,18 @@ public class IconShell extends LObjectDialog<Icon> {
 				}
 			}
 		});
-		image.addMouseListener(new LMouseListener() {
-			@Override
-			public void onMouseChange(LMouseEvent e) {
-				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
-					Animation anim = (Animation) tree.getSelectedObject();
-					if (anim != null) {
-						col = (int) (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
-						row = (int) (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
-						image.redraw();
-					}
-				}
-			}
-		});
+		image.addMouseListener(e -> {
+            if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+                Animation anim = (Animation) tree.getSelectedObject();
+                if (anim != null) {
+                    col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
+                    row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+                    image.redraw();
+                }
+            }
+        });
 		
 		sashForm.setWeights(1, 2);
-		
-		pack();
 	}
 	
 	private void setImage(Animation anim) {

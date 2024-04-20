@@ -10,33 +10,27 @@ import lui.widget.LText;
 import lui.widget.LTextBox;
 
 public class TagDialog extends ObjectEditorDialog<Tag> {
-	
-	private LText txtKey;
-	private LTextBox txtValue;
 
-	public TagDialog(LWindow parent) {
-		super(parent, Vocab.instance.TAGSHELL);
+    public TagDialog(LWindow parent, String title) {
+		super(parent, title);
 		setMinimumSize(400, 300);
+		setSize(400, 300);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.KEY);
-		
-		txtKey = new LText(contentEditor);
+        LText txtKey = new LText(contentEditor);
+		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, LFlags.TOP, Vocab.instance.VALUE, Tooltip.instance.JSON);
-		
-		txtValue = new LTextBox(contentEditor);
-		txtValue.getCellData().setMinimumSize(170, 75);
+        LTextBox txtValue = new LTextBox(contentEditor);
+		txtValue.getCellData().setExpand(true, true);
 		addControl(txtValue, "value");
-		
-		pack();
 	}
 	
 }
