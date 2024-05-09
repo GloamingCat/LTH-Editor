@@ -33,7 +33,7 @@ import project.Project;
 
 public class StatusTab extends DatabaseTab<Status> {
 
-	private final IDList lstCancel;
+	private IDList lstCancel;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -41,7 +41,10 @@ public class StatusTab extends DatabaseTab<Status> {
 	 */
 	public StatusTab(LContainer parent) {
 		super(parent);
+	}
 
+	@Override
+	protected void createContent() {
 		// Icon
 
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
@@ -49,7 +52,6 @@ public class StatusTab extends DatabaseTab<Status> {
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.getCellData().setMinimumSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);

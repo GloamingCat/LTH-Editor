@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.widgets.IDButton;
 import lui.base.LFlags;
 import data.Troop.Unit;
+import lui.container.LCanvas;
 import project.Project;
 import lui.container.LContainer;
 import lui.container.LPanel;
@@ -17,7 +18,7 @@ import lui.widget.LText;
 
 public class UnitEditor extends GDefaultObjectEditor<Unit> {
 
-	public LPanel gridCanvas = null;
+	public LCanvas gridCanvas = null;
 	public final LSpinner spnX;
 	public final LSpinner spnY;
 	public final LText txtChar;

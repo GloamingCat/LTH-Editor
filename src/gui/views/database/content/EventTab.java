@@ -27,7 +27,16 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	 */
 	public EventTab(LContainer parent) {
 		super(parent);
-		
+	}
+
+	@Override
+	protected void createContent() {
+		grpGeneral.getCellData().setExpand(true, true);
+		left.getCellData().setExpand(true, false);
+		left.getCellData().setAlignment(LFlags.FILL);
+		right.getCellData().setExpand(true, false);
+		right.getCellData().setAlignment(LFlags.FILL);
+
 		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral);
@@ -47,6 +56,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		lstEvents.type = EventSheet.Event.class;
 		lstEvents.addMenu(grpEvents);
 		addChild(lstEvents, "events");
+
 		EventEditor eventEditor = new EventEditor(grpEvents, false);
 		eventEditor.setGridLayout(2);
 		eventEditor.getCellData().setExpand(true, true);
@@ -72,10 +82,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		txtCondition.getCellData().setExpand(true, false);
 		txtCondition.addMenu(lblCondition);
 		eventEditor.addControl(txtCondition, "condition");
-		
-		grpGeneral.getCellData().setExpand(true, true);
-		left.getCellData().setExpand(true, false);
-		right.getCellData().setExpand(true, false);
+
 	}
 
 	@Override

@@ -102,7 +102,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 
 		canvas.onTileEnter = t -> {
 			lblPos.setText("(" + (t.dx + 1) + "," + (t.dy + 1) + "," + (t.height + 1) + ")");
-			bottom.layout();
+			bottom.refreshLayout();
 		};
 
 	}

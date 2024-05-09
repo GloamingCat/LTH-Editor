@@ -44,7 +44,10 @@ public class BattlerTab extends DatabaseTab<Battler> {
 	 */
 	public BattlerTab(LContainer parent) {
 		super(parent);
-		
+	}
+
+	@Override
+	protected void createContent() {
 		LPanel middle = new LPanel(left);
 		middle.setGridLayout(2);
 		middle.getCellData().setExpand(true, true);
@@ -60,7 +63,6 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.getCellData().setMinimumSize(48, 48);
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
@@ -74,7 +76,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 			Tooltip.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral);
-		txtDescription.getCellData().setExpand(true, false);
+		txtDescription.getCellData().setExpand(true, true);
 		txtDescription.getCellData().setMinimumSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
@@ -91,7 +93,6 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LLabel lblMoney = new LLabel(other, Vocab.instance.MONEY, Tooltip.instance.MONEY);
 		lblMoney.getCellData().setMinimumSize(LABELWIDTH, 0);
 
-		
 		LSpinner spnMoney = new LSpinner(other);
 		spnMoney.getCellData().setExpand(true, false);
 		spnMoney.setMaximum(99999999);
@@ -164,7 +165,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 
 		// Elements
 		
-		LFrame grpElements = new LFrame(middle, (String) Vocab.instance.ELEMENTS);
+		LFrame grpElements = new LFrame(middle, Vocab.instance.ELEMENTS);
 		grpElements.setFillLayout(true);
 		grpElements.setHoverText(Tooltip.instance.ELEMENTDEF);
 		grpElements.getCellData().setExpand(true, true);
@@ -174,7 +175,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Skills
 		
-		LFrame grpSkills = new LFrame(bottom, (String) Vocab.instance.INITSKILLS);
+		LFrame grpSkills = new LFrame(bottom, Vocab.instance.INITSKILLS);
 		grpSkills.setFillLayout(true);
 		grpSkills.setHoverText(Tooltip.instance.INITSKILLS);
 		grpSkills.getCellData().setExpand(true, true);
@@ -204,7 +205,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Drop
 		
-		LFrame grpDrop = new LFrame(right, (String) Vocab.instance.DROP);
+		LFrame grpDrop = new LFrame(right, Vocab.instance.DROP);
 		grpDrop.setFillLayout(true);
 		grpDrop.setHoverText(Tooltip.instance.DROP);
 		grpDrop.getCellData().setExpand(true, true);
@@ -214,7 +215,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// AI
 
-		LFrame grpAI = new LFrame(right, (String) Vocab.instance.RULES);
+		LFrame grpAI = new LFrame(right, Vocab.instance.RULES);
 		grpAI.setFillLayout(true);
 		grpAI.setHoverText(Tooltip.instance.RULES);
 		grpAI.getCellData().setExpand(true, true);

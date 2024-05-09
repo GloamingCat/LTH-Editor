@@ -32,7 +32,10 @@ public class JobTab extends DatabaseTab<Job> {
 	 */
 	public JobTab(LContainer parent) {
 		super(parent);
-		
+	}
+
+	@Override
+	protected void createContent() {
 		LLabel lblExp = new LLabel(grpGeneral, Vocab.instance.EXPCURVE, Tooltip.instance.EXPCURVE);
 		LText txtCurve = new LText(grpGeneral);
 		txtCurve.getCellData().setExpand(true, false);
@@ -54,7 +57,7 @@ public class JobTab extends DatabaseTab<Job> {
 		btnAttack.addMenu(lblExp);
 		addControl(btnAttack, "attackID");
 		
-		LFrame grpBuild = new LFrame(left, (String) Vocab.instance.BUILD);
+		LFrame grpBuild = new LFrame(left, Vocab.instance.BUILD);
 		grpBuild.setFillLayout(true);
 		grpBuild.setHoverText(Tooltip.instance.BUILD);
 		grpBuild.getCellData().setExpand(true, true);

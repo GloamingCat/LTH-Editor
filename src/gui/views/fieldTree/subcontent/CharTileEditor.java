@@ -150,7 +150,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		addControl(txtAnim, "animation");
 
 		LSpinner spnFrame = new LSpinner(animation);
-		spnFrame.getCellData().setExpand(true, false);
+		spnFrame.getCellData().setExpand(false, false);
 		spnFrame.getCellData().setAlignment(LFlags.MIDDLE);
 		spnFrame.getCellData().setMinimumSize(36, 0);
 		addControl(spnFrame, "frame");
@@ -181,7 +181,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 		LPanel compOptions = new LPanel(this);
 		compOptions.setSequentialLayout(true);
-		compOptions.getCellData().setSpread(4, 1);
+		compOptions.getCellData().setSpread(3, 1);
 		compOptions.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 
 		LCheckBox btnPersistent = new LCheckBox(compOptions);
@@ -203,7 +203,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 		LFrame grpScripts = new LFrame(this, Vocab.instance.SCRIPTS);
 		grpScripts.setGridLayout(1);
-		grpScripts.getCellData().setSpread(4, 1);
+		grpScripts.getCellData().setSpread(3, 1);
 		grpScripts.getCellData().setExpand(true, true);
 		
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
@@ -213,6 +213,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
+		btnRepeat.getCellData().setAlignment(LFlags.LEFT);
 		addControl(btnRepeat, "repeatCollisions");
 
 	}

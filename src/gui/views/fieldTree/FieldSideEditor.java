@@ -90,8 +90,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		super(parent, false);
 		setGridLayout(1);
 		
-		lblTitle = new LLabel(this, LFlags.CENTER | LFlags.EXPAND, Vocab.instance.TERRAIN);
-		
+		lblTitle = new LLabel(this, LFlags.CENTER | LFlags.EXPAND, "");
+
 		stack = new LStack(this);
 		stack.getCellData().setExpand(true, true);
 		
@@ -216,7 +216,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		lstChars = new SimpleEditableList<>(character);
 		lstChars.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
-		lstChars.getCellData().setExpand(true, true);
 		lstChars.getCollectionWidget().setEditEnabled(false);
 		lstChars.setIncludeID(false);
 		lstChars.type = CharTile.class;
@@ -224,7 +223,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		charEditor = new CharTileEditor(character);
 		charEditor.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
-		charEditor.getCellData().setExpand(true, false);
 		lstChars.addChild(charEditor);
 		lstChars.getCollectionWidget().addInsertListener(charListener);
 		lstChars.getCollectionWidget().addDeleteListener(charListener);
@@ -233,7 +231,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			if (onSelectChar != null)
 				onSelectChar.accept(tile);
         });
-		character.setWeights(1, 3);
+		character.setWeights(1, 1);
 
 		// Party
 
@@ -252,9 +250,9 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		cmbPlayerParty.setOptional(true);
 		addControl(cmbPlayerParty, "playerParty");
 
-		LFlexPanel partylist = new LFlexPanel(party, false);
-		partylist.getCellData().setExpand(true, true);
-		partylist.getCellData().setSpread(2, 1);
+		LFlexPanel partyList = new LFlexPanel(party, false);
+		partyList.getCellData().setExpand(true, true);
+		partyList.getCellData().setSpread(2, 1);
 
 		LCollectionListener<Party> partyListener = new LCollectionListener<>() {
 			public void onInsert(LInsertEvent<Party> event) {
@@ -267,7 +265,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			}
 		};
 
-		lstParties = new SimpleEditableList<>(partylist);
+		lstParties = new SimpleEditableList<>(partyList);
 		lstParties.setMargins(0, LPrefs.GRIDSPACING);
 		lstParties.getCollectionWidget().setEditEnabled(false);
 		lstParties.setIncludeID(true);
@@ -281,9 +279,10 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				onSelectParty.accept(p);
         });
 
-        partyEditor = new PartyEditor(partylist);
+        partyEditor = new PartyEditor(partyList);
 		partyEditor.onRename = n -> updatePartyNames();
 		lstParties.addChild(partyEditor);
+		partyList.setWeights(1, 1);
 
 		lstTerrain.onEdit =	lstObstacle.onEdit = lstRegion.onEdit = this::onLayerEdit;
 		lstTerrain.onCheck = lstObstacle.onCheck = lstRegion.onCheck = this::onLayerEdit;
@@ -291,7 +290,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lists = new LayerList[] { lstTerrain, lstObstacle, lstRegion };
 		trees = new TileTree[] { selTerrain, selObstacle, selRegion };
 		editors = new LContainer[] { terrain, obstacle, region, character, party };
-		
+
+
 	}
 
 	public void setMenuInterface(LMenuInterface mi) {
@@ -348,7 +348,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lblTitle.setText(titles[i]);
 		lblTitle.setHoverText(tooltips[i]);
 		stack.setTop(editors[i]);
-		layout();
+		refreshLayout();
 	}
 	
 	public void selectTile(int i) {

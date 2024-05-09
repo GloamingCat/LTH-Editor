@@ -6,7 +6,6 @@ import lui.base.event.listener.LControlListener;
 import data.subcontent.Transform;
 import lui.container.LContainer;
 import lui.container.LImage;
-import lui.base.event.LControlEvent;
 import lui.graphics.LPainter;
 import lui.gson.GDefaultObjectEditor;
 import lui.widget.LLabel;
@@ -16,47 +15,30 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	
 	public LImage image = null;
 	public Transform secondaryTransform = null;
-	private LSpinner spnOffsetX;
-	private LSpinner spnOffsetY;
-	private LSpinner spnScaleY;
-	private LSpinner spnScaleX;
-	private LSpinner spnRotation;
 
-	public TransformEditor(LContainer parent) {
+    public TransformEditor(LContainer parent) {
 		super(parent, false);
 		setGridLayout(4);
 
-		LControlListener<Integer> updateColor = new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event.oldValue == null) return;
-				onChangeColor((Transform) getObject());
-			}
-		};
-		LControlListener<Integer> updateOffset = new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event.oldValue == null) return;
-				onChangeOffset((Transform) getObject());
-			}
-		};
-		LControlListener<Integer> updateScale = new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event.oldValue == null) return;
-				onChangeScale((Transform) getObject());
-			}
-		};
-		LControlListener<Integer> updateRotation = new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				if (event.oldValue == null) return;
-				onChangeRotation((Transform) getObject());
-			}
-		};
+		LControlListener<Integer> updateColor = event -> {
+            if (event.oldValue == null) return;
+            onChangeColor(getObject());
+        };
+		LControlListener<Integer> updateOffset = event -> {
+            if (event.oldValue == null) return;
+            onChangeOffset(getObject());
+        };
+		LControlListener<Integer> updateScale = event -> {
+            if (event.oldValue == null) return;
+            onChangeScale(getObject());
+        };
+		LControlListener<Integer> updateRotation = event -> {
+            if (event.oldValue == null) return;
+            onChangeRotation(getObject());
+        };
 		
 		LLabel lblOffsetX = new LLabel(this, Vocab.instance.OFFSETX, Tooltip.instance.OFFSETX);
-		spnOffsetX = new LSpinner(this);
+        LSpinner spnOffsetX = new LSpinner(this);
 		spnOffsetX.getCellData().setExpand(true, false);
 		spnOffsetX.getCellData().setExpand(true, false);
 		spnOffsetX.setMaximum(1024 * 4);
@@ -64,7 +46,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnOffsetX.addMenu(lblOffsetX);
 		addControl(spnOffsetX, "offsetX");
 		spnOffsetX.addModifyListener(updateOffset);
-		
+
 		LLabel lblRed = new LLabel(this, Vocab.instance.RED, Tooltip.instance.RED);
 		LSpinner spnRed = new LSpinner(this);
 		spnRed.getCellData().setExpand(true, false);
@@ -73,16 +55,16 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnRed.addMenu(lblRed);
 		addControl(spnRed, "red");
 		spnRed.addModifyListener(updateColor);
-		
+
 		LLabel lblOffsetY = new LLabel(this, Vocab.instance.OFFSETY, Tooltip.instance.OFFSETY);
-		spnOffsetY = new LSpinner(this);
+        LSpinner spnOffsetY = new LSpinner(this);
 		spnOffsetY.getCellData().setExpand(true, false);
 		spnOffsetY.setMaximum(1024);
 		spnOffsetY.setMinimum(-1024);
 		spnOffsetY.addMenu(lblOffsetY);
 		addControl(spnOffsetY, "offsetY");
 		spnOffsetY.addModifyListener(updateOffset);
-		
+
 		LLabel lblGreen = new LLabel(this, Vocab.instance.GREEN, Tooltip.instance.GREEN);
 		LSpinner spnGreen = new LSpinner(this);
 		spnGreen.getCellData().setExpand(true, false);
@@ -91,7 +73,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnGreen.addMenu(lblGreen);
 		addControl(spnGreen, "green");
 		spnGreen.addModifyListener(updateColor);
-		
+
 		LLabel lblOffsetDepth = new LLabel(this, Vocab.instance.OFFSETDEPTH, Tooltip.instance.OFFSETDEPTH);
 		LSpinner spnOffsetDepth = new LSpinner(this);
 		spnOffsetDepth.getCellData().setExpand(true, false);
@@ -99,7 +81,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnOffsetDepth.setMaximum(1024);
 		spnOffsetDepth.addMenu(lblOffsetDepth);
 		addControl(spnOffsetDepth, "offsetDepth");
-		
+
 		LLabel lblBlue = new LLabel(this, Vocab.instance.BLUE, Tooltip.instance.BLUE);
 		LSpinner spnBlue = new LSpinner(this);
 		spnBlue.getCellData().setExpand(true, false);
@@ -110,14 +92,14 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnBlue.addModifyListener(updateColor);
 		
 		LLabel lblScaleX = new LLabel(this, Vocab.instance.SCALEX, Tooltip.instance.SCALEX);
-		spnScaleX = new LSpinner(this);
+        LSpinner spnScaleX = new LSpinner(this);
 		spnScaleX.getCellData().setExpand(true, false);
 		spnScaleX.setMaximum(10000);
 		spnScaleX.setMinimum(-10000);
 		spnScaleX.addMenu(lblScaleX);
 		addControl(spnScaleX, "scaleX");
 		spnScaleX.addModifyListener(updateScale);
-		
+
 		LLabel lblAlpha = new LLabel(this, Vocab.instance.ALPHA, Tooltip.instance.ALPHA);
 		LSpinner spnAlpha = new LSpinner(this);
 		spnAlpha.getCellData().setExpand(true, false);
@@ -128,14 +110,14 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnAlpha.addModifyListener(updateColor);
 		
 		LLabel lblScaleY = new LLabel(this, Vocab.instance.SCALEY, Tooltip.instance.SCALEY);
-		spnScaleY = new LSpinner(this);
+        LSpinner spnScaleY = new LSpinner(this);
 		spnScaleY.getCellData().setExpand(true, false);
 		spnScaleY.setMaximum(10000);
 		spnScaleY.setMinimum(-10000);
 		spnScaleY.addMenu(lblScaleY);
 		addControl(spnScaleY, "scaleY");
 		spnScaleY.addModifyListener(updateScale);
-		
+
 		LLabel lblHue = new LLabel(this, Vocab.instance.HUE, Tooltip.instance.HUE);
 		LSpinner spnHue = new LSpinner(this);
 		spnHue.getCellData().setExpand(true, false);
@@ -146,14 +128,14 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnHue.addModifyListener(updateColor);
 		
 		LLabel lblRotation = new LLabel(this, Vocab.instance.ROTATION, Tooltip.instance.ROTATION);
-		spnRotation = new LSpinner(this);
+        LSpinner spnRotation = new LSpinner(this);
 		spnRotation.getCellData().setExpand(true, false);
 		spnRotation.setMaximum(360);
 		spnRotation.setMinimum(-360);
 		spnRotation.addMenu(lblRotation);
 		addControl(spnRotation, "rotation");
 		spnRotation.addModifyListener(updateRotation);
-		
+
 		LLabel lblSaturation = new LLabel(this, Vocab.instance.SATURATION, Tooltip.instance.SATURATION);
 		LSpinner spnSaturation = new LSpinner(this);
 		spnSaturation.getCellData().setExpand(true, false);
@@ -179,10 +161,9 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		img.addPainter(new LPainter() {
 			@Override
 			public void paint() {
-				Object obj = getObject();
-				if (obj == null)
+				Transform t = getObject();
+				if (t == null)
 					return;
-				Transform t = (Transform) obj;
 				float sw = t.scaleX / 100f;
 				float sh = t.scaleY / 100f;
 				int x = Math.round(t.offsetX * sw) + (int) img.getImageX();
@@ -256,7 +237,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	}
 
 	public void updateColorTransform(LImage img) {
-		Transform t1 = (Transform) getObject();
+		Transform t1 = getObject();
 		if (t1 != null) {
 			Transform t2 = secondaryTransform;
 			if (t2 != null) {

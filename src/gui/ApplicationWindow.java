@@ -21,7 +21,7 @@ public class ApplicationWindow extends LApplicationWindow {
 	}
 
 	public ApplicationWindow(String... args) {
-		super(1200, 700, "/img/icon.png", args);
+		super(1200, 750, "bin/img/icon.png", args);
 		setMinimumSize(800, 600);
 	}
 

@@ -20,10 +20,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 
 	public final FieldCanvas canvas;
 	public final FieldToolBar toolBar;
-
 	private final LScrollPanel scrolledComposite;
-
-	private final LLabel lblId;
 
 	/**
 	 * @wbp.parser.constructor
@@ -31,26 +28,25 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	 */
 	public FieldEditor(LContainer parent) {
 		super(parent, true);
-		setGridLayout(2);
+		setGridLayout(1);
+		setSpacing(0);
 		
 		toolBar = new FieldToolBar(this);
-		toolBar.getCellData().setAlignment(LFlags.CENTER);
+		toolBar.getCellData().setAlignment(LFlags.LEFT);
 		toolBar.getCellData().setExpand(true, false);
 		toolBar.getCellData().setMinimumSize(440, 0);
 		addChild(toolBar);
 		
-		lblId = new LLabel(this, "ID: 9999", Tooltip.instance.ID);
-		
 		scrolledComposite = new LScrollPanel(this);
 		scrolledComposite.getCellData().setExpand(true, true);
-		scrolledComposite.getCellData().setSpread(2, 1);
+		scrolledComposite.getCellData().setSpread(1, 1);
 		
 		canvas = new FieldCanvasOpenGL(scrolledComposite);
 		addChild(canvas);
 
 		LPanel bottom = new LPanel(this);
 		bottom.setGridLayout(2);
-		bottom.getCellData().setSpread(2, 1);
+		bottom.getCellData().setSpread(1, 1);
 		bottom.getCellData().setExpand(true, false);
 
 		LPanel scale = new LPanel(bottom);
@@ -83,10 +79,9 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 
 		toolBar.onSelectTool = canvas::setTool;
 		toolBar.onShowGrid = canvas::setShowGrid;
-		canvas.lblId = lblId;
 		canvas.onTileEnter = t -> {
 			tileCoord.setText("(" + (t.dx + 1) + "," + (t.dy + 1) + "," + (t.height + 1) + ")");
-			bottom.layout();
+			bottom.refreshLayout();
 		};
 
 	}
@@ -96,7 +91,6 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	}
 
 	public void selectField(Field field) {
-		lblId.setText("ID: " + (field == null ? -1 : field.id));
 		canvas.setField(field);
 		toolBar.setField(field);
 		scrolledComposite.setContentSize(canvas.getCurrentSize());

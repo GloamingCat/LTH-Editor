@@ -75,7 +75,10 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 
 		new LLabel(this, Vocab.instance.DIRECTION, Tooltip.instance.PARTYDIR);
 		
-		DirectionCombo cmbDir = new DirectionCombo(this);
+		LCombo cmbDir = new LCombo(this);
+		cmbDir.setIncludeID(false);
+		cmbDir.setOptional(false);
+		cmbDir.setItems(DirectionCombo.dir4);
 		cmbDir.getCellData().setExpand(true, false);
 		cmbDir.addModifyListener(redrawListener);
 		addControl(cmbDir, "rotation");

@@ -6,7 +6,6 @@ import lui.container.LScrollPanel;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import lui.base.data.LPoint;
-import lui.widget.LLabel;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.action.BucketAction;
 import gui.views.fieldTree.action.CharAction;
@@ -38,8 +37,6 @@ public abstract class FieldCanvas extends LCanvas {
 	public int x0;
 	public int y0;
 
-	public LLabel lblId = null;
-
 	protected LPoint mousePoint = new LPoint(0, 0);
 	protected Tile currentTile = new Tile(0, 0, 0);
 	protected LPoint clickedTile = null;
@@ -70,14 +67,18 @@ public abstract class FieldCanvas extends LCanvas {
 		scrollPanel = parent;
 		addPainter(new LPainter() {
 			public void paint() {
-				draw(this);
-				setTransparency(100);
-				if (currentParty != null) {
-					setFillColor(partyColor);
-					drawParty(this);
-				} else {
-					setFillColor(selectionColor);
-					drawSelection(this);
+				try {
+					draw(this);
+					setTransparency(100);
+					if (currentParty != null) {
+						setFillColor(partyColor);
+						drawParty(this);
+					} else {
+						setFillColor(selectionColor);
+						drawSelection(this);
+					}
+				} catch (Throwable e) {
+					e.printStackTrace();
 				}
 			}
 		});
@@ -166,7 +167,7 @@ public abstract class FieldCanvas extends LCanvas {
 				(int) ((p1.y + y0) * scale) };
 		painter.fillPolygon(poly);
 		int direction = (currentParty.rotation * 90 + FieldHelper.math.initialDirection) % 360;
-		String dirName =  "/img/falsearrow_" + direction;
+		String dirName =  "bin/img/falsearrow_" + direction;
 		painter.setTransparency(255);
 		painter.drawImageCenter(dirName + ".png",
 				(int) (x0 + (p1.x + p3.x) * scale / 2),
@@ -296,7 +297,11 @@ public abstract class FieldCanvas extends LCanvas {
 			this.currentLayer = null;
 			rescale(scale);
 		}
-		refresh();
+		try {
+			refresh();
+		} catch(Exception e) {
+			System.out.println("Thread: " + Thread.currentThread().threadId());
+		}
 	}
 
 	public void setClickedTile(int x, int y, int h) {

@@ -38,8 +38,8 @@ import project.Project;
 
 public class CharacterTab extends DatabaseTab<GameCharacter> {
 
-	private final IDButton btnBattler;
-	private final NodeList lstAnim;
+	private IDButton btnBattler;
+	private NodeList lstAnim;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -47,7 +47,10 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 	 */
 	public CharacterTab(LContainer parent) {
 		super(parent);
-		
+	}
+
+	@Override
+	protected void createContent() {
 		LLabel lblBattler = new LLabel(grpGeneral, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
 		LPanel battler = new LPanel(grpGeneral);
 		battler.setGridLayout(2);

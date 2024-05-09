@@ -8,6 +8,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.event.listener.LCollectionListener;
 
 import com.google.gson.Gson;
@@ -65,11 +66,11 @@ public abstract class DatabaseTab<T> extends LView {
 		listEditor.getCollectionWidget().setDeleteEnabled(true);
 		listEditor.getCollectionWidget().setCopyEnabled(true);
 		listEditor.getCollectionWidget().setPasteEnabled(true);
-		listEditor.getCollectionWidget().setIncludeID(true);
 		super.addChild(listEditor);
 		
 		contentEditor = new DatabaseContentEditor(sashForm, true);
 		contentEditor.setGridLayout(2);
+		contentEditor.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		contentEditor.setEqualCells(true, false);
 		
 		left = new LPanel(contentEditor);
@@ -137,9 +138,13 @@ public abstract class DatabaseTab<T> extends LView {
 				lblID.setText("ID " + event.node.id);
 			}
 		});
+
+		createContent();
 		
 		sashForm.setWeights(1, 3);
 	}
+
+	protected abstract void createContent();
 	
 	protected abstract GObjectTreeSerializer getSerializer();
 	

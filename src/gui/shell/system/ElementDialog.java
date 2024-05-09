@@ -39,7 +39,6 @@ public class ElementDialog extends ObjectEditorDialog<Element> {
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.getCellData().setMinimumSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);

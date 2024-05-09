@@ -36,7 +36,10 @@ public class ItemTab extends DatabaseTab<Item> {
 	 */
 	public ItemTab(LContainer parent) {
 		super(parent);
+	}
 
+	@Override
+	protected void createContent() {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
@@ -44,7 +47,6 @@ public class ItemTab extends DatabaseTab<Item> {
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.getCellData().setMinimumSize(48,48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
@@ -59,7 +61,7 @@ public class ItemTab extends DatabaseTab<Item> {
 		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral);
-		txtDescription.getCellData().setExpand(true, false);
+		txtDescription.getCellData().setExpand(true, true);
 		txtDescription.getCellData().setMinimumSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");

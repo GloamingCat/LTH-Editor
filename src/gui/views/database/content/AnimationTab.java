@@ -28,8 +28,8 @@ import gson.GObjectTreeSerializer;
 
 public class AnimationTab extends DatabaseTab<Animation> {
 
-	private final LSpinner spnCols;
-	private final LSpinner spnRows;
+	private LSpinner spnCols;
+	private LSpinner spnRows;
 
 	/**
 	 * @wbp.parser.constructor
@@ -37,7 +37,10 @@ public class AnimationTab extends DatabaseTab<Animation> {
 	 */
 	public AnimationTab(LContainer parent) {
 		super(parent);
-		
+			}
+
+	@Override
+	protected void createContent() {
 		// Script
 		
 		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);

@@ -28,8 +28,8 @@ import project.Project;
 
 public class TerrainTab extends DatabaseTab<Terrain> {
 
-	private final PropertyList lstJobMoveCost;
-	private final IDButton btnStatus;
+	private PropertyList lstJobMoveCost;
+	private IDButton btnStatus;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -37,6 +37,10 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 	 */
 	public TerrainTab(LContainer parent) {
 		super(parent);
+	}
+
+	@Override
+	protected void createContent() {
 		
 		// General
 
@@ -49,22 +53,21 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		btnPassable.setHoverText(Tooltip.instance.PASSABLE);
 		addControl(btnPassable, "passable");
-		
+
 		// Graphics
-		
+
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
 		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.getCellData().setExpand(true, true);
 		LImage imgGraphics = new LImage(grpGraphics);
-		imgGraphics.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgGraphics.getCellData().setExpand(true, true);
-		imgGraphics.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
-		ImageButton btnAnim = new ImageButton(grpGraphics, true);
-		btnAnim.setImage(imgGraphics);
-		btnAnim.addMenu(grpGraphics);
-		btnAnim.addMenu(imgGraphics);
-		addControl(btnAnim, "animID");
+		imgGraphics.setAlignment(LFlags.MIDDLE | LFlags.CENTER);
+		ImageButton btnGraphics = new ImageButton(grpGraphics, true);
+		btnGraphics.addMenu(grpGraphics);
+		btnGraphics.addMenu(imgGraphics);
+		btnGraphics.setImage(imgGraphics);
+		addControl(btnGraphics, "animID");
 
 		// Move Cost
 
@@ -75,7 +78,6 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 		LLabel lblCost = new LLabel(moveCost, LFlags.TOP, Vocab.instance.DEFAULT,
 				Tooltip.instance.DEFAULTCOST);
-		lblCost.getCellData().setMinimumSize(LABELWIDTH, 0);
 		LSpinner spnCost = new LSpinner(moveCost);
 		spnCost.getCellData().setExpand(true, false);
 		spnCost.setMinimum(100);
@@ -108,7 +110,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		addChild(lstAudio, "sounds");
 
 		// Status
-		
+
 		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS);
 		grpStatus.setGridLayout(2);
 		grpStatus.setHoverText(Tooltip.instance.TERRAINSTATUS);
@@ -128,13 +130,13 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		btnRemoveOnExit.setText(Vocab.instance.REMOVEONEXIT);
 		btnRemoveOnExit.setHoverText(Tooltip.instance.REMOVEONEXIT);
 		addControl(btnRemoveOnExit, "removeOnExit");
-		
+
 	}
 	
 	@Override
 	public void onVisible() {
-		btnStatus.dataTree = Project.current.status.getTree();
-		lstJobMoveCost.dataTree = Project.current.jobs.getTree();
+		//btnStatus.dataTree = Project.current.status.getTree();
+		//lstJobMoveCost.dataTree = Project.current.jobs.getTree();
 		super.onVisible();
 	}
 	

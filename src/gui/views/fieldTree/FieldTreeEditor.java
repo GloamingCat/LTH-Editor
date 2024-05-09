@@ -128,6 +128,7 @@ public class FieldTreeEditor extends LView {
 				return new FieldPrefDialog(parent, n);
 			}
 		});
+		fieldTree.setIncludeID(true);
 		addChild(treeEditor);
 
 		LFlexPanel sashForm2 = new LFlexPanel(sashForm, true);
@@ -226,8 +227,8 @@ public class FieldTreeEditor extends LView {
 			}
 		};
 
-		sashForm.setWeights(1, 4);
-		sashForm2.setWeights(3, 1);
+		sashForm.setWeights(1, 5);
+		sashForm2.setWeights(2, 1);
 	}
 	
 	public void onVisible() {

@@ -29,7 +29,10 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 	 */
 	public ObstacleTab(LContainer parent) {
 		super(parent);
+	}
 
+	@Override
+	protected void createContent() {
 		LLabel lblTiles = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES,
 				Tooltip.instance.COLLIDERTILES);
 		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<>(grpGeneral);
@@ -45,7 +48,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		tileList.getCellData().setMinimumSize(0, 60);
 		tileList.addMenu(lblTiles);
 		addChild(tileList, "tiles");
-		
+
 		// Graphics
 		
 		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
@@ -82,7 +85,8 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		transformEditor.setImage(imgGraphics);
 		btnGraphics.setTransform(transformEditor);
 
-		new LLabel(right, 1, 1);
+		LLabel fill = new LLabel(right, 1, 1);
+		fill.getCellData().setExpand(true, true);
 	}
 
 	@Override

@@ -11,7 +11,6 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import lui.base.LFlags;
-import lui.base.event.listener.LControlListener;
 import lui.container.LCanvas;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -22,7 +21,6 @@ import lui.graphics.LPainter;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
-import lui.base.event.LControlEvent;
 import lui.widget.LCheckBox;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
@@ -40,8 +38,7 @@ import gson.GObjectTreeSerializer;
 
 public class SkillTab extends DatabaseTab<Skill> {
 
-
-	private final PropertyList lstElements;
+	private PropertyList lstElements;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -49,7 +46,10 @@ public class SkillTab extends DatabaseTab<Skill> {
 	 */
 	public SkillTab(LContainer parent) {
 		super(parent);
+	}
 
+	@Override
+	protected void createContent() {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
@@ -57,7 +57,6 @@ public class SkillTab extends DatabaseTab<Skill> {
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.setImage("/javax/swing/plaf/basic/icons/image-delayed.png");
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.getCellData().setMinimumSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
@@ -73,7 +72,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(grpGeneral);
-		txtDescription.getCellData().setExpand(true, false);
+		txtDescription.getCellData().setExpand(true, true);
 		txtDescription.getCellData().setMinimumSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
@@ -248,7 +247,6 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		LCanvas effectMask = new LCanvas(grpEffect);
 		effectMask.getCellData().setExpand(true, true);
-		effectMask.setMenu(btnEffectMask.getMenu());
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 		
 		LCheckBox btnRotate = new LCheckBox(grpEffect);
@@ -269,7 +267,6 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		LCanvas castMask = new LCanvas(grpCast);
 		castMask.getCellData().setExpand(true, true);
-		castMask.setMenu(btnCastMask.getMenu());
 		addMaskButton(btnCastMask, castMask, castColor);	
 		
 	}
@@ -292,13 +289,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 	protected static final int cellSize = 8;
 	protected static final int border = 2;
 	
-	public LColor effectColor = new LColor(0, 255, 0);
-	public LColor castColor = new LColor(0, 0, 255);
-	public LColor falseColor = new LColor(0, 0, 0);
-	public LColor centerColor = new LColor(255, 0, 0);
+	public static final LColor effectColor = new LColor(0, 255, 0);
+	public static final LColor castColor = new LColor(0, 0, 255);
+	public static final LColor falseColor = new LColor(0, 0, 0);
+	public static final LColor centerColor = new LColor(255, 0, 0);
 	
 	private void addMaskButton(LObjectButton<Mask> button, LCanvas mask, LColor trueColor) {
-		button.setShellFactory(new LWindowFactory<Mask>() {
+		button.setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Mask> createWindow(LWindow parent) {
 				MaskShell shell = new MaskShell(parent);
@@ -308,12 +305,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 				return shell;
 			}
 		});
-		button.addModifyListener(new LControlListener<Mask>() {
-			@Override
-			public void onModify(LControlEvent<Mask> event) {
-				mask.redraw();
-			}
-		});
+		button.addModifyListener(event -> mask.redraw());
 		mask.addPainter(new LPainter() {
 			@Override
 			public void paint() {
@@ -339,6 +331,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 						cellSize - border - 2);
 			}
 		});
+		button.addMenu(mask);
 	}
 	
 	private static class MaskButton extends LObjectButton<Mask> {

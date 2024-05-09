@@ -22,31 +22,26 @@ import lui.graphics.LColor;
 import lui.base.data.LPoint;
 import lui.graphics.LTexture;
 import project.Project;
-import rendering.Context;
-import rendering.Renderer;
-import rendering.Screen;
-import rendering.ShaderProgram;
-import rendering.Texture;
-import rendering.VertexArray;
+import rendering.*;
 
 public class SceneHelper {
 	
-	public static final Context context = new Context(1, 1);
-	private static HashMap<String, Texture> loadedTextures = new HashMap<String, Texture>();
+	public static Context context = null;
+	private static final HashMap<String, Texture> loadedTextures = new HashMap<>();
 	private static Config conf;
 	private static Texture whiteTexture;
 
 	public static boolean initContext() {
-		if (!context.isInitialized()) {
-			try {
-				context.init();
-			} catch (UnsatisfiedLinkError e) {
-				return false;
-			} catch (ExceptionInInitializerError e) {
-				return false;
-			}
-			whiteTexture = Texture.white(255);
+		try {
+			if (context == null)
+				context = new Context(1, 1);
+			else if (context.isInitialized())
+				return true;
+			context.init();
+		} catch (UnsatisfiedLinkError | ExceptionInInitializerError | OpenGLError e) {
+			return false;
 		}
+		whiteTexture = Texture.white(255);
 		return true;
 	}
 	
@@ -57,7 +52,7 @@ public class SceneHelper {
 	}
 
 	public static void reload() {
-		conf = (Config) Project.current.config.getData();
+		conf = Project.current.config.getData();
 		for (Texture texture : loadedTextures.values())
 			texture.dispose();
 		loadedTextures.clear();
@@ -106,7 +101,7 @@ public class SceneHelper {
 					if (!layer.visible || layer != currentLayer)
 						continue;
 					addRegion(layer, tile, scene, x0, y0);
-					if (showGrid && currentLayer == layer) {
+					if (showGrid) {
 						addTile(tile, layer.info.height, scene, x0, y0, "?g");
 					}
 				}
@@ -304,7 +299,7 @@ public class SceneHelper {
 		int w = (int)Math.ceil(conf.grid.tileW * scale) + 6;
 		int h = (int)Math.ceil(conf.grid.tileH * scale) + 6;
 		Screen cellBuffer = new Screen(w, h, false);
-		VertexArray array = VertexArray.octagon(w / 2, h / 2, 
+		VertexArray array = VertexArray.octagon(w / 2.0f, h / 2.0f,
 				conf.grid.tileW * scale, conf.grid.tileH * scale,
 				conf.grid.tileB * scale, conf.grid.tileS * scale,
 				0, 0, 0, alpha);
@@ -322,7 +317,7 @@ public class SceneHelper {
 		int w = (int)Math.ceil(conf.grid.tileW * scale) + 6;
 		int h = (int)Math.ceil(conf.grid.tileH * scale) + 6;
 		Screen cellBuffer = new Screen(w, h, false);
-		VertexArray array = VertexArray.octagon(w / 2, h / 2, 
+		VertexArray array = VertexArray.octagon(w / 2.0f, h / 2.0f,
 				conf.grid.tileW * scale, conf.grid.tileH * scale,
 				conf.grid.tileB * scale, conf.grid.tileS * scale,
 				r.color.red, r.color.green, r.color.blue, r.color.alpha);

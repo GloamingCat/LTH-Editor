@@ -10,6 +10,7 @@ import gui.helper.FieldHelper;
 import gui.helper.SceneHelper;
 import lui.container.LScrollPanel;
 import lui.base.data.LPoint;
+import lui.graphics.LPainter;
 import rendering.Renderer;
 import rendering.Screen;
 import rendering.ShaderProgram;
@@ -24,6 +25,8 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	protected Renderer renderer = null;
 	protected VertexArray vertexArray;
 	protected int nFloats;
+
+	private boolean refreshRequested = true;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -31,33 +34,67 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	 */
 	public FieldCanvasOpenGL(LScrollPanel parent) {
 		super(parent);
-		try {
-			initRenderer();
-		} catch(LinkageError e) {
-			
-		}
 	}
 	
 	/**
 	 * @wbp.eval.method.return true
 	 */
 	private boolean initRenderer() {
-		SceneHelper.initContext();
-		renderer = new Renderer();
-		renderer.setBackgroundColor(192, 192, 192, 255);
-		renderer.setPencilSize(1);
+		if (renderer != null)
+			return true;
+		if (SceneHelper.initContext())
+			System.out.println("Initialized OpenGL context on thread: " + Thread.currentThread());
+		else {
+			System.err.println("Failed to initialize OpenGL context!");
+			return false;
+		}
 		try {
-			shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");
-		} catch (UncheckedIOException e) {
-			shader = new ShaderProgram();
+			renderer = new Renderer();
+			renderer.setBackgroundColor(192, 192, 192, 255);
+			renderer.setPencilSize(1);
+			try {
+				shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");
+			} catch (UncheckedIOException e) {
+				shader = new ShaderProgram();
+			}
+		} catch (LinkageError e) {
+			System.err.println("Failed to link shader.");
+			return false;
 		}
 		return true;
 	}
 
 	//////////////////////////////////////////////////
 	// {{ Draw
-	
+
+	@Override
+	public void draw(LPainter painter) {
+		if (refreshRequested && field != null) {
+			if (!initRenderer())
+				return;
+			SceneHelper.createTileTextures(renderer, shader);
+			scene = SceneHelper.createScene(field, x0, y0, showGrid, currentLayer, currentChar);
+			if (vertexArray != null)
+				vertexArray.dispose();
+			vertexArray = new VertexArray(scene.allObjects().size() * 4);
+			vertexArray.initVAO(shader.attributes, shader.vertexSize);
+			nFloats = shader.vertexSize / 4;
+			LPoint size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
+			int w = size.x + x0 * 2;
+			int h = size.y + (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 +
+					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
+			if (screen != null)
+				screen.dispose();
+			screen = new Screen(w, h, false);
+			refreshRequested = false;
+			super.refresh();
+		}
+		super.draw(painter);
+	}
+
 	public void redrawBuffer() {
+		if (!initRenderer())
+			return;
 		SceneHelper.context.bind();
 		shader.bind();
 		screen.bind(shader);
@@ -103,8 +140,10 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	
 	public void onVisible() {
 		SceneHelper.reload();
-		renderer.resetBindings();
-		shader.bind();
+		if (renderer != null) {
+			renderer.resetBindings();
+			shader.bind();
+		}
 		super.onVisible();
 	}
 	
@@ -113,32 +152,12 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		shader.dispose();
 		SceneHelper.terminateContext();
 	}
-	
-	// }}
-	
-	//////////////////////////////////////////////////
-	// {{ Visualization
-	
+
 	public void refresh() {
-		if (field != null) {
-			SceneHelper.createTileTextures(renderer, shader);
-			scene = SceneHelper.createScene(field, x0, y0, showGrid, currentLayer, currentChar);
-			if (vertexArray != null)
-				vertexArray.dispose();
-			vertexArray = new VertexArray(scene.allObjects().size() * 4);
-			vertexArray.initVAO(shader.attributes, shader.vertexSize);
-			nFloats = shader.vertexSize / 4;
-			LPoint size = FieldHelper.math.pixelSize(field.sizeX, field.sizeY);
-			int w = size.x + x0 * 2;
-			int h = size.y + (FieldHelper.math.pixelDisplacement(field.sizeY) + 200 + 
-					FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
-			if (screen != null)
-				screen.dispose();
-			screen = new Screen(w, h, false);
-		}
-		super.refresh();
+		refreshRequested = true;
+		repaint();
 	}
 	
-	// }}	
+	// }}
 
 }

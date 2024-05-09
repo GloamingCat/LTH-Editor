@@ -41,7 +41,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 	public static int tWidth = 32;
 	public static int tHeight = 48;
 	
-	private final LGridEditor<LPoint, LPoint> gridEditor;
+	private LGridEditor<LPoint, LPoint> gridEditor;
 	private final LDataList<LPoint> points = new LDataList<>();
 
 	/**
@@ -50,7 +50,10 @@ public class TroopTab extends DatabaseTab<Troop> {
 	 */
 	public TroopTab(LContainer parent) {
 		super(parent);
-		
+	}
+
+	@Override
+	protected void createContent() {
 		// Rewards
 		
 		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
@@ -120,23 +123,25 @@ public class TroopTab extends DatabaseTab<Troop> {
 		// Units
 		
 		LFrame grpMembers = new LFrame(contentEditor, Vocab.instance.UNITS);
-		grpMembers.setFillLayout(true);
-		grpMembers.setSpacing(LPrefs.FRAMEMARGIN);
+		grpMembers.setGridLayout(2);
+		grpMembers.setEqualCells(true);
 		grpMembers.setHoverText(Tooltip.instance.UNITS);
 		grpMembers.getCellData().setExpand(true, false);
 		grpMembers.getCellData().setSpread(2, 1);
 		
 		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers);
 		lstMembers.getCollectionWidget().setEditEnabled(false);
+		lstMembers.getCellData().setExpand(true, true);
 		lstMembers.setIncludeID(false);
 		lstMembers.type = Unit.class;
 		lstMembers.addMenu(grpMembers);
 		addChild(lstMembers, "members");
-		
+
 		UnitEditor unitEditor = new UnitEditor(grpMembers);
-		lstMembers.addChild(unitEditor);
+		unitEditor.getCellData().setExpand(true, false);
 		unitEditor.addModifyListener(event -> refreshUnit(event.newValue));
-		
+		lstMembers.addChild(unitEditor);
+
 		LCollectionListener<Unit> modifyListener = new LCollectionListener<>() {
 			public void onEdit(LEditEvent<Unit> e) {
 				refreshUnit(e.newData);
