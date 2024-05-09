@@ -1,7 +1,6 @@
 package gui.views.database.content;
 
 import lui.base.LFlags;
-import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LPath;
 import lui.base.data.LPoint;
@@ -15,7 +14,6 @@ import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
 import lui.editor.LGridEditor;
-import lui.graphics.LColor;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
@@ -105,7 +103,6 @@ public class TroopTab extends DatabaseTab<Troop> {
 		// Grid
 		
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID);
-		grpGrid.setFillLayout(true);
 		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
 		grpGrid.getCellData().setExpand(true, true);
 		gridEditor = new UnitGrid(grpGrid);
@@ -245,7 +242,6 @@ public class TroopTab extends DatabaseTab<Troop> {
 			super(parent);
 			getCollectionWidget().cellWidth = tWidth;
 			getCollectionWidget().cellHeight = tHeight;
-			setBackground(new LColor(255, 0, 255).convert());
 		}
 		
 		@Override
