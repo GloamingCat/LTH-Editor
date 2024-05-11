@@ -33,15 +33,17 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 	public Consumer<PositionEvent> onChangeH;
 	public Consumer<PositionEvent> onChangeSprite;
 
-	private final LCombo cmbParty;
-	private final LSpinner spnX;
-	private final LSpinner spnY;
-	private final LSpinner spnH;
+	private LCombo cmbParty;
+	private LSpinner spnX;
+	private LSpinner spnY;
+	private LSpinner spnH;
 
 	public CharTileEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setGridLayout(3);
-		
 		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.CHARPOS);
 		LPanel position = new LPanel(this);
 		position.setFillLayout(true);
@@ -146,13 +148,13 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 		LText txtAnim = new LText(animation);
 		txtAnim.getCellData().setExpand(true, false);
-		txtAnim.getCellData().setMinimumSize(lblFrame.getTargetSize());
+		txtAnim.getCellData().setRequiredSize(lblFrame.getTargetSize());
 		addControl(txtAnim, "animation");
 
 		LSpinner spnFrame = new LSpinner(animation);
 		spnFrame.getCellData().setExpand(false, false);
 		spnFrame.getCellData().setAlignment(LFlags.MIDDLE);
-		spnFrame.getCellData().setMinimumSize(36, 0);
+		spnFrame.getCellData().setRequiredSize(36, 0);
 		addControl(spnFrame, "frame");
 		
 		// Battle

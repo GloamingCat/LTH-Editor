@@ -15,7 +15,7 @@ public class JobStatusDialog extends ObjectEditorDialog<Job.Status> {
 
 	public JobStatusDialog(LWindow parent) {
 		super(parent, Vocab.instance.STATUSSHELL);
-		setMinimumSize(300, 200);
+		setRequiredSize(300, 200);
 		setSize(300, 200);
 	}
 	

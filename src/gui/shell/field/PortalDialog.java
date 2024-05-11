@@ -31,7 +31,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 	public PortalDialog(LWindow parent, int fieldID) {
 		super(parent, Vocab.instance.PORTALSHELL);
 		this.fieldID = fieldID;
-		setMinimumSize(640, 480);
+		setRequiredSize(640, 480);
 		setSize(640, 480);
 	}
 
@@ -51,7 +51,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 
 		new LLabel(bottom, LFlags.CENTER, Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH);
 		spnH = new LSpinner(bottom);
-		spnH.getCellData().setPreferredSize(80, -1);
+		spnH.getCellData().setTargetSize(80, -1);
 		spnH.setMinimum(1);
 		spnH.setValue(1);
 		spnH.addModifyListener(event -> {

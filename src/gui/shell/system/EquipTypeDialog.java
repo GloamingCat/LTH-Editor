@@ -17,7 +17,7 @@ public class EquipTypeDialog extends ObjectEditorDialog<EquipType> {
 	public EquipTypeDialog(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPTYPESHELL);
 		LPoint size = getTargetSize();
-		setMinimumSize(200, size.y);
+		setRequiredSize(200, size.y);
 		setSize(200, size.y);
 	}
 	

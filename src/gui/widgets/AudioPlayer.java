@@ -36,7 +36,7 @@ public class AudioPlayer extends LPanel {
 					LSoundPlayer.playSFX(path, volume * 0.01f, pitch * 0.01f);
 			}
 		};
-		play.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
+		play.getCellData().setRequiredSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 
 		LCommandButton stop = new LCommandButton(this, Vocab.instance.STOP) {
 			@Override
@@ -44,7 +44,7 @@ public class AudioPlayer extends LPanel {
 				LSoundPlayer.stop();
 			}
 		};
-		stop.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
+		stop.getCellData().setRequiredSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 		
 	}
 	

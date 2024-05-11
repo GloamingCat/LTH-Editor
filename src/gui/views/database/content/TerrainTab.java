@@ -30,7 +30,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 	private PropertyList lstJobMoveCost;
 	private IDButton btnStatus;
-	
+
 	/**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
@@ -44,7 +44,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		// General
 
-		LPanel properties = new LPanel(grpGeneral);
+		LPanel properties = new LPanel(contentEditor.grpGeneral);
 		properties.getCellData().setSpread(2, 1);
 		properties.getCellData().setAlignment(LFlags.LEFT);
 		properties.setSequentialLayout(true);
@@ -56,7 +56,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 		// Graphics
 
-		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
+		LFrame grpGraphics = new LFrame(contentEditor.left, Vocab.instance.GRAPHICS);
 		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.getCellData().setExpand(true, true);
@@ -71,7 +71,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 		// Move Cost
 
-		LFrame moveCost = new LFrame(right, Vocab.instance.MOVECOST);
+		LFrame moveCost = new LFrame(contentEditor.right, Vocab.instance.MOVECOST);
 		moveCost.setHoverText(Tooltip.instance.DEFAULTCOST);
 		moveCost.getCellData().setExpand(true, true);
 		moveCost.setGridLayout(2);
@@ -93,7 +93,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		addChild(lstJobMoveCost, "jobMoveCost");
 
 		// Audio
-		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND);
+		LFrame grpAudio = new LFrame(contentEditor.right, Vocab.instance.SOUND);
 		grpAudio.setFillLayout(true);
 		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.getCellData().setExpand(true, true);
@@ -111,7 +111,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 		// Status
 
-		LFrame grpStatus = new LFrame(right, Vocab.instance.STATUS);
+		LFrame grpStatus = new LFrame(contentEditor.right, Vocab.instance.STATUS);
 		grpStatus.setGridLayout(2);
 		grpStatus.setHoverText(Tooltip.instance.TERRAINSTATUS);
 		grpStatus.getCellData().setExpand(true, false);
@@ -135,8 +135,8 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 	
 	@Override
 	public void onVisible() {
-		//btnStatus.dataTree = Project.current.status.getTree();
-		//lstJobMoveCost.dataTree = Project.current.jobs.getTree();
+		btnStatus.dataTree = Project.current.status.getTree();
+		lstJobMoveCost.dataTree = Project.current.jobs.getTree();
 		super.onVisible();
 	}
 	

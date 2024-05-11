@@ -1,6 +1,7 @@
 package gui.views.database.subcontent;
 
 import data.config.Attribute;
+import lui.base.LPrefs;
 import project.Project;
 import lui.container.LContainer;
 import lui.gson.GGridForm;
@@ -12,7 +13,8 @@ public class BuildEditor extends GGridForm<String> {
 
 	public BuildEditor(LContainer parent, int columns) {
 		super(parent, columns);
-		//addHeader().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		labelWidth = 20;
+		controlWidth = 80;
 	}
 	
 	protected String getDefaultValue() {

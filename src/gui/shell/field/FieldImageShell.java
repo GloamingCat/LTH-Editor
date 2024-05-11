@@ -36,7 +36,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 	
 	public FieldImageShell(LWindow parent) {
 		super(parent, Vocab.instance.FIELDIMGSHELL);
-		setMinimumSize(400, 300);
+		setRequiredSize(400, 300);
 		setSize(600, 400);
 	}
 	

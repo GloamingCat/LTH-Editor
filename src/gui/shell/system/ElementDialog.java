@@ -19,7 +19,7 @@ public class ElementDialog extends ObjectEditorDialog<Element> {
 	
 	public ElementDialog(LWindow parent) {
 		super(parent, Vocab.instance.ELEMENTSHELL);
-		setMinimumSize(300, 300);
+		setRequiredSize(300, 300);
 		setSize(300, 300);
 	}
 	
@@ -40,7 +40,7 @@ public class ElementDialog extends ObjectEditorDialog<Element> {
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setMinimumSize(0, 48);
+		imgIcon.getCellData().setRequiredSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
@@ -54,7 +54,7 @@ public class ElementDialog extends ObjectEditorDialog<Element> {
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.getCellData().setSpread(2, 1);
 		grpTags.getCellData().setExpand(true, true);
-		grpTags.getCellData().setMinimumSize(150, 100);
+		grpTags.getCellData().setRequiredSize(150, 100);
 		TagList lstTroops = new TagList(grpTags);
 		addChild(lstTroops, "tags");
 	}

@@ -29,22 +29,21 @@ import gson.GObjectTreeSerializer;
 public class AnimationTab extends DatabaseTab<Animation> {
 
 	private LSpinner spnCols;
-	private LSpinner spnRows;
 
-	/**
+    /**
 	 * @wbp.parser.constructor
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
 	public AnimationTab(LContainer parent) {
 		super(parent);
-			}
+	}
 
 	@Override
 	protected void createContent() {
 		// Script
 		
-		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
-		LPanel script = new LPanel(grpGeneral);
+		LLabel lblScript = new LLabel(contentEditor.grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
+		LPanel script = new LPanel(contentEditor.grpGeneral);
 		script.setGridLayout(2);
 		script.getCellData().setAlignment(LFlags.CENTER);
 		script.getCellData().setExpand(true, false);
@@ -59,9 +58,9 @@ public class AnimationTab extends DatabaseTab<Animation> {
 
 		// Size
 		
-		LLabel lblSize = new LLabel(grpGeneral, Vocab.instance.SIZE, Tooltip.instance.SIZE);
+		LLabel lblSize = new LLabel(contentEditor.grpGeneral, Vocab.instance.SIZE, Tooltip.instance.SIZE);
 		lblSize.setHoverText(Tooltip.instance.SIZE);
-		LPanel size = new LPanel(grpGeneral);
+		LPanel size = new LPanel(contentEditor.grpGeneral);
 		size.setGridLayout(4);
 		size.getCellData().setExpand(true, false);
 		
@@ -72,14 +71,14 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		addControl(spnCols, "cols");
 
 		LLabel lblRows = new LLabel(size, Vocab.instance.ROWS, Tooltip.instance.ROWS);
-		spnRows = new LSpinner(size);
+        LSpinner spnRows = new LSpinner(size);
 		spnRows.getCellData().setExpand(true, false);
 		spnRows.addMenu(lblRows);
 		addControl(spnRows, "rows");
 		
 		// Transform
 		
-		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM);
+		LFrame grpTransform = new LFrame(contentEditor.right, Vocab.instance.TRANSFORM);
 		grpTransform.setFillLayout(true);
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.getCellData().setExpand(true, false);
@@ -89,7 +88,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Audio
 		
-		LFrame grpAudio = new LFrame(right, Vocab.instance.SOUND);
+		LFrame grpAudio = new LFrame(contentEditor.right, Vocab.instance.SOUND);
 		grpAudio.setFillLayout(true);
 		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.getCellData().setExpand(true, true);
@@ -107,7 +106,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Intro
 		
-		LFrame grpIntro = new LFrame(left, Vocab.instance.INTRO);
+		LFrame grpIntro = new LFrame(contentEditor.left, Vocab.instance.INTRO);
 		grpIntro.setGridLayout(3);
 		grpIntro.setHoverText(Tooltip.instance.INTRO);
 		grpIntro.getCellData().setExpand(true, false);
@@ -130,7 +129,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Loop
 		
-		LFrame grpLoop = new LFrame(left, Vocab.instance.LOOP);
+		LFrame grpLoop = new LFrame(contentEditor.left, Vocab.instance.LOOP);
 		grpLoop.setGridLayout(3);
 		grpLoop.setHoverText(Tooltip.instance.LOOP);
 		grpLoop.getCellData().setExpand(true, false);
@@ -153,7 +152,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		
 		// Graphics
 		
-		LFrame grpImg = new LFrame(left, Vocab.instance.GRAPHICS);
+		LFrame grpImg = new LFrame(contentEditor.left, Vocab.instance.GRAPHICS);
 		grpImg.setGridLayout(1);
 		grpImg.setHoverText(Tooltip.instance.GRAPHICS);
 		grpImg.getCellData().setExpand(true, true);

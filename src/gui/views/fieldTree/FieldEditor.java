@@ -1,6 +1,5 @@
 package gui.views.fieldTree;
 
-import gui.Tooltip;
 import gui.helper.TilePainter;
 import lui.base.LFlags;
 import lui.base.LPrefs;
@@ -18,9 +17,9 @@ import data.field.Layer;
 
 public class FieldEditor extends GDefaultObjectEditor<Field> {
 
-	public final FieldCanvas canvas;
-	public final FieldToolBar toolBar;
-	private final LScrollPanel scrolledComposite;
+	public FieldCanvas canvas;
+	public FieldToolBar toolBar;
+	private LScrollPanel scroll;
 
 	/**
 	 * @wbp.parser.constructor
@@ -28,20 +27,23 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	 */
 	public FieldEditor(LContainer parent) {
 		super(parent, true);
+	}
+
+	protected void createContent(int style) {
 		setGridLayout(1);
 		setSpacing(0);
 		
 		toolBar = new FieldToolBar(this);
 		toolBar.getCellData().setAlignment(LFlags.LEFT);
 		toolBar.getCellData().setExpand(true, false);
-		toolBar.getCellData().setMinimumSize(440, 0);
+		toolBar.getCellData().setRequiredSize(440, 0);
 		addChild(toolBar);
-		
-		scrolledComposite = new LScrollPanel(this);
-		scrolledComposite.getCellData().setExpand(true, true);
-		scrolledComposite.getCellData().setSpread(1, 1);
-		
-		canvas = new FieldCanvasOpenGL(scrolledComposite);
+
+		scroll = new LScrollPanel(this);
+		scroll.getCellData().setExpand(true, true);
+		scroll.getCellData().setSpread(1, 1);
+
+		canvas = new FieldCanvasOpenGL(scroll);
 		addChild(canvas);
 
 		LPanel bottom = new LPanel(this);
@@ -52,25 +54,25 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		LPanel scale = new LPanel(bottom);
 		scale.setFillLayout(true);
 		scale.setSpacing(LPrefs.GRIDSPACING);
-		scale.getCellData().setMinimumSize(100, 0);
+		scale.getCellData().setRequiredSize(100, 0);
 		scale.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 
 		LActionButton btn50 = new LActionButton(scale, "1:2");
 		btn50.addModifyListener(event -> {
             canvas.rescale(0.5f);
-            scrolledComposite.setContentSize(canvas.getCurrentSize());
+            scroll.setContentSize(canvas.getCurrentSize());
         });
 
 		LActionButton btn100 = new LActionButton(scale, "1:1");
 		btn100.addModifyListener(event -> {
             canvas.rescale(1);
-            scrolledComposite.setContentSize(canvas.getCurrentSize());
+            scroll.setContentSize(canvas.getCurrentSize());
         });
 
 		LActionButton btn200 = new LActionButton(scale, "2:1");
 		btn200.addModifyListener(event -> {
             canvas.rescale(2);
-            scrolledComposite.setContentSize(canvas.getCurrentSize());
+            scroll.setContentSize(canvas.getCurrentSize());
         });
 
 		LLabel tileCoord = new LLabel(bottom, "(-99, -99, -99)");
@@ -93,7 +95,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	public void selectField(Field field) {
 		canvas.setField(field);
 		toolBar.setField(field);
-		scrolledComposite.setContentSize(canvas.getCurrentSize());
+		scroll.setContentSize(canvas.getCurrentSize());
 	}
 
 	@Override

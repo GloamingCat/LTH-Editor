@@ -13,6 +13,7 @@ import gui.widgets.IDList;
 import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
@@ -48,22 +49,23 @@ public class BattlerTab extends DatabaseTab<Battler> {
 
 	@Override
 	protected void createContent() {
-		LPanel middle = new LPanel(left);
+		LPanel middle = new LPanel(contentEditor.left);
 		middle.setGridLayout(2);
 		middle.getCellData().setExpand(true, true);
-		LPanel bottom = new LPanel(left);
+		LPanel bottom = new LPanel(contentEditor.left);
 		bottom.setGridLayout(2);
 		bottom.setEqualCells(true, false);
 		bottom.getCellData().setExpand(true, true);
+		bottom.getCellData().setRequiredSize(0, 80);
 		
 		// Icon
 		
-		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral);
+		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
+		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.getCellData().setMinimumSize(48, 48);
+		imgIcon.getCellData().setRequiredSize(48, 48);
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		IconButton btnGraphics = new IconButton(compositeIcon, false);
@@ -73,68 +75,70 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Description
 		
-		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
+		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 			Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(grpGeneral);
+		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
 		txtDescription.getCellData().setExpand(true, true);
-		txtDescription.getCellData().setMinimumSize(0, 60);
+		txtDescription.getCellData().setRequiredSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 
-		// Rewards + Job
 
-		LPanel other = new LPanel(grpGeneral);
-		other.setGridLayout(4);
-		other.getCellData().setExpand(true, false);
-		other.getCellData().setSpread(2, 1);
-
-		// Rewards
-		
-		LLabel lblMoney = new LLabel(other, Vocab.instance.MONEY, Tooltip.instance.MONEY);
-		lblMoney.getCellData().setMinimumSize(LABELWIDTH, 0);
-
-		LSpinner spnMoney = new LSpinner(other);
-		spnMoney.getCellData().setExpand(true, false);
-		spnMoney.setMaximum(99999999);
-		spnMoney.addMenu(lblMoney);
-		addControl(spnMoney, "money");
-		
-		LLabel lblExp = new LLabel(other, Vocab.instance.EXP, Tooltip.instance.EXP);
-		lblExp.getCellData().setMinimumSize(LABELWIDTH, 0);
-		LSpinner spnEXP = new LSpinner(other);
-		spnEXP.getCellData().setExpand(true, false);
-		spnEXP.setMaximum(99999999);
-		spnEXP.addMenu(lblExp);
-		addControl(spnEXP, "exp");
-		
 		// Job
-		
-		LLabel lblJob = new LLabel(other, Vocab.instance.JOB, Tooltip.instance.JOB);
-		LPanel job = new LPanel(other);
-		job.setGridLayout(2);
-		job.getCellData().setSpread(2, 1);
+
+		LLabel lblJob = new LLabel(contentEditor.grpGeneral, Vocab.instance.JOB, Tooltip.instance.JOB);
+		LPanel job = new LPanel(contentEditor.grpGeneral);
+		job.setGridLayout(3);
 		job.getCellData().setAlignment(LFlags.FILL);
-		LText txtJob = new LText(job, true);
+
+		LPanel jobId = new LPanel(job);
+		jobId.setGridLayout(2);
+		jobId.getCellData().setExpand(true, false);
+		jobId.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2, LPrefs.WIDGETHEIGHT);
+
+		LText txtJob = new LText(jobId, true);
 		txtJob.getCellData().setExpand(true, false);
-		btnJob = new IDButton(job, Vocab.instance.JOBSHELL, false);
+		btnJob = new IDButton(jobId, Vocab.instance.JOBSHELL, false);
 		btnJob.setNameWidget(txtJob);
 		btnJob.addMenu(lblJob);
 		btnJob.addMenu(txtJob);
 		addControl(btnJob, "jobID");
 
-		LPanel level = new LPanel(other);
-		level.setGridLayout(2);
-		level.getCellData().setAlignment(LFlags.FILL);
-		LLabel lblLevel = new LLabel(level, Vocab.instance.LEVEL, Tooltip.instance.LEVEL);
-		lblLevel.getCellData().setMinimumSize(LABELWIDTH / 2, 0);
-		LSpinner spnLevel = new LSpinner(level);
+		LLabel lblLevel = new LLabel(job, Vocab.instance.LEVEL, Tooltip.instance.LEVEL);
+		lblLevel.getCellData().setRequiredSize(LPrefs.LABELWIDTH / 2, 0);
+		LSpinner spnLevel = new LSpinner(job);
 		spnLevel.getCellData().setExpand(true, false);
+		spnLevel.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2 - LPrefs.LABELWIDTH * 2, LPrefs.WIDGETHEIGHT);
 		spnLevel.addMenu(lblLevel);
 		addControl(spnLevel, "level");
 
+		// Rewards
+
+		LLabel lblMoney = new LLabel(contentEditor.grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
+		LPanel rewards = new LPanel(contentEditor.grpGeneral);
+		rewards.setGridLayout(3);
+		rewards.getCellData().setExpand(true, false);
+
+		LSpinner spnMoney = new LSpinner(rewards);
+		spnMoney.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2, LPrefs.WIDGETHEIGHT);
+		spnMoney.getCellData().setExpand(true, false);
+		spnMoney.setMaximum(99999999);
+		spnMoney.addMenu(lblMoney);
+		addControl(spnMoney, "money");
+		
+		LLabel lblExp = new LLabel(rewards, Vocab.instance.EXP, Tooltip.instance.EXP);
+		lblExp.getCellData().setRequiredSize(LPrefs.LABELWIDTH / 2, 0);
+
+		LSpinner spnEXP = new LSpinner(rewards);
+		spnEXP.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2 - LPrefs.LABELWIDTH * 2, LPrefs.WIDGETHEIGHT);
+		spnEXP.getCellData().setExpand(true, false);
+		spnEXP.setMaximum(99999999);
+		spnEXP.addMenu(lblExp);
+		addControl(spnEXP, "exp");
+
 		// Properties
 
-		LPanel check = new LPanel(grpGeneral);
+		LPanel check = new LPanel(contentEditor.grpGeneral);
 		check.setGridLayout(2);
 		check.getCellData().setExpand(true, false);
 		check.getCellData().setAlignment(LFlags.LEFT);
@@ -158,7 +162,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		grpAtt.setFillLayout(true);
 		grpAtt.setHoverText(Tooltip.instance.BATTLERATT);
 		grpAtt.getCellData().setExpand(true, true);
-		grpAtt.getCellData().setMinimumSize(220, 0);
+		grpAtt.getCellData().setRequiredSize(160, 0);
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, 2);
 		attEditor.addMenu(grpAtt);
 		addChild(attEditor, "attributes");
@@ -169,6 +173,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		grpElements.setFillLayout(true);
 		grpElements.setHoverText(Tooltip.instance.ELEMENTDEF);
 		grpElements.getCellData().setExpand(true, true);
+		grpElements.getCellData().setRequiredSize(160, 0);
 		lstElements = new PropertyList(grpElements, Vocab.instance.BATTLERELEMENTSHELL);
 		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
@@ -185,7 +190,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Status
 		
-		LFrame grpStatus = new LFrame(bottom, (String) Vocab.instance.INITSTATUS);
+		LFrame grpStatus = new LFrame(bottom, Vocab.instance.INITSTATUS);
 		grpStatus.setFillLayout(true);
 		grpStatus.setHoverText(Tooltip.instance.INITSTATUS);
 		grpStatus.getCellData().setExpand(true, true);
@@ -195,7 +200,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Equip
 		
-		LFrame grpEquip = new LFrame(right, (String) Vocab.instance.INITEQUIP);
+		LFrame grpEquip = new LFrame(contentEditor.right, Vocab.instance.INITEQUIP);
 		grpEquip.setFillLayout(true);
 		grpEquip.setHoverText(Tooltip.instance.INITEQUIP);
 		grpEquip.getCellData().setExpand(true, true);
@@ -205,7 +210,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// Drop
 		
-		LFrame grpDrop = new LFrame(right, Vocab.instance.DROP);
+		LFrame grpDrop = new LFrame(contentEditor.right, Vocab.instance.DROP);
 		grpDrop.setFillLayout(true);
 		grpDrop.setHoverText(Tooltip.instance.DROP);
 		grpDrop.getCellData().setExpand(true, true);
@@ -215,14 +220,14 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		
 		// AI
 
-		LFrame grpAI = new LFrame(right, Vocab.instance.RULES);
+		LFrame grpAI = new LFrame(contentEditor.right, Vocab.instance.RULES);
 		grpAI.setFillLayout(true);
 		grpAI.setHoverText(Tooltip.instance.RULES);
 		grpAI.getCellData().setExpand(true, true);
-		SimpleEditableList<Rule> lstRules = new SimpleEditableList<Rule>(grpAI);
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<>(grpAI);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
-		lstRules.setShellFactory(new LWindowFactory<Rule>() {
+		lstRules.setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Rule> createWindow(LWindow parent) {
 				return new RuleDialog(parent);

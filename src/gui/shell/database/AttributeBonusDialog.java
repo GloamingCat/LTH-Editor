@@ -16,7 +16,7 @@ public class AttributeBonusDialog extends ObjectEditorDialog<Attribute> {
 	public AttributeBonusDialog(LWindow parent) {
 		super(parent, Vocab.instance.BUFFSHELL);
 		LPoint size = getTargetSize();
-		setMinimumSize(200, size.y);
+		setRequiredSize(200, size.y);
 		setSize(200, size.y);
 	}
 	

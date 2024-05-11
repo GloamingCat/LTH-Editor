@@ -16,7 +16,11 @@ import java.lang.reflect.Type;
 public class TransitionEditor extends GDefaultObjectEditor<Transition> {
 
     public TransitionEditor(LContainer parent, int id) {
-        super(parent, false);
+        super(parent, id, false);
+	}
+
+    @Override
+	protected void createContent(int id) {
 
         // Destination
 

@@ -16,7 +16,7 @@ public class TroopSpawnDialog extends ObjectEditorDialog<TroopSpawn> {
 
 	public TroopSpawnDialog(LWindow parent) {
 		super(parent, Vocab.instance.TROOPSHELL);
-		setMinimumSize(360, 320);
+		setRequiredSize(360, 320);
 		setSize(360, 320);
 	}
 	

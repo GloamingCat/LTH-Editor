@@ -36,7 +36,7 @@ public class AudioDialog extends ObjectEditorDialog<Audio.Node> {
 	
 	public AudioDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.AUDIOFILESHELL);
-		setMinimumSize(400, 400);
+		setRequiredSize(400, 400);
 		setSize(400, 400);
 	}
 	

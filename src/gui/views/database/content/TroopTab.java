@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LPath;
 import lui.base.data.LPoint;
@@ -54,8 +55,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 	protected void createContent() {
 		// Rewards
 		
-		LLabel lblMoney = new LLabel(grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
-		LPanel compositeReward = new LPanel(grpGeneral);
+		LLabel lblMoney = new LLabel(contentEditor.grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
+		LPanel compositeReward = new LPanel(contentEditor.grpGeneral);
 		compositeReward.setGridLayout(3);
 		compositeReward.getCellData().setExpand(true, false);
 		LSpinner spnMoney = new LSpinner(compositeReward);
@@ -65,7 +66,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		addControl(spnMoney, "money");
 		
 		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP, Tooltip.instance.EXP);
-		lblExp.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblExp.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 		LSpinner spnEXP = new LSpinner(compositeReward);
 		spnEXP.getCellData().setExpand(true, false);
 		spnEXP.setMaximum(99999999);
@@ -74,8 +75,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		// AI
 		
-		LLabel lblAI = new LLabel(grpGeneral, Vocab.instance.AI, Tooltip.instance.AI);
-		LPanel select = new LPanel(grpGeneral);
+		LLabel lblAI = new LLabel(contentEditor.grpGeneral, Vocab.instance.AI, Tooltip.instance.AI);
+		LPanel select = new LPanel(contentEditor.grpGeneral);
 		select.setGridLayout(2);
 		select.getCellData().setExpand(true, false);
 		LText txtAI = new LText(select, true);
@@ -88,7 +89,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 		// Properties
 
-		LPanel check = new LPanel(grpGeneral);
+		LPanel check = new LPanel(contentEditor.grpGeneral);
 		check.setGridLayout(2);
 		check.getCellData().setExpand(true, false);
 		check.getCellData().setAlignment(LFlags.LEFT);
@@ -102,14 +103,14 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 		// Grid
 		
-		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID);
+		LFrame grpGrid = new LFrame(contentEditor.left, Vocab.instance.GRID);
 		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
 		grpGrid.getCellData().setExpand(true, true);
 		gridEditor = new UnitGrid(grpGrid);
 
 		// Items
 		
-		LFrame grpItems = new LFrame(right, Vocab.instance.ITEMS);
+		LFrame grpItems = new LFrame(contentEditor.right, Vocab.instance.ITEMS);
 		grpItems.setFillLayout(true);
 		grpItems.setHoverText(Tooltip.instance.INVENTORY);
 		grpItems.getCellData().setExpand(true, true);

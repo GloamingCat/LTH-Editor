@@ -16,7 +16,7 @@ public abstract class IDDialog extends LObjectDialog<Integer> {
 	 */
 	public IDDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
-		setMinimumSize(350, 500);
+		setRequiredSize(350, 500);
 		setSize(350, 500);
 	}
 	

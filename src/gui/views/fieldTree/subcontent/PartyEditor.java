@@ -32,6 +32,9 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 
 	public PartyEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setGridLayout(2);
 		
 		// Position
@@ -97,12 +100,12 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		});
 		addControl(cmbGen, "memberGen");
 
-		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS);;
+		LFrame grpTroops = new LFrame(this, Vocab.instance.TROOPS);
 		grpTroops.setFillLayout(true);
 		grpTroops.setHoverText(Tooltip.instance.PARTYTROOPS);
 		grpTroops.getCellData().setExpand(true, true);
 		grpTroops.getCellData().setSpread(2, 1);
-		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<TroopSpawn>(grpTroops);
+		SimpleEditableList<TroopSpawn> lstTroops = new SimpleEditableList<>(grpTroops);
 		lstTroops.type = TroopSpawn.class;
 		lstTroops.setIncludeID(false);
 		lstTroops.setShellFactory(new LWindowFactory<>() {

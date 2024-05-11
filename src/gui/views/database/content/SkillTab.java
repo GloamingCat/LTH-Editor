@@ -11,6 +11,7 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LCanvas;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -52,13 +53,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 	protected void createContent() {
 		// Icon
 		
-		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral);
+		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
+		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setMinimumSize(0, 48);
+		imgIcon.getCellData().setRequiredSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
@@ -69,18 +70,18 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Description
 		
-		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
+		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(grpGeneral);
+		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
 		txtDescription.getCellData().setExpand(true, true);
-		txtDescription.getCellData().setMinimumSize(0, 60);
+		txtDescription.getCellData().setRequiredSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 		
 		// Script
 		
-		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
-		LPanel script = new LPanel(grpGeneral);
+		LLabel lblScript = new LLabel(contentEditor.grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
+		LPanel script = new LPanel(contentEditor.grpGeneral);
 		script.setGridLayout(2);
 		script.getCellData().setExpand(true, false);
 		script.getCellData().setAlignment(LFlags.MIDDLE);
@@ -96,16 +97,16 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Restrictions
 		
-		LFrame grpRestrictions = new LFrame(left, Vocab.instance.RESTRICTIONS);
+		LFrame grpRestrictions = new LFrame(contentEditor.left, Vocab.instance.RESTRICTIONS);
 		grpRestrictions.setGridLayout(2);
 		grpRestrictions.setHoverText(Tooltip.instance.RESTRICTIONS);
 		grpRestrictions.getCellData().setExpand(true, true);
 		
 		LLabel lblCosts = new LLabel(grpRestrictions, Vocab.instance.COSTS, Tooltip.instance.COSTS);
-		lblCosts.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblCosts.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 		TagList lstCosts = new TagList(grpRestrictions, Vocab.instance.COST);
 		lstCosts.getCellData().setExpand(true, true);
-		lstCosts.getCellData().setMinimumSize(0, 60);
+		lstCosts.getCellData().setRequiredSize(0, 60);
 		lstCosts.addMenu(lblCosts);
 		addChild(lstCosts, "costs");
 		
@@ -130,19 +131,19 @@ public class SkillTab extends DatabaseTab<Skill> {
 
 		// Effects
 
-		LFrame grpEffects = new LFrame(left, Vocab.instance.EFFECTS);
+		LFrame grpEffects = new LFrame(contentEditor.left, Vocab.instance.EFFECTS);
 		grpEffects.setGridLayout(2);
 		grpEffects.setHoverText(Tooltip.instance.EFFECTS);
 		grpEffects.getCellData().setExpand(true, true);
 		SkillEffectList lstEffects = new SkillEffectList(grpEffects);
 		lstEffects.getCellData().setExpand(true, true);
-		lstEffects.getCellData().setMinimumSize(0, 60);
+		lstEffects.getCellData().setRequiredSize(0, 60);
 		lstEffects.getCellData().setSpread(2, 1);
 		lstEffects.addMenu(grpEffects);
 		addChild(lstEffects, "effects");
 
 		LLabel lblEffCond = new LLabel(grpEffects, Vocab.instance.EFFECTCONDITION, Tooltip.instance.EFFECTCONDITION);
-		lblEffCond.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblEffCond.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 		LText txtEffectCondition = new LText(grpEffects);
 		txtEffectCondition.addMenu(lblEffCond);
 		txtEffectCondition.getCellData().setExpand(true, false);
@@ -150,13 +151,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Target Selection
 		
-		LFrame grpTarget = new LFrame(left, Vocab.instance.TARGET);
+		LFrame grpTarget = new LFrame(contentEditor.left, Vocab.instance.TARGET);
 		grpTarget.setGridLayout(2);
 		grpTarget.setHoverText(Tooltip.instance.TARGET);
 		grpTarget.getCellData().setExpand(true, false);
 		
 		LLabel lblType = new LLabel(grpTarget, Vocab.instance.TYPE, Tooltip.instance.SKILLTYPE);
-		lblType.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblType.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 		LCombo cmbType = new LCombo(grpTarget, true);
 		cmbType.getCellData().setExpand(true, false);
 		cmbType.setIncludeID(false);
@@ -204,7 +205,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 
 		// Animations
 		
-		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS);
+		LFrame grpAnimations = new LFrame(contentEditor.right, Vocab.instance.ANIMATIONS);
 		grpAnimations.setFillLayout(true);
 		grpAnimations.setHoverText(Tooltip.instance.ANIMATIONS);
 		grpAnimations.getCellData().setExpand(true, false);
@@ -214,7 +215,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Elements
 		
-		LFrame grpElements = new LFrame(right, Vocab.instance.ELEMENTS);
+		LFrame grpElements = new LFrame(contentEditor.right, Vocab.instance.ELEMENTS);
 		grpElements.setGridLayout(2);
 		grpElements.setHoverText(Tooltip.instance.SKILLELEMENTS);
 		grpElements.getCellData().setExpand(true, true);
@@ -230,7 +231,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		// Range
 		
-		LPanel range = new LPanel(right);
+		LPanel range = new LPanel(contentEditor.right);
 		range.setGridLayout(2);
 		range.setEqualCells(true, false);
 		range.getCellData().setExpand(true, true);

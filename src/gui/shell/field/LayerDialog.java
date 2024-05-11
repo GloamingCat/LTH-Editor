@@ -21,7 +21,7 @@ public class LayerDialog extends ObjectEditorDialog<Info> {
 	public LayerDialog(LWindow parent, int maxHeight) {
 		super(parent, maxHeight, Vocab.instance.LAYERSHELL);
 		LPoint size = getTargetSize();
-		setMinimumSize(size.x, size.y);
+		setRequiredSize(size.x, size.y);
 		setSize(300, size.y);
 	}
 	
@@ -35,7 +35,7 @@ public class LayerDialog extends ObjectEditorDialog<Info> {
 		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.getCellData().setExpand(true, true);
-		grpGeneral.getCellData().setMinimumSize(150, 0);
+		grpGeneral.getCellData().setRequiredSize(150, 0);
 		
 		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
 		
@@ -64,7 +64,7 @@ public class LayerDialog extends ObjectEditorDialog<Info> {
 		grpTags.setFillLayout(true);
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.getCellData().setExpand(true, true);
-		grpTags.getCellData().setMinimumSize(100, 0);
+		grpTags.getCellData().setRequiredSize(100, 0);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 

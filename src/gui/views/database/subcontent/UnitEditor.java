@@ -19,14 +19,17 @@ import lui.widget.LText;
 public class UnitEditor extends GDefaultObjectEditor<Unit> {
 
 	public LCanvas gridCanvas = null;
-	public final LSpinner spnX;
-	public final LSpinner spnY;
-	public final LText txtChar;
-	public final LText txtBattler;
-	public final LCombo cmbList;
+	public LSpinner spnX;
+	public LSpinner spnY;
+	public LText txtChar;
+	public LText txtBattler;
+	public LCombo cmbList;
 	
 	public UnitEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setGridLayout(4);
 		
 		LLabel lblKey = new LLabel(this, Vocab.instance.KEY, Tooltip.instance.KEY);

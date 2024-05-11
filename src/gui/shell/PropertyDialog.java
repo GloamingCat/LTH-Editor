@@ -14,7 +14,7 @@ public abstract class PropertyDialog extends ObjectEditorDialog<Property> {
 
 	public PropertyDialog(LWindow parent, String title) {
 		super(parent, title);
-		setMinimumSize(400, 320);
+		setRequiredSize(400, 320);
 		setSize(400, 320);
 	}
 	

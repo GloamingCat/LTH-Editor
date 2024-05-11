@@ -48,17 +48,17 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 	
 	private int editor = 0;
 	
-	private final LayerList[] lists;
-	private final TileTree[] trees;
-	private final LContainer[] editors;
-	private final LStack stack;
+	private LayerList[] lists;
+	private TileTree[] trees;
+	private LContainer[] editors;
+	private LStack stack;
 	
-	private final SimpleEditableList<CharTile> lstChars;
-	private final SimpleEditableList<Party> lstParties;
-	public final CharTileEditor charEditor;
-	public final PartyEditor partyEditor;
-    private final LCombo cmbPlayerParty;
-	private final LLabel lblTitle;
+	private SimpleEditableList<CharTile> lstChars;
+	private SimpleEditableList<Party> lstParties;
+	public CharTileEditor charEditor;
+	public PartyEditor partyEditor;
+    private LCombo cmbPlayerParty;
+	private LLabel lblTitle;
 
 	public Consumer<CharTile> onSelectChar, onNewChar, onDeleteChar;
 	public Consumer<Integer> onSelectTile, onSelectEditor;
@@ -88,6 +88,9 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 	 */
 	FieldSideEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setGridLayout(1);
 		
 		lblTitle = new LLabel(this, LFlags.CENTER | LFlags.EXPAND, "");
@@ -144,7 +147,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		LFrame grpObstacleTiles = new LFrame(obstacle, Vocab.instance.TILES);
 		grpObstacleTiles.setFillLayout(false);
-		grpObstacleTiles.setHoverText(Tooltip.instance.TILES);
+		grpObstacleTiles.setHoverText(Tooltip.instance.TILESET);
 		TileTree selObstacle = new TileTree(grpObstacleTiles) {
 			@Override
 			public LDataTree<Object> getTree() {
@@ -178,7 +181,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		LFrame grpRegionTiles = new LFrame(region, Vocab.instance.TILES);
 		grpRegionTiles.setFillLayout(false);
-		grpRegionTiles.setHoverText(Tooltip.instance.TILES);
+		grpRegionTiles.setHoverText(Tooltip.instance.TILESET);
 		TileTree selRegion = new TileTree(grpRegionTiles) {
 			@Override
 			public LDataTree<Object> getTree() {

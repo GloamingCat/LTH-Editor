@@ -31,15 +31,15 @@ public class EventTab extends DatabaseTab<EventSheet> {
 
 	@Override
 	protected void createContent() {
-		grpGeneral.getCellData().setExpand(true, true);
-		left.getCellData().setExpand(true, false);
-		left.getCellData().setAlignment(LFlags.FILL);
-		right.getCellData().setExpand(true, false);
-		right.getCellData().setAlignment(LFlags.FILL);
+		contentEditor.grpGeneral.getCellData().setExpand(true, true);
+		contentEditor.left.getCellData().setExpand(true, false);
+		contentEditor.left.getCellData().setAlignment(LFlags.FILL);
+		contentEditor.right.getCellData().setExpand(true, false);
+		contentEditor.right.getCellData().setAlignment(LFlags.FILL);
 
-		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
+		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(grpGeneral);
+		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
 		txtDescription.getCellData().setExpand(true, true);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
@@ -58,30 +58,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		addChild(lstEvents, "events");
 
 		EventEditor eventEditor = new EventEditor(grpEvents, false);
-		eventEditor.setGridLayout(2);
 		eventEditor.getCellData().setExpand(true, true);
 		lstEvents.addChild(eventEditor);
-		
-		LLabel lblCmd = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.COMMAND,
-				Tooltip.instance.COMMAND);
-		LTextBox txtCommand = new LTextBox(eventEditor);
-		txtCommand.getCellData().setExpand(true, true);
-		txtCommand.addMenu(lblCmd);
-		eventEditor.addControl(txtCommand, "name");
-		
-		LLabel lblParam = new LLabel(eventEditor, LFlags.TOP, Vocab.instance.PARAM,
-				Tooltip.instance.PARAM);
-		TagList txtArgs = new TagList(eventEditor);
-		txtArgs.getCellData().setExpand(true, true);
-		txtArgs.addMenu(lblParam);
-		eventEditor.addChild(txtArgs, "tags");
-		
-		LLabel lblCondition = new LLabel(eventEditor, Vocab.instance.CONDITION,
-				Tooltip.instance.CONDITION);
-		LText txtCondition = new LText(eventEditor);
-		txtCondition.getCellData().setExpand(true, false);
-		txtCondition.addMenu(lblCondition);
-		eventEditor.addControl(txtCondition, "condition");
 
 	}
 
@@ -94,6 +72,33 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		public EventEditor(LContainer parent, boolean doubleBuffered) {
 			super(parent, doubleBuffered);
 		}
+
+		@Override
+		protected void createContent(int style) {
+			setGridLayout(2);
+
+			LLabel lblCmd = new LLabel(this, LFlags.TOP, Vocab.instance.COMMAND,
+					Tooltip.instance.COMMAND);
+			LTextBox txtCommand = new LTextBox(this);
+			txtCommand.getCellData().setExpand(true, true);
+			txtCommand.addMenu(lblCmd);
+			addControl(txtCommand, "name");
+
+			LLabel lblParam = new LLabel(this, LFlags.TOP, Vocab.instance.PARAM,
+					Tooltip.instance.PARAM);
+			TagList txtArgs = new TagList(this);
+			txtArgs.getCellData().setExpand(true, true);
+			txtArgs.addMenu(lblParam);
+			addChild(txtArgs, "tags");
+
+			LLabel lblCondition = new LLabel(this, Vocab.instance.CONDITION,
+					Tooltip.instance.CONDITION);
+			LText txtCondition = new LText(this);
+			txtCondition.getCellData().setExpand(true, false);
+			txtCondition.addMenu(lblCondition);
+			addControl(txtCondition, "condition");
+		}
+
 		@Override
 		public Type getType() {
 			return EventSheet.Event.class;

@@ -51,8 +51,8 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 	@Override
 	protected void createContent() {
-		LLabel lblBattler = new LLabel(grpGeneral, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
-		LPanel battler = new LPanel(grpGeneral);
+		LLabel lblBattler = new LLabel(contentEditor.grpGeneral, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
+		LPanel battler = new LPanel(contentEditor.grpGeneral);
 		battler.setGridLayout(2);
 		battler.getCellData().setExpand(true, false);
 		LText txtBattler = new LText(battler, true);
@@ -65,8 +65,8 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		
 		// Shadow
 		
-		LLabel lblShadow = new LLabel(grpGeneral, Vocab.instance.SHADOW, Tooltip.instance.SHADOW);
-		LPanel shadow = new LPanel(grpGeneral);
+		LLabel lblShadow = new LLabel(contentEditor.grpGeneral, Vocab.instance.SHADOW, Tooltip.instance.SHADOW);
+		LPanel shadow = new LPanel(contentEditor.grpGeneral);
 		shadow.setGridLayout(2);
 		shadow.getCellData().setExpand(true, false);
 		LText txtShadow = new LText(shadow, true);
@@ -79,7 +79,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 		// Transform
 
-		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM);
+		LFrame grpTransform = new LFrame(contentEditor.right, Vocab.instance.TRANSFORM);
 		grpTransform.setFillLayout(true);
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.getCellData().setExpand(true, false);
@@ -90,7 +90,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 		// Tiles + Scripts
 
-		LPanel middle = new LPanel(left);
+		LPanel middle = new LPanel(contentEditor.left);
 		middle.setFillLayout(true);
 		middle.setSpacing(LPrefs.FRAMEMARGIN);
 		middle.getCellData().setExpand(true, true);
@@ -132,7 +132,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 		// KO
 
-		LFrame grpKO = new LFrame(left, Vocab.instance.KOEFFECT);
+		LFrame grpKO = new LFrame(contentEditor.left, Vocab.instance.KOEFFECT);
 		grpKO.setGridLayout(3);
 		grpKO.setHoverText(Tooltip.instance.KOEFFECT);
 		grpKO.getCellData().setExpand(true, false);
@@ -168,7 +168,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		grpAnimations.setHoverText(Tooltip.instance.CHARANIMS);
 		lstAnim = new NodeList(grpAnimations, Vocab.instance.ANIMSHELL);
 		lstAnim.getCollectionWidget().setIncludeID(false);
-		lstAnim.getCellData().setMinimumSize(128, 0);
+		lstAnim.getCellData().setRequiredSize(128, 0);
 		lstAnim.getCellData().setExpand(false, true);
 		lstAnim.addMenu(grpAnimations);
 		addChild(lstAnim, "animations");
@@ -187,7 +187,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		grpPortraits.setGridLayout(2);
 		grpPortraits.setHoverText(Tooltip.instance.CHARICONS);
 		PortraitList lstPortraits = new PortraitList(grpPortraits);
-		lstPortraits.getCellData().setMinimumSize(128, 0);
+		lstPortraits.getCellData().setRequiredSize(128, 0);
 		lstPortraits.getCellData().setExpand(false, true);
 		lstPortraits.addMenu(grpPortraits);
 		addChild(lstPortraits, "portraits");
@@ -195,17 +195,17 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		imgPortrait.getCellData().setExpand(true, true);
 		imgPortrait.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
 		lstPortraits.getCollectionWidget().addSelectionListener(event -> updatePortrait(imgPortrait, (Portrait) event.data));
-		lstPortraits.getCollectionWidget().addEditListener(new LCollectionListener<Portrait>() {
+		lstPortraits.getCollectionWidget().addEditListener(new LCollectionListener<>() {
 			@Override
 			public void onEdit(LEditEvent<Portrait> e) {
 				updatePortrait(imgPortrait, e.newData);
 			}
 		});
 
-		right.getCellData().setExpand(true, false);
-		right.getCellData().setAlignment(LFlags.FILL);
-		left.getCellData().setExpand(true, false);
-		left.getCellData().setAlignment(LFlags.FILL);
+		contentEditor.right.getCellData().setExpand(true, false);
+		contentEditor.right.getCellData().setAlignment(LFlags.FILL);
+		contentEditor.left.getCellData().setExpand(true, false);
+		contentEditor.left.getCellData().setAlignment(LFlags.FILL);
 	}
 	
 	private void updateAnim(LImage img, Node node) {
@@ -230,7 +230,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				img.setImage((String) null);
 				return;
 			}
-			GameCharacter c = (GameCharacter) contentEditor.getObject();
+			GameCharacter c = contentEditor.getObject();
 			Animation anim = (Animation) obj;
 			anim.transform.setColorTransform(img, c.transform);
 			if (anim.quad.path.isEmpty()) {

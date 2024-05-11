@@ -13,7 +13,7 @@ public class TagDialog extends ObjectEditorDialog<Tag> {
 
     public TagDialog(LWindow parent, String title) {
 		super(parent, title);
-		setMinimumSize(400, 300);
+		setRequiredSize(400, 300);
 		setSize(400, 300);
 	}
 	

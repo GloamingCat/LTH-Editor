@@ -44,7 +44,7 @@ public class QuadDialog extends LObjectDialog<Quad> {
 	 */
 	public QuadDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.QUADSHELL);
-		setMinimumSize(600, 400);
+		setRequiredSize(600, 400);
 	}
 	
 	@Override

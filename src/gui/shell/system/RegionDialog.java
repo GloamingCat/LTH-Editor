@@ -21,7 +21,7 @@ public class RegionDialog extends ObjectEditorDialog<Region> {
 	
 	public RegionDialog(LWindow parent) {
 		super(parent, Vocab.instance.REGIONSHELL);
-		setMinimumSize(250, 250);
+		setRequiredSize(250, 250);
 		setSize(250, 250);
 	}
 	
@@ -56,7 +56,7 @@ public class RegionDialog extends ObjectEditorDialog<Region> {
 		grpTroops.setHoverText(Tooltip.instance.BATTLEFIELDS);
 		grpTroops.getCellData().setSpread(2, 1);
 		grpTroops.getCellData().setExpand(true, true);
-		grpTroops.getCellData().setMinimumSize(150, 100);
+		grpTroops.getCellData().setRequiredSize(150, 100);
 		IDList lstTroops = new IDList(grpTroops, Vocab.instance.TROOPSHELL);
 		lstTroops.dataTree = Project.current.fieldTree.getData().toObjectTree();
 		addChild(lstTroops, "troops");

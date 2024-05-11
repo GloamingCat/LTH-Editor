@@ -30,7 +30,7 @@ public class IconDialog extends LObjectDialog<Icon> {
 	 */
 	public IconDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.ICONSHELL);
-		setMinimumSize(600, 400);
+		setRequiredSize(600, 400);
 		setSize(800, 800);
 	}
 	

@@ -21,7 +21,7 @@ public class EquipDialog extends ObjectEditorDialog<Equip> {
 
 	public EquipDialog(LWindow parent) {
 		super(parent, Vocab.instance.EQUIPSHELL);
-		setMinimumSize(400, 400);
+		setRequiredSize(400, 400);
 		setSize(400, 400);
 	}
 	

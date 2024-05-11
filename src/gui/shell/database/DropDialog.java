@@ -16,7 +16,7 @@ public class DropDialog extends ObjectEditorDialog<Drop> {
 
 	public DropDialog(LWindow parent) {
 		super(parent, Vocab.instance.DROPSHELL);
-		setMinimumSize(400, 300);
+		setRequiredSize(400, 300);
 		setSize(400, 300);
 	}
 	

@@ -18,6 +18,9 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 
     public TransformEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setGridLayout(4);
 
 		LControlListener<Integer> updateColor = event -> {

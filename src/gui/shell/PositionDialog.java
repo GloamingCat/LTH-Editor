@@ -39,7 +39,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 	public PositionDialog(LWindow parent, int fieldId) {
 		super(parent, fieldId, Vocab.instance.POSITIONSHELL);
 		this.fieldId = fieldId;
-		setMinimumSize(640, 480);
+		setRequiredSize(640, 480);
 		setSize(640, 480);
 	}
 	
@@ -71,28 +71,28 @@ public class PositionDialog extends LObjectDialog<Position> {
 		
 		new LLabel(bottom, Vocab.instance.POSITIONX, Tooltip.instance.POSITIONX);
 		spnX = new LSpinner(bottom);
-		spnX.getCellData().setPreferredSize(80, -1);
+		spnX.getCellData().setTargetSize(80, -1);
 		spnX.setMinimum(1);
 		spnX.setValue(1);
 		spnX.addModifyListener(redraw);
 		
 		new LLabel(bottom, Vocab.instance.POSITIONY, Tooltip.instance.POSITIONY);
 		spnY = new LSpinner(bottom);
-		spnY.getCellData().setPreferredSize(80, -1);
+		spnY.getCellData().setTargetSize(80, -1);
 		spnY.setMinimum(1);
 		spnY.setValue(1);
 		spnY.addModifyListener(redraw);
 		
 		new LLabel(bottom, Vocab.instance.POSITIONH, Tooltip.instance.POSITIONH);
 		spnH = new LSpinner(bottom);
-		spnH.getCellData().setPreferredSize(80, -1);
+		spnH.getCellData().setTargetSize(80, -1);
 		spnH.setMinimum(1);
 		spnH.setValue(1);
 		spnH.addModifyListener(redraw);
 		
 		new LLabel(bottom, Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR);
 		cmbDirection = new DirectionCombo(bottom);
-		cmbDirection.getCellData().setPreferredSize(80, -1);
+		cmbDirection.getCellData().setTargetSize(80, -1);
 		
 		sashForm.setWeights(1, 3);
 

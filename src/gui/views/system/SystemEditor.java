@@ -11,8 +11,8 @@ public class SystemEditor extends LViewFolder {
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell()
 	 */
 	public SystemEditor(LContainer parent) {
-		super(parent, false);	
-		
+		super(parent, false);
+
 		ConfigEditor systemEditor = new ConfigEditor(this);
 		addTab(Vocab.instance.GENERAL, systemEditor);
 

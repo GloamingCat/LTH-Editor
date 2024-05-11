@@ -18,7 +18,7 @@ public class TransformationDialog extends ObjectEditorDialog<Transformation> {
 		super(parent, Vocab.instance.TRANSFORMSHELL);
 		LPoint size = getTargetSize();
 		setSize(200, size.y);
-		setMinimumSize(200, size.y);
+		setRequiredSize(200, size.y);
 	}
 	
 	@Override

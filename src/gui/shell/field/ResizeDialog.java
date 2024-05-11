@@ -15,7 +15,7 @@ public class ResizeDialog extends ObjectEditorDialog<LRect> {
 	public ResizeDialog(LWindow parent) {
 		super(parent, Vocab.instance.RESIZESHELL);
 		LPoint size = getTargetSize();
-		setMinimumSize(size.x, size.y);
+		setRequiredSize(size.x, size.y);
 		setSize(200, size.y);
 	}
 	

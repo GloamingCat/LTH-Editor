@@ -16,7 +16,7 @@ public class CharTileDialog extends ObjectEditorDialog<Tile> {
 	public CharTileDialog(LWindow parent) {
 		super(parent, Vocab.instance.CHARTILESHELL);
 		LPoint size = getTargetSize();
-		setMinimumSize(200, size.y);
+		setRequiredSize(200, size.y);
 		setSize(200, size.y);
 	}
 	

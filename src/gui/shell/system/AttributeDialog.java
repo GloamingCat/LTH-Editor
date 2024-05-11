@@ -15,7 +15,7 @@ public class AttributeDialog extends ObjectEditorDialog<Attribute> {
 	
 	public AttributeDialog(LWindow parent) {
 		super(parent, Vocab.instance.ATTRIBUTESHELL);
-		setMinimumSize(300, 300);
+		setRequiredSize(300, 300);
 		setSize(300, 300);
 	}
 	
@@ -54,7 +54,7 @@ public class AttributeDialog extends ObjectEditorDialog<Attribute> {
 		new LLabel(contentEditor, Vocab.instance.FORMULA, Tooltip.instance.FORMULA);
 		LTextBox txtScript = new LTextBox(contentEditor);
 		txtScript.getCellData().setExpand(true, true);
-		txtScript.getCellData().setMinimumSize(200, 48);
+		txtScript.getCellData().setRequiredSize(200, 48);
 		addControl(txtScript, "script");
 
 	}

@@ -13,17 +13,19 @@ import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
-import lui.base.event.LControlEvent;
 import lui.widget.LActionButton;
 import lui.widget.LLabel;
 import lui.widget.LToggleButton;
 
 public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 
-	private final LToggleButton[] labels;
+	private LToggleButton[] labels;
 	
 	public NeighborEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setFillLayout(true);
 		
 		LFrame group = new LFrame(this, Vocab.instance.NEIGHBORS);
@@ -33,12 +35,12 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		LActionButton btnNone = new LActionButton(group, Vocab.instance.NONE);
 		btnNone.addModifyListener(allAction(false));
 		btnNone.getCellData().setExpand(true, false);
-		btnNone.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, 0);
+		btnNone.getCellData().setRequiredSize(LPrefs.BUTTONWIDTH, 0);
 		
 		LActionButton btnAll = new LActionButton(group, Vocab.instance.ALL);
 		btnAll.addModifyListener(allAction(true));
 		btnAll.getCellData().setExpand(true, false);
-		btnAll.getCellData().setMinimumSize(LPrefs.BUTTONWIDTH, 0);
+		btnAll.getCellData().setRequiredSize(LPrefs.BUTTONWIDTH, 0);
 		
 		LPanel composite = new LPanel(group);
 		composite.setGridLayout(3);

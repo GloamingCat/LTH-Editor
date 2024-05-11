@@ -47,13 +47,13 @@ public class StatusTab extends DatabaseTab<Status> {
 	protected void createContent() {
 		// Icon
 
-		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral);
+		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
+		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setMinimumSize(0, 48);
+		imgIcon.getCellData().setRequiredSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		IconButton btnSelectIcon = new IconButton(compositeIcon, true);
 		btnSelectIcon.setImageWidget(imgIcon);
@@ -63,21 +63,21 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Cancel
 
-		LLabel lblCancel = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL,
+		LLabel lblCancel = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.STATUSCANCEL,
 				Tooltip.instance.STATUSCANCEL);
-		lstCancel = new IDList(grpGeneral, Vocab.instance.STATUSSHELL);
+		lstCancel = new IDList(contentEditor.grpGeneral, Vocab.instance.STATUSSHELL);
 		lstCancel.getCellData().setExpand(true, true);
-		lstCancel.getCellData().setMinimumSize(0, 70);
+		lstCancel.getCellData().setRequiredSize(0, 70);
 		lstCancel.addMenu(lblCancel);
 		addChild(lstCancel, "cancel");
 
 		// Behavior Script
 
-		LLabel lblBehavior = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.BEHAVIOR,
+		LLabel lblBehavior = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.BEHAVIOR,
 				Tooltip.instance.BEHAVIOR);
-		SimpleEditableList<Rule> lstRules = new SimpleEditableList<>(grpGeneral);
+		SimpleEditableList<Rule> lstRules = new SimpleEditableList<>(contentEditor.grpGeneral);
 		lstRules.getCellData().setExpand(true, true);
-		lstRules.getCellData().setMinimumSize(0, 70);
+		lstRules.getCellData().setRequiredSize(0, 70);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
 		lstRules.setShellFactory(new LWindowFactory<>() {
@@ -91,8 +91,8 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Script
 
-		LLabel lblScript = new LLabel(grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
-		LPanel compositeScript = new LPanel(grpGeneral);
+		LLabel lblScript = new LLabel(contentEditor.grpGeneral, Vocab.instance.SCRIPT, Tooltip.instance.SCRIPT);
+		LPanel compositeScript = new LPanel(contentEditor.grpGeneral);
 		compositeScript.setGridLayout(2);
 		compositeScript.getCellData().setExpand(true, false);
 		LText txtScript = new LText(compositeScript, true);
@@ -106,8 +106,8 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Visibility
 
-		LLabel lblPriority = new LLabel(grpGeneral, Vocab.instance.PRIORITY, Tooltip.instance.PRIORITY);
-		LPanel compositeVisible = new LPanel(grpGeneral);
+		LLabel lblPriority = new LLabel(contentEditor.grpGeneral, Vocab.instance.PRIORITY, Tooltip.instance.PRIORITY);
+		LPanel compositeVisible = new LPanel(contentEditor.grpGeneral);
 		compositeVisible.setGridLayout(2);
 		compositeVisible.getCellData().setExpand(true, false);
 		
@@ -126,7 +126,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Other properties
 		
-		LPanel check = new LPanel(grpGeneral);
+		LPanel check = new LPanel(contentEditor.grpGeneral);
 		check.setSequentialLayout(true);
 		check.setEqualCells(true);
 		check.getCellData().setSpread(2, 1);
@@ -150,11 +150,11 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Durability
 
-		LFrame grpDurability = new LFrame(left, Vocab.instance.DURABILITY);
+		LFrame grpDurability = new LFrame(contentEditor.left, Vocab.instance.DURABILITY);
 		grpDurability.setGridLayout(3);
 		grpDurability.setHoverText(Tooltip.instance.DURABILITY);
 		grpDurability.getCellData().setExpand(true, false);
-		grpDurability.getCellData().setMinimumSize(200, 0);
+		grpDurability.getCellData().setRequiredSize(200, 0);
 
 		LLabel lblTurns = new LLabel(grpDurability, Vocab.instance.TURNS, Tooltip.instance.TURNS);
 		LSpinner spnTurns = new LSpinner(grpDurability);
@@ -189,7 +189,7 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		// Graphics
 
-		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
+		LFrame grpGraphics = new LFrame(contentEditor.left, Vocab.instance.GRAPHICS);
 		grpGraphics.setGridLayout(2);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.getCellData().setExpand(true, true);
@@ -218,14 +218,14 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Drain
 
-		LFrame grpDrain = new LFrame(right, Vocab.instance.DRAIN);
+		LFrame grpDrain = new LFrame(contentEditor.right, Vocab.instance.DRAIN);
 		grpDrain.setGridLayout(3);
 		grpDrain.setHoverText(Tooltip.instance.DRAIN);
 		grpDrain.getCellData().setExpand(true, false);
-		grpDrain.getCellData().setMinimumSize(200, 0);
+		grpDrain.getCellData().setRequiredSize(200, 0);
 
 		LLabel lblDrainAtt = new LLabel(grpDrain, Vocab.instance.DRAINATT, Tooltip.instance.DRAINATT);
-		lblDrainAtt.getCellData().setMinimumSize(LPrefs.LABELWIDTH, LPrefs.WIDGETHEIGHT);
+		lblDrainAtt.getCellData().setRequiredSize(LPrefs.LABELWIDTH, LPrefs.WIDGETHEIGHT);
 		LText txtDrainAtt = new LText(grpDrain);
 		txtDrainAtt.getCellData().setSpread(2, 1);
 		txtDrainAtt.getCellData().setExpand(true, false);
@@ -242,12 +242,12 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		LCheckBox btnPercentage = new LCheckBox(grpDrain);
 		btnPercentage.setText(Vocab.instance.PERCENTAGE);
-		btnPercentage.setToolTipText(Tooltip.instance.PERCENTAGE);
+		btnPercentage.setHoverText(Tooltip.instance.PERCENTAGE);
 		addControl(btnPercentage, "percentage");
 		
 		// Effects
 
-		LPanel effects = new LPanel(right);
+		LPanel effects = new LPanel(contentEditor.right);
 		effects.setGridLayout(2);
 		effects.setEqualCells(true, false);
 		effects.getCellData().setExpand(true, true);

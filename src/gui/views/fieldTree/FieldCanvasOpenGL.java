@@ -37,16 +37,16 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	}
 	
 	/**
-	 * @wbp.eval.method.return true
+	 * @wbp.eval.method.return false
 	 */
 	private boolean initRenderer() {
 		if (renderer != null)
-			return true;
+			return false;
 		if (SceneHelper.initContext())
 			System.out.println("Initialized OpenGL context on thread: " + Thread.currentThread());
 		else {
 			System.err.println("Failed to initialize OpenGL context!");
-			return false;
+			return true;
 		}
 		try {
 			renderer = new Renderer();
@@ -59,18 +59,18 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 			}
 		} catch (LinkageError e) {
 			System.err.println("Failed to link shader.");
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	//////////////////////////////////////////////////
-	// {{ Draw
+	//region Draw
 
 	@Override
 	public void draw(LPainter painter) {
 		if (refreshRequested && field != null) {
-			if (!initRenderer())
+			if (initRenderer())
 				return;
 			SceneHelper.createTileTextures(renderer, shader);
 			scene = SceneHelper.createScene(field, x0, y0, showGrid, currentLayer, currentChar);
@@ -93,7 +93,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	}
 
 	public void redrawBuffer() {
-		if (!initRenderer())
+		if (initRenderer())
 			return;
 		SceneHelper.context.bind();
 		shader.bind();
@@ -125,10 +125,10 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		renderer.resetBindings();
 	}
 
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Callbacks
+	//region Callbacks
 
 	public void onTileChange(int x, int y) {
 		refresh();
@@ -158,6 +158,6 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		repaint();
 	}
 	
-	// }}
+	//endregion
 
 }

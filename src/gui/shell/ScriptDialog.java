@@ -93,7 +93,7 @@ public class ScriptDialog extends ObjectEditorDialog<Script> {
 		btnInteract.setEnabled((style & ONINTERACT) > 0);
 
 		LLabel lblParam = new LLabel(grpOpts, Vocab.instance.PARAM, Tooltip.instance.PARAM);
-		lblParam.getCellData().setMinimumSize(LPrefs.LABELWIDTH + 20, LPrefs.WIDGETHEIGHT);
+		lblParam.getCellData().setRequiredSize(LPrefs.LABELWIDTH + 20, LPrefs.WIDGETHEIGHT);
 		TagList lstParam = new TagList(grpOpts, Vocab.instance.PARAM);
 		lstParam.getCellData().setExpand(true, true);
 		addChild(lstParam, "tags");

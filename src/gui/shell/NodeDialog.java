@@ -15,7 +15,7 @@ public abstract class NodeDialog extends ObjectEditorDialog<Node> {
 
 	public NodeDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
-		setMinimumSize(600, 400);
+		setRequiredSize(600, 400);
 		setSize(600, 400);
 	}
 	

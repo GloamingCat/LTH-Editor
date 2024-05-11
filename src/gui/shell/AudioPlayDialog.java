@@ -41,7 +41,7 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 	 */
 	public AudioPlayDialog(LWindow parent, int style) {
 		super(parent, style, Vocab.instance.AUDIOSHELL);
-		setMinimumSize(400, 400);
+		setRequiredSize(400, 400);
 		setSize(400, 400);
 	}
 	

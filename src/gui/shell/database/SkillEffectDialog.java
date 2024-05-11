@@ -18,7 +18,7 @@ public class SkillEffectDialog extends ObjectEditorDialog<Effect> {
 	public SkillEffectDialog(LWindow parent) {
 		super(parent, Vocab.instance.EFFECTSHELL);
 		setSize(400, 400);
-		setMinimumSize(400, 400);
+		setRequiredSize(400, 400);
 	}
 	
 	@Override

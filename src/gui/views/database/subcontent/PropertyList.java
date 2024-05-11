@@ -27,15 +27,15 @@ public class PropertyList extends SimpleEditableList<Property> {
 				return new PropertyDialog(parent, title) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
-					};
+					}
 				};
 			}
 		});
 	}
 	
 	@Override
-	protected LList<Property, Property> createList(boolean check) {
-		return new LList<>(this, check) {
+	protected void createContent(int style) {
+		list = new LList<>(this, style == 1) {
 			@Override
 			public LEditEvent<Property> edit(LPath path) {
 				return onEditItem(path);

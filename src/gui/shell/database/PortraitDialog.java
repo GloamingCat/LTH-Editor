@@ -30,7 +30,7 @@ public class PortraitDialog extends LObjectDialog<Portrait> {
 	
 	public PortraitDialog(LWindow parent) {
 		super(parent, Vocab.instance.PORTRAITSHELL);
-		setMinimumSize(600, 400);
+		setRequiredSize(600, 400);
 		setSize(600, 400);
 	}
 	

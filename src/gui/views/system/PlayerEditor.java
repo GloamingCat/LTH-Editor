@@ -1,0 +1,58 @@
+package gui.views.system;
+
+import data.config.Config;
+import gui.Tooltip;
+import gui.Vocab;
+import gui.widgets.PositionButton;
+import lui.container.LContainer;
+import lui.gson.GDefaultObjectEditor;
+import lui.widget.LLabel;
+import lui.widget.LSpinner;
+import lui.widget.LText;
+
+import java.lang.reflect.Type;
+
+public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
+    public PlayerEditor(LContainer parent, boolean doubleBuffered) {
+        super(parent, doubleBuffered);
+    }
+
+    @Override
+    protected void createContent(int style) {
+
+		setGridLayout(3);
+		new LLabel(this, Vocab.instance.WALKSPEED, Tooltip.instance.WALKSPEED);
+		LSpinner spnWalkSpeed = new LSpinner(this);
+		spnWalkSpeed.getCellData().setExpand(true, false);
+		spnWalkSpeed.getCellData().setSpread(2, 1);
+		addControl(spnWalkSpeed, "walkSpeed");
+		spnWalkSpeed.setMaximum(9999);
+
+		new LLabel(this, Vocab.instance.DASHSPEED, Tooltip.instance.DASHSPEED);
+		LSpinner spnDashSpeed = new LSpinner(this);
+		spnDashSpeed.getCellData().setExpand(true, false);
+		addControl(spnDashSpeed, "dashSpeed");
+		spnDashSpeed.setMaximum(9999);
+
+		new LLabel(this, "%");
+		new LLabel(this, Vocab.instance.DIAGTHRESHOLD, Tooltip.instance.DIAGTHRESHOLD);
+
+		LSpinner spnDiagThreshold = new LSpinner(this);
+		spnDiagThreshold.getCellData().setExpand(true, false);
+		addControl(spnDiagThreshold, "diagThreshold");
+
+		new LLabel(this, "%");
+		new LLabel(this, Vocab.instance.STARTPOS, Tooltip.instance.STARTPOS);
+
+		LText txtPos = new LText(this, true);
+		txtPos.getCellData().setExpand(true, false);
+		PositionButton btnStartPos = new PositionButton(this, -1);
+		btnStartPos.setTextWidget(txtPos);
+		addControl(btnStartPos, "startPos");
+    }
+
+    @Override
+    public Type getType() {
+        return Config.Player.class;
+    }
+}

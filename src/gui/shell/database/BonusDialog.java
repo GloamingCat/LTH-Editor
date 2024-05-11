@@ -25,7 +25,7 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
 	
 	public BonusDialog(LWindow parent, String title) {
 		super(parent, title);
-		setMinimumSize(300, 200);
+		setRequiredSize(300, 200);
 		setSize(300, 200);
 	}
 	

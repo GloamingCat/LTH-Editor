@@ -36,7 +36,7 @@ public class FieldPrefDialog extends ObjectEditorDialog<Field.Prefs> {
 	public FieldPrefDialog(LWindow parent, FieldNode n) {
 		super(parent,  Project.current.fieldTree.getData().findNode(n).id, "");
 		setTitle(String.format("[%03d] ", id) + n.name);
-		setMinimumSize(600, 400);
+		setRequiredSize(600, 400);
 	}
 	
 	@Override

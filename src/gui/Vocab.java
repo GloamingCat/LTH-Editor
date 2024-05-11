@@ -230,7 +230,7 @@ public class Vocab {
 	// Character
 	public String CHARBATTLER = "Battler";
 	public String SHADOW = "Shadow";
-	public String COLLIDERTILES = "Collision Tiles";
+	public String COLLIDERTILES = "Colliders";
 	public String PORTRAITS = "Portraits";
 	public String KOEFFECT = "KO Effect";
 	

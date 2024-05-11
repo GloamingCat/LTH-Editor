@@ -15,7 +15,7 @@ public class EquipStatusDialog extends ObjectEditorDialog<EquipStatus> {
 
 	public EquipStatusDialog(LWindow parent) {
 		super(parent, Vocab.instance.STATUSSHELL);
-		setMinimumSize(300, 250);
+		setRequiredSize(300, 250);
 		setSize(300, 250);
 	}
 	

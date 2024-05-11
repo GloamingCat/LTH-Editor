@@ -33,9 +33,9 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 
 	@Override
 	protected void createContent() {
-		LLabel lblTiles = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES,
-				Tooltip.instance.COLLIDERTILES);
-		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<>(grpGeneral);
+		LLabel lblTiles = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.COLLIDERTILES,
+				Tooltip.instance.TILES);
+		SimpleEditableList<ObstacleTile> tileList = new SimpleEditableList<>(contentEditor.grpGeneral);
 		tileList.type = ObstacleTile.class;
 		tileList.setIncludeID(false);
 		tileList.setShellFactory(new LWindowFactory<>() {
@@ -45,13 +45,13 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 			}
 		});
 		tileList.getCellData().setExpand(true, true);
-		tileList.getCellData().setMinimumSize(0, 60);
+		tileList.getCellData().setRequiredSize(0, 60);
 		tileList.addMenu(lblTiles);
 		addChild(tileList, "tiles");
 
 		// Graphics
 		
-		LFrame grpGraphics = new LFrame(left, Vocab.instance.GRAPHICS);
+		LFrame grpGraphics = new LFrame(contentEditor.left, Vocab.instance.GRAPHICS);
 		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.getCellData().setExpand(true, true);
@@ -66,7 +66,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 
 		// Transform
 
-		LFrame grpTransform = new LFrame(right, Vocab.instance.TRANSFORM);
+		LFrame grpTransform = new LFrame(contentEditor.right, Vocab.instance.TRANSFORM);
 		grpTransform.setFillLayout(true);
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.getCellData().setExpand(true, false);
@@ -85,7 +85,7 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		transformEditor.setImage(imgGraphics);
 		btnGraphics.setTransform(transformEditor);
 
-		LLabel fill = new LLabel(right, 1, 1);
+		LLabel fill = new LLabel(contentEditor.right, 1, 1);
 		fill.getCellData().setExpand(true, true);
 	}
 

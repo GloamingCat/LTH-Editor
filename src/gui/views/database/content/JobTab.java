@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -36,16 +37,16 @@ public class JobTab extends DatabaseTab<Job> {
 
 	@Override
 	protected void createContent() {
-		LLabel lblExp = new LLabel(grpGeneral, Vocab.instance.EXPCURVE, Tooltip.instance.EXPCURVE);
-		LText txtCurve = new LText(grpGeneral);
+		LLabel lblExp = new LLabel(contentEditor.grpGeneral, Vocab.instance.EXPCURVE, Tooltip.instance.EXPCURVE);
+		LText txtCurve = new LText(contentEditor.grpGeneral);
 		txtCurve.getCellData().setExpand(true, false);
 		txtCurve.addMenu(lblExp);
 		addControl(txtCurve, "expCurve");
 		
 		// Attack Skill
 		
-		LLabel lblAtk = new LLabel(grpGeneral, Vocab.instance.ATTACKSKILL, Tooltip.instance.ATTACKSKILL);
-		LPanel attackSkill = new LPanel(grpGeneral);
+		LLabel lblAtk = new LLabel(contentEditor.grpGeneral, Vocab.instance.ATTACKSKILL, Tooltip.instance.ATTACKSKILL);
+		LPanel attackSkill = new LPanel(contentEditor.grpGeneral);
 		attackSkill.setGridLayout(2);
 		attackSkill.getCellData().setExpand(true, false);
 		
@@ -57,15 +58,16 @@ public class JobTab extends DatabaseTab<Job> {
 		btnAttack.addMenu(lblExp);
 		addControl(btnAttack, "attackID");
 		
-		LFrame grpBuild = new LFrame(left, Vocab.instance.BUILD);
+		LFrame grpBuild = new LFrame(contentEditor.left, Vocab.instance.BUILD);
 		grpBuild.setFillLayout(true);
 		grpBuild.setHoverText(Tooltip.instance.BUILD);
 		grpBuild.getCellData().setExpand(true, true);
 		BuildEditor buildEditor = new BuildEditor(grpBuild, 1);
 		buildEditor.addMenu(grpBuild);
+		buildEditor.getCellData().setAlignment(LFlags.TOP);
 		addChild(buildEditor, "build");
 		
-		LPanel nodes = new LPanel(right);
+		LPanel nodes = new LPanel(contentEditor.right);
 		nodes.setFillLayout(false);
 		nodes.setSpacing(LPrefs.FRAMEMARGIN);
 		nodes.getCellData().setExpand(true, true);

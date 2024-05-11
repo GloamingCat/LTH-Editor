@@ -17,7 +17,7 @@ public class ObstacleTileDialog extends ObjectEditorDialog<ObstacleTile> {
     public ObstacleTileDialog(LWindow parent) {
 		super(parent, Vocab.instance.OBSTACLESHELL);
 		setSize(400, 240);
-		setMinimumSize(400, 240);
+		setRequiredSize(400, 240);
 	}
 	
 	@Override

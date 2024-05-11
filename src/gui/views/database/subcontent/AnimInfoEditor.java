@@ -22,6 +22,9 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 	
 	public AnimInfoEditor(LContainer parent) {
 		super(parent, false);
+	}
+
+	protected void createContent(int style) {
 		setFillLayout(true);
 		
 		LViewFolder tab = new LViewFolder(this, false);
@@ -34,7 +37,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		tab.addTab(Vocab.instance.BATTLE, battle);
 		
 		LLabel lblLoad = new LLabel(battle, Vocab.instance.LOAD, Tooltip.instance.LOAD);
-		lblLoad.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblLoad.getCellData().setRequiredSize(LABELWIDTH, 0);
 		LText txtLoad = new LText(battle, true);
 		txtLoad.getCellData().setExpand(true, false);
 		ImageButton btnLoad = new ImageButton(battle, true);
@@ -78,7 +81,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		tab.addTab(Vocab.instance.USER, user);
 		
 		LLabel lblUserLoad = new LLabel(user, Vocab.instance.LOAD, Tooltip.instance.USERLOAD);
-		lblUserLoad.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblUserLoad.getCellData().setRequiredSize(LABELWIDTH, 0);
 		LText txtUserLoad = new LText(user);
 		txtUserLoad.getCellData().setExpand(true, false);
 		txtUserLoad.addMenu(lblUserLoad);
@@ -104,7 +107,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		tab.addTab(Vocab.instance.OPTIONS, animOptions);
 		
 		LLabel lblIntroTime = new LLabel(animOptions, Vocab.instance.INTROTIME, Tooltip.instance.INTROTIME);
-		lblIntroTime.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblIntroTime.getCellData().setRequiredSize(LABELWIDTH, 0);
 		LSpinner spnIntroTime = new LSpinner(animOptions);
 		spnIntroTime.getCellData().setExpand(true, false);
 		spnIntroTime.addMenu(lblIntroTime);
@@ -113,7 +116,7 @@ public class AnimInfoEditor extends GDefaultObjectEditor<AnimInfo> {
 		addControl(spnIntroTime, "introTime");
 		
 		LLabel lblCastTime = new LLabel(animOptions, Vocab.instance.CASTTIME, Tooltip.instance.CASTTIME);
-		lblCastTime.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblCastTime.getCellData().setRequiredSize(LABELWIDTH, 0);
 		LSpinner spnCastTime = new LSpinner(animOptions);
 		spnCastTime.getCellData().setExpand(true, false);
 		spnCastTime.addMenu(lblCastTime);

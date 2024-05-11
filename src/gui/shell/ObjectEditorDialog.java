@@ -35,6 +35,8 @@ public class ObjectEditorDialog<T> extends LObjectDialog<T> {
 			public Type getType() {
 				return null;
 			}
+			@Override
+			protected void createContent(int style) {}
 		};
 		contentEditor.createMenuInterface();
 	}

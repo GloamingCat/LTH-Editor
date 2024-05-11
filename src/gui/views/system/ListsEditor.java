@@ -19,12 +19,12 @@ public class ListsEditor extends LObjectEditor<Object> {
 	private RegionList lstRegions;
 	private PluginList lstPlugins;
 
-	/**
-	 * Create the composite.
-	 * @param parent
-	 */
 	public ListsEditor(LContainer parent) {
 		super(parent, true);
+	}
+
+	@Override
+	protected void createContent(int style) {
 		setFillLayout(false);
 
 		createMenuInterface();

@@ -11,6 +11,7 @@ import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
@@ -42,13 +43,13 @@ public class ItemTab extends DatabaseTab<Item> {
 	protected void createContent() {
 		// Icon
 		
-		LLabel lblIcon = new LLabel(grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(grpGeneral);
+		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
+		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setMinimumSize(48,48);
+		imgIcon.getCellData().setRequiredSize(48,48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		IconButton btnGraphics = new IconButton(compositeIcon, true);
 		btnGraphics.setImageWidget(imgIcon);
@@ -58,18 +59,18 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		// Description
 		
-		LLabel lblDesc = new LLabel(grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
+		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(grpGeneral);
+		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
 		txtDescription.getCellData().setExpand(true, true);
-		txtDescription.getCellData().setMinimumSize(0, 60);
+		txtDescription.getCellData().setRequiredSize(0, 60);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 		
 		// Price
 		
-		LLabel lblPrice = new LLabel(grpGeneral, Vocab.instance.PRICE, Tooltip.instance.PRICE);
-		LPanel price = new LPanel(grpGeneral);
+		LLabel lblPrice = new LLabel(contentEditor.grpGeneral, Vocab.instance.PRICE, Tooltip.instance.PRICE);
+		LPanel price = new LPanel(contentEditor.grpGeneral);
 		price.setGridLayout(2);
 		price.getCellData().setExpand(true, false);
 		LSpinner spnPrice = new LSpinner(price);
@@ -86,7 +87,7 @@ public class ItemTab extends DatabaseTab<Item> {
 
 		// Use
 		
-		LFrame grpUse = new LFrame(left, Vocab.instance.USE);
+		LFrame grpUse = new LFrame(contentEditor.left, Vocab.instance.USE);
 		grpUse.setGridLayout(3);
 		grpUse.setHoverText(Tooltip.instance.USE);
 		grpUse.getCellData().setExpand(true, true);
@@ -101,9 +102,9 @@ public class ItemTab extends DatabaseTab<Item> {
 
 		LLabel lblEffects = new LLabel(grpUse, LFlags.TOP, Vocab.instance.EFFECTS,
 				Tooltip.instance.ITEMEFFECTS);
-		lblEffects.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblEffects.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 		SkillEffectList lstEffects = new SkillEffectList(grpUse);
-		lstEffects.getCellData().setMinimumSize(0, 60);
+		lstEffects.getCellData().setRequiredSize(0, 60);
 		lstEffects.getCellData().setExpand(true, true);
 		lstEffects.getCellData().setSpread(2, 1);
 		lstEffects.addMenu(lblEffects);
@@ -112,7 +113,7 @@ public class ItemTab extends DatabaseTab<Item> {
 		LLabel lblAtt = new LLabel(grpUse, LFlags.TOP, Vocab.instance.ATTRIBUTES,
 				Tooltip.instance.ITEMATTRIBUTES);
 		AttributeList lstUseAtt = new AttributeList(grpUse);
-		lstUseAtt.getCellData().setMinimumSize(0, 60);
+		lstUseAtt.getCellData().setRequiredSize(0, 60);
 		lstUseAtt.getCellData().setExpand(true, true);
 		lstUseAtt.getCellData().setSpread(2, 1);
 		lstUseAtt.addMenu(lblAtt);
@@ -134,13 +135,13 @@ public class ItemTab extends DatabaseTab<Item> {
 
 		// Equip
 
-		LFrame grpEquip = new LFrame(right, Vocab.instance.EQUIP);
+		LFrame grpEquip = new LFrame(contentEditor.right, Vocab.instance.EQUIP);
 		grpEquip.setGridLayout(2);
 		grpEquip.setHoverText(Tooltip.instance.EQUIP);
 		grpEquip.getCellData().setExpand(true, true);
 
 		LLabel lblSlot = new LLabel(grpEquip, Vocab.instance.SLOT, Tooltip.instance.SLOT);
-		lblSlot.getCellData().setMinimumSize(LABELWIDTH, 0);
+		lblSlot.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 		LText txtSlot = new LText(grpEquip);
 		txtSlot.getCellData().setExpand(true, false);
 		txtSlot.addMenu(lblSlot);
@@ -155,7 +156,7 @@ public class ItemTab extends DatabaseTab<Item> {
 				Tooltip.instance.BLOCKEDSLOTS);
 		NameList lstBlocked = new NameList(grpEquip, Vocab.instance.SLOTSHELL);
 		lstBlocked.getCellData().setExpand(true, true);
-		lstBlocked.getCellData().setMinimumSize(0, 48);
+		lstBlocked.getCellData().setRequiredSize(0, 48);
 		lstBlocked.addMenu(lblBlock);
 		addChild(lstBlocked, "blocked");
 		
@@ -163,7 +164,7 @@ public class ItemTab extends DatabaseTab<Item> {
 				Tooltip.instance.EQUIPATTRIBUTES);
 		AttributeList lstEquipAtt = new AttributeList(grpEquip);
 		lstEquipAtt.getCellData().setExpand(true, true);
-		lstEquipAtt.getCellData().setMinimumSize(0, 60);
+		lstEquipAtt.getCellData().setRequiredSize(0, 60);
 		lstEquipAtt.addMenu(lblEquipAtt);
 		addChild(lstEquipAtt, "equipAttributes");
 		
@@ -171,7 +172,7 @@ public class ItemTab extends DatabaseTab<Item> {
 				Tooltip.instance.EQUIPPROPERTIES);
 		BonusList lstElement = new BonusList(grpEquip, Vocab.instance.PROPERTYSHELL);
 		lstElement.getCellData().setExpand(true, true);
-		lstElement.getCellData().setMinimumSize(0, 60);
+		lstElement.getCellData().setRequiredSize(0, 60);
 		lstElement.addMenu(lblProp);
 		addChild(lstElement, "bonuses");
 		
@@ -179,7 +180,7 @@ public class ItemTab extends DatabaseTab<Item> {
 				Tooltip.instance.EQUIPSTATUSES);
 		EquipStatusList lstEquipStatus = new EquipStatusList(grpEquip);
 		lstEquipStatus.getCellData().setExpand(true, true);
-		lstEquipStatus.getCellData().setMinimumSize(0, 60);
+		lstEquipStatus.getCellData().setRequiredSize(0, 60);
 		lstEquipStatus.setIncludeID(false);
 		lstEquipStatus.addMenu(lblStatus);
 		addChild(lstEquipStatus, "equipStatus");
