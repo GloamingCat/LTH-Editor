@@ -10,9 +10,9 @@ import lui.widget.LText;
 
 import java.lang.reflect.Type;
 
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 
-public class AudioButton extends LObjectButton<Audio> {
+public class AudioButton extends LObjectButton<AudioPlay> {
 	
 	private LText text;
 	
@@ -23,9 +23,9 @@ public class AudioButton extends LObjectButton<Audio> {
 	 */
 	public AudioButton(LContainer parent, boolean optional) {
 		super(parent);
-		setShellFactory(new LWindowFactory<Audio>() {
+		setShellFactory(new LWindowFactory<AudioPlay>() {
 			@Override
-			public LObjectDialog<Audio> createWindow(LWindow parent) {
+			public LObjectDialog<AudioPlay> createWindow(LWindow parent) {
 				return new AudioPlayDialog(parent, AudioPlayDialog.OPTIONAL);
 			}
 		});
@@ -39,7 +39,7 @@ public class AudioButton extends LObjectButton<Audio> {
 	public void setValue(Object value) {
 		if (value != null) {
 			setEnabled(true);
-			Audio s = (Audio) value;
+			AudioPlay s = (AudioPlay) value;
 			if (text != null) {
 				text.setValue(s.toString());
 			}
@@ -55,7 +55,7 @@ public class AudioButton extends LObjectButton<Audio> {
 
 	@Override
 	protected Type getType() {
-		return Audio.class;
+		return AudioPlay.class;
 	}
 
 }

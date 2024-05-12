@@ -2,6 +2,7 @@ package data;
 
 import java.util.Arrays;
 
+import lui.datainterface.LInitializable;
 import project.Project;
 import data.subcontent.Property;
 import data.subcontent.Icon;
@@ -9,7 +10,7 @@ import data.subcontent.Tag;
 import lui.base.data.LDataList;
 import lui.base.data.LDataTree;
 
-public class Skill extends Data {
+public class Skill extends Data implements LInitializable {
 
 	// General
 	public String description = "";
@@ -86,7 +87,10 @@ public class Skill extends Data {
 	public boolean rotateEffect = false;
 	public Mask castMask = new Mask();
 	
-	public Skill() {
+	public Skill() {}
+
+
+	public void initialize() {
 		effects.add(new Effect());
 		costs.add(new Tag("sp", "10"));
 	}

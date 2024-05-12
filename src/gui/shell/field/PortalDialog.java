@@ -29,10 +29,8 @@ public class PortalDialog extends LObjectDialog<Portal> {
 	 * @wbp.parser.constructor
 	 */
 	public PortalDialog(LWindow parent, int fieldID) {
-		super(parent, Vocab.instance.PORTALSHELL);
+		super(parent, 640, 480, Vocab.instance.PORTALSHELL);
 		this.fieldID = fieldID;
-		setRequiredSize(640, 480);
-		setSize(640, 480);
 	}
 
 	@Override

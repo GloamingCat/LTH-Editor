@@ -2,7 +2,8 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.base.LFlags;
+import lui.gson.GObjectDialog;
 
 import data.Item.EquipStatus;
 import lui.dialog.LWindow;
@@ -11,12 +12,10 @@ import lui.widget.LNodeSelector;
 
 import project.Project;
 
-public class EquipStatusDialog extends ObjectEditorDialog<EquipStatus> {
+public class EquipStatusDialog extends GObjectDialog<EquipStatus> {
 
 	public EquipStatusDialog(LWindow parent) {
-		super(parent, Vocab.instance.STATUSSHELL);
-		setRequiredSize(300, 250);
-		setSize(300, 250);
+		super(parent, 300, 250, Vocab.instance.STATUSSHELL);
 	}
 	
 	@Override
@@ -30,6 +29,7 @@ public class EquipStatusDialog extends ObjectEditorDialog<EquipStatus> {
 		addControl(tree, "id");
 		
 		LCheckBox btnBattle = new LCheckBox(contentEditor);
+		btnBattle.getCellData().setAlignment(LFlags.LEFT);
 		btnBattle.setText(Vocab.instance.ADDONBATTLE);
 		btnBattle.setHoverText(Tooltip.instance.ADDONBATTLE);
 		addControl(btnBattle, "battle");

@@ -2,9 +2,9 @@ package gui.shell.field;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
-import lui.base.data.LPoint;
+import lui.base.LFlags;
 import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.dialog.LWindow;
@@ -15,14 +15,10 @@ import lui.widget.LText;
 
 import data.field.Layer.Info;
 
-public class LayerDialog extends ObjectEditorDialog<Info> {
-
+public class LayerDialog extends GObjectDialog<Info> {
 
 	public LayerDialog(LWindow parent, int maxHeight) {
 		super(parent, maxHeight, Vocab.instance.LAYERSHELL);
-		LPoint size = getTargetSize();
-		setRequiredSize(size.x, size.y);
-		setSize(300, size.y);
 	}
 	
 	@Override
@@ -30,7 +26,7 @@ public class LayerDialog extends ObjectEditorDialog<Info> {
 		super.createContent(0);
 
 		contentEditor.setGridLayout(2);
-		
+
 		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
 		grpGeneral.setGridLayout(2);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
@@ -53,6 +49,7 @@ public class LayerDialog extends ObjectEditorDialog<Info> {
 
 		LPanel check = new LPanel(grpGeneral);
 		check.getCellData().setSpread(2, 1);
+		check.getCellData().setAlignment(LFlags.LEFT);
 		check.setSequentialLayout(true);
 
 		LCheckBox btnNoAuto = new LCheckBox(check);
@@ -60,13 +57,19 @@ public class LayerDialog extends ObjectEditorDialog<Info> {
 		btnNoAuto.setHoverText(Tooltip.instance.NOAUTO);
 		addControl(btnNoAuto, "noAuto");
 
-		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);;
+		new LLabel(grpGeneral, 2, 1).getCellData().setExpand(false, true);
+
+		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);
 		grpTags.setFillLayout(true);
 		grpTags.setHoverText(Tooltip.instance.TAGS);
 		grpTags.getCellData().setExpand(true, true);
-		grpTags.getCellData().setRequiredSize(100, 0);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
+
+		System.out.println(grpGeneral.getTargetSize());
+		System.out.println(contentEditor.getTargetSize());
+
+		pack();
 
 	}
 	

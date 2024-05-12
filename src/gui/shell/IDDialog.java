@@ -15,9 +15,7 @@ public abstract class IDDialog extends LObjectDialog<Integer> {
 	 * @wbp.parser.constructor
 	 */
 	public IDDialog(LWindow parent, String title, int style) {
-		super(parent, style, title);
-		setRequiredSize(350, 500);
-		setSize(350, 500);
+		super(parent, 350, 500, style, title);
 	}
 	
 	@Override

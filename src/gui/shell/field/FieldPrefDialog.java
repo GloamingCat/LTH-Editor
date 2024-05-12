@@ -1,6 +1,7 @@
 package gui.shell.field;
 
 import gui.views.fieldTree.subcontent.TransitionEditor;
+import gui.widgets.CheckBoxPanel;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
@@ -13,7 +14,7 @@ import lui.widget.LSpinner;
 import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
 import gui.views.fieldTree.subcontent.FieldImageList;
 import gui.widgets.AudioButton;
@@ -29,24 +30,26 @@ import data.field.FieldNode;
 import data.field.Transition;
 import project.Project;
 
-public class FieldPrefDialog extends ObjectEditorDialog<Field.Prefs> {
+public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 
 	protected int id;
 	
 	public FieldPrefDialog(LWindow parent, FieldNode n) {
-		super(parent,  Project.current.fieldTree.getData().findNode(n).id, "");
+		super(parent, 800, 400, Project.current.fieldTree.getData().findNode(n).id, "");
 		setTitle(String.format("[%03d] ", id) + n.name);
-		setRequiredSize(600, 400);
+		setCurrentSize(1000, 600);
 	}
 	
 	@Override
 	protected void createContent(int id) {
 		super.createContent(0);
 		this.id = id;
-		contentEditor.setGridLayout(3);
-		contentEditor.setEqualCells(true);
-		
-		LFrame grpGeneral = new LFrame(contentEditor, Vocab.instance.GENERAL);
+		contentEditor.setFillLayout(true);
+
+		LPanel left = new LPanel(contentEditor);
+		left.setGridLayout(1);
+
+		LFrame grpGeneral = new LFrame(left, Vocab.instance.GENERAL);
 		grpGeneral.setGridLayout(3);
 		grpGeneral.setHoverText(Tooltip.instance.GENERAL);
 		grpGeneral.getCellData().setAlignment(LFlags.TOP);
@@ -102,22 +105,36 @@ public class FieldPrefDialog extends ObjectEditorDialog<Field.Prefs> {
 		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "loadScript");
 
-		LPanel check = new LPanel(grpGeneral);
+		LPanel check = new CheckBoxPanel(grpGeneral);
 		check.getCellData().setSpread(3, 1);
-		check.setSequentialLayout(true);
 
 		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
 		addControl(btnPersistent, "persistent");
-		
+
+		// Transitions
+
+		LFrame grpTransitions = new LFrame(left, Vocab.instance.TRANSITIONS);
+		grpTransitions.setGridLayout(1);
+		grpTransitions.setHoverText(Tooltip.instance.TRANSITIONS);
+		grpTransitions.getCellData().setExpand(true, true);
+
+		SimpleEditableList<Transition> lstTransitions = new SimpleEditableList<>(grpTransitions);
+		lstTransitions.type = Transition.class;
+		lstTransitions.getCollectionWidget().setEditEnabled(false);
+		lstTransitions.getCellData().setExpand(true, true);
+		addChild(lstTransitions, "transitions");
+
+		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, id);
+		transitionEditor.getCellData().setExpand(true, false);
+		lstTransitions.addChild(transitionEditor);
+
 		// Images
 		
 		LFrame grpImages = new LFrame(contentEditor, Vocab.instance.IMAGES);
 		grpImages.setFillLayout(false);
 		grpImages.setHoverText(Tooltip.instance.IMAGES);
-		grpImages.getCellData().setSpread(1, 2);
-		grpImages.getCellData().setExpand(true, true);
 		
 		FieldImageList lstImages = new FieldImageList(grpImages);
 		addChild(lstImages, "images");
@@ -135,28 +152,8 @@ public class FieldPrefDialog extends ObjectEditorDialog<Field.Prefs> {
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);
 		grpTags.setFillLayout(false);
 		grpTags.setHoverText(Tooltip.instance.TAGS);
-		grpTags.getCellData().setSpread(1, 2);
-		grpTags.getCellData().setExpand(true, true);
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
-		
-		// Transitions
-		
-		LFrame grpTransitions = new LFrame(contentEditor, Vocab.instance.TRANSITIONS);
-		grpTransitions.setGridLayout(1);
-		grpTransitions.setHoverText(Tooltip.instance.TRANSITIONS);
-		grpTransitions.getCellData().setExpand(true, true);
-		
-		SimpleEditableList<Transition> lstTransitions = new SimpleEditableList<>(grpTransitions);
-		lstTransitions.type = Transition.class;
-		lstTransitions.getCollectionWidget().setEditEnabled(false);
-		lstTransitions.getCellData().setExpand(true, true);
-		addChild(lstTransitions, "transitions");
-		
-		TransitionEditor transitionEditor = new TransitionEditor(grpTransitions, id);
-		transitionEditor.setGridLayout(3);
-		transitionEditor.getCellData().setExpand(true, false);
-		lstTransitions.addChild(transitionEditor);
 
 	}
 
@@ -172,7 +169,7 @@ public class FieldPrefDialog extends ObjectEditorDialog<Field.Prefs> {
 				img.setImage((String) null);
 				return;
 			}
-			img.setImage(anim.quad.fullPath(), anim.quad.getRect());
+			img.setImage(anim.quad.fullPath(), anim.quad);
 		} else {
 			img.setImage((String) null);
 		}

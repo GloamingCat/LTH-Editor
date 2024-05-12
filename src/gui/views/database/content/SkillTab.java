@@ -8,6 +8,7 @@ import gui.views.database.subcontent.AnimInfoEditor;
 import gui.views.database.subcontent.PropertyList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.TagList;
+import gui.widgets.CheckBoxPanel;
 import gui.widgets.IconButton;
 import gui.widgets.LuaButton;
 import lui.base.LFlags;
@@ -183,22 +184,20 @@ public class SkillTab extends DatabaseTab<Skill> {
 		cmbSelection.addMenu(lblSelection);
 		addControl(cmbSelection, "selection");
 		
-		LPanel check = new LPanel(grpTarget);
-		check.setSequentialLayout(true);
-		check.getCellData().setSpread(2, 1);
-		check.getCellData().setAlignment(LFlags.LEFT);
+		LPanel targetCheck = new CheckBoxPanel(grpTarget);
+		targetCheck.getCellData().setSpread(2, 1);
 		
-		LCheckBox btnAllParties = new LCheckBox(check);
+		LCheckBox btnAllParties = new LCheckBox(targetCheck);
 		btnAllParties.setText(Vocab.instance.ALLPARTIES);
 		btnAllParties.setHoverText(Tooltip.instance.ALLPARTIES);
 		addControl(btnAllParties, "allParties");
 		
-		LCheckBox btnAutopath = new LCheckBox(check);
+		LCheckBox btnAutopath = new LCheckBox(targetCheck);
 		btnAutopath.setText(Vocab.instance.AUTOPATH);
 		btnAutopath.setHoverText(Tooltip.instance.AUTOPATH);
 		addControl(btnAutopath, "autoPath");
 		
-		LCheckBox btnFreeNavigation = new LCheckBox(check);
+		LCheckBox btnFreeNavigation = new LCheckBox(targetCheck);
 		btnFreeNavigation.setText(Vocab.instance.FREENAVIGATION);
 		btnFreeNavigation.setHoverText(Tooltip.instance.FREENAVIGATION);
 		addControl(btnFreeNavigation, "freeNavigation");
@@ -249,10 +248,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 		LCanvas effectMask = new LCanvas(grpEffect);
 		effectMask.getCellData().setExpand(true, true);
 		addMaskButton(btnEffectMask, effectMask, effectColor);
-		
-		LCheckBox btnRotate = new LCheckBox(grpEffect);
-		btnRotate.getCellData().setSpread(2, 1);
+
+		LPanel effectCheck = new CheckBoxPanel(grpEffect);
+		effectCheck.getCellData().setSpread(2, 1);
+
+		LCheckBox btnRotate = new LCheckBox(effectCheck);
 		btnRotate.setText(Vocab.instance.ROTATE);
+		btnRotate.setHoverText(Tooltip.instance.ROTATE);
 		btnRotate.addMenu();
 		addControl(btnRotate, "rotateEffect");
 		

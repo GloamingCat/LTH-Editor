@@ -22,7 +22,8 @@ public class Script extends Data {
 	public boolean onCollide = false;
 	
 	public String description = "";
-	
+
+	@Override
 	public String toString() {
 		String s = "(";
 		if (onLoad) {

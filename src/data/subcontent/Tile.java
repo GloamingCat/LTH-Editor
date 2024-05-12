@@ -1,16 +1,12 @@
 package data.subcontent;
 
-public class Tile {
+public class Tile implements Cloneable {
 	
 	public int dx = 0;
 	public int dy = 0;
 	public int height = 0;
 	
 	public Tile() {}
-	public Tile(Tile i) {
-		dx = i.dx;
-		dy = i.dy;
-	}
 	
 	public Tile(int x, int y, int h) {
 		dx = x;
@@ -23,14 +19,21 @@ public class Tile {
 	}
 	
 	public boolean equals(Object other) {
-		if (other instanceof Tile) {
-			Tile t = (Tile) other;
-			return t.dx == dx && t.dy == dy && t.height == height;
+		if (other instanceof Tile t) {
+            return t.dx == dx && t.dy == dy && t.height == height;
 		} else return false;
 	}
 	
 	public Tile clone() {
-		return new Tile(dx, dy, height);
+        try {
+            Tile tile = (Tile) super.clone();
+			tile.dx = dx;
+			tile.dy = dy;
+			tile.height = height;
+			return tile;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 }

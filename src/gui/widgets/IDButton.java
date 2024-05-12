@@ -22,11 +22,6 @@ public class IDButton extends LObjectButton<Integer> {
 	protected LText txtName;
 	protected LImage image;
 
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
 	public IDButton(LContainer parent, String title, boolean optional) {
 		super(parent);
 		setShellFactory(new LWindowFactory<Integer>() {
@@ -73,7 +68,7 @@ public class IDButton extends LObjectButton<Integer> {
 				if (anim == null)
 					image.setImage((String) null); 
 				else {
-					image.setImage(anim.quad.fullPath(), anim.quad.getRect());
+					image.setImage(anim.quad.fullPath(), anim.quad);
 				}
 			}
 			currentValue = id;

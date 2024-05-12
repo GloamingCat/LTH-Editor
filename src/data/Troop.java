@@ -49,9 +49,8 @@ public class Troop extends Data {
 		}
 		
 		public boolean equals(Object obj) {
-			if (obj instanceof Unit) {
-				Unit other = (Unit) obj;
-				return other.key.equals(key) && other.x == x && other.y == y &&
+			if (obj instanceof Unit other) {
+                return other.key.equals(key) && other.x == x && other.y == y &&
 						other.charID == charID && other.battlerID == battlerID;
 			} else return false;
 		}

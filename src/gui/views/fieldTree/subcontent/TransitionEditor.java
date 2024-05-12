@@ -21,6 +21,7 @@ public class TransitionEditor extends GDefaultObjectEditor<Transition> {
 
     @Override
 	protected void createContent(int id) {
+        setGridLayout(3);
 
         // Destination
 

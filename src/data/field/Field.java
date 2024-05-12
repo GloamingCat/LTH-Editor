@@ -1,7 +1,7 @@
 package data.field;
 
 import data.Data;
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 import data.subcontent.Script;
 import lui.base.data.LDataList;
 
@@ -31,7 +31,7 @@ public class Field {
 		public boolean persistent = false;
 		public int defaultRegion = -1;
 		public int maxHeight = 4;
-		public Audio bgm = new Audio();
+		public AudioPlay bgm = new AudioPlay();
 		public Script loadScript = new Script(true, false, false);
 		public LDataList<FieldImage> images = new LDataList<>();
 		public LDataList<Transition> transitions = new LDataList<>(); 

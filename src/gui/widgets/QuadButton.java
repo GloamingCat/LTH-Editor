@@ -20,7 +20,7 @@ public class QuadButton extends LObjectButton<Quad> {
 	
 	public QuadButton(LContainer parent, boolean optional) {
 		super(parent);
-		setShellFactory(new LWindowFactory<Quad>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Quad> createWindow(LWindow parent) {
 				return new QuadDialog(parent, optional ? QuadDialog.OPTIONAL : 0);
@@ -48,7 +48,7 @@ public class QuadButton extends LObjectButton<Quad> {
 				if (s.path.isEmpty()) {
 					image.setImage((String) null);
 				} else {
-					image.setImage(s.fullPath(), s.getRect());
+					image.setImage(s.fullPath(), s);
 				}
 			}
 			currentValue = s;

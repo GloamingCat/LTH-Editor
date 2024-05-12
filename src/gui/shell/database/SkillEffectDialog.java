@@ -2,7 +2,9 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import gui.widgets.CheckBoxPanel;
+import lui.container.LPanel;
+import lui.gson.GObjectDialog;
 
 import data.Skill.Effect;
 import lui.container.LFrame;
@@ -13,12 +15,10 @@ import lui.widget.LNodeSelector;
 import lui.widget.LText;
 import project.Project;
 
-public class SkillEffectDialog extends ObjectEditorDialog<Effect> {
+public class SkillEffectDialog extends GObjectDialog<Effect> {
 
 	public SkillEffectDialog(LWindow parent) {
-		super(parent, Vocab.instance.EFFECTSHELL);
-		setSize(400, 400);
-		setRequiredSize(400, 400);
+		super(parent, 400, 400, Vocab.instance.EFFECTSHELL);
 	}
 	
 	@Override
@@ -40,13 +40,16 @@ public class SkillEffectDialog extends ObjectEditorDialog<Effect> {
 		LText txtSuccessRate = new LText(contentEditor);
 		txtSuccessRate.getCellData().setExpand(true, false);
 		addControl(txtSuccessRate, "successRate");
-		
-		LCheckBox btnHeal = new LCheckBox(contentEditor);
+
+		LPanel check = new CheckBoxPanel(contentEditor);
+		check.getCellData().setSpread(2, 1);
+
+		LCheckBox btnHeal = new LCheckBox(check);
 		btnHeal.setText(Vocab.instance.HEAL);
 		btnHeal.setHoverText(Tooltip.instance.HEAL);
 		addControl(btnHeal, "heal");
 		
-		LCheckBox btnAbsorb = new LCheckBox(contentEditor);
+		LCheckBox btnAbsorb = new LCheckBox(check);
 		btnAbsorb.setText(Vocab.instance.ABSORB);
 		btnAbsorb.setHoverText(Tooltip.instance.ABSORB);
 		addControl(btnAbsorb, "absorb");

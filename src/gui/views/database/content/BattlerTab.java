@@ -8,10 +8,7 @@ import gui.views.database.subcontent.AttributeEditor;
 import gui.views.database.subcontent.PropertyList;
 import gui.views.database.subcontent.DropList;
 import gui.views.database.subcontent.EquipList;
-import gui.widgets.IDButton;
-import gui.widgets.IDList;
-import gui.widgets.IconButton;
-import gui.widgets.SimpleEditableList;
+import gui.widgets.*;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LContainer;
@@ -138,22 +135,17 @@ public class BattlerTab extends DatabaseTab<Battler> {
 
 		// Properties
 
-		LPanel check = new LPanel(contentEditor.grpGeneral);
-		check.setGridLayout(2);
-		check.getCellData().setExpand(true, false);
-		check.getCellData().setAlignment(LFlags.LEFT);
+		LPanel check = new CheckBoxPanel(contentEditor.grpGeneral);
 		check.getCellData().setSpread(2, 1);
 
 		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
-		btnPersistent.getCellData().setExpand(true, false);
 		addControl(btnPersistent, "persistent");
 
 		LCheckBox btnRecruit = new LCheckBox(check);
 		btnRecruit.setText(Vocab.instance.RECRUIT);
 		btnRecruit.setHoverText(Tooltip.instance.RECRUIT);
-		btnRecruit.getCellData().setExpand(true, false);
 		addControl(btnRecruit, "persistent");
 
 		// Attributes

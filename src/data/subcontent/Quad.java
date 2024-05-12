@@ -3,16 +3,10 @@ package data.subcontent;
 import lui.graphics.LRect;
 import project.Project;
 
-public class Quad {
+public class Quad extends LRect {
 
 	// Texture
 	public String path = "";
-	
-	// Quad
-	public int x = 0;
-	public int y = 0;
-	public int width = 0;
-	public int height = 0;
 	
 	public Quad() {}
 	
@@ -25,15 +19,16 @@ public class Quad {
 	}
 
 	public Quad clone() {
-		return new Quad(path, x, y, width, height);
+		Quad quad = (Quad) super.clone();
+		quad.path = path;
+		return quad;
 	}
 	
 	public boolean equals(Object other) {
 		if (other == null)
 			return false;
-		if (other instanceof Quad) {
-			Quad q = (Quad) other;
-			return q.x == x && q.y == y 
+		if (other instanceof Quad q) {
+            return q.x == x && q.y == y
 					&& q.width == width && q.height == height 
 					&& q.path.equals(path);
 		} else {
@@ -43,10 +38,6 @@ public class Quad {
 	
 	public String fullPath() {
 		return Project.current.imagePath() + path;
-	}
-	
-	public LRect getRect() {
-		return new LRect(x, y, width, height);
 	}
 
 }

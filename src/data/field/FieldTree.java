@@ -2,8 +2,11 @@ package data.field;
 
 import lui.base.data.LDataTree;
 
+import java.io.Serial;
+
 public class FieldTree extends LDataTree<FieldNode> {
 	
+	@Serial
 	private static final long serialVersionUID = 1971762099996146816L;
 	
 	public int lastField = -1;

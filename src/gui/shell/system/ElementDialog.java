@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.IconButton;
 import lui.base.LFlags;
@@ -15,12 +15,10 @@ import lui.widget.LText;
 
 import data.config.Element;
 
-public class ElementDialog extends ObjectEditorDialog<Element> {
+public class ElementDialog extends GObjectDialog<Element> {
 	
 	public ElementDialog(LWindow parent) {
-		super(parent, Vocab.instance.ELEMENTSHELL);
-		setRequiredSize(300, 300);
-		setSize(300, 300);
+		super(parent, 300, 300, Vocab.instance.ELEMENTSHELL);
 	}
 	
 	@Override

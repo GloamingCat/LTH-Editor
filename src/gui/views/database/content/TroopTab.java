@@ -1,19 +1,15 @@
 package gui.views.database.content;
 
-import lui.base.LFlags;
+import gui.widgets.CheckBoxPanel;
 import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LPath;
 import lui.base.data.LPoint;
 import lui.base.event.listener.LCollectionListener;
-import lui.base.event.listener.LSelectionListener;
 import lui.base.event.LDeleteEvent;
 import lui.base.event.LEditEvent;
 import lui.base.event.LInsertEvent;
-import lui.container.LContainer;
-import lui.container.LFrame;
-import lui.container.LImage;
-import lui.container.LPanel;
+import lui.container.*;
 import lui.editor.LGridEditor;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
@@ -42,6 +38,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 	
 	private LGridEditor<LPoint, LPoint> gridEditor;
 	private final LDataList<LPoint> points = new LDataList<>();
+	private SimpleEditableList<Unit> lstMembers;
 
 	/**
 	 * @wbp.parser.constructor
@@ -89,16 +86,12 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 		// Properties
 
-		LPanel check = new LPanel(contentEditor.grpGeneral);
-		check.setGridLayout(2);
-		check.getCellData().setExpand(true, false);
-		check.getCellData().setAlignment(LFlags.LEFT);
+		LPanel check = new CheckBoxPanel(contentEditor.grpGeneral);
 		check.getCellData().setSpread(2, 1);
 
 		LCheckBox btnPersistent = new LCheckBox(check);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
 		btnPersistent.setHoverText(Tooltip.instance.PERSISTENT);
-		btnPersistent.getCellData().setExpand(true, false);
 		addControl(btnPersistent, "persistent");
 
 		// Grid
@@ -107,6 +100,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
 		grpGrid.getCellData().setExpand(true, true);
 		gridEditor = new UnitGrid(grpGrid);
+		contentEditor.addChild((LView) gridEditor);
 
 		// Items
 		
@@ -126,8 +120,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 		grpMembers.setHoverText(Tooltip.instance.UNITS);
 		grpMembers.getCellData().setExpand(true, false);
 		grpMembers.getCellData().setSpread(2, 1);
-		
-		SimpleEditableList<Unit> lstMembers = new SimpleEditableList<>(grpMembers);
+
+		lstMembers = new SimpleEditableList<>(grpMembers);
 		lstMembers.getCollectionWidget().setEditEnabled(false);
 		lstMembers.getCellData().setExpand(true, true);
 		lstMembers.setIncludeID(false);
@@ -175,24 +169,40 @@ public class TroopTab extends DatabaseTab<Troop> {
                 }
             }
         });
-		
-		LSelectionListener selectionListener = event -> gridEditor.getCollectionWidget().setDataCollection(points);
-		listEditor.getCollectionWidget().addSelectionListener(selectionListener);
-		unitEditor.addSelectionListener(selectionListener);
+
+		listEditor.getCollectionWidget().addSelectionListener(e -> refreshAllUnits());
+		lstMembers.addModifyListener(e -> refreshAllUnits());
 		
 	}
 	
 	@Override
 	public void onVisible() {
 		Config.Troop conf = Project.current.config.getData().troop;
-		gridEditor.getCollectionWidget().setColumns(conf.width);
 		points.clear();
-		for (int j = 0; j < conf.height; j++) {				
-			for (int i = 0; i < conf.width; i++) {
+		for (int j = 0; j < conf.height; j++) {
+			for (int i = 0; i < conf.width; i++)
 				points.add(new LPoint(i + 1, j + 1));
+		}
+		gridEditor.getCollectionWidget().setColumns(conf.width);
+		super.onVisible();
+		refreshAllUnits();
+		lstMembers.forceFirstSelection();
+
+	}
+
+	protected void refreshAllUnits() {
+		Troop troop = contentEditor.getObject();
+		if (troop == null) {
+			for (int i = 0; i < points.size(); i++)
+				gridEditor.getCollectionWidget().getImage(i).setImage((String) null);
+		} else {
+			for (int i = 0; i < points.size(); i++) {
+				int id = troop.find(points.get(i).x,points.get(i).y);
+				Unit u = id >= 0 ? troop.members.get(id) : null;
+				LImage img = gridEditor.getCollectionWidget().getImage(i);
+				refreshUnit(img, u);
 			}
 		}
-		super.onVisible();
 	}
 	
 	protected void refreshUnit(LImage img) {
@@ -241,8 +251,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		
 		public UnitGrid(LContainer parent) {
 			super(parent);
-			getCollectionWidget().cellWidth = tWidth;
-			getCollectionWidget().cellHeight = tHeight;
+			getCollectionWidget().setCellSize(tWidth, tHeight);
 		}
 		
 		@Override

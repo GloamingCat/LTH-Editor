@@ -9,6 +9,7 @@ import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.views.fieldTree.subcontent.ScriptList;
+import gui.widgets.CheckBoxPanel;
 import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
@@ -94,6 +95,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		middle.setFillLayout(true);
 		middle.setSpacing(LPrefs.FRAMEMARGIN);
 		middle.getCellData().setExpand(true, true);
+		middle.getCellData().setTargetSize(0, 0);
 
 		// Tiles
 
@@ -111,6 +113,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			}
 		});
 		lstTiles.addMenu(grpTiles);
+		lstTiles.getCellData().setRequiredSize(0, 0);
 		addChild(lstTiles, "tiles");
 
 		// Scripts
@@ -122,10 +125,13 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				ScriptDialog.ONLOAD | ScriptDialog.ONCOLLIDE | ScriptDialog.ONINTERACT);
 		lstScripts.getCellData().setExpand(true, true);
 		lstScripts.getCellData().setAlignment(LFlags.FILL);
+		lstScripts.getCellData().setRequiredSize(0, 0);
 		lstScripts.addMenu(grpScripts);
 		addChild(lstScripts, "scripts");
 
-		LCheckBox btnRepeat = new LCheckBox(grpScripts);
+		LPanel scriptCheck = new CheckBoxPanel(grpScripts);
+
+		LCheckBox btnRepeat = new LCheckBox(scriptCheck);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
 		addControl(btnRepeat, "repeatCollisions");
@@ -139,6 +145,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		grpKO.getCellData().setAlignment(LFlags.FILL);
 
 		LLabel lblKO = new LLabel(grpKO, Vocab.instance.ANIMATION, Tooltip.instance.KOANIM);
+		lblKO.getCellData().setTargetSize(LPrefs.LABELWIDTH, LPrefs.WIDGETHEIGHT);
 		LText txtKO = new LText(grpKO, true);
 		txtKO.getCellData().setExpand(true, false);
 		ImageButton btnKO = new ImageButton(grpKO, true);
@@ -214,7 +221,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			if (anim != null) {
 				GameCharacter c = contentEditor.getObject();
 				anim.transform.setColorTransform(img, c.transform);
-				img.setImage(anim.quad.fullPath(), anim.quad.getRect());
+				img.setImage(anim.quad.fullPath(), anim.quad);
 			} else {
 				img.setImage((String) null); 
 			}
@@ -237,7 +244,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				img.setImage((String) null);
 				return;
 			}
-			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad.getRect());
+			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad);
 		} else {
 			img.setImage((String) null);
 		}

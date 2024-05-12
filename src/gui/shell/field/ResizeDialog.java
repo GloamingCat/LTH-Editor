@@ -2,27 +2,22 @@ package gui.shell.field;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
-import lui.base.data.LPoint;
+import lui.gson.GObjectDialog;
 import lui.dialog.LWindow;
 import lui.graphics.LRect;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 
-public class ResizeDialog extends ObjectEditorDialog<LRect> {
+public class ResizeDialog extends GObjectDialog<LRect> {
 
 	public ResizeDialog(LWindow parent) {
 		super(parent, Vocab.instance.RESIZESHELL);
-		LPoint size = getTargetSize();
-		setRequiredSize(size.x, size.y);
-		setSize(200, size.y);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.SIZEX, Tooltip.instance.SIZEX);
@@ -54,6 +49,7 @@ public class ResizeDialog extends ObjectEditorDialog<LRect> {
 		cmbY.setOptional(false);
 		cmbY.setItems(new String[] { Vocab.instance.TOP, Vocab.instance.CENTER, Vocab.instance.BOTTOM });
 		addControl(cmbY, "y");
+		pack();
 	}
 
 	@Override

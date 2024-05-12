@@ -7,16 +7,15 @@ import data.subcontent.Node;
 import lui.container.LPanel;
 import lui.base.data.LDataTree;
 import lui.dialog.LWindow;
+import lui.gson.GObjectDialog;
 import lui.widget.LLabel;
 import lui.widget.LNodeSelector;
 import lui.widget.LText;
 
-public abstract class NodeDialog extends ObjectEditorDialog<Node> {
+public abstract class NodeDialog extends GObjectDialog<Node> {
 
 	public NodeDialog(LWindow parent, String title, int style) {
-		super(parent, style, title);
-		setRequiredSize(600, 400);
-		setSize(600, 400);
+		super(parent, 600, 400, style, title);
 	}
 	
 	public NodeDialog(LWindow parent, String title) {

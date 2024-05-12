@@ -15,7 +15,7 @@ public class FieldImageList extends SimpleEditableList<FieldImage> {
 		super(parent);
 		type = FieldImage.class;
 		setIncludeID(false);
-		setShellFactory(new LWindowFactory<FieldImage>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<FieldImage> createWindow(LWindow parent) {
 				return new FieldImageShell(parent);

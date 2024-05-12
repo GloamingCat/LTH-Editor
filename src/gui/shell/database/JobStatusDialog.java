@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import data.Job;
 import lui.dialog.LWindow;
@@ -11,12 +11,10 @@ import lui.widget.LNodeSelector;
 import lui.widget.LSpinner;
 import project.Project;
 
-public class JobStatusDialog extends ObjectEditorDialog<Job.Status> {
+public class JobStatusDialog extends GObjectDialog<Job.Status> {
 
 	public JobStatusDialog(LWindow parent) {
-		super(parent, Vocab.instance.STATUSSHELL);
-		setRequiredSize(300, 200);
-		setSize(300, 200);
+		super(parent, 300, 200, Vocab.instance.STATUSSHELL);
 	}
 	
 	@Override

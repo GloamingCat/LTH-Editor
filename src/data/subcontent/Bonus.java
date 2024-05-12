@@ -17,7 +17,8 @@ public class Bonus extends Property {
 		this.id = id;
 		this.value = value;
 	}
-	
+
+	@Override
 	public String toString() {
 		if (type <= 2) {
 			Object element = Project.current.elements.getList().get(id);
@@ -25,12 +26,19 @@ public class Bonus extends Property {
 			String t = type == 0 ? Vocab.instance.ELEMENTDEF : 
 				type == 1 ? Vocab.instance.ELEMENTATK :
 				type == 2 ? Vocab.instance.ELEMENTBUFF : "";
-			return element.toString() + ": " + value + "% (" + t + ")";
+			return element + ": " + value + "% (" + t + ")";
 		} else {
 			Object status = Project.current.status.getData().get(id);
 			if (status == null) status = "NULL " + id;
-			return status.toString() + ": " + value + "% (" + Vocab.instance.STATUSDEF + ")";
+			return status + ": " + value + "% (" + Vocab.instance.STATUSDEF + ")";
 		}
 	}
-	
+
+	@Override
+	public Bonus clone() {
+        Bonus bonus = (Bonus) super.clone();
+		bonus.type = type;
+		return bonus;
+    }
+
 }

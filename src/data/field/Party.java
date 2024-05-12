@@ -42,7 +42,7 @@ public class Party {
 			return y + Project.current.config.getData().troop.width - 1;
 	}
 	
-	public class TroopSpawn {
+	public static class TroopSpawn {
 		
 		public int id = 0;
 		public int maxLevel = 99;
@@ -52,7 +52,7 @@ public class Party {
 			Object troop = Project.current.troops.getData().get(id);
 			if (troop == null)
 				troop = "NULL " + id;
-			return troop.toString() + " [" + minLevel + "-" + maxLevel + "]";
+			return troop + " [" + minLevel + "-" + maxLevel + "]";
 		}
 
 	}

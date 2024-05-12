@@ -10,6 +10,13 @@ public class Layer {
 		public int height = 1;
 		public boolean noAuto = false;
 		public LDataList<Tag> tags = new LDataList<>();
+		public Info() {}
+		public Info(Info original) {
+			name = original.name;
+			height = original.height;
+			noAuto = original.noAuto;
+			tags = new LDataList<>(original.tags);
+		}
 	}
 	
 	public Info info = new Info();
@@ -34,10 +41,8 @@ public class Layer {
 		for (int i = 0; i < sizeX; i++) {
             System.arraycopy(original.grid[i], 0, grid[i], 0, sizeY);
 		}
-		info.name = original.info.name;
-		info.height = original.info.height;
-		info.noAuto = original.info.noAuto;
-		info.tags = new LDataList<>(original.info.tags);
+		info = new Info(original.info);
+		visible = original.visible;
 	}
 
 	public Layer(Layer original, int width, int height, int x0, int y0) {

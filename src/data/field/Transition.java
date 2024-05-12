@@ -4,7 +4,7 @@ import data.subcontent.Position;
 import data.subcontent.Tile;
 import lui.base.data.LDataList;
 
-public class Transition {
+public class Transition implements Cloneable {
 
 	public Transition() { }
 
@@ -19,14 +19,18 @@ public class Transition {
 	}
 	
 	public Transition clone() {
-		Transition t = new Transition();
-		t.destination = destination.clone();
-		if (tl != null) {
-			t.tl = tl.clone();
-			t.br = br.clone();
-		}
-		t.origin = origin.clone();
-		return t;
+        try {
+			Transition t = (Transition) super.clone();
+			t.destination = destination.clone();
+			if (tl != null) {
+				t.tl = tl.clone();
+				t.br = br.clone();
+			}
+			t.origin = origin.clone();
+			return t;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 	public void convert() {
@@ -66,10 +70,8 @@ public class Transition {
 		}
 		
 		public Portal clone() {
-			Portal p = new Portal();
-			for (Tile t : this) {
-				p.add(t.clone());
-			}
+            Portal p = (Portal) super.clone();
+            p.replaceAll(Tile::clone);
 			return p;
 		}
 		

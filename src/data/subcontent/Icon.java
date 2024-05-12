@@ -38,14 +38,15 @@ public class Icon {
 			return null;
 		return anim.getCell(col, row);
 	}
-	
+
+	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Icon) {
-			Icon other = (Icon) obj;
-			return other.id == id && other.col == col && other.row == row;
+		if (obj instanceof Icon other) {
+            return other.id == id && other.col == col && other.row == row;
 		} else return false;
 	}
-	
+
+	@Override
 	public String toString() {
 		Animation anim = (Animation) Project.current.animations.getTree().get(id);
 		String name = (anim == null ? ("NULL " + id) : anim.toString());

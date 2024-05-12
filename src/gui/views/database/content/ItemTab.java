@@ -7,6 +7,7 @@ import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.EquipStatusList;
+import gui.widgets.CheckBoxPanel;
 import gui.widgets.IDButton;
 import gui.widgets.IconButton;
 import gui.widgets.NameList;
@@ -119,18 +120,17 @@ public class ItemTab extends DatabaseTab<Item> {
 		lstUseAtt.addMenu(lblAtt);
 		addChild(lstUseAtt, "attributes");
 
-		LPanel checkButtons = new LPanel(grpUse);
-		checkButtons.setSequentialLayout(true);
-		checkButtons.getCellData().setAlignment(LFlags.TOP);
-		checkButtons.getCellData().setExpand(true, false);
+		LPanel checkButtons = new CheckBoxPanel(grpUse);
 		checkButtons.getCellData().setSpread(3, 1);
 
 		LCheckBox btnConsume = new LCheckBox(checkButtons);
 		btnConsume.setText(Vocab.instance.CONSUME);
+		btnConsume.setHoverText(Tooltip.instance.CONSUME);
 		addControl(btnConsume, "consume");
 
 		LCheckBox btnNeedsUser = new LCheckBox(checkButtons);
 		btnNeedsUser.setText(Vocab.instance.NEEDSUSER);
+		btnNeedsUser.setHoverText(Tooltip.instance.NEEDSUSER);
 		addControl(btnNeedsUser, "needsUser");
 
 		// Equip
@@ -149,12 +149,15 @@ public class ItemTab extends DatabaseTab<Item> {
 		
 		new LLabel(grpEquip, 1, 1);
 		LCheckBox btnAllSlots = new LCheckBox(grpEquip);
+		btnAllSlots.getCellData().setAlignment(LFlags.LEFT);
 		btnAllSlots.setText(Vocab.instance.ALLSLOTS);
+		btnAllSlots.setHoverText(Tooltip.instance.ALLSLOTS);
 		addControl(btnAllSlots, "allSlots");
 		
 		LLabel lblBlock = new LLabel(grpEquip, LFlags.TOP, Vocab.instance.BLOCKEDSLOTS,
 				Tooltip.instance.BLOCKEDSLOTS);
 		NameList lstBlocked = new NameList(grpEquip, Vocab.instance.SLOTSHELL);
+		lstBlocked.setIncludeID(false);
 		lstBlocked.getCellData().setExpand(true, true);
 		lstBlocked.getCellData().setRequiredSize(0, 48);
 		lstBlocked.addMenu(lblBlock);

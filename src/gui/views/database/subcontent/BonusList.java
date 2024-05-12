@@ -15,7 +15,7 @@ public class BonusList extends SimpleEditableList<Bonus> {
 		super(parent);
 		type = Bonus.class;
 		setIncludeID(false);
-		setShellFactory(new LWindowFactory<Bonus>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Bonus> createWindow(LWindow parent) {
 				return new BonusDialog(parent, title);

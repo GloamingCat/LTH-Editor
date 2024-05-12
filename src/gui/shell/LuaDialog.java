@@ -16,17 +16,19 @@ public class LuaDialog extends LObjectDialog<String> {
 	 */
 	public LuaDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
-		setSize(300, 300);
+		pack();
 	}
 	
 	@Override
 	protected void createContent(int style) {
+		super.createContent(style);
 		content.setFillLayout(true);
 		selFile = new LFileSelector(content, (style & OPTIONAL) > 0);
-		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
+		selFile.addFileRestriction( f -> f.getName().endsWith(".lua") );
 		selFile.setFolder(Project.current.scriptPath());
 	}
-	
+
+	@Override
 	public void open(String initial) {
 		super.open(initial);
 		selFile.setSelectedFile(initial);

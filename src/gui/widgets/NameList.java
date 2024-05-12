@@ -20,4 +20,9 @@ public class NameList extends SimpleEditableList<String> {
 		});
 	}
 
+	@Override
+	public String createNewElement() {
+		return "Empty";
+	}
+
 }

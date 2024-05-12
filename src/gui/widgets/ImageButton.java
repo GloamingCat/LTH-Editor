@@ -27,7 +27,7 @@ public class ImageButton extends IDButton {
 			if (label != null) {
 				if (id >= 0) {
 					Animation anim = (Animation) getDataTree().get(id);
-					label.setImage(anim.quad.fullPath(), anim.quad.getRect());
+					label.setImage(anim.quad.fullPath(), anim.quad);
 				} else {
 					label.setImage((String) null);
 				}

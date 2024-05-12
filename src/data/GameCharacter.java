@@ -1,5 +1,6 @@
 package data;
 
+import lui.datainterface.LInitializable;
 import project.Project;
 import data.subcontent.Icon;
 import data.subcontent.Node;
@@ -8,7 +9,7 @@ import data.subcontent.Tile;
 import data.subcontent.Transform;
 import lui.base.data.LDataList;
 
-public class GameCharacter extends Data {
+public class GameCharacter extends Data implements LInitializable {
 
 	public int battlerID = -1;
 	public int shadowID = -1;
@@ -22,11 +23,14 @@ public class GameCharacter extends Data {
 	public LDataList<Script> scripts = new LDataList<>();
 	public boolean repeatCollisions = false;
 	
-	public GameCharacter() {
+	public GameCharacter() {}
+
+	@Override
+	public void initialize() {
 		animations.add(new Node());
 		tiles.add(new Tile());
 	}
-	
+
 	public int defaultAnimationID() {
 		if (animations.isEmpty())
 			return -1;
@@ -37,11 +41,11 @@ public class GameCharacter extends Data {
 				break;
 			}
 		}
-		if (id == -1 && animations.size() > 0)
-			id = animations.get(0).id;
+		if (id == -1)
+			id = animations.getFirst().id;
 		return id;
 	}
-	
+
 	public Animation defaultAnimation() {
 		int id = defaultAnimationID();
 		if (id == -1) {
@@ -72,9 +76,8 @@ public class GameCharacter extends Data {
 		public boolean equals(Object obj) {
 			if (!super.equals(obj))
 				return false;
-			if (obj instanceof Portrait) {
-				Portrait other = (Portrait) obj;
-				return other.name.equals(name);
+			if (obj instanceof Portrait other) {
+                return other.name.equals(name);
 			} else return false;
 		}
 		

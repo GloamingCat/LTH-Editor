@@ -41,22 +41,25 @@ public class Battler extends Data {
 			if (item == null)
 				return key + ":        ";
 			else
-				return key + ": " + item.toString();
+				return key + ": " + item;
 		}
 		
 		public boolean equals(Object other) {
-			if (other instanceof Equip) {
-				Equip equip = (Equip) other;
-				return equip.id == id && equip.state == state && equip.key.equals(key);
+			if (other instanceof Equip equip) {
+                return equip.id == id && equip.state == state && equip.key.equals(key);
 			} else return false;
 		}
 		
 		public Equip clone() {
-			Equip e = new Equip();
-			e.id = id;
-			e.key = key;
-			e.state = state;
-			return e;
+            try {
+				Equip e = (Equip) super.clone();
+				e.id = id;
+				e.key = key;
+				e.state = state;
+				return e;
+            } catch (CloneNotSupportedException ex) {
+                throw new RuntimeException(ex);
+            }
 		}
 		
 	}
@@ -72,9 +75,8 @@ public class Battler extends Data {
 		}
 		
 		public boolean equals(Object obj) {
-			if (obj instanceof Drop) {
-				Drop other = (Drop) obj;
-				return other.id == id && other.count == count && other.value == value;
+			if (obj instanceof Drop other) {
+                return other.id == id && other.count == count && other.value == value;
 			} else return false;
 		}
 		

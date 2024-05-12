@@ -11,9 +11,8 @@ public class FieldImage extends Portrait {
 	public boolean equals(Object obj) {
 		if (!super.equals(obj))
 			return false;
-		if (obj instanceof FieldImage) {
-			FieldImage other = (FieldImage) obj;
-			return other.foreground == foreground && 
+		if (obj instanceof FieldImage other) {
+            return other.foreground == foreground &&
 					other.glued == glued && other.visible == visible;
 		} else return false;
 	}

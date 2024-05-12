@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import data.config.EquipType;
 import lui.base.data.LPoint;
@@ -12,13 +12,10 @@ import lui.widget.LLabel;
 import lui.widget.LSpinner;
 import lui.widget.LText;
 
-public class EquipTypeDialog extends ObjectEditorDialog<EquipType> {
+public class EquipTypeDialog extends GObjectDialog<EquipType> {
 
 	public EquipTypeDialog(LWindow parent) {
-		super(parent, Vocab.instance.EQUIPTYPESHELL);
-		LPoint size = getTargetSize();
-		setRequiredSize(200, size.y);
-		setSize(200, size.y);
+		super(parent, 200, 0, Vocab.instance.EQUIPTYPESHELL);
 	}
 	
 	@Override

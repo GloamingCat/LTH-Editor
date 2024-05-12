@@ -7,10 +7,14 @@ public class FieldNode {
 	public int[] lastLayers = new int[] {-1, -1, -1};
 	
 	public FieldNode clone() {
-		FieldNode copy = new FieldNode();
-		copy.lastLayers = lastLayers.clone();
-		copy.name = name;
-		return copy;
+        try {
+			FieldNode copy = (FieldNode) super.clone();
+			copy.lastLayers = lastLayers.clone();
+			copy.name = name;
+			return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 	public String toString() {

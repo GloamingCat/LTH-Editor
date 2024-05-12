@@ -1,9 +1,12 @@
 package data.field;
 
+import data.GameCharacter;
 import lui.base.data.LDataList;
 import data.subcontent.Script;
+import lui.datainterface.LInitializable;
+import project.Project;
 
-public class CharTile {
+public class CharTile implements LInitializable {
 	
 	public String key = "CharKey";
 	public boolean persistent = false;
@@ -18,7 +21,7 @@ public class CharTile {
 	public int charID = -1;
 	public int battlerID = -1;
 	
-	public String animation = "Idle";
+	public String animation = "";
 	public int frame = 1;
 	public int direction = 315;
 	
@@ -29,6 +32,15 @@ public class CharTile {
 	
 	public CharTile() {}
 
+	public void initialize() {
+		charID = Project.current.characters.getData().findID() - 1;
+		if (charID != -1) {
+			GameCharacter c = (GameCharacter) Project.current.characters.getData().get(charID);
+			animation = c.animations.isEmpty() ? "Idle" : c.animations.getFirst().name;
+		}
+	}
+
+	@Override
 	public String toString() {
 		return key;
 	}

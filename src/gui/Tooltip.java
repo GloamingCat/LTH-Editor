@@ -29,7 +29,7 @@ public class Tooltip {
 			Leave it empty to use the base class.""";
 	
 	//////////////////////////////////////////////////
-	// {{ Config
+	//region Config
 	
 	// General
 	public String IDENTITY = "Game's identity and presentation.";
@@ -149,10 +149,10 @@ public class Tooltip {
 	public String MAXMEMBERS = "Maximum number of units in the 'current' list of the party.";
 	public String TROOPSIZE = "Width and height of the troop grid in tiles.";
 	
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Database
+	//region Database
 	
 	// Item
 	public String PRICE = "Item's full price.";
@@ -454,10 +454,10 @@ public class Tooltip {
             In this case, the 'script' argument can be used to refer to the script's data,
             which includes the character executing it (if any).""";
 	
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Sub-content
+	//region Sub-content
 	
 	// Audio
 	public String FILE = "Path to the audio file.";
@@ -548,10 +548,10 @@ public class Tooltip {
 	public String MAXY = "Maximum tile distance below the user.";
 	public String MASKH = "Current height to be edited (by the difference from the target to the user).";
 	
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Field
+	//region Field
 	
 	// Prefs
 	public String DEFAULTREGION = "The region that is automatically added to all tiles in the field.";
@@ -650,6 +650,6 @@ public class Tooltip {
 			Time in frames of the fading animation when the player steps on the origin tiles.
 			Set as 0 to teleport instantly.""";
 	
-	// }}
+	//endregion
 
 }

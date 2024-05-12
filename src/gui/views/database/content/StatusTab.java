@@ -7,10 +7,7 @@ import gui.shell.database.TransformationDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
-import gui.widgets.IDList;
-import gui.widgets.IconButton;
-import gui.widgets.LuaButton;
-import gui.widgets.SimpleEditableList;
+import gui.widgets.*;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LContainer;
@@ -51,9 +48,9 @@ public class StatusTab extends DatabaseTab<Status> {
 		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
 		compositeIcon.setGridLayout(2);
 		compositeIcon.getCellData().setExpand(true, false);
+		compositeIcon.getCellData().setTargetSize(0, 48);
 		LImage imgIcon = new LImage(compositeIcon);
 		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setRequiredSize(0, 48);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 		IconButton btnSelectIcon = new IconButton(compositeIcon, true);
 		btnSelectIcon.setImageWidget(imgIcon);
@@ -67,7 +64,6 @@ public class StatusTab extends DatabaseTab<Status> {
 				Tooltip.instance.STATUSCANCEL);
 		lstCancel = new IDList(contentEditor.grpGeneral, Vocab.instance.STATUSSHELL);
 		lstCancel.getCellData().setExpand(true, true);
-		lstCancel.getCellData().setRequiredSize(0, 70);
 		lstCancel.addMenu(lblCancel);
 		addChild(lstCancel, "cancel");
 
@@ -77,7 +73,6 @@ public class StatusTab extends DatabaseTab<Status> {
 				Tooltip.instance.BEHAVIOR);
 		SimpleEditableList<Rule> lstRules = new SimpleEditableList<>(contentEditor.grpGeneral);
 		lstRules.getCellData().setExpand(true, true);
-		lstRules.getCellData().setRequiredSize(0, 70);
 		lstRules.type = Rule.class;
 		lstRules.setIncludeID(false);
 		lstRules.setShellFactory(new LWindowFactory<>() {
@@ -126,12 +121,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		
 		// Other properties
 		
-		LPanel check = new LPanel(contentEditor.grpGeneral);
-		check.setSequentialLayout(true);
-		check.setEqualCells(true);
+		LPanel check = new CheckBoxPanel(contentEditor.grpGeneral);
 		check.getCellData().setSpread(2, 1);
-		check.getCellData().setExpand(false, false);
-		check.getCellData().setAlignment(LFlags.LEFT);
 
 		LCheckBox btnKO = new LCheckBox(check);
 		btnKO.setText(Vocab.instance.KOLIKE);
@@ -170,12 +161,8 @@ public class StatusTab extends DatabaseTab<Status> {
 		btnBattleOnly.getCellData().setAlignment(LFlags.MIDDLE);
 		addControl(btnBattleOnly, "battleOnly");
 
-		LPanel checkDurability = new LPanel(grpDurability);
-		checkDurability.setSequentialLayout(true);
-		checkDurability.setEqualCells(true);
+		LPanel checkDurability = new CheckBoxPanel(grpDurability);
 		checkDurability.getCellData().setSpread(2, 1);
-		checkDurability.getCellData().setExpand(false, false);
-		checkDurability.getCellData().setAlignment(LFlags.LEFT);
 
 		LCheckBox btnRemoveOnKO = new LCheckBox(checkDurability);
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);

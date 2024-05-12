@@ -5,7 +5,8 @@ import data.Data;
 public class Rule extends Data {
 
 	public String condition = "";
-	
+
+	@Override
 	public String toString() {
 		if (name.isEmpty())
 			return "Wait";

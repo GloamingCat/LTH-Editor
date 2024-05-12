@@ -1,6 +1,6 @@
 package data;
 
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 import data.subcontent.Property;
 import lui.base.data.LDataList;
 
@@ -8,7 +8,7 @@ public class Terrain extends Data {
 
 	// General
 	public int animID = -1;
-	public LDataList<Audio> sounds = new LDataList<>();
+	public LDataList<AudioPlay> sounds = new LDataList<>();
 	
 	// Movement
 	public boolean passable = true;

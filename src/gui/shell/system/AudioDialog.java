@@ -1,18 +1,15 @@
 package gui.shell.system;
 
+import data.subcontent.Audio;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.widgets.AudioPlayer;
 import lui.base.LFlags;
 import lui.base.LPrefs;
-import lui.base.event.listener.LControlListener;
-import lui.base.event.listener.LSelectionListener;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.dialog.LWindow;
-import lui.base.event.LControlEvent;
-import lui.base.event.LSelectionEvent;
 import lui.widget.LFileSelector;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
@@ -21,9 +18,9 @@ import lui.widget.LText;
 
 import project.Project;
 
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 
-public class AudioDialog extends ObjectEditorDialog<Audio.Node> {
+public class AudioDialog extends GObjectDialog<Audio> {
 	
 	protected LFileSelector selFile;
 	protected AudioPlayer reproduction;
@@ -35,9 +32,7 @@ public class AudioDialog extends ObjectEditorDialog<Audio.Node> {
 	public static final int BGM = 0x04;
 	
 	public AudioDialog(LWindow parent, int style) {
-		super(parent, style, Vocab.instance.AUDIOFILESHELL);
-		setRequiredSize(400, 400);
-		setSize(400, 400);
+		super(parent, 400, 400, style, Vocab.instance.AUDIOFILESHELL);
 	}
 	
 	@Override
@@ -113,7 +108,7 @@ public class AudioDialog extends ObjectEditorDialog<Audio.Node> {
 		form.setWeights(1, 1);
 	}
 	
-	public void open(Audio.Node initial) {
+	public void open(Audio initial) {
 		super.open(initial);
 		selFile.setSelectedFile(initial.name);
 		reproduction.volume = spnVolume.getValue();
@@ -121,8 +116,8 @@ public class AudioDialog extends ObjectEditorDialog<Audio.Node> {
 	}
 
 	@Override
-	protected Audio.Node createResult(Audio.Node initial) {
-		Audio audio = (Audio) contentEditor.getObject();
+	protected Audio createResult(Audio initial) {
+		AudioPlay audio = (AudioPlay) contentEditor.getObject();
 		audio.name = selFile.getSelectedFile();
 		if (audio.name == null) {
 			audio.name = "";

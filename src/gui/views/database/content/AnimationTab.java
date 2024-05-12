@@ -23,7 +23,7 @@ import lui.widget.LText;
 
 import project.Project;
 import data.Animation;
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 import gson.GObjectTreeSerializer;
 
 public class AnimationTab extends DatabaseTab<Animation> {
@@ -92,12 +92,12 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		grpAudio.setFillLayout(true);
 		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.getCellData().setExpand(true, true);
-		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<>(grpAudio);
-		lstAudio.type = Audio.class;
+		SimpleEditableList<AudioPlay> lstAudio = new SimpleEditableList<>(grpAudio);
+		lstAudio.type = AudioPlay.class;
 		lstAudio.setIncludeID(false);
 		lstAudio.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectDialog<Audio> createWindow(LWindow parent) {
+			public LObjectDialog<AudioPlay> createWindow(LWindow parent) {
 				return new AudioPlayDialog(parent, AudioPlayDialog.TIMED);
 			}
 		});

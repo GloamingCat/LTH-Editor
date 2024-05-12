@@ -29,9 +29,8 @@ public class IconDialog extends LObjectDialog<Icon> {
 	 * @wbp.parser.constructor
 	 */
 	public IconDialog(LWindow parent, int style) {
-		super(parent, style, Vocab.instance.ICONSHELL);
-		setRequiredSize(600, 400);
-		setSize(800, 800);
+		super(parent, 600, 400, style, Vocab.instance.ICONSHELL);
+		setCurrentSize(800, 800);
 	}
 	
 	@Override

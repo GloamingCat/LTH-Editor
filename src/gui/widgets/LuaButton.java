@@ -14,11 +14,6 @@ public class LuaButton extends LObjectButton<String> {
 	
 	private LText pathText;
 	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
 	public LuaButton(LContainer parent, String title, boolean optional) {
 		super(parent);
 		setShellFactory(new LWindowFactory<String>() {

@@ -37,10 +37,8 @@ public class PositionDialog extends LObjectDialog<Position> {
 	private final int fieldId;
 
 	public PositionDialog(LWindow parent, int fieldId) {
-		super(parent, fieldId, Vocab.instance.POSITIONSHELL);
+		super(parent, 640, 480, fieldId, Vocab.instance.POSITIONSHELL);
 		this.fieldId = fieldId;
-		setRequiredSize(640, 480);
-		setSize(640, 480);
 	}
 	
 	@Override

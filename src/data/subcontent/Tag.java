@@ -1,6 +1,6 @@
 package data.subcontent;
 
-public class Tag {
+public class Tag implements Cloneable {
 
 	public String key = "key";
 	public String value = "value";
@@ -22,12 +22,22 @@ public class Tag {
 	}
 	
 	public boolean equals(Object obj) {
-		if (obj instanceof Tag) {
-			Tag tag = (Tag) obj;
-			return key.equals(tag.key) && value.equals(tag.value);
+		if (obj instanceof Tag tag) {
+            return key.equals(tag.key) && value.equals(tag.value);
 		} else {
 			return false;
 		}
 	}
-	
+
+    @Override
+    public Tag clone() {
+        try {
+            Tag clone = (Tag) super.clone();
+			clone.key = key;
+            clone.value = value;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

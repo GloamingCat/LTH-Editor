@@ -2,14 +2,11 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import lui.base.LFlags;
-import lui.base.event.listener.LControlListener;
 import data.subcontent.Bonus;
 import lui.container.LStack;
 import lui.dialog.LWindow;
-import lui.base.event.LControlEvent;
-import lui.widget.LWidget;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LNodeSelector;
@@ -17,16 +14,14 @@ import lui.widget.LSpinner;
 
 import project.Project;
 
-public class BonusDialog extends ObjectEditorDialog<Bonus> {
+public class BonusDialog extends GObjectDialog<Bonus> {
 
 	protected LLabel typeLabel;
 	protected LNodeSelector<Object> typeNode;
 	protected LCombo cmbType;
 	
 	public BonusDialog(LWindow parent, String title) {
-		super(parent, title);
-		setRequiredSize(300, 200);
-		setSize(300, 200);
+		super(parent, 350, 350, title);
 	}
 	
 	@Override
@@ -62,10 +57,10 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
 		final LStack stack = new LStack(contentEditor);
 		stack.getCellData().setExpand(true, true);
 		
-		final LNodeSelector<Object> elementTree = new LNodeSelector<Object>(stack, false);
+		final LNodeSelector<Object> elementTree = new LNodeSelector<>(stack, false);
 		elementTree.setCollection(Project.current.elements.getList().toTree());
 		
-		final LNodeSelector<Object> statusTree = new LNodeSelector<Object>(stack, false);
+		final LNodeSelector<Object> statusTree = new LNodeSelector<>(stack, false);
 		statusTree.setCollection(Project.current.status.getTree());
 		
 		cmbType.addModifyListener(event -> {
@@ -74,7 +69,7 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
                 typeLabel.setText(Vocab.instance.STATUS);
                 typeLabel.setHoverText(Tooltip.instance.STATUSBONUS);
                 typeNode = statusTree;
-                stack.setTop((LWidget) typeNode);
+                stack.setTop(typeNode);
                 removeControl(elementTree);
                 addControl(typeNode, "id");
             } else {
@@ -82,7 +77,7 @@ public class BonusDialog extends ObjectEditorDialog<Bonus> {
                 typeLabel.setText(Vocab.instance.ELEMENT);
                 typeLabel.setHoverText(Tooltip.instance.ELEMENTBONUS);
                 typeNode = elementTree;
-                stack.setTop((LWidget) typeNode);
+                stack.setTop(typeNode);
                 removeControl(statusTree);
                 addControl(typeNode, "id");
             }

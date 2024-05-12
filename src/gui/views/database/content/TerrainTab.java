@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.shell.AudioPlayDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.PropertyList;
+import gui.widgets.CheckBoxPanel;
 import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
@@ -22,7 +23,7 @@ import lui.widget.LSpinner;
 import lui.widget.LText;
 
 import data.Terrain;
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 import gson.GObjectTreeSerializer;
 import project.Project;
 
@@ -44,12 +45,10 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		
 		// General
 
-		LPanel properties = new LPanel(contentEditor.grpGeneral);
-		properties.getCellData().setSpread(2, 1);
-		properties.getCellData().setAlignment(LFlags.LEFT);
-		properties.setSequentialLayout(true);
+		LPanel check = new CheckBoxPanel(contentEditor.grpGeneral);
+		check.getCellData().setSpread(2, 1);
 
-		LCheckBox btnPassable = new LCheckBox(properties);
+		LCheckBox btnPassable = new LCheckBox(check);
 		btnPassable.setText(Vocab.instance.PASSABLE);
 		btnPassable.setHoverText(Tooltip.instance.PASSABLE);
 		addControl(btnPassable, "passable");
@@ -97,12 +96,12 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 		grpAudio.setFillLayout(true);
 		grpAudio.setHoverText(Tooltip.instance.SOUND);
 		grpAudio.getCellData().setExpand(true, true);
-		SimpleEditableList<Audio> lstAudio = new SimpleEditableList<>(grpAudio);
-		lstAudio.type = Audio.class;
+		SimpleEditableList<AudioPlay> lstAudio = new SimpleEditableList<>(grpAudio);
+		lstAudio.type = AudioPlay.class;
 		lstAudio.setIncludeID(false);
 		lstAudio.setShellFactory(new LWindowFactory<>() {
 			@Override
-			public LObjectDialog<Audio> createWindow(LWindow parent) {
+			public LObjectDialog<AudioPlay> createWindow(LWindow parent) {
 				return new AudioPlayDialog(parent, AudioPlayDialog.TIMED);
 			}
 		});

@@ -1,6 +1,6 @@
 package data;
 
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 import data.subcontent.Quad;
 import data.subcontent.Transform;
 import lui.base.data.LDataList;
@@ -22,7 +22,7 @@ public class Animation extends Data {
 	public String introDuration = "";
 	public String loopPattern = "";
 	public String loopDuration = "";
-	public LDataList<Audio> audio = new LDataList<>();
+	public LDataList<AudioPlay> audio = new LDataList<>();
 	
 	public int getFrame(int i) {
 		try {

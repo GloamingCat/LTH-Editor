@@ -29,9 +29,10 @@ public class IDList extends SimpleEditableList<Integer> {
 		});
 		list.setIncludeID(false);
 	}
-	
-	protected LList<Integer, Integer> createList(boolean check) {
-		return new LList<>(this, check) {
+
+	@Override
+	protected void createContent(int style) {
+		list = new LList<>(this, style == 1) {
 			@Override
 			public LEditEvent<Integer> edit(LPath path) {
 				return onEditItem(path);

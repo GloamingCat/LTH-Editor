@@ -18,9 +18,8 @@ public class FontData {
 	}
 	
 	public boolean equals(Object obj) {
-		if (obj instanceof FontData) {
-			FontData other = (FontData) obj;
-			return other.path.equals(path) && other.size == size && other.format.equals(format);
+		if (obj instanceof FontData other) {
+            return other.path.equals(path) && other.size == size && other.format.equals(format);
 		} else return false;
 	}
 	

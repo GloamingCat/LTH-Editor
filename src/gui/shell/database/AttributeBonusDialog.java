@@ -7,17 +7,14 @@ import lui.widget.LSpinner;
 import lui.widget.LText;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import data.Item.Attribute;
 
-public class AttributeBonusDialog extends ObjectEditorDialog<Attribute> {
+public class AttributeBonusDialog extends GObjectDialog<Attribute> {
 
 	public AttributeBonusDialog(LWindow parent) {
 		super(parent, Vocab.instance.BUFFSHELL);
-		LPoint size = getTargetSize();
-		setRequiredSize(200, size.y);
-		setSize(200, size.y);
 	}
 	
 	@Override

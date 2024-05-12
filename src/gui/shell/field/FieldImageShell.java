@@ -35,9 +35,8 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 	private LCheckBox btnGlued;
 	
 	public FieldImageShell(LWindow parent) {
-		super(parent, Vocab.instance.FIELDIMGSHELL);
-		setRequiredSize(400, 300);
-		setSize(600, 400);
+		super(parent, 400, 300, Vocab.instance.FIELDIMGSHELL);
+		setCurrentSize(600, 400);
 	}
 	
 	@Override

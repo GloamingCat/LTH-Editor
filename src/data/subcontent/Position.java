@@ -3,7 +3,7 @@ package data.subcontent;
 import data.field.FieldNode;
 import project.Project;
 
-public class Position {
+public class Position implements Cloneable {
 	
 	public int fieldID = 0;
 	public int x = 0;
@@ -24,22 +24,33 @@ public class Position {
 	public String toString() {
 		FieldNode node = Project.current.fieldTree.getData().get(fieldID);
 		String name = node == null ? ("NULL " + fieldID) : node.name;
-		String dir = direction == -1 ? "" : ", " + direction + "ฐ";
+		String dir = direction == -1 ? "" : ", " + direction + "ยบ";
 		return name + " (" + x + "," + y + "), Layer " + h + dir;
 	}
 	
 	public boolean equals(Object original) {
-		if (original instanceof Position) {
-			Position p = (Position) original;
-			return p.fieldID == fieldID && p.direction == direction
+		if (original instanceof Position p) {
+            return p.fieldID == fieldID && p.direction == direction
 					&& p.x == x && p.y == y && p.h == h;
 		} else {
 			return false;
 		}
 	}
-	
+
+	@Override
 	public Position clone() {
-		return new Position(this);
+        try {
+            Position clone = (Position) super.clone();
+			clone.fieldID = fieldID;
+			clone.x = x;
+			clone.y = y;
+			clone.h = h;
+			clone.direction = direction;
+			return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
 	}
 	
 }

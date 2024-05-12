@@ -2,7 +2,7 @@ package data.subcontent;
 
 import lui.container.LImage;
 
-public class Transform {
+public class Transform implements Cloneable {
 
 	public static final Transform neutral = new Transform();
 	
@@ -24,20 +24,24 @@ public class Transform {
 	public int brightness = 100;
 	
 	public Transform clone() {
-		Transform t = new Transform();
-		t.offsetDepth = offsetDepth;
-		t.offsetX = offsetX;
-		t.offsetY = offsetY;
-		t.scaleX = scaleX;
-		t.scaleY = scaleY;
-		t.rotation = rotation;
-		t.red = red;
-		t.green = green;
-		t.blue = blue;
-		t.hue = hue;
-		t.saturation = saturation;
-		t.brightness = brightness;
-		return t;
+        try {
+			Transform t = (Transform) super.clone();
+			t.offsetDepth = offsetDepth;
+			t.offsetX = offsetX;
+			t.offsetY = offsetY;
+			t.scaleX = scaleX;
+			t.scaleY = scaleY;
+			t.rotation = rotation;
+			t.red = red;
+			t.green = green;
+			t.blue = blue;
+			t.hue = hue;
+			t.saturation = saturation;
+			t.brightness = brightness;
+			return t;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
 	}
 	
 	public batching.Transform convert() {

@@ -15,14 +15,15 @@ public class EventSheet extends Data {
 		public Event() {
 			name = "print('Hello World')";
 		}
-		
+
+		@Override
 		public String toString() {
-			String str = name;
+			StringBuilder str = new StringBuilder(name);
 			for (Tag tag : tags)
-				str += ", " + tag.value;
+				str.append(", ").append(tag.value);
 			if (!condition.isEmpty())
-				str += " if " + condition;
-			return str;
+				str.append(" if ").append(condition);
+			return str.toString();
 		}
 		
 	}

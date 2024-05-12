@@ -1,19 +1,17 @@
 package gui.shell;
 
+import data.subcontent.Audio;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.AudioPlayer;
 import lui.base.LFlags;
-import lui.base.event.listener.LControlListener;
-import lui.base.event.listener.LSelectionListener;
 
 import java.util.ArrayList;
 
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.dialog.LWindow;
-import lui.base.event.LControlEvent;
-import lui.base.event.LSelectionEvent;
+import lui.gson.GObjectDialog;
 import lui.widget.LFileSelector;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
@@ -21,13 +19,13 @@ import lui.widget.LSpinner;
 
 import project.Project;
 
-import data.subcontent.Audio;
+import data.subcontent.AudioPlay;
 
-public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
+public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 	
 	protected LCombo cmbSound;
 	protected LFileSelector selFile;
-	protected Audio comboAudio = null;
+	protected AudioPlay comboAudio = null;
 	
 	public static final int OPTIONAL = 0x01;
 	public static final int TIMED = 0x02;
@@ -40,9 +38,7 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 	 * @wbp.eval.method.parameter parent new lwt.dialog.LShell(800, 600)
 	 */
 	public AudioPlayDialog(LWindow parent, int style) {
-		super(parent, style, Vocab.instance.AUDIOSHELL);
-		setRequiredSize(400, 400);
-		setSize(400, 400);
+		super(parent, 400, 400, style, Vocab.instance.AUDIOSHELL);
 	}
 	
 	@Override
@@ -66,8 +62,8 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 		cmbSound.setIncludeID(false);
 		cmbSound.addModifyListener(event -> {
             selFile.setValue(-1);
-            ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
-            comboAudio = list.get(cmbSound.getValue());
+            ArrayList<Audio> list = Project.current.config.getData().sounds;
+            comboAudio = list.get(event.newValue);
         });
 		selFile.addModifyListener(event -> cmbSound.setValue(-1));
 
@@ -121,9 +117,9 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 		form.setWeights(1, 1);
 	}
 	
-	public void open(Audio initial) {
+	public void open(AudioPlay initial) {
 		super.open(initial);
-		ArrayList<Audio.Node> list = Project.current.config.getData().sounds;
+		ArrayList<Audio> list = Project.current.config.getData().sounds;
 		cmbSound.setItems(list);
 		selFile.setSelectedFile(initial.name);
 		if (selFile.getValue() == null) {
@@ -138,14 +134,14 @@ public class AudioPlayDialog extends ObjectEditorDialog<Audio> {
 	}
 
 	@Override
-	protected Audio createResult(Audio initial) {
-		Audio audio = (Audio) contentEditor.getObject();
+	protected AudioPlay createResult(AudioPlay initial) {
+		AudioPlay audio = (AudioPlay) contentEditor.getObject();
 		audio.name = selFile.getSelectedFile();
 		if (audio.name == null)
 			audio.name = "";
 		int i = cmbSound.getSelectionIndex();
 		if (i >= 0) {
-			Audio.Node node = (Audio.Node) Project.current.config.getData().sounds.get(i);
+			Audio node = (Audio) Project.current.config.getData().sounds.get(i);
 			audio.name = node.key;
 		}
 		return super.createResult(initial);

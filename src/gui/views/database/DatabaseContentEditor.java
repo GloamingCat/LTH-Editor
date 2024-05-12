@@ -48,10 +48,11 @@ public class DatabaseContentEditor<T> extends GDefaultObjectEditor<T> {
         right.setGridLayout(1);
         right.getCellData().setExpand(true, true);
 
-        grpGeneral = new LFrame(left, Vocab.instance.GENERAL);
+        LFrame grpGeneral = new LFrame(left, Vocab.instance.GENERAL);
         grpGeneral.setGridLayout(2);
         grpGeneral.setHoverText(Tooltip.instance.GENERAL);
         grpGeneral.getCellData().setExpand(true, false);
+        this.grpGeneral = grpGeneral;
 
         LPanel compID = new LPanel(grpGeneral);
         compID.setGridLayout(3);

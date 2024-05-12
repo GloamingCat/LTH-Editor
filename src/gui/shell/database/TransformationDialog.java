@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import data.subcontent.Transformation;
 import lui.base.data.LPoint;
@@ -12,13 +12,10 @@ import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 
-public class TransformationDialog extends ObjectEditorDialog<Transformation> {
+public class TransformationDialog extends GObjectDialog<Transformation> {
 
 	public TransformationDialog(LWindow parent) {
 		super(parent, Vocab.instance.TRANSFORMSHELL);
-		LPoint size = getTargetSize();
-		setSize(200, size.y);
-		setRequiredSize(200, size.y);
 	}
 	
 	@Override

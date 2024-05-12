@@ -6,16 +6,15 @@ import gui.Vocab;
 import data.subcontent.Property;
 import lui.base.data.LDataTree;
 import lui.dialog.LWindow;
+import lui.gson.GObjectDialog;
 import lui.widget.LLabel;
 import lui.widget.LNodeSelector;
 import lui.widget.LSpinner;
 
-public abstract class PropertyDialog extends ObjectEditorDialog<Property> {
+public abstract class PropertyDialog extends GObjectDialog<Property> {
 
 	public PropertyDialog(LWindow parent, String title) {
-		super(parent, title);
-		setRequiredSize(400, 320);
-		setSize(400, 320);
+		super(parent, 400, 320, title);
 	}
 	
 	@Override

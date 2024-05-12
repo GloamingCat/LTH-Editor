@@ -43,13 +43,13 @@ public class QuadDialog extends LObjectDialog<Quad> {
 	 * @wbp.parser.constructor
 	 */
 	public QuadDialog(LWindow parent, int style) {
-		super(parent, style, Vocab.instance.QUADSHELL);
-		setRequiredSize(600, 400);
+		super(parent, 600, 400, style, Vocab.instance.QUADSHELL);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
+		content.setFillLayout(true);
 
 		LFlexPanel form = new LFlexPanel(content, true);
 		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
@@ -73,22 +73,26 @@ public class QuadDialog extends LObjectDialog<Quad> {
 		new LLabel(spinners, Vocab.instance.QUADX, Tooltip.instance.QUADX);
 
 		spnX = new LSpinner(spinners);
+		spnX.getCellData().setExpand(true, false);
 		spnX.setMaximum(4095);
 
 		new LLabel(spinners, Vocab.instance.QUADW, Tooltip.instance.QUADW);
 
 		spnWidth = new LSpinner(spinners);
+		spnWidth.getCellData().setExpand(true, false);
 		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
 
 		new LLabel(spinners, Vocab.instance.QUADY, Tooltip.instance.QUADY);
 
 		spnY = new LSpinner(spinners);
+		spnY.getCellData().setExpand(true, false);
 		spnY.setMaximum(4095);
 
 		new LLabel(spinners, Vocab.instance.QUADH, Tooltip.instance.QUADH);
 
 		spnHeight = new LSpinner(spinners);
+		spnHeight.getCellData().setExpand(true, false);
 		spnHeight.setMaximum(4096);
 		spnHeight.setMinimum(1);
 

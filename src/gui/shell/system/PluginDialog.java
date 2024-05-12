@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
 import lui.container.LFrame;
 import lui.container.LPanel;
@@ -14,7 +14,7 @@ import lui.widget.LCheckBox;
 import data.config.Plugin;
 import project.Project;
 
-public class PluginDialog extends ObjectEditorDialog<Plugin> {
+public class PluginDialog extends GObjectDialog<Plugin> {
 	
 	private LFileSelector selFile;
 	

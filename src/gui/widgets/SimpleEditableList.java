@@ -1,5 +1,6 @@
 package gui.widgets;
 
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.gson.GDefaultListEditor;
 import lui.base.data.LDataList;
@@ -17,6 +18,7 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 		getCollectionWidget().setDragEnabled(true);
 		getCollectionWidget().setCopyEnabled(true);
 		getCollectionWidget().setPasteEnabled(true);
+		getCellData().setRequiredSize(LPrefs.LISTWIDTH, LPrefs.LISTHEIGHT);
 	}
 	
 	public SimpleEditableList(LContainer parent, Class<?> type) {

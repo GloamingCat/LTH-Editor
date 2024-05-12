@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import lui.base.data.LPoint;
 import lui.dialog.LWindow;
@@ -11,13 +11,10 @@ import lui.widget.LSpinner;
 
 import data.subcontent.Tile;
 
-public class CharTileDialog extends ObjectEditorDialog<Tile> {
+public class CharTileDialog extends GObjectDialog<Tile> {
 	
 	public CharTileDialog(LWindow parent) {
 		super(parent, Vocab.instance.CHARTILESHELL);
-		LPoint size = getTargetSize();
-		setRequiredSize(200, size.y);
-		setSize(200, size.y);
 	}
 	
 	@Override

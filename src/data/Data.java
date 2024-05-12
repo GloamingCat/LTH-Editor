@@ -4,7 +4,7 @@ import lui.base.data.LDataList;
 import lui.base.data.LDataTree;
 import data.subcontent.Tag;
 
-public class Data {
+public class Data implements Cloneable {
 
 	public String name = "Empty";
 	public LDataList<Tag> tags = new LDataList<>();
@@ -20,5 +20,18 @@ public class Data {
 			root.setKeyID(key, node.id);
 		}
 	}
-	
+
+    @Override
+    public Data clone() {
+        try {
+            Data clone = (Data) super.clone();
+            clone.name = name;
+			clone.key = key;
+			clone.tags = tags.clone();
+			clone.tags.replaceAll(Tag::clone);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

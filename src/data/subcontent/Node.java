@@ -11,14 +11,15 @@ public class Node {
 		this.id = id;
 		this.name = name;
 	}
-	
+
+	@Override
 	public String toString() {
 		return name;
 	}
-	
-	public boolean equals(Node node) {
-		if (node instanceof Node) {
-			Node n = (Node) node;
+
+	@Override
+	public boolean equals(Object node) {
+		if (node instanceof Node n) {
 			return n.id == id && name.equals(n.name);
 		}
 		return false;

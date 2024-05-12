@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
@@ -12,12 +12,10 @@ import lui.widget.LSpinner;
 import project.Project;
 import data.Battler.Drop;
 
-public class DropDialog extends ObjectEditorDialog<Drop> {
+public class DropDialog extends GObjectDialog<Drop> {
 
 	public DropDialog(LWindow parent) {
-		super(parent, Vocab.instance.DROPSHELL);
-		setRequiredSize(400, 300);
-		setSize(400, 300);
+		super(parent, 400, 300, Vocab.instance.DROPSHELL);
 	}
 	
 	@Override

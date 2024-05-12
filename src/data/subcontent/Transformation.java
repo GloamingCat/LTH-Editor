@@ -4,7 +4,7 @@ import gui.Vocab;
 
 public class Transformation {
 	
-	public static String[] types = new String[] {
+	public static final String[] types = new String[] {
 			Vocab.instance.OFFSETX,
 			Vocab.instance.OFFSETY,
 			Vocab.instance.OFFSETDEPTH,

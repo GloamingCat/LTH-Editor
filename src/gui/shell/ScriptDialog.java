@@ -9,6 +9,7 @@ import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.dialog.LWindow;
+import lui.gson.GObjectDialog;
 import lui.widget.LFileSelector;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
@@ -17,7 +18,7 @@ import lui.widget.LText;
 import data.subcontent.Script;
 import project.Project;
 
-public class ScriptDialog extends ObjectEditorDialog<Script> {
+public class ScriptDialog extends GObjectDialog<Script> {
 	
 	private LFileSelector selFile;
 	
@@ -27,13 +28,12 @@ public class ScriptDialog extends ObjectEditorDialog<Script> {
 	public static final int ONINTERACT = 0x0001;
 	
 	public ScriptDialog(LWindow parent, int style) {
-		super(parent, style, Vocab.instance.SCRIPTSHELL);
+		super(parent, 750, 450, style, Vocab.instance.SCRIPTSHELL);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.DESCRIPTION, Tooltip.instance.DESCRIPTION);
@@ -60,33 +60,39 @@ public class ScriptDialog extends ObjectEditorDialog<Script> {
 		new LLabel(grpOpts, Vocab.instance.TRIGGER, Tooltip.instance.SCRIPTTRIGGER);
 
 		LCheckBox btnGlobal = new LCheckBox(checks);
+		btnGlobal.getCellData().setAlignment(LFlags.LEFT);
 		btnGlobal.setText(Vocab.instance.GLOBAL);
 		btnGlobal.setHoverText(Tooltip.instance.GLOBAL);
 		addControl(btnGlobal, "global");
-		
+
 		LCheckBox btnWait = new LCheckBox(checks);
+		btnWait.getCellData().setAlignment(LFlags.LEFT);
 		btnWait.setText(Vocab.instance.WAIT);
 		btnWait.setHoverText(Tooltip.instance.WAIT);
 		addControl(btnWait, "wait");
-		
+
 		LCheckBox btnBlock = new LCheckBox(checks);
+		btnBlock.getCellData().setAlignment(LFlags.LEFT);
 		btnBlock.setText(Vocab.instance.BLOCKPLAYER);
 		btnBlock.setHoverText(Tooltip.instance.BLOCKPLAYER);
 		addControl(btnBlock, "block");
-		
+
 		LCheckBox btnLoad = new LCheckBox(checks);
+		btnLoad.getCellData().setAlignment(LFlags.LEFT);
 		btnLoad.setText(Vocab.instance.ONLOAD);
 		btnLoad.setHoverText(Tooltip.instance.ONLOAD);
 		addControl(btnLoad, "onLoad");
 		btnLoad.setEnabled((style & ONLOAD) > 0);
-	
+
 		LCheckBox btnCollide = new LCheckBox(checks);
+		btnCollide.getCellData().setAlignment(LFlags.LEFT);
 		btnCollide.setText(Vocab.instance.ONCOLLIDE);
 		btnCollide.setHoverText(Tooltip.instance.ONCOLLIDE);
 		addControl(btnCollide, "onCollide");
 		btnCollide.setEnabled((style & ONCOLLIDE) > 0);
-		
+
 		LCheckBox btnInteract = new LCheckBox(checks);
+		btnInteract.getCellData().setAlignment(LFlags.LEFT);
 		btnInteract.setText(Vocab.instance.ONINTERACT);
 		btnInteract.setHoverText(Tooltip.instance.ONINTERACT);
 		addControl(btnInteract, "onInteract");

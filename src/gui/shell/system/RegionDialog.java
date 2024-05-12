@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.widgets.IDList;
 import lui.base.LFlags;
 import lui.container.LFrame;
@@ -17,12 +17,10 @@ import project.Project;
 
 import data.config.Region;
 
-public class RegionDialog extends ObjectEditorDialog<Region> {
+public class RegionDialog extends GObjectDialog<Region> {
 	
 	public RegionDialog(LWindow parent) {
-		super(parent, Vocab.instance.REGIONSHELL);
-		setRequiredSize(250, 250);
-		setSize(250, 250);
+		super(parent, 250, 250, Vocab.instance.REGIONSHELL);
 	}
 	
 	@Override

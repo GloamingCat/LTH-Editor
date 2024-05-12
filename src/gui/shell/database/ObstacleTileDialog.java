@@ -2,7 +2,7 @@ package gui.shell.database;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.NeighborEditor;
 
 import lui.container.LFrame;
@@ -12,12 +12,10 @@ import lui.widget.LLabel;
 import lui.widget.LSpinner;
 import data.Obstacle.ObstacleTile;
 
-public class ObstacleTileDialog extends ObjectEditorDialog<ObstacleTile> {
+public class ObstacleTileDialog extends GObjectDialog<ObstacleTile> {
 
     public ObstacleTileDialog(LWindow parent) {
-		super(parent, Vocab.instance.OBSTACLESHELL);
-		setSize(400, 240);
-		setRequiredSize(400, 240);
+		super(parent, 400, 240, Vocab.instance.OBSTACLESHELL);
 	}
 	
 	@Override

@@ -15,7 +15,8 @@ public class Job extends Data {
 	
 		public int id;
 		public int level;
-	
+
+		@Override
 		public String toString() {
 			Object obj = Project.current.skills.getTree().get(id);
 			String skillName = obj == null ? ("NULL " + id) : obj.toString();
@@ -29,7 +30,8 @@ public class Job extends Data {
 		
 		public int id;
 		public int level;
-	
+
+		@Override
 		public String toString() {
 			Object obj = Project.current.status.getTree().get(id);
 			String skillName = obj == null ? ("NULL " + id) : obj.toString();

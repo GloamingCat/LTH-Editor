@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 
 import data.config.Attribute;
 import lui.dialog.LWindow;
@@ -11,12 +11,10 @@ import lui.widget.LLabel;
 import lui.widget.LText;
 import lui.widget.LTextBox;
 
-public class AttributeDialog extends ObjectEditorDialog<Attribute> {
+public class AttributeDialog extends GObjectDialog<Attribute> {
 	
 	public AttributeDialog(LWindow parent) {
-		super(parent, Vocab.instance.ATTRIBUTESHELL);
-		setRequiredSize(300, 300);
-		setSize(300, 300);
+		super(parent, 300, 300, Vocab.instance.ATTRIBUTESHELL);
 	}
 	
 	@Override

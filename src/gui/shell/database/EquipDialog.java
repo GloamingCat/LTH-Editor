@@ -3,7 +3,7 @@ package gui.shell.database;
 import data.Item;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ObjectEditorDialog;
+import lui.gson.GObjectDialog;
 import gui.widgets.IDButton;
 
 import data.Battler.Equip;
@@ -17,12 +17,10 @@ import lui.widget.LText;
 
 import project.Project;
 
-public class EquipDialog extends ObjectEditorDialog<Equip> {
+public class EquipDialog extends GObjectDialog<Equip> {
 
 	public EquipDialog(LWindow parent) {
-		super(parent, Vocab.instance.EQUIPSHELL);
-		setRequiredSize(400, 400);
-		setSize(400, 400);
+		super(parent, 400, 300, Vocab.instance.EQUIPSHELL);
 	}
 	
 	@Override

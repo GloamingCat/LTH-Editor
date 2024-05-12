@@ -29,9 +29,7 @@ public class PortraitDialog extends LObjectDialog<Portrait> {
 	private LText txtName;
 	
 	public PortraitDialog(LWindow parent) {
-		super(parent, Vocab.instance.PORTRAITSHELL);
-		setRequiredSize(600, 400);
-		setSize(600, 400);
+		super(parent, 600, 400, Vocab.instance.PORTRAITSHELL);
 	}
 	
 	@Override

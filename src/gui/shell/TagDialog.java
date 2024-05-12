@@ -5,16 +5,15 @@ import gui.Vocab;
 import lui.base.LFlags;
 import data.subcontent.Tag;
 import lui.dialog.LWindow;
+import lui.gson.GObjectDialog;
 import lui.widget.LLabel;
 import lui.widget.LText;
 import lui.widget.LTextBox;
 
-public class TagDialog extends ObjectEditorDialog<Tag> {
+public class TagDialog extends GObjectDialog<Tag> {
 
     public TagDialog(LWindow parent, String title) {
-		super(parent, title);
-		setRequiredSize(400, 300);
-		setSize(400, 300);
+		super(parent, 400, 200, title);
 	}
 	
 	@Override
