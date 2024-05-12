@@ -12,7 +12,7 @@ import lui.widget.LSpinner;
 public class ResizeDialog extends GObjectDialog<LRect> {
 
 	public ResizeDialog(LWindow parent) {
-		super(parent, Vocab.instance.RESIZESHELL);
+		super(parent, 250, 0, Vocab.instance.RESIZESHELL);
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class ResizeDialog extends GObjectDialog<LRect> {
 		cmbY.setOptional(false);
 		cmbY.setItems(new String[] { Vocab.instance.TOP, Vocab.instance.CENTER, Vocab.instance.BOTTOM });
 		addControl(cmbY, "y");
-		pack();
+
 	}
 
 	@Override

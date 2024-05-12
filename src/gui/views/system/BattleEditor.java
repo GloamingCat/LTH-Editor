@@ -3,6 +3,7 @@ package gui.views.system;
 import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.widgets.CheckBoxPanel;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
@@ -28,7 +29,6 @@ public class BattleEditor extends GDefaultObjectEditor<Config.Battle> {
 		spnMaxLevel.getCellData().setExpand(true, false);
 		spnMaxLevel.getCellData().setSpread(2, 1);
 		addControl(spnMaxLevel, "maxLevel");
-		spnMaxLevel.setMaximum(9999);
 
 		new LLabel(this, Vocab.instance.ATTHP, Tooltip.instance.ATTHP);
 
@@ -62,14 +62,11 @@ public class BattleEditor extends GDefaultObjectEditor<Config.Battle> {
 
 		LSpinner spnCharSpeed = new LSpinner(this);
 		spnCharSpeed.getCellData().setExpand(true, false);
-		spnCharSpeed.setMaximum(9999);
 		addControl(spnCharSpeed, "charSpeed");
 
 		new LLabel(this, "%");
 
-		LPanel checkBattle = new LPanel(this);
-		checkBattle.setSequentialLayout(true);
-		checkBattle.getCellData().setExpand(true, false);
+		LPanel checkBattle = new CheckBoxPanel(this);
 		checkBattle.getCellData().setSpread(2, 1);
 
 		LCheckBox btnRevive = new LCheckBox(checkBattle);

@@ -7,15 +7,11 @@ import gui.views.database.subcontent.AttributeList;
 import gui.views.database.subcontent.BonusList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.EquipStatusList;
-import gui.widgets.CheckBoxPanel;
-import gui.widgets.IDButton;
-import gui.widgets.IconButton;
-import gui.widgets.NameList;
+import gui.widgets.*;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.container.LPanel;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
@@ -45,26 +41,13 @@ public class ItemTab extends DatabaseTab<Item> {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
-		compositeIcon.setGridLayout(2);
-		compositeIcon.getCellData().setExpand(true, false);
-		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setRequiredSize(48,48);
-		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
-		IconButton btnGraphics = new IconButton(compositeIcon, true);
-		btnGraphics.setImageWidget(imgIcon);
-		btnGraphics.addMenu(lblIcon);
-		btnGraphics.addMenu(imgIcon);
-		addControl(btnGraphics, "icon");
+		new IconSelector(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
 		
 		// Description
 		
 		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
-		txtDescription.getCellData().setExpand(true, true);
-		txtDescription.getCellData().setRequiredSize(0, 60);
+		LTextBox txtDescription = new DescriptionField(contentEditor.grpGeneral);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 		
@@ -77,7 +60,6 @@ public class ItemTab extends DatabaseTab<Item> {
 		LSpinner spnPrice = new LSpinner(price);
 		spnPrice.getCellData().setExpand(true, false);
 		spnPrice.setMinimum(0);
-		spnPrice.setMaximum(9999999);
 		spnPrice.addMenu(lblPrice);
 		addControl(spnPrice, "price");
 		

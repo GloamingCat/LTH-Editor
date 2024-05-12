@@ -23,6 +23,7 @@ public class ApplicationWindow extends LApplicationWindow {
 	public ApplicationWindow(String... args) {
 		super(800, 700, "bin/img/icon.png", args);
 		setCurrentSize(1200, 800);
+		setContinuousLayout(false);
 	}
 
 	@Override

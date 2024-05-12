@@ -125,7 +125,6 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		new LLabel(this, Vocab.instance.SPEED, Tooltip.instance.SPEED);
 		LSpinner spnSpeed = new LSpinner(this);
 		spnSpeed.getCellData().setExpand(true, false);
-		spnSpeed.setMaximum(9999);
 		new LLabel(this, "%");
 		addControl(spnSpeed, "defaultSpeed");
 		

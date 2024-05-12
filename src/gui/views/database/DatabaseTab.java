@@ -81,7 +81,7 @@ public abstract class DatabaseTab<T> extends LView {
 		});
 
 		createContent();
-		
+
 		sashForm.setWeights(1, 3);
 	}
 

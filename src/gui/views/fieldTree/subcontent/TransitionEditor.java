@@ -47,7 +47,6 @@ public class TransitionEditor extends GDefaultObjectEditor<Transition> {
         LSpinner spnFade = new LSpinner(this);
         spnFade.getCellData().setExpand(true, false);
         spnFade.setMinimum(-1);
-        spnFade.setMaximum(99999);
         this.addControl(spnFade, "fade");
         new LLabel(this, 1, 1);
 

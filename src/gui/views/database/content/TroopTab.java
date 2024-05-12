@@ -50,23 +50,25 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 	@Override
 	protected void createContent() {
+
 		// Rewards
 		
 		LLabel lblMoney = new LLabel(contentEditor.grpGeneral, Vocab.instance.MONEY, Tooltip.instance.MONEY);
-		LPanel compositeReward = new LPanel(contentEditor.grpGeneral);
-		compositeReward.setGridLayout(3);
-		compositeReward.getCellData().setExpand(true, false);
-		LSpinner spnMoney = new LSpinner(compositeReward);
+		LPanel rewards = new LPanel(contentEditor.grpGeneral);
+		rewards.setGridLayout(3);
+		rewards.getCellData().setExpand(true, false);
+
+		LSpinner spnMoney = new LSpinner(rewards);
 		spnMoney.getCellData().setExpand(true, false);
-		spnMoney.setMaximum(99999999);
 		spnMoney.addMenu(lblMoney);
 		addControl(spnMoney, "money");
 		
-		LLabel lblExp = new LLabel(compositeReward, Vocab.instance.EXP, Tooltip.instance.EXP);
-		lblExp.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
-		LSpinner spnEXP = new LSpinner(compositeReward);
+		LLabel lblExp = new LLabel(rewards, Vocab.instance.EXP, Tooltip.instance.EXP);
+		lblExp.getCellData().setRequiredSize(LPrefs.LABELWIDTH / 2, 0);
+
+		LSpinner spnEXP = new LSpinner(rewards);
+		//spnEXP.getCellData().setTargetSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 		spnEXP.getCellData().setExpand(true, false);
-		spnEXP.setMaximum(99999999);
 		spnEXP.addMenu(lblExp);
 		addControl(spnEXP, "exp");
 		

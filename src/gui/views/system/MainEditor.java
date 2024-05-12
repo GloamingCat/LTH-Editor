@@ -87,7 +87,6 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 		LSpinner spnFpsMin = new LSpinner(grpExecution);
 		spnFpsMin.getCellData().setExpand(true, false);
 		spnFpsMin.setMinimum(1);
-		spnFpsMin.setMaximum(9999);
 		addControl(spnFpsMin, "fpsMin");
 
 		new LLabel(grpExecution, " ~ ");
@@ -95,7 +94,6 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 		LSpinner spnFpsMax = new LSpinner(grpExecution);
 		spnFpsMax.getCellData().setExpand(true, false);
 		spnFpsMax.setMinimum(1);
-		spnFpsMax.setMaximum(9999);
 		addControl(spnFpsMax, "fpsMax");
     }
 

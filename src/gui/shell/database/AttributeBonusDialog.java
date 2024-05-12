@@ -30,15 +30,13 @@ public class AttributeBonusDialog extends GObjectDialog<Attribute> {
 		new LLabel(contentEditor, Vocab.instance.ATTADD, Tooltip.instance.ATTADD);
 		LSpinner spnAdd = new LSpinner(contentEditor);
 		spnAdd.getCellData().setExpand(true, false);
-		spnAdd.setMaximum(999999);
-		spnAdd.setMinimum(-999999);
+		spnAdd.setMinimum(Integer.MIN_VALUE);
 		addControl(spnAdd, "add");
 
 		new LLabel(contentEditor, Vocab.instance.ATTMUL, Tooltip.instance.ATTMUL);
 		LSpinner spnMul = new LSpinner(contentEditor);
 		spnMul.getCellData().setExpand(true, false);
-		spnMul.setMaximum(999999);
-		spnMul.setMinimum(-999999);
+		spnMul.setMinimum(Integer.MIN_VALUE);
 		addControl(spnMul, "mul");
 	}
 	

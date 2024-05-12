@@ -13,7 +13,6 @@ import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.container.LPanel;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
@@ -46,40 +45,31 @@ public class BattlerTab extends DatabaseTab<Battler> {
 
 	@Override
 	protected void createContent() {
+
 		LPanel middle = new LPanel(contentEditor.left);
 		middle.setGridLayout(2);
 		middle.getCellData().setExpand(true, true);
+		middle.getCellData().setRequiredSize(0, LPrefs.LISTHEIGHT * 2);
+		middle.getCellData().setTargetSize(-1, LPrefs.LISTHEIGHT * 2);
 		LPanel bottom = new LPanel(contentEditor.left);
 		bottom.setGridLayout(2);
 		bottom.setEqualCells(true, false);
 		bottom.getCellData().setExpand(true, true);
-		bottom.getCellData().setRequiredSize(0, 80);
-		
+		bottom.getCellData().setRequiredSize(0, LPrefs.LISTHEIGHT);
+		bottom.getCellData().setTargetSize(-1, LPrefs.LISTHEIGHT);
+
 		// Icon
 		
 		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
-		compositeIcon.setGridLayout(2);
-		compositeIcon.getCellData().setExpand(true, false);
-		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.getCellData().setRequiredSize(48, 48);
-		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
-		IconButton btnGraphics = new IconButton(compositeIcon, false);
-		btnGraphics.setImageWidget(imgIcon);
-		btnGraphics.addMenu(lblIcon);
-		addControl(btnGraphics, "icon");
+		new IconSelector(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
 		
 		// Description
 		
 		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 			Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
-		txtDescription.getCellData().setExpand(true, true);
-		txtDescription.getCellData().setRequiredSize(0, 60);
+		LTextBox txtDescription = new DescriptionField(contentEditor.grpGeneral);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
-
 
 		// Job
 
@@ -104,8 +94,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LLabel lblLevel = new LLabel(job, Vocab.instance.LEVEL, Tooltip.instance.LEVEL);
 		lblLevel.getCellData().setRequiredSize(LPrefs.LABELWIDTH / 2, 0);
 		LSpinner spnLevel = new LSpinner(job);
-		spnLevel.getCellData().setExpand(true, false);
-		spnLevel.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2 - LPrefs.LABELWIDTH * 2, LPrefs.WIDGETHEIGHT);
+		spnLevel.getCellData().setExpand(false, false);
+		spnLevel.getCellData().setTargetSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 		spnLevel.addMenu(lblLevel);
 		addControl(spnLevel, "level");
 
@@ -117,9 +107,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		rewards.getCellData().setExpand(true, false);
 
 		LSpinner spnMoney = new LSpinner(rewards);
-		spnMoney.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2, LPrefs.WIDGETHEIGHT);
+		//spnMoney.getCellData().setTargetSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 		spnMoney.getCellData().setExpand(true, false);
-		spnMoney.setMaximum(99999999);
 		spnMoney.addMenu(lblMoney);
 		addControl(spnMoney, "money");
 		
@@ -127,9 +116,8 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		lblExp.getCellData().setRequiredSize(LPrefs.LABELWIDTH / 2, 0);
 
 		LSpinner spnEXP = new LSpinner(rewards);
-		spnEXP.getCellData().setTargetSize(LPrefs.BUTTONWIDTH * 2 - LPrefs.LABELWIDTH * 2, LPrefs.WIDGETHEIGHT);
+		//spnEXP.getCellData().setTargetSize(LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 		spnEXP.getCellData().setExpand(true, false);
-		spnEXP.setMaximum(99999999);
 		spnEXP.addMenu(lblExp);
 		addControl(spnEXP, "exp");
 
@@ -146,7 +134,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		LCheckBox btnRecruit = new LCheckBox(check);
 		btnRecruit.setText(Vocab.instance.RECRUIT);
 		btnRecruit.setHoverText(Tooltip.instance.RECRUIT);
-		addControl(btnRecruit, "persistent");
+		addControl(btnRecruit, "recruit");
 
 		// Attributes
 		
@@ -154,7 +142,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		grpAtt.setFillLayout(true);
 		grpAtt.setHoverText(Tooltip.instance.BATTLERATT);
 		grpAtt.getCellData().setExpand(true, true);
-		grpAtt.getCellData().setRequiredSize(160, 0);
+		grpAtt.getCellData().setRequiredSize(LPrefs.LISTWIDTH, 0);
 		AttributeEditor attEditor = new AttributeEditor(grpAtt, 2);
 		attEditor.addMenu(grpAtt);
 		addChild(attEditor, "attributes");

@@ -1,7 +1,6 @@
 package gui.views.database.subcontent;
 
 import data.config.Attribute;
-import lui.base.LPrefs;
 import project.Project;
 import lui.container.LContainer;
 import lui.gson.GGridForm;
@@ -14,7 +13,7 @@ public class AttributeEditor extends GGridForm<Integer> {
 	public AttributeEditor(LContainer parent, int columns) {
 		super(parent, columns);
 		labelWidth = 20;
-		controlWidth = 20;
+		controlWidth = 60;
 	}
 
 	protected Integer getDefaultValue() {
@@ -26,7 +25,9 @@ public class AttributeEditor extends GGridForm<Integer> {
 	}
 	
 	protected LControlWidget<Integer> createControl(final int i, final Object obj) {
-		return new LSpinner(content);
+		LSpinner spinner = new LSpinner(content);
+		spinner.setMinimum(Integer.MIN_VALUE);
+		return spinner;
 	}
 	
 	protected String getLabelText(final int i, final Object obj) {

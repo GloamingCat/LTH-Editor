@@ -26,13 +26,11 @@ public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
 		spnWalkSpeed.getCellData().setExpand(true, false);
 		spnWalkSpeed.getCellData().setSpread(2, 1);
 		addControl(spnWalkSpeed, "walkSpeed");
-		spnWalkSpeed.setMaximum(9999);
 
 		new LLabel(this, Vocab.instance.DASHSPEED, Tooltip.instance.DASHSPEED);
 		LSpinner spnDashSpeed = new LSpinner(this);
 		spnDashSpeed.getCellData().setExpand(true, false);
 		addControl(spnDashSpeed, "dashSpeed");
-		spnDashSpeed.setMaximum(9999);
 
 		new LLabel(this, "%");
 		new LLabel(this, Vocab.instance.DIAGTHRESHOLD, Tooltip.instance.DIAGTHRESHOLD);

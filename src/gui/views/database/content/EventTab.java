@@ -41,6 +41,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 				Tooltip.instance.DESCRIPTION);
 		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
 		txtDescription.getCellData().setExpand(true, true);
+		txtDescription.getCellData().setTargetSize(0, 0);
+		txtDescription.getCellData().setRequiredSize(-1, -1);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 

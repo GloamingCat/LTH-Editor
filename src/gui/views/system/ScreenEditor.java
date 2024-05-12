@@ -3,6 +3,7 @@ package gui.views.system;
 import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.widgets.CheckBoxPanel;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
@@ -32,7 +33,6 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		LSpinner spnNativeWidth = new LSpinner(nativeSize);
 		spnNativeWidth.getCellData().setExpand(true, false);
 		spnNativeWidth.setMinimum(1);
-		spnNativeWidth.setMaximum(9999);
 		addControl(spnNativeWidth, "nativeWidth");
 
 		new LLabel(nativeSize, "x");
@@ -40,7 +40,6 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		LSpinner spnNativeHeight = new LSpinner(nativeSize);
 		spnNativeHeight.getCellData().setExpand(true, false);
 		spnNativeHeight.setMinimum(1);
-		spnNativeHeight.setMaximum(9999);
 		addControl(spnNativeHeight, "nativeHeight");
 
 		new LLabel(this, Vocab.instance.SCALEFACTOR, Tooltip.instance.SCALEFACTOR);
@@ -53,7 +52,6 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		LSpinner spnWidthScale = new LSpinner(scaleFactor);
 		spnWidthScale.getCellData().setExpand(true, false);
 		spnWidthScale.setMinimum(1);
-		spnWidthScale.setMaximum(9999);
 		addControl(spnWidthScale, "widthScale");
 
 		new LLabel(scaleFactor, "x");
@@ -61,7 +59,6 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		LSpinner spnHeightScale = new LSpinner(scaleFactor);
 		spnHeightScale.getCellData().setExpand(true, false);
 		spnHeightScale.setMinimum(1);
-		spnHeightScale.setMaximum(9999);
 		addControl(spnHeightScale, "heightScale");
 
 		String[] scaleTypes = new String[] {
@@ -91,8 +88,7 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		cmbScaleMobile.setItems(scaleTypes);
 		addControl(cmbScaleMobile, "mobileScaleType");
 
-		LPanel checkScreen = new LPanel(this);
-		checkScreen.setSequentialLayout(true);
+		LPanel checkScreen = new CheckBoxPanel(this);
 		checkScreen.getCellData().setSpread(3, 1);
 
 		LCheckBox btnPixelPerfect = new LCheckBox(checkScreen);

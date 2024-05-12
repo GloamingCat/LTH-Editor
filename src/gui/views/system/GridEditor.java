@@ -3,6 +3,7 @@ package gui.views.system;
 import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.widgets.CheckBoxPanel;
 import lui.base.LFlags;
 import lui.container.LContainer;
 import lui.container.LPanel;
@@ -64,10 +65,7 @@ public class GridEditor extends GDefaultObjectEditor<Config.Grid> {
 		spnDepthPerY.getCellData().setSpread(2, 1);
 		addControl(spnDepthPerY, "depthPerY");
 
-		LPanel gridOptions = new LPanel(this);
-		gridOptions.setSequentialLayout(true);
-		gridOptions.getCellData().setAlignment(LFlags.CENTER);
-		gridOptions.getCellData().setExpand(true, false);
+		LPanel gridOptions = new CheckBoxPanel(this);
 		gridOptions.getCellData().setSpread(3, 1);
 
 		LCheckBox btnAllNeighbors = new LCheckBox(gridOptions);

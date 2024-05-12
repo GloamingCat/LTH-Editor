@@ -9,14 +9,14 @@ import gui.views.database.subcontent.PropertyList;
 import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.CheckBoxPanel;
-import gui.widgets.IconButton;
+import gui.widgets.DescriptionField;
+import gui.widgets.IconSelector;
 import gui.widgets.LuaButton;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LCanvas;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.container.LPanel;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
@@ -55,27 +55,13 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
-		compositeIcon.setGridLayout(2);
-		compositeIcon.getCellData().setExpand(true, false);
-		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setRequiredSize(0, 48);
-		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
-		
-		IconButton btnGraphics = new IconButton(compositeIcon, true);
-		btnGraphics.setImageWidget(imgIcon);
-		btnGraphics.addMenu(lblIcon);
-		btnGraphics.addMenu(imgIcon);
-		addControl(btnGraphics, "icon");
+		new IconSelector(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
 		
 		// Description
 		
 		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
-		LTextBox txtDescription = new LTextBox(contentEditor.grpGeneral);
-		txtDescription.getCellData().setExpand(true, true);
-		txtDescription.getCellData().setRequiredSize(0, 60);
+		LTextBox txtDescription = new DescriptionField(contentEditor.grpGeneral);
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 		

@@ -12,7 +12,6 @@ import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.container.LPanel;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
@@ -45,18 +44,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		// Icon
 
 		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(contentEditor.grpGeneral);
-		compositeIcon.setGridLayout(2);
-		compositeIcon.getCellData().setExpand(true, false);
-		compositeIcon.getCellData().setTargetSize(0, 48);
-		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
-		IconButton btnSelectIcon = new IconButton(compositeIcon, true);
-		btnSelectIcon.setImageWidget(imgIcon);
-		btnSelectIcon.addMenu(lblIcon);
-		btnSelectIcon.addMenu(imgIcon);
-		addControl(btnSelectIcon, "icon");
+		new IconSelector(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
 
 		// Cancel
 
@@ -150,7 +138,6 @@ public class StatusTab extends DatabaseTab<Status> {
 		LLabel lblTurns = new LLabel(grpDurability, Vocab.instance.TURNS, Tooltip.instance.TURNS);
 		LSpinner spnTurns = new LSpinner(grpDurability);
 		spnTurns.getCellData().setExpand(true, false);
-		spnTurns.setMaximum(999999);
 		spnTurns.setMinimum(-1);
 		spnTurns.addMenu(lblTurns);
 		addControl(spnTurns, "duration");
@@ -162,7 +149,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		addControl(btnBattleOnly, "battleOnly");
 
 		LPanel checkDurability = new CheckBoxPanel(grpDurability);
-		checkDurability.getCellData().setSpread(2, 1);
+		checkDurability.getCellData().setSpread(3, 1);
 
 		LCheckBox btnRemoveOnKO = new LCheckBox(checkDurability);
 		btnRemoveOnKO.setText(Vocab.instance.REMOVEONKO);
@@ -222,8 +209,6 @@ public class StatusTab extends DatabaseTab<Status> {
 		LLabel lblDrain = new LLabel(grpDrain, Vocab.instance.DRAINVALUE, Tooltip.instance.DRAINVALUE);
 		LSpinner spnDrain = new LSpinner(grpDrain);
 		spnDrain.getCellData().setExpand(true, false);
-		spnDrain.setMaximum(999999);
-		spnDrain.setMinimum(0);
 		spnDrain.addMenu(lblDrain);
 		addControl(spnDrain, "drainValue");
 

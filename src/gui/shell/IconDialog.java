@@ -65,6 +65,8 @@ public class IconDialog extends LObjectDialog<Icon> {
                 if (anim != null) {
                     col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
                     row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+					col = Math.max(0, Math.min(col, anim.cols - 1));
+					row = Math.max(0, Math.min(row, anim.rows - 1));
                     image.redraw();
                 }
             }

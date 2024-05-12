@@ -33,7 +33,6 @@ public class DropDialog extends GObjectDialog<Drop> {
 		new LLabel(contentEditor, Vocab.instance.COUNT, Tooltip.instance.COUNT);
 		LSpinner spnCount = new LSpinner(contentEditor);
 		spnCount.getCellData().setExpand(true, false);
-		spnCount.setMaximum(999999999);
 		spnCount.setMinimum(1);
 		addControl(spnCount, "count");
 		

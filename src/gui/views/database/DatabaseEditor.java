@@ -16,31 +16,31 @@ public class DatabaseEditor extends LViewFolder {
 
 		AnimationTab animationTab = new AnimationTab(this);
 		addTab(Vocab.instance.ANIMATIONS, animationTab);
-		
-		ObstacleTab obstacleTab = new ObstacleTab(this);
-		addTab(Vocab.instance.OBSTACLES, obstacleTab);
-		
-		StatusTab statusTab = new StatusTab(this);
-		addTab(Vocab.instance.STATUS, statusTab);
-		
+
 		SkillTab skillTab = new SkillTab(this);
 		addTab(Vocab.instance.SKILLS, skillTab);
-		
+
 		ItemTab itemTab = new ItemTab(this);
 		addTab(Vocab.instance.ITEMS, itemTab);
-		
-		JobTab jobTab = new JobTab(this);
-		addTab(Vocab.instance.JOBS, jobTab);
-		
+
+		StatusTab statusTab = new StatusTab(this);
+		addTab(Vocab.instance.STATUS, statusTab);
+
 		BattlerTab battlerTab = new BattlerTab(this);
 		addTab(Vocab.instance.BATTLERS, battlerTab);
-		
+
+		JobTab jobTab = new JobTab(this);
+		addTab(Vocab.instance.JOBS, jobTab);
+
 		CharacterTab characterTab = new CharacterTab(this);
 		addTab(Vocab.instance.CHARACTERS, characterTab);
-		
+
 		TroopTab troopTab = new TroopTab(this);
 		addTab(Vocab.instance.TROOPS, troopTab);
-		
+
+		ObstacleTab obstacleTab = new ObstacleTab(this);
+		addTab(Vocab.instance.OBSTACLES, obstacleTab);
+
 		TerrainTab terrainTab = new TerrainTab(this);
 		addTab(Vocab.instance.TERRAINS, terrainTab);
 

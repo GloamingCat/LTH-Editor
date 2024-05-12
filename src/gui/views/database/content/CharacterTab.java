@@ -158,7 +158,6 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		spnFade.getCellData().setExpand(true, false);
 		spnFade.getCellData().setSpread(2, 1);
 		spnFade.setMinimum(-1);
-		spnFade.setMaximum(999);
 		spnFade.addMenu(lblFade);
 		addControl(spnFade, "koFadeout");
 
