@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.FileShell;
+import gui.shell.FileListDialog;
 import lui.container.LPanel;
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
@@ -15,7 +15,7 @@ import project.Project;
 
 import data.subcontent.FontData;
 
-public class FontShell extends FileShell<FontData> {
+public class FontShell extends FileListDialog<FontData> {
 
 	private LSpinner spnSize;
 	private LText txtFormat;

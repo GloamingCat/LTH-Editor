@@ -2,13 +2,10 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
+import gui.widgets.IconSelector;
 import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
-import gui.widgets.IconButton;
-import lui.base.LFlags;
 import lui.container.LFrame;
-import lui.container.LImage;
-import lui.container.LPanel;
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
 import lui.widget.LText;
@@ -33,19 +30,7 @@ public class ElementDialog extends GObjectDialog<Element> {
 		addControl(txtName, "name");
 
 		LLabel lblIcon = new LLabel(contentEditor, Vocab.instance.ICON, Tooltip.instance.ICON);
-		LPanel compositeIcon = new LPanel(contentEditor);
-		compositeIcon.setGridLayout(2);
-		compositeIcon.getCellData().setExpand(true, false);
-		LImage imgIcon = new LImage(compositeIcon);
-		imgIcon.getCellData().setExpand(true, true);
-		imgIcon.getCellData().setRequiredSize(0, 48);
-		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
-
-		IconButton btnGraphics = new IconButton(compositeIcon, true);
-		btnGraphics.setImageWidget(imgIcon);
-		btnGraphics.addMenu(lblIcon);
-		btnGraphics.addMenu(imgIcon);
-		addControl(btnGraphics, "icon");
+		new IconSelector(contentEditor, lblIcon, contentEditor, "icon");
 
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);
 		grpTags.setFillLayout(true);

@@ -63,37 +63,32 @@ public class QuadDialog extends LObjectDialog<Quad> {
 		scroll.getCellData().setExpand(true, true);
 
 		imgQuad = new LImage(scroll);
-		imgQuad.getCellData().setAlignment(LFlags.TOP | LFlags.LEFT);
+		imgQuad.setAlignment(LFlags.TOP | LFlags.LEFT);
 
 		LPanel spinners = new LPanel(quad);
 		spinners.setGridLayout(4);
 		spinners.getCellData().setExpand(true, false);
-		spinners.getCellData().setAlignment(LFlags.CENTER);
 
 		new LLabel(spinners, Vocab.instance.QUADX, Tooltip.instance.QUADX);
 
 		spnX = new LSpinner(spinners);
 		spnX.getCellData().setExpand(true, false);
-		spnX.setMaximum(4095);
 
 		new LLabel(spinners, Vocab.instance.QUADW, Tooltip.instance.QUADW);
 
 		spnWidth = new LSpinner(spinners);
 		spnWidth.getCellData().setExpand(true, false);
-		spnWidth.setMaximum(4096);
 		spnWidth.setMinimum(1);
 
 		new LLabel(spinners, Vocab.instance.QUADY, Tooltip.instance.QUADY);
 
 		spnY = new LSpinner(spinners);
 		spnY.getCellData().setExpand(true, false);
-		spnY.setMaximum(4095);
 
 		new LLabel(spinners, Vocab.instance.QUADH, Tooltip.instance.QUADH);
 
 		spnHeight = new LSpinner(spinners);
 		spnHeight.getCellData().setExpand(true, false);
-		spnHeight.setMaximum(4096);
 		spnHeight.setMinimum(1);
 
 		LActionButton btnFullImage = new LActionButton(quad, Vocab.instance.FULLIMAGE);
@@ -131,13 +126,13 @@ public class QuadDialog extends LObjectDialog<Quad> {
 	}
 
 	public void open(Quad initial) {
-		super.open(initial);
 		selFile.setSelectedFile(initial.path);
 		spnX.setValue(initial.x);
 		spnY.setValue(initial.y);
 		spnWidth.setValue(initial.width);
 		spnHeight.setValue(initial.height);
 		resetImage();
+		super.open(initial);
 	}
 
 	@Override

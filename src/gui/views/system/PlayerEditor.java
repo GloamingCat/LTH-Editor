@@ -47,6 +47,9 @@ public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
 		PositionButton btnStartPos = new PositionButton(this, -1);
 		btnStartPos.setTextWidget(txtPos);
 		addControl(btnStartPos, "startPos");
+
+		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
+
     }
 
     @Override

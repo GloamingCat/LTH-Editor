@@ -53,6 +53,9 @@ public class TroopEditor extends GDefaultObjectEditor<Config.Troop> {
 		LSpinner spnHeight = new LSpinner(troopSize);
 		spnHeight.getCellData().setExpand(true, false);
 		addControl(spnHeight, "height");
+
+		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
+
     }
 
     @Override

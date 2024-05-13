@@ -8,7 +8,7 @@ import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LFlatList;
 
-public abstract class FileShell<T> extends LObjectDialog<T> {
+public abstract class FileListDialog<T> extends LObjectDialog<T> {
 
 	protected String folder;
 	protected LFlexPanel sashForm;
@@ -20,7 +20,7 @@ public abstract class FileShell<T> extends LObjectDialog<T> {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public FileShell(LWindow parent, String title, int style) {
+	public FileListDialog(LWindow parent, String title, int style) {
 		super(parent, style, title);
 	}
 	
@@ -43,7 +43,7 @@ public abstract class FileShell<T> extends LObjectDialog<T> {
 	}
 	
 	protected String[] getItems(String folder, boolean optional) {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		if (optional) {
 			list.add("");
 		}
@@ -59,7 +59,10 @@ public abstract class FileShell<T> extends LObjectDialog<T> {
 		File f = new File(rootPath() + folder + "/" + path);
 		if (!f.exists())
 			return;
-		for (File entry : f.listFiles()) {
+		File[] entries = f.listFiles();
+		if (entries == null)
+			return;
+		for (File entry : entries) {
 			if (entry.isDirectory()) {
 				readFiles(folder, items, path + entry.getName() + "/");
 			} else {

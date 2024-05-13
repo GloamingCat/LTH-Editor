@@ -15,8 +15,7 @@ public class LuaDialog extends LObjectDialog<String> {
 	 * @wbp.parser.constructor
 	 */
 	public LuaDialog(LWindow parent, String title, int style) {
-		super(parent, style, title);
-		pack();
+		super(parent, 300, 300, style, title);
 	}
 	
 	@Override
@@ -30,8 +29,8 @@ public class LuaDialog extends LObjectDialog<String> {
 
 	@Override
 	public void open(String initial) {
-		super.open(initial);
 		selFile.setSelectedFile(initial);
+		super.open(initial);
 	}
 	
 	@Override

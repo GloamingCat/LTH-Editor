@@ -76,6 +76,9 @@ public class BattleEditor extends GDefaultObjectEditor<Config.Battle> {
 		LCheckBox btnKeepParties = new LCheckBox(checkBattle);
 		btnKeepParties.setText(Vocab.instance.KEEPPARTIES);
 		addControl(btnKeepParties, "keepParties");
+
+		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
+
     }
 
     @Override

@@ -4,7 +4,6 @@ import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.CheckBoxPanel;
-import lui.base.LFlags;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
@@ -82,6 +81,8 @@ public class GridEditor extends GDefaultObjectEditor<Config.Grid> {
 		btnOverpassDeads.setText(Vocab.instance.OVERPASSDEADS);
 		btnOverpassDeads.setHoverText(Tooltip.instance.OVERPASSDEADS);
 		addControl(btnOverpassDeads, "overpassDeads");
+
+		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
 
     }
 

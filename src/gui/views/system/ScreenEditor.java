@@ -100,6 +100,9 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		btnVSync.setText(Vocab.instance.VSYNC);
 		btnVSync.setHoverText(Tooltip.instance.VSYNC);
 		addControl(btnVSync, "vsync");
+
+		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
+
     }
 
     @Override

@@ -4,7 +4,6 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
-import lui.base.LFlags;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
@@ -33,7 +32,6 @@ public class ConfigEditor extends LView {
 		createMenuInterface();
 
 		editor = new MainEditor(this, false);
-		editor.getCellData().setAlignment(LFlags.CENTER);
 		editor.getCellData().setSpread(4, 1);
 		editor.getCellData().setExpand(true, false);
 		addChild(editor);
@@ -46,7 +44,7 @@ public class ConfigEditor extends LView {
 		LPanel middle = new LPanel(this);
 		middle.setGridLayout(1);
 		middle.getCellData().setExpand(true, true);
-		middle.getCellData().setRequiredSize(150, 0);
+		middle.getCellData().setRequiredSize(180, 0);
 
 		LPanel right = new LPanel(this);
 		right.setFillLayout(false);
@@ -58,7 +56,6 @@ public class ConfigEditor extends LView {
 		grpScreen.setFillLayout(true);
 		grpScreen.setHoverText(Tooltip.instance.SCREEN);
 		grpScreen.getCellData().setExpand(true, true);
-		grpScreen.getCellData().setRequiredSize(0, -1);
 		
 		ScreenEditor screenEditor = new ScreenEditor(grpScreen, true);
 		editor.addChild(screenEditor, "screen");
@@ -79,7 +76,6 @@ public class ConfigEditor extends LView {
 		grpGrid.setFillLayout(true);
 		grpGrid.setHoverText(Tooltip.instance.GRID);
 		grpGrid.getCellData().setExpand(true, true);
-		grpGrid.getCellData().setRequiredSize(0, -1);
 		
 		GridEditor gridEditor = new GridEditor(grpGrid, true);
 		editor.addChild(gridEditor, "grid");
@@ -90,7 +86,6 @@ public class ConfigEditor extends LView {
 		grpBattle.setFillLayout(true);
 		grpBattle.setHoverText(Tooltip.instance.BATTLE);
 		grpBattle.getCellData().setExpand(true, true);
-		grpBattle.getCellData().setRequiredSize(0, -1);
 		
 		BattleEditor battleEditor = new BattleEditor(grpBattle, true);
 		editor.addChild(battleEditor, "battle");
@@ -101,7 +96,6 @@ public class ConfigEditor extends LView {
 		grpTroop.setFillLayout(true);
 		grpTroop.setHoverText(Tooltip.instance.TROOP);
 		grpTroop.getCellData().setExpand(true, true);
-		grpTroop.getCellData().setRequiredSize(0, -1);
 		
 		troopEditor = new TroopEditor(grpTroop, true);
 		editor.addChild(troopEditor, "troop");

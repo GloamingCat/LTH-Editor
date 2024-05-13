@@ -22,7 +22,7 @@ public class PluginDialog extends GObjectDialog<Plugin> {
 	 * @wbp.parser.constructor
 	 */
 	public PluginDialog(LWindow parent) {
-		super(parent, Vocab.instance.PLUGINSHELL);
+		super(parent, 600, 400, Vocab.instance.PLUGINSHELL);
 	}
 	
 	@Override
@@ -31,15 +31,13 @@ public class PluginDialog extends GObjectDialog<Plugin> {
 		contentEditor.setFillLayout(true);
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		selFile = new LFileSelector(form, false);
-		selFile.addFileRestriction( (f) -> { return f.getName().endsWith(".lua"); } );
+		selFile.addFileRestriction( (f) -> f.getName().endsWith(".lua") );
 		selFile.setFolder(Project.current.scriptPath());
 		
 		LPanel composite = new LPanel(form);
 		composite.setGridLayout(1);
-		LFrame frame = new LFrame(composite, (String) Vocab.instance.PARAM);
-		frame.setFillLayout(true);
-		
-		LFrame grpParameters = frame;
+		LFrame grpParameters = new LFrame(composite, Vocab.instance.PARAM);
+		grpParameters.setFillLayout(true);
 		grpParameters.setHoverText(Tooltip.instance.PARAM);
 		grpParameters.getCellData().setExpand(true, true);
 		TagList lstParam = new TagList(grpParameters);
@@ -60,7 +58,7 @@ public class PluginDialog extends GObjectDialog<Plugin> {
 	
 	@Override
 	protected Plugin createResult(Plugin initial) {
-		Plugin script = (Plugin) contentEditor.getObject();
+		Plugin script = contentEditor.getObject();
 		script.name = selFile.getSelectedFile();
 		if (script.name == null)
 			script.name = "";
