@@ -108,8 +108,8 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	}
 	
 	public void open(Script initial) {
-		super.open(initial);
 		selFile.setSelectedFile(initial.name);
+		super.open(initial);
 	}
 	
 	@Override

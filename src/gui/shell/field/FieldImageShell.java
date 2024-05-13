@@ -113,23 +113,28 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 	}
 	
 	public void open(FieldImage initial) {
-		super.open(initial);
 		txtName.setValue(initial.name);
 		btnVisible.setValue(initial.visible);
 		btnForeground.setValue(initial.foreground);
 		btnGlued.setValue(initial.glued);
-		tree.setValue(-1);
-		if (initial.id >= 0) {
-			col = initial.col;
-			row = initial.row;
-			LDataTree<Object> node = getTree().findNode(initial.id);
+		setIcon(initial);
+		super.open(initial);
+	}
+
+	protected void setIcon(FieldImage icon) {
+		if (icon.id >= 0) {
+			col = icon.col;
+			row = icon.row;
+			LDataTree<Object> node = getTree().findNode(icon.id);
 			if (node != null) {
 				tree.setValue(node.id);
 				setImage((Animation) node.data);
+				return;
 			}
 		} else {
 			col = row = 0;
 		}
+		tree.setValue(-1);
 	}
 	
 	@Override

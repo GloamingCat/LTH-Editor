@@ -28,8 +28,8 @@ public abstract class IDDialog extends LObjectDialog<Integer> {
 	
 	@Override
 	public void open(Integer initial) {
-		super.open(initial);
 		tree.setValue(initial);
+		super.open(initial);
 	}
 
 	@Override

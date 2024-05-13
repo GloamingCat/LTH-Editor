@@ -49,8 +49,8 @@ public class RuleDialog extends GObjectDialog<Rule> {
 	}
 	
 	public void open(Rule initial) {
-		super.open(initial);
 		selFile.setSelectedFile(initial.name);
+		super.open(initial);
 	}
 	
 	@Override

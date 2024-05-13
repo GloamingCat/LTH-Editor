@@ -52,8 +52,8 @@ public class PluginDialog extends GObjectDialog<Plugin> {
 	}
 	
 	public void open(Plugin initial) {
-		super.open(initial);
 		selFile.setSelectedFile(initial.name);
+		super.open(initial);
 	}
 	
 	@Override

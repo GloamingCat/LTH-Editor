@@ -85,9 +85,9 @@ public class BonusDialog extends GObjectDialog<Bonus> {
 	}
 	
 	public void open(Bonus initial) {
-		super.open(initial);
 		cmbType.notifyEmpty();
 		typeNode.setValue(initial.id);
+		super.open(initial);
 	}
 
 }

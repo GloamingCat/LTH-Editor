@@ -89,12 +89,16 @@ public class PortraitDialog extends LObjectDialog<Portrait> {
 	}
 	
 	public void open(Portrait initial) {
-		super.open(initial);
 		txtName.setValue(initial.name);
-		if (initial.id >= 0) {
-			col = initial.col;
-			row = initial.row;
-			LDataTree<Object> node = getTree().findNode(initial.id);
+		setPortrait(initial);
+		super.open(initial);
+	}
+
+	protected void setPortrait(Portrait icon) {
+		if (icon.id >= 0) {
+			col = icon.col;
+			row = icon.row;
+			LDataTree<Object> node = getTree().findNode(icon.id);
 			if (node != null) {
 				tree.setValue(node.id);
 				setImage((Animation) node.data);

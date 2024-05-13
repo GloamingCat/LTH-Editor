@@ -69,7 +69,6 @@ public class PortalDialog extends LObjectDialog<Portal> {
 	}
 
 	public void open(Portal initial) {
-		super.open(initial);
 		if (!initial.isEmpty()) {
 			spnH.setValue(initial.getLast().height);
 		} else {
@@ -81,6 +80,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		spnH.setMaximum(maxHeight);
 		canvas.setField(field);
 		canvas.setHeight(spnH.getValue() - 1);
+		super.open(initial);
 	}
 
 	@Override

@@ -109,10 +109,10 @@ public class AudioDialog extends GObjectDialog<Audio> {
 	}
 	
 	public void open(Audio initial) {
-		super.open(initial);
 		selFile.setSelectedFile(initial.name);
 		reproduction.volume = spnVolume.getValue();
 		reproduction.pitch = spnPitch.getValue();
+		super.open(initial);
 	}
 
 	@Override

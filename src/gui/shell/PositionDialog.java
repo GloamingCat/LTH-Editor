@@ -125,7 +125,6 @@ public class PositionDialog extends LObjectDialog<Position> {
 	}
 	
 	public void open(Position initial) {
-		super.open(initial);
 		if (initial == null) {
 			if (fieldId == -1) {
 				tree.forceSelection(null);
@@ -147,6 +146,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 			}
 		}
 		updateClickPoint();
+		super.open(initial);
 	}
 	
 	private LPath findPath(int id) {

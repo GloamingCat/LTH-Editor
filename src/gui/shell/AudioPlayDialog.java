@@ -118,30 +118,26 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 	}
 	
 	public void open(AudioPlay initial) {
-		super.open(initial);
 		ArrayList<Audio> list = Project.current.config.getData().sounds;
 		cmbSound.setItems(list);
 		selFile.setSelectedFile(initial.name);
-		if (selFile.getValue() == null) {
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).key.equals(initial.name)) {
-					cmbSound.setSelectionIndex(i);
-					return;
-				}
-			}
-		}
-		cmbSound.setValue(-1);
+		var item = list.stream().filter(a -> a.key.equals(initial.name)).findAny();
+		if (item.isPresent())
+			cmbSound.setSelectionIndex(list.indexOf(item.get()));
+		else
+			cmbSound.setValue(-1);
+		super.open(initial);
 	}
 
 	@Override
 	protected AudioPlay createResult(AudioPlay initial) {
-		AudioPlay audio = (AudioPlay) contentEditor.getObject();
+		AudioPlay audio = contentEditor.getObject();
 		audio.name = selFile.getSelectedFile();
 		if (audio.name == null)
 			audio.name = "";
 		int i = cmbSound.getSelectionIndex();
 		if (i >= 0) {
-			Audio node = (Audio) Project.current.config.getData().sounds.get(i);
+			Audio node = Project.current.config.getData().sounds.get(i);
 			audio.name = node.key;
 		}
 		return super.createResult(initial);

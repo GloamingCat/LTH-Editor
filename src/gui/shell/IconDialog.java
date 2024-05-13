@@ -84,11 +84,15 @@ public class IconDialog extends LObjectDialog<Icon> {
 	}
 	
 	public void open(Icon initial) {
+		setIcon(initial);
 		super.open(initial);
-		if (initial.id >= 0) {
-			col = initial.col;
-			row = initial.row;
-			LDataTree<Object> node = getTree().findNode(initial.id);
+	}
+
+	protected void setIcon(Icon icon) {
+		if (icon.id >= 0) {
+			col = icon.col;
+			row = icon.row;
+			LDataTree<Object> node = getTree().findNode(icon.id);
 			if (node != null) {
 				tree.setValue(node.id);
 				setImage((Animation) node.data);
@@ -99,7 +103,7 @@ public class IconDialog extends LObjectDialog<Icon> {
 		}
 		tree.setValue(-1);
 	}
-	
+
 	@Override
 	protected Icon createResult(Icon initial) {
 		Icon icon = new Icon();

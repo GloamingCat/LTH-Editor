@@ -17,8 +17,8 @@ import data.subcontent.FontData;
 
 public class FontShell extends FileListDialog<FontData> {
 
-	private LSpinner spnSize;
-	private LText txtFormat;
+	private final LSpinner spnSize;
+	private final LText txtFormat;
 	
 	public FontShell(LWindow parent) {
 		super(parent, Vocab.instance.FONTSHELL, 0);
@@ -34,18 +34,17 @@ public class FontShell extends FileListDialog<FontData> {
 		spnSize.addMenu(lblLength);
 		
 		LLabel lblFormat =new LLabel(composite, Vocab.instance.FORMAT, Tooltip.instance.FORMAT);
-		//lblFormat.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		txtFormat = new LText(composite);
 		txtFormat.addMenu(lblFormat);
 	}
 	
 	public void open(FontData initial) {
-		super.open(initial);
 		int i = list.indexOf(initial.path);
 		list.setValue(i);
 		spnSize.setValue(initial.size);
 		txtFormat.setValue(initial.format);
+		super.open(initial);
 	}
 
 	@Override
