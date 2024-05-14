@@ -33,9 +33,9 @@ public class FieldToolBar extends LToolBar {
 				onSelectTool.accept(i);
 		};
 
-		addItem(selectTool, 0, "bin/img/pencil.png", true);
-		addItem(selectTool, 1, "bin/img/bucket.png", false);
-		addItem(selectTool, 2, "bin/img/eraser.png", false);
+		addItem(selectTool, FieldCanvas.PENCIL, "bin/img/pencil.png", true);
+		addItem(selectTool, FieldCanvas.BUCKET, "bin/img/bucket.png", false);
+		addItem(selectTool, FieldCanvas.ERASER, "bin/img/eraser.png", false);
 
 		addSeparator();
 
@@ -44,11 +44,11 @@ public class FieldToolBar extends LToolBar {
 				onSelectEditor.accept(i);
 		};
 
-		addItem(selectEditor, 0, "bin/img/terrain.png", true);
-		addItem(selectEditor, 1, "bin/img/object.png", false);
-		addItem(selectEditor, 2, "bin/img/region.png", false);
-		addItem(selectEditor, 3, "bin/img/character.png", false);
-		addItem(selectEditor, 4, "bin/img/party.png", false);
+		addItem(selectEditor, FieldSideEditor.TERRAIN, "bin/img/terrain.png", true);
+		addItem(selectEditor, FieldSideEditor.OBSTACLE, "bin/img/object.png", false);
+		addItem(selectEditor, FieldSideEditor.REGION, "bin/img/region.png", false);
+		addItem(selectEditor, FieldSideEditor.CHAR, "bin/img/character.png", false);
+		addItem(selectEditor, FieldSideEditor.PARTY, "bin/img/party.png", false);
 
 		addSeparator();
 

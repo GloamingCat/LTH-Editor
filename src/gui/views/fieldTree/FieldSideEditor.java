@@ -170,8 +170,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		// Region
 
 		LFlexPanel region = new LFlexPanel(stack, false);
-		region.getCellData().setExpand(true, false);
-		region.getCellData().setAlignment(LFlags.CENTER);
 
 		LFrame grpRegionLayers = new LFrame(region, Vocab.instance.LAYERS);
 		grpRegionLayers.setFillLayout(true);
@@ -234,28 +232,15 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			if (onSelectChar != null)
 				onSelectChar.accept(tile);
         });
-		character.setWeights(1, 1);
+		character.setWeights(1, 3);
 
 		// Party
 
-		LPanel party = new LPanel(stack);
-		party.setGridLayout(2);
-		party.getCellData().setAlignment(LFlags.CENTER);
-		party.getCellData().setExpand(true, false);
-		party.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
-		party.setSpacing(LPrefs.GRIDSPACING, 0);
+		LFlexPanel party = new LFlexPanel(stack, false);
 
-		new LLabel(party, Vocab.instance.PLAYERPARTY, Tooltip.instance.PLAYERPARTY);
-
-		cmbPlayerParty = new LCombo(party, true);
-		cmbPlayerParty.getCellData().setExpand(true, false);
-		cmbPlayerParty.setIncludeID(false);
-		cmbPlayerParty.setOptional(true);
-		addControl(cmbPlayerParty, "playerParty");
-
-		LFlexPanel partyList = new LFlexPanel(party, false);
-		partyList.getCellData().setExpand(true, true);
-		partyList.getCellData().setSpread(2, 1);
+		LPanel partyList = new LPanel(party);
+		partyList.setGridLayout(2);
+		partyList.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 
 		LCollectionListener<Party> partyListener = new LCollectionListener<>() {
 			public void onInsert(LInsertEvent<Party> event) {
@@ -269,7 +254,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		};
 
 		lstParties = new SimpleEditableList<>(partyList);
-		lstParties.setMargins(0, LPrefs.GRIDSPACING);
+		lstParties.getCellData().setExpand(true, true);
+		lstParties.getCellData().setSpread(2, 1);
 		lstParties.getCollectionWidget().setEditEnabled(false);
 		lstParties.setIncludeID(true);
 		lstParties.type = Party.class;
@@ -282,10 +268,21 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 				onSelectParty.accept(p);
         });
 
-        partyEditor = new PartyEditor(partyList);
+		LLabel lblPlayerParty = new LLabel(partyList, Vocab.instance.PLAYERPARTY, Tooltip.instance.PLAYERPARTY);
+		lblPlayerParty.getCellData().setTargetSize(LPrefs.LABELWIDTH, -1);
+		cmbPlayerParty = new LCombo(partyList, true);
+		cmbPlayerParty.getCellData().setExpand(true, false);
+		cmbPlayerParty.setIncludeID(false);
+		cmbPlayerParty.setOptional(true);
+		addControl(cmbPlayerParty, "playerParty");
+
+        partyEditor = new PartyEditor(party);
+		partyEditor.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
+		partyEditor.getCellData().setExpand(true, true);
 		partyEditor.onRename = n -> updatePartyNames();
 		lstParties.addChild(partyEditor);
-		partyList.setWeights(1, 1);
+
+		party.setWeights(1, 3);
 
 		lstTerrain.onEdit =	lstObstacle.onEdit = lstRegion.onEdit = this::onLayerEdit;
 		lstTerrain.onCheck = lstObstacle.onCheck = lstRegion.onCheck = this::onLayerEdit;
@@ -293,7 +290,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		lists = new LayerList[] { lstTerrain, lstObstacle, lstRegion };
 		trees = new TileTree[] { selTerrain, selObstacle, selRegion };
 		editors = new LContainer[] { terrain, obstacle, region, character, party };
-
 
 	}
 

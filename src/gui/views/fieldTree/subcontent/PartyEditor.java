@@ -5,7 +5,6 @@ import gui.Vocab;
 import gui.shell.field.TroopSpawnDialog;
 import gui.widgets.DirectionCombo;
 import gui.widgets.SimpleEditableList;
-import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.base.event.listener.LControlListener;
 import data.field.Party;
@@ -39,21 +38,25 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		
 		// Position
 
-		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.PARTYPOS);
+		LLabel lblPos = new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.PARTYPOS);
+		lblPos.getCellData().setTargetSize(LPrefs.LABELWIDTH, -1);
+
 		LPanel position = new LPanel(this);
-		position.setFillLayout(true);
-		position.setSpacing(LPrefs.GRIDSPACING);
-		position.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
+		position.setGridLayout(3);
+		position.getCellData().setExpand(true, false);
 
 		LSpinner spnX = new LSpinner(position);
+		spnX.getCellData().setExpand(true, false);
 		spnX.setMinimum(1);
 		addControl(spnX, "x");
-		
+
 		LSpinner spnY = new LSpinner(position);
+		spnY.getCellData().setExpand(true, false);
 		spnY.setMinimum(1);
 		addControl(spnY, "y");
-		
+
 		LSpinner spnH = new LSpinner(position);
+		spnH.getCellData().setExpand(true, false);
 		spnH.setMinimum(1);
 		addControl(spnH, "h");
 

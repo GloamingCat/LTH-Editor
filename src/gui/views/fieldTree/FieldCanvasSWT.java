@@ -44,7 +44,7 @@ public class FieldCanvasSWT extends FieldCanvas {
 		}
 
 		public void run() {
-			LPoint o = tiles.get(0);
+			LPoint o = tiles.getFirst();
 			int imgW = FieldHelper.math.lineWidth(field.sizeX, field.sizeY);
 			LTexture img = new LTexture(size.x + imgW, size.y);
 			LPainter gc = new LPainter(img) {
@@ -133,8 +133,8 @@ public class FieldCanvasSWT extends FieldCanvas {
 		int h = height - y;
 		width = (int) (w * anim.transform.scaleX / 100f);
 		height = (int) (h * anim.transform.scaleX / 100f);
-		x0 -= anim.transform.offsetX * anim.transform.scaleX / 100f;
-		y0 -= anim.transform.offsetY * anim.transform.scaleY / 100f;
+		x0 -= (int) (anim.transform.offsetX * anim.transform.scaleX / 100f);
+		y0 -= (int) (anim.transform.offsetY * anim.transform.scaleY / 100f);
 		painter.drawImage(bg, x, y, w, h, x0, y0, width, height);
 	}
 	

@@ -24,6 +24,8 @@ import data.field.Party;
 
 public abstract class FieldCanvas extends LCanvas {
 
+	public static final int TILE = 0, CHAR = 1, PARTY = 2;
+	public static final int PENCIL = 0, BUCKET = 1, ERASER = 2;
 	public Consumer<CharTile> onMoveCharacter;
 	public Consumer<int[][]> onSelectArea;
 
@@ -70,10 +72,10 @@ public abstract class FieldCanvas extends LCanvas {
 				try {
 					draw(this);
 					setTransparency(100);
-					if (currentParty != null) {
+					if (currentParty != null && mode == PARTY) {
 						setFillColor(partyColor);
 						drawParty(this);
-					} else {
+					} else if (mode == TILE) {
 						setFillColor(selectionColor);
 						drawSelection(this);
 					}
@@ -99,7 +101,7 @@ public abstract class FieldCanvas extends LCanvas {
             } else if (e.type == LFlags.RELEASE) {
                 if (e.button == LFlags.LEFT) {
                     if (draggingLeft) {
-						if (mode == 1) // Characters
+						if (mode == CHAR)
 							dragCharacter(currentTile.dx, currentTile.dy, dragOrigin);
 					}
                     draggingLeft = false;
@@ -206,7 +208,7 @@ public abstract class FieldCanvas extends LCanvas {
 	}
 
 	public void onTileClick() {
-		if (mode == 0) // Layers
+		if (mode == TILE)
 			useTool(currentTile.dx, currentTile.dy);
 		else { // Characters and Parties
 			clickedTile = new LPoint(currentTile.dx, currentTile.dy);
@@ -390,15 +392,15 @@ public abstract class FieldCanvas extends LCanvas {
 			return;
 		int[][] grid = currentLayer.grid;
 		switch (tool) {
-		case 0: // pencil
-			usePencil(grid, x, y);
-			break;
-		case 1: // bucket
-			useBucket(grid, x, y);
-			break;
-		case 2: // eraser
-			useEraser(grid, x, y);
-			break;
+			case PENCIL: // pencil
+				usePencil(grid, x, y);
+				break;
+			case BUCKET: // bucket
+				useBucket(grid, x, y);
+				break;
+			case ERASER: // eraser
+				useEraser(grid, x, y);
+				break;
 		}
 	}
 

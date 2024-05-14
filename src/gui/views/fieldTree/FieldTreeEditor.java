@@ -216,14 +216,14 @@ public class FieldTreeEditor extends LView {
 		sideEditor.onSelectEditor = i -> {
 			if (i == FieldSideEditor.CHAR ) {
 				fieldEditor.canvas.setParty(null);
-				fieldEditor.canvas.setMode(1);
+				fieldEditor.canvas.setMode(FieldCanvas.CHAR);
 			} else if (i == FieldSideEditor.PARTY) {
 				fieldEditor.canvas.setCharacter(null);
-				fieldEditor.canvas.setMode(2);
+				fieldEditor.canvas.setMode(FieldCanvas.PARTY);
 			} else {
 				fieldEditor.canvas.setParty(null);
 				fieldEditor.canvas.setCharacter(null);
-				fieldEditor.canvas.setMode(0);
+				fieldEditor.canvas.setMode(FieldCanvas.TILE);
 			}
 		};
 

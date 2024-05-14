@@ -237,7 +237,7 @@ public class Vocab {
 	// Job
 	public String ATTACKSKILL = "Attack";
 	public String BUILD = "Build";
-	public String EXPCURVE = "EXP Curve";;
+	public String EXPCURVE = "EXP Curve";
 	public String SKILLNODES = "Skill Nodes";
 	public String STATUSNODES = "Status Nodes";
 	

@@ -2,6 +2,7 @@ package gui.views.fieldTree.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
+import gui.widgets.CheckBoxPanel;
 import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
 import lui.base.LFlags;
@@ -44,7 +45,12 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 	protected void createContent(int style) {
 		setGridLayout(3);
-		new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.CHARPOS);
+
+		// Position
+
+		LLabel lblPos = new LLabel(this, Vocab.instance.POSITION, Tooltip.instance.CHARPOS);
+		lblPos.getCellData().setTargetSize(LPrefs.LABELWIDTH, -1);
+
 		LPanel position = new LPanel(this);
 		position.setFillLayout(true);
 		position.setSpacing(LPrefs.GRIDSPACING, 0);
@@ -64,7 +70,8 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		addControl(spnH, "h");
 		
 		spnX.addModifyListener(event -> {
-            if (event == null || event.oldValue == null || onChangeX == null) return;
+            if (event == null || event.oldValue == null || onChangeX == null ||
+			 spnX.getValue() == null || spnY.getValue() == null || spnH.getValue() == null) return;
 			onChangeX.accept(new PositionEvent(
 					event.oldValue - 1,
 					spnY.getValue() - 1,
@@ -72,7 +79,8 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 					event.newValue - 1));
         });
 		spnY.addModifyListener(event -> {
-            if (event == null || event.oldValue == null) return;
+            if (event == null || event.oldValue == null || onChangeY == null ||
+			 spnX.getValue() == null || spnY.getValue() == null || spnH.getValue() == null) return;
 			onChangeY.accept(new PositionEvent(
 					spnX.getValue() - 1,
 					event.oldValue - 1,
@@ -80,7 +88,8 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 					event.newValue - 1));
         });
 		spnH.addModifyListener(event -> {
-            if (event == null || event.oldValue == null) return;
+            if (event == null || event.oldValue == null || onChangeH == null ||
+			 spnX.getValue() == null || spnY.getValue() == null || spnH.getValue() == null) return;
 			onChangeH.accept(new PositionEvent(
 					spnX.getValue() - 1,
 					spnY.getValue() - 1,
@@ -180,10 +189,8 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 		// Properties
 
-		LPanel compOptions = new LPanel(this);
-		compOptions.setSequentialLayout(true);
+		LPanel compOptions = new CheckBoxPanel(this);
 		compOptions.getCellData().setSpread(3, 1);
-		compOptions.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 
 		LCheckBox btnPersistent = new LCheckBox(compOptions);
 		btnPersistent.setText(Vocab.instance.PERSISTENT);
