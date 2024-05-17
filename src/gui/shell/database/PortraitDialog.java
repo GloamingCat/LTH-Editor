@@ -73,7 +73,7 @@ public class PortraitDialog extends LObjectDialog<Portrait> {
                 if (anim != null) {
                     col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
                     row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
-                    image.redraw();
+                    image.repaint();
                 }
             }
         });
@@ -85,7 +85,7 @@ public class PortraitDialog extends LObjectDialog<Portrait> {
 			return;
 		image.setImage(anim.quad.fullPath());
 		scroll.setContentSize(anim.quad.width, anim.quad.height);
-		image.redraw();
+		image.repaint();
 	}
 	
 	public void open(Portrait initial) {

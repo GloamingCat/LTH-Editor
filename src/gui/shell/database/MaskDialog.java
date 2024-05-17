@@ -125,7 +125,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 		cmbHeight.setIncludeID(false);
 		cmbHeight.addModifyListener(event -> {
             height = event.newValue - spnMinH.getValue();
-            canvas.redraw();
+            canvas.repaint();
         });
 
 		LCheckBox btnShowALl = new LCheckBox(content);
@@ -134,7 +134,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 		btnShowALl.getCellData().setSpread(4, 1);
 		btnShowALl.addModifyListener(e -> {
 			showAll = e.newValue;
-			canvas.redraw();
+			canvas.repaint();
 		});
 		btnShowALl.setValue(true);
 		
@@ -168,7 +168,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 				if (tile.x < 0 || tile.y < 0 || tile.x >= grid[0].length || tile.y >= grid[0][0].length)
 					return;
                 grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];
-				canvas.redraw();
+				canvas.repaint();
             }
         });
 	}
@@ -209,7 +209,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 		LPoint p = FieldHelper.math.pixelSize(x, y);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
-		canvas.redraw();
+		canvas.repaint();
 	}
 	
 	private void shrink(int x, int y, int h, int dx, int dy, int dh) {
@@ -221,7 +221,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 		LPoint p = FieldHelper.math.pixelSize(x, y);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
-		canvas.redraw();
+		canvas.repaint();
 	}
 	
 	private void updateLayerCombo(int minH) {
@@ -230,7 +230,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 			items[i] = "" + (i - minH);
 		cmbHeight.setItems(items);
 		cmbHeight.setValue(height + minH);
-		canvas.redraw();
+		canvas.repaint();
 	}
 
 	public void open(Mask initial) {

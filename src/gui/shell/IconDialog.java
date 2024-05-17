@@ -67,7 +67,7 @@ public class IconDialog extends LObjectDialog<Icon> {
                     row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
 					col = Math.max(0, Math.min(col, anim.cols - 1));
 					row = Math.max(0, Math.min(row, anim.rows - 1));
-                    image.redraw();
+                    image.repaint();
                 }
             }
         });
@@ -80,7 +80,7 @@ public class IconDialog extends LObjectDialog<Icon> {
 			return;
 		image.setImage(anim.quad.fullPath());
 		scroll.setContentSize(anim.quad.width, anim.quad.height);
-		image.redraw();
+		image.repaint();
 	}
 	
 	public void open(Icon initial) {

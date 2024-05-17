@@ -41,7 +41,6 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 
 		scroll = new LScrollPanel(this);
 		scroll.getCellData().setExpand(true, true);
-		scroll.getCellData().setSpread(1, 1);
 
 		canvas = new FieldCanvasOpenGL(scroll);
 		addChild(canvas);
@@ -58,22 +57,13 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 		scale.getCellData().setAlignment(LFlags.LEFT | LFlags.MIDDLE);
 
 		LActionButton btn50 = new LActionButton(scale, "1:2");
-		btn50.addModifyListener(event -> {
-            canvas.rescale(0.5f);
-            scroll.setContentSize(canvas.getCurrentSize());
-        });
+		btn50.addModifyListener(event -> canvas.rescale(0.5f));
 
 		LActionButton btn100 = new LActionButton(scale, "1:1");
-		btn100.addModifyListener(event -> {
-            canvas.rescale(1);
-            scroll.setContentSize(canvas.getCurrentSize());
-        });
+		btn100.addModifyListener(event -> canvas.rescale(1));
 
 		LActionButton btn200 = new LActionButton(scale, "2:1");
-		btn200.addModifyListener(event -> {
-            canvas.rescale(2);
-            scroll.setContentSize(canvas.getCurrentSize());
-        });
+		btn200.addModifyListener(event -> canvas.rescale(2));
 
 		LLabel tileCoord = new LLabel(bottom, "(-99, -99, -99)");
 		tileCoord.getCellData().setExpand(true, false);

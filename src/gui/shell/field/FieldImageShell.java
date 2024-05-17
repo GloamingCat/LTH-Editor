@@ -80,7 +80,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
                 if (anim != null) {
                     col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
                     row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
-                    image.redraw();
+                    image.repaint();
                 }
             }
         });
@@ -109,7 +109,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 			return;
 		image.setImage(anim.quad.fullPath());
 		scroll.setContentSize(anim.quad.width, anim.quad.height);
-		image.redraw();
+		image.repaint();
 	}
 	
 	public void open(FieldImage initial) {

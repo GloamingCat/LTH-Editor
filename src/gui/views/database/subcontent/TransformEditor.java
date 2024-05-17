@@ -203,7 +203,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 				oy += secondaryTransform.offsetY;
 			}
 			image.setOffset(ox, oy);
-			image.redraw();
+			image.repaint();
 		}
 	}
 	
@@ -214,7 +214,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 				r += secondaryTransform.rotation;
 			}
 			image.setRotation(r);
-			image.redraw();
+			image.repaint();
 		}
 	}
 	
@@ -225,7 +225,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 				t = new Transform().combine(t).combine(t2);
 			t.setColorTransform(image);
 			image.setRect(image.getRect());
-			image.refreshImage();
+			image.refreshBuffer();
 		}
 	}
 	
@@ -235,7 +235,7 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 			if (t2 != null)
 				t = new Transform().combine(t).combine(t2);
 			image.setScale(t.scaleX / 100f, t.scaleY / 100f);
-			image.redraw();
+			image.repaint();
 		}
 	}
 

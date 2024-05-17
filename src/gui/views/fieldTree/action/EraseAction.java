@@ -5,11 +5,11 @@ import lui.base.action.LAction;
 
 public class EraseAction implements LAction {
 
-	private int x;
-	private int y;
-	private int id;
-	private int[][] grid;
-	private FieldCanvas canvas;
+	private final int x;
+	private final int y;
+	private final int id;
+	private final int[][] grid;
+	private final FieldCanvas canvas;
 	
 	public EraseAction(int[][] grid, int x, int y, int id, FieldCanvas canvas) {
 		this.grid = grid;
@@ -23,16 +23,14 @@ public class EraseAction implements LAction {
 	public void undo() {
 		grid[x][y] = id;
 		canvas.onTileChange(x, y);
-		canvas.redrawBuffer();
-		canvas.redraw();
+		canvas.refreshBuffer(false);
 	}
 
 	@Override
 	public void redo() {
 		grid[x][y] = -1;
 		canvas.onTileChange(x, y);
-		canvas.redrawBuffer();
-		canvas.redraw();
+		canvas.refreshBuffer(false);
 	}
 
 }

@@ -8,11 +8,11 @@ import lui.base.data.LPoint;
 
 public class BucketAction implements LAction {
 
-	private int[][] grid;
-	private FieldCanvas canvas;
-	private ArrayList<LPoint> tiles;
-	private int newID;
-	private int oldID;
+	private final int[][] grid;
+	private final FieldCanvas canvas;
+	private final ArrayList<LPoint> tiles;
+	private final int newID;
+	private final int oldID;
 	
 	public BucketAction(int[][] grid, int newID, int oldID, ArrayList<LPoint> modified, FieldCanvas canvas) {
 		this.grid = grid;
@@ -28,8 +28,7 @@ public class BucketAction implements LAction {
 			grid[p.x][p.y] = oldID;
 		}
 		canvas.onTileChange(tiles);
-		canvas.redrawBuffer();
-		canvas.redraw();
+		canvas.refreshBuffer(false);
 	}
 
 	@Override
@@ -38,8 +37,7 @@ public class BucketAction implements LAction {
 			grid[p.x][p.y] = newID;
 		}
 		canvas.onTileChange(tiles);
-		canvas.redrawBuffer();
-		canvas.redraw();
+		canvas.refreshBuffer(false);
 	}
 
 }

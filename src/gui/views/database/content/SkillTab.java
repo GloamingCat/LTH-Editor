@@ -293,7 +293,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 				return shell;
 			}
 		});
-		button.addModifyListener(event -> mask.redraw());
+		button.addModifyListener(event -> mask.repaint());
 		mask.addPainter(new LPainter() {
 			@Override
 			public void paint() {

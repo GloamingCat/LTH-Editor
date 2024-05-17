@@ -7,8 +7,6 @@ import lui.base.event.listener.LCollectionListener;
 import lui.dialog.LObjectDialog;
 import project.Project;
 
-import com.google.gson.Gson;
-
 import data.field.Field;
 import data.field.Field.Prefs;
 import data.field.FieldNode;
@@ -93,8 +91,6 @@ public class FieldTreeEditor extends LView {
 		}
 
 	}
-
-	protected static Gson gson = new Gson();
 	
 	public LTree<FieldNode, Field.Prefs> fieldTree;
 
@@ -146,7 +142,7 @@ public class FieldTreeEditor extends LView {
 				LDataTree<FieldNode> node = Project.current.fieldTree.getData().getNode(e.path);
 				node.data.name = e.newData.name;
 				fieldTree.refreshObject(e.path);
-				fieldEditor.canvas.redraw();
+				fieldEditor.canvas.repaint();
 			}
 		});
 		fieldTree.addInsertListener(new LCollectionListener<>() {
@@ -168,43 +164,37 @@ public class FieldTreeEditor extends LView {
 		fieldEditor.toolBar.onSelectEditor = sideEditor::selectEditor;
 		fieldEditor.toolBar.onResize = newSize -> {
 			fieldTree.refreshObject(fieldTree.getSelectedPath());
-			fieldEditor.canvas.redrawBuffer();
-			fieldEditor.canvas.redraw();
+			fieldEditor.canvas.refreshBuffer(true);
 		};
 
 		sideEditor.charEditor.onChangeX = event -> {
             fieldEditor.canvas.onTileChange(event.x(), event.y());
             fieldEditor.canvas.onTileChange(event.newValue(), event.y());
-            fieldEditor.canvas.redrawBuffer();
-            fieldEditor.canvas.redraw();
+            fieldEditor.canvas.refreshBuffer(false);
         };
 		sideEditor.charEditor.onChangeY = event -> {
             fieldEditor.canvas.onTileChange(event.x(), event.y());
             fieldEditor.canvas.onTileChange(event.x(), event.newValue());
-            fieldEditor.canvas.redrawBuffer();
-            fieldEditor.canvas.redraw();
+            fieldEditor.canvas.refreshBuffer(false);
         };
 		sideEditor.charEditor.onChangeH = event -> {
             fieldEditor.canvas.setHeight(event.newValue());
             fieldEditor.canvas.onTileChange(event.x(), event.y());
-            fieldEditor.canvas.redrawBuffer();
-            fieldEditor.canvas.redraw();
+            fieldEditor.canvas.refreshBuffer(false);
         };
 		sideEditor.charEditor.onChangeSprite = event -> {
 			fieldEditor.canvas.onTileChange(event.x(), event.y());
-            fieldEditor.canvas.redrawBuffer();
-            fieldEditor.canvas.redraw();
+            fieldEditor.canvas.refreshBuffer(false);
 		};
-		sideEditor.partyEditor.onChange = p -> fieldEditor.canvas.redraw();
+		sideEditor.partyEditor.onChange = p -> fieldEditor.canvas.repaint();
 		sideEditor.onSelectChar = fieldEditor.canvas::setCharacter;
 		sideEditor.onSelectTile = fieldEditor.canvas::setSelection;
 		sideEditor.onSelectParty = fieldEditor.canvas::setParty;
 		sideEditor.onNewChar = sideEditor.onDeleteChar = tile -> {
 			fieldEditor.canvas.onTileChange(tile.x - 1, tile.y - 1);
-			fieldEditor.canvas.redrawBuffer();
-			fieldEditor.canvas.redraw();
+			fieldEditor.canvas.refreshBuffer(false);
 		};
-		sideEditor.onLayerEdit = fieldEditor.canvas::refresh;
+		sideEditor.onLayerEdit = () -> fieldEditor.canvas.refreshBuffer(true);
 		sideEditor.onSelectLayer = fieldEditor::selectLayer;
 		sideEditor.onSelectEditor = i -> {
 			if (i == FieldSideEditor.CHAR ) {

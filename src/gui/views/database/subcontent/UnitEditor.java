@@ -105,7 +105,7 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 	
 	public void refresh() {
 		if (gridCanvas != null)
-			gridCanvas.redraw();
+			gridCanvas.repaint();
 	}
 
 	@Override

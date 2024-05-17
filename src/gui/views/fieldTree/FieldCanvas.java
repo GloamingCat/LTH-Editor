@@ -35,9 +35,9 @@ public abstract class FieldCanvas extends LCanvas {
 	public Layer currentLayer;
 	public Party currentParty;
 	public CharTile currentChar;
-	public float scale = 1;
-	public int x0;
-	public int y0;
+	protected float scale = 1;
+	protected int x0;
+	protected int y0;
 
 	protected LPoint mousePoint = new LPoint(0, 0);
 	protected Tile currentTile = new Tile(0, 0, 0);
@@ -109,7 +109,7 @@ public abstract class FieldCanvas extends LCanvas {
 					selectArea(dragOrigin, currentTile.dx, currentTile.dy);
 					if (onSelectArea != null)
 						onSelectArea.accept(selection);
-					redraw();
+					repaint();
                 }
                 dragOrigin = null;
             }
@@ -124,7 +124,7 @@ public abstract class FieldCanvas extends LCanvas {
 	//////////////////////////////////////////////////
 	// {{ Draw
 
-	public void draw(LPainter painter) {
+	protected void draw(LPainter painter) {
 		if (field != null) {
 			drawBuffer(0, 0, scale, scale);
 			painter.setPaintColor(hoverColor);
@@ -137,7 +137,7 @@ public abstract class FieldCanvas extends LCanvas {
 		}
 	}
 
-	public abstract void redrawBuffer();
+	protected abstract void redrawBuffer();
 
 	protected void drawSelection(LPainter painter) {
 		if (dragOrigin == null || draggingLeft || currentLayer == null)
@@ -202,7 +202,7 @@ public abstract class FieldCanvas extends LCanvas {
 					onTileClick();
 				if (onTileEnter != null)
 					onTileEnter.accept(currentTile);
-				redraw();
+				repaint();
 			}
 		}
 	}
@@ -214,25 +214,22 @@ public abstract class FieldCanvas extends LCanvas {
 			clickedTile = new LPoint(currentTile.dx, currentTile.dy);
 			clickedHeight = currentTile.height;
 			onTileChange(currentTile.dx, currentTile.dy);
-			redrawBuffer();
+			refreshBuffer(false);
 		}
-		redraw();
 	}
 
-	public void onTileChange(int x, int y) {
-	}
+	public void onTileChange(int x, int y) {}
 
-	public void onTileChange(ArrayList<LPoint> tiles) {
-	}
+	public void onTileChange(ArrayList<LPoint> tiles) {}
 
 	// }}
 
 	//////////////////////////////////////////////////
 	// {{ Visualization
 
-	public void refresh() {
+	public void refreshBuffer(boolean all) {
 		redrawBuffer();
-		redraw();
+		repaint();
 	}
 
 	public void rescale(float scale) {
@@ -247,8 +244,9 @@ public abstract class FieldCanvas extends LCanvas {
 			y0 = (FieldHelper.math.pixelDisplacement(field.sizeY) + x0
 					+ FieldHelper.config.grid.pixelsPerHeight * field.layers.maxHeight());
 		}
-		scrollPanel.setContentSize(Math.round((pixelSize.x + x0 * 2 - FieldHelper.config.grid.tileB) * scale),
-				Math.round((pixelSize.y + y0) * scale));
+		int w = Math.round((pixelSize.x + x0 * 2 - FieldHelper.config.grid.tileB) * scale);
+		int h = Math.round((pixelSize.y + y0) * scale);
+		scrollPanel.setContentSize(w, h);
 	}
 
 	public void setCurrentLayer(Layer layer) {
@@ -257,7 +255,7 @@ public abstract class FieldCanvas extends LCanvas {
 		if (currentLayer != layer) {
 			currentLayer = layer;
 			if (showGrid)
-				refresh();
+				refreshBuffer(true);
 		}
 	}
 
@@ -270,22 +268,21 @@ public abstract class FieldCanvas extends LCanvas {
 			currentParty = party;
 			if (party != null)
 				currentTile.height = party.h - 1;
-			redraw();
+			repaint();
 		}
 	}
 
 	public void setCharacter(CharTile tile) {
 		if (tile != currentChar) {
 			currentChar = tile;
-			redrawBuffer();
-			redraw();
+			refreshBuffer(false);
 		}
 	}
 
 	public void setShowGrid(boolean value) {
 		if (value != showGrid) {
 			showGrid = value;
-			refresh();
+			refreshBuffer(true);
 		}
 	}
 
@@ -300,7 +297,7 @@ public abstract class FieldCanvas extends LCanvas {
 			rescale(scale);
 		}
 		try {
-			refresh();
+			refreshBuffer(true);
 		} catch(Exception e) {
 			System.out.println("Thread: " + Thread.currentThread().threadId());
 		}
@@ -309,7 +306,7 @@ public abstract class FieldCanvas extends LCanvas {
 	public void setClickedTile(int x, int y, int h) {
 		clickedTile = new LPoint(x, y);
 		clickedHeight = h;
-		redraw();
+		repaint();
 	}
 
 	// }}
@@ -378,8 +375,7 @@ public abstract class FieldCanvas extends LCanvas {
 		onTileChange(x - 1, y - 1);
 		if (onMoveCharacter != null)
 			onMoveCharacter.accept(tile);
-		redrawBuffer();
-		redraw();
+		refreshBuffer(false);
 	}
 
 	// }}
@@ -409,6 +405,7 @@ public abstract class FieldCanvas extends LCanvas {
 			return;
 		tileX -= selectionPoint.x;
 		tileY -= selectionPoint.y;
+		boolean changed = false;
 		int[][] values = new int[selection.length][selection[0].length];
 		for (int i = 0; i < values.length; i++) {
 			for (int j = 0; j < values[0].length; j++) {
@@ -424,37 +421,35 @@ public abstract class FieldCanvas extends LCanvas {
 			}
 		}
 		PencilAction action = new PencilAction(this, grid, tileX, tileY, values, selection);
-		if (action.apply(selection)) {
+		if (action.apply(selection))
 			getActionStack().newAction(action);
-		}
 	}
 
 	private void useBucket(int[][] grid, int tileX, int tileY) {
 		int id = grid[tileX][tileY];
 		int newID = selection[selectionPoint.x][selectionPoint.y];
-		if (newID != id) {
-			ArrayList<LPoint> modified = new ArrayList<>();
-			Stack<LPoint> stack = new Stack<>();
-			stack.push(new LPoint(tileX, tileY));
-			while (!stack.isEmpty()) {
-				LPoint p = stack.pop();
-				if (p.x >= 0 && p.x < grid.length && p.y >= 0 && p.y < grid[0].length) {
-					if (grid[p.x][p.y] == id) {
-						modified.add(p);
-						grid[p.x][p.y] = newID;
-						LPoint[] shift = FieldHelper.math.neighborShift;
-                        for (LPoint lPoint : shift) {
-                            stack.push(new LPoint(p.x + lPoint.x, p.y + lPoint.y));
-                        }
+		if (newID == id)
+			return;
+		ArrayList<LPoint> modified = new ArrayList<>();
+		Stack<LPoint> stack = new Stack<>();
+		stack.push(new LPoint(tileX, tileY));
+		while (!stack.isEmpty()) {
+			LPoint p = stack.pop();
+			if (p.x >= 0 && p.x < grid.length && p.y >= 0 && p.y < grid[0].length) {
+				if (grid[p.x][p.y] == id) {
+					modified.add(p);
+					grid[p.x][p.y] = newID;
+					LPoint[] shift = FieldHelper.math.neighborShift;
+					for (LPoint lPoint : shift) {
+						stack.push(new LPoint(p.x + lPoint.x, p.y + lPoint.y));
 					}
 				}
 			}
-			onTileChange(modified);
-			redrawBuffer();
-			redraw();
-			BucketAction action = new BucketAction(grid, newID, id, modified, this);
-			getActionStack().newAction(action);
 		}
+		onTileChange(modified);
+		BucketAction action = new BucketAction(grid, newID, id, modified, this);
+		getActionStack().newAction(action);
+		refreshBuffer(false);
 	}
 
 	private void useEraser(int[][] grid, int tileX, int tileY) {
@@ -464,6 +459,7 @@ public abstract class FieldCanvas extends LCanvas {
 			getActionStack().newAction(action);
 		}
 	}
+
 	// }}
 
 }

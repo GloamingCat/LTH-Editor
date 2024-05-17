@@ -60,7 +60,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 
 		LControlListener<Integer> redraw = event -> {
             updateClickPoint();
-            canvas.redraw();
+            canvas.repaint();
         };
 
 		LPanel bottom = new LPanel(content);
@@ -209,7 +209,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 			spnX.setValue(currentTile.dx + 1);
 			spnY.setValue(currentTile.dy + 1);
 			updateClickPoint();
-			canvas.redraw();
+			canvas.repaint();
 		}
 
 	}

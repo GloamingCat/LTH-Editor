@@ -36,12 +36,13 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		super(parent);
 	}
 	
-	/**
-	 * @wbp.eval.method.return false
+	/** @wbp.eval.method.return false
+	 * Returns true if some error occurred.
 	 */
 	private boolean initRenderer() {
-		if (renderer != null)
+		if (renderer != null) {
 			return false;
+		}
 		if (SceneHelper.initContext())
 			System.out.println("Initialized OpenGL context on thread: " + Thread.currentThread());
 		else {
@@ -87,11 +88,12 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 				screen.dispose();
 			screen = new Screen(w, h, false);
 			refreshRequested = false;
-			super.refresh();
+			super.refreshBuffer(true);
 		}
 		super.draw(painter);
 	}
 
+	@Override
 	public void redrawBuffer() {
 		if (initRenderer())
 			return;
@@ -131,11 +133,11 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 	//region Callbacks
 
 	public void onTileChange(int x, int y) {
-		refresh();
+		refreshBuffer(true);
 	}
 	
 	public void onTileChange(ArrayList<LPoint> tiles) {
-		refresh();
+		refreshBuffer(true);
 	}
 	
 	public void onVisible() {
@@ -146,14 +148,16 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		}
 		super.onVisible();
 	}
-	
+
+	@Override
 	public void onDispose() {
 		screen.dispose();
 		shader.dispose();
 		SceneHelper.terminateContext();
 	}
 
-	public void refresh() {
+	@Override
+	public void refreshBuffer(boolean all) {
 		refreshRequested = true;
 		repaint();
 	}

@@ -19,7 +19,7 @@ import data.subcontent.Quad;
 import data.subcontent.Transform;
 import project.Project;
 
-public class FieldPainterSWT {
+public class FieldPainterGC {
 
 	public LColor gridColor = new LColor(50, 50, 50);
 

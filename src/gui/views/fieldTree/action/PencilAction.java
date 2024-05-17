@@ -44,10 +44,8 @@ public class PencilAction implements LAction {
 				}
 			}
 		}
-		if (needsRedraw) {
-			canvas.redrawBuffer();
-			canvas.redraw();
-		}
+		if (needsRedraw)
+			canvas.refreshBuffer(false);
 		return needsRedraw;
 	}
 

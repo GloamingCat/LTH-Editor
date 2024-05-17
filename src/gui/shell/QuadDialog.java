@@ -98,8 +98,9 @@ public class QuadDialog extends LObjectDialog<Quad> {
             spnY.setValue(0);
             spnWidth.setValue(size.x);
             spnHeight.setValue(size.y);
-            imgQuad.redraw();
+            imgQuad.repaint();
         });
+		btnFullImage.getCellData().setExpand(true, false);
 
 		imgQuad.addPainter(new LPainter() {
 			@Override
@@ -114,7 +115,7 @@ public class QuadDialog extends LObjectDialog<Quad> {
 
 		selFile.addSelectionListener(event -> resetImage());
 
-		LControlListener<Integer> redrawListener = event -> imgQuad.redraw();
+		LControlListener<Integer> redrawListener = event -> imgQuad.repaint();
 
 		spnX.addModifyListener(redrawListener);
 		spnY.addModifyListener(redrawListener);
@@ -166,8 +167,8 @@ public class QuadDialog extends LObjectDialog<Quad> {
 	protected void resetImage() {
 		String path = selFile.getRootFolder() + selFile.getSelectedFile();
 		imgQuad.setImage(path);
-		scroll.setContentSize(imgQuad.getCurrentSize());
-		imgQuad.redraw();
+		scroll.setContentSize(imgQuad.getTargetSize());
+		imgQuad.repaint();
 	}
 
 }

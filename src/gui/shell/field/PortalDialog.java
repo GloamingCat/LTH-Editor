@@ -54,7 +54,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		spnH.setValue(1);
 		spnH.addModifyListener(event -> {
             canvas.setHeight(event.newValue - 1);
-            canvas.redraw();
+            canvas.repaint();
         });
 
 		lblPos = new LLabel(bottom, "(-99, -99, -99)");
@@ -96,7 +96,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		@Override
 		public void onTileClick() {
 			selectedTiles[currentTile.height][currentTile.dx][currentTile.dy] = !selectedTiles[currentTile.height][currentTile.dx][currentTile.dy];
-			canvas.redraw();
+			canvas.repaint();
 		}
 
 		@Override
