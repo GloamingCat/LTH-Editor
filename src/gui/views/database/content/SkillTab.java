@@ -2,7 +2,7 @@ package gui.views.database.content;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.database.MaskShell;
+import gui.shell.database.MaskDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.AnimInfoEditor;
 import gui.views.database.subcontent.PropertyList;
@@ -286,7 +286,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		button.setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Mask> createWindow(LWindow parent) {
-				MaskShell shell = new MaskShell(parent);
+				MaskDialog shell = new MaskDialog(parent);
 				shell.trueColor = trueColor;
 				shell.falseColor = falseColor;
 				shell.centerColor = centerColor;

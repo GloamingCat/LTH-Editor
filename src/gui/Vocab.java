@@ -356,6 +356,7 @@ public class Vocab {
 	public String MAXX = "Max X";
 	public String MINY = "Min Y";
 	public String MAXY = "Max Y";
+	public String SHOWALL = "Show all layers";
 	
 	// Properties
 	public String ELEMENTDEF = "Elemental Immunity";

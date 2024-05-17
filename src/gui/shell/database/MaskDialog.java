@@ -11,11 +11,12 @@ import lui.graphics.LPainter;
 import lui.base.data.LPoint;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
+import lui.widget.LCheckBox;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 
-public class MaskShell extends LObjectDialog<Mask> {
+public class MaskDialog extends LObjectDialog<Mask> {
 
 	private LCanvas canvas;
 	private LSpinner spnMinH;
@@ -27,43 +28,43 @@ public class MaskShell extends LObjectDialog<Mask> {
 	
 	boolean[][][] grid;
 	int x0, y0, height;
+
+	boolean showAll = true;
 	
 	public LColor falseColor;
 	public LColor trueColor;
 	public LColor centerColor;
 	private LCombo cmbHeight;
 
-	public MaskShell(LWindow parent) {
-		super(parent, Vocab.instance.MASKSHELL);
+	public MaskDialog(LWindow parent) {
+		super(parent, 600, 400, Vocab.instance.MASKSHELL);
 	}
 	
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
 		content.setGridLayout(6);
-		
-		new LLabel(content, Vocab.instance.MINHEIGHT, Tooltip.instance.MINHEIGHT);
-		
+
 		// Minimum Limits
-		
+
+		new LLabel(content, Vocab.instance.MINHEIGHT, Tooltip.instance.MINHEIGHT);
 		spnMinH = new LSpinner(content);
 		spnMinH.setMaximum(20);
 		spnMinH.addModifyListener(event -> {
-            int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
+            int n = spnMaxH.getValue() + event.newValue + 1;
             if (n < grid.length) {
                 height = Math.max(height, -spnMinH.getValue());
                 shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
             } else
                 expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
-            updateLayerCombo();
+            updateLayerCombo(event.newValue);
         });
 
 		new LLabel(content, Vocab.instance.MINX, Tooltip.instance.MINX);
-		
 		spnMinX = new LSpinner(content);
 		spnMinX.setMaximum(20);
 		spnMinX.addModifyListener(event -> {
-            int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
+            int n = spnMaxX.getValue() + event.newValue + 1;
             if (n < grid[0].length)
                 shrink(n, grid[0][0].length, grid.length, grid[0].length - n, 0, 0);
             else
@@ -71,39 +72,36 @@ public class MaskShell extends LObjectDialog<Mask> {
         });
 
 		new LLabel(content, Vocab.instance.MINY, Tooltip.instance.MINY);
-		
 		spnMinY = new LSpinner(content);
 		spnMinY.setMaximum(20);
 		spnMinY.addModifyListener(event -> {
-            int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
+            int n = spnMaxY.getValue() + event.newValue + 1;
             if (n < grid[0][0].length)
                 shrink(grid[0].length, n, grid.length, 0, grid[0][0].length - n, 0);
             else
                 expand(grid[0].length, n, grid.length, 0, n - grid[0][0].length, 0);
         });
 
-		new LLabel(content, Vocab.instance.MAXHEIGHT, Tooltip.instance.MAXHEIGHT);
-		
 		// Maximum Limits
-		
+
+		new LLabel(content, Vocab.instance.MAXHEIGHT, Tooltip.instance.MAXHEIGHT);
 		spnMaxH = new LSpinner(content);
 		spnMaxH.setMaximum(20);
 		spnMaxH.addModifyListener(event -> {
-            int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
+            int n = event.newValue + spnMinH.getValue() + 1;
             if (n < grid.length) {
                 height = Math.min(height, spnMaxH.getValue());
                 shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
             } else
                 expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);
-            updateLayerCombo();
+            updateLayerCombo(spnMinH.getValue());
         });
 
 		new LLabel(content, Vocab.instance.MAXX, Tooltip.instance.MAXX);
-		
 		spnMaxX = new LSpinner(content);
 		spnMaxX.setMaximum(20);
 		spnMaxX.addModifyListener(event -> {
-            int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
+            int n = event.newValue + spnMinX.getValue() + 1;
             if (n < grid[0].length)
                 shrink(n, grid[0][0].length, grid.length, 0, 0, 0);
             else
@@ -111,11 +109,10 @@ public class MaskShell extends LObjectDialog<Mask> {
         });
 
 		new LLabel(content, Vocab.instance.MAXY, Tooltip.instance.MAXY);
-		
 		spnMaxY = new LSpinner(content);
 		spnMaxY.setMaximum(20);
 		spnMaxY.addModifyListener(event -> {
-            int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
+            int n = event.newValue + spnMinY.getValue() + 1;
             if (n < grid[0][0].length)
                 shrink(grid[0].length, n, grid.length, 0, 0, 0);
             else
@@ -123,18 +120,26 @@ public class MaskShell extends LObjectDialog<Mask> {
         });
 
 		new LLabel(content, Vocab.instance.HEIGHT, Tooltip.instance.MASKH);
-		
 		cmbHeight = new LCombo(content, true);
 		cmbHeight.setOptional(false);
 		cmbHeight.setIncludeID(false);
 		cmbHeight.addModifyListener(event -> {
-            height = cmbHeight.getValue() - spnMinH.getValue();
+            height = event.newValue - spnMinH.getValue();
             canvas.redraw();
         });
-		new LLabel(content, 4, 1);
+
+		LCheckBox btnShowALl = new LCheckBox(content);
+		btnShowALl.setText(Vocab.instance.SHOWALL);
+		btnShowALl.getCellData().setExpand(true, false);
+		btnShowALl.getCellData().setSpread(4, 1);
+		btnShowALl.addModifyListener(e -> {
+			showAll = e.newValue;
+			canvas.redraw();
+		});
+		btnShowALl.setValue(true);
 		
 		canvas = new LCanvas(content);
-		canvas.getCellData().setExpand(false, true);
+		canvas.getCellData().setExpand(true, true);
 		canvas.getCellData().setSpread(6, 1);
 		
 		canvas.addPainter(new LPainter() {
@@ -169,10 +174,13 @@ public class MaskShell extends LObjectDialog<Mask> {
 	}
 	
 	private void drawGrid(LPainter painter) {
-		int x0 = this.x0 + canvas.getCurrentSize().x / 2;
-		int y0 = this.y0 + canvas.getCurrentSize().y / 2;
+		LPoint canvasSize = canvas.getCurrentSize();
+		int x0 = this.x0 + canvasSize.x / 2;
+		int y0 = this.y0 + canvasSize.y / 2;
 		int currentH = spnMinH.getValue() + height;
 		for (int h = 0; h < grid.length; h++) {
+			if (!showAll && h != currentH)
+				continue;
 			painter.setTransparency(h == currentH ? 255 : 127);
 			for (int x = 0; x < grid[h].length; x++) {
 				for (int y = 0; y < grid[h][x].length; y++) {
@@ -181,17 +189,15 @@ public class MaskShell extends LObjectDialog<Mask> {
 					int[] p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 1);
 					painter.fillPolygon(p);
 					painter.drawPolygon(p, true);
+					if (x == spnMinX.getValue() && y == spnMinY.getValue() && (!showAll || h == currentH)) {
+						p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 0.8f);
+						painter.setPaintColor(centerColor);
+						painter.fillPolygon(p);
+						painter.drawPolygon(p, true);
+					}
 				}
 			}
 		}
-		int h = spnMinH.getValue();
-		int x = spnMinX.getValue();
-		int y = spnMinY.getValue();
-		LPoint center = FieldHelper.math.tile2Pixel(x, y, h);
-		int[] p = FieldHelper.getTilePolygon(center.x + x0, center.y + y0, 0.8f);
-		painter.setPaintColor(centerColor);
-		painter.fillPolygon(p);
-		painter.drawPolygon(p, true);
 	}
 	
 	private void expand(int x, int y, int h, int dx, int dy, int dh) {
@@ -218,12 +224,12 @@ public class MaskShell extends LObjectDialog<Mask> {
 		canvas.redraw();
 	}
 	
-	private void updateLayerCombo() {
+	private void updateLayerCombo(int minH) {
 		String[] items = new String[grid.length];
 		for (int i = 0; i < grid.length; i++)
-			items[i] = "" + (i - spnMinH.getValue());
+			items[i] = "" + (i - minH);
 		cmbHeight.setItems(items);
-		cmbHeight.setValue(height + spnMinH.getValue());
+		cmbHeight.setValue(height + minH);
 		canvas.redraw();
 	}
 
@@ -243,7 +249,7 @@ public class MaskShell extends LObjectDialog<Mask> {
 		LPoint p = FieldHelper.math.pixelSize(grid[0].length, grid[0][0].length);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(grid[0][0].length) - p.y / 2;
-		updateLayerCombo();
+		updateLayerCombo(spnMinH.getValue());
 		super.open(initial);
 	}
 	
@@ -256,4 +262,5 @@ public class MaskShell extends LObjectDialog<Mask> {
 		m.centerY = spnMinY.getValue() + 1;
 		return m;
 	}
+
 }
