@@ -4,8 +4,6 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.helper.FieldHelper;
 import lui.base.LFlags;
-import lui.base.event.listener.LControlListener;
-import lui.base.event.listener.LMouseListener;
 import data.Skill.Mask;
 import lui.container.LCanvas;
 import lui.graphics.LColor;
@@ -13,8 +11,6 @@ import lui.graphics.LPainter;
 import lui.base.data.LPoint;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
-import lui.base.event.LControlEvent;
-import lui.base.event.LMouseEvent;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
@@ -51,111 +47,90 @@ public class MaskShell extends LObjectDialog<Mask> {
 		// Minimum Limits
 		
 		spnMinH = new LSpinner(content);
-		spnMinH.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
-				if (n < grid.length) {
-					height = Math.max(height, -spnMinH.getValue());
-					shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
-				} else 
-					expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
-				updateLayerCombo();
-			}
-		});
 		spnMinH.setMaximum(20);
-		
+		spnMinH.addModifyListener(event -> {
+            int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
+            if (n < grid.length) {
+                height = Math.max(height, -spnMinH.getValue());
+                shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
+            } else
+                expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
+            updateLayerCombo();
+        });
+
 		new LLabel(content, Vocab.instance.MINX, Tooltip.instance.MINX);
 		
 		spnMinX = new LSpinner(content);
-		spnMinX.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
-				if (n < grid[0].length)
-					shrink(n, grid[0][0].length, grid.length, grid[0].length - n, 0, 0);
-				else 
-					expand(n, grid[0][0].length, grid.length, n - grid[0].length, 0, 0);
-			}
-		});
 		spnMinX.setMaximum(20);
-		
+		spnMinX.addModifyListener(event -> {
+            int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
+            if (n < grid[0].length)
+                shrink(n, grid[0][0].length, grid.length, grid[0].length - n, 0, 0);
+            else
+                expand(n, grid[0][0].length, grid.length, n - grid[0].length, 0, 0);
+        });
+
 		new LLabel(content, Vocab.instance.MINY, Tooltip.instance.MINY);
 		
 		spnMinY = new LSpinner(content);
-		spnMinY.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
-				if (n < grid[0][0].length)
-					shrink(grid[0].length, n, grid.length, 0, grid[0][0].length - n, 0);
-				else 
-					expand(grid[0].length, n, grid.length, 0, n - grid[0][0].length, 0);
-			}
-		});
 		spnMinY.setMaximum(20);
-		
+		spnMinY.addModifyListener(event -> {
+            int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
+            if (n < grid[0][0].length)
+                shrink(grid[0].length, n, grid.length, 0, grid[0][0].length - n, 0);
+            else
+                expand(grid[0].length, n, grid.length, 0, n - grid[0][0].length, 0);
+        });
+
 		new LLabel(content, Vocab.instance.MAXHEIGHT, Tooltip.instance.MAXHEIGHT);
 		
 		// Maximum Limits
 		
 		spnMaxH = new LSpinner(content);
-		spnMaxH.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
-				if (n < grid.length) {
-					height = Math.min(height, spnMaxH.getValue());
-					shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
-				} else 
-					expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);
-				updateLayerCombo();
-			}
-		});
 		spnMaxH.setMaximum(20);
-		
+		spnMaxH.addModifyListener(event -> {
+            int n = spnMaxH.getValue() + spnMinH.getValue() + 1;
+            if (n < grid.length) {
+                height = Math.min(height, spnMaxH.getValue());
+                shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
+            } else
+                expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);
+            updateLayerCombo();
+        });
+
 		new LLabel(content, Vocab.instance.MAXX, Tooltip.instance.MAXX);
 		
 		spnMaxX = new LSpinner(content);
-		spnMaxX.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
-				if (n < grid[0].length)
-					shrink(n, grid[0][0].length, grid.length, 0, 0, 0);
-				else 
-					expand(n, grid[0][0].length, grid.length, 0, 0, 0);
-			}
-		});
 		spnMaxX.setMaximum(20);
-		
+		spnMaxX.addModifyListener(event -> {
+            int n = spnMaxX.getValue() + spnMinX.getValue() + 1;
+            if (n < grid[0].length)
+                shrink(n, grid[0][0].length, grid.length, 0, 0, 0);
+            else
+                expand(n, grid[0][0].length, grid.length, 0, 0, 0);
+        });
+
 		new LLabel(content, Vocab.instance.MAXY, Tooltip.instance.MAXY);
 		
 		spnMaxY = new LSpinner(content);
-		spnMaxY.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
-				if (n < grid[0][0].length)
-					shrink(grid[0].length, n, grid.length, 0, 0, 0);
-				else 
-					expand(grid[0].length, n, grid.length, 0, 0, 0);
-			}
-		});
 		spnMaxY.setMaximum(20);
-		
+		spnMaxY.addModifyListener(event -> {
+            int n = spnMaxY.getValue() + spnMinY.getValue() + 1;
+            if (n < grid[0][0].length)
+                shrink(grid[0].length, n, grid.length, 0, 0, 0);
+            else
+                expand(grid[0].length, n, grid.length, 0, 0, 0);
+        });
+
 		new LLabel(content, Vocab.instance.HEIGHT, Tooltip.instance.MASKH);
 		
 		cmbHeight = new LCombo(content, true);
 		cmbHeight.setOptional(false);
 		cmbHeight.setIncludeID(false);
-		cmbHeight.addModifyListener(new LControlListener<Integer>() {
-			@Override
-			public void onModify(LControlEvent<Integer> event) {
-				height = cmbHeight.getValue() - spnMinH.getValue();
-				canvas.redraw();
-			}
-		});
+		cmbHeight.addModifyListener(event -> {
+            height = cmbHeight.getValue() - spnMinH.getValue();
+            canvas.redraw();
+        });
 		new LLabel(content, 4, 1);
 		
 		canvas = new LCanvas(content);
@@ -175,23 +150,22 @@ public class MaskShell extends LObjectDialog<Mask> {
 		
 		// Flip Tile
 		
-		canvas.addMouseListener(new LMouseListener() {
-			@Override
-			public void onMouseChange(LMouseEvent e) {
-				if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
-					int h = (height + spnMinH.getValue());
-					LPoint size = canvas.getCurrentSize();
-					int px = e.x - (x0 + size.x / 2);
-					int py = e.y - (y0 + size.y / 2);
-					int pd = h * FieldHelper.config.grid.pixelsPerHeight;
-					LPoint tile = FieldHelper.math.pixel2Tile(px, py, pd);
-					try {
-						grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];
-						canvas.redraw();
-					} catch (IndexOutOfBoundsException ex) {}
-				}
-			}
-		});
+		canvas.addMouseListener(e -> {
+            if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
+                int h = (height + spnMinH.getValue());
+				if (h < 0 || h >= grid.length)
+					return;
+                LPoint size = canvas.getCurrentSize();
+                int px = e.x - (x0 + size.x / 2);
+                int py = e.y - (y0 + size.y / 2);
+                int pd = h * FieldHelper.config.grid.pixelsPerHeight;
+                LPoint tile = FieldHelper.math.pixel2Tile(px, py, pd);
+				if (tile.x < 0 || tile.y < 0 || tile.x >= grid[0].length || tile.y >= grid[0][0].length)
+					return;
+                grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];
+				canvas.redraw();
+            }
+        });
 	}
 	
 	private void drawGrid(LPainter painter) {
@@ -221,12 +195,11 @@ public class MaskShell extends LObjectDialog<Mask> {
 	}
 	
 	private void expand(int x, int y, int h, int dx, int dy, int dh) {
-		boolean[][][] newgrid = new boolean[h][x][y];
+		boolean[][][] newGrid = new boolean[h][x][y];
 		for (int k = 0; k < grid.length; k++)
-		for (int i = 0; i < grid[k].length; i++)
-		for (int j = 0; j < grid[k][i].length; j++)
-			newgrid[k + dh][i + dx][j + dy] = grid[k][i][j];
-		grid = newgrid;
+			for (int i = 0; i < grid[k].length; i++)
+                System.arraycopy(grid[k][i], 0, newGrid[k + dh][i + dx], dy, grid[k][i].length);
+		grid = newGrid;
 		LPoint p = FieldHelper.math.pixelSize(x, y);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;
@@ -234,12 +207,11 @@ public class MaskShell extends LObjectDialog<Mask> {
 	}
 	
 	private void shrink(int x, int y, int h, int dx, int dy, int dh) {
-		boolean[][][] newgrid = new boolean[h][x][y];
+		boolean[][][] newGrid = new boolean[h][x][y];
 		for (int k = 0; k < h; k++)
-		for (int i = 0; i < x; i++)
-		for (int j = 0; j < y; j++)
-			newgrid[k][i][j] = grid[k + dh][i + dx][j + dy];
-		grid = newgrid;
+			for (int i = 0; i < x; i++)
+                System.arraycopy(grid[k + dh][i + dx], dy, newGrid[k][i], 0, y);
+		grid = newGrid;
 		LPoint p = FieldHelper.math.pixelSize(x, y);
 		x0 = FieldHelper.config.grid.tileW / 2 - p.x / 2;
 		y0 = FieldHelper.math.pixelDisplacement(y) - p.y / 2;

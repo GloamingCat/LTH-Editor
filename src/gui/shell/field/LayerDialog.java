@@ -66,11 +66,6 @@ public class LayerDialog extends GObjectDialog<Info> {
 		TagList lstTags = new TagList(grpTags);
 		addChild(lstTags, "tags");
 
-		System.out.println(grpGeneral.getTargetSize());
-		System.out.println(contentEditor.getTargetSize());
-
-		pack();
-
 	}
 	
 }

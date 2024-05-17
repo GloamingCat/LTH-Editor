@@ -2,11 +2,11 @@ package data;
 
 import java.util.Arrays;
 
-import lui.datainterface.LInitializable;
 import project.Project;
 import data.subcontent.Property;
 import data.subcontent.Icon;
 import data.subcontent.Tag;
+import lui.base.data.LInitializable;
 import lui.base.data.LDataList;
 import lui.base.data.LDataTree;
 

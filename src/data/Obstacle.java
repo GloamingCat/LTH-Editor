@@ -4,7 +4,7 @@ import data.subcontent.Icon;
 import data.subcontent.Tile;
 import data.subcontent.Transform;
 import lui.base.data.LDataList;
-import lui.datainterface.LInitializable;
+import lui.base.data.LInitializable;
 
 public class Obstacle extends Data implements LInitializable {
 

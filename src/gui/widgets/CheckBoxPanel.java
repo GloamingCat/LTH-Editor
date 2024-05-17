@@ -11,7 +11,7 @@ public class CheckBoxPanel extends LPanel {
         super(parent);
         setSequentialLayout(true);
         getCellData().setExpand(true, false);
-        getCellData().setAlignment(LFlags.LEFT);
+        getCellData().setAlignment(LFlags.FILL);
         setSpacing(LPrefs.GRIDSPACING, 0);
         setMargins(LPrefs.GRIDSPACING, 0);
     }

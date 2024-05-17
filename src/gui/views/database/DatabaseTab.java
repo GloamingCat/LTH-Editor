@@ -1,12 +1,8 @@
 package gui.views.database;
 
-import java.util.LinkedList;
-
 import gson.GObjectTreeSerializer;
 import lui.base.LPrefs;
 import lui.base.event.listener.LCollectionListener;
-
-import com.google.gson.Gson;
 
 import lui.container.LContainer;
 import lui.container.LControlView;
@@ -20,8 +16,6 @@ import lui.widget.LControlWidget;
 
 public abstract class DatabaseTab<T> extends LView {
 
-	protected static Gson gson = new Gson();
-	
 	protected GDefaultTreeEditor<Object> listEditor;
 	protected DatabaseContentEditor<T> contentEditor;
 
@@ -32,7 +26,7 @@ public abstract class DatabaseTab<T> extends LView {
 	public DatabaseTab(LContainer parent) {
 		super(parent, true);
 		setFillLayout(true);
-		
+
 		createMenuInterface();
 		
 		LFlexPanel sashForm = new LFlexPanel(this, true);
@@ -64,18 +58,11 @@ public abstract class DatabaseTab<T> extends LView {
                 contentEditor.lblID.setText("ID " + node.id);
             }
         });
-		listEditor.getCollectionWidget().addInsertListener(new LCollectionListener<Object>() {
+		listEditor.getCollectionWidget().addInsertListener(new LCollectionListener<>() {
 			@Override
 			public void onInsert(LInsertEvent<Object> event) {
-				LinkedList<LDataTree<Object>> nodes = new LinkedList <>();
-				nodes.add(event.node);
-				while (nodes.peek() != null) {
-					int id = listEditor.getDataCollection().findID();
-					nodes.peek().initID(id);
-					for (LDataTree<Object> child : nodes.poll().children) {
-						nodes.add(child);
-					}
-				}
+				listEditor.getDataCollection().initIDs(event.node);
+				listEditor.getCollectionWidget().refreshAll(event.node);
 				contentEditor.lblID.setText("ID " + event.node.id);
 			}
 		});
@@ -83,6 +70,7 @@ public abstract class DatabaseTab<T> extends LView {
 		createContent();
 
 		sashForm.setWeights(1, 3);
+
 	}
 
 	protected abstract void createContent();

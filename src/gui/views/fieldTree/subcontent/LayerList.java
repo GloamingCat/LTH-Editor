@@ -10,8 +10,6 @@ import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.editor.LListEditor;
 import lui.base.event.LEditEvent;
-import lui.base.event.LInsertEvent;
-import lui.base.event.LMoveEvent;
 import data.field.Field;
 import data.field.Layer;
 import data.field.Layer.Info;
@@ -72,7 +70,7 @@ public class LayerList extends LListEditor<Layer, Layer.Info> {
 			fieldWidth = field.sizeX;
 			fieldHeight = field.sizeY;
 			maxHeight = field.prefs.maxHeight;
-			if (lastLayer >= 0)
+			if (lastLayer >= 0 && lastLayer < getDataCollection().size())
 				getCollectionWidget().select(new LPath(lastLayer));
 		}
 	}

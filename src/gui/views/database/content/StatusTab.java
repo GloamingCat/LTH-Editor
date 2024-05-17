@@ -105,6 +105,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		btnVisible.setHoverText(Tooltip.instance.VISIBLE);
 		btnVisible.getCellData().setAlignment(LFlags.MIDDLE);
+		btnVisible.getCellData().setTargetSize(LPrefs.BUTTONWIDTH, -1);
 		addControl(btnVisible, "visible");
 		
 		// Other properties

@@ -1,6 +1,6 @@
 package data.subcontent;
 
-import lui.datainterface.LInitializable;
+import lui.base.data.LInitializable;
 
 public class AudioPlay implements LInitializable {
 

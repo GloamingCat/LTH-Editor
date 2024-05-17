@@ -14,6 +14,8 @@ import gui.widgets.IconSelector;
 import gui.widgets.LuaButton;
 import lui.base.LFlags;
 import lui.base.LPrefs;
+import lui.base.LVocab;
+import lui.base.data.LPoint;
 import lui.container.LCanvas;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -135,10 +137,34 @@ public class SkillTab extends DatabaseTab<Skill> {
 		txtEffectCondition.addMenu(lblEffCond);
 		txtEffectCondition.getCellData().setExpand(true, false);
 		addControl(txtEffectCondition, "effectCondition");
-		
+
+		// Elements
+
+		LLabel lblElements = new LLabel(grpEffects, Vocab.instance.ELEMENTS);
+		lstElements = new PropertyList(grpEffects, Vocab.instance.SKILLELEMENTSHELL);
+		lstElements.getCellData().setExpand(true, true);
+		lstElements.addMenu(lblElements);
+		addChild(lstElements, "elements");
+
+		new LLabel(grpEffects, 1, 1);
+		LCheckBox btnUserElements = new LCheckBox(grpEffects);
+		btnUserElements.getCellData().setAlignment(LFlags.LEFT);
+		btnUserElements.setText(Vocab.instance.USERELEMENTS);
+		addControl(btnUserElements, "userElements");
+
+		// Animations
+
+		LFrame grpAnimations = new LFrame(contentEditor.right, Vocab.instance.ANIMATIONS);
+		grpAnimations.setFillLayout(true);
+		grpAnimations.setHoverText(Tooltip.instance.ANIMATIONS);
+		grpAnimations.getCellData().setExpand(true, false);
+		AnimInfoEditor animEditor = new AnimInfoEditor(grpAnimations);
+		animEditor.addMenu(grpAnimations);
+		addChild(animEditor, "animInfo");
+
 		// Target Selection
 		
-		LFrame grpTarget = new LFrame(contentEditor.left, Vocab.instance.TARGET);
+		LFrame grpTarget = new LFrame(contentEditor.right, Vocab.instance.TARGET);
 		grpTarget.setGridLayout(2);
 		grpTarget.setHoverText(Tooltip.instance.TARGET);
 		grpTarget.getCellData().setExpand(true, false);
@@ -188,32 +214,6 @@ public class SkillTab extends DatabaseTab<Skill> {
 		btnFreeNavigation.setHoverText(Tooltip.instance.FREENAVIGATION);
 		addControl(btnFreeNavigation, "freeNavigation");
 
-		// Animations
-		
-		LFrame grpAnimations = new LFrame(contentEditor.right, Vocab.instance.ANIMATIONS);
-		grpAnimations.setFillLayout(true);
-		grpAnimations.setHoverText(Tooltip.instance.ANIMATIONS);
-		grpAnimations.getCellData().setExpand(true, false);
-		AnimInfoEditor animEditor = new AnimInfoEditor(grpAnimations);
-		animEditor.addMenu(grpAnimations);
-		addChild(animEditor, "animInfo");
-		
-		// Elements
-		
-		LFrame grpElements = new LFrame(contentEditor.right, Vocab.instance.ELEMENTS);
-		grpElements.setGridLayout(2);
-		grpElements.setHoverText(Tooltip.instance.SKILLELEMENTS);
-		grpElements.getCellData().setExpand(true, true);
-		lstElements = new PropertyList(grpElements, Vocab.instance.SKILLELEMENTSHELL);
-		lstElements.getCellData().setExpand(true, true);
-		lstElements.addMenu(grpElements);
-		addChild(lstElements, "elements");
-		
-		LCheckBox btnUserElements = new LCheckBox(grpElements);
-		btnUserElements.getCellData().setAlignment(LFlags.TOP);
-		btnUserElements.setText(Vocab.instance.USERELEMENTS);
-		addControl(btnUserElements, "userElements");
-		
 		// Range
 		
 		LPanel range = new LPanel(contentEditor.right);
@@ -222,12 +222,11 @@ public class SkillTab extends DatabaseTab<Skill> {
 		range.getCellData().setExpand(true, true);
 	
 		LFrame grpEffect = new LFrame(range, Vocab.instance.EFFECTMASK);
-		grpEffect.setGridLayout(2);
+		grpEffect.setGridLayout(1);
 		grpEffect.setHoverText(Tooltip.instance.EFFECTMASK);
 		grpEffect.getCellData().setExpand(true, true);
 		MaskButton btnEffectMask = new MaskButton(grpEffect);
-		btnEffectMask.getCellData().setAlignment(LFlags.LEFT | LFlags.TOP);
-		btnEffectMask.getCellData().setExpand(true, false);
+		btnEffectMask.getCellData().setAlignment(LFlags.CENTER);
 		btnEffectMask.addMenu(grpEffect);
 		addControl(btnEffectMask, "effectMask");
 		
@@ -236,27 +235,27 @@ public class SkillTab extends DatabaseTab<Skill> {
 		addMaskButton(btnEffectMask, effectMask, effectColor);
 
 		LPanel effectCheck = new CheckBoxPanel(grpEffect);
-		effectCheck.getCellData().setSpread(2, 1);
 
 		LCheckBox btnRotate = new LCheckBox(effectCheck);
-		btnRotate.setText(Vocab.instance.ROTATE);
-		btnRotate.setHoverText(Tooltip.instance.ROTATE);
+		btnRotate.setText(Vocab.instance.ROTATEMASK);
+		btnRotate.setHoverText(Tooltip.instance.ROTATEMASK);
 		btnRotate.addMenu();
 		addControl(btnRotate, "rotateEffect");
 		
 		LFrame grpCast = new LFrame(range, Vocab.instance.CASTMASK);
-		grpCast.setGridLayout(2);
+		grpCast.setGridLayout(1);
 		grpCast.setHoverText(Tooltip.instance.CASTMASK);
 		grpCast.getCellData().setExpand(true, true);
 		MaskButton btnCastMask = new MaskButton(grpCast);
-		btnCastMask.getCellData().setAlignment(LFlags.LEFT | LFlags.TOP);
-		btnCastMask.getCellData().setExpand(true, false);
+		btnCastMask.getCellData().setAlignment(LFlags.CENTER);
 		btnCastMask.addMenu(grpCast);
 		addControl(btnCastMask, "castMask");
 		
 		LCanvas castMask = new LCanvas(grpCast);
 		castMask.getCellData().setExpand(true, true);
-		addMaskButton(btnCastMask, castMask, castColor);	
+		addMaskButton(btnCastMask, castMask, castColor);
+
+		new LLabel(grpCast, 1, 1).getCellData().setTargetSize(1, LPrefs.WIDGETHEIGHT);
 		
 	}
 	
@@ -300,22 +299,27 @@ public class SkillTab extends DatabaseTab<Skill> {
 			public void paint() {
 				Mask m = button.getValue();
 				if (m == null) return;
+				LPoint widgetSize = mask.getCurrentSize();
+				int width = Math.min(widgetSize.x, m.grid.length * cellSize);
+				int height = Math.min(widgetSize.y, m.grid[0].length * cellSize);
+				int x = (widgetSize.x - width) / 2;
+				int y = (widgetSize.y - height) / 2;
 				boolean[][] middle = m.grid[m.centerH - 1];
-				drawRect(0, 0, 
+				drawRect(x, y,
 						middle.length * cellSize, 
 						middle[0].length * cellSize);
 				for (int i = 0; i < middle.length; i++) {
 					for (int j = 0; j < middle[i].length; j++) {
 						setFillColor(middle[i][j] ? trueColor : falseColor);
-						fillRect(border + i * cellSize, border + j * cellSize,
+						fillRect(x + border + i * cellSize, y + border + j * cellSize,
 									cellSize - border, cellSize - border);
-						drawRect(i * cellSize, j * cellSize,
+						drawRect(x + i * cellSize, y + j * cellSize,
 									cellSize, cellSize);
 					}
 				}
 				setPaintColor(centerColor);
-				drawRect(border + (m.centerX - 1) * cellSize, 
-						border + (m.centerY - 1)* cellSize,
+				drawRect(x + border + (m.centerX - 1) * cellSize,
+						y + border + (m.centerY - 1)* cellSize,
 						cellSize - border - 2, 
 						cellSize - border - 2);
 			}
@@ -326,6 +330,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 	private static class MaskButton extends LObjectButton<Mask> {
 		public MaskButton(LContainer parent) {
 			super(parent);
+			setText(LVocab.instance.EDIT);
 		}
 
 		@Override

@@ -83,7 +83,13 @@ public class Tooltip {
 	public String ALLNEIGHBORS = "Considers all 8 neighbor tiles as passable from one to the other in a battle grid.";
 	public String OVERPASSALLIES = "Ally characters don't block the path.";
 	public String OVERPASSDEADS = "Dead character don't block the path.";
-	
+	public String TILESHAPE = """
+			Tile size and format.
+			If base and side are zero, the grid is isometric.
+			If only base is zero, the grid hexagonal and vertically-linked.
+			If only side is zero, the grid hexagonal and horizontally-linked.
+			If base=width and side=height, the grid is rectangular/orthogonal.""";
+
 	// Screen
 	public String SCREEN = "Screen settings.";
 	public String COVER = "Background image shown when the game starts.";
@@ -106,7 +112,8 @@ public class Tooltip {
             Only by integers: the screen will be scaled by the bigger integer number that can still fit within the actual screen.
             Keep ratio: the screen is scaled to fit either the width or the height, and the remaining space is filled with black.
             Fill screen: the screen is freely scaled to fit the actual screen.""";
-	public String MOBILESCALETYPE = "The scale type when the game is played on a mobile.\n";
+	public String PCSCALETYPE = "The scale type when the game is played on a PC.\n";
+	public String MOBILESCALETYPE = "The scale type when the game is played on a mobile device.\n";
 	public String PIXELPERFECT = """
 			When checked, the position of sprites will be rounded off.
 			If unchecked, the sprites might be blurred with it's on a non-integer position.""";
@@ -126,11 +133,11 @@ public class Tooltip {
 	public String DASHSPEED = "The multipler of the speed (in percentage) when the player is holding the dash button.";
 	public String DIAGTHRESHOLD = """
             The minimum value that the axis input (from 0 to 100) should have to be considered non-zero.
-            For horizontally-liked hexagonal grid: if the horizontal input is bigger than the vertical input,
+            For horizontally-linked hexagonal grid: if the horizontal input is bigger than the vertical input,
             the vertical input should be at least two times the threshold for it to be considered diagonal.
-            For vertically-liked hexagonal grid: if the vertical input is bigger than the horizontal input,
+            For vertically-linked hexagonal grid: if the vertical input is bigger than the horizontal input,
             the horizontal input should be at least two times the threshold for it to be considered diagonal.
-            For orthogonal grid: both conditions above are applied.""";
+            For rectangular/orthogonal grid: both conditions above are applied.""";
 	
 	// Battle
 	public String BATTLE = "Battle settings.";
@@ -262,7 +269,7 @@ public class Tooltip {
 	public String USERELEMENTS = """
 			When checked, the skill element list will include any elemental property that is
 			currently applied to the user's attack.""";
-	public String ROTATE = """
+	public String ROTATEMASK = """
 			When checked, the effect mask will be rotated according the user's facing direction.
 			The neutral facing direction is right (on orthogonal grids) or right-down (on isometric/hexagonal grids).""";
 	public String MIRROR = "When checked, the animations will mirror if the character is facing left.";

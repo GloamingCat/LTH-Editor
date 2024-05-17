@@ -1,6 +1,6 @@
 package data;
 
-import lui.datainterface.LInitializable;
+import lui.base.data.LInitializable;
 import project.Project;
 import data.subcontent.Icon;
 import data.subcontent.Node;

@@ -1,7 +1,5 @@
 package gui.views.fieldTree;
 
-import java.util.LinkedList;
-
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import gui.shell.field.FieldPrefDialog;
@@ -154,13 +152,8 @@ public class FieldTreeEditor extends LView {
 		fieldTree.addInsertListener(new LCollectionListener<>() {
 			@Override
 			public void onInsert(LInsertEvent<FieldNode> event) {
-				LinkedList<LDataTree<FieldNode>> nodes = new LinkedList <>();
-				nodes.add(event.node);
-				while (!nodes.isEmpty()) {
-					int id = treeEditor.getDataCollection().findID();
-					nodes.peek().initID(id);
-                    nodes.addAll(nodes.poll().children);
-				}
+				treeEditor.getDataCollection().initIDs(event.node);
+				fieldTree.refreshAll(event.node);
 			}
 		});
 

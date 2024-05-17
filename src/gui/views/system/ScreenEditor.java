@@ -4,7 +4,9 @@ import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.CheckBoxPanel;
+import lui.base.LPrefs;
 import lui.container.LContainer;
+import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
 import lui.widget.LCheckBox;
@@ -36,7 +38,6 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		addControl(spnNativeWidth, "nativeWidth");
 
 		new LLabel(nativeSize, "x");
-
 		LSpinner spnNativeHeight = new LSpinner(nativeSize);
 		spnNativeHeight.getCellData().setExpand(true, false);
 		spnNativeHeight.setMinimum(1);
@@ -61,6 +62,12 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		spnHeightScale.setMinimum(1);
 		addControl(spnHeightScale, "heightScale");
 
+		LFrame scaleType = new LFrame(this, Vocab.instance.SCALETYPE);
+		scaleType.setHoverText(Tooltip.instance.SCALETYPE);
+		scaleType.setGridLayout(2);
+		scaleType.getCellData().setExpand(true, true);
+		scaleType.getCellData().setSpread(3, 1);
+
 		String[] scaleTypes = new String[] {
 			Vocab.instance.NOSCALE,
 			Vocab.instance.INTEGERONLY,
@@ -68,21 +75,17 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 			Vocab.instance.FREESCALE
 		};
 
-		new LLabel(this, Vocab.instance.SCALETYPE, Tooltip.instance.SCALETYPE);
-
-		LCombo cmbScale = new LCombo(this, true);
+		new LLabel(scaleType, Vocab.instance.PCSCALETYPE, Tooltip.instance.PCSCALETYPE).getCellData().setTargetSize(LPrefs.LABELWIDTH / 2, -1);
+		LCombo cmbScale = new LCombo(scaleType, true);
 		cmbScale.getCellData().setExpand(true, false);
-		cmbScale.getCellData().setSpread(2, 1);
 		cmbScale.setOptional(false);
 		cmbScale.setIncludeID(false);
 		cmbScale.setItems(scaleTypes);
 		addControl(cmbScale, "scaleType");
 
-		new LLabel(this, Vocab.instance.MOBILESCALETYPE, Tooltip.instance.MOBILESCALETYPE);
-
-		LCombo cmbScaleMobile = new LCombo(this, true);
+		new LLabel(scaleType, Vocab.instance.MOBILESCALETYPE, Tooltip.instance.MOBILESCALETYPE).getCellData().setTargetSize(LPrefs.LABELWIDTH / 2, -1);
+		LCombo cmbScaleMobile = new LCombo(scaleType, true);
 		cmbScaleMobile.getCellData().setExpand(true, false);
-		cmbScaleMobile.getCellData().setSpread(2, 1);
 		cmbScaleMobile.setOptional(false);
 		cmbScaleMobile.setIncludeID(false);
 		cmbScaleMobile.setItems(scaleTypes);
@@ -90,6 +93,7 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 
 		LPanel checkScreen = new CheckBoxPanel(this);
 		checkScreen.getCellData().setSpread(3, 1);
+		checkScreen.getCellData().setExpand(true, true);
 
 		LCheckBox btnPixelPerfect = new LCheckBox(checkScreen);
 		btnPixelPerfect.setText(Vocab.instance.PIXELPERFECT);
@@ -100,8 +104,6 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		btnVSync.setText(Vocab.instance.VSYNC);
 		btnVSync.setHoverText(Tooltip.instance.VSYNC);
 		addControl(btnVSync, "vsync");
-
-		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
 
     }
 

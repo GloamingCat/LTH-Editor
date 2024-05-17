@@ -92,16 +92,17 @@ public class Vocab {
 	public String INVISIBLE = "Invisible";
 	
 	// Grid
-	public String TILEWIDTH = "Tile Width";
-	public String TILEHEIGHT = "Tile Height";
-	public String TILEBASE = "Tile Base";
-	public String TILESIDE = "Tile Side";
+	public String TILEWIDTH = "Width";
+	public String TILEHEIGHT = "Height";
+	public String TILEBASE = "Base";
+	public String TILESIDE = "Side";
 	public String PIXELHEIGHT = "Pixels/Height";
 	public String DEPTHHEIGHT = "Depth/Height";
 	public String DEPTHY = "Depth/Y";
 	public String ALLNEIGHBORS = "8 neighbors";
 	public String OVERPASSALLIES = "Overpass Allies";
 	public String OVERPASSDEADS = "Overpass Dead";
+	public String TILESHAPE = "Tile Shape";
 	
 	// Screen
 	public String COVER = "Cover";
@@ -110,7 +111,8 @@ public class Vocab {
 	public String NATIVESIZE = "Native Size";
 	public String SCALEFACTOR = "Scale Factor";
 	public String SCALETYPE = "Scale Type";
-	public String MOBILESCALETYPE = "Scale Type (Mobile)";
+	public String PCSCALETYPE = "PC";
+	public String MOBILESCALETYPE = "Mobile";
 	public String NOSCALE = "No scaling";
 	public String INTEGERONLY = "Only by integers";
 	public String KEEPRATIO = "Keep ratio";
@@ -202,7 +204,7 @@ public class Vocab {
 	public String CASTMASK = "Range Mask";
 	public String EFFECTMASK = "Effect Mask";
 	public String USERELEMENTS = "Include user's elements";
-	public String ROTATE = "Rotate";
+	public String ROTATEMASK = "Rotate with user";
 	public String USERANIMATIONS = "User Animations";
 	public String BATTLEANIMATIONS = "Battle Animations";
 	public String MIRROR = "Mirror";

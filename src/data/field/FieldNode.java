@@ -1,6 +1,6 @@
 package data.field;
 
-public class FieldNode {
+public class FieldNode implements Cloneable {
 
 	public String name = "New Field";
 	

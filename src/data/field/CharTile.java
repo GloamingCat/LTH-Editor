@@ -1,9 +1,9 @@
 package data.field;
 
-import data.GameCharacter;
 import lui.base.data.LDataList;
+import lui.base.data.LInitializable;
+import data.GameCharacter;
 import data.subcontent.Script;
-import lui.datainterface.LInitializable;
 import project.Project;
 
 public class CharTile implements LInitializable {
