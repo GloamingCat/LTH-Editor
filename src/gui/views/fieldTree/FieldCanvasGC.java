@@ -239,7 +239,9 @@ public class FieldCanvasGC extends FieldCanvas {
 			currentChar = tile;
 			if (tile != null) {
 				currentTile.height = tile.h - 1;
-				updateTileImage(tile.x - 1, tile.y - 1, false);
+				currentTile.dx = tile.x - 1;
+				currentTile.dy = tile.y - 1;
+				updateTileImage(currentTile.dx, currentTile.dy, false);
 			}
 			refreshBuffer(false);
 		}

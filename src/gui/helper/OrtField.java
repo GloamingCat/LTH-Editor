@@ -51,8 +51,8 @@ public class OrtField extends FieldMath {
 		int pph = conf.pixelsPerHeight;
 		int dph = conf.depthPerHeight;
 		return new LPoint(
-				(int)-Math.ceil(sizeY * dpy + pph* 2 + dph * (height - 1)),
-				(int) Math.ceil(pph + dph * (height + 1)));
+				-(sizeY * dpy + pph * 2 + dph * (height - 1)),
+				 (pph + dph * (height + 1)));
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class OrtField extends FieldMath {
 	}
 	
 	@Override
-	public LPoint pixel2Tile(float x, float y, float d) {
-		float newH = d / conf.pixelsPerHeight;
+	public LPoint pixel2Tile(float x, float y, float h) {
+		float newH = h * conf.pixelsPerHeight;
 		int newX = Math.round(x / conf.tileW);
 		int newY = Math.round((y + newH) / conf.tileH);
 		return new LPoint(newX, newY);
@@ -114,7 +114,7 @@ public class OrtField extends FieldMath {
 	}
 	
 	public Iterator<ArrayList<LPoint>> lineIterator(int sizeX, int sizeY) {
-		return new Iterator<ArrayList<LPoint>>() {
+		return new Iterator<>() {
 			int j = 0;
 			@Override
 			public ArrayList<LPoint> next() {

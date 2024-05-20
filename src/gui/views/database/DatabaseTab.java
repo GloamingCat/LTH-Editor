@@ -61,8 +61,6 @@ public abstract class DatabaseTab<T> extends LView {
 		listEditor.getCollectionWidget().addInsertListener(new LCollectionListener<>() {
 			@Override
 			public void onInsert(LInsertEvent<Object> event) {
-				listEditor.getDataCollection().initIDs(event.node);
-				listEditor.getCollectionWidget().refreshAll(event.node);
 				contentEditor.lblID.setText("ID " + event.node.id);
 			}
 		});

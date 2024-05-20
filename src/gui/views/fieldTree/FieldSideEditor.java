@@ -326,8 +326,12 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 			lists[2].setObject(field.layers.region);
 		}
 		super.setObject(object);
-		for (int i = 0; i < lists.length; i++)
-			lists[i].setField(field, Project.current.fieldTree.getData().getLastLayer(field.id, i));
+		for (int i = 0; i < lists.length; i++) {
+			if (field == null)
+				lists[i].setField(null, -1);
+			else
+				lists[i].setField(field, Project.current.fieldTree.getData().getLastLayer(field.id, i));
+		}
 		selectEditor(editor);
 	}
 

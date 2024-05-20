@@ -40,20 +40,19 @@ public abstract class BaseIsoField extends FieldMath {
 		int pph = conf.pixelsPerHeight;
 		int dph = conf.depthPerHeight;
 		return new LPoint(
-				(int)-Math.ceil(sizeY * dpy + pph + dph * (height - 1)),
-				(int) Math.ceil(sizeX * dpy + pph * 2 + dph * (height + 1)));
+				-(sizeY * dpy + pph + dph * (height - 1)),
+				 (sizeX * dpy + pph * 2 + dph * (height + 1)));
 	}
 	
 	@Override
 	public int lineWidth(int sizeX, int sizeY) {
 		int tileCount = Math.max(sizeX, sizeY);
-		int imgW = (FieldHelper.config.grid.tileW + FieldHelper.config.grid.tileB) * tileCount;
-		return imgW;
+        return (FieldHelper.config.grid.tileW + FieldHelper.config.grid.tileB) * tileCount;
 	}
 
 	@Override
-	public LPoint pixel2Tile(float x, float y, float d) {
-		float newH = d / conf.pixelsPerHeight;
+	public LPoint pixel2Tile(float x, float y, float h) {
+		float newH = h * conf.pixelsPerHeight;
 		float sxy = x * 2 / (conf.tileW + conf.tileB);			// sum
 		float dyx = (y + newH) * 2 / (conf.tileH + conf.tileS); // dif
 		int newX = Math.round((sxy - dyx) / 2);
@@ -74,27 +73,25 @@ public abstract class BaseIsoField extends FieldMath {
 	// -------------------------------------------------------------------------------------
 	
 	public Iterator<ArrayList<LPoint>> lineIterator(int sizeX, int sizeY) {
-		return new Iterator<ArrayList<LPoint>>() {
+		return new Iterator<>() {
 			int k = sizeX - 1;
 			int l = 1;
 			@Override
 			public ArrayList<LPoint> next() {
-				if (k >= 0) {
-					ArrayList<LPoint> list = new ArrayList<>();
-					for(int i = k, j = 0; i < sizeX && j < sizeY; i++, j++) {
+                ArrayList<LPoint> list = new ArrayList<>();
+                if (k >= 0) {
+                    for(int i = k, j = 0; i < sizeX && j < sizeY; i++, j++) {
 						list.add(new LPoint(i, j));
 					}
 					k--;
-					return list;
-				} else {
-					ArrayList<LPoint> list = new ArrayList<>();
-					for(int i = 0, j = l; i < sizeX && j < sizeY; i++, j++) {
+                } else {
+                    for(int i = 0, j = l; i < sizeX && j < sizeY; i++, j++) {
 						list.add(new LPoint(i, j));
 					}
 					l++;
-					return list;
-				}
-			}
+                }
+                return list;
+            }
 			@Override
 			public boolean hasNext() {
 				return k >= 0 || l < sizeY;

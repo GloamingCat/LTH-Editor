@@ -148,7 +148,7 @@ public class FieldTreeEditor extends LView {
 		fieldTree.addInsertListener(new LCollectionListener<>() {
 			@Override
 			public void onInsert(LInsertEvent<FieldNode> event) {
-				treeEditor.getDataCollection().initIDs(event.node);
+				Project.current.fieldTree.getData().lastField = event.node.id;
 				fieldTree.refreshAll(event.node);
 			}
 		});
@@ -197,15 +197,11 @@ public class FieldTreeEditor extends LView {
 		sideEditor.onLayerEdit = () -> fieldEditor.canvas.refreshBuffer(true);
 		sideEditor.onSelectLayer = fieldEditor::selectLayer;
 		sideEditor.onSelectEditor = i -> {
-			if (i == FieldSideEditor.CHAR ) {
-				fieldEditor.canvas.setParty(null);
+			if (i == FieldSideEditor.CHAR) {
 				fieldEditor.canvas.setMode(FieldCanvas.CHAR);
 			} else if (i == FieldSideEditor.PARTY) {
-				fieldEditor.canvas.setCharacter(null);
 				fieldEditor.canvas.setMode(FieldCanvas.PARTY);
 			} else {
-				fieldEditor.canvas.setParty(null);
-				fieldEditor.canvas.setCharacter(null);
 				fieldEditor.canvas.setMode(FieldCanvas.TILE);
 			}
 		};

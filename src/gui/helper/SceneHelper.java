@@ -88,6 +88,7 @@ public class SceneHelper {
 		while (it.hasNext()) {
 			ArrayList<LPoint> tiles = it.next();
 			for (LPoint tile : tiles) {
+				int charHeight = currentChar == null ? -1 : currentChar.h;
 				for (int i = 0; i < field.layers.terrain.size(); i++) {
 					Layer layer = field.layers.terrain.get(i);
 					if (!layer.visible)
@@ -108,18 +109,19 @@ public class SceneHelper {
 				for (Layer layer : field.layers.obstacle) {
 					if (!layer.visible)
 						continue;
-					addObstacle(layer, tile, scene, x0, y0);
 					if (showGrid && currentLayer == layer) {
 						addTile(tile, layer.info.height, scene, x0, y0, "?g");
 					}
+					addObstacle(layer, tile, scene, x0, y0);
 				}
 				for (CharTile ctile : field.characters) {
-					if (ctile.x - 1 != tile.x || ctile.y - 1 != tile.y)
+					if (showGrid && ctile.h == charHeight) {
+						addTile(tile, ctile.h, scene, x0, y0, "?g");
+						charHeight = -1;
+					}
+					if (!ctile.visible || ctile.x - 1 != tile.x || ctile.y - 1 != tile.y)
 						continue;
 					addCharacter(ctile, tile, scene, x0, y0);
-					if (showGrid && currentChar == ctile) {
-						addTile(tile, ctile.h, scene, x0, y0, "?g");
-					}
 				}
 			}
 		}

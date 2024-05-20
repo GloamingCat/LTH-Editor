@@ -163,8 +163,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
                 LPoint size = canvas.getCurrentSize();
                 int px = e.x - (x0 + size.x / 2);
                 int py = e.y - (y0 + size.y / 2);
-                int pd = h * FieldHelper.config.grid.pixelsPerHeight;
-                LPoint tile = FieldHelper.math.pixel2Tile(px, py, pd);
+                LPoint tile = FieldHelper.math.pixel2Tile(px, py, h);
 				if (tile.x < 0 || tile.y < 0 || tile.x >= grid[0].length || tile.y >= grid[0][0].length)
 					return;
                 grid[h][tile.x][tile.y] = !grid[h][tile.x][tile.y];

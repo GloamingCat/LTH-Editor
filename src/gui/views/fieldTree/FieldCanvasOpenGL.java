@@ -74,7 +74,9 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 			if (initRenderer())
 				return;
 			SceneHelper.createTileTextures(renderer, shader);
-			scene = SceneHelper.createScene(field, x0, y0, showGrid, currentLayer, currentChar);
+			scene = SceneHelper.createScene(field, x0, y0, showGrid,
+					mode == TILE ? null : currentLayer,
+					mode == CHAR ? null : currentChar);
 			if (vertexArray != null)
 				vertexArray.dispose();
 			vertexArray = new VertexArray(scene.allObjects().size() * 4);

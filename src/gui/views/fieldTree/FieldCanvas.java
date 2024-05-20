@@ -41,8 +41,7 @@ public abstract class FieldCanvas extends LCanvas {
 
 	protected LPoint mousePoint = new LPoint(0, 0);
 	protected Tile currentTile = new Tile(0, 0, 0);
-	protected LPoint clickedTile = null;
-	protected int clickedHeight = 0;
+	protected Tile clickedTile = null;
 	protected boolean draggingLeft = false;
 	protected LPoint dragOrigin = null;
 	protected int mode = 0;
@@ -129,8 +128,8 @@ public abstract class FieldCanvas extends LCanvas {
 			drawBuffer(0, 0, scale, scale);
 			painter.setPaintColor(hoverColor);
 			drawCursor(painter, mousePoint);
-			if (clickedTile != null) {
-				LPoint clickPoint = FieldHelper.math.tile2Pixel(clickedTile.x, clickedTile.y, clickedHeight);
+			if (clickedTile != null && mode != TILE) {
+				LPoint clickPoint = FieldHelper.math.tile2Pixel(clickedTile.dx, clickedTile.dy, currentTile.height);
 				painter.setPaintColor(cursorColor);
 				drawCursor(painter, clickPoint);
 			}
@@ -192,7 +191,7 @@ public abstract class FieldCanvas extends LCanvas {
 
 	public void onMouseMove(int x, int y) {
 		LPoint tilePos = FieldHelper.math.pixel2Tile(x * 1.0f / scale - x0, y * 1.0f / scale - y0,
-				currentTile.height * FieldHelper.config.grid.pixelsPerHeight);
+				currentTile.height);
 		if ((currentTile.dx != tilePos.x || currentTile.dy != tilePos.y) && field != null) {
 			if (tilePos.x >= 0 && tilePos.x < field.sizeX && tilePos.y >= 0 && tilePos.y < field.sizeY) {
 				currentTile.dx = tilePos.x;
@@ -211,8 +210,7 @@ public abstract class FieldCanvas extends LCanvas {
 		if (mode == TILE)
 			useTool(currentTile.dx, currentTile.dy);
 		else { // Characters and Parties
-			clickedTile = new LPoint(currentTile.dx, currentTile.dy);
-			clickedHeight = currentTile.height;
+			clickedTile = currentTile.clone();
 			onTileChange(currentTile.dx, currentTile.dy);
 			refreshBuffer(false);
 		}
@@ -275,6 +273,12 @@ public abstract class FieldCanvas extends LCanvas {
 	public void setCharacter(CharTile tile) {
 		if (tile != currentChar) {
 			currentChar = tile;
+			if (currentChar != null) {
+				currentTile.dx = tile.x - 1;
+				currentTile.dy = tile.y - 1;
+				currentTile.height = tile.h - 1;
+				clickedTile = currentTile.clone();
+			}
 			refreshBuffer(false);
 		}
 	}
@@ -287,14 +291,16 @@ public abstract class FieldCanvas extends LCanvas {
 	}
 
 	public void setField(Field field) {
-		if (field == null) {
-			this.field = null;
-			this.currentLayer = null;
-			rescale(1);
-		} else {
+		if (field != this.field) {
+			currentLayer = null;
+			currentChar = null;
+			currentParty = null;
 			this.field = field;
-			this.currentLayer = null;
-			rescale(scale);
+			if (field == null) {
+				rescale(1);
+			} else {
+				rescale(scale);
+			}
 		}
 		try {
 			refreshBuffer(true);
@@ -304,8 +310,7 @@ public abstract class FieldCanvas extends LCanvas {
 	}
 
 	public void setClickedTile(int x, int y, int h) {
-		clickedTile = new LPoint(x, y);
-		clickedHeight = h;
+		clickedTile = new Tile(x, y, h);
 		repaint();
 	}
 

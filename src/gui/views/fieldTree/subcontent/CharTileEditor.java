@@ -232,6 +232,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		cmbParty.setItems(field.parties);
 		spnX.setMaximum(field.sizeX);
 		spnY.setMaximum(field.sizeY);
+		spnH.setMaximum(field.prefs.maxHeight);
 	}
 
 	public void setPosition(CharTile tile) {
