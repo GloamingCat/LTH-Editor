@@ -113,9 +113,8 @@ public abstract class FieldCanvas extends LCanvas {
                 dragOrigin = null;
             }
         });
-		selection = new int[1][1];
-		selection[0][0] = 0;
-		selectionPoint = new LPoint(0, 0);
+		selection = new int[0][0];
+		selectionPoint = null;
 	}
 
 	// }}
@@ -171,8 +170,8 @@ public abstract class FieldCanvas extends LCanvas {
 		String dirName =  "bin/img/falsearrow_" + direction;
 		painter.setTransparency(255);
 		painter.drawImageCenter(dirName + ".png",
-				(int) (x0 + (p1.x + p3.x) * scale / 2),
-				(int) (y0 + (p1.y + p3.y) * scale / 2),
+				(int) ((x0 + (p1.x + p3.x) / 2) * scale),
+				(int) ((y0 + (p1.y + p3.y) / 2) * scale),
 				scale, scale);
 	}
 	
