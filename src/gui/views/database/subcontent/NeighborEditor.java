@@ -47,23 +47,23 @@ public class NeighborEditor extends GDefaultObjectEditor<boolean[]> {
 		composite.getCellData().setExpand(true, true);
 		composite.getCellData().setSpread(2, 1);
 		
-		LToggleButton arrow135 = new LToggleButton(composite, "bin/img/arrow_135.png", "bin/img/falsearrow_135.png");
+		LToggleButton arrow135 = new LToggleButton(composite, "img/arrow_135.png", "img/falsearrow_135.png");
 		
-		LToggleButton arrow90 = new LToggleButton(composite, "bin/img/arrow_90.png", "bin/img/falsearrow_90.png");
+		LToggleButton arrow90 = new LToggleButton(composite, "img/arrow_90.png", "img/falsearrow_90.png");
 		
-		LToggleButton arrow45 = new LToggleButton(composite, "bin/img/arrow_45.png", "bin/img/falsearrow_45.png");
+		LToggleButton arrow45 = new LToggleButton(composite, "img/arrow_45.png", "img/falsearrow_45.png");
 		
-		LToggleButton arrow180 = new LToggleButton(composite, "bin/img/arrow_180.png", "bin/img/falsearrow_180.png");
+		LToggleButton arrow180 = new LToggleButton(composite, "img/arrow_180.png", "img/falsearrow_180.png");
 		
 		new LLabel(composite, 1, 1);
 		
-		LToggleButton arrow0 = new LToggleButton(composite, "bin/img/arrow_0.png", "bin/img/falsearrow_0.png");
+		LToggleButton arrow0 = new LToggleButton(composite, "img/arrow_0.png", "img/falsearrow_0.png");
 		
-		LToggleButton arrow225 = new LToggleButton(composite, "bin/img/arrow_225.png", "bin/img/falsearrow_225.png");
+		LToggleButton arrow225 = new LToggleButton(composite, "img/arrow_225.png", "img/falsearrow_225.png");
 		
-		LToggleButton arrow270 = new LToggleButton(composite, "bin/img/arrow_270.png", "bin/img/falsearrow_270.png");
+		LToggleButton arrow270 = new LToggleButton(composite, "img/arrow_270.png", "img/falsearrow_270.png");
 		
-		LToggleButton arrow315 = new LToggleButton(composite, "bin/img/arrow_315.png", "bin/img/falsearrow_315.png");
+		LToggleButton arrow315 = new LToggleButton(composite, "img/arrow_315.png", "img/falsearrow_315.png");
 		
 		labels = new LToggleButton [] {arrow0, arrow45, arrow90, arrow135, arrow180, arrow225, arrow270, arrow315};
 		for (LToggleButton btn : labels) {

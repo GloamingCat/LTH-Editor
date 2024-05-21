@@ -167,7 +167,7 @@ public abstract class FieldCanvas extends LCanvas {
 				(int) ((p1.y + y0) * scale) };
 		painter.fillPolygon(poly);
 		int direction = (currentParty.rotation * 90 + FieldHelper.math.initialDirection) % 360;
-		String dirName =  "bin/img/falsearrow_" + direction;
+		String dirName =  "img/falsearrow_" + direction;
 		painter.setTransparency(255);
 		painter.drawImageCenter(dirName + ".png",
 				(int) ((x0 + (p1.x + p3.x) / 2) * scale),

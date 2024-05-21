@@ -1,4 +1,5 @@
 /bin/
+/out/
 *.log
 log.*
 .classpath
