@@ -389,6 +389,12 @@ public class Vocab {
 	
 	// Resize
 	public String RESIZE = "Resize";
+	public String TRANSFORMFIELD = "Transform";
+	public String TRANSPOSE = "Transpose";
+	public String INVERTX = "Invert Axis X";
+	public String INVERTY = "Invert Axis Y";
+	public String ROTATE90 = "Rotate Clockwise";
+	public String ROTATE270 = "Rotate Counterclockwise";
 	public String SIZEX = "Width";
 	public String SIZEY = "Height";
 	public String ALIGNX = "Horizontal Anchor";

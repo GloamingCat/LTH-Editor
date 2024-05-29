@@ -92,5 +92,31 @@ public class Field {
 		return newLayers;
 	}
 
+	public Layers transformLayers(int op) {
+		Layers layers = new Layers();
+		layers.terrain = transformLayers(this.layers.terrain, op);
+		layers.obstacle = transformLayers(this.layers.obstacle, op);
+		layers.region = transformLayers(this.layers.region, op);
+		return layers;
+	}
+	
+	public LDataList<Layer> transformLayers(LDataList<Layer> layers, int op) {
+		LDataList<Layer> newLayers = new LDataList<>();
+		for (Layer l : layers) {
+			Layer newLayer = new Layer(l);
+			switch (op) {
+				case 0: newLayer.transpose(); break;
+				case 1: newLayer.invertX(); break;
+				case 2: newLayer.invertY(); break;
+				case 3: newLayer.rotate90(); break;
+				case 4: newLayer.rotate270(); break;
+			}
+			newLayers.add(newLayer);
+			newLayer.info = l.info;
+			newLayer.visible = l.visible;
+		}
+		return newLayers;
+	}
+
 	
 }

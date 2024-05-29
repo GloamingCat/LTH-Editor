@@ -164,6 +164,7 @@ public class FieldTreeEditor extends LView {
 		fieldEditor.toolBar.onSelectEditor = sideEditor::selectEditor;
 		fieldEditor.toolBar.onResize = newSize -> {
 			fieldTree.refreshObject(fieldTree.getSelectedPath());
+			sideEditor.setObject(fieldEditor.getObject());
 			fieldEditor.canvas.refreshBuffer(true);
 		};
 

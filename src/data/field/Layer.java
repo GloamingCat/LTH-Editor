@@ -66,5 +66,43 @@ public class Layer {
 	public String toString() {
 		return info.name;
 	}
-	
+
+	public void transpose() {
+		int[][] newGrid = new int[grid[0].length][grid.length];
+		for (int i = 0; i < newGrid.length; i++) {
+			for (int j = 0; j < newGrid[0].length; j++) {
+				newGrid[i][j] = grid[j][i];
+			}
+		}
+		grid = newGrid;
+	}
+
+	public void invertX() {
+		int[][] newGrid = new int[grid.length][grid[0].length];
+		for (int i = 0; i < newGrid.length; i++) {
+            System.arraycopy(grid[newGrid.length - i - 1], 0, newGrid[i], 0, newGrid[0].length);
+		}
+		grid = newGrid;
+	}
+
+	public void invertY() {
+		int[][] newGrid = new int[grid.length][grid[0].length];
+		for (int i = 0; i < newGrid.length; i++) {
+			for (int j = 0; j < newGrid[0].length; j++) {
+				newGrid[i][j] = grid[i][newGrid[0].length - j - 1];
+			}
+		}
+		grid = newGrid;
+	}
+
+	public void rotate90() {
+		transpose();
+		invertX();
+	}
+
+	public void rotate270() {
+		transpose();
+		invertY();
+	}
+
 }

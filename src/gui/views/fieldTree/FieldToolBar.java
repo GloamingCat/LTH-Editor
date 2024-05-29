@@ -8,6 +8,7 @@ import gui.views.fieldTree.action.ResizeAction;
 
 import java.util.function.Consumer;
 
+import gui.views.fieldTree.action.TransformAction;
 import lui.container.LContainer;
 import lui.container.LToolBar;
 import lui.dialog.LObjectDialog;
@@ -67,6 +68,19 @@ public class FieldToolBar extends LToolBar {
 		};
 
 		addButtonItem(resizeField, null, Vocab.instance.RESIZE);
+
+		Consumer<Integer> transformField = v -> {
+			if (field != null) {
+				TransformAction action = new TransformAction(this, v);
+				getActionStack().newAction(action);
+				transformField(v);
+			}
+		};
+
+		addListItem(transformField, new Integer[] {0, 1, 2, 3, 4}, Vocab.instance.TRANSFORMFIELD,
+				new String[] { Vocab.instance.TRANSPOSE, Vocab.instance.INVERTX, Vocab.instance.INVERTY,
+				 Vocab.instance.ROTATE90, Vocab.instance.ROTATE270 }
+		);
 	}
 
 	public void resizeField() {
@@ -89,7 +103,6 @@ public class FieldToolBar extends LToolBar {
 	}
 
 	public void resizeField(LRect newSize, Field.Layers newLayers) {
-		//FieldTreeEditor.instance.fieldTree.forceSelection(null);
 		field.sizeX = newSize.width;
 		field.sizeY = newSize.height;
 		field.layers = newLayers;
@@ -99,7 +112,29 @@ public class FieldToolBar extends LToolBar {
 		}
 		if (onResize != null)
 			onResize.accept(newSize);
-		//FieldTreeEditor.instance.fieldTree.forceSelection(path);
+	}
+
+	public void transformField(int op) {
+		field.layers = field.transformLayers(op);
+		if (op == 0 || op >= 3) {
+			int sizeX = field.sizeX;
+			field.sizeX = field.sizeY;
+			field.sizeY = sizeX;
+		}
+		for (CharTile c : field.characters) {
+			if (op == 0 || op >= 3) {
+				int t = c.x;
+				c.x = c.y;
+				c.y = t;
+			}
+			if (op == 1 || op == 3) {
+				c.x = field.sizeX - c.x + 1;
+			} else if (op == 2 || op == 4) {
+				c.y = field.sizeY - c.y + 1;
+			}
+		}
+		if (onResize != null)
+			onResize.accept(null);
 	}
 
 	public void setField(Field field) {
