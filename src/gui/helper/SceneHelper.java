@@ -93,7 +93,7 @@ public class SceneHelper {
 					Layer layer = field.layers.terrain.get(i);
 					if (!layer.visible)
 						continue;
-					addTerrain(layer, tile, scene, x0, y0, field.layers.terrain.size() - i);
+					addTerrain(layer, tile, scene, x0, y0, -i);
 					if (showGrid && currentLayer == layer) {
 						addTile(tile, layer.info.height, scene, x0, y0, "?g");
 					}
@@ -128,7 +128,7 @@ public class SceneHelper {
 		return scene;
 	}
 	
-	public static void addTerrain(Layer layer, LPoint tile, Scene scene, int x0, int y0, int order) {
+	public static void addTerrain(Layer layer, LPoint tile, Scene scene, int x0, int y0, int depth) {
 		int id = layer.grid[tile.x][tile.y];
 		if (id < 0)
 			return;
@@ -146,8 +146,8 @@ public class SceneHelper {
 		int dh = anim.quad.height / anim.rows;
 		
 		LPoint pos = FieldHelper.math.tile2Pixel(tile.x, tile.y, layer.info.height - 1);
-		int depth = FieldHelper.math.pixelDepth(pos.x, pos.y, layer.info.height - 1);
-		int dTop = depth + anim.transform.offsetDepth + order;
+		depth += FieldHelper.math.pixelDepth(pos.x, pos.y, layer.info.height - 1);
+		int dTop = depth + anim.transform.offsetDepth;
 		int dBottom = dTop + conf.grid.depthPerY / 2;
 		
 		int w = dw / 2;
