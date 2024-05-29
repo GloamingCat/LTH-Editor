@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.helper.FieldHelper;
 import gui.views.fieldTree.*;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LPanel;
 import lui.container.LScrollPanel;
 import lui.dialog.LObjectDialog;
@@ -36,7 +37,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		content.setGridLayout(2);
+		content.setGridLayout(1);
 
 		scrolledComposite = new LScrollPanel(content);
 		scrolledComposite.getCellData().setExpand(true, true);
@@ -60,6 +61,8 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		lblPos = new LLabel(bottom, "(-99, -99, -99)");
 		lblPos.getCellData().setExpand(true, false);
 		lblPos.getCellData().setAlignment(LFlags.RIGHT);
+		lblPos.getCellData().setTargetSize(LPrefs.LABELWIDTH, LPrefs.WIDGETHEIGHT);
+		lblPos.setAlignment(LFlags.RIGHT);
 
 		canvas.onTileEnter = t -> {
 			lblPos.setText("(" + (t.dx + 1) + "," + (t.dy + 1) + "," + (t.height + 1) + ")");
@@ -80,6 +83,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		spnH.setMaximum(maxHeight);
 		canvas.setField(field);
 		canvas.setHeight(spnH.getValue() - 1);
+		scrolledComposite.setContentSize(canvas.getTargetSize());
 		super.open(initial);
 	}
 

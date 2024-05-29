@@ -24,8 +24,12 @@ import data.field.Party;
 
 public abstract class FieldCanvas extends LCanvas {
 
+    // Modes
 	public static final int TILE = 0, CHAR = 1, PARTY = 2;
+
+    // Tools
 	public static final int PENCIL = 0, BUCKET = 1, ERASER = 2;
+
 	public Consumer<CharTile> onMoveCharacter;
 	public Consumer<int[][]> onSelectArea;
 
@@ -243,7 +247,7 @@ public abstract class FieldCanvas extends LCanvas {
 		}
 		int w = Math.round((pixelSize.x + x0 * 2 - FieldHelper.config.grid.tileB) * scale);
 		int h = Math.round((pixelSize.y + y0) * scale);
-		scrollPanel.setContentSize(w, h);
+        getCellData().setTargetSize(w, h);
 	}
 
 	public void setCurrentLayer(Layer layer) {
@@ -351,8 +355,6 @@ public abstract class FieldCanvas extends LCanvas {
 
 	public void setMode(int m) {
 		mode = m;
-		if (m == 0)
-			clickedTile = null;
 	}
 
 	public void dragCharacter(int x, int y, LPoint origin) {

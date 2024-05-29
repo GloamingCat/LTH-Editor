@@ -5,6 +5,7 @@ import gui.Vocab;
 import gui.views.fieldTree.*;
 import gui.widgets.DirectionCombo;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.base.event.listener.LControlListener;
 import lui.container.LContainer;
 import lui.container.LPanel;
@@ -14,7 +15,6 @@ import lui.base.data.LDataTree;
 import lui.base.data.LPath;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
-import lui.widget.LCombo;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
 import lui.widget.LTree;
@@ -27,7 +27,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 	
 	private FieldSelector tree;
 	private FieldCanvas canvas;
-	private LCombo cmbDirection;
+	private DirectionCombo cmbDirection;
 	private LSpinner spnX;
 	private LSpinner spnY;
 	private LSpinner spnH;
@@ -37,7 +37,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 	private final int fieldId;
 
 	public PositionDialog(LWindow parent, int fieldId) {
-		super(parent, 640, 480, fieldId, Vocab.instance.POSITIONSHELL);
+		super(parent, 900, 600, fieldId, Vocab.instance.POSITIONSHELL);
 		this.fieldId = fieldId;
 	}
 	
@@ -91,17 +91,19 @@ public class PositionDialog extends LObjectDialog<Position> {
 		new LLabel(bottom, Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR);
 		cmbDirection = new DirectionCombo(bottom);
 		cmbDirection.getCellData().setTargetSize(80, -1);
-		
-		sashForm.setWeights(1, 3);
 
 		lblPos = new LLabel(bottom, "(-99, -99, -99)");
 		lblPos.getCellData().setExpand(true, false);
 		lblPos.getCellData().setAlignment(LFlags.RIGHT);
+		lblPos.getCellData().setTargetSize(LPrefs.LABELWIDTH, LPrefs.WIDGETHEIGHT);
+		lblPos.setAlignment(LFlags.RIGHT);
 
 		canvas.onTileEnter = t -> {
 			lblPos.setText("(" + (t.dx + 1) + "," + (t.dy + 1) + "," + (t.height + 1) + ")");
 			bottom.refreshLayout();
 		};
+
+		sashForm.setWeights(1, 3);
 
 	}
 	
@@ -113,8 +115,9 @@ public class PositionDialog extends LObjectDialog<Position> {
 		spnX.setMaximum(field.sizeX);
 		spnY.setMaximum(field.sizeY);
 		canvas.setField(field);
+		canvas.setMode(FieldCanvas.CHAR);
 		updateClickPoint();
-		scrolledComposite.setContentSize(canvas.getCurrentSize());
+		scrolledComposite.setContentSize(canvas.getTargetSize());
 	}
 	
 	private void updateClickPoint() {
@@ -161,6 +164,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 		pos.y = spnY.getValue();
 		pos.h = spnH.getValue();
 		pos.fieldID = canvas.field.id;
+		pos.direction = cmbDirection.getSelectionIndex();
 		return pos;
 	}
 	

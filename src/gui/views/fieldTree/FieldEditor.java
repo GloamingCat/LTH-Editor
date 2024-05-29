@@ -85,7 +85,7 @@ public class FieldEditor extends GDefaultObjectEditor<Field> {
 	public void selectField(Field field) {
 		canvas.setField(field);
 		toolBar.setField(field);
-		scroll.setContentSize(canvas.getCurrentSize());
+		scroll.setContentSize(canvas.getTargetSize());
 	}
 
 	@Override
