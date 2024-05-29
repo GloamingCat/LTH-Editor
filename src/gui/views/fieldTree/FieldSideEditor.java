@@ -14,7 +14,6 @@ import gui.views.fieldTree.subcontent.LayerList;
 import gui.views.fieldTree.subcontent.PartyEditor;
 import gui.views.fieldTree.subcontent.TileTree;
 import gui.widgets.SimpleEditableList;
-import lui.LMenuInterface;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
@@ -291,11 +290,6 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		trees = new TileTree[] { selTerrain, selObstacle, selRegion };
 		editors = new LContainer[] { terrain, obstacle, region, character, party };
 
-	}
-
-	public void setMenuInterface(LMenuInterface mi) {
-		for (LayerList list : lists)
-			list.setMenuInterface(mi);
 	}
 
 	private void onLayerEdit(Object obj) {

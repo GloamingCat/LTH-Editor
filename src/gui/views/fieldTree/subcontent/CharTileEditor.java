@@ -7,7 +7,7 @@ import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
 import lui.base.LFlags;
 import lui.base.LPrefs;
-import lui.base.event.listener.LControlListener;
+import lui.base.event.LControlEvent;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
@@ -100,23 +100,12 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		// General
 		
 		new LLabel(this, Vocab.instance.KEY, Tooltip.instance.KEY);
-		
 		LText txtKey = new LText(this);
 		txtKey.getCellData().setSpread(2, 1);
 		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
 
 		// Char
-
-		LControlListener<Integer> updateCharSprite = event -> {
-            if (event == null || event.oldValue == null || onChangeSprite == null) return;
-			onChangeSprite.accept(new PositionEvent(
-					spnX.getValue() - 1,
-					spnY.getValue() - 1,
-					spnH.getValue() - 1,
-					event.newValue
-			));
-        };
 
 		new LLabel(this, Vocab.instance.CHARACTER, Tooltip.instance.CHARACTER);
 		LText txtChar = new LText(this, true);
@@ -128,7 +117,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 			}
 		};
 		btnChar.setNameWidget(txtChar);
-		btnChar.addModifyListener(updateCharSprite);
+		btnChar.addModifyListener(this::onCharSpriteChange);
 		addControl(btnChar, "charID");
 		
 		new LLabel(this, Vocab.instance.SPEED, Tooltip.instance.SPEED);
@@ -149,7 +138,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 
 		DirectionCombo cmbDir = new DirectionCombo(animation);
 		cmbDir.getCellData().setExpand(true, false);
-		cmbDir.addModifyListener(updateCharSprite);
+		cmbDir.addModifyListener(this::onCharSpriteChange);
 		addControl(cmbDir, "direction");
 
 		LLabel lblFrame = new LLabel(animation, LFlags.BOTTOM | LFlags.LEFT, Vocab.instance.FRAME, Tooltip.instance.FRAME);
@@ -157,12 +146,14 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		LText txtAnim = new LText(animation);
 		txtAnim.getCellData().setExpand(true, false);
 		txtAnim.getCellData().setRequiredSize(lblFrame.getTargetSize());
+		txtAnim.addModifyListener(this::onCharSpriteChange);
 		addControl(txtAnim, "animation");
 
 		LSpinner spnFrame = new LSpinner(animation);
 		spnFrame.getCellData().setExpand(false, false);
 		spnFrame.getCellData().setAlignment(LFlags.MIDDLE);
 		spnFrame.getCellData().setRequiredSize(36, 0);
+		spnFrame.addModifyListener(this::onCharSpriteChange);
 		addControl(spnFrame, "frame");
 		
 		// Battle
@@ -205,6 +196,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		LCheckBox btnVisible = new LCheckBox(compOptions);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		btnVisible.setHoverText(Tooltip.instance.CHARVISIBLE);
+		btnVisible.addModifyListener(this::onCharSpriteChange);
 		addControl(btnVisible, "visible");
 
 		// Scripts
@@ -213,16 +205,17 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		grpScripts.setGridLayout(1);
 		grpScripts.getCellData().setSpread(3, 1);
 		grpScripts.getCellData().setExpand(true, true);
-		
+
 		ScriptList lstScripts = new ScriptList(grpScripts, 2 | 4 | 8);
 		lstScripts.getCellData().setExpand(true, true);
 		addChild(lstScripts, "scripts");
-		
+
 		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
 		btnRepeat.getCellData().setAlignment(LFlags.LEFT);
 		addControl(btnRepeat, "repeatCollisions");
+
 
 	}
 
@@ -239,6 +232,16 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		spnX.setValue(tile.x);
 		spnY.setValue(tile.y);
 		spnH.setValue(tile.h);
+	}
+
+	private void onCharSpriteChange(LControlEvent<?> event) {
+		if (event == null || event.oldValue == null || onChangeSprite == null) return;
+		onChangeSprite.accept(new PositionEvent(
+				spnX.getValue() - 1,
+				spnY.getValue() - 1,
+				spnH.getValue() - 1,
+				-1
+		));
 	}
 
 	@Override
