@@ -6,7 +6,6 @@ import gui.views.fieldTree.*;
 import gui.widgets.DirectionCombo;
 import lui.base.LFlags;
 import lui.base.LPrefs;
-import lui.base.event.listener.LControlListener;
 import lui.container.LContainer;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
@@ -58,11 +57,6 @@ public class PositionDialog extends LObjectDialog<Position> {
 
 		canvas = new PositionCanvas(scrolledComposite);
 
-		LControlListener<Integer> redraw = event -> {
-            updateClickPoint();
-            canvas.repaint();
-        };
-
 		LPanel bottom = new LPanel(content);
 		bottom.setGridLayout(9);
 		bottom.getCellData().setExpand(true, false);
@@ -72,21 +66,37 @@ public class PositionDialog extends LObjectDialog<Position> {
 		spnX.getCellData().setTargetSize(80, -1);
 		spnX.setMinimum(1);
 		spnX.setValue(1);
-		spnX.addModifyListener(redraw);
+		spnX.addModifyListener(e -> {
+			int y = spnY.getValue() - 1;
+			int h = spnH.getValue() - 1;
+			canvas.setClickedTile(e.newValue - 1, y, h);
+			canvas.repaint();
+		});
 		
 		new LLabel(bottom, Vocab.instance.POSITIONY, Tooltip.instance.POSITIONY);
 		spnY = new LSpinner(bottom);
 		spnY.getCellData().setTargetSize(80, -1);
 		spnY.setMinimum(1);
 		spnY.setValue(1);
-		spnY.addModifyListener(redraw);
+		spnY.addModifyListener(e -> {
+			int x = spnX.getValue() - 1;
+			int h = spnH.getValue() - 1;
+			canvas.setClickedTile(x, e.newValue - 1, h);
+			canvas.repaint();
+		});
 		
 		new LLabel(bottom, Vocab.instance.POSITIONH, Tooltip.instance.POSITIONH);
 		spnH = new LSpinner(bottom);
 		spnH.getCellData().setTargetSize(80, -1);
 		spnH.setMinimum(1);
 		spnH.setValue(1);
-		spnH.addModifyListener(redraw);
+		spnH.addModifyListener(e -> {
+			int x = spnX.getValue() - 1;
+			int y = spnY.getValue() - 1;
+			canvas.setHeight(e.newValue - 1);
+			canvas.setClickedTile(x, y, e.newValue - 1);
+			canvas.repaint();
+		});
 		
 		new LLabel(bottom, Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR);
 		cmbDirection = new DirectionCombo(bottom);
@@ -145,8 +155,9 @@ public class PositionDialog extends LObjectDialog<Position> {
 			if (initial.direction == -1) {
 				cmbDirection.setValue(-1);
 			} else {
-				cmbDirection.setValue(initial.direction / 45);
+				cmbDirection.setSelectionIndex(initial.direction);
 			}
+			canvas.setHeight(initial.h - 1);
 		}
 		updateClickPoint();
 		super.open(initial);

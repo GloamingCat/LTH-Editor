@@ -55,17 +55,18 @@ public class ResizeDialog extends GObjectDialog<LRect> {
 	@Override
 	public LRect createResult(LRect initial) {
 		LRect rect = super.createResult(initial);
-		if (rect == null)
+		if (rect == null || rect.height == initial.height && rect.width == initial.width)
 			return null;
+		// X anchor
 		if (rect.x == 1) {
 			rect.x = (initial.width - rect.width) / 2;
 		} else if (rect.x == 2) {
-			rect.y = initial.width - rect.width;
+			rect.x = initial.width - rect.width;
 		}
 		// Y anchor
 		if (rect.y == 1) {
 			rect.y = (initial.height - rect.height) / 2;
-		} else if (rect.x == 2) {
+		} else if (rect.y == 2) {
 			rect.y = initial.height - rect.height;
 		}
 		return rect;
