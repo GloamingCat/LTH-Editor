@@ -62,7 +62,7 @@ public class IconDialog extends LObjectDialog<Icon> {
 		image.addMouseListener(e -> {
             if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
                 Animation anim = (Animation) tree.getSelectedObject();
-                if (anim != null) {
+                if (anim != null && anim.quad.width > 0 && anim.quad.height > 0) {
                     col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
                     row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
 					col = Math.max(0, Math.min(col, anim.cols - 1));

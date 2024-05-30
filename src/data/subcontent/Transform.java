@@ -76,20 +76,28 @@ public class Transform implements Cloneable {
 		brightness = (brightness * t.brightness) / 100;
 		return this;
 	}
-	
-	public void setColorTransform(LImage img, Transform other) {
-		img.setRGBA(red / 255f * other.red / 255f,
-				green / 255f * other.green / 255f,
-				blue / 255f * other.blue / 255f,
-				alpha / 255f * other.alpha / 255f);
-		img.setHSV(hue + other.hue,
-				saturation / 100f * other.saturation / 100f,
-				brightness / 100f * other.brightness / 100f);
+
+	public void applyTo(LImage img) {
+		img.setRGBA(red / 255f * img.r,
+				green / 255f * img.g,
+				blue / 255f * img.b,
+				alpha / 255f * img.a);
+		img.setHSV(hue + img.h,
+				saturation / 100f * img.s,
+				brightness / 100f * img.v);
+		img.setOffset(img.ox + offsetX, img.oy + offsetY);
+		img.setScale(scaleX / 100f * img.sx, scaleY / 100f * img.sy);
+		img.setRotation(rotation + img.rz);
 	}
-	
-	public void setColorTransform(LImage img) {
-		img.setRGBA(red / 255f, green / 255f, blue / 255f, alpha / 255f);
-		img.setHSV(hue, saturation / 100f, brightness / 100f);
+
+	public void applyColorTo(LImage img) {
+		img.setRGBA(red / 255f * img.r,
+				green / 255f * img.g,
+				blue / 255f * img.b,
+				alpha / 255f * img.a);
+		img.setHSV(hue + img.h,
+				saturation / 100f * img.s,
+				brightness / 100f * img.v);
 	}
-	
+
 }

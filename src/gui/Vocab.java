@@ -235,6 +235,7 @@ public class Vocab {
 	public String COLLIDERTILES = "Colliders";
 	public String PORTRAITS = "Portraits";
 	public String KOEFFECT = "KO Effect";
+	public String APPLYTRANSFORM = "Apply transform";
 	
 	// Job
 	public String ATTACKSKILL = "Attack";

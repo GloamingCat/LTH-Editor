@@ -18,8 +18,10 @@ public class GameCharacter extends Data implements LInitializable {
 	public LDataList<Tile> tiles = new LDataList<>();
 	public Transform transform = new Transform();
 	public LDataList<Portrait> portraits = new LDataList<>();
+	public boolean transformPortraits = true;
 	public LDataList<Node> animations = new LDataList<>();
-	
+	public boolean transformAnimations = true;
+
 	public LDataList<Script> scripts = new LDataList<>();
 	public boolean repeatCollisions = false;
 	

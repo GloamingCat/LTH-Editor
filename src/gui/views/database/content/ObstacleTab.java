@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import data.subcontent.Transform;
 import lui.base.LFlags;
 import gui.Tooltip;
 import gui.Vocab;
@@ -14,8 +15,8 @@ import lui.container.LImage;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
+import lui.graphics.LPainter;
 import lui.widget.LLabel;
-import data.Animation;
 import data.Obstacle;
 import data.Obstacle.ObstacleTile;
 import gson.GObjectTreeSerializer;
@@ -73,17 +74,19 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		TransformEditor transformEditor = new TransformEditor(grpTransform);
 		transformEditor.addMenu(grpTransform);
 		addChild(transformEditor, "transform");
-		transformEditor.addSelectionListener(event -> {
-            Obstacle o = contentEditor.getObject();
-            if (o == null)
-                return;
-            Animation a = (Animation) Project.current.animations.getData().get(o.image.id);
-            if (a == null)
-                return;
-            transformEditor.secondaryTransform = a.transform;
-        });
-		transformEditor.setImage(imgGraphics);
-		btnGraphics.setTransform(transformEditor);
+
+		transformEditor.onChange = t -> btnGraphics.setTransforms(new Transform[] { t });
+
+		imgGraphics.addPainter(new LPainter() {
+			@Override
+			public void paint() {
+				int x = Math.round(imgGraphics.ox * imgGraphics.sx) + (int) imgGraphics.getImageX();
+				int y = Math.round(imgGraphics.oy * imgGraphics.sy) + (int) imgGraphics.getImageY();
+				x -= 1;
+				drawLine(x - 2, y, x + 2, y);
+				drawLine(x, y - 2, x, y + 2);
+			}
+		});
 
 		LLabel fill = new LLabel(contentEditor.right, 1, 1);
 		fill.getCellData().setExpand(true, true);

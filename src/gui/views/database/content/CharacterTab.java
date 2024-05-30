@@ -9,7 +9,6 @@ import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.views.fieldTree.subcontent.ScriptList;
-import gui.widgets.CheckBoxPanel;
 import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
@@ -52,6 +51,11 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 	@Override
 	protected void createContent() {
+		contentEditor.right.getCellData().setExpand(true, false);
+		contentEditor.right.getCellData().setAlignment(LFlags.FILL);
+		contentEditor.left.getCellData().setExpand(true, false);
+		contentEditor.left.getCellData().setAlignment(LFlags.FILL);
+
 		LLabel lblBattler = new LLabel(contentEditor.grpGeneral, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);
 		LPanel battler = new LPanel(contentEditor.grpGeneral);
 		battler.setGridLayout(2);
@@ -129,11 +133,10 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		lstScripts.addMenu(grpScripts);
 		addChild(lstScripts, "scripts");
 
-		LPanel scriptCheck = new CheckBoxPanel(grpScripts);
-
-		LCheckBox btnRepeat = new LCheckBox(scriptCheck);
+		LCheckBox btnRepeat = new LCheckBox(grpScripts);
 		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
 		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
+		btnRepeat.getCellData().setAlignment(LFlags.LEFT);
 		addControl(btnRepeat, "repeatCollisions");
 
 		// KO
@@ -180,6 +183,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		addChild(lstAnim, "animations");
 		LImage imgAnim = new LImage(grpAnimations);
 		imgAnim.getCellData().setExpand(true, true);
+		imgAnim.getCellData().setSpread(1, 2);
 		imgAnim.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
 		lstAnim.getCollectionWidget().addSelectionListener(event -> updateAnim(imgAnim, (Node) event.data));
 		lstAnim.getCollectionWidget().addEditListener(new LCollectionListener<>() {
@@ -188,7 +192,13 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				updateAnim(imgAnim, e.newData);
 			}
 		});
-		
+
+		LCheckBox btnAnim = new LCheckBox(grpAnimations);
+		btnAnim.setText(Vocab.instance.APPLYTRANSFORM);
+		btnAnim.setHoverText(Tooltip.instance.TRANSFORMANIM);
+		btnAnim.getCellData().setAlignment(LFlags.LEFT);
+		addControl(btnAnim, "transformAnimations");
+
 		LFrame grpPortraits = new LFrame(graphics, Vocab.instance.PORTRAITS);
 		grpPortraits.setGridLayout(2);
 		grpPortraits.setHoverText(Tooltip.instance.CHARICONS);
@@ -199,6 +209,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		addChild(lstPortraits, "portraits");
 		LImage imgPortrait = new LImage(grpPortraits);
 		imgPortrait.getCellData().setExpand(true, true);
+		imgPortrait.getCellData().setSpread(1, 2);
 		imgPortrait.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
 		lstPortraits.getCollectionWidget().addSelectionListener(event -> updatePortrait(imgPortrait, (Portrait) event.data));
 		lstPortraits.getCollectionWidget().addEditListener(new LCollectionListener<>() {
@@ -208,10 +219,17 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			}
 		});
 
-		contentEditor.right.getCellData().setExpand(true, false);
-		contentEditor.right.getCellData().setAlignment(LFlags.FILL);
-		contentEditor.left.getCellData().setExpand(true, false);
-		contentEditor.left.getCellData().setAlignment(LFlags.FILL);
+		LCheckBox btnIcon = new LCheckBox(grpPortraits);
+		btnIcon.setText(Vocab.instance.APPLYTRANSFORM);
+		btnIcon.setHoverText(Tooltip.instance.TRANSFORMICON);
+		btnIcon.getCellData().setAlignment(LFlags.LEFT);
+		addControl(btnIcon, "transformPortraits");
+
+		transform.onChange = t -> {
+			updateAnim(imgAnim, lstAnim.getCollectionWidget().getSelectedObject());
+			updatePortrait(imgPortrait, lstPortraits.getCollectionWidget().getSelectedObject());
+		};
+
 	}
 	
 	private void updateAnim(LImage img, Node node) {
@@ -219,7 +237,12 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 			Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
 			if (anim != null) {
 				GameCharacter c = contentEditor.getObject();
-				anim.transform.setColorTransform(img, c.transform);
+				img.resetTransform();
+				anim.transform.applyTo(img);
+				if (c.transformAnimations)
+					c.transform.applyTo(img);
+				else
+					c.transform.applyColorTo(img);
 				img.setImage(anim.quad.fullPath(), anim.quad);
 			} else {
 				img.setImage((String) null); 
@@ -236,9 +259,14 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 				img.setImage((String) null);
 				return;
 			}
+			img.resetTransform();
 			GameCharacter c = contentEditor.getObject();
 			Animation anim = (Animation) obj;
-			anim.transform.setColorTransform(img, c.transform);
+			anim.transform.applyTo(img);
+			if (c.transformPortraits)
+				c.transform.applyTo(img);
+			else
+				c.transform.applyColorTo(img);
 			if (anim.quad.path.isEmpty()) {
 				img.setImage((String) null);
 				return;

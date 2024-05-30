@@ -1,5 +1,6 @@
 package gui.views.database.content;
 
+import data.subcontent.Transform;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.AudioPlayDialog;
@@ -164,12 +165,11 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		QuadButton btnImage = new QuadButton(grpImg, true);
 		btnImage.addMenu(image);
 		btnImage.addMenu(grpImg);
+		btnImage.setImageWidget(image);
 		addControl(btnImage, "quad");
 		
-		transformEditor.setImage(image);
-		btnImage.setImage(image);
-		btnImage.setTransform(transformEditor);
-		
+		transformEditor.onChange = t -> btnImage.setTransforms(new Transform[] { t });
+
 		addDurationListener(btnIntroDuration, txtIntroDuration);
 		addDurationListener(btnLoopDuration, txtLoopDuration);
 		addPatternListener(btnIntroPattern, txtIntroPattern);

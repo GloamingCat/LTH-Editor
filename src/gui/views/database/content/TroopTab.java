@@ -234,8 +234,9 @@ public class TroopTab extends DatabaseTab<Troop> {
 				Animation anim = (Animation) Project.current.animations.getData().get(animID);
 				if (anim != null && anim.cols > 0 && anim.rows > 0) {
 					Icon icon = new Icon(animID, anim.getFrame(0), 270 / 45);
-					anim.transform.setColorTransform(img, c.transform);
-					img.setScale(anim.transform.scaleX * c.transform.scaleX / 10000f, anim.transform.scaleY * c.transform.scaleY / 10000f);
+					img.resetTransform();
+					anim.transform.applyTo(img);
+					c.transform.applyTo(img);
 					img.setImage(icon.fullPath(), icon.getRectangle());
 					return;
 				}

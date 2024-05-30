@@ -1,5 +1,6 @@
 package gui.widgets;
 
+import data.subcontent.Transform;
 import gui.shell.QuadDialog;
 import gui.views.database.subcontent.TransformEditor;
 import lui.container.LContainer;
@@ -17,6 +18,7 @@ public class QuadButton extends LObjectButton<Quad> {
 	
 	private LImage image;
 	private TransformEditor transform;
+	private Transform[] transforms = new Transform[0];
 	
 	public QuadButton(LContainer parent, boolean optional) {
 		super(parent);
@@ -28,12 +30,14 @@ public class QuadButton extends LObjectButton<Quad> {
 		});
 	}
 
-	public void setImage(LImage image) {
+	public void setImageWidget(LImage image) {
 		this.image = image;
 	}
 	
-	public void setTransform(TransformEditor transform) {
-		this.transform = transform;
+	public void setTransforms(Transform[] transforms) {
+		this.transforms = transforms;
+		if (image != null)
+			applyTransforms();
 	}
 	
 	@Override
@@ -42,14 +46,12 @@ public class QuadButton extends LObjectButton<Quad> {
 			setEnabled(true);
 			Quad s = (Quad) value;
 			if (image != null) {
-				if (transform != null) {
-					transform.updateColorTransform(image);
-				}
 				if (s.path.isEmpty()) {
 					image.setImage((String) null);
 				} else {
 					image.setImage(s.fullPath(), s);
 				}
+				applyTransforms();
 			}
 			currentValue = s;
 		} else {
@@ -59,6 +61,13 @@ public class QuadButton extends LObjectButton<Quad> {
 			}
 			currentValue = null;
 		}
+	}
+
+	private void applyTransforms() {
+		image.resetTransform();
+		for (Transform t : transforms)
+			t.applyTo(image);
+		image.repaint();
 	}
 
 	@Override

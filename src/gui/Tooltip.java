@@ -334,9 +334,15 @@ public class Tooltip {
             The set can be changed when the character is in a battle (to set 'Battle') and when it receives a status (e. g. 'Sleep').
             Example: 'Battle:Idle' indicates that the animation's name is 'Idle', but it belongs to the set 'Battle',
             so it replaces the 'Idle' animation during battle.""";
+	public String TRANSFORMANIM = """
+			Apply character's transform to all of its animations.
+			When false, only color is applied.""";
 	public String CHARICONS = """
             The list of portrait icons of this character.
             The name of the animation must be unique in the list.""";
+	public String TRANSFORMICON = """
+			Apply character's transform to all of its portraits.
+			When false, only color is applied.""";
 	public String KOEFFECT = "What happens when this character is knocked out.";
 	public String KOANIM = "The name of the animation that over the character when it's knocked out.";
 	public String KOFADE = """
@@ -486,7 +492,7 @@ public class Tooltip {
 	public String OFFSETDEPTH = """
 			Number added to the sprite's depth.
 			Sprites with higher depth are rendered first.""";
-	public String ROTATION = "Rotation of the sprite, in angles.";
+	public String ROTATION = "Rotation of the sprite, in degrees.";
 	public String SCALEX = "Horizontal scale of the sprite, in percentage.";
 	public String SCALEY = "Vertical scale of the sprite, in percentage.";
 	public String RED = "Red multiplier. Neutral/white is 255.";
