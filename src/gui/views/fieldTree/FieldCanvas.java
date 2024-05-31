@@ -1,6 +1,7 @@
 package gui.views.fieldTree;
 
 import data.subcontent.Tile;
+import lui.LovelyTheme;
 import lui.container.LCanvas;
 import lui.container.LScrollPanel;
 import lui.graphics.LColor;
@@ -54,7 +55,7 @@ public abstract class FieldCanvas extends LCanvas {
 	protected LPoint selectionPoint;
 	protected int[][] selection;
 
-	public LColor hoverColor = new LColor(0, 0, 0);
+	public LColor hoverColor = LovelyTheme.BLACK;
 	public LColor cursorColor = new LColor(255, 0, 0);
 	public LColor partyColor = new LColor(0, 0, 255);
 	public LColor selectionColor = new LColor(255, 255, 0);

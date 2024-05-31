@@ -8,8 +8,10 @@ import batching.BatchIterator;
 import batching.Scene;
 import gui.helper.FieldHelper;
 import gui.helper.SceneHelper;
+import lui.LovelyTheme;
 import lui.container.LScrollPanel;
 import lui.base.data.LPoint;
+import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import rendering.Renderer;
 import rendering.Screen;
@@ -51,7 +53,8 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 		}
 		try {
 			renderer = new Renderer();
-			renderer.setBackgroundColor(192, 192, 192, 255);
+			LColor bg = LovelyTheme.LIGHT;
+			renderer.setBackgroundColor(bg.red, bg.green, bg.blue, 255);
 			renderer.setPencilSize(1);
 			try {
 				shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");

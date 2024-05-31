@@ -1,5 +1,6 @@
 package gui.helper;
 
+import lui.LovelyTheme;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import lui.base.data.LPoint;
@@ -21,7 +22,7 @@ import project.Project;
 
 public class FieldPainterGC {
 
-	public LColor gridColor = new LColor(50, 50, 50);
+	public LColor gridColor = LovelyTheme.DARK;
 
 	public int imgW, imgH;
 

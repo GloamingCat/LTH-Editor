@@ -1,5 +1,6 @@
 package gui.widgets;
 
+import lui.LovelyTheme;
 import lui.base.LFlags;
 import lui.container.LContainer;
 import lui.container.LPanel;
@@ -18,6 +19,7 @@ public class IconButtonPanel extends LPanel {
 		getCellData().setRequiredSize(-1, 48);
 
 		LImage imgIcon = new LImage(this);
+		imgIcon.setBackground(LovelyTheme.LIGHT);
 		imgIcon.getCellData().setExpand(true, true);
 		imgIcon.setAlignment(LFlags.LEFT | LFlags.TOP);
 

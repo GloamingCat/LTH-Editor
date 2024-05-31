@@ -2,6 +2,7 @@ package gui.shell.field;
 
 import gui.Tooltip;
 import gui.Vocab;
+import lui.LovelyTheme;
 import lui.base.LFlags;
 import lui.container.LImage;
 import lui.container.LPanel;
@@ -10,7 +11,6 @@ import lui.container.LScrollPanel;
 import lui.base.data.LDataTree;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
-import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import lui.widget.LCheckBox;
 import lui.widget.LLabel;
@@ -21,7 +21,6 @@ import data.Animation;
 import data.field.FieldImage;
 
 import project.Project;
-
 
 public class FieldImageShell extends LObjectDialog<FieldImage> {
 	
@@ -62,7 +61,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 		scroll = new LScrollPanel(sashForm);
 		
 		image = new LImage(scroll);
-		image.setBackground(new LColor(100, 100, 100));
+		image.setBackground(LovelyTheme.LIGHT);
 		image.setAlignment(LFlags.TOP | LFlags.LEFT);
 		image.addPainter(new LPainter() {
 			public void paint() {

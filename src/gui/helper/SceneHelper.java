@@ -18,6 +18,7 @@ import data.field.CharTile;
 import data.field.Field;
 import data.field.Layer;
 import data.subcontent.Icon;
+import lui.LovelyTheme;
 import lui.graphics.LColor;
 import lui.base.data.LPoint;
 import lui.graphics.LTexture;
@@ -70,7 +71,9 @@ public class SceneHelper {
 				old.dispose();
 			loadedTextures.put(key, texture);
 		}
-		Texture cell = createTileTexture(renderer, 0.95f, 64, shader);
+		LColor color = LovelyTheme.MEDIUM.clone();
+		color.alpha = 64;
+		Texture cell = createTileTexture(renderer, 0.95f, color, shader);
 		Texture old = loadedTextures.get("?g");
 		if (old != null)
 			old.dispose();
@@ -290,21 +293,20 @@ public class SceneHelper {
 	// {{ Tile texture
 	
 	public static LTexture createTileImage(Renderer renderer, float scale, LColor color, ShaderProgram shader) {
-		renderer.setPencilColor(color.red, color.green, color.blue, color.alpha);
-		Texture texture = createTileTexture(renderer, scale, 255, shader);
+		Texture texture = createTileTexture(renderer, scale, color, shader);
 		LTexture img = toImage(texture);
 		texture.dispose();
 		return img;
 	}
 	
-	private static Texture createTileTexture(Renderer renderer, float scale, int alpha, ShaderProgram shader) {
+	private static Texture createTileTexture(Renderer renderer, float scale, LColor color, ShaderProgram shader) {
 		int w = (int)Math.ceil(conf.grid.tileW * scale) + 6;
 		int h = (int)Math.ceil(conf.grid.tileH * scale) + 6;
 		Screen cellBuffer = new Screen(w, h, false);
 		VertexArray array = VertexArray.octagon(w / 2.0f, h / 2.0f,
 				conf.grid.tileW * scale, conf.grid.tileH * scale,
 				conf.grid.tileB * scale, conf.grid.tileS * scale,
-				0, 0, 0, alpha);
+				color.red, color.green, color.blue, color.alpha);
 		array.initVAO(shader.attributes, shader.vertexSize);
 		cellBuffer.bind(shader);
 		whiteTexture.bind();

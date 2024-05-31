@@ -1,16 +1,15 @@
 package gui.widgets;
 
+import lui.LovelyTheme;
 import lui.base.LFlags;
 import lui.base.data.LDataTree;
 import lui.container.LContainer;
 import lui.container.LFlexPanel;
 import lui.container.LScrollPanel;
-import lui.graphics.LColor;
 import lui.widget.LNodeSelector;
 
 public class AnimationSelector extends LFlexPanel {
 
-    protected static LColor bg = new LColor(127, 127, 127);
 
     protected final LNodeSelector<Object> tree;
     protected final TransformedImage image;
@@ -21,7 +20,7 @@ public class AnimationSelector extends LFlexPanel {
 		tree = new LNodeSelector<>(this, true);
 		scroll = new LScrollPanel(this);
 		image = new TransformedImage(scroll);
-		image.setBackground(bg);
+		image.setBackground(LovelyTheme.LIGHT);
 		image.getCellData().setAlignment(LFlags.TOP | LFlags.LEFT);
         tree.addModifyListener(event -> setAnimation(event.newValue));
     }

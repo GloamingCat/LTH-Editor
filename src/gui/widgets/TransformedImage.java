@@ -12,9 +12,11 @@ import lui.graphics.LColor;
 import lui.graphics.LPainter;
 import project.Project;
 
+import javax.swing.*;
+
 public class TransformedImage extends LImage {
 
-	private static final LColor originColor = new LColor(0, 0, 0, 255);
+	private final LColor originColor = new LColor(UIManager.getColor("textText"));
 
     public TransformedImage(LContainer parent) {
         super(parent);

@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
 import gui.widgets.CheckBoxPanel;
+import lui.LovelyTheme;
 import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LPath;
@@ -255,6 +256,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		public UnitGrid(LContainer parent) {
 			super(parent);
 			getCollectionWidget().setCellSize(tWidth, tHeight);
+			getCollectionWidget().setCellColor(LovelyTheme.LIGHT);
 		}
 		
 		@Override
