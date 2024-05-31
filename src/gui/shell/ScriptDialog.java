@@ -8,24 +8,24 @@ import lui.base.LPrefs;
 import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.container.LFlexPanel;
+import lui.container.LViewFolder;
 import lui.dialog.LWindow;
 import lui.gson.GObjectDialog;
-import lui.widget.LFileSelector;
-import lui.widget.LCheckBox;
-import lui.widget.LLabel;
-import lui.widget.LText;
+import lui.widget.*;
 
 import data.subcontent.Script;
 import project.Project;
 
 public class ScriptDialog extends GObjectDialog<Script> {
-	
+
+	private LViewFolder viewFolder;
 	private LFileSelector selFile;
+	private LNodeSelector<Object> selSheet;
 	
-	public static final int OPTIONAL = 0x1;
-	public static final int ONLOAD = 0x01;
-	public static final int ONCOLLIDE = 0x001;
-	public static final int ONINTERACT = 0x0001;
+	public static final int OPTIONAL = 1;
+	public static final int ONLOAD = 2;
+	public static final int ONCOLLIDE = 4;
+	public static final int ONINTERACT = 8;
 	
 	public ScriptDialog(LWindow parent, int style) {
 		super(parent, 750, 450, style, Vocab.instance.SCRIPTSHELL);
@@ -33,7 +33,7 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	
 	@Override
 	protected void createContent(int style) {
-		super.createContent(style);
+		super.createContent(0);
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.DESCRIPTION, Tooltip.instance.DESCRIPTION);
@@ -44,9 +44,28 @@ public class ScriptDialog extends GObjectDialog<Script> {
 		LFlexPanel form = new LFlexPanel(contentEditor, true);
 		form.getCellData().setExpand(true, true);
 		form.getCellData().setSpread(2, 1);
-		selFile = new LFileSelector(form, (style & OPTIONAL) > 0);
+
+		// Script
+
+		viewFolder = new LViewFolder(form, false);
+
+		selFile = new LFileSelector(viewFolder, (style & OPTIONAL) > 0);
 		selFile.addFileRestriction(f ->f.getName().endsWith(".lua"));
 		selFile.setFolder(Project.current.scriptPath());
+		selFile.addModifyListener(event -> {
+			if (event.newValue != null)
+				selSheet.setValue(null);
+		});
+		viewFolder.addTab(Vocab.instance.LUAFILE, selFile);
+
+		selSheet = new LNodeSelector<>(viewFolder, (style & OPTIONAL) > 0);
+		selSheet.addModifyListener(event -> {
+			if (event.newValue != null)
+				selFile.setValue(null);
+		});
+		viewFolder.addTab(Vocab.instance.EVENTSHEET, selSheet);
+
+		// Parameters
 
 		LFrame grpOpts = new LFrame(form, Vocab.instance.OPTIONS);
 		grpOpts.setGridLayout(2);
@@ -108,7 +127,16 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	}
 	
 	public void open(Script initial) {
-		selFile.setSelectedFile(initial.name);
+		selSheet.setCollection(Project.current.events.getTree());
+		try {
+			int id = Integer.parseInt(initial.name);
+			selFile.setSelectedFile(null);
+			selSheet.setValue(id);
+			viewFolder.openTab(1);
+		} catch (NumberFormatException e) {
+			selSheet.setValue(null);
+			selFile.setSelectedFile(initial.name);
+		}
 		super.open(initial);
 	}
 	
@@ -116,8 +144,17 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	protected Script createResult(Script initial) {
 		Script script = contentEditor.getObject();
 		script.name = selFile.getSelectedFile();
-		if (script.name == null)
+		if (script.name == null) // Legacy
 			script.name = "";
+		if (script.name.isEmpty()) {
+			Integer id = selSheet.getValue();
+			System.out.println(id);
+			if (id != null && id >= 0)
+				script.name = "" + id;
+			else
+				script.name = "";
+		}
 		return super.createResult(initial);
 	}
+
 }

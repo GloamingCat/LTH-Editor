@@ -10,7 +10,7 @@ import gui.views.database.subcontent.SkillEffectList;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.CheckBoxPanel;
 import gui.widgets.DescriptionField;
-import gui.widgets.IconSelector;
+import gui.widgets.IconButtonPanel;
 import gui.widgets.LuaButton;
 import lui.base.LFlags;
 import lui.base.LPrefs;
@@ -57,7 +57,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		new IconSelector(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
+		new IconButtonPanel(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
 		
 		// Description
 		

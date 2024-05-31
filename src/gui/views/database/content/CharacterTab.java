@@ -12,12 +12,12 @@ import gui.views.fieldTree.subcontent.ScriptList;
 import gui.widgets.IDButton;
 import gui.widgets.ImageButton;
 import gui.widgets.SimpleEditableList;
+import gui.widgets.TransformedImage;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.base.event.listener.LCollectionListener;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.container.LPanel;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
@@ -28,7 +28,6 @@ import lui.widget.LLabel;
 import lui.widget.LSpinner;
 import lui.widget.LText;
 
-import data.Animation;
 import data.GameCharacter;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
@@ -40,6 +39,7 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 	private IDButton btnBattler;
 	private NodeList lstAnim;
+	private PortraitList lstPortraits;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -89,9 +89,9 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		grpTransform.setHoverText(Tooltip.instance.TRANSFORM);
 		grpTransform.getCellData().setExpand(true, false);
 		grpTransform.getCellData().setAlignment(LFlags.FILL);
-		TransformEditor transform = new TransformEditor(grpTransform);
-		transform.addMenu(grpTransform);
-		addChild(transform, "transform");
+		TransformEditor transformEditor = new TransformEditor(grpTransform);
+		transformEditor.addMenu(grpTransform);
+		addChild(transformEditor, "transform");
 
 		// Tiles + Scripts
 
@@ -181,15 +181,21 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		lstAnim.getCellData().setExpand(false, true);
 		lstAnim.addMenu(grpAnimations);
 		addChild(lstAnim, "animations");
-		LImage imgAnim = new LImage(grpAnimations);
+		TransformedImage imgAnim = new TransformedImage(grpAnimations);
 		imgAnim.getCellData().setExpand(true, true);
 		imgAnim.getCellData().setSpread(1, 2);
 		imgAnim.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
-		lstAnim.getCollectionWidget().addSelectionListener(event -> updateAnim(imgAnim, (Node) event.data));
+		lstAnim.getCollectionWidget().addSelectionListener(e -> {
+			GameCharacter c = contentEditor.getObject();
+			if (c != null)
+				imgAnim.update((Node) e.data, c.transform, !c.transformAnimations);
+		});
 		lstAnim.getCollectionWidget().addEditListener(new LCollectionListener<>() {
 			@Override
 			public void onEdit(LEditEvent<Node> e) {
-				updateAnim(imgAnim, e.newData);
+				GameCharacter c = contentEditor.getObject();
+				if (c != null)
+					imgAnim.update(e.newData, c.transform, !c.transformAnimations);
 			}
 		});
 
@@ -202,20 +208,26 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		LFrame grpPortraits = new LFrame(graphics, Vocab.instance.PORTRAITS);
 		grpPortraits.setGridLayout(2);
 		grpPortraits.setHoverText(Tooltip.instance.CHARICONS);
-		PortraitList lstPortraits = new PortraitList(grpPortraits);
+		lstPortraits = new PortraitList(grpPortraits);
 		lstPortraits.getCellData().setRequiredSize(128, 0);
 		lstPortraits.getCellData().setExpand(false, true);
 		lstPortraits.addMenu(grpPortraits);
 		addChild(lstPortraits, "portraits");
-		LImage imgPortrait = new LImage(grpPortraits);
+		TransformedImage imgPortrait = new TransformedImage(grpPortraits);
 		imgPortrait.getCellData().setExpand(true, true);
 		imgPortrait.getCellData().setSpread(1, 2);
 		imgPortrait.setAlignment(LFlags.CENTER | LFlags.MIDDLE);
-		lstPortraits.getCollectionWidget().addSelectionListener(event -> updatePortrait(imgPortrait, (Portrait) event.data));
+		lstPortraits.getCollectionWidget().addSelectionListener(e -> {
+			GameCharacter c = contentEditor.getObject();
+			if (c != null)
+				imgPortrait.update((Portrait) e.data, c.transform, !c.transformPortraits);
+		});
 		lstPortraits.getCollectionWidget().addEditListener(new LCollectionListener<>() {
 			@Override
 			public void onEdit(LEditEvent<Portrait> e) {
-				updatePortrait(imgPortrait, e.newData);
+				GameCharacter c = contentEditor.getObject();
+				if (c != null)
+					imgPortrait.update(e.newData, c.transform, !c.transformPortraits);
 			}
 		});
 
@@ -225,58 +237,47 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		btnIcon.getCellData().setAlignment(LFlags.LEFT);
 		addControl(btnIcon, "transformPortraits");
 
-		transform.onChange = t -> {
-			updateAnim(imgAnim, lstAnim.getCollectionWidget().getSelectedObject());
-			updatePortrait(imgPortrait, lstPortraits.getCollectionWidget().getSelectedObject());
-		};
-
-	}
-	
-	private void updateAnim(LImage img, Node node) {
-		if (node != null) {
-			Animation anim = (Animation) Project.current.animations.getTree().get(node.id);
-			if (anim != null) {
-				GameCharacter c = contentEditor.getObject();
-				img.resetTransform();
-				anim.transform.applyTo(img);
-				if (c.transformAnimations)
-					c.transform.applyTo(img);
-				else
-					c.transform.applyColorTo(img);
-				img.setImage(anim.quad.fullPath(), anim.quad);
-			} else {
-				img.setImage((String) null); 
-			}
-		} else {
-			img.setImage((String) null); 
-		}
-	}
-	
-	private void updatePortrait(LImage img, Portrait p) {
-		if (p != null) {
-			Object obj = Project.current.animations.getTree().get(p.id);
-			if (obj == null) {
-				img.setImage((String) null);
-				return;
-			}
-			img.resetTransform();
+		transformEditor.onOffsetChange = offset -> {
 			GameCharacter c = contentEditor.getObject();
-			Animation anim = (Animation) obj;
-			anim.transform.applyTo(img);
+			if (c.transformAnimations)
+				imgAnim.updateOffset(selectedAnimId(), offset);
 			if (c.transformPortraits)
-				c.transform.applyTo(img);
-			else
-				c.transform.applyColorTo(img);
-			if (anim.quad.path.isEmpty()) {
-				img.setImage((String) null);
-				return;
-			}
-			img.setImage(Project.current.imagePath() + anim.quad.path, anim.quad);
-		} else {
-			img.setImage((String) null);
-		}
+				imgPortrait.updateOffset(selectedPortraitId(), offset);
+		};
+		transformEditor.onScaleChange = scale -> {
+			GameCharacter c = contentEditor.getObject();
+			if (c.transformAnimations)
+				imgAnim.updateScale(selectedAnimId(), scale);
+			if (c.transformPortraits)
+				imgPortrait.updateScale(selectedPortraitId(), scale);
+		};
+		transformEditor.onRotationChange = angle -> {
+			GameCharacter c = contentEditor.getObject();
+			if (c.transformAnimations)
+				imgAnim.updateRotation(selectedAnimId(), angle);
+			if (c.transformPortraits)
+				imgPortrait.updateRotation(selectedPortraitId(), angle);
+		};
+		transformEditor.onRGBAChange = color -> {
+			imgAnim.updateRGBA(selectedAnimId(), color);
+			imgPortrait.updateRGBA(selectedPortraitId(), color);
+		};
+		transformEditor.onHSVChange = color -> {
+			imgAnim.updateHSV(selectedAnimId(), color);
+			imgPortrait.updateHSV(selectedPortraitId(), color);
+		};
 	}
-	
+
+	private int selectedAnimId() {
+		Node n = lstAnim.getCollectionWidget().getSelectedObject();
+		return n == null ? -1 : n.id;
+	}
+
+	private int selectedPortraitId() {
+		Portrait n = lstPortraits.getCollectionWidget().getSelectedObject();
+		return n == null ? -1 : n.id;
+	}
+
 	@Override
 	public void onVisible() {
 		btnBattler.dataTree = Project.current.battlers.getTree();

@@ -85,8 +85,8 @@ public class AudioDialog extends GObjectDialog<Audio> {
 		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.TOP);
 		reproduction.loop = (style & BGM) > 0;
 		
-		selFile.addSelectionListener(event -> {
-            String file = selFile.getSelectedFile();
+		selFile.addModifyListener(event -> {
+            String file = selFile.getFile(event.newValue);
             reproduction.filename = file != null ? file : "";
         });
 		spnVolume.addModifyListener(event -> {
@@ -117,7 +117,7 @@ public class AudioDialog extends GObjectDialog<Audio> {
 
 	@Override
 	protected Audio createResult(Audio initial) {
-		AudioPlay audio = (AudioPlay) contentEditor.getObject();
+		AudioPlay audio = contentEditor.getObject();
 		audio.name = selFile.getSelectedFile();
 		if (audio.name == null) {
 			audio.name = "";

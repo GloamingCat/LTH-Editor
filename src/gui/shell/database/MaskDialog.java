@@ -53,7 +53,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 		spnMinH.addModifyListener(event -> {
             int n = spnMaxH.getValue() + event.newValue + 1;
             if (n < grid.length) {
-                height = Math.max(height, -spnMinH.getValue());
+                height = Math.max(height, -event.newValue);
                 shrink(grid[0].length, grid[0][0].length, n, 0, 0, grid.length - n);
             } else
                 expand(grid[0].length, grid[0][0].length, n, 0, 0, n - grid.length);
@@ -90,7 +90,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
 		spnMaxH.addModifyListener(event -> {
             int n = event.newValue + spnMinH.getValue() + 1;
             if (n < grid.length) {
-                height = Math.min(height, spnMaxH.getValue());
+                height = Math.min(height, event.newValue);
                 shrink(grid[0].length, grid[0][0].length, n, 0, 0, 0);
             } else
                 expand(grid[0].length, grid[0][0].length, n, 0, 0, 0);

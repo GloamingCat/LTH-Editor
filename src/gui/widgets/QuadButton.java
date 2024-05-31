@@ -17,27 +17,19 @@ import data.subcontent.Quad;
 public class QuadButton extends LObjectButton<Quad> {
 	
 	private LImage image;
-	private TransformEditor transform;
-	private Transform[] transforms = new Transform[0];
 	
-	public QuadButton(LContainer parent, boolean optional) {
+	public QuadButton(LContainer parent) {
 		super(parent);
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Quad> createWindow(LWindow parent) {
-				return new QuadDialog(parent, optional ? QuadDialog.OPTIONAL : 0);
+				return new QuadDialog(parent, QuadDialog.OPTIONAL);
 			}
 		});
 	}
 
 	public void setImageWidget(LImage image) {
 		this.image = image;
-	}
-	
-	public void setTransforms(Transform[] transforms) {
-		this.transforms = transforms;
-		if (image != null)
-			applyTransforms();
 	}
 	
 	@Override
@@ -51,7 +43,6 @@ public class QuadButton extends LObjectButton<Quad> {
 				} else {
 					image.setImage(s.fullPath(), s);
 				}
-				applyTransforms();
 			}
 			currentValue = s;
 		} else {
@@ -61,13 +52,6 @@ public class QuadButton extends LObjectButton<Quad> {
 			}
 			currentValue = null;
 		}
-	}
-
-	private void applyTransforms() {
-		image.resetTransform();
-		for (Transform t : transforms)
-			t.applyTo(image);
-		image.repaint();
 	}
 
 	@Override

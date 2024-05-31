@@ -2,7 +2,7 @@ package gui.shell.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.widgets.IconSelector;
+import gui.widgets.IconButtonPanel;
 import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
 import lui.container.LFrame;
@@ -30,7 +30,7 @@ public class ElementDialog extends GObjectDialog<Element> {
 		addControl(txtName, "name");
 
 		LLabel lblIcon = new LLabel(contentEditor, Vocab.instance.ICON, Tooltip.instance.ICON);
-		new IconSelector(contentEditor, lblIcon, contentEditor, "icon");
+		new IconButtonPanel(contentEditor, lblIcon, contentEditor, "icon");
 
 		LFrame grpTags = new LFrame(contentEditor, Vocab.instance.TAGS);
 		grpTags.setFillLayout(true);

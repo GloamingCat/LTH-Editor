@@ -2,7 +2,7 @@ package gui.views.database.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-import lui.base.event.listener.LControlListener;
+import lui.base.data.LPoint;
 import data.subcontent.Transform;
 import lui.container.LContainer;
 import lui.gson.GDefaultObjectEditor;
@@ -13,7 +13,11 @@ import java.util.function.Consumer;
 
 public class TransformEditor extends GDefaultObjectEditor<Transform> {
 
-	public Consumer<Transform> onChange;
+	public Consumer<LPoint> onOffsetChange;
+	public Consumer<LPoint> onScaleChange;
+	public Consumer<Integer> onRotationChange;
+	public Consumer<int[]> onRGBAChange;
+	public Consumer<int[]> onHSVChange;
 
     public TransformEditor(LContainer parent) {
 		super(parent, false);
@@ -22,13 +26,20 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 	protected void createContent(int style) {
 		setGridLayout(4);
 
-		LControlListener<Integer> updateListener = e -> {
-           if (onChange != null && e.oldValue != null)
-				onChange.accept(getObject());
-        };
         addSelectionListener(e -> {
-			if (onChange != null && e.data != null)
-				onChange.accept((Transform) e.data);
+			if (e.data == null)
+				return;
+			Transform t = (Transform) e.data;
+			if (onOffsetChange != null)
+				onOffsetChange.accept(new LPoint(t.offsetX, t.offsetY));
+			if (onScaleChange != null)
+				onScaleChange.accept(new LPoint(t.scaleX, t.scaleY));
+			if (onRotationChange != null)
+				onRotationChange.accept(t.rotation);
+			if (onRGBAChange != null)
+				onRGBAChange.accept(new int[] {t.red, t.green, t.blue, t.alpha});
+			if (onHSVChange != null)
+				onHSVChange.accept(new int[] {t.hue, t.saturation, t.brightness});
 		});
 		
 		LLabel lblOffsetX = new LLabel(this, Vocab.instance.OFFSETX, Tooltip.instance.OFFSETX);
@@ -39,7 +50,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnOffsetX.setMinimum(-1024 * 4);
 		spnOffsetX.addMenu(lblOffsetX);
 		addControl(spnOffsetX, "offsetX");
-		spnOffsetX.addModifyListener(updateListener);
 
 		LLabel lblRed = new LLabel(this, Vocab.instance.RED, Tooltip.instance.RED);
 		LSpinner spnRed = new LSpinner(this);
@@ -48,7 +58,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnRed.setMinimum(0);
 		spnRed.addMenu(lblRed);
 		addControl(spnRed, "red");
-		spnRed.addModifyListener(updateListener);
 
 		LLabel lblOffsetY = new LLabel(this, Vocab.instance.OFFSETY, Tooltip.instance.OFFSETY);
         LSpinner spnOffsetY = new LSpinner(this);
@@ -57,7 +66,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnOffsetY.setMinimum(-1024);
 		spnOffsetY.addMenu(lblOffsetY);
 		addControl(spnOffsetY, "offsetY");
-		spnOffsetY.addModifyListener(updateListener);
 
 		LLabel lblGreen = new LLabel(this, Vocab.instance.GREEN, Tooltip.instance.GREEN);
 		LSpinner spnGreen = new LSpinner(this);
@@ -66,7 +74,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnGreen.setMinimum(0);
 		spnGreen.addMenu(lblGreen);
 		addControl(spnGreen, "green");
-		spnGreen.addModifyListener(updateListener);
 
 		LLabel lblOffsetDepth = new LLabel(this, Vocab.instance.OFFSETDEPTH, Tooltip.instance.OFFSETDEPTH);
 		LSpinner spnOffsetDepth = new LSpinner(this);
@@ -83,7 +90,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnBlue.setMinimum(0);
 		spnBlue.addMenu(lblBlue);
 		addControl(spnBlue, "blue");
-		spnBlue.addModifyListener(updateListener);
 		
 		LLabel lblScaleX = new LLabel(this, Vocab.instance.SCALEX, Tooltip.instance.SCALEX);
         LSpinner spnScaleX = new LSpinner(this);
@@ -92,7 +98,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnScaleX.setMinimum(-10000);
 		spnScaleX.addMenu(lblScaleX);
 		addControl(spnScaleX, "scaleX");
-		spnScaleX.addModifyListener(updateListener);
 
 		LLabel lblAlpha = new LLabel(this, Vocab.instance.ALPHA, Tooltip.instance.ALPHA);
 		LSpinner spnAlpha = new LSpinner(this);
@@ -101,7 +106,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnAlpha.setMinimum(0);
 		spnAlpha.addMenu(lblAlpha);
 		addControl(spnAlpha, "alpha");
-		spnAlpha.addModifyListener(updateListener);
 		
 		LLabel lblScaleY = new LLabel(this, Vocab.instance.SCALEY, Tooltip.instance.SCALEY);
         LSpinner spnScaleY = new LSpinner(this);
@@ -110,7 +114,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnScaleY.setMinimum(-10000);
 		spnScaleY.addMenu(lblScaleY);
 		addControl(spnScaleY, "scaleY");
-		spnScaleY.addModifyListener(updateListener);
 
 		LLabel lblHue = new LLabel(this, Vocab.instance.HUE, Tooltip.instance.HUE);
 		LSpinner spnHue = new LSpinner(this);
@@ -119,7 +122,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnHue.setMinimum(-360);
 		spnHue.addMenu(lblHue);
 		addControl(spnHue, "hue");
-		spnHue.addModifyListener(updateListener);
 		
 		LLabel lblRotation = new LLabel(this, Vocab.instance.ROTATION, Tooltip.instance.ROTATION);
         LSpinner spnRotation = new LSpinner(this);
@@ -128,7 +130,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnRotation.setMinimum(-360);
 		spnRotation.addMenu(lblRotation);
 		addControl(spnRotation, "rotation");
-		spnRotation.addModifyListener(updateListener);
 
 		LLabel lblSaturation = new LLabel(this, Vocab.instance.SATURATION, Tooltip.instance.SATURATION);
 		LSpinner spnSaturation = new LSpinner(this);
@@ -137,7 +138,6 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnSaturation.setMinimum(0);
 		spnSaturation.addMenu(lblSaturation);
 		addControl(spnSaturation, "saturation");
-		spnSaturation.addModifyListener(updateListener);
 		
 		new LLabel(this, 2, 1);
 		
@@ -148,7 +148,60 @@ public class TransformEditor extends GDefaultObjectEditor<Transform> {
 		spnBrightness.setMinimum(0);
 		spnBrightness.addMenu(lblBrightness);
 		addControl(spnBrightness, "brightness");
-		spnBrightness.addModifyListener(updateListener);
+
+
+		spnOffsetX.addModifyListener(e -> {
+			if (onOffsetChange != null)
+				onOffsetChange.accept(new LPoint(e.newValue, spnOffsetY.getValue()));
+		});
+		spnOffsetY.addModifyListener(e -> {
+			if (onOffsetChange != null)
+				onOffsetChange.accept(new LPoint(spnOffsetX.getValue(), e.newValue));
+		});
+
+		spnScaleX.addModifyListener(e -> {
+			if (onScaleChange != null)
+				onScaleChange.accept(new LPoint(e.newValue, spnScaleY.getValue()));
+		});
+		spnScaleY.addModifyListener(e -> {
+			if (onScaleChange != null)
+				onScaleChange.accept(new LPoint(spnScaleX.getValue(), e.newValue));
+		});
+
+		spnRotation.addModifyListener(e -> {
+			if (onRotationChange != null)
+				onRotationChange.accept(e.newValue);
+		});
+
+		spnRed.addModifyListener(e -> {
+			if (onRGBAChange != null)
+				onRGBAChange.accept(new int[] {e.newValue, spnGreen.getValue(), spnBlue.getValue(), spnAlpha.getValue() });
+		});
+		spnGreen.addModifyListener(e -> {
+			if (onRGBAChange != null)
+				onRGBAChange.accept(new int[] {spnRed.getValue(), e.newValue, spnBlue.getValue(), spnAlpha.getValue() });
+		});
+		spnBlue.addModifyListener(e -> {
+			if (onRGBAChange != null)
+				onRGBAChange.accept(new int[] {spnRed.getValue(), spnGreen.getValue(), e.newValue, spnAlpha.getValue() });
+		});
+		spnAlpha.addModifyListener(e -> {
+			if (onRGBAChange != null)
+				onRGBAChange.accept(new int[] {spnRed.getValue(), spnGreen.getValue(), spnBlue.getValue(), e.newValue });
+		});
+
+		spnHue.addModifyListener(e -> {
+			if (onHSVChange != null)
+				onHSVChange.accept(new int[] {e.newValue, spnSaturation.getValue(), spnBrightness.getValue() });
+		});
+		spnSaturation.addModifyListener(e -> {
+			if (onHSVChange != null)
+				onHSVChange.accept(new int[] {spnHue.getValue(), e.newValue, spnBrightness.getValue() });
+		});
+		spnBrightness.addModifyListener(e -> {
+			if (onHSVChange != null)
+				onHSVChange.accept(new int[] {spnHue.getValue(), spnSaturation.getValue(), e.newValue });
+		});
 	}
 
 	@Override

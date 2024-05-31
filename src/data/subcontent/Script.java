@@ -1,6 +1,7 @@
 package data.subcontent;
 
 import data.Data;
+import project.Project;
 
 public class Script extends Data {
 	
@@ -38,9 +39,14 @@ public class Script extends Data {
 				s += ", Interact";
 		} else if (onInteract)
 			s += "Interact";
-		if (description.isEmpty())
+		if (description.isEmpty()) {
+			String name = this.name;
+			try {
+				int id = Integer.parseInt(name);
+				name = Project.current.events.getData().get(id).toString();
+			} catch (NumberFormatException ignored) {}
 			return name + " " + s + ")";
-		else
+		} else
 			return description + " " + s + ")";
 	}
 	

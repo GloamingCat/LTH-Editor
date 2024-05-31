@@ -1,6 +1,5 @@
 package gui.widgets;
 
-import data.subcontent.Transform;
 import gui.shell.IconDialog;
 import lui.container.LContainer;
 import lui.container.LImage;
@@ -18,7 +17,6 @@ public class IconButton extends LObjectButton<Icon> {
 	
 	private LImage image;
 	private LText text;
-	private Transform[] transforms = new Transform[0];
 	
 	public IconButton(LContainer parent, boolean optional) {
 		super(parent);
@@ -33,12 +31,6 @@ public class IconButton extends LObjectButton<Icon> {
 	public void setImageWidget(LImage image) {
 		this.image = image;
 	}
-	
-	public void setTransforms(Transform[] transforms) {
-		this.transforms = transforms;
-		if (image != null && getValue() != null)
-			applyTransforms(getValue());
-	}
 
 	@Override
 	public void setValue(Object value) {
@@ -51,7 +43,6 @@ public class IconButton extends LObjectButton<Icon> {
 					image.setImage(anim.quad.fullPath(), i.getRectangle());
 				else
 					image.setImage((String) null);
-				applyTransforms(i);
 			}
 			currentValue = i;
 		} else {
@@ -64,16 +55,6 @@ public class IconButton extends LObjectButton<Icon> {
 			}
 			currentValue = null;
 		}
-	}
-
-	private void applyTransforms(Icon icon) {
-		image.resetTransform();
-		Animation anim = icon.getAnimation();
-		if (anim != null)
-			anim.transform.applyTo(image);
-		for (Transform t : transforms)
-			t.applyTo(image);
-		image.repaint();
 	}
 
 	@Override

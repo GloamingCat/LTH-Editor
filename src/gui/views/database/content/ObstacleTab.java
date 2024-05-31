@@ -1,6 +1,7 @@
 package gui.views.database.content;
 
-import data.subcontent.Transform;
+import data.subcontent.Icon;
+import gui.widgets.TransformedImage;
 import lui.base.LFlags;
 import gui.Tooltip;
 import gui.Vocab;
@@ -11,11 +12,9 @@ import gui.widgets.IconButton;
 import gui.widgets.SimpleEditableList;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
-import lui.graphics.LPainter;
 import lui.widget.LLabel;
 import data.Obstacle;
 import data.Obstacle.ObstacleTile;
@@ -23,6 +22,8 @@ import gson.GObjectTreeSerializer;
 import project.Project;
 
 public class ObstacleTab extends DatabaseTab<Obstacle> {
+
+	private IconButton btnGraphics;
 
 	/**
 	 * @wbp.parser.constructor
@@ -56,10 +57,10 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		grpGraphics.setGridLayout(1);
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.getCellData().setExpand(true, true);
-		LImage imgGraphics = new LImage(grpGraphics);
+		TransformedImage imgGraphics = new TransformedImage(grpGraphics);
 		imgGraphics.getCellData().setExpand(true, true);
 		imgGraphics.setAlignment(LFlags.TOP | LFlags.LEFT);
-		IconButton btnGraphics = new IconButton(grpGraphics, false);
+		btnGraphics = new IconButton(grpGraphics, false);
 		btnGraphics.addMenu(grpGraphics);
 		btnGraphics.addMenu(imgGraphics);
 		btnGraphics.setImageWidget(imgGraphics);
@@ -75,21 +76,21 @@ public class ObstacleTab extends DatabaseTab<Obstacle> {
 		transformEditor.addMenu(grpTransform);
 		addChild(transformEditor, "transform");
 
-		transformEditor.onChange = t -> btnGraphics.setTransforms(new Transform[] { t });
-
-		imgGraphics.addPainter(new LPainter() {
-			@Override
-			public void paint() {
-				int x = Math.round(imgGraphics.ox * imgGraphics.sx) + (int) imgGraphics.getImageX();
-				int y = Math.round(imgGraphics.oy * imgGraphics.sy) + (int) imgGraphics.getImageY();
-				x -= 1;
-				drawLine(x - 2, y, x + 2, y);
-				drawLine(x, y - 2, x, y + 2);
-			}
-		});
+		transformEditor.onOffsetChange = offset -> imgGraphics.updateOffset(selectedAnimId(), offset);
+		transformEditor.onScaleChange = scale -> imgGraphics.updateScale(selectedAnimId(), scale);
+		transformEditor.onRotationChange = angle -> imgGraphics.updateRotation(selectedAnimId(), angle);
+		transformEditor.onRGBAChange = color -> imgGraphics.updateRGBA(selectedAnimId(), color);
+		transformEditor.onHSVChange = color -> imgGraphics.updateHSV(selectedAnimId(), color);
 
 		LLabel fill = new LLabel(contentEditor.right, 1, 1);
 		fill.getCellData().setExpand(true, true);
+	}
+
+	private int selectedAnimId() {
+		Icon icon = btnGraphics.getValue();
+		if (icon == null)
+			return -1;
+		return icon.id;
 	}
 
 	@Override

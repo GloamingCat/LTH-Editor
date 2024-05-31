@@ -1,6 +1,5 @@
 package gui.views.database.content;
 
-import data.subcontent.Transform;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.AudioPlayDialog;
@@ -9,18 +8,15 @@ import gui.views.database.subcontent.TransformEditor;
 import gui.widgets.LuaButton;
 import gui.widgets.QuadButton;
 import gui.widgets.SimpleEditableList;
+import gui.widgets.TransformedImage;
 import lui.base.LFlags;
 import lui.container.LContainer;
 import lui.container.LFrame;
-import lui.container.LImage;
 import lui.container.LPanel;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
-import lui.widget.LActionButton;
-import lui.widget.LLabel;
-import lui.widget.LSpinner;
-import lui.widget.LText;
+import lui.widget.*;
 
 import project.Project;
 import data.Animation;
@@ -158,17 +154,21 @@ public class AnimationTab extends DatabaseTab<Animation> {
 		grpImg.setHoverText(Tooltip.instance.GRAPHICS);
 		grpImg.getCellData().setExpand(true, true);
 		
-		LImage image = new LImage(grpImg);
+		TransformedImage image = new TransformedImage(grpImg);
 		image.getCellData().setExpand(true, true);
 		image.setAlignment(LFlags.TOP | LFlags.LEFT);
 		
-		QuadButton btnImage = new QuadButton(grpImg, true);
+		QuadButton btnImage = new QuadButton(grpImg);
 		btnImage.addMenu(image);
 		btnImage.addMenu(grpImg);
 		btnImage.setImageWidget(image);
 		addControl(btnImage, "quad");
-		
-		transformEditor.onChange = t -> btnImage.setTransforms(new Transform[] { t });
+
+		transformEditor.onOffsetChange = offset -> image.updateOffset(-1, offset);
+		transformEditor.onScaleChange = scale -> image.updateScale(-1, scale);
+		transformEditor.onRotationChange = angle -> image.updateRotation(-1, angle);
+		transformEditor.onRGBAChange = color -> image.updateRGBA(-1, color);
+		transformEditor.onHSVChange = color -> image.updateHSV(-1, color);
 
 		addDurationListener(btnIntroDuration, txtIntroDuration);
 		addDurationListener(btnLoopDuration, txtLoopDuration);

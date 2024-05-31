@@ -14,7 +14,6 @@ public class Vocab {
 	public String CHARACTERS = "Characters";
 	public String ITEMS = "Items";
 	public String JOBS = "Jobs";
-	public String SCRIPTS = "Scripts";
 	public String SKILLS = "Skills";
 	public String STATUS = "Status";
 	public String OBSTACLES = "Obstacles";
@@ -40,6 +39,7 @@ public class Vocab {
 	public String VARIABLES = "Variables";
 	public String ICONS = "Icons";
 	public String SOUNDS = "Sounds";
+	public String SCRIPTS = "Scripts";
 	
 	// Common
 	public String ID = "ID";
@@ -56,7 +56,9 @@ public class Vocab {
 	public String OPTIONS = "Options";
 	public String ELEMENT = "Element";
 	public String SCRIPT = "Script";
-	
+	public String LUAFILE = "Lua File";
+	public String EVENTSHEET = "Event Sheet";
+
 	//////////////////////////////////////////////////
 	// {{ Config
 	

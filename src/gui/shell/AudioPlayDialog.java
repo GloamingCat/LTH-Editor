@@ -99,9 +99,9 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 		reproduction.getCellData().setAlignment(LFlags.RIGHT | LFlags.TOP);
 		reproduction.loop = (style & BGM) > 0;
 		
-		selFile.addSelectionListener(event -> reproduction.filename =
+		selFile.addModifyListener(event -> reproduction.filename =
                 comboAudio != null ? comboAudio.name :
-                event.data != null ? event.data.toString() :
+                event.newValue != null ? event.newValue.toString() :
                 "");
 		spnVolume.addModifyListener(event -> {
             reproduction.volume = event.newValue *

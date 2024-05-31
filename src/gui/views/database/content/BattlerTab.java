@@ -61,7 +61,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		// Icon
 		
 		LLabel lblIcon = new LLabel(contentEditor.grpGeneral, Vocab.instance.ICON, Tooltip.instance.ICON);
-		new IconSelector(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
+		new IconButtonPanel(contentEditor.grpGeneral, lblIcon, contentEditor, "icon");
 		
 		// Description
 		

@@ -55,7 +55,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 		tree = new LNodeSelector<>(sashForm, false);
 		tree.setCollection(getTree());
 		tree.addModifyListener(event -> {
-            Animation anim = (Animation) tree.getSelectedObject();
+            Animation anim = (Animation) getTree().get(event.newValue);
             setImage(anim);
         });
 		

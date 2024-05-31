@@ -15,15 +15,10 @@ import data.subcontent.Script;
 public class ScriptButton extends LObjectButton<Script> {
 	
 	private LText pathText;
-	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
+
 	public ScriptButton(LContainer parent, int style) {
 		super(parent);
-		setShellFactory(new LWindowFactory<Script>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Script> createWindow(LWindow parent) {
 				return new ScriptDialog(parent, style);

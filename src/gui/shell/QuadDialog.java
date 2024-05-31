@@ -37,7 +37,7 @@ public class QuadDialog extends LObjectDialog<Quad> {
 	private LSpinner spnHeight;
 	private LScrollPanel scroll;
 	
-	public static final int OPTIONAL = 0x01;
+	public static final int OPTIONAL = 1;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -113,7 +113,7 @@ public class QuadDialog extends LObjectDialog<Quad> {
 			}
 		});
 
-		selFile.addSelectionListener(event -> resetImage());
+		selFile.addModifyListener(event -> resetImage(selFile.getFile(event.newValue)));
 
 		LControlListener<Integer> redrawListener = event -> imgQuad.repaint();
 
@@ -132,7 +132,7 @@ public class QuadDialog extends LObjectDialog<Quad> {
 		spnY.setValue(initial.y);
 		spnWidth.setValue(initial.width);
 		spnHeight.setValue(initial.height);
-		resetImage();
+		resetImage(initial.path);
 		super.open(initial);
 	}
 
@@ -164,8 +164,8 @@ public class QuadDialog extends LObjectDialog<Quad> {
 		}
 	}
 
-	protected void resetImage() {
-		String path = selFile.getRootFolder() + selFile.getSelectedFile();
+	protected void resetImage(String file) {
+		String path = selFile.getRootFolder() + file;
 		imgQuad.setImage(path);
 		scroll.setContentSize(imgQuad.getTargetSize());
 		imgQuad.repaint();
