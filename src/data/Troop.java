@@ -2,6 +2,7 @@ package data;
 
 import data.Battler.Drop;
 import data.config.Config;
+import lui.base.data.LDataTree;
 import project.Project;
 import lui.base.data.LDataList;
 
@@ -58,6 +59,10 @@ public class Troop extends Data {
 	}
 
 	public int find(int col, int row) {
+		return find(members, col, row);
+	}
+
+	public static int find(LDataList<Unit> members, int col, int row) {
 		for (int i = 0; i < members.size(); i++) {
 			if (members.get(i).x == col && members.get(i).y == row)
 				return i;

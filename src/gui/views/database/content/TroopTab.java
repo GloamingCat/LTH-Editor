@@ -157,7 +157,10 @@ public class TroopTab extends DatabaseTab<Troop> {
             if (u != null) {
                 Config.Troop conf = Project.current.config.getData().troop;
                 int i = (u.y - 1) * conf.width + (u.x - 1);
-                gridEditor.getCollectionWidget().select(new LPath(i));
+				LPath selection = gridEditor.getCollectionWidget().getSelectedPath();
+				int current = selection == null ? -1 : selection.index;
+				if (current != i)
+					gridEditor.getCollectionWidget().select(new LPath(i));
             }
         });
 		gridEditor.getCollectionWidget().addSelectionListener(event -> {
@@ -168,7 +171,9 @@ public class TroopTab extends DatabaseTab<Troop> {
             if (p != null) {
                 int i = troop.find(p.x, p.y);
                 if (i != -1) {
-                    lstMembers.getCollectionWidget().select(new LPath(i));
+					LPath selection = lstMembers.getCollectionWidget().getSelectedPath();
+					if (selection == null || selection.index != i)
+						lstMembers.getCollectionWidget().select(new LPath(i));
                 }
             }
         });
@@ -190,32 +195,19 @@ public class TroopTab extends DatabaseTab<Troop> {
 		super.onVisible();
 		refreshAllUnits();
 		lstMembers.forceFirstSelection();
-
 	}
 
 	protected void refreshAllUnits() {
-		Troop troop = contentEditor.getObject();
-		if (troop == null) {
-			for (int i = 0; i < points.size(); i++)
-				gridEditor.getCollectionWidget().getImage(i).setImage((String) null);
-		} else {
-			for (int i = 0; i < points.size(); i++) {
-				int id = troop.find(points.get(i).x,points.get(i).y);
-				Unit u = id >= 0 ? troop.members.get(id) : null;
-				LImage img = gridEditor.getCollectionWidget().getImage(i);
-				refreshUnit(img, u);
-			}
+		for (int i = 0; i < points.size(); i++) {
+			LImage img = gridEditor.getCollectionWidget().getImage(i);
+			refreshUnit(img);
 		}
 	}
 	
 	protected void refreshUnit(LImage img) {
 		LPoint p = (LPoint) img.getData();
 		Troop troop = contentEditor.getObject();
-		if (troop == null) {
-			img.setImage((String) null);
-			return;
-		}
-		int i = troop.find(p.x, p.y);
+		int i = troop == null ? -1 : troop.find(p.x, p.y);
 		Unit u = i >= 0 ? troop.members.get(i) : null;
 		refreshUnit(img, u);
 	}
