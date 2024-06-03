@@ -11,11 +11,7 @@ import lui.base.event.LDeleteEvent;
 import lui.base.event.LEditEvent;
 import lui.base.event.LInsertEvent;
 import lui.container.*;
-import lui.editor.LGridEditor;
-import lui.widget.LCheckBox;
-import lui.widget.LLabel;
-import lui.widget.LSpinner;
-import lui.widget.LText;
+import lui.widget.*;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
@@ -37,7 +33,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 	public static int tWidth = 32;
 	public static int tHeight = 48;
 	
-	private LGridEditor<LPoint, LPoint> gridEditor;
+	private LGrid<LPoint, LPoint> unitGrid;
 	private final LDataList<LPoint> points = new LDataList<>();
 	private SimpleEditableList<Unit> lstMembers;
 
@@ -102,8 +98,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		LFrame grpGrid = new LFrame(contentEditor.left, Vocab.instance.GRID);
 		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
 		grpGrid.getCellData().setExpand(true, true);
-		gridEditor = new UnitGrid(grpGrid);
-		contentEditor.addChild((LView) gridEditor);
+		unitGrid = new UnitGrid(grpGrid);
 
 		// Items
 		
@@ -134,18 +129,21 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 		UnitEditor unitEditor = new UnitEditor(grpMembers);
 		unitEditor.getCellData().setExpand(true, false);
-		unitEditor.addModifyListener(event -> refreshUnit(event.newValue));
+		unitEditor.addModifyListener(event -> {
+			refreshUnit(event.oldValue, true);
+			refreshUnit(event.newValue, false);
+		});
 		lstMembers.addChild(unitEditor);
 
 		LCollectionListener<Unit> modifyListener = new LCollectionListener<>() {
 			public void onEdit(LEditEvent<Unit> e) {
-				refreshUnit(e.newData);
+				refreshUnit(e.newData, false);
 			}
 			public void onInsert(LInsertEvent<Unit> e) {
-				refreshUnit(e.node.data);
+				refreshUnit(e.node.data, false);
 			}
 			public void onDelete(LDeleteEvent<Unit> e) {
-				refreshUnit(e.node.data);
+				refreshUnit(e.node.data, true);
 			}
 		};
 		lstMembers.getCollectionWidget().addEditListener(modifyListener);
@@ -157,13 +155,13 @@ public class TroopTab extends DatabaseTab<Troop> {
             if (u != null) {
                 Config.Troop conf = Project.current.config.getData().troop;
                 int i = (u.y - 1) * conf.width + (u.x - 1);
-				LPath selection = gridEditor.getCollectionWidget().getSelectedPath();
+				LPath selection = unitGrid.getSelectedPath();
 				int current = selection == null ? -1 : selection.index;
 				if (current != i)
-					gridEditor.getCollectionWidget().select(new LPath(i));
+					unitGrid.select(new LPath(i));
             }
         });
-		gridEditor.getCollectionWidget().addSelectionListener(event -> {
+		unitGrid.addSelectionListener(event -> {
             Troop troop = contentEditor.getObject();
             if (troop == null)
                 return;
@@ -191,7 +189,8 @@ public class TroopTab extends DatabaseTab<Troop> {
 			for (int i = 0; i < conf.width; i++)
 				points.add(new LPoint(i + 1, j + 1));
 		}
-		gridEditor.getCollectionWidget().setColumns(conf.width);
+		unitGrid.setColumns(conf.width);
+		unitGrid.setDataCollection(points);
 		super.onVisible();
 		refreshAllUnits();
 		lstMembers.forceFirstSelection();
@@ -199,7 +198,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 	protected void refreshAllUnits() {
 		for (int i = 0; i < points.size(); i++) {
-			LImage img = gridEditor.getCollectionWidget().getImage(i);
+			LImage img = unitGrid.getImage(i);
 			refreshUnit(img);
 		}
 	}
@@ -212,11 +211,13 @@ public class TroopTab extends DatabaseTab<Troop> {
 		refreshUnit(img, u);
 	}
 	
-	protected void refreshUnit(Unit u) {
+	protected void refreshUnit(Unit u, boolean erase) {
 		Config.Troop conf = Project.current.config.getData().troop;
+		if (u.x <= 0 || u.y <= 0 || u.x > conf.width || u.y > conf.height)
+			return;
 		int i = (u.y - 1) * conf.width + (u.x - 1);
-		LImage img = (LImage) gridEditor.getCollectionWidget().getChild(i);
-		refreshUnit(img, u);
+		LImage img = (LImage) unitGrid.getChild(i);
+		refreshUnit(img, erase ? null : u);
 	}
 	
 	protected void refreshUnit(LImage img, Unit u) {
@@ -243,41 +244,19 @@ public class TroopTab extends DatabaseTab<Troop> {
 		return Project.current.troops;
 	}
 	
-	private class UnitGrid extends LGridEditor<LPoint, LPoint> {
-		
+	private class UnitGrid extends LGrid<LPoint, LPoint> {
 		public UnitGrid(LContainer parent) {
 			super(parent);
-			getCollectionWidget().setCellSize(tWidth, tHeight);
-			getCollectionWidget().setCellColor(LovelyTheme.LIGHT);
+			setCellSize(tWidth, tHeight);
+			setCellColor(LovelyTheme.LIGHT);
 		}
-		
-		@Override
-		protected LPoint createNewElement() { return null; }
-		@Override
-		protected LPoint duplicateElement(LPoint original) { return null; }
 		@Override
 		protected void setImage(LImage img, int i) {
 			refreshUnit(img);
 		}
 		@Override
-		protected LDataList<LPoint> getDataCollection() {
-			return points;
-		}
-		@Override
-		protected LPoint getEditableData(LPath path) { return null; }
-		@Override
-		protected void setEditableData(LPath path, LPoint newData) {}
-		@Override
-		protected String encodeElement(LPoint data) {
-			return null;
-		}
-		@Override
-		protected LPoint decodeElement(String str) {
-			return null;
-		}
-		@Override
-		public boolean canDecode(String str) {
-			return false;
+		public LPoint toObject(LPath path) {
+			return path == null ? null : points.get(path.index);
 		}
 	}
 	

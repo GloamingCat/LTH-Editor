@@ -16,7 +16,7 @@ import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.widget.LLabel;
 import lui.widget.LSpinner;
-import lui.widget.LTree;
+import lui.widget.LEditableTree;
 import data.field.Field;
 import data.field.FieldNode;
 import data.subcontent.Position;
@@ -175,7 +175,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 		return pos;
 	}
 	
-	private static class FieldSelector extends LTree<FieldNode, Field> {
+	private static class FieldSelector extends LEditableTree<FieldNode, Field> {
 		public FieldSelector(LContainer parent) {
 			super(parent);
 		}

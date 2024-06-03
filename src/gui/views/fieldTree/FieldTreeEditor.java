@@ -21,7 +21,7 @@ import lui.dialog.LWindowFactory;
 import lui.editor.LTreeEditor;
 import lui.base.event.LEditEvent;
 import lui.base.event.LInsertEvent;
-import lui.widget.LTree;
+import lui.widget.LEditableTree;
 
 public class FieldTreeEditor extends LView {
 
@@ -89,7 +89,7 @@ public class FieldTreeEditor extends LView {
 
 	}
 	
-	public LTree<FieldNode, Field.Prefs> fieldTree;
+	public LEditableTree<FieldNode, Prefs> fieldTree;
 
 	/**
 	 * @wbp.parser.constructor

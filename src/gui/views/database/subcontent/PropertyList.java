@@ -11,7 +11,7 @@ import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.base.event.LEditEvent;
-import lui.widget.LList;
+import lui.widget.LEditableList;
 
 public class PropertyList extends SimpleEditableList<Property> {
 
@@ -35,7 +35,7 @@ public class PropertyList extends SimpleEditableList<Property> {
 	
 	@Override
 	protected void createContent(int style) {
-		list = new LList<>(this, style == 1) {
+		list = new LEditableList<>(this, style == 1) {
 			@Override
 			public LEditEvent<Property> edit(LPath path) {
 				return onEditItem(path);

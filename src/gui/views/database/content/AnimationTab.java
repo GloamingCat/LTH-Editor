@@ -184,7 +184,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
             for (int i = 2; i <= cols; i++) {
                 s.append(" ").append(i);
             }
-            text.modify(s.toString());
+            text.forceModification(s.toString());
         });
 	}
 	
@@ -199,7 +199,7 @@ public class AnimationTab extends DatabaseTab<Animation> {
                 StringBuilder s = new StringBuilder(time + "");
                 for (;cols > 1; cols--)
                     s.append(" ").append(time);
-                text.modify(s.toString());
+                text.forceModification(s.toString());
             }
         });
 	}
