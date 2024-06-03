@@ -55,12 +55,13 @@ public abstract class FieldCanvas extends LCanvas {
 	protected LPoint selectionPoint;
 	protected int[][] selection;
 
-	public LColor hoverColor = LovelyTheme.BLACK;
+	public LColor hoverColor = LovelyTheme.DARK;
 	public LColor cursorColor = new LColor(255, 0, 0);
 	public LColor partyColor = new LColor(0, 0, 255);
 	public LColor selectionColor = new LColor(255, 255, 0);
 
 	protected LScrollPanel scrollPanel;
+
 	//////////////////////////////////////////////////
 	// {{ Initialization
 
@@ -130,6 +131,7 @@ public abstract class FieldCanvas extends LCanvas {
 	protected void draw(LPainter painter) {
 		if (field != null) {
 			drawBuffer(0, 0, scale, scale);
+			painter.setLineWidth(2);
 			painter.setPaintColor(hoverColor);
 			drawCursor(painter, mousePoint);
 			if (clickedTile != null && mode != TILE) {

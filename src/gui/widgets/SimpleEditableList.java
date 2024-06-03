@@ -38,7 +38,5 @@ public class SimpleEditableList<T> extends GDefaultListEditor<T> {
 	public Class<?> getType() {
 		return type;
 	}
-	@Override
-	public void setChecked(T c, boolean checked) {}
 	
 }

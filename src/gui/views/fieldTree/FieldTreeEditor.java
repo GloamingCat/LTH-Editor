@@ -74,9 +74,6 @@ public class FieldTreeEditor extends LView {
 		}
 
 		@Override
-		protected void setChecked(FieldNode node, boolean checked) {}
-
-		@Override
 		public void forceFirstSelection() {
 			if (getDataCollection() != null) {
 				LDataTree<FieldNode> tree = getDataCollection().toTree();

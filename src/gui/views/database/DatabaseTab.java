@@ -103,8 +103,6 @@ public abstract class DatabaseTab<T> extends LView {
 		public Class<?> getType() {
 			return (Class<?>) getSerializer().getDataType();
 		}
-		@Override
-		public void setChecked(Object c, boolean checked) {}
 	}
 
 }

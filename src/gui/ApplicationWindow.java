@@ -3,6 +3,7 @@ package gui;
 import gui.views.database.DatabaseEditor;
 import gui.views.fieldTree.FieldTreeEditor;
 import gui.views.system.SystemEditor;
+import lui.LovelyTheme;
 import lui.base.serialization.LFileManager;
 import lui.base.serialization.LSerializer;
 import project.Project;
@@ -12,6 +13,7 @@ public class ApplicationWindow extends LApplicationWindow {
 
 	public static void main(String[] args) {
 		try {
+			ApplicationWindow.setTheme(new LovelyTheme());
 			ApplicationWindow shell = new ApplicationWindow(args);
 			shell.run();
 		} catch (Exception e) {

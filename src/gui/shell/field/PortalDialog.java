@@ -107,6 +107,7 @@ public class PortalDialog extends LObjectDialog<Portal> {
 		public void drawSelection(LPainter painter) {
 			if (selectedTiles == null)
 				return;
+			painter.setLineWidth(2);
 			painter.setPaintColor(selectionColor);
 			for (int h = 0; h < selectedTiles.length; h++)
 				for (int x = 0; x < selectedTiles[h].length; x++)
