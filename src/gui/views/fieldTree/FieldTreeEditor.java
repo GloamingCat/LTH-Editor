@@ -139,7 +139,8 @@ public class FieldTreeEditor extends LView {
 				LDataTree<FieldNode> node = Project.current.fieldTree.getData().getNode(e.path);
 				node.data.name = e.newData.name;
 				fieldTree.refreshObject(e.path);
-				fieldEditor.canvas.repaint();
+				sideEditor.setPrefs(e.newData);
+				fieldEditor.canvas.refreshBuffer(true);
 			}
 		});
 		fieldTree.addInsertListener(new LCollectionListener<>() {
@@ -166,17 +167,19 @@ public class FieldTreeEditor extends LView {
 		};
 
 		sideEditor.charEditor.onChangeX = event -> {
+			fieldEditor.canvas.setClickedTile(event.newValue(), event.y(), event.h());
             fieldEditor.canvas.onTileChange(event.x(), event.y());
             fieldEditor.canvas.onTileChange(event.newValue(), event.y());
             fieldEditor.canvas.refreshBuffer(false);
         };
 		sideEditor.charEditor.onChangeY = event -> {
+			fieldEditor.canvas.setClickedTile(event.x(), event.newValue(), event.h());
             fieldEditor.canvas.onTileChange(event.x(), event.y());
             fieldEditor.canvas.onTileChange(event.x(), event.newValue());
             fieldEditor.canvas.refreshBuffer(false);
         };
 		sideEditor.charEditor.onChangeH = event -> {
-            fieldEditor.canvas.setHeight(event.newValue());
+			fieldEditor.canvas.setClickedTile(event.x(), event.y(), event.newValue());
             fieldEditor.canvas.onTileChange(event.x(), event.y());
             fieldEditor.canvas.refreshBuffer(false);
         };

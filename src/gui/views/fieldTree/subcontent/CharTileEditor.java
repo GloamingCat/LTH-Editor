@@ -64,11 +64,11 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		spnY = new LSpinner(position);
 		spnY.setMinimum(1);
 		addControl(spnY, "y");
-		
+
 		spnH = new LSpinner(position);
 		spnH.setMinimum(1);
 		addControl(spnH, "h");
-		
+
 		spnX.addModifyListener(event -> {
             if (event == null || event.oldValue == null || onChangeX == null ||
 			 spnX.getValue() == null || spnY.getValue() == null || spnH.getValue() == null) return;
@@ -216,16 +216,23 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		btnRepeat.getCellData().setAlignment(LFlags.LEFT);
 		addControl(btnRepeat, "repeatCollisions");
 
-
 	}
 
 	public void setField(Field field) {
-		if (field == null)
-			return;
-		cmbParty.setItems(field.parties);
-		spnX.setMaximum(field.sizeX);
-		spnY.setMaximum(field.sizeY);
-		spnH.setMaximum(field.prefs.maxHeight);
+		if (field == null) {
+			spnX.setMaximum(Integer.MAX_VALUE);
+			spnY.setMaximum(Integer.MAX_VALUE);
+			spnH.setMaximum(Integer.MAX_VALUE);
+		} else {
+			cmbParty.setItems(field.parties);
+			spnX.setMaximum(field.sizeX);
+			spnY.setMaximum(field.sizeY);
+			spnH.setMaximum(field.prefs.maxHeight);
+		}
+	}
+
+	public void setMaxHeight(int h) {
+		spnH.setMaximum(h);
 	}
 
 	public void setPosition(CharTile tile) {

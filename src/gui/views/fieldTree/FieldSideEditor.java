@@ -329,6 +329,10 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		selectEditor(editor);
 	}
 
+	public void setPrefs(Field.Prefs prefs) {
+		charEditor.setMaxHeight(prefs.maxHeight);
+	}
+
 	public void selectEditor(int i) {
 		editor = i;
 		if (i == CHAR) {         // Character
