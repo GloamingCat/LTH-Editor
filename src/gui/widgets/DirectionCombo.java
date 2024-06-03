@@ -12,13 +12,13 @@ public class DirectionCombo extends LCombo {
 					{"0º", "90º", "180º",  "270º"};
 	private final int rotation;
 	
-	public DirectionCombo(LContainer parent, boolean dir8) {
+	public DirectionCombo(LContainer parent, boolean has8dir) {
 		super(parent, true);
-		this.rotation = dir8 ? 45 : 90;
+		this.rotation = has8dir ? 45 : 90;
 		setIncludeID(false);
 		setOptional(false);
-		if (dir8) {
-			setItems(DirectionCombo.dir8);
+		if (has8dir) {
+			setItems(dir8);
 		} else {
 			setItems(dir4);
 		}
@@ -27,13 +27,21 @@ public class DirectionCombo extends LCombo {
 	public DirectionCombo(LContainer parent) {
 		this(parent, true);
 	}
-	
-	public void setSelectionIndex(int i) {
-		super.setSelectionIndex(i / rotation);
+
+	@Override
+	protected void setSelectionIndex(int i) {
+		if (i == -1)
+			super.setSelectionIndex(-1);
+		else
+			super.setSelectionIndex(i / rotation);
 	}
 
-	public int getSelectionIndex() {
-		return super.getSelectionIndex() * rotation;
+	@Override
+	protected int getSelectionIndex() {
+		int i = super.getSelectionIndex();
+		if (i == -1)
+			return -1;
+		return i * rotation;
 	}
 	
 }

@@ -366,9 +366,9 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		if (field == null)
 			cmbPlayerParty.setItems((String[]) null);
 		else {
-			int index = cmbPlayerParty.getSelectionIndex();
+			int index = cmbPlayerParty.getValue();
 			cmbPlayerParty.setItems(field.parties);
-			cmbPlayerParty.setSelectionIndex(index);
+			cmbPlayerParty.setValue(index);
 		}
 	}
 

@@ -152,11 +152,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 			spnX.setValue(initial.x);
 			spnY.setValue(initial.y);
 			spnH.setValue(initial.h);
-			if (initial.direction == -1) {
-				cmbDirection.setValue(-1);
-			} else {
-				cmbDirection.setSelectionIndex(initial.direction);
-			}
+			cmbDirection.setValue(initial.direction);
 			canvas.setHeight(initial.h - 1);
 		}
 		updateClickPoint();
@@ -175,7 +171,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 		pos.y = spnY.getValue();
 		pos.h = spnH.getValue();
 		pos.fieldID = canvas.field.id;
-		pos.direction = cmbDirection.getSelectionIndex();
+		pos.direction = cmbDirection.getValue();
 		return pos;
 	}
 	

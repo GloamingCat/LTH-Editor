@@ -123,7 +123,7 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 		selFile.setSelectedFile(initial.name);
 		var item = list.stream().filter(a -> a.key.equals(initial.name)).findAny();
 		if (item.isPresent())
-			cmbSound.setSelectionIndex(list.indexOf(item.get()));
+			cmbSound.setValue(list.indexOf(item.get()));
 		else
 			cmbSound.setValue(-1);
 		super.open(initial);
@@ -135,7 +135,7 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 		audio.name = selFile.getSelectedFile();
 		if (audio.name == null)
 			audio.name = "";
-		int i = cmbSound.getSelectionIndex();
+		int i = cmbSound.getValue();
 		if (i >= 0) {
 			Audio node = Project.current.config.getData().sounds.get(i);
 			audio.name = node.key;
