@@ -24,9 +24,8 @@ public class TransformationDialog extends GObjectDialog<Transformation> {
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.TRANSFORMTYPE);
-		LCombo cmbType = new LCombo(contentEditor, true);
+		LCombo cmbType = new LCombo(contentEditor, LCombo.READONLY);
 		cmbType.getCellData().setExpand(true, false);
-		cmbType.setOptional(false);
 		cmbType.setIncludeID(false);
 		cmbType.setItems(Transformation.types);
 		addControl(cmbType, "type");

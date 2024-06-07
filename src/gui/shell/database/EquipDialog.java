@@ -1,13 +1,10 @@
 package gui.shell.database;
 
-import data.Item;
 import gui.Tooltip;
 import gui.Vocab;
 import lui.gson.GObjectDialog;
-import gui.widgets.IDButton;
 
 import data.Battler.Equip;
-import lui.base.data.LDataTree;
 import lui.container.LFrame;
 import lui.dialog.LWindow;
 import lui.widget.LCombo;
@@ -34,10 +31,9 @@ public class EquipDialog extends GObjectDialog<Equip> {
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, Vocab.instance.STATE, Tooltip.instance.STATE);
-		LCombo cmbState = new LCombo(contentEditor, true);
+		LCombo cmbState = new LCombo(contentEditor, LCombo.READONLY);
 		cmbState.getCellData().setExpand(true, false);
 		cmbState.setIncludeID(false);
-		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {
 				Vocab.instance.FREE, Vocab.instance.NOTEMPTY,
 				Vocab.instance.ALLEQUIPED, Vocab.instance.UNCHANGABLE,

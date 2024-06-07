@@ -38,9 +38,8 @@ public class AttributeDialog extends GObjectDialog<Attribute> {
 		addControl(txtShortName, "shortName");
 
 		new LLabel(contentEditor, Vocab.instance.VISIBILITY, Tooltip.instance.VISIBILITY);
-		LCombo cmbVisibility = new LCombo(contentEditor, true);
+		LCombo cmbVisibility = new LCombo(contentEditor, LCombo.READONLY);
 		cmbVisibility.getCellData().setExpand(true, false);
-		cmbVisibility.setOptional(false);
 		cmbVisibility.setIncludeID(false);
 		cmbVisibility.setItems(new String [] {
 			Vocab.instance.NOTVISIBLE,

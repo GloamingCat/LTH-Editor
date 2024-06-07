@@ -56,9 +56,8 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 		selFile.setFolder(Project.current.audioPath());
 		selFile.getCellData().setExpand(true, true);
 
-		cmbSound = new LCombo(sound, true);
+		cmbSound = new LCombo(sound, LCombo.OPTIONAL | LCombo.READONLY);
 		cmbSound.getCellData().setExpand(true, false);
-		cmbSound.setOptional(true);
 		cmbSound.setIncludeID(false);
 		cmbSound.addModifyListener(event -> {
             selFile.setValue(-1);

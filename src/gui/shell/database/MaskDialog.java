@@ -120,8 +120,7 @@ public class MaskDialog extends LObjectDialog<Mask> {
         });
 
 		new LLabel(content, Vocab.instance.HEIGHT, Tooltip.instance.MASKH);
-		cmbHeight = new LCombo(content, true);
-		cmbHeight.setOptional(false);
+		cmbHeight = new LCombo(content, LCombo.READONLY);
 		cmbHeight.setIncludeID(false);
 		cmbHeight.addModifyListener(event -> {
             height = event.newValue - spnMinH.getValue();

@@ -81,9 +81,8 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 
 		new LLabel(this, Vocab.instance.DIRECTION, Tooltip.instance.PARTYDIR);
 		
-		LCombo cmbDir = new LCombo(this);
+		LCombo cmbDir = new LCombo(this, LCombo.READONLY);
 		cmbDir.setIncludeID(false);
-		cmbDir.setOptional(false);
 		cmbDir.setItems(DirectionCombo.dir4);
 		cmbDir.getCellData().setExpand(true, false);
 		cmbDir.addModifyListener(redrawListener);
@@ -93,10 +92,9 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		
 		new LLabel(this, Vocab.instance.PARTYGEN, Tooltip.instance.PARTYGEN);
 		
-		LCombo cmbGen = new LCombo(this, true);
+		LCombo cmbGen = new LCombo(this, LCombo.READONLY);
 		cmbGen.getCellData().setExpand(true, false);
 		cmbGen.setIncludeID(false);
-		cmbGen.setOptional(false);
 		cmbGen.setItems(new String[] {
 			Vocab.instance.FIELDCHARS,
 			Vocab.instance.TROOPUNITS

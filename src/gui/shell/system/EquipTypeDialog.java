@@ -34,10 +34,9 @@ public class EquipTypeDialog extends GObjectDialog<EquipType> {
 		addControl(txtKey, "key");
 		
 		new LLabel(contentEditor, Vocab.instance.STATE, Tooltip.instance.STATE);
-		LCombo cmbState = new LCombo(contentEditor, true);
+		LCombo cmbState = new LCombo(contentEditor, LCombo.READONLY);
 		cmbState.getCellData().setExpand(true, false);
 		cmbState.setIncludeID(false);
-		cmbState.setOptional(false);
 		cmbState.setItems(new String[] {
 				Vocab.instance.FREE, Vocab.instance.NOTEMPTY,
 				Vocab.instance.ALLEQUIPED, Vocab.instance.UNCHANGABLE,

@@ -70,10 +70,9 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 				Vocab.instance.MOBILEBROWSER
 			};
 		new LLabel(grpExecution, Vocab.instance.PLATFORM, Tooltip.instance.PLATFORM);
-		LCombo cmbPlatform = new LCombo(grpExecution, true);
+		LCombo cmbPlatform = new LCombo(grpExecution, LCombo.READONLY);
 		cmbPlatform.getCellData().setSpread(3, 1);
 		cmbPlatform.getCellData().setExpand(true, false);
-		cmbPlatform.setOptional(false);
 		cmbPlatform.setIncludeID(false);
 		cmbPlatform.setItems(platforms);
 		addControl(cmbPlatform, "platform");

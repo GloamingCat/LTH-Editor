@@ -100,10 +100,9 @@ public class SkillTab extends DatabaseTab<Skill> {
 		addChild(lstCosts, "costs");
 		
 		LLabel lblContext = new LLabel(grpRestrictions, Vocab.instance.CONTEXT, Tooltip.instance.CONTEXT);
-		LCombo cmbContext = new LCombo(grpRestrictions, true);
+		LCombo cmbContext = new LCombo(grpRestrictions, LCombo.READONLY);
 		cmbContext.getCellData().setExpand(true, false);
 		cmbContext.setIncludeID(false);
-		cmbContext.setOptional(false);
 		cmbContext.setItems(new String[] {
 				Vocab.instance.ALWAYS,
 				Vocab.instance.BATTLEONLY,
@@ -171,10 +170,9 @@ public class SkillTab extends DatabaseTab<Skill> {
 		
 		LLabel lblType = new LLabel(grpTarget, Vocab.instance.TYPE, Tooltip.instance.SKILLTYPE);
 		lblType.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
-		LCombo cmbType = new LCombo(grpTarget, true);
+		LCombo cmbType = new LCombo(grpTarget, LCombo.READONLY);
 		cmbType.getCellData().setExpand(true, false);
 		cmbType.setIncludeID(false);
-		cmbType.setOptional(false);
 		cmbType.setItems(new String[] {
 			Vocab.instance.GENERAL,
 			Vocab.instance.ATTACK,
@@ -184,10 +182,9 @@ public class SkillTab extends DatabaseTab<Skill> {
 		addControl(cmbType, "type");
 
 		LLabel lblSelection = new LLabel(grpTarget, Vocab.instance.TARGETSELECTION, Tooltip.instance.TARGETSELECTION);
-		LCombo cmbSelection = new LCombo(grpTarget, true);
+		LCombo cmbSelection = new LCombo(grpTarget, LCombo.READONLY);
 		cmbSelection.getCellData().setExpand(true, false);
 		cmbSelection.setIncludeID(false);
-		cmbSelection.setOptional(false);
 		cmbSelection.setItems(new String[] {
 				Vocab.instance.ANYTILE,
 				Vocab.instance.EFFECTONLY,

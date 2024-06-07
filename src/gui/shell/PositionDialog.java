@@ -22,6 +22,8 @@ import data.field.FieldNode;
 import data.subcontent.Position;
 import project.Project;
 
+import java.time.Duration;
+
 public class PositionDialog extends LObjectDialog<Position> {
 	
 	private FieldSelector tree;
@@ -99,7 +101,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 		});
 		
 		new LLabel(bottom, Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR);
-		cmbDirection = new DirectionCombo(bottom);
+		cmbDirection = new DirectionCombo(bottom, DirectionCombo.OPTIONAL | DirectionCombo.READONLY, true);
 		cmbDirection.getCellData().setTargetSize(80, -1);
 
 		lblPos = new LLabel(bottom, "(-99, -99, -99)");

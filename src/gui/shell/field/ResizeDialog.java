@@ -34,19 +34,17 @@ public class ResizeDialog extends GObjectDialog<LRect> {
 		
 		new LLabel(contentEditor, Vocab.instance.ALIGNX, Tooltip.instance.ALIGNX);
 		
-		LCombo cmbX = new LCombo(contentEditor, true);
+		LCombo cmbX = new LCombo(contentEditor, LCombo.READONLY);
 		cmbX.getCellData().setExpand(true, false);
-		cmbX.setOptional(false);
 		cmbX.setIncludeID(false);
 		cmbX.setItems(new String[] { Vocab.instance.LEFT, Vocab.instance.CENTER, Vocab.instance.RIGHT });
 		addControl(cmbX, "x");
 		
 		new LLabel(contentEditor, Vocab.instance.ALIGNY, Tooltip.instance.ALIGNY);
 		
-		LCombo cmbY = new LCombo(contentEditor, true);
+		LCombo cmbY = new LCombo(contentEditor, LCombo.READONLY);
 		cmbY.getCellData().setExpand(true, false);
 		cmbY.setIncludeID(false);
-		cmbY.setOptional(false);
 		cmbY.setItems(new String[] { Vocab.instance.TOP, Vocab.instance.CENTER, Vocab.instance.BOTTOM });
 		addControl(cmbY, "y");
 

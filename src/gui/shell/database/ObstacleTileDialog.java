@@ -51,9 +51,8 @@ public class ObstacleTileDialog extends GObjectDialog<ObstacleTile> {
 		addControl(spnX, "height");
 		
 		new LLabel(grpGeneral, Vocab.instance.MODE, Tooltip.instance.MODE);
-        LCombo cmbMode = new LCombo(grpGeneral, true);
+        LCombo cmbMode = new LCombo(grpGeneral, LCombo.READONLY);
 		cmbMode.setIncludeID(false);
-		cmbMode.setOptional(false);
 		cmbMode.getCellData().setExpand(true, false);
 		cmbMode.setItems(new String[] {
 			Vocab.instance.BLOCK,

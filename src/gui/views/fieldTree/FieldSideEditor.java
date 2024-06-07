@@ -269,10 +269,9 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		LLabel lblPlayerParty = new LLabel(partyList, Vocab.instance.PLAYERPARTY, Tooltip.instance.PLAYERPARTY);
 		lblPlayerParty.getCellData().setTargetSize(LPrefs.LABELWIDTH, -1);
-		cmbPlayerParty = new LCombo(partyList, true);
+		cmbPlayerParty = new LCombo(partyList, LCombo.OPTIONAL | LCombo.READONLY);
 		cmbPlayerParty.getCellData().setExpand(true, false);
 		cmbPlayerParty.setIncludeID(false);
-		cmbPlayerParty.setOptional(true);
 		addControl(cmbPlayerParty, "playerParty");
 
         partyEditor = new PartyEditor(party);
@@ -370,7 +369,7 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 		if (field == null)
 			cmbPlayerParty.setItems((String[]) null);
 		else {
-			int index = cmbPlayerParty.getValue();
+			Integer index = cmbPlayerParty.getValue();
 			cmbPlayerParty.setItems(field.parties);
 			cmbPlayerParty.setValue(index);
 		}
