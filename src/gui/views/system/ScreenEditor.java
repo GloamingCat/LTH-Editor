@@ -78,14 +78,12 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		new LLabel(scaleType, Vocab.instance.PCSCALETYPE, Tooltip.instance.PCSCALETYPE).getCellData().setTargetSize(LPrefs.LABELWIDTH / 2, -1);
 		LCombo cmbScale = new LCombo(scaleType, LCombo.READONLY);
 		cmbScale.getCellData().setExpand(true, false);
-		cmbScale.setIncludeID(false);
 		cmbScale.setItems(scaleTypes);
 		addControl(cmbScale, "scaleType");
 
 		new LLabel(scaleType, Vocab.instance.MOBILESCALETYPE, Tooltip.instance.MOBILESCALETYPE).getCellData().setTargetSize(LPrefs.LABELWIDTH / 2, -1);
 		LCombo cmbScaleMobile = new LCombo(scaleType, LCombo.READONLY);
 		cmbScaleMobile.getCellData().setExpand(true, false);
-		cmbScaleMobile.setIncludeID(false);
 		cmbScaleMobile.setItems(scaleTypes);
 		addControl(cmbScaleMobile, "mobileScaleType");
 

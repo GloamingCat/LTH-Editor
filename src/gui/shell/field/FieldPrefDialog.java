@@ -75,7 +75,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		addControl(txtName, "name");
 		
 		new LLabel(grpGeneral, Vocab.instance.DEFAULTREGION, Tooltip.instance.DEFAULTREGION);
-		LCombo cmbRegion = new LCombo(grpGeneral, LCombo.READONLY);
+		LCombo cmbRegion = new LCombo(grpGeneral, LCombo.READONLY | LCombo.INCLUDEID);
 		cmbRegion.getCellData().setSpread(2, 1);
 		cmbRegion.getCellData().setExpand(true, false);
 		cmbRegion.setItems(Project.current.regions.getData());

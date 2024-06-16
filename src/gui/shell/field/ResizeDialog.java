@@ -36,7 +36,6 @@ public class ResizeDialog extends GObjectDialog<LRect> {
 		
 		LCombo cmbX = new LCombo(contentEditor, LCombo.READONLY);
 		cmbX.getCellData().setExpand(true, false);
-		cmbX.setIncludeID(false);
 		cmbX.setItems(new String[] { Vocab.instance.LEFT, Vocab.instance.CENTER, Vocab.instance.RIGHT });
 		addControl(cmbX, "x");
 		
@@ -44,7 +43,6 @@ public class ResizeDialog extends GObjectDialog<LRect> {
 		
 		LCombo cmbY = new LCombo(contentEditor, LCombo.READONLY);
 		cmbY.getCellData().setExpand(true, false);
-		cmbY.setIncludeID(false);
 		cmbY.setItems(new String[] { Vocab.instance.TOP, Vocab.instance.CENTER, Vocab.instance.BOTTOM });
 		addControl(cmbY, "y");
 

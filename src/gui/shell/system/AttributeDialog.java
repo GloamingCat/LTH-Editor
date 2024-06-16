@@ -40,7 +40,6 @@ public class AttributeDialog extends GObjectDialog<Attribute> {
 		new LLabel(contentEditor, Vocab.instance.VISIBILITY, Tooltip.instance.VISIBILITY);
 		LCombo cmbVisibility = new LCombo(contentEditor, LCombo.READONLY);
 		cmbVisibility.getCellData().setExpand(true, false);
-		cmbVisibility.setIncludeID(false);
 		cmbVisibility.setItems(new String [] {
 			Vocab.instance.NOTVISIBLE,
 			Vocab.instance.PRIMARY,

@@ -91,7 +91,6 @@ public class UnitEditor extends GDefaultObjectEditor<Unit> {
 		cmbList = new LCombo(this, LCombo.READONLY);
 		cmbList.getCellData().setSpread(3, 1);
 		cmbList.getCellData().setExpand(true, false);
-		cmbList.setIncludeID(false);
 		cmbList.setItems(new String[] {
 				Vocab.instance.CURRENT,
 				Vocab.instance.BACKUP,

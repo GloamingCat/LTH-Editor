@@ -15,7 +15,6 @@ public class DirectionCombo extends LCombo {
 	public DirectionCombo(LContainer parent, int flags, boolean has8dir) {
 		super(parent, flags);
 		this.rotation = has8dir ? 45 : 90;
-		setIncludeID(false);
 		if (has8dir) {
 			setItems(dir8);
 		} else {

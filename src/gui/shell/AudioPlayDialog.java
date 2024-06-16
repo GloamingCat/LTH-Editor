@@ -58,7 +58,6 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 
 		cmbSound = new LCombo(sound, LCombo.OPTIONAL | LCombo.READONLY);
 		cmbSound.getCellData().setExpand(true, false);
-		cmbSound.setIncludeID(false);
 		cmbSound.addModifyListener(event -> {
             selFile.setValue(-1);
             ArrayList<Audio> list = Project.current.config.getData().sounds;

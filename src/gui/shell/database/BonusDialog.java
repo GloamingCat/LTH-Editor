@@ -33,7 +33,6 @@ public class BonusDialog extends GObjectDialog<Bonus> {
 		new LLabel(contentEditor, Vocab.instance.TYPE, Tooltip.instance.BONUSTYPE);
 		cmbType = new LCombo(contentEditor, LCombo.READONLY);
 		cmbType.getCellData().setExpand(true, false);
-		cmbType.setIncludeID(false);
 		cmbType.setItems(new String[] {
 				Vocab.instance.ELEMENTDEF,
 				Vocab.instance.ELEMENTATK,

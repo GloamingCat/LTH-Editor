@@ -611,7 +611,7 @@ public class Tooltip {
 	// Character
 	public String CHARPOS = "Character's initial position.";
 	public String CHARDIR = """
-			Character's initial direction.
+			Character's initial direction, in degrees.
 			0 is facing right, 180 is facing left.""";
 	public String CHARACTER = "Character graphics.";
 	public String ANIMATION = """
@@ -654,15 +654,34 @@ public class Tooltip {
 	public String POSITIONX = "X of the tile.";
 	public String POSITIONY = "Y of the tile.";
 	public String POSITIONH = "Height of the layer.";
-	
+	public String TILEREF = """
+			If non-empty, the destination tile will the added to this object's tile.
+			Throws an error if no object/character with this key is found in the current field.
+			Set as "self" (no quotes) to refer to the current character.""";
+	public String PATHLIMIT = """
+			If different than -1, the path to the destination will be limited by this number of steps.""";
+
+	public String DISTANCE = """
+			The number of tiles the character will walk in the given direction.""";
+
 	// Transition
 	public String TRANSITIONS = "List of transitions to other fields.";
-	public String DESTINATION = "The tile the player with be teleported to.";
+	public String DESTINATION = "The tile the player will be teleported to.";
 	public String ORIGTILES = "The tile the player need to step on to be teleported.";
 	public String FADEOUT = """
 			Time in frames of the fading animation when the player steps on the origin tiles.
 			Set as 0 to teleport instantly.""";
-	
+
+	// Battle
+	public String BATTLEFIELD = """
+			The field in which the battle will happen.""";
+	public String SKIPINTRO = """
+			Flag to skip the intro animation showing the parties.""";
+	public String DISABLEESCAPE = """
+			Prevents the player from escaping the battle.""";
+	public String GAMEOVERCONDITION = """
+			The condition to block the "Continue" option from the Game Over screen.""";
+
 	//endregion
 
 }

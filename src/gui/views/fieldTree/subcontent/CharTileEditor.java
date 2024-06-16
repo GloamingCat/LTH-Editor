@@ -159,10 +159,9 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		// Battle
 		
 		new LLabel(this, Vocab.instance.PARTY, Tooltip.instance.CHARPARTY);
-		cmbParty = new LCombo(this, LCombo.OPTIONAL | LCombo.READONLY);
+		cmbParty = new LCombo(this, LCombo.OPTIONAL | LCombo.READONLY | LCombo.INCLUDEID);
 		cmbParty.getCellData().setSpread(2, 1);
 		cmbParty.getCellData().setExpand(true, false);
-		cmbParty.setIncludeID(false);
 		addControl(cmbParty, "party");
 		
 		new LLabel(this, Vocab.instance.CHARBATTLER, Tooltip.instance.CHARBATTLER);

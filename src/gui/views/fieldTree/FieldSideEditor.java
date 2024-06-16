@@ -269,9 +269,8 @@ public class FieldSideEditor extends GDefaultObjectEditor<Field> {
 
 		LLabel lblPlayerParty = new LLabel(partyList, Vocab.instance.PLAYERPARTY, Tooltip.instance.PLAYERPARTY);
 		lblPlayerParty.getCellData().setTargetSize(LPrefs.LABELWIDTH, -1);
-		cmbPlayerParty = new LCombo(partyList, LCombo.OPTIONAL | LCombo.READONLY);
+		cmbPlayerParty = new LCombo(partyList, LCombo.OPTIONAL | LCombo.READONLY | LCombo.INCLUDEID);
 		cmbPlayerParty.getCellData().setExpand(true, false);
-		cmbPlayerParty.setIncludeID(false);
 		addControl(cmbPlayerParty, "playerParty");
 
         partyEditor = new PartyEditor(party);

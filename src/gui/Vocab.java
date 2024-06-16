@@ -297,7 +297,10 @@ public class Vocab {
 	// Event Sheet
 	public String EVENTS = "Events";
 	public String COMMAND = "Command";
-	
+	public String DEFAULTCOMMANDS = "Default Commands";
+	public String FIELDEVENTS = "Field";
+	public String CHAREVENTS = "Character";
+
 	// }}
 	
 	//////////////////////////////////////////////////
@@ -432,13 +435,24 @@ public class Vocab {
 	public String POSITIONX = "X";
 	public String POSITIONY = "Y";
 	public String POSITIONH = "H";
-	
+	public String TILEREF = "To Object";
+	public String PATHLIMIT = "Path Limit";
+	public String DISTANCE = "Distance";
+
 	// Transition
 	public String TRANSITIONS = "Transitions";
 	public String DESTINATION = "Destination";
 	public String ORIGTILES = "Origin Tiles";
 	public String FADEOUT = "Fade out";
-	
+
+	// Battle
+	public String BATTLEFIELD = "Battle Field ID";
+	public String SKIPINTRO = "Skip Intro";
+	public String DISABLEESCAPE = "Disable Escape";
+	public String GAMEOVERCONDITION = "Game Over Condition";
+	public String LOSE = "All allies dead (lose)";
+	public String NOWIN = "Any enemy alive (lose or draw)";
+
 	// }}
 	
 	//////////////////////////////////////////////////

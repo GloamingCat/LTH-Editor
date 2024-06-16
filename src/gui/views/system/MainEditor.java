@@ -73,7 +73,6 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 		LCombo cmbPlatform = new LCombo(grpExecution, LCombo.READONLY);
 		cmbPlatform.getCellData().setSpread(3, 1);
 		cmbPlatform.getCellData().setExpand(true, false);
-		cmbPlatform.setIncludeID(false);
 		cmbPlatform.setItems(platforms);
 		addControl(cmbPlatform, "platform");
 		// TODO: export button
