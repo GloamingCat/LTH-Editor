@@ -4,10 +4,11 @@ import data.subcontent.Position;
 import data.subcontent.Tag;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.widgets.PositionButton;
+import gui.views.fieldTree.PositionEditor;
 import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LDataTree;
+import lui.container.LFrame;
 import lui.dialog.LWindow;
 import lui.gson.GObjectDialog;
 import lui.widget.*;
@@ -29,7 +30,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int SIZE = 512;
     public static final int WAIT = 1024;
     public static final int DEACTIVATE = 2048;
-    public static final int PASSABLE = 4096;
+    //public static final int PASSABLE = 4096;
     public static final int OPTIONAL = 8192;
     public static final int PERMANENT = 16384;
     public static final int LIMIT = 32768;
@@ -42,8 +43,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
 
     TreeMap<String, LControlWidget<?>> controls;
 
-    PositionButton btnPosition;
-
+    PositionEditor position;
 
     public EventArgsDialog(LWindow parent, int style, String title) {
         super(parent, style, title);
@@ -55,17 +55,21 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         contentEditor.setGridLayout(3);
         controls = new TreeMap<>();
 
-        if ((style & KEY) > 0)
+        if ((style & KEY) > 0) {
             addTextField(Vocab.instance.KEY, Tooltip.instance.KEY, "key");
+            if ((style & NAME) > 0 && (style & WINDOW) == 0)
+                addTextField(Vocab.instance.NAME, Tooltip.instance.CHARANIM, "name");
+        }
         if ((style & FIELD) > 0) {
             if ((style & TILE) > 0) {
                 // Transition
-                new LLabel(contentEditor, Vocab.instance.DESTINATION, Tooltip.instance.DESTINATION);
-                LText txtPos = new LText(contentEditor, true);
-                txtPos.getCellData().setExpand(true, false);
-                btnPosition = new PositionButton(contentEditor, -1);
-                btnPosition.setValue(Project.current.config.getData().player.startPos);
-                btnPosition.setTextWidget(txtPos);
+                LFrame grpDestination = new LFrame(contentEditor, Vocab.instance.DESTINATION);
+                grpDestination.setHoverText(Tooltip.instance.DESTINATION);
+                grpDestination.setFillLayout(true);
+                grpDestination.getCellData().setSpread(3, 1);
+                grpDestination.getCellData().setExpand(true, true);
+                position = new PositionEditor(grpDestination, -1, false);
+                position.setObject(Project.current.config.getData().player.startPos.clone());
             } else {
                 // Battle
                 addNodeSelector(Vocab.instance.BATTLEFIELD, Tooltip.instance.BATTLEFIELD, "fieldID",
@@ -73,10 +77,9 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 addCheckBox(Vocab.instance.SKIPINTRO, Tooltip.instance.SKIPINTRO, "skipIntro");
                 addCheckBox(Vocab.instance.DISABLEESCAPE, Tooltip.instance.DISABLEESCAPE, "skipIntro");
                 addCombo(Vocab.instance.GAMEOVERCONDITION, Tooltip.instance.GAMEOVERCONDITION, "gameOverCondition",
-                       new String[] { Vocab.instance.NONE, Vocab.instance.LOSE, Vocab.instance.NOWIN }, 0 );
+                       new String[] { Vocab.instance.NONE, Vocab.instance.LOSE, Vocab.instance.NOWIN }, LCombo.READONLY );
             }
             addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade");
-            return;
         } else if ((style & TILE) > 0) {
             addSpinner(Vocab.instance.POSITIONX, Tooltip.instance.POSITIONX, "x");
             addSpinner(Vocab.instance.POSITIONY, Tooltip.instance.POSITIONY, "y");
@@ -92,10 +95,13 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             if ((style & LIMIT) > 0) {
                 addSpinner(Vocab.instance.DISTANCE, Tooltip.instance.DISTANCE, "distance");
             }
+        } else if ((style & DEACTIVATE) > 0) {
+            addCheckBox(Vocab.instance.PASSABLE, Tooltip.instance.CHARPASSABLE, "passable");
+            addCheckBox(Vocab.instance.DEACTIVATE, Tooltip.instance.CHARDEACTIVATE, "deactivate");
+            addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
+            addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
+            addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade");
         }
-
-        if ((style & NAME) > 0)
-            addTextField(Vocab.instance.NAME, Tooltip.instance.NAME, "name");
     }
 
     @Override
@@ -122,16 +128,14 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             Tag p = new Tag(entry.getKey(), entry.getValue().getValue().toString());
             params.add(p);
         }
-        if (btnPosition != null) {
-            Position p = btnPosition.getValue();
+        if (position != null) {
+            Position p = position.getObject();
             params.add(new Tag("fieldID", "" + p.fieldID));
             params.add(new Tag("x", "" + p.x));
             params.add(new Tag("y", "" + p.y));
             params.add(new Tag("h", "" + p.h));
             params.add(new Tag("direction", "" + p.direction));
         }
-        if (params.equals(initial))
-            return null;
         return params;
     }
 

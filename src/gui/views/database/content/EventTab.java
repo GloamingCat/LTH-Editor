@@ -14,10 +14,7 @@ import lui.base.action.LAction;
 import lui.base.data.LDataList;
 import lui.base.event.LControlEvent;
 import lui.base.event.listener.LSelectionListener;
-import lui.container.LContainer;
-import lui.container.LFrame;
-import lui.container.LPanel;
-import lui.container.LViewFolder;
+import lui.container.*;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
@@ -57,11 +54,13 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		addControl(txtDescription, "description");
 
 		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS);
-		grpEvents.setGridLayout(2);
+		grpEvents.setFillLayout(true);
 		grpEvents.setHoverText(Tooltip.instance.EVENTS);
 		grpEvents.getCellData().setExpand(true, true);
 		grpEvents.getCellData().setSpread(2, 1);
-		SimpleEditableList<EventSheet.Event> lstEvents = new SimpleEditableList<>(grpEvents);
+		LFlexPanel events = new LFlexPanel(grpEvents);
+
+		SimpleEditableList<EventSheet.Event> lstEvents = new SimpleEditableList<>(events);
 		lstEvents.getCellData().setExpand(true, true);
 		lstEvents.getCollectionWidget().setEditEnabled(false);
 		lstEvents.setIncludeID(false);
@@ -69,9 +68,11 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		lstEvents.addMenu(grpEvents);
 		addChild(lstEvents, "events");
 
-		EventEditor eventEditor = new EventEditor(grpEvents, false);
+		EventEditor eventEditor = new EventEditor(events, false);
 		eventEditor.getCellData().setExpand(true, true);
 		lstEvents.addChild(eventEditor);
+
+		events.setWeights(1, 2);
 
 	}
 
@@ -120,25 +121,35 @@ public class EventTab extends DatabaseTab<EventSheet> {
 
 			LViewFolder tabFolder = new LViewFolder(commands, false);
 
-			LPanel fieldEvents = new LPanel(tabFolder);
+			LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
+			LPanel fieldEvents = new LPanel(fieldScroll);
 			fieldEvents.setSequentialLayout(true);
-			tabFolder.addTab(Vocab.instance.FIELDEVENTS, fieldEvents);
+			tabFolder.addTab(Vocab.instance.FIELDEVENTS, fieldScroll);
 			new EventButton(fieldEvents, "Normal Field Transition", "moveToField",
 					EventArgsDialog.FIELD | EventArgsDialog.TILE);
 			new EventButton(fieldEvents, "Battle Field Transition", "startBattle",
 					EventArgsDialog.FIELD);
 
-			LPanel charEvents = new LPanel(tabFolder);
+			LScrollPanel charScroll = new LScrollPanel(tabFolder);
+			LPanel charEvents = new LPanel(charScroll);
 			charEvents.setSequentialLayout(true);
-			tabFolder.addTab(Vocab.instance.CHAREVENTS, charEvents);
-			new EventButton(charEvents, "Move to Tile", "moveCharTile",
-					EventArgsDialog.KEY | EventArgsDialog.TILE | EventArgsDialog.LIMIT);
-			new EventButton(charEvents, "Move in Direction", "moveCharDir",
-					EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.LIMIT);
+			tabFolder.addTab(Vocab.instance.CHAREVENTS, charScroll);
 			new EventButton(charEvents, "Turn to Tile", "turnCharTile",
 					EventArgsDialog.KEY | EventArgsDialog.TILE);
 			new EventButton(charEvents, "Turn to Direction", "turnCharDir",
 					EventArgsDialog.KEY | EventArgsDialog.DIR);
+			new EventButton(charEvents, "Move to Tile", "moveCharTile",
+					EventArgsDialog.KEY | EventArgsDialog.TILE | EventArgsDialog.LIMIT);
+			new EventButton(charEvents, "Move in Direction", "moveCharDir",
+					EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.LIMIT);
+			new EventButton(charEvents, "Hide", "hideChar",
+					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
+			new EventButton(charEvents, "Delete", "deleteChar",
+					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
+			new EventButton(charEvents, "Play Animation", "playCharAnim",
+					EventArgsDialog.KEY | EventArgsDialog.NAME);
+			new EventButton(charEvents, "Stop Animation", "stopChar",
+					EventArgsDialog.KEY);
 
 			//tabFolder.addTab(Vocab.instance.FLOWEVENT);
 			//tabFolder.addTab(Vocab.instance.MENUEVENT);

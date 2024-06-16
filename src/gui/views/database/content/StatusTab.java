@@ -169,7 +169,7 @@ public class StatusTab extends DatabaseTab<Status> {
 		grpGraphics.setHoverText(Tooltip.instance.GRAPHICS);
 		grpGraphics.getCellData().setExpand(true, true);
 
-		LLabel lblAnim = new LLabel(grpGraphics, Vocab.instance.CHARANIM, Tooltip.instance.CHARANIM);
+		LLabel lblAnim = new LLabel(grpGraphics, Vocab.instance.CHARANIM, Tooltip.instance.STATUSANIM);
 		LText txtCharAnim = new LText(grpGraphics);
 		txtCharAnim.getCellData().setExpand(true, false);
 		txtCharAnim.addMenu(lblAnim);

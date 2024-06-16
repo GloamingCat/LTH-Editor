@@ -419,7 +419,8 @@ public class Vocab {
 	public String ONCOLLIDE = "On Collide";
 	public String ONINTERACT = "On Interact";
 	public String SPEED = "Speed";
-	
+	public String OPTIONAL = "Optional";
+
 	// Party
 	public String PLAYERPARTY = "Player Party";
 	public String PARTYGEN = "Generation";

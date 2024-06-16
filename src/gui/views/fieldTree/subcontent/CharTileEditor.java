@@ -134,7 +134,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		animation.setEqualCells(true);
 		animation.getCellData().setSpread(2, 2);
 		animation.getCellData().setExpand(true, false);
-		new LLabel(this, Vocab.instance.ANIMATION, Tooltip.instance.ANIMATION);
+		new LLabel(this, Vocab.instance.ANIMATION, Tooltip.instance.CHARANIM);
 
 		DirectionCombo cmbDir = new DirectionCombo(animation);
 		cmbDir.getCellData().setExpand(true, false);

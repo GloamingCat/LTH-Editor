@@ -398,7 +398,7 @@ public class Tooltip {
 	public String BEHAVIOR = """
 			The AI rules that this character executes when it has this status.
 			Leave it empty to not change the battler's AI.""";
-	public String CHARANIM = """
+	public String STATUSANIM = """
             The animation set of the character is changed to this one when it receives the status.
             Specific animation replacement can be set in the character's animation list by specifying the set of an animation.
             The replacements are processed in order according to the statuses' priorities.""";
@@ -536,7 +536,8 @@ public class Tooltip {
             When checked, the collision scripts will be executed in multiple times in parallel if
             the character has another collision before the script ends.
             If unchecked, the script won't be executed again if it's already running when the new collision occurs.""";
-	
+	public String CHAROPTIONAL = "When unchecked, it will raise an error when the character with the specified key is not found.";
+
 	// Effect
 	public String EFFECTS = "Effects of the skill (damage, healing and status).";
 	public String BASICRESULT = "The base value of the damage or healing.";
@@ -611,12 +612,12 @@ public class Tooltip {
 	// Character
 	public String CHARPOS = "Character's initial position.";
 	public String CHARDIR = """
-			Character's initial direction, in degrees.
+			Character's direction, in degrees.
 			0 is facing right, 180 is facing left.""";
 	public String CHARACTER = "Character graphics.";
-	public String ANIMATION = """
-			The name of the initial animation of this character.
-			Usually 'Idle'.""";
+	public String CHARANIM = """
+			The name of the animation of this character.
+			The initial animation should typically be 'Idle'.""";
 	public String FRAME = """
 			The initial frame of the animation.
 			It's an index in the animation's pattern (not a column number).""";
@@ -624,12 +625,13 @@ public class Tooltip {
 	public String CHARPERSISTENT = "When checked, the changed data will be saved in the field's save if the field is also persistent.";
 	public String CHARPASSABLE = "When checked, the player and other characters can overpass it.";
 	public String CHARVISIBLE = "If unchecked, the character starts off as invisible.";
+	public String CHARDEACTIVATE = "When checked, the character's scripts are ignored.";
 	public String CHARPARTY = """
             The party slot associated with this character, in case it's a battle character.
             This will tell which troop this character belongs to, when the 'unit generation'
             setting of the party is set as 'field characters'.
             If left blank, it will be treated as a scenery object or non-battle NPC.""";
-	
+
 	// Party
 	public String PARTYPOS = """
 			Top-left (when orthogonal) or left (when isometric/hexagonal) corner of the party's grid.
@@ -659,8 +661,8 @@ public class Tooltip {
 			Throws an error if no object/character with this key is found in the current field.
 			Set as "self" (no quotes) to refer to the current character.""";
 	public String PATHLIMIT = """
-			If different than -1, the path to the destination will be limited by this number of steps.""";
-
+			If greater then zero, the path to the destination will be limited by this number of steps.
+			If -1, no path is computed, and the character walks straight to the destination.""";
 	public String DISTANCE = """
 			The number of tiles the character will walk in the given direction.""";
 
