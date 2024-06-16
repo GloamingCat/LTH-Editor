@@ -22,6 +22,7 @@ public class PositionDialog extends LObjectDialog<Position> {
 	}
 	
 	public void open(Position initial) {
+		positionEditor.onVisible();
 		positionEditor.setObject(initial.clone());
 		super.open(initial);
 	}

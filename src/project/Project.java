@@ -25,7 +25,7 @@ public class Project implements LSerializer {
 		public int dataVersion = 0;
 	}
 	
-	private ProjectSettings settings;
+	private final ProjectSettings settings;
 	
 	// Database
 	public GObjectTreeSerializer animations;
@@ -52,7 +52,7 @@ public class Project implements LSerializer {
 	public FieldTreeSerializer fieldTree;
 	
 	private LSerializer[] allData;
-	private GObjectTreeSerializer[] database;
+	private final GObjectTreeSerializer[] database;
 	
 	public static Project current = null;
 	public String path;

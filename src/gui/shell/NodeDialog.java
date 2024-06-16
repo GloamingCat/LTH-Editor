@@ -32,7 +32,7 @@ public abstract class NodeDialog extends GObjectDialog<Node> {
 		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
 		
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, 0);
 		tree.getCellData().setSpread(2, 1);
 		tree.getCellData().setExpand(true, true);
 		tree.setCollection(getTree());

@@ -9,7 +9,7 @@ public abstract class IDDialog extends LObjectDialog<Integer> {
 	
 	protected LNodeSelector<Object> tree;
 	
-	public static final int OPTIONAL = 0x01;
+	public static final int OPTIONAL = 1;
 	
 	/**
 	 * @wbp.parser.constructor
@@ -22,7 +22,7 @@ public abstract class IDDialog extends LObjectDialog<Integer> {
 	protected void createContent(int style) {
 		super.createContent(style);
 		content.setFillLayout(true);
-		tree = new LNodeSelector<>(content, (style & OPTIONAL) > 0);
+		tree = new LNodeSelector<>(content, style & LNodeSelector.OPTIONAL);
 		tree.setCollection(getTree());
 	}
 	

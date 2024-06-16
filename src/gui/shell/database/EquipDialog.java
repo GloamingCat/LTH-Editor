@@ -46,7 +46,7 @@ public class EquipDialog extends GObjectDialog<Equip> {
 		item.getCellData().setExpand(true, true);
 		item.getCellData().setSpread(2, 1);
 
-		LNodeSelector<Object> selItem = new LNodeSelector<>(item, true);
+		LNodeSelector<Object> selItem = new LNodeSelector<>(item, LNodeSelector.OPTIONAL);
 		selItem.setCollection(Project.current.items.getTree());
 		addControl(selItem, "id");
 	}

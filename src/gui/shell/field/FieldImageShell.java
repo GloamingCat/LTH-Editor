@@ -51,7 +51,7 @@ public class FieldImageShell extends LObjectDialog<FieldImage> {
 		sashForm.getCellData().setExpand(true, true);
 		sashForm.getCellData().setSpread(2, 1);
 		
-		tree = new LNodeSelector<>(sashForm, false);
+		tree = new LNodeSelector<>(sashForm, 0);
 		tree.setCollection(getTree());
 		tree.addModifyListener(event -> {
             Animation anim = (Animation) getTree().get(event.newValue);

@@ -39,7 +39,7 @@ public class TroopSpawnDialog extends GObjectDialog<TroopSpawn> {
 		spnMax.setValue(100);
 		addControl(spnMax, "maxLevel");
 		
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, 0);
 		tree.getCellData().setSpread(2, 1);
 		tree.getCellData().setExpand(true, true);
 		tree.setCollection(Project.current.troops.getTree());

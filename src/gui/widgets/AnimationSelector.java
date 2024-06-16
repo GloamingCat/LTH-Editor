@@ -17,7 +17,7 @@ public class AnimationSelector extends LFlexPanel {
 
     public AnimationSelector(LContainer parent) {
         super(parent, true);
-		tree = new LNodeSelector<>(this, true);
+		tree = new LNodeSelector<>(this, LNodeSelector.OPTIONAL);
 		scroll = new LScrollPanel(this);
 		image = new TransformedImage(scroll);
 		image.setBackground(LovelyTheme.LIGHT);

@@ -121,6 +121,21 @@ public class EventTab extends DatabaseTab<EventSheet> {
 
 			LViewFolder tabFolder = new LViewFolder(commands, false);
 
+			LScrollPanel flowScroll = new LScrollPanel(tabFolder);
+			LPanel flowEvents = new LPanel(flowScroll);
+			flowEvents.setSequentialLayout(true);
+			tabFolder.addTab(Vocab.instance.FLOWEVENTS, flowScroll);
+			new EventButton(flowEvents, "Set Label", "setLabel",
+					EventArgsDialog.NAME);
+			new EventButton(flowEvents, "Jump To Label", "jumpTo",
+					EventArgsDialog.SKIP | EventArgsDialog.NAME);
+			new EventButton(flowEvents, "Skip To Event", "setEvent",
+					EventArgsDialog.SKIP);
+			new EventButton(flowEvents, "Skip Events", "skipEvents",
+					EventArgsDialog.SKIP | EventArgsDialog.LIMIT);
+			new EventButton(flowEvents, "Wait", "wait",
+					EventArgsDialog.WAIT);
+
 			LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
 			LPanel fieldEvents = new LPanel(fieldScroll);
 			fieldEvents.setSequentialLayout(true);
@@ -142,7 +157,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					EventArgsDialog.KEY | EventArgsDialog.TILE | EventArgsDialog.LIMIT);
 			new EventButton(charEvents, "Move in Direction", "moveCharDir",
 					EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.LIMIT);
-			new EventButton(charEvents, "Hide", "hideChar",
+			new EventButton(charEvents, "Set Properties", "hideChar",
 					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
 			new EventButton(charEvents, "Delete", "deleteChar",
 					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
@@ -151,8 +166,17 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(charEvents, "Stop Animation", "stopChar",
 					EventArgsDialog.KEY);
 
-			//tabFolder.addTab(Vocab.instance.FLOWEVENT);
-			//tabFolder.addTab(Vocab.instance.MENUEVENT);
+			LScrollPanel menuScroll = new LScrollPanel(tabFolder);
+			LPanel menuEvents = new LPanel(menuScroll);
+			menuEvents.setSequentialLayout(true);
+			tabFolder.addTab(Vocab.instance.MENUEVENTS, menuScroll);
+			new EventButton(menuEvents, "Field Menu", "openFieldMenu",
+					EventArgsDialog.MENU | EventArgsDialog.FIELD);
+			new EventButton(menuEvents, "Shop Menu", "openShopMenu",
+					EventArgsDialog.MENU | EventArgsDialog.ITEM);
+			new EventButton(menuEvents, "Recruit Menu", "openRecruitMenu",
+					EventArgsDialog.MENU);
+
 			//tabFolder.addTab(Vocab.instance.PARTYEVENT);
 			//tabFolder.addTab(Vocab.instance.SCREENEVENT);
 			//tabFolder.addTab(Vocab.instance.SOUNDEVENT);

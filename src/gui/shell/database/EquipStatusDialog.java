@@ -23,7 +23,7 @@ public class EquipStatusDialog extends GObjectDialog<EquipStatus> {
 		super.createContent(style);
 		contentEditor.setGridLayout(1);
 		
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, 0);
 		tree.getCellData().setExpand(true, true);
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "id");

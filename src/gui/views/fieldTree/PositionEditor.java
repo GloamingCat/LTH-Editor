@@ -15,8 +15,8 @@ import lui.container.LFlexPanel;
 import lui.container.LPanel;
 import lui.container.LScrollPanel;
 import lui.gson.GDefaultObjectEditor;
-import lui.widget.LEditableTree;
 import lui.widget.LLabel;
+import lui.widget.LNodeSelector;
 import lui.widget.LSpinner;
 import project.Project;
 
@@ -24,7 +24,7 @@ import java.lang.reflect.Type;
 
 public class PositionEditor extends GDefaultObjectEditor<Position> {
 
-    private FieldSelector tree;
+    private LNodeSelector<FieldNode> tree;
 	private FieldCanvas canvas;
     private LSpinner spnX;
 	private LSpinner spnY;
@@ -47,10 +47,9 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		LFlexPanel sashForm = new LFlexPanel(this, true);
 		sashForm.getCellData().setExpand(true, true);
 
-		tree = new FieldSelector(sashForm);
-		tree.setDragEnabled(false);
-		tree.setDataCollection(Project.current.fieldTree.getData());
-		tree.addSelectionListener(event -> setField(event.id, (FieldNode) event.data));
+		tree = new LNodeSelector<>(sashForm, LNodeSelector.INCLUDEID);
+		tree.addModifyListener(e -> setField(e.newValue));
+		addControl(tree, "fieldID");
 
 		scrolledComposite = new LScrollPanel(sashForm);
 
@@ -122,22 +121,21 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
     @Override
     public void setObject(Object value) {
 		super.setObject(value);
-        if (value == null) {
-			if (fieldId == -1) {
-				tree.forceSelection(null);
-			} else {
-				var node = tree.getDataCollection().findNode(fieldId);
-				var path = node == null ? null : node.toPath();
-				tree.forceSelection(path);
-			}
+		if (value == null) {
+			setField(fieldId);
 		} else {
-            Position pos = (Position) value;
-			LPath path = findPath(pos.fieldID);
-			tree.forceSelection(path);
-			canvas.setHeight(pos.h - 1);
+			Position p = (Position) value;
+			setField(p.fieldID);
 		}
 		updateClickPoint();
     }
+
+	@Override
+	public void onVisible() {
+		tree.setCollection(Project.current.fieldTree.getData());
+		super.onVisible();
+	}
+
     private LPath findPath(int id) {
 		LDataTree<FieldNode> node = Project.current.fieldTree.getData().findNode(id);
 		return node == null ? null : node.toPath();
@@ -150,10 +148,14 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		canvas.setClickedTile(x, y, h);
 	}
 
-	private void setField(int id, FieldNode node) {
+	private void setField(int id) {
 		if (canvas.field != null && canvas.field.id == id)
 			return;
-		Field field = Project.current.fieldTree.loadField(node);
+		Field field = Project.current.fieldTree.loadField(id);
+		if (field == null) {
+			canvas.setField(null);
+			return;
+		}
 		spnH.setMaximum(field.prefs.maxHeight);
 		spnX.setMaximum(field.sizeX);
 		spnY.setMaximum(field.sizeY);
@@ -163,45 +165,17 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		scrolledComposite.setContentSize(canvas.getTargetSize());
 	}
 
+	@Override
+	public void refresh() {
+		Position object = currentObject;
+		currentObject = null;
+		setObject(object);
+	}
+
     @Override
     public Type getType() {
         return Position.class;
     }
-
-
-	private static class FieldSelector extends LEditableTree<FieldNode, Field> {
-		public FieldSelector(LContainer parent) {
-			super(parent);
-		}
-		@Override
-		protected LDataTree<FieldNode> emptyNode() {
-			return null;
-		}
-		@Override
-		protected LDataTree<FieldNode> duplicateNode(LDataTree<FieldNode> node) {
-			return null;
-		}
-		@Override
-		public LDataTree<FieldNode> toNode(LPath path) {
-			return Project.current.fieldTree.getData().getNode(path);
-		}
-		@Override
-		public FieldNode toObject(LPath path) {
-			return toNode(path).data;
-		}
-		@Override
-		protected String encodeNode(LDataTree<FieldNode> node) {
-			return null;
-		}
-		@Override
-		protected LDataTree<FieldNode> decodeNode(String node) {
-			return null;
-		}
-		@Override
-		public boolean canDecode(String str) {
-			return false;
-		}
-	}
 
 	private class PositionCanvas extends FieldCanvasOpenGL {
 

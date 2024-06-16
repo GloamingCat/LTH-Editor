@@ -536,7 +536,15 @@ public class Tooltip {
             When checked, the collision scripts will be executed in multiple times in parallel if
             the character has another collision before the script ends.
             If unchecked, the script won't be executed again if it's already running when the new collision occurs.""";
+	public String LABEL = """
+			Name of the label.""";
+	public String EVENTID = """
+			Index (position) of the event command in the sheet.""";
+	public String EVENTSKIP = """
+			Number of event commands to skip.""";
 	public String CHAROPTIONAL = "When unchecked, it will raise an error when the character with the specified key is not found.";
+	public String WAITTIME = """
+			Number of frame to wait until the next command is executed.""";
 
 	// Effect
 	public String EFFECTS = "Effects of the skill (damage, healing and status).";

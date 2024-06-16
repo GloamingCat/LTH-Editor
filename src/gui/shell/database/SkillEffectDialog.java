@@ -59,7 +59,7 @@ public class SkillEffectDialog extends GObjectDialog<Effect> {
 		grpStatus.setHoverText(Tooltip.instance.EFFECTSTATUS);
 		grpStatus.getCellData().setExpand(true, true);
 		grpStatus.getCellData().setSpread(2, 1);
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(grpStatus, true);
+		LNodeSelector<Object> tree = new LNodeSelector<Object>(grpStatus, LNodeSelector.OPTIONAL);
 		tree.setCollection(Project.current.status.getTree());
 		addControl(tree, "statusID");
 	}

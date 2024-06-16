@@ -22,7 +22,7 @@ public class JobStatusDialog extends GObjectDialog<Job.Status> {
 		super.createContent(style);
 		contentEditor.setGridLayout(2);
 
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, 0);
 		tree.getCellData().setExpand(true, true);
 		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(Project.current.status.getTree());

@@ -15,7 +15,7 @@ public abstract class TileTree extends LView {
 	public TileTree(LContainer parent) {
 		super(parent, false);
 		setFillLayout(true);
-		selector = new LNodeSelector<>(this, false);
+		selector = new LNodeSelector<>(this, 0);
 	}
 	
 	public void setTile(int id) {

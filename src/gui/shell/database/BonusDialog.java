@@ -55,10 +55,10 @@ public class BonusDialog extends GObjectDialog<Bonus> {
 		final LStack stack = new LStack(contentEditor);
 		stack.getCellData().setExpand(true, true);
 		
-		final LNodeSelector<Object> elementTree = new LNodeSelector<>(stack, false);
+		final LNodeSelector<Object> elementTree = new LNodeSelector<>(stack, 0);
 		elementTree.setCollection(Project.current.elements.getList().toTree());
 		
-		final LNodeSelector<Object> statusTree = new LNodeSelector<>(stack, false);
+		final LNodeSelector<Object> statusTree = new LNodeSelector<>(stack, 0);
 		statusTree.setCollection(Project.current.status.getTree());
 		
 		cmbType.addModifyListener(event -> {

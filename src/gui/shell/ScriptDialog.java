@@ -58,7 +58,7 @@ public class ScriptDialog extends GObjectDialog<Script> {
 		});
 		viewFolder.addTab(Vocab.instance.LUAFILE, selFile);
 
-		selSheet = new LNodeSelector<>(viewFolder, (style & OPTIONAL) > 0);
+		selSheet = new LNodeSelector<>(viewFolder, style & LNodeSelector.OPTIONAL);
 		selSheet.addModifyListener(event -> {
 			if (event.newValue != null)
 				selFile.setValue(null);

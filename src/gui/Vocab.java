@@ -154,7 +154,7 @@ public class Vocab {
 	
 	// Item
 	public String PRICE = "Price";
-	public String SELLABLE = "Sellable";
+	public String SELLABLE = "Can sell";
 	public String USE = "Use";
 	public String CONSUME = "Consume on use";
 	public String NEEDSUSER = "Needs user";
@@ -169,7 +169,7 @@ public class Vocab {
 	public String ADDONBATTLE = "Add on battle";
 	
 	// Battler
-	public String RECRUIT = "Recruitable";
+	public String RECRUIT = "Can dismiss";
 	public String JOB = "Job";
 	public String PERSISTENT = "Persistent";
 	public String RULES = "AI";
@@ -298,8 +298,14 @@ public class Vocab {
 	public String EVENTS = "Events";
 	public String COMMAND = "Command";
 	public String DEFAULTCOMMANDS = "Default Commands";
+	public String FLOWEVENTS = "Flow";
 	public String FIELDEVENTS = "Field";
 	public String CHAREVENTS = "Character";
+	public String MENUEVENTS = "Menu";
+	public String FIELDMENU = "Field Menu";
+	public String SAVEMENU = "Save Menu";
+	public String SHOPMENU = "Shop Menu";
+	public String RECRUITMENU = "Recruit Menu";
 
 	// }}
 	
@@ -420,6 +426,7 @@ public class Vocab {
 	public String ONINTERACT = "On Interact";
 	public String SPEED = "Speed";
 	public String OPTIONAL = "Optional";
+	public String EVENTID = "Event ID";
 
 	// Party
 	public String PLAYERPARTY = "Player Party";

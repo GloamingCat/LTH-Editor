@@ -22,7 +22,7 @@ public class JobSkillDialog extends GObjectDialog<Job.Skill> {
 		super.createContent(style);
 		contentEditor.setGridLayout(2);
 
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, 0);
 		tree.getCellData().setExpand(true, true);
 		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(Project.current.skills.getTree());

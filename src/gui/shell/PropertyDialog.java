@@ -29,7 +29,7 @@ public abstract class PropertyDialog extends GObjectDialog<Property> {
 		spnValue.setMaximum(100000);
 		addControl(spnValue, "value");
 		
-		LNodeSelector<Object> tree = new LNodeSelector<Object>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, 0);
 		tree.getCellData().setExpand(true, true);
 		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(getTree());

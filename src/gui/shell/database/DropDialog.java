@@ -36,7 +36,7 @@ public class DropDialog extends GObjectDialog<Drop> {
 		spnCount.setMinimum(1);
 		addControl(spnCount, "count");
 		
-		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, false);
+		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor,0);
 		tree.getCellData().setExpand(true, true);
 		tree.getCellData().setSpread(2, 1);
 		tree.setCollection(Project.current.items.getTree());
