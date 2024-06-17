@@ -182,6 +182,14 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
 
     @Override
     public void open(LDataList<Tag> initial) {
+        if (editors.containsKey("")) {
+            LObjectEditor<?> oe = editors.get("");
+            String json = GGlobals.encodeJsonList(initial, Tag::toString);
+            json = "{" + json.substring(1, json.length() - 1) + "}";
+            Object obj = oe.decodeData(json);
+            if (obj != null)
+                oe.setObject(obj);
+        }
         for (Tag p : initial) {
             if (controls.containsKey(p.key)) {
                 LControlWidget<?> cw = controls.get(p.key);
@@ -197,13 +205,6 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 Object value = oe.decodeData(p.value);
                 oe.setObject(value);
             }
-        }
-        if (editors.containsKey("")) {
-            LObjectEditor<?> oe = editors.get("");
-            String json = GGlobals.encodeJsonList(initial, Tag::toString);
-            Object obj = oe.decodeData(json);
-            if (obj != null)
-                oe.setObject(obj);
         }
         for (var editor : editors.values()) {
             Object obj = editor.getObject();
