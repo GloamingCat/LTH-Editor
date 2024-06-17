@@ -10,7 +10,9 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
 import lui.base.LPrefs;
-import lui.base.action.LAction;
+import lui.base.action.LCompoundAction;
+import lui.base.action.LControlAction;
+import lui.base.data.LDataCollection;
 import lui.base.data.LDataList;
 import lui.base.event.LControlEvent;
 import lui.base.event.listener.LSelectionListener;
@@ -70,6 +72,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 
 		EventEditor eventEditor = new EventEditor(events, false);
 		eventEditor.getCellData().setExpand(true, true);
+		eventEditor.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		lstEvents.addChild(eventEditor);
 
 		events.setWeights(1, 2);
@@ -223,21 +226,13 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					}
 				});
 				addModifyListener(e -> {
+					LControlEvent<LDataCollection<Tag>> e1 = new LControlEvent<>(lstParam.getDataCollection().clone(), e.newValue);
 					LControlEvent<String> e2 = new LControlEvent<>(txtCommand.getValue(), command);
-					e.oldValue = lstParam.getDataCollection().clone();
-					LAction action = new LAction() {
-						@Override
-						public void undo() {
-							lstParam.setValue(e.oldValue);
-							txtCommand.setValue(e2.oldValue);
-						}
-						@Override
-						public void redo() {
-							lstParam.setValue(e.newValue);
-							txtCommand.setValue(e2.newValue);
-						}
-					};
-					action.redo();
+					LControlAction<LDataCollection<Tag>> a1 = new LControlAction<>(lstParam, e1);
+					a1.apply();
+					LControlAction<String> a2 = new LControlAction<>(txtCommand, e2);
+					a2.apply();
+					LCompoundAction action = new LCompoundAction(a1, a2);
 					EventEditor.this.getActionStack().newAction(action);
 				});
 				LSelectionListener onClick = button.onClick;

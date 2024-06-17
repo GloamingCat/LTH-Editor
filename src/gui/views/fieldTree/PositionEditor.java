@@ -8,8 +8,11 @@ import gui.Vocab;
 import gui.widgets.DirectionCombo;
 import lui.base.LFlags;
 import lui.base.LPrefs;
+import lui.base.action.LCompoundAction;
+import lui.base.action.LControlAction;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
+import lui.base.event.LControlEvent;
 import lui.container.LContainer;
 import lui.container.LFlexPanel;
 import lui.container.LPanel;
@@ -54,6 +57,7 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		scrolledComposite = new LScrollPanel(sashForm);
 
 		canvas = new PositionCanvas(scrolledComposite);
+		addChild(canvas);
 
         sashForm.setWeights(1, 3);
 
@@ -126,8 +130,8 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		} else {
 			Position p = (Position) value;
 			setField(p.fieldID);
+			updateClickPoint();
 		}
-		updateClickPoint();
     }
 
 	@Override
@@ -161,7 +165,8 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		spnY.setMaximum(field.sizeY);
 		canvas.setField(field);
 		canvas.setMode(FieldCanvas.CHAR);
-		updateClickPoint();
+		if (currentObject != null)
+			updateClickPoint();
 		scrolledComposite.setContentSize(canvas.getTargetSize());
 	}
 
@@ -185,8 +190,17 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 
 		@Override
 		public void onTileClick() {
-			spnX.setValue(currentTile.dx + 1);
-			spnY.setValue(currentTile.dy + 1);
+			LControlEvent<Integer> e1 = new LControlEvent<>(spnX.getValue(), currentTile.dx + 1);
+			LControlEvent<Integer> e2 = new LControlEvent<>(spnY.getValue(), currentTile.dy + 1);
+			if (e1.newValue.equals(e1.oldValue) && e2.newValue.equals(e2.oldValue))
+				return;
+			LControlAction<Integer> a1 = new LControlAction<>(spnX, e1);
+			a1.apply();
+			LControlAction<Integer> a2 = new LControlAction<>(spnY, e2);
+			a2.apply();
+			LCompoundAction action = new LCompoundAction(a1, a2);
+			if (getActionStack() != null)
+				getActionStack().newAction(action);
 			updateClickPoint();
 			canvas.repaint();
 		}
