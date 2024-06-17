@@ -200,13 +200,10 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         }
         if (editors.containsKey("")) {
             LObjectEditor<?> oe = editors.get("");
-            for (Tag p : initial) {
-                Object value = oe.getFieldValue(p.key);
-                if (value != null) {
-                    value =  GGlobals.gson.fromJson(p.value, value.getClass());
-                    oe.setFieldValue(p.key, value);
-                }
-            }
+            String json = GGlobals.encodeJsonList(initial, Tag::toString);
+            Object obj = oe.decodeData(json);
+            if (obj != null)
+                oe.setObject(obj);
         }
         for (var editor : editors.values()) {
             Object obj = editor.getObject();
@@ -221,8 +218,10 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         LDataList<Tag> params = new LDataList<>();
         for (var entry : controls.entrySet()) {
             Object value = entry.getValue().getValue();
-            Tag p = new Tag(entry.getKey(), GGlobals.gson.toJson(value));
-            params.add(p);
+            if (value != null) {
+                Tag p = new Tag(entry.getKey(), GGlobals.gson.toJson(value));
+                params.add(p);
+            }
         }
         for (var entry : editors.entrySet()) {
             LObjectEditor<?> oe = entry.getValue();
@@ -233,12 +232,18 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                     params.add(p);
                 }
             } else {
-                Tag p = new Tag(entry.getKey(), GGlobals.gson.toJson(oe.getObject()));
-                params.add(p);
+                String str = oe.encodeObject();
+                if (str != null) {
+                    Tag p = new Tag(entry.getKey(), oe.encodeObject());
+                    params.add(p);
+                }
             }
         }
         return params;
     }
+
+    //////////////////////////////////////////////////
+	//region Controls
 
     private LText addTextField(String label, String tooltip, String key) {
         new LLabel(contentEditor, label, tooltip);
@@ -313,5 +318,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         editors.put(key, lst);
         return lst;
     }
+
+    //endregion
 
 }
