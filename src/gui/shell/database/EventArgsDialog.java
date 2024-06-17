@@ -1,21 +1,17 @@
 package gui.shell.database;
 
-import data.subcontent.Property;
 import data.subcontent.Tag;
 import gson.GGlobals;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.PropertyDialog;
+import gui.views.database.subcontent.PropertyList;
 import gui.views.fieldTree.PositionEditor;
-import gui.widgets.SimpleEditableList;
 import lui.base.LPrefs;
 import lui.base.data.LDataList;
 import lui.base.data.LDataTree;
 import lui.container.LFrame;
 import lui.container.LView;
-import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
-import lui.dialog.LWindowFactory;
 import lui.editor.LObjectEditor;
 import lui.gson.GObjectDialog;
 import lui.widget.*;
@@ -86,28 +82,10 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "menu",
                     new String[] { Vocab.instance.FIELDMENU, Vocab.instance.SAVEMENU }, LCombo.READONLY );
             } else if((style & ITEM) > 0) {
-                var list = addList(Vocab.instance.ITEMS, Tooltip.instance.INVENTORY, "items", false, new LWindowFactory<>() {
-                    @Override
-                    public LObjectDialog<Property> createWindow(LWindow parent) {
-                        return new PropertyDialog(parent, Vocab.instance.ITEMSHELL) {
-                            public LDataTree<Object> getTree() {
-                                return Project.current.items.getTree();
-                            }
-                        };
-                    }
-                }, Property.class);
+                var list = addPropertyList(Vocab.instance.ITEMS, Tooltip.instance.INVENTORY, "items", false, Project.current.items.getTree());
                 addCheckBox(Vocab.instance.SELLABLE, Tooltip.instance.SELLABLE, "sell");
             } else {
-                addList(Vocab.instance.BATTLERS, Tooltip.instance.UNITS, "items", false, new LWindowFactory<>() {
-                    @Override
-                    public LObjectDialog<Property> createWindow(LWindow parent) {
-                        return new PropertyDialog(parent, Vocab.instance.BATTLERSHELL) {
-                            public LDataTree<Object> getTree() {
-                                return Project.current.battlers.getTree();
-                            }
-                        };
-                    }
-                }, Property.class);
+                addPropertyList(Vocab.instance.BATTLERS, Tooltip.instance.UNITS, "items", false, Project.current.battlers.getTree());
                 addCheckBox(Vocab.instance.RECRUIT, Tooltip.instance.RECRUIT, "sell");
             }
         } else if ((style & FIELD) > 0) {
@@ -172,8 +150,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 }
             } else if (editors.containsKey(p.key)) {
                 LObjectEditor<?> oe = editors.get(p.key);
-                Object value = oe.getFieldValue(p.key);
-                oe.setFieldValue(p.key, GGlobals.gson.fromJson(p.value, value.getClass()));
+                Object value = oe.decodeData(p.value);
+                oe.setObject(value);
             }
         }
         if (editors.containsKey("")) {
@@ -182,7 +160,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 Object value = oe.getFieldValue(p.key);
                 if (value != null) {
                     value =  GGlobals.gson.fromJson(p.value, value.getClass());
-                    oe.setFieldValue(p.key,value);
+                    oe.setFieldValue(p.key, value);
                 }
             }
         }
@@ -198,7 +176,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public LDataList<Tag> createResult(LDataList<Tag> initial) {
         LDataList<Tag> params = new LDataList<>();
         for (var entry : controls.entrySet()) {
-            Tag p = new Tag(entry.getKey(), entry.getValue().getValue().toString());
+            Object value = entry.getValue().getValue();
+            Tag p = new Tag(entry.getKey(), GGlobals.gson.toJson(value));
             params.add(p);
         }
         for (var entry : editors.entrySet()) {
@@ -206,11 +185,11 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             oe.saveObjectValues();
             if (entry.getKey().isEmpty()) {
                 for (var field : oe.getFieldValues().entrySet()) {
-                    Tag p = new Tag(field.getKey(), field.getValue().toString());
+                    Tag p = new Tag(field.getKey(), GGlobals.gson.toJson(field.getValue()));
                     params.add(p);
                 }
             } else {
-                Tag p = new Tag(entry.getKey(), oe.getObject().toString());
+                Tag p = new Tag(entry.getKey(), GGlobals.gson.toJson(oe.getObject()));
                 params.add(p);
             }
         }
@@ -273,16 +252,15 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         return ns;
     }
 
-    private <T> SimpleEditableList<T> addList(String label, String tooltip, String key, boolean includeId, LWindowFactory<T> factory, Class<T> type) {
+    private PropertyList addPropertyList(String label, String tooltip, String key, boolean includeId, LDataTree<Object> data) {
         new LLabel(contentEditor, label, tooltip);
-        SimpleEditableList<T> lst = new SimpleEditableList<>(contentEditor);
+        PropertyList lst = new PropertyList(contentEditor, label);
+        lst.dataTree = data;
         lst.getCollectionWidget().setIncludeID(includeId);
         lst.getCellData().setExpand(true, true);
         lst.getCellData().setSpread(2, 1);
         lst.getCellData().setRequiredSize(LPrefs.LISTWIDTH, LPrefs.LISTHEIGHT * 2);
-        lst.setShellFactory(factory);
-        lst.type = type;
-        lst.setObject(new LDataList<T>());
+        lst.setObject(new LDataList<>());
         editors.put(key, lst);
         return lst;
     }

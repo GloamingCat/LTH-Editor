@@ -30,4 +30,9 @@ public class Property implements Cloneable {
             throw new AssertionError();
         }
     }
+
+	@Override
+	public String toString() {
+		return "{id=" + id + "; value=" + value + "}";
+	}
 }
