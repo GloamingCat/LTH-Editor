@@ -3,7 +3,10 @@ package gui;
 public class Vocab {
 
 	public static Vocab instance = new Vocab();
-	
+
+	//////////////////////////////////////////////////
+	//region General
+
 	public String DATABASEEDITOR = "Database Editor";
 	public String SYSTEMEDITOR = "System Editor";
 	public String FIELDEDITOR = "Field Editor";
@@ -59,8 +62,10 @@ public class Vocab {
 	public String LUAFILE = "Lua File";
 	public String EVENTSHEET = "Event Sheet";
 
+	//endregion
+
 	//////////////////////////////////////////////////
-	// {{ Config
+	//region Config
 	
 	// General
 	public String IDENTITY = "Identity";
@@ -147,10 +152,10 @@ public class Vocab {
 	public String WIDTH = "Width";
 	public String HEIGHT = "Height";
 	
-	// }}
+	//endregion
 
 	//////////////////////////////////////////////////
-	// {{ Database
+	//region Database
 	
 	// Item
 	public String PRICE = "Price";
@@ -306,11 +311,18 @@ public class Vocab {
 	public String SAVEMENU = "Save Menu";
 	public String SHOPMENU = "Shop Menu";
 	public String RECRUITMENU = "Recruit Menu";
+	public String TEXT = "Text";
+	public String NAMEX = "Name X";
+	public String NAMEY = "Name Y";
+	public String CANCELVALUE = "Cancel Value";
+	public String MINLENGTH = "Minimum Length";
+	public String MAXLENGTH = "Maximum Length";
+	public String DIGITS = "Digits";
 
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Sub-content
+	//region Sub-content
 	
 	// Audio
 	public String FILE = "File";
@@ -376,10 +388,10 @@ public class Vocab {
 	public String ELEMENTBUFF = "Damage Multipler";
 	public String STATUSDEF = "Status Immunity";
 
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Field
+	//region Field
 	
 	// Prefs
 	public String DEFAULTREGION = "Default Region";
@@ -461,10 +473,10 @@ public class Vocab {
 	public String LOSE = "All allies dead (lose)";
 	public String NOWIN = "Any enemy alive (lose or draw)";
 
-	// }}
+	//endregion
 	
 	//////////////////////////////////////////////////
-	// {{ Shell
+	//region Shell
 	
 	// General
 	public String AUDIOSHELL = "Play Audio";
@@ -519,6 +531,6 @@ public class Vocab {
 	public String TROOPSCRIPTSHELL = "Select Troop Lua File";
 
 
-	// }}
+	//endregion
 	
 }

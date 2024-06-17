@@ -170,6 +170,24 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			LPanel menuEvents = new LPanel(menuScroll);
 			menuEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.MENUEVENTS, menuScroll);
+			new EventButton(menuEvents, "Show Dialogue", "showDialogue",
+					EventArgsDialog.WINDOW | EventArgsDialog.POS | EventArgsDialog.NAME);
+			new EventButton(menuEvents, "Close Dialogue", "closeDialogueWindow",
+					EventArgsDialog.WINDOW);
+			new EventButton(menuEvents, "Show Title", "openTitleWindow",
+					EventArgsDialog.WINDOW | EventArgsDialog.POS);
+			new EventButton(menuEvents, "Close Title", "closeTitleWindow",
+					EventArgsDialog.WINDOW);
+			new EventButton(menuEvents, "Show Message", "showMessage",
+					EventArgsDialog.WINDOW | EventArgsDialog.POS);
+			new EventButton(menuEvents, "Close Message", "closeMessageWindow",
+					EventArgsDialog.WINDOW);
+			new EventButton(menuEvents, "Choice Window", "openChoiceWindow",
+					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS);
+			new EventButton(menuEvents, "Name Window", "openStringWindow",
+					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.NAME);
+			new EventButton(menuEvents, "Number Window", "openNumberWindow",
+					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.LIMIT);
 			new EventButton(menuEvents, "Field Menu", "openFieldMenu",
 					EventArgsDialog.MENU | EventArgsDialog.FIELD);
 			new EventButton(menuEvents, "Shop Menu", "openShopMenu",

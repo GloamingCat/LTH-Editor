@@ -466,7 +466,18 @@ public class Tooltip {
             If no function with the given name is found, the text will be interpreted as Lua code inside a function.
             In this case, the 'script' argument can be used to refer to the script's data,
             which includes the character executing it (if any).""";
-	
+	public String CENTERX = "Position X of the center.";
+	public String CENTERY = "Position Y of the center.";
+	public String TEXT = "Main text.";
+	public String TEXTALIGN = "Text alignment.";
+	public String NAMEPOS = """
+			Position of the name window relative to the main window, from
+			0 (top left of main window) to 100 (bottom right of the main window).""";
+	public String CANCELVALUE = "Default answer for when the player cancels.";
+	public String LENGTHLIMITS = "The minimum and maximum length of the input string required.";
+	public String DIGITS = "Number of digits to select.";
+	public String CHOICES = "List of choices to select.";
+
 	//endregion
 	
 	//////////////////////////////////////////////////
@@ -569,7 +580,7 @@ public class Tooltip {
 	public String MINY = "Maximum tile distance above the user.";
 	public String MAXY = "Maximum tile distance below the user.";
 	public String MASKH = "Current height to be edited (by the difference from the target to the user).";
-	
+
 	//endregion
 	
 	//////////////////////////////////////////////////
@@ -616,7 +627,7 @@ public class Tooltip {
 	public String ALIGNY = """
 			The tiles on vertical axis are removed from/added to the opposite side.
 			If 'Center' is selected, the tiles are equally distributed between top and bottom.""";
-	
+
 	// Character
 	public String CHARPOS = "Character's initial position.";
 	public String CHARDIR = """
