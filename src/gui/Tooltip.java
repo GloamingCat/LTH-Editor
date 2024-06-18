@@ -68,7 +68,7 @@ public class Tooltip {
 	public String FORMULA = """
 			The formula that computes this attribute.
 			It has access to the table 'att', which contains each attribute function referred by its key.""";
-	public String VISIBILITY = "Whether or not the attribute is shown in the character's status menu, and in which column.";
+	public String ATTVISIBLE = "Whether or not the attribute is shown in the character's status menu, and in which column.";
 	public String PLUGINON = "Uncheck this to disable the plugin without uninstalling it.";
 	
 	// Grid
@@ -386,7 +386,7 @@ public class Tooltip {
             Brige: frees the path. It makes a non-passable terrain passable instead of blocking it.""";
 
 	// Status
-	public String VISIBLE = "If unchecked, the status is does not appear on the UI.";
+	public String STATUSVISIBLE = "If unchecked, the status is does not appear on the UI.";
 	public String PRIORITY = "Statues with lower priority numbers appear and are processed first.";
 	public String KOLIKE = "When checked, a character with this status is considered knocked-out when deciding who won the battle.";
 	public String DEACTIVATE = "When checked, this character's turn is skipped.";
@@ -466,6 +466,11 @@ public class Tooltip {
             If no function with the given name is found, the text will be interpreted as Lua code inside a function.
             In this case, the 'script' argument can be used to refer to the script's data,
             which includes the character executing it (if any).""";
+	public String VARIABLE = "Name of the variable.";
+	public String VARVALUE = """
+			Value of the variable.
+			The value is interpreted as JSON.""";
+	public String VISIBLE = "Check this to show, uncheck to hide.";
 	public String CENTERX = "Position X of the center.";
 	public String CENTERY = "Position Y of the center.";
 	public String TEXT = "Main text.";
@@ -477,6 +482,17 @@ public class Tooltip {
 	public String LENGTHLIMITS = "The minimum and maximum length of the input string required.";
 	public String DIGITS = "Number of digits to select.";
 	public String CHOICES = "List of choices to select.";
+	public String BACKUP = "Include backup members.";
+	public String SKILL = "The skill to be used.";
+	public String REMOVE = "Remove instead of adding.";
+	public String STORE = "Move the previously equipped item to the party's inventory.";
+	public String SKILLUSER = """
+		The user of the skill. This should be the key of the unit in the specified troop.
+		When empty, no user is defined, so the skill should not depend on a user.""";
+	public String SKILLTARGET = """
+		The target of the skill. This should be the key of the unit in the specified troop.
+		When empty, then a target selection screen will be opened if the skill is single-target.
+		If it's an area skill, all members are affected.""";
 
 	//endregion
 	
@@ -525,7 +541,7 @@ public class Tooltip {
 	
 	// Script / Rule
 	public String PARAM = """
-            Parameters to the script's execution.\s
+            Parameters to the script's execution.
             Like tags, the value of each parameters is interpreted as a JSON value.
             If the JSON code is not valid, it is interpreted as a raw string.""";
 	public String SCRIPTTRIGGER = "When the script will be executed.";
@@ -629,11 +645,12 @@ public class Tooltip {
 			If 'Center' is selected, the tiles are equally distributed between top and bottom.""";
 
 	// Character
+	public String CHARKEY = "Key of the character (or unit) instance.";
 	public String CHARPOS = "Character's initial position.";
 	public String CHARDIR = """
 			Character's direction, in degrees.
 			0 is facing right, 180 is facing left.""";
-	public String CHARACTER = "Character graphics.";
+	public String CHARACTER = "Character data.";
 	public String CHARANIM = """
 			The name of the animation of this character.
 			The initial animation should typically be 'Idle'.""";

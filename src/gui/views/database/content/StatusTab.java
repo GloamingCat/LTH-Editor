@@ -103,7 +103,7 @@ public class StatusTab extends DatabaseTab<Status> {
 
 		LCheckBox btnVisible = new LCheckBox(compositeVisible);
 		btnVisible.setText(Vocab.instance.VISIBLE);
-		btnVisible.setHoverText(Tooltip.instance.VISIBLE);
+		btnVisible.setHoverText(Tooltip.instance.STATUSVISIBLE);
 		btnVisible.getCellData().setAlignment(LFlags.MIDDLE);
 		btnVisible.getCellData().setTargetSize(LPrefs.BUTTONWIDTH, -1);
 		addControl(btnVisible, "visible");

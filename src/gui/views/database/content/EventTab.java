@@ -128,6 +128,10 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			LPanel flowEvents = new LPanel(flowScroll);
 			flowEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.FLOWEVENTS, flowScroll);
+			new EventButton(flowEvents, "Set Local Variable", "setLocalVar",
+					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
+			new EventButton(flowEvents, "Set Global Variable", "setGlobalVar",
+					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
 			new EventButton(flowEvents, "Set Label", "setLabel",
 					EventArgsDialog.NAME);
 			new EventButton(flowEvents, "Jump To Label", "jumpTo",
@@ -136,15 +140,17 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					EventArgsDialog.SKIP);
 			new EventButton(flowEvents, "Skip Events", "skipEvents",
 					EventArgsDialog.SKIP | EventArgsDialog.LIMIT);
-			new EventButton(flowEvents, "Wait", "wait",
+			new EventButton(flowEvents, "Wait", "waitFrames",
 					EventArgsDialog.WAIT);
 
 			LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
 			LPanel fieldEvents = new LPanel(fieldScroll);
 			fieldEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.FIELDEVENTS, fieldScroll);
+			new EventButton(fieldEvents, "Set Field Variable", "setFieldVar",
+					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
 			new EventButton(fieldEvents, "Normal Field Transition", "moveToField",
-					EventArgsDialog.FIELD | EventArgsDialog.TILE);
+					EventArgsDialog.FIELD | EventArgsDialog.POS);
 			new EventButton(fieldEvents, "Battle Field Transition", "startBattle",
 					EventArgsDialog.FIELD);
 
@@ -152,18 +158,22 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			LPanel charEvents = new LPanel(charScroll);
 			charEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.CHAREVENTS, charScroll);
+			new EventButton(charEvents, "Set Character Variable", "setCharVar",
+					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
+			new EventButton(charEvents, "Delete Character", "deleteChar",
+					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
+			new EventButton(charEvents, "Set Properties", "setupChar",
+					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE | EventArgsDialog.VISIBLE);
+			new EventButton(charEvents, "Shadow Properties", "setupShadow",
+					EventArgsDialog.KEY | EventArgsDialog.VISIBLE);
 			new EventButton(charEvents, "Turn to Tile", "turnCharTile",
-					EventArgsDialog.KEY | EventArgsDialog.TILE);
+					EventArgsDialog.KEY | EventArgsDialog.POS);
 			new EventButton(charEvents, "Turn to Direction", "turnCharDir",
 					EventArgsDialog.KEY | EventArgsDialog.DIR);
 			new EventButton(charEvents, "Move to Tile", "moveCharTile",
-					EventArgsDialog.KEY | EventArgsDialog.TILE | EventArgsDialog.LIMIT);
+					EventArgsDialog.KEY | EventArgsDialog.POS | EventArgsDialog.LIMIT);
 			new EventButton(charEvents, "Move in Direction", "moveCharDir",
 					EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.LIMIT);
-			new EventButton(charEvents, "Set Properties", "hideChar",
-					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
-			new EventButton(charEvents, "Delete", "deleteChar",
-					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
 			new EventButton(charEvents, "Play Animation", "playCharAnim",
 					EventArgsDialog.KEY | EventArgsDialog.NAME);
 			new EventButton(charEvents, "Stop Animation", "stopChar",
@@ -187,21 +197,46 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					EventArgsDialog.WINDOW);
 			new EventButton(menuEvents, "Choice Window", "openChoiceWindow",
 					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS);
-			new EventButton(menuEvents, "Name Window", "openStringWindow",
+			new EventButton(menuEvents, "Input Window", "openStringWindow",
 					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.NAME);
-			new EventButton(menuEvents, "Number Window", "openNumberWindow",
+			new EventButton(menuEvents, "Password Window", "openNumberWindow",
 					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.LIMIT);
 			new EventButton(menuEvents, "Field Menu", "openFieldMenu",
-					EventArgsDialog.MENU | EventArgsDialog.FIELD);
+					EventArgsDialog.MENU);
 			new EventButton(menuEvents, "Shop Menu", "openShopMenu",
 					EventArgsDialog.MENU | EventArgsDialog.ITEM);
 			new EventButton(menuEvents, "Recruit Menu", "openRecruitMenu",
-					EventArgsDialog.MENU);
+					EventArgsDialog.MENU | EventArgsDialog.FORMATION);
+			new EventButton(menuEvents, "HUD Visibility", "setHudVisibility",
+					EventArgsDialog.VISIBLE);
 
-			//tabFolder.addTab(Vocab.instance.PARTYEVENT);
+			LScrollPanel partyScroll = new LScrollPanel(tabFolder);
+			LPanel partyEvents = new LPanel(partyScroll);
+			partyEvents.setSequentialLayout(true);
+			tabFolder.addTab(Vocab.instance.PARTYEVENTS, partyScroll);
+			new EventButton(partyEvents, "Add Member", "addMember",
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.POS);
+			new EventButton(partyEvents, "Remove Member", "hideMember",
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY);
+			new EventButton(partyEvents, "Use Skill", "useSkill",
+					EventArgsDialog.FORMATION | EventArgsDialog.SKILL | EventArgsDialog.ALL);
+			new EventButton(partyEvents, "Add Exp", "increaseExp",
+					EventArgsDialog.FORMATION | EventArgsDialog.LIMIT | EventArgsDialog.ALL);
+			new EventButton(partyEvents, "Add Money", "increaseMoney",
+					EventArgsDialog.FORMATION | EventArgsDialog.LIMIT);
+			new EventButton(partyEvents, "Add Item", "increaseItem",
+					EventArgsDialog.FORMATION | EventArgsDialog.LIMIT | EventArgsDialog.ITEM);
+			new EventButton(partyEvents, "Set Equip", "setEquip",
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.ITEM);
+			new EventButton(partyEvents, "Set Level", "setLevel",
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.LIMIT);
+			new EventButton(partyEvents, "Add Skill", "learnSKill",
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.SKILL | EventArgsDialog.ALL);
+			new EventButton(partyEvents, "Add Status", "addStatus",
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.ALL);
+
 			//tabFolder.addTab(Vocab.instance.SCREENEVENT);
 			//tabFolder.addTab(Vocab.instance.SOUNDEVENT);
-
 
 		}
 

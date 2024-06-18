@@ -318,6 +318,10 @@ public class Vocab {
 	public String MINLENGTH = "Minimum Length";
 	public String MAXLENGTH = "Maximum Length";
 	public String DIGITS = "Digits";
+	public String PARTYEVENTS = "Party";
+	public String SKILL = "Skill";
+	public String REMOVE = "Remove";
+	public String STORE = "Store";
 
 	//endregion
 	
