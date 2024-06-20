@@ -76,7 +76,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		eventEditor.setMargins(LPrefs.FRAMEMARGIN, LPrefs.FRAMEMARGIN);
 		lstEvents.addChild(eventEditor);
 
-		events.setWeights(1, 2);
+		events.setWeights(1, 3);
 
 	}
 
@@ -159,6 +159,10 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					EventArgsDialog.FIELD | EventArgsDialog.POS);
 			new EventButton(fieldEvents, "Battle Field Transition", "startBattle",
 					EventArgsDialog.FIELD);
+			new EventButton(fieldEvents, "Finish Battle", "finishBattle",
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(fieldEvents, "Field Image", "setupImage",
+					EventArgsDialog.NAME | EventArgsDialog.VISIBLE);
 
 			LScrollPanel charScroll = new LScrollPanel(tabFolder);
 			LPanel charEvents = new LPanel(charScroll);
@@ -256,7 +260,24 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(soundEvents, "Play Field BGM", "playFieldBGM",
 					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
 
-			//tabFolder.addTab(Vocab.instance.SCREENEVENT);
+			LScrollPanel screenScroll = new LScrollPanel(tabFolder);
+			LPanel screenEvents = new LPanel(screenScroll);
+			screenEvents.setSequentialLayout(true);
+			tabFolder.addTab(Vocab.instance.SCREENEVENTS, screenScroll);
+			new EventButton(screenEvents, "Focus On Character", "focusCharacter",
+					EventArgsDialog.SPEED | EventArgsDialog.KEY | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(screenEvents, "Focus On Tile", "focusTile",
+					EventArgsDialog.SPEED | EventArgsDialog.POS | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(screenEvents, "Fade in", "fadein",
+					EventArgsDialog.NAME | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(screenEvents, "Fade out", "fadeout",
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(screenEvents, "Apply Shader", "shaderin",
+					EventArgsDialog.NAME | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(screenEvents, "Unapply Shader", "shaderout",
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(screenEvents, "Change Color", "colorin",
+					EventArgsDialog.COLOR | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
 
 			currentEventButton = new EventButton(grpCommands, "Edit Current", null,0);
 			currentEventButton.getCellData().setExpand(true, false);

@@ -657,7 +657,7 @@ public class Tooltip {
 	public String FRAME = """
 			The initial frame of the animation.
 			It's an index in the animation's pattern (not a column number).""";
-	public String SPEED = "Speed";
+	public String SPEED = "Movement speed, in pixels per second.";
 	public String CHARPERSISTENT = "When checked, the changed data will be saved in the field's save if the field is also persistent.";
 	public String CHARPASSABLE = "When checked, the player and other characters can overpass it.";
 	public String CHARVISIBLE = "If unchecked, the character starts off as invisible.";

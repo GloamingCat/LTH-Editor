@@ -319,7 +319,8 @@ public class Vocab {
 	public String MAXLENGTH = "Maximum Length";
 	public String DIGITS = "Digits";
 	public String PARTYEVENTS = "Party";
-	public String SOUNDEVENTS = "Sound";
+	public String SOUNDEVENTS = "Audio";
+	public String SCREENEVENTS = "Screen";
 	public String SKILL = "Skill";
 	public String REMOVE = "Remove";
 	public String STORE = "Store";

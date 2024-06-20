@@ -35,12 +35,12 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int WAIT = 512;
     public static final int DEACTIVATE = 1024;
     public static final int SKIP = 2048;
-    //public static final int CLOSE = 4096;
+    public static final int SPEED = 4096;
     public static final int LIMIT = 8192;
     //public static final int MENU = 16384;
     public static final int ITEM = 32768;
     public static final int INPUT = 65536;
-    //public static final int CHOICE = 131072;
+    public static final int COLOR = 131072;
     public static final int ALL = 262144;
     public static final int SKILL = 524288;
     public static final int FORMATION = 1048576;
@@ -82,6 +82,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             addTextField(Vocab.instance.KEY, Tooltip.instance.CHARKEY, "key");
             if ((style & NAME) > 0 && (style & WINDOW) == 0)
                 addTextField(Vocab.instance.NAME, Tooltip.instance.CHARKEY, "name");
+        } else if ((style & NAME) > 0 && (style & WINDOW) == 0) {
+            addTextField(Vocab.instance.NAME, Tooltip.instance.SCRIPT, "name");
         }
 
         if ((style & WINDOW) > 0) {
@@ -238,10 +240,14 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             addSpinner(Vocab.instance.OFFSETX, Tooltip.instance.POSITIONX, "x", false);
             addSpinner(Vocab.instance.OFFSETY, Tooltip.instance.POSITIONY, "y", false);
             addSpinner(Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH, "h", false);
-            addTextField(Vocab.instance.TILEREF, Tooltip.instance.TILEREF, "other");
-            if ((style & LIMIT) > 0) {
-                // Move
-                addSpinner(Vocab.instance.PATHLIMIT, Tooltip.instance.PATHLIMIT, "limit", true);
+            if ((style & SPEED) > 0) {
+                addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
+            } else {
+                addTextField(Vocab.instance.TILEREF, Tooltip.instance.TILEREF, "other");
+                if ((style & LIMIT) > 0) {
+                    // Move
+                    addSpinner(Vocab.instance.PATHLIMIT, Tooltip.instance.PATHLIMIT, "limit", true);
+                }
             }
         } else if ((style & DIR) > 0) {
             // Angle
@@ -250,13 +256,21 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 // Move
                 addSpinner(Vocab.instance.DISTANCE, Tooltip.instance.DISTANCE, "distance", false);
             }
+            if ((style & SPEED) > 0) {
+                addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
+            }
+        } else if ((style & COLOR) > 0) {
+            addSpinner(Vocab.instance.RED, Tooltip.instance.RED, "red", false);
+            addSpinner(Vocab.instance.GREEN, Tooltip.instance.GREEN, "green", false);
+            addSpinner(Vocab.instance.BLUE, Tooltip.instance.BLUE, "blue", false);
         }
 
         if ((style & VISIBLE) > 0) {
             addCheckBox(Vocab.instance.VISIBLE, Tooltip.instance.VISIBLE, "visible");
-            if ((style & KEY) > 0) {
-                // Setup Shadow/Char
+            if ((style & (KEY | NAME)) > 0) {
+                // Setup Shadow/Char/Image
                 addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
+                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
                 if ((style & DEACTIVATE) > 0) {
                     // Setup Char
                     addCheckBox(Vocab.instance.PASSABLE, Tooltip.instance.CHARPASSABLE, "passable");
