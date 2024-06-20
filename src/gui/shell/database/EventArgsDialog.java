@@ -215,16 +215,20 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         } else if ((style & FIELD) > 0) {
             if ((style & POS) > 0) {
                 // Transition
+                contentEditor.setGridLayout(6);
                 LFrame grpDestination = new LFrame(contentEditor, Vocab.instance.DESTINATION);
                 grpDestination.setHoverText(Tooltip.instance.DESTINATION);
                 grpDestination.setFillLayout(true);
-                grpDestination.getCellData().setSpread(3, 1);
+                grpDestination.getCellData().setSpread(6, 1);
                 grpDestination.getCellData().setExpand(true, true);
                 PositionEditor position = new PositionEditor(grpDestination, -1, false);
                 position.onVisible();
                 position.setObject(Project.current.config.getData().player.startPos.clone());
                 editors.put("", position);
                 contentEditor.addChild((LView) position);
+                new LLabel(contentEditor, 1, 1).getCellData().setExpand(true, false);
+                LCheckBox btn = addCheckBox(Vocab.instance.MOVEPLAYER, Tooltip.instance.MOVEPLAYER, "movePlayer");
+                btn.getCellData().setSpread(1, 1);
             } else {
                 // Battle
                 addNodeSelector(Vocab.instance.BATTLEFIELD, Tooltip.instance.BATTLEFIELD, "fieldID",
@@ -247,6 +251,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 if ((style & LIMIT) > 0) {
                     // Move
                     addSpinner(Vocab.instance.PATHLIMIT, Tooltip.instance.PATHLIMIT, "limit", true);
+                    addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
                 }
             }
         } else if ((style & DIR) > 0) {
@@ -255,6 +260,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             if ((style & LIMIT) > 0) {
                 // Move
                 addSpinner(Vocab.instance.DISTANCE, Tooltip.instance.DISTANCE, "distance", false);
+                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
             }
             if ((style & SPEED) > 0) {
                 addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);

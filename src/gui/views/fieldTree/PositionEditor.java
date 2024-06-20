@@ -69,7 +69,6 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		spnX = new LSpinner(bottom);
 		spnX.getCellData().setTargetSize(80, -1);
 		spnX.setMinimum(1);
-		spnX.setValue(1);
 		spnX.addModifyListener(e -> {
 			int y = spnY.getValue() - 1;
 			int h = spnH.getValue() - 1;
@@ -82,7 +81,6 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		spnY = new LSpinner(bottom);
 		spnY.getCellData().setTargetSize(80, -1);
 		spnY.setMinimum(1);
-		spnY.setValue(1);
 		spnY.addModifyListener(e -> {
 			int x = spnX.getValue() - 1;
 			int h = spnH.getValue() - 1;
@@ -95,7 +93,6 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		spnH = new LSpinner(bottom);
 		spnH.getCellData().setTargetSize(80, -1);
 		spnH.setMinimum(1);
-		spnH.setValue(1);
 		spnH.addModifyListener(e -> {
 			int x = spnX.getValue() - 1;
 			int y = spnY.getValue() - 1;
@@ -130,7 +127,6 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		} else {
 			Position p = (Position) value;
 			setField(p.fieldID);
-			updateClickPoint();
 		}
     }
 
@@ -153,8 +149,6 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 	}
 
 	private void setField(int id) {
-		if (canvas.field != null && canvas.field.id == id)
-			return;
 		Field field = Project.current.fieldTree.loadField(id);
 		if (field == null) {
 			canvas.setField(null);
@@ -163,6 +157,8 @@ public class PositionEditor extends GDefaultObjectEditor<Position> {
 		spnH.setMaximum(field.prefs.maxHeight);
 		spnX.setMaximum(field.sizeX);
 		spnY.setMaximum(field.sizeY);
+		if (canvas.field != null && canvas.field.id == id)
+			return;
 		canvas.setField(field);
 		canvas.setMode(FieldCanvas.CHAR);
 		if (currentObject != null)

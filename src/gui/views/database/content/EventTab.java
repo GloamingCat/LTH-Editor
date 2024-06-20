@@ -296,6 +296,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 				currentEventButton.setValue(null);
 				currentEventButton.setEnabled(false);
 			} else {
+				currentEventButton.command = eventButton.command;
 				currentEventButton.setShellFactory(eventButton.getShellFactory());
 				currentEventButton.setValue(lstParam.getObject());
 				currentEventButton.setEnabled(true);

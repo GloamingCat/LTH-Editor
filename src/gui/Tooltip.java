@@ -710,6 +710,8 @@ public class Tooltip {
 			Time in frames of the fading animation when the player steps on the origin tiles.
 			Set as 0 to teleport instantly.""";
 
+	public String MOVEPLAYER = "Moves player toward this object's tile during the fading animation.";
+
 	// Battle
 	public String BATTLEFIELD = """
 			The field in which the battle will happen.""";

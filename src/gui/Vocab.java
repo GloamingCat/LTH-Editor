@@ -470,6 +470,7 @@ public class Vocab {
 	public String DESTINATION = "Destination";
 	public String ORIGTILES = "Origin Tiles";
 	public String FADEOUT = "Fade out";
+	public String MOVEPLAYER = "Move Player";
 
 	// Battle
 	public String BATTLEFIELD = "Battle Field ID";
