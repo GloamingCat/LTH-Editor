@@ -303,7 +303,11 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         for (var entry : controls.entrySet()) {
             Object value = entry.getValue().getValue();
             if (value != null) {
-                Tag p = new Tag(entry.getKey(), GGlobals.gson.toJson(value));
+                Tag p = new Tag(entry.getKey(), "");
+                if (value instanceof String str)
+                    p.value = str;
+                else
+                    p.value = value.toString();
                 params.add(p);
             }
         }
