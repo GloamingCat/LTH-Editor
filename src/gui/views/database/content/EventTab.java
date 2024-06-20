@@ -10,12 +10,12 @@ import gui.views.database.subcontent.TagList;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
 import lui.base.LPrefs;
+import lui.base.action.LAction;
 import lui.base.action.LCompoundAction;
 import lui.base.action.LControlAction;
 import lui.base.data.LDataCollection;
 import lui.base.data.LDataList;
 import lui.base.event.LControlEvent;
-import lui.base.event.listener.LSelectionListener;
 import lui.container.*;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
@@ -24,6 +24,7 @@ import lui.gson.GDefaultObjectEditor;
 import lui.widget.*;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import data.EventSheet;
 import project.Project;
@@ -65,7 +66,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		SimpleEditableList<EventSheet.Event> lstEvents = new SimpleEditableList<>(events);
 		lstEvents.getCellData().setExpand(true, true);
 		lstEvents.getCollectionWidget().setEditEnabled(false);
-		lstEvents.setIncludeID(false);
+		lstEvents.setIncludeID(true);
 		lstEvents.type = EventSheet.Event.class;
 		lstEvents.addMenu(grpEvents);
 		addChild(lstEvents, "events");
@@ -87,6 +88,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 	private static class EventEditor extends GDefaultObjectEditor<EventSheet.Event> {
 		LTextBox txtCommand;
 		TagList lstParam;
+		EventButton currentEventButton;
+		HashMap<String, EventButton> eventButtons;
 
 		public EventEditor(LContainer parent, boolean doubleBuffered) {
 			super(parent, doubleBuffered);
@@ -95,6 +98,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		@Override
 		protected void createContent(int style) {
 			setGridLayout(2);
+			eventButtons = new HashMap<>();
 
 			LLabel lblCondition = new LLabel(this, Vocab.instance.CONDITION,
 					Tooltip.instance.CONDITION);
@@ -108,6 +112,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			txtCommand = new LTextBox(this);
 			txtCommand.getCellData().setExpand(true, true);
 			txtCommand.addMenu(lblCmd);
+			txtCommand.addModifyListener(e -> refreshCurrentEventButton());
 			addControl(txtCommand, "name");
 
 			LLabel lblParam = new LLabel(this, LFlags.TOP, Vocab.instance.PARAM,
@@ -117,12 +122,13 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			lstParam.addMenu(lblParam);
 			addChild(lstParam, "tags");
 
-			LFrame commands = new LFrame(this, Vocab.instance.DEFAULTCOMMANDS);
-			commands.setFillLayout(true);
-			commands.getCellData().setExpand(true, true);
-			commands.getCellData().setSpread(2, 1);
+			LFrame grpCommands = new LFrame(this, Vocab.instance.DEFAULTCOMMANDS);
+			grpCommands.setGridLayout(1);
+			grpCommands.getCellData().setExpand(true, true);
+			grpCommands.getCellData().setSpread(2, 1);
 
-			LViewFolder tabFolder = new LViewFolder(commands, false);
+			LViewFolder tabFolder = new LViewFolder(grpCommands, false);
+			tabFolder.getCellData().setExpand(true, true);
 
 			LScrollPanel flowScroll = new LScrollPanel(tabFolder);
 			LPanel flowEvents = new LPanel(flowScroll);
@@ -238,6 +244,27 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			//tabFolder.addTab(Vocab.instance.SCREENEVENT);
 			//tabFolder.addTab(Vocab.instance.SOUNDEVENT);
 
+			currentEventButton = new EventButton(grpCommands, "Edit Current", null,0);
+			currentEventButton.getCellData().setExpand(true, false);
+
+		}
+
+		@Override
+		public void setObject(Object obj) {
+			super.setObject(obj);
+			refreshCurrentEventButton();
+		}
+
+		private void refreshCurrentEventButton() {
+			EventButton eventButton = eventButtons.getOrDefault(txtCommand.getValue(), null);
+			if (eventButton == null) {
+				currentEventButton.setValue(null);
+				currentEventButton.setEnabled(false);
+			} else {
+				currentEventButton.setShellFactory(eventButton.getShellFactory());
+				currentEventButton.setValue(lstParam.getObject());
+				currentEventButton.setEnabled(true);
+			}
 		}
 
 		@Override
@@ -254,27 +281,43 @@ public class EventTab extends DatabaseTab<EventSheet> {
 				this.command = command;
 				getCellData().setTargetSize(2 * LPrefs.BUTTONWIDTH, LPrefs.WIDGETHEIGHT);
 				setText(name);
+				addModifyListener(e -> {
+					LAction action = null;
+					if (!lstParam.getDataCollection().equals(e.newValue)) {
+						LControlEvent<LDataCollection<Tag>> e1 = new LControlEvent<>(lstParam.getDataCollection().clone(), e.newValue);
+						LControlAction<LDataCollection<Tag>> a1 = new LControlAction<>(lstParam, e1);
+						a1.apply();
+						action = a1;
+					}
+					if (!txtCommand.getValue().equals(EventButton.this.command)) {
+						LControlEvent<String> e2 = new LControlEvent<>(txtCommand.getValue(), EventButton.this.command);
+						LControlAction<String> a2 = new LControlAction<>(txtCommand, e2);
+						a2.apply();
+						if (action != null)
+							action = new LCompoundAction(action, a2);
+						else
+							action = a2;
+					}
+					if (action != null)
+						EventEditor.this.getActionStack().newAction(action);
+				});
+				if (command == null) {
+					setEnabled(false);
+					return;
+				}
 				setShellFactory(new LWindowFactory<>() {
 					@Override
 					public LObjectDialog<LDataList<Tag>> createWindow(LWindow parent) {
 						return new EventArgsDialog(parent, flags, name);
 					}
 				});
-				addModifyListener(e -> {
-					LControlEvent<LDataCollection<Tag>> e1 = new LControlEvent<>(lstParam.getDataCollection().clone(), e.newValue);
-					LControlEvent<String> e2 = new LControlEvent<>(txtCommand.getValue(), command);
-					LControlAction<LDataCollection<Tag>> a1 = new LControlAction<>(lstParam, e1);
-					a1.apply();
-					LControlAction<String> a2 = new LControlAction<>(txtCommand, e2);
-					a2.apply();
-					LCompoundAction action = new LCompoundAction(a1, a2);
-					EventEditor.this.getActionStack().newAction(action);
-				});
-				LSelectionListener onClick = button.onClick;
-				button.onClick = e -> {
-					currentValue = lstParam.getDataCollection();
-					onClick.onSelect(e);
-				};
+				eventButtons.put(command, this);
+			}
+
+			@Override
+			protected void onClick() {
+				currentValue = lstParam.getDataCollection();
+				super.onClick();
 			}
 
 			@Override
