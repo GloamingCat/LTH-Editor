@@ -6,6 +6,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.PropertyList;
 import gui.views.fieldTree.PositionEditor;
+import gui.widgets.AudioButton;
 import gui.widgets.NameList;
 import lui.base.LPrefs;
 import lui.base.data.LDataList;
@@ -25,21 +26,21 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int KEY = 1;
     public static final int FIELD = 2;
     public static final int WINDOW = 4;
-    public static final int DIR = 8;
-    //public static final int TILE = 16;
+    public static final int MENU = 8;
+    public static final int AUDIO = 16;
     public static final int NAME = 32;
     public static final int VISIBLE = 64;
     public static final int POS = 128;
-    public static final int SIZE = 256;
+    public static final int DIR = 256;
     public static final int WAIT = 512;
     public static final int DEACTIVATE = 1024;
     public static final int SKIP = 2048;
-    public static final int CLOSE = 4096;
+    //public static final int CLOSE = 4096;
     public static final int LIMIT = 8192;
-    public static final int MENU = 16384;
+    //public static final int MENU = 16384;
     public static final int ITEM = 32768;
     public static final int INPUT = 65536;
-    public static final int CHOICE = 131072;
+    //public static final int CHOICE = 131072;
     public static final int ALL = 262144;
     public static final int SKILL = 524288;
     public static final int FORMATION = 1048576;
@@ -58,9 +59,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         controls = new TreeMap<>();
         editors = new TreeMap<>();
 
-        if (style == WAIT) {
-            addSpinner(Vocab.instance.DURATION, Tooltip.instance.WAITTIME, "time", false);
-        } else if (style == NAME) {
+        if (style == NAME) {
             // Set label
             addTextField(Vocab.instance.NAME, Tooltip.instance.LABEL, "name");
             LSpinner spn = addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", false);
@@ -201,6 +200,16 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             }
             if ((style & ALL) > 0)
                 addCheckBox(Vocab.instance.BACKUP, Tooltip.instance.BACKUP, "backup");
+        } else if ((style & AUDIO) > 0) {
+            if ((style & EventArgsDialog.SKILL) > 0)
+                new LLabel(contentEditor, Vocab.instance.BGM, Tooltip.instance.BGM);
+            else
+                new LLabel(contentEditor, Vocab.instance.SOUND, Tooltip.instance.SOUND);
+            LText txtAudio = new LText(contentEditor, true);
+            txtAudio.getCellData().setExpand(true, false);
+            AudioButton btnAudio = new AudioButton(contentEditor, false);
+            btnAudio.setTextWidget(txtAudio);
+            controls.put("", btnAudio);
         } else if ((style & FIELD) > 0) {
             if ((style & POS) > 0) {
                 // Transition
@@ -261,6 +270,14 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
             addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
         }
+
+        if ((style & WAIT) > 0) {
+            addSpinner(Vocab.instance.DURATION, Tooltip.instance.WAITTIME, "time", false);
+            if ((style & LIMIT) > 0) {
+                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
+            }
+        }
+
     }
 
     @Override
@@ -272,6 +289,14 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             Object obj = oe.decodeData(json);
             if (obj != null)
                 oe.setObject(obj);
+        }
+        if (controls.containsKey("")) {
+            LControlWidget<?> oe = controls.get("");
+            String json = GGlobals.encodeJsonList(initial, Tag::toString);
+            json = "{" + json.substring(1, json.length() - 1) + "}";
+            Object obj = oe.decodeData(json);
+            if (obj != null)
+                oe.setValue(obj);
         }
         for (Tag p : initial) {
             if (controls.containsKey(p.key)) {
@@ -301,8 +326,16 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public LDataList<Tag> createResult(LDataList<Tag> initial) {
         LDataList<Tag> params = new LDataList<>();
         for (var entry : controls.entrySet()) {
+            LControlWidget<?> cw = entry.getValue();
             Object value = entry.getValue().getValue();
-            if (value != null) {
+            if (value == null)
+                continue;
+            if (entry.getKey().isEmpty()) {
+                for (var field : LObjectEditor.getFieldValues(value).entrySet()) {
+                    Tag p = new Tag(field.getKey(), GGlobals.gson.toJson(field.getValue()));
+                    params.add(p);
+                }
+            } else {
                 Tag p = new Tag(entry.getKey(), "");
                 if (value instanceof String str)
                     p.value = str;

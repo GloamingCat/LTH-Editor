@@ -241,8 +241,22 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(partyEvents, "Add Status", "addStatus",
 					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.ALL);
 
+			LScrollPanel soundScroll = new LScrollPanel(tabFolder);
+			LPanel soundEvents = new LPanel(soundScroll);
+			soundEvents.setSequentialLayout(true);
+			tabFolder.addTab(Vocab.instance.SOUNDEVENTS, soundScroll);
+			new EventButton(soundEvents, "Play SFX", "playBGM",
+					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.LIMIT | EventArgsDialog.SKILL);
+			new EventButton(soundEvents, "Play BGM", "playBGM",
+					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(soundEvents, "Pause BGM", "pauseBGM",
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(soundEvents, "Resume BGM", "resumeBGM",
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+			new EventButton(soundEvents, "Play Field BGM", "playFieldBGM",
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+
 			//tabFolder.addTab(Vocab.instance.SCREENEVENT);
-			//tabFolder.addTab(Vocab.instance.SOUNDEVENT);
 
 			currentEventButton = new EventButton(grpCommands, "Edit Current", null,0);
 			currentEventButton.getCellData().setExpand(true, false);

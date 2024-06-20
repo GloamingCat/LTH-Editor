@@ -16,11 +16,6 @@ public class AudioButton extends LObjectButton<AudioPlay> {
 	
 	private LText text;
 	
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
 	public AudioButton(LContainer parent, boolean optional) {
 		super(parent);
 		setShellFactory(new LWindowFactory<AudioPlay>() {
