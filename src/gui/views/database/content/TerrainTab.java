@@ -86,7 +86,7 @@ public class TerrainTab extends DatabaseTab<Terrain> {
 
 		LLabel lblJobCost = new LLabel(moveCost, LFlags.TOP, Vocab.instance.JOBMOVECOST,
 				Tooltip.instance.JOBMOVECOST);
-		lstJobMoveCost = new PropertyList(moveCost, Vocab.instance.JOBMOVECOST);
+		lstJobMoveCost = new PropertyList(moveCost, Vocab.instance.JOBMOVECOST, false);
 		lstJobMoveCost.getCellData().setExpand(true, true);
 		lstJobMoveCost.addMenu(lblJobCost);
 		addChild(lstJobMoveCost, "jobMoveCost");

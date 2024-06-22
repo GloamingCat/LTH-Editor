@@ -5,7 +5,6 @@ import gui.Vocab;
 import lui.gson.GObjectDialog;
 
 import data.config.EquipType;
-import lui.base.data.LPoint;
 import lui.dialog.LWindow;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
@@ -23,7 +22,7 @@ public class EquipTypeDialog extends GObjectDialog<EquipType> {
 		super.createContent(style);
 		contentEditor.setGridLayout(2);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
 		LText txtName = new LText(contentEditor);
 		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");

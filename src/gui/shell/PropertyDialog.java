@@ -13,20 +13,35 @@ import lui.widget.LSpinner;
 
 public abstract class PropertyDialog extends GObjectDialog<Property> {
 
-	public PropertyDialog(LWindow parent, String title) {
-		super(parent, 400, 320, title);
+	public static final int PERCENTAGE = 2;
+	public static final int OPTIONAL = 4;
+	public static final int NEGATIVE = 8;
+
+	public PropertyDialog(LWindow parent, String title, int flags) {
+		super(parent, 400, 320, flags, title);
 	}
 	
 	@Override
 	protected void createContent(int style) {
-		super.createContent(style);
+		super.createContent(0);
 		contentEditor.setGridLayout(2);
 		
 		new LLabel(contentEditor, Vocab.instance.VALUE, Tooltip.instance.VALUE);
 		LSpinner spnValue = new LSpinner(contentEditor);
 		spnValue.getCellData().setExpand(true, false);
-		spnValue.setMinimum(-100000);
-		spnValue.setMaximum(100000);
+		if ((style & OPTIONAL) > 0)
+			spnValue.setMinimum(-1);
+		else
+			spnValue.setMinimum(0);
+		if ((style & PERCENTAGE) > 0) {
+			spnValue.setMaximum(100);
+			if ((style & NEGATIVE) > 0)
+				spnValue.setMinimum(-100);
+		} else {
+			spnValue.setMaximum(Integer.MAX_VALUE);
+			if ((style & NEGATIVE) > 0)
+				spnValue.setMinimum(Integer.MIN_VALUE);
+		}
 		addControl(spnValue, "value");
 		
 		LNodeSelector<Object> tree = new LNodeSelector<>(contentEditor, 0);

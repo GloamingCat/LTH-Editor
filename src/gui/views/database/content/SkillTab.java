@@ -139,7 +139,7 @@ public class SkillTab extends DatabaseTab<Skill> {
 		// Elements
 
 		LLabel lblElements = new LLabel(grpEffects, Vocab.instance.ELEMENTS);
-		lstElements = new PropertyList(grpEffects, Vocab.instance.SKILLELEMENTSHELL);
+		lstElements = new PropertyList(grpEffects, Vocab.instance.SKILLELEMENTSHELL, false);
 		lstElements.getCellData().setExpand(true, true);
 		lstElements.addMenu(lblElements);
 		addChild(lstElements, "elements");

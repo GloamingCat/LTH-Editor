@@ -64,7 +64,7 @@ public class DatabaseContentEditor<T> extends GDefaultObjectEditor<T> {
         txtKey.getCellData().setExpand(true, false);
         addControl(txtKey, "key");
 
-        lblName = new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
+        lblName = new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
         lblName.getCellData().setRequiredSize(LPrefs.LABELWIDTH, 0);
 
         txtName = new LText(grpGeneral);

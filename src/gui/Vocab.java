@@ -40,6 +40,7 @@ public class Vocab {
 	public String EQUIPTYPES = "Equip Types";
 	public String PLUGINS = "Plugins";
 	public String VARIABLES = "Variables";
+	public String LANGUAGES = "Languages";
 	public String ICONS = "Icons";
 	public String SOUNDS = "Sounds";
 	public String SCRIPTS = "Scripts";
@@ -314,6 +315,7 @@ public class Vocab {
 	public String TEXT = "Text";
 	public String NAMEX = "Name X";
 	public String NAMEY = "Name Y";
+	public String VARIABLE = "Variable";
 	public String CANCELVALUE = "Cancel Value";
 	public String MINLENGTH = "Minimum Length";
 	public String MAXLENGTH = "Maximum Length";

@@ -2,7 +2,7 @@ package gui.views.system;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.views.database.subcontent.TagList;
+import gui.views.database.subcontent.DataList;
 import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -14,7 +14,7 @@ public class ListsEditor extends LObjectEditor<Object> {
 	
 	private ElementList lstElements;
 	private EquipTypeList lstEquipTypes;
-	private TagList lstVariables;
+	private DataList lstLanguages;
 	private AttributeList lstAttributes;
 	private RegionList lstRegions;
 	private PluginList lstPlugins;
@@ -64,12 +64,12 @@ public class ListsEditor extends LObjectEditor<Object> {
 		
 		// Variables
 		
-		LFrame grpVariables = new LFrame(bottom, Vocab.instance.VARIABLES);
+		LFrame grpVariables = new LFrame(bottom, Vocab.instance.LANGUAGES);
 		grpVariables.setFillLayout(true);
 		grpVariables.setHoverText(Tooltip.instance.VARIABLES);
-		lstVariables = new TagList(grpVariables);
-		lstVariables.setIncludeID(true);
-		addChild(lstVariables, "variables");
+		lstLanguages = new DataList(grpVariables, Vocab.instance.LANGUAGES, false);
+		lstLanguages.setIncludeID(true);
+		addChild(lstLanguages, "languages");
 		
 		// Equip types
 		
@@ -94,7 +94,7 @@ public class ListsEditor extends LObjectEditor<Object> {
 		lstAttributes.setObject(Project.current.attributes.getList());
 		lstElements.setObject(Project.current.elements.getList());
 		lstEquipTypes.setObject(Project.current.equipTypes.getList());
-		lstVariables.setObject(Project.current.variables.getList());
+		lstLanguages.setObject(Project.current.languages.getList());
 		lstRegions.setObject(Project.current.regions.getList());
 		lstPlugins.setObject(Project.current.plugins.getList());
 	}

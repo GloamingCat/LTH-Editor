@@ -154,7 +154,7 @@ public class BattlerTab extends DatabaseTab<Battler> {
 		grpElements.setHoverText(Tooltip.instance.ELEMENTDEF);
 		grpElements.getCellData().setExpand(true, true);
 		grpElements.getCellData().setRequiredSize(160, 0);
-		lstElements = new PropertyList(grpElements, Vocab.instance.BATTLERELEMENTSHELL);
+		lstElements = new PropertyList(grpElements, Vocab.instance.BATTLERELEMENTSHELL, false);
 		lstElements.addMenu(grpElements);
 		addChild(lstElements, "elements");
 		

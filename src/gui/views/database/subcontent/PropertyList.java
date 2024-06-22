@@ -16,15 +16,18 @@ import lui.widget.LEditableList;
 public class PropertyList extends SimpleEditableList<Property> {
 
 	public LDataTree<Object> dataTree = null;
+
+	public int defaultValue;
 	
-	public PropertyList(LContainer parent, String title) {
+	public PropertyList(LContainer parent, String title, boolean optionalValue) {
 		super(parent);
 		type = Property.class;
 		setIncludeID(false);
+		defaultValue = optionalValue ? -1 : 100;
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Property> createWindow(LWindow parent) {
-				return new PropertyDialog(parent, title) {
+				return new PropertyDialog(parent, title, optionalValue ? PropertyDialog.OPTIONAL : PropertyDialog.NEGATIVE) {
 					public LDataTree<Object> getTree() {
 						return getDataTree();
 					}
@@ -35,7 +38,7 @@ public class PropertyList extends SimpleEditableList<Property> {
 	
 	@Override
 	protected void createContent(int style) {
-		list = new LEditableList<>(this, style == 1) {
+		list = new LEditableList<>(this, false) {
 			@Override
 			public LEditEvent<Property> edit(LPath path) {
 				return onEditItem(path);
@@ -53,7 +56,7 @@ public class PropertyList extends SimpleEditableList<Property> {
 			}
 			@Override
 			public LDataTree<Property> emptyNode() {
-				return new LDataTree<>(new Property());
+				return new LDataTree<>(new Property(0, defaultValue));
 			}
 			@Override
 			public LDataTree<Property> duplicateNode(LDataTree<Property> node) {
@@ -69,11 +72,11 @@ public class PropertyList extends SimpleEditableList<Property> {
 			}
 			@Override
 			protected String encodeNode(LDataTree<Property> node) {
-				return PropertyList.this.encodeData(node);
+				return PropertyList.this.encodeElement(node.data);
 			}
 			@Override
 			protected LDataTree<Property> decodeNode(String str) {
-				return PropertyList.this.decodeData(str);
+				return new LDataTree<>(PropertyList.this.decodeElement(str));
 			}
 			@Override
 			public boolean canDecode(String str) {

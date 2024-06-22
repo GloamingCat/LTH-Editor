@@ -69,7 +69,7 @@ public class PartyEditor extends GDefaultObjectEditor<Party> {
 		spnY.addModifyListener(redrawListener);
 		spnH.addModifyListener(redrawListener);
 		
-		new LLabel(this, Vocab.instance.NAME, Tooltip.instance.NAME);
+		new LLabel(this, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
 		
 		LText txtName = new LText(this);
 		txtName.getCellData().setExpand(true, false);

@@ -27,7 +27,7 @@ public class AttributeDialog extends GObjectDialog<Attribute> {
 		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
 
-		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
 		LText txtName = new LText(contentEditor);
 		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");

@@ -24,7 +24,7 @@ public class ElementDialog extends GObjectDialog<Element> {
 		
 		contentEditor.setGridLayout(2);
 		
-		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.NAME);
+		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
 		LText txtName = new LText(contentEditor);
 		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");

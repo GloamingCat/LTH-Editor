@@ -6,6 +6,11 @@ public class Property implements Cloneable {
 	public int value = 100;
 	
 	public Property() {}
+
+	public Property(int id, int value) {
+		this.id = id;
+		this.value = value;
+	}
 	
 	public Property(Property copy) {
 		id = copy.id;

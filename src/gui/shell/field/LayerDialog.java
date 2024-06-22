@@ -33,7 +33,7 @@ public class LayerDialog extends GObjectDialog<Info> {
 		grpGeneral.getCellData().setExpand(true, true);
 		grpGeneral.getCellData().setRequiredSize(150, 0);
 		
-		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
+		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
 		
 		LText txtName = new LText(grpGeneral);
 		txtName.getCellData().setExpand(true, false);

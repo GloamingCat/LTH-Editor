@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import data.*;
 import data.config.*;
-import data.subcontent.Tag;
 import gson.GObjectListSerializer;
 import gson.GObjectSerializer;
 import gson.GObjectTreeSerializer;
@@ -21,7 +20,6 @@ public class Project implements LSerializer {
 		public String dataPath = "data/";
 		public String imagePath = "images/";
 		public String audioPath = "audio/";
-		public String language = "us";
 		public int dataVersion = 0;
 	}
 	
@@ -43,7 +41,7 @@ public class Project implements LSerializer {
 	// System
 	public GObjectSerializer<Config> config;
 	public GObjectListSerializer attributes;
-	public GObjectListSerializer variables;
+	public GObjectListSerializer languages;
 	public GObjectListSerializer elements;
 	public GObjectListSerializer equipTypes;
 	public GObjectListSerializer plugins;
@@ -81,9 +79,9 @@ public class Project implements LSerializer {
 		troops = new GObjectTreeSerializer(dataPath() + "troops", Troop.class);
 		
 		// System
-		config = new GObjectSerializer<Config>(systemPath() + "config", Config.class);
+		config = new GObjectSerializer<>(systemPath() + "config", Config.class);
 		attributes = new GObjectListSerializer(systemPath() + "attributes", Attribute.class);
-		variables = new GObjectListSerializer(systemPath() + "variables", Tag.class);
+		languages = new GObjectListSerializer(systemPath() + "languages", Data.class);
 		elements = new GObjectListSerializer(systemPath() + "elements", Element.class);
 		equipTypes = new GObjectListSerializer(systemPath() + "equipTypes", EquipType.class);
 		plugins = new GObjectListSerializer(systemPath() + "plugins", Plugin.class);
@@ -94,7 +92,7 @@ public class Project implements LSerializer {
 		database = new GObjectTreeSerializer[] { animations, battlers, characters, 
 				events, jobs, items, obstacles, skills, status, terrains, troops };
 		
-		allData = new LSerializer[] { config, fieldTree, attributes, variables, elements, equipTypes, plugins, regions };
+		allData = new LSerializer[] { config, fieldTree, attributes, languages, elements, equipTypes, plugins, regions };
 		allData = Arrays.copyOf(allData, allData.length + database.length);
 		System.arraycopy(database, 0, allData, allData.length - database.length, database.length);
 	}
@@ -130,11 +128,7 @@ public class Project implements LSerializer {
 	public String fontPath() {
 		return path + "fonts/";
 	}
-	
-	public String getLanguage() {
-		return settings.language;
-	}
-	
+
 	public int dataVersion() {
 		return settings.dataVersion;
 	}

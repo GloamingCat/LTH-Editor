@@ -13,7 +13,7 @@ public class Tooltip {
 	
 	// Common
 	public String ID = "Unique identification number.";
-	public String NAME = "Display name.";
+	public String DISPLAYNAME = "Display name.";
 	public String KEY = "Unique identification text.";
 	public String ICON = "Display icon.";
 	public String DESCRIPTION = "Description shown in the menu.";
@@ -46,8 +46,9 @@ public class Tooltip {
 	public String ATTRIBUTES = "List of all attributes in the game's system.";
 	public String EQUIPTYPES = "List of all types of equipment slots.";
 	public String PLUGINS = "List of installed plugins.";
-	public String VARIABLES = "List of variables to used in text messages or formulas.";
-	
+	public String VARIABLES = "List of variables to be used in text messages or formulas.";
+	public String LANGUAGES = "List of implemented languages in the game.";
+
 	// Sub-content
 	public String LENGTH = "Size of file.";
 	public String FORMAT = "Format of file.";
@@ -466,7 +467,7 @@ public class Tooltip {
             If no function with the given name is found, the text will be interpreted as Lua code inside a function.
             In this case, the 'script' argument can be used to refer to the script's data,
             which includes the character executing it (if any).""";
-	public String VARIABLE = "Name of the variable.";
+	public String VARIABLE = "Name of the variable that will store the value.";
 	public String VARVALUE = """
 			Value of the variable.
 			The value is interpreted as JSON.""";

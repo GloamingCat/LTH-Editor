@@ -135,9 +135,9 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			flowEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.FLOWEVENTS, flowScroll);
 			new EventButton(flowEvents, "Set Local Variable", "setLocalVar",
-					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
 			new EventButton(flowEvents, "Set Global Variable", "setGlobalVar",
-					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
 			new EventButton(flowEvents, "Set Label", "setLabel",
 					EventArgsDialog.NAME);
 			new EventButton(flowEvents, "Jump To Label", "jumpTo",
@@ -154,7 +154,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			fieldEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.FIELDEVENTS, fieldScroll);
 			new EventButton(fieldEvents, "Set Field Variable", "setFieldVar",
-					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
 			new EventButton(fieldEvents, "Normal Field Transition", "moveToField",
 					EventArgsDialog.FIELD | EventArgsDialog.POS);
 			new EventButton(fieldEvents, "Battle Field Transition", "startBattle",
@@ -169,7 +169,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			charEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.CHAREVENTS, charScroll);
 			new EventButton(charEvents, "Set Character Variable", "setCharVar",
-					EventArgsDialog.NAME | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
 			new EventButton(charEvents, "Delete Character", "deleteChar",
 					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
 			new EventButton(charEvents, "Set Properties", "setupChar",

@@ -68,7 +68,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		txtKey.getCellData().setExpand(true, false);
 		addControl(txtKey, "key");
 		
-		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.NAME);
+		new LLabel(grpGeneral, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
 		LText txtName = new LText(grpGeneral);
 		txtName.getCellData().setSpread(2, 1);
 		txtName.getCellData().setExpand(true, false);

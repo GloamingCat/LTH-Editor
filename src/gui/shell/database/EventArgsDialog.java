@@ -37,7 +37,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int SKIP = 2048;
     public static final int SPEED = 4096;
     public static final int LIMIT = 8192;
-    //public static final int MENU = 16384;
+    public static final int VAR = 16384;
     public static final int ITEM = 32768;
     public static final int INPUT = 65536;
     public static final int COLOR = 131072;
@@ -65,7 +65,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             LSpinner spn = addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", false);
             spn.setMinimum(-1);
             spn.setValue(-1);
-        } else if (style == (NAME | LIMIT)) {
+        } else if (style == (VAR | LIMIT)) {
+            // Set Variable
             addTextField(Vocab.instance.KEY, Tooltip.instance.VARIABLE, "key");
             addTextField(Vocab.instance.VALUE, Tooltip.instance.VARVALUE, "value");
         } else if ((style & SKIP) > 0) {
@@ -87,11 +88,14 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         }
 
         if ((style & WINDOW) > 0) {
-            LSpinner spn = addSpinner(Vocab.instance.ID, Tooltip.instance.ID, "id", false);
-            spn.setMinimum(1);
-            spn.setValue(1);
+            if ((style & INPUT) == 0) {
+                LSpinner spn = addSpinner(Vocab.instance.ID, Tooltip.instance.ID, "id", false);
+                spn.setMinimum(1);
+                spn.setValue(1);
+            }
             if ((style & POS) > 0) {
                 if ((style & INPUT) > 0) {
+                    String varName;
                     if ((style & NAME) > 0) {
                         // String Input
                         addSpinner(Vocab.instance.MINLENGTH, Tooltip.instance.LENGTHLIMITS, "min", false);
@@ -103,16 +107,11 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                         addSpinner(Vocab.instance.CANCELVALUE, Tooltip.instance.CANCELVALUE, "cancel", true);
                     } else {
                         // Choices
-                        new LLabel(contentEditor, Vocab.instance.OPTIONS, Tooltip.instance.CHOICES);
-                        NameList lst = new NameList(contentEditor, Vocab.instance.TEXT);
-                        lst.getCollectionWidget().setIncludeID(true);
-                        lst.getCellData().setExpand(true, true);
-                        lst.getCellData().setSpread(2, 1);
-                        lst.getCellData().setRequiredSize(LPrefs.LISTWIDTH, LPrefs.LISTHEIGHT * 2);
-                        lst.setObject(new LDataList<>());
-                        editors.put("choices", lst);
+                        addNameList(Vocab.instance.OPTIONS, Tooltip.instance.CHOICES, "choices", true);
                         addSpinner(Vocab.instance.CANCELVALUE, Tooltip.instance.CANCELVALUE, "cancel", true);
                     }
+                    LText txt = addTextField(Vocab.instance.VARIABLE, Tooltip.instance.VARIABLE, "variable");
+                    txt.setValue("inputResult");
                 } else if ((style & NAME) > 0) {
                     // Dialogue
                     addTextField(Vocab.instance.TEXT, Tooltip.instance.TEXT, "message");
@@ -126,14 +125,18 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                         new String[] {Vocab.instance.TOP, Vocab.instance.CENTER, Vocab.instance.BOTTOM}, 0 );
                 addSpinner(Vocab.instance.WIDTH, Tooltip.instance.SIZEX, "width", true);
                 addSpinner(Vocab.instance.HEIGHT, Tooltip.instance.SIZEY, "height", true);
-                addSpinner(Vocab.instance.POSITIONX, Tooltip.instance.CENTERX, "x", true);
-                addSpinner(Vocab.instance.POSITIONY, Tooltip.instance.CENTERY, "y", true);
+                LSpinner x = addSpinner(Vocab.instance.POSITIONX, Tooltip.instance.CENTERX, "x", false);
+                LSpinner y = addSpinner(Vocab.instance.POSITIONY, Tooltip.instance.CENTERY, "y", false);
+                x.setMinimum(Integer.MIN_VALUE);
+                y.setMinimum(Integer.MIN_VALUE);
                 if ((style & INPUT) == 0) {
                     if ((style & NAME) > 0) {
                         // Dialogue
-                        addTextField(Vocab.instance.NAME, Tooltip.instance.NAME, "name");
-                        addSpinner(Vocab.instance.NAMEX, Tooltip.instance.NAMEPOS, "nameX", true);
-                        addSpinner(Vocab.instance.NAMEY, Tooltip.instance.NAMEPOS, "nameY", true);
+                        addTextField(Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME, "name");
+                        x = addSpinner(Vocab.instance.NAMEX, Tooltip.instance.NAMEPOS, "nameX", false);
+                        y = addSpinner(Vocab.instance.NAMEY, Tooltip.instance.NAMEPOS, "nameY", false);
+                        x.setMinimum(Integer.MIN_VALUE);
+                        y.setMinimum(Integer.MIN_VALUE);
                     } else {
                         // Title/message
                         addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
@@ -143,11 +146,11 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         } else if ((style & MENU) > 0) {
             if ((style & ITEM) > 0) {
                 // Shop
-                var list = addPropertyList(Vocab.instance.ITEMS, Tooltip.instance.INVENTORY, "items", false, Project.current.items.getTree());
+                var list = addPropertyList(Vocab.instance.ITEMS, Tooltip.instance.INVENTORY, "items", false, true, Project.current.items.getTree());
                 addCheckBox(Vocab.instance.SELLABLE, Tooltip.instance.SELLABLE, "sell");
             } else if ((style & FORMATION) > 0) {
                 // Recruit
-                addPropertyList(Vocab.instance.BATTLERS, Tooltip.instance.UNITS, "items", false, Project.current.battlers.getTree());
+                addPropertyList(Vocab.instance.BATTLERS, Tooltip.instance.UNITS, "items", false, true, Project.current.battlers.getTree());
                 addCheckBox(Vocab.instance.RECRUIT, Tooltip.instance.RECRUIT, "sell");
             } else {
                 // Field/Save
@@ -332,6 +335,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 LObjectEditor<?> oe = editors.get(p.key);
                 Object value = oe.decodeData(p.value);
                 oe.setObject(value);
+                System.out.println(p.key + ": " + value.getClass());
             }
         }
         for (var editor : editors.values()) {
@@ -447,11 +451,23 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         return ns;
     }
 
-    private PropertyList addPropertyList(String label, String tooltip, String key, boolean includeId, LDataTree<Object> data) {
+    private PropertyList addPropertyList(String label, String tooltip, String key, boolean includeId, boolean optional, LDataTree<Object> data) {
         new LLabel(contentEditor, label, tooltip);
-        PropertyList lst = new PropertyList(contentEditor, label);
+        PropertyList lst = new PropertyList(contentEditor, label, optional);
         lst.dataTree = data;
         lst.getCollectionWidget().setIncludeID(includeId);
+        lst.getCellData().setExpand(true, true);
+        lst.getCellData().setSpread(2, 1);
+        lst.getCellData().setRequiredSize(LPrefs.LISTWIDTH, LPrefs.LISTHEIGHT * 2);
+        lst.setObject(new LDataList<>());
+        editors.put(key, lst);
+        return lst;
+    }
+
+    private NameList addNameList(String label, String tooltip, String key, boolean includeId) {
+        new LLabel(contentEditor, label, tooltip);
+        NameList lst = new NameList(contentEditor, Vocab.instance.TEXT);
+        lst.getCollectionWidget().setIncludeID(true);
         lst.getCellData().setExpand(true, true);
         lst.getCellData().setSpread(2, 1);
         lst.getCellData().setRequiredSize(LPrefs.LISTWIDTH, LPrefs.LISTHEIGHT * 2);
