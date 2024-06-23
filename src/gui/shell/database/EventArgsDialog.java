@@ -33,10 +33,10 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int POS = 128;
     public static final int DIR = 256;
     public static final int WAIT = 512;
-    public static final int DEACTIVATE = 1024;
+    public static final int PROP = 1024;
     public static final int SKIP = 2048;
     public static final int SPEED = 4096;
-    public static final int LIMIT = 8192;
+    public static final int DURATION = 8192;
     public static final int VAR = 16384;
     public static final int ITEM = 32768;
     public static final int INPUT = 65536;
@@ -44,6 +44,12 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int ALL = 262144;
     public static final int SKILL = 524288;
     public static final int FORMATION = 1048576;
+    public static final int VALUE = 2097152;
+    public static final int HEIGHT = 4194304;
+
+    //public static final int FLAG = 8388608;
+
+    //public static final int FLAG = 1073741824;
 
     TreeMap<String, LControlWidget<?>> controls;
     TreeMap<String, LObjectEditor<?>> editors;
@@ -65,7 +71,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             LSpinner spn = addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", false);
             spn.setMinimum(-1);
             spn.setValue(-1);
-        } else if (style == (VAR | LIMIT)) {
+        } else if (style == (VAR | VALUE)) {
             // Set Variable
             addTextField(Vocab.instance.KEY, Tooltip.instance.VARIABLE, "key");
             addTextField(Vocab.instance.VALUE, Tooltip.instance.VARVALUE, "value");
@@ -73,7 +79,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             if ((style & NAME) > 0)
                 // Go to label
                 addTextField(Vocab.instance.NAME, Tooltip.instance.LABEL, "name");
-            else if ((style & LIMIT) > 0)
+            else if ((style & VALUE) > 0)
                 // Skip events
                 addSpinner(Vocab.instance.COUNT, Tooltip.instance.EVENTSKIP, "events", false);
             else
@@ -101,7 +107,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                         addSpinner(Vocab.instance.MINLENGTH, Tooltip.instance.LENGTHLIMITS, "min", false);
                         addSpinner(Vocab.instance.MAXLENGTH, Tooltip.instance.LENGTHLIMITS, "max", true);
                         addTextField(Vocab.instance.CANCELVALUE, Tooltip.instance.CANCELVALUE, "cancel");
-                    } else if ((style & LIMIT) > 0) {
+                    } else if ((style & VALUE) > 0) {
                         // Password
                         addSpinner(Vocab.instance.DIGITS, Tooltip.instance.DIGITS, "length", false);
                         addSpinner(Vocab.instance.CANCELVALUE, Tooltip.instance.CANCELVALUE, "cancel", true);
@@ -166,7 +172,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                     addNodeSelector(Vocab.instance.EQUIPITEM, Tooltip.instance.EQUIPITEM, "id",
                             Project.current.items.getTree(), LNodeSelector.OPTIONAL);
                     addCheckBox(Vocab.instance.STORE, Tooltip.instance.STORE, "store");
-                } else if ((style & LIMIT) > 0) {
+                } else if ((style & VALUE) > 0) {
                     // Level
                     addSpinner(Vocab.instance.LEVEL, Tooltip.instance.LEVEL, "level", false);
                 } else if ((style & ALL) > 0) {
@@ -186,7 +192,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                     addSpinner(Vocab.instance.GRIDY, Tooltip.instance.GRIDY, "y", false);
                     addCheckBox(Vocab.instance.BACKUP, Tooltip.instance.UNITLIST, "backup");
                 }
-            } else if ((style & LIMIT) > 0) {
+            } else if ((style & VALUE) > 0) {
                 // Money/EXP/Item
                 if ((style & ITEM) > 0) {
                     // Item
@@ -246,67 +252,63 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             // Tile Destination
             addSpinner(Vocab.instance.OFFSETX, Tooltip.instance.POSITIONX, "x", false);
             addSpinner(Vocab.instance.OFFSETY, Tooltip.instance.POSITIONY, "y", false);
-            addSpinner(Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH, "h", false);
-            if ((style & SPEED) > 0) {
+            if ((style & HEIGHT) > 0)
+                addSpinner(Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH, "h", false);
+            if ((style & KEY) > 0)
+                addTextField(Vocab.instance.OBJREF, Tooltip.instance.TILEREF, "other");
+            if ((style & VALUE) > 0)
+                addSpinner(Vocab.instance.PATHLIMIT, Tooltip.instance.PATHLIMIT, "limit", true);
+            if ((style & SPEED) > 0)
                 addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
-            } else {
-                addTextField(Vocab.instance.TILEREF, Tooltip.instance.TILEREF, "other");
-                if ((style & LIMIT) > 0) {
-                    // Move
-                    addSpinner(Vocab.instance.PATHLIMIT, Tooltip.instance.PATHLIMIT, "limit", true);
-                    addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
-                }
-            }
         } else if ((style & DIR) > 0) {
             // Angle
             addSpinner(Vocab.instance.DIRECTION, Tooltip.instance.CHARDIR, "angle", false);
-            if ((style & LIMIT) > 0) {
-                // Move
+            if ((style & KEY) > 0)
+                addTextField(Vocab.instance.OBJREF, Tooltip.instance.DIRREF, "other");
+            if ((style & VALUE) > 0)
                 addSpinner(Vocab.instance.DISTANCE, Tooltip.instance.DISTANCE, "distance", false);
-                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
-            }
-            if ((style & SPEED) > 0) {
+            if ((style & SPEED) > 0)
                 addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
-            }
+        } else if ((style & HEIGHT) > 0) {
+            addSpinner(Vocab.instance.HEIGHT, Tooltip.instance.PIXELHEIGHT, "height", true);
+            if ((style & SPEED) > 0)
+                addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
         } else if ((style & COLOR) > 0) {
             addSpinner(Vocab.instance.RED, Tooltip.instance.RED, "red", false);
             addSpinner(Vocab.instance.GREEN, Tooltip.instance.GREEN, "green", false);
             addSpinner(Vocab.instance.BLUE, Tooltip.instance.BLUE, "blue", false);
         }
 
-        if ((style & VISIBLE) > 0) {
+        if ((style & VISIBLE) > 0)
             addCheckBox(Vocab.instance.VISIBLE, Tooltip.instance.VISIBLE, "visible");
-            if ((style & (KEY | NAME)) > 0) {
-                // Setup Shadow/Char/Image
-                addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
-                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
-            }
-        }
 
-        if ((style & DEACTIVATE) > 0) {
-            if ((style & LIMIT) > 0) {
+        if ((style & PROP) > 0) {
+            if ((style & VALUE) > 0) {
                 // Props
                 addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "prop",
-                    new String[] { Vocab.instance.PASSABLE, Vocab.instance.ACTIVE, Vocab.instance.SPEED }, LCombo.READONLY );
+                    new String[] { Vocab.instance.PASSABLE, Vocab.instance.ACTIVE, Vocab.instance.SPEED,
+                    Vocab.instance.FIXANIM, Vocab.instance.FIXDIR }, LCombo.READONLY );
                 addTextField(Vocab.instance.VALUE, Tooltip.instance.VALUE, "value");
-            } else if ((style & SPEED) > 0) {
-                // Reset
+            } else if ((style & ALL) > 0) {
+                // Log/Reset
                 addCheckBox(Vocab.instance.TILE, Tooltip.instance.TILERESET, "tile");
                 addCheckBox(Vocab.instance.PROPERTIES, Tooltip.instance.PROPRESET, "props");
+                addCheckBox(Vocab.instance.SCRIPTS, Tooltip.instance.SCRIPTS, "scripts");
+            } else if ((style & (VISIBLE)) > 0) {
+                // Setup Shadow/Char/Image
+                addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
             } else {
                 // Delete Char
                 addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
                 addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
-                addCheckBox(Vocab.instance.TIME, Tooltip.instance.WAITTIME, "time");
+                addSpinner(Vocab.instance.TIME, Tooltip.instance.WAITTIME, "time", false);
             }
         }
 
-        if ((style & WAIT) > 0) {
+        if ((style & DURATION) > 0)
             addSpinner(Vocab.instance.DURATION, Tooltip.instance.WAITTIME, "time", false);
-            if ((style & LIMIT) > 0) {
-                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
-            }
-        }
+        if ((style & WAIT) > 0)
+            addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
 
     }
 

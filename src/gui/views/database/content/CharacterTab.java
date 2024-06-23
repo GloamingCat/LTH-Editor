@@ -8,10 +8,7 @@ import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import gui.views.database.subcontent.TransformEditor;
 import gui.views.fieldTree.subcontent.ScriptList;
-import gui.widgets.IDButton;
-import gui.widgets.ImageButton;
-import gui.widgets.SimpleEditableList;
-import gui.widgets.TransformedImage;
+import gui.widgets.*;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.base.event.listener.LCollectionListener;
@@ -81,6 +78,19 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		btnShadow.addMenu(txtShadow);
 		addControl(btnShadow, "shadowID");
 
+		CheckBoxPanel options = new CheckBoxPanel(contentEditor.grpGeneral);
+		options.getCellData().setSpread(2, 1);
+
+		LCheckBox btnFixAnim = new LCheckBox(options);
+		btnFixAnim.setText(Vocab.instance.FIXANIM);
+		btnFixAnim.setHoverText(Tooltip.instance.FIXANIM);
+		addControl(btnFixAnim, "fixedAnimation");
+
+		LCheckBox btnFixDir = new LCheckBox(options);
+		btnFixDir.setText(Vocab.instance.FIXDIR);
+		btnFixDir.setHoverText(Tooltip.instance.FIXDIR);
+		addControl(btnFixDir, "fixedDirection");
+
 		// Transform
 
 		LFrame grpTransform = new LFrame(contentEditor.right, Vocab.instance.TRANSFORM);
@@ -122,20 +132,12 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 		// Scripts
 
 		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS);
-		grpScripts.setGridLayout(1);
+		grpScripts.setFillLayout(true);
 		grpScripts.setHoverText(Tooltip.instance.SCRIPTS);
 		ScriptList lstScripts = new ScriptList(grpScripts, 0);
-		lstScripts.getCellData().setExpand(true, true);
-		lstScripts.getCellData().setAlignment(LFlags.FILL);
 		lstScripts.getCellData().setRequiredSize(0, 0);
 		lstScripts.addMenu(grpScripts);
 		addChild(lstScripts, "scripts");
-
-		LCheckBox btnRepeat = new LCheckBox(grpScripts);
-		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
-		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
-		btnRepeat.getCellData().setAlignment(LFlags.LEFT);
-		addControl(btnRepeat, "repeatCollisions");
 
 		// KO
 

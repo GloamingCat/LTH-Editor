@@ -12,25 +12,25 @@ public class CharTile implements LInitializable {
 	public boolean persistent = false;
 	public boolean passable = false;
 	public boolean visible = true;
-	public boolean active = true;
 
 	public int x = 1;
 	public int y = 1;
 	public int h = 1;
-	
+
 	public int party = -1;
 	public int charID = -1;
 	public int battlerID = -1;
-	
+
 	public String animation = "";
 	public int frame = 1;
 	public int direction = 315;
-	
+
 	public int defaultSpeed = 100;
-	
+
 	public LDataList<Script> scripts = new LDataList<>();
-	public boolean repeatCollisions = false;
-	
+	public boolean replaceScripts = false;
+	public boolean active = true;
+
 	public CharTile() {}
 
 	public void initialize() {

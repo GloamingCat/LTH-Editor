@@ -23,8 +23,10 @@ public class GameCharacter extends Data implements LInitializable {
 	public boolean transformAnimations = true;
 
 	public LDataList<Script> scripts = new LDataList<>();
-	public boolean repeatCollisions = false;
-	
+	public boolean replaceScripts = false;
+	public boolean fixedAnimation = false;
+	public boolean fixedDirection = false;
+
 	public GameCharacter() {}
 
 	@Override

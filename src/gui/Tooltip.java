@@ -354,6 +354,8 @@ public class Tooltip {
 	public String TILEX = "The displacement from the character's position, in tiles (coordinate x).";
 	public String TILEY = "The displacement from the character's position, in tiles (coordinate y).";
 	public String TILEH = "The height of this tile of the character, in tiles.";
+	public String FIXANIM = "When checked, movement commands won't change the animation.";
+	public String FIXDIR = "When checked, movement commands won't change the direction.";
 
 	// Job
 	public String ATTACKSKILL = "The skill set as the attack skill of the battler.";
@@ -563,10 +565,6 @@ public class Tooltip {
 	public String CONDITION = """
 			Condition to execute the script.
 			It is treated as a Lua boolean expression.""";
-	public String REPEATCOLLISIONS = """
-            When checked, the collision scripts will be executed in multiple times in parallel if
-            the character has another collision before the script ends.
-            If unchecked, the script won't be executed again if it's already running when the new collision occurs.""";
 	public String LABEL = """
 			Name of the label.""";
 	public String EVENTID = """
@@ -672,6 +670,9 @@ public class Tooltip {
             This will tell which troop this character belongs to, when the 'unit generation'
             setting of the party is set as 'field characters'.
             If left blank, it will be treated as a scenery object or non-battle NPC.""";
+	public String REPLACESCRIPTS = """
+			When checked, this script list will replace the original character's script list.
+			When unchecked, the two list are combined (the original one comes first).""";
 
 	// Party
 	public String PARTYPOS = """
@@ -698,7 +699,7 @@ public class Tooltip {
 	public String POSITIONY = "Y of the tile.";
 	public String POSITIONH = "Height of the layer.";
 	public String TILEREF = """
-			If non-empty, the destination tile will the added to this object's tile.
+			If non-empty, the destination tile will be incremented with this object's tile.
 			Throws an error if no object/character with this key is found in the current field.
 			Set as "self" (no quotes) to refer to the current character.""";
 	public String ORIGIN = """
@@ -708,6 +709,10 @@ public class Tooltip {
 			If -1, no path is computed, and the character walks straight to the destination.""";
 	public String DISTANCE = """
 			The number of tiles the character will walk in the given direction.""";
+	public String DIRREF = """
+			If non-empty, the angle will be incremented with this object's direction.
+			Throws an error if no object/character with this key is found in the current field.
+			Set as "self" (no quotes) to refer to the current character.""";
 
 	// Transition
 	public String TRANSITIONS = "List of transitions to other fields.";

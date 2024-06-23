@@ -37,6 +37,8 @@ public class Script extends Data {
 
 	@Override
 	public String toString() {
+		if (name.isEmpty())
+			return "            ";
 		String s = "(";
 		if (onLoad) {
 			s += "Load";

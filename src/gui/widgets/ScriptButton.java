@@ -34,11 +34,10 @@ public class ScriptButton extends LObjectButton<Script> {
 	public void setValue(Object value) {
 		if (value != null) {
 			setEnabled(true);
-			Script s = (Script) value;
 			if (pathText != null) {
-				pathText.setValue(s.name);
+				pathText.setValue(value.toString());
 			}
-			currentValue = s;
+			currentValue = (Script) value;
 		} else {
 			setEnabled(false);
 			if (pathText != null) {

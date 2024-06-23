@@ -191,11 +191,6 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		btnPassable.setHoverText(Tooltip.instance.CHARPASSABLE);
 		addControl(btnPassable, "passable");
 
-		LCheckBox btnActive = new LCheckBox(compOptions);
-		btnActive.setText(Vocab.instance.ACTIVE);
-		btnActive.setHoverText(Tooltip.instance.CHARACTIVE);
-		addControl(btnActive, "active");
-
 		LCheckBox btnVisible = new LCheckBox(compOptions);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		btnVisible.setHoverText(Tooltip.instance.CHARVISIBLE);
@@ -213,11 +208,17 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		lstScripts.getCellData().setExpand(true, true);
 		addChild(lstScripts, "scripts");
 
-		LCheckBox btnRepeat = new LCheckBox(grpScripts);
-		btnRepeat.setText(Vocab.instance.REPEATCOLLISIONS);
-		btnRepeat.setHoverText(Tooltip.instance.REPEATCOLLISIONS);
-		btnRepeat.getCellData().setAlignment(LFlags.LEFT);
-		addControl(btnRepeat, "repeatCollisions");
+		CheckBoxPanel scriptCheck = new CheckBoxPanel(grpScripts);
+
+		LCheckBox btnActive = new LCheckBox(scriptCheck);
+		btnActive.setText(Vocab.instance.ACTIVE);
+		btnActive.setHoverText(Tooltip.instance.CHARACTIVE);
+		addControl(btnActive, "active");
+
+		LCheckBox btnRepeat = new LCheckBox(scriptCheck);
+		btnRepeat.setText(Vocab.instance.REPLACESCRIPTS);
+		btnRepeat.setHoverText(Tooltip.instance.REPLACESCRIPTS);
+		addControl(btnRepeat, "replaceScripts");
 
 	}
 

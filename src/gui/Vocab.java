@@ -244,6 +244,8 @@ public class Vocab {
 	public String PORTRAITS = "Portraits";
 	public String KOEFFECT = "KO Effect";
 	public String APPLYTRANSFORM = "Apply transform";
+	public String FIXANIM = "Fixed Animation";
+	public String FIXDIR = "Fixed Direction";
 	
 	// Job
 	public String ATTACKSKILL = "Attack";
@@ -372,8 +374,9 @@ public class Vocab {
 	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
-	public String REPEATCOLLISIONS = "Repeat collisions";
 	public String ACTIVE = "Active";
+	public String REPLACESCRIPTS = "Replace List";
+	public String OPTIONAL = "Optional";
 
 	// Effect
 	public String EFFECTS = "Effects";
@@ -446,7 +449,6 @@ public class Vocab {
 	public String ONCOLLIDE = "On Collide";
 	public String ONINTERACT = "On Interact";
 	public String SPEED = "Speed";
-	public String OPTIONAL = "Optional";
 	public String EVENTID = "Event ID";
 
 	// Party
@@ -464,7 +466,7 @@ public class Vocab {
 	public String POSITIONX = "X";
 	public String POSITIONY = "Y";
 	public String POSITIONH = "H";
-	public String TILEREF = "To Object";
+	public String OBJREF = "To Object";
 	public String ORIGIN = "Origin";
 	public String PATHLIMIT = "Path Limit";
 	public String DISTANCE = "Distance";

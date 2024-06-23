@@ -135,9 +135,9 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			flowEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.FLOWEVENTS, flowScroll);
 			new EventButton(flowEvents, "Set Local Variable", "setLocalVar",
-					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.VALUE);
 			new EventButton(flowEvents, "Set Global Variable", "setGlobalVar",
-					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.VALUE);
 			new EventButton(flowEvents, "Set Label", "setLabel",
 					EventArgsDialog.NAME);
 			new EventButton(flowEvents, "Jump To Label", "jumpTo",
@@ -145,16 +145,16 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(flowEvents, "Skip To Event", "setEvent",
 					EventArgsDialog.SKIP);
 			new EventButton(flowEvents, "Skip Events", "skipEvents",
-					EventArgsDialog.SKIP | EventArgsDialog.LIMIT);
+					EventArgsDialog.SKIP | EventArgsDialog.VALUE);
 			new EventButton(flowEvents, "Wait", "wait",
-					EventArgsDialog.WAIT);
+					EventArgsDialog.DURATION);
 
 			LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
 			LPanel fieldEvents = new LPanel(fieldScroll);
 			fieldEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.FIELDEVENTS, fieldScroll);
 			new EventButton(fieldEvents, "Set Field Variable", "setFieldVar",
-					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.VALUE);
 			new EventButton(fieldEvents, "Move to Field", "moveToField",
 					EventArgsDialog.FIELD | EventArgsDialog.POS);
 			new EventButton(fieldEvents, "Run Battle", "runBattle",
@@ -167,25 +167,29 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			charEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.CHAREVENTS, charScroll);
 			new EventButton(charEvents, "Set Character Variable", "setCharVar",
-					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
-			new EventButton(charEvents, "Delete Character", "deleteChar",
-					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
-			new EventButton(charEvents, "Reset Character", "resetChar",
-					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE | EventArgsDialog.SPEED);
-			new EventButton(charEvents, "Set Properties", "setCharProperty",
-					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE | EventArgsDialog.LIMIT);
+					EventArgsDialog.VAR | EventArgsDialog.VALUE);
+			new EventButton(charEvents, "Set Property", "setCharProperty",
+					EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VALUE);
+			new EventButton(charEvents, "Log Properties", "logProperties",
+					EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.ALL);
 			new EventButton(charEvents, "Character Visibility", "setCharVisibility",
-					EventArgsDialog.KEY | EventArgsDialog.VISIBLE);
+					EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VISIBLE | EventArgsDialog.WAIT);
 			new EventButton(charEvents, "Shadow Visibility", "setShadowVisibility",
-					EventArgsDialog.KEY | EventArgsDialog.VISIBLE);
+					EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VISIBLE | EventArgsDialog.WAIT);
+			new EventButton(charEvents, "Delete Character", "deleteChar",
+					EventArgsDialog.KEY | EventArgsDialog.PROP);
+			new EventButton(charEvents, "Reset Character", "resetChar",
+					EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.ALL);
 			new EventButton(charEvents, "Turn to Tile", "turnCharTile",
 					EventArgsDialog.KEY | EventArgsDialog.POS);
 			new EventButton(charEvents, "Turn to Direction", "turnCharDir",
 					EventArgsDialog.KEY | EventArgsDialog.DIR);
 			new EventButton(charEvents, "Move to Tile", "moveCharTile",
-					EventArgsDialog.KEY | EventArgsDialog.POS | EventArgsDialog.LIMIT);
+					EventArgsDialog.KEY | EventArgsDialog.POS | EventArgsDialog.HEIGHT | EventArgsDialog.VALUE | EventArgsDialog.SPEED | EventArgsDialog.WAIT);
 			new EventButton(charEvents, "Move in Direction", "moveCharDir",
-					EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.LIMIT);
+					EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.VALUE | EventArgsDialog.SPEED | EventArgsDialog.WAIT);
+			new EventButton(charEvents, "Character Jump", "jumpChar",
+					EventArgsDialog.KEY | EventArgsDialog.HEIGHT | EventArgsDialog.SPEED | EventArgsDialog.DURATION | EventArgsDialog.WAIT);
 			new EventButton(charEvents, "Play Animation", "playCharAnim",
 					EventArgsDialog.KEY | EventArgsDialog.NAME);
 			new EventButton(charEvents, "Stop Animation", "stopChar",
@@ -212,7 +216,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(menuEvents, "Input Window", "openStringWindow",
 					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.NAME);
 			new EventButton(menuEvents, "Password Window", "openNumberWindow",
-					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.LIMIT);
+					EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS | EventArgsDialog.VALUE);
 			new EventButton(menuEvents, "Field Menu", "openFieldMenu",
 					EventArgsDialog.MENU);
 			new EventButton(menuEvents, "Shop Menu", "openShopMenu",
@@ -233,15 +237,15 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(partyEvents, "Use Skill", "useSkill",
 					EventArgsDialog.FORMATION | EventArgsDialog.SKILL | EventArgsDialog.ALL);
 			new EventButton(partyEvents, "Add Exp", "increaseExp",
-					EventArgsDialog.FORMATION | EventArgsDialog.LIMIT | EventArgsDialog.ALL);
+					EventArgsDialog.FORMATION | EventArgsDialog.VALUE | EventArgsDialog.ALL);
 			new EventButton(partyEvents, "Add Money", "increaseMoney",
-					EventArgsDialog.FORMATION | EventArgsDialog.LIMIT);
+					EventArgsDialog.FORMATION | EventArgsDialog.VALUE);
 			new EventButton(partyEvents, "Add Item", "increaseItem",
-					EventArgsDialog.FORMATION | EventArgsDialog.LIMIT | EventArgsDialog.ITEM);
+					EventArgsDialog.FORMATION | EventArgsDialog.VALUE | EventArgsDialog.ITEM);
 			new EventButton(partyEvents, "Set Equip", "setEquip",
 					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.ITEM);
 			new EventButton(partyEvents, "Set Level", "setLevel",
-					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.LIMIT);
+					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.VALUE);
 			new EventButton(partyEvents, "Add Skill", "learnSKill",
 					EventArgsDialog.FORMATION | EventArgsDialog.KEY | EventArgsDialog.SKILL | EventArgsDialog.ALL);
 			new EventButton(partyEvents, "Add Status", "addStatus",
@@ -252,34 +256,34 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			soundEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.SOUNDEVENTS, soundScroll);
 			new EventButton(soundEvents, "Play SFX", "playSFX",
-					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.LIMIT | EventArgsDialog.SKILL);
+					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.VALUE | EventArgsDialog.SKILL);
 			new EventButton(soundEvents, "Play BGM", "playBGM",
-					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.VALUE);
 			new EventButton(soundEvents, "Pause BGM", "pauseBGM",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.WAIT | EventArgsDialog.VALUE);
 			new EventButton(soundEvents, "Resume BGM", "resumeBGM",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.WAIT | EventArgsDialog.VALUE);
 			new EventButton(soundEvents, "Play Field BGM", "playFieldBGM",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.WAIT | EventArgsDialog.VALUE);
 
 			LScrollPanel screenScroll = new LScrollPanel(tabFolder);
 			LPanel screenEvents = new LPanel(screenScroll);
 			screenEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.SCREENEVENTS, screenScroll);
 			new EventButton(screenEvents, "Focus On Character", "focusCharacter",
-					EventArgsDialog.SPEED | EventArgsDialog.KEY | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.SPEED | EventArgsDialog.KEY | EventArgsDialog.WAIT | EventArgsDialog.SPEED);
 			new EventButton(screenEvents, "Focus On Tile", "focusTile",
-					EventArgsDialog.SPEED | EventArgsDialog.POS | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.SPEED | EventArgsDialog.POS | EventArgsDialog.HEIGHT | EventArgsDialog.WAIT | EventArgsDialog.SPEED);
 			new EventButton(screenEvents, "Fade in", "fadein",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.DURATION | EventArgsDialog.WAIT);
 			new EventButton(screenEvents, "Fade out", "fadeout",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.DURATION | EventArgsDialog.WAIT);
 			new EventButton(screenEvents, "Apply Shader", "shaderin",
-					EventArgsDialog.NAME | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.NAME | EventArgsDialog.DURATION | EventArgsDialog.WAIT);
 			new EventButton(screenEvents, "Unapply Shader", "shaderout",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.DURATION | EventArgsDialog.WAIT);
 			new EventButton(screenEvents, "Change Color", "colorin",
-					EventArgsDialog.COLOR | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.COLOR | EventArgsDialog.DURATION | EventArgsDialog.WAIT);
 
 			currentEventButton = new EventButton(grpCommands, "Edit Current", null,0);
 			currentEventButton.getCellData().setExpand(true, false);
@@ -293,15 +297,24 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		}
 
 		private void refreshCurrentEventButton() {
-			EventButton eventButton = eventButtons.getOrDefault(txtCommand.getValue(), null);
-			if (eventButton == null) {
+			String command = txtCommand.getValue();
+			if (command == null) {
 				currentEventButton.setValue(null);
 				currentEventButton.setEnabled(false);
 			} else {
-				currentEventButton.command = eventButton.command;
-				currentEventButton.setShellFactory(eventButton.getShellFactory());
-				currentEventButton.setValue(lstParam.getObject());
-				currentEventButton.setEnabled(true);
+				EventButton eventButton = eventButtons.getOrDefault(command, null);
+				if (eventButton == null) {
+					currentEventButton.setValue(null);
+					currentEventButton.setEnabled(false);
+				} else {
+					currentEventButton.command = eventButton.command;
+					currentEventButton.setShellFactory(eventButton.getShellFactory());
+					currentEventButton.setValue(lstParam.getObject());
+					currentEventButton.setEnabled(true);
+				}
+			}
+			for (EventButton button : eventButtons.values()) {
+				button.setEnabled(command != null);
 			}
 		}
 
