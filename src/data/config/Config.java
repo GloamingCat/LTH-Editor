@@ -1,6 +1,7 @@
 package data.config;
 
 import data.subcontent.Audio;
+import data.subcontent.Script;
 import lui.base.data.LDataList;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
@@ -33,6 +34,7 @@ public class Config {
 		public int dashSpeed = 200;
 		public int diagThreshold = 15;
 		public Position startPos = new Position();
+		public Script loadScript = new Script("LoadPlayer.lua", false);
 	}
 
 	public static class Battle {

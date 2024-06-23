@@ -78,7 +78,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 addSpinner(Vocab.instance.COUNT, Tooltip.instance.EVENTSKIP, "events", false);
             else
                 // Go to event
-                addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", false);
+                addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", true);
         } else if ((style & KEY) > 0) {
             addTextField(Vocab.instance.KEY, Tooltip.instance.CHARKEY, "key");
             if ((style & NAME) > 0 && (style & WINDOW) == 0)
@@ -280,18 +280,25 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 // Setup Shadow/Char/Image
                 addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
                 addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
-                if ((style & DEACTIVATE) > 0) {
-                    // Setup Char
-                    addCheckBox(Vocab.instance.PASSABLE, Tooltip.instance.CHARPASSABLE, "passable");
-                    addCheckBox(Vocab.instance.DEACTIVATE, Tooltip.instance.CHARDEACTIVATE, "deactivate");
-                }
             }
         }
 
         if ((style & DEACTIVATE) > 0) {
-            // Setup/delete Char
-            addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
-            addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
+            if ((style & LIMIT) > 0) {
+                // Props
+                addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "prop",
+                    new String[] { Vocab.instance.PASSABLE, Vocab.instance.ACTIVE, Vocab.instance.SPEED }, LCombo.READONLY );
+                addTextField(Vocab.instance.VALUE, Tooltip.instance.VALUE, "value");
+            } else if ((style & SPEED) > 0) {
+                // Reset
+                addCheckBox(Vocab.instance.TILE, Tooltip.instance.TILERESET, "tile");
+                addCheckBox(Vocab.instance.PROPERTIES, Tooltip.instance.PROPRESET, "props");
+            } else {
+                // Delete Char
+                addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
+                addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
+                addCheckBox(Vocab.instance.TIME, Tooltip.instance.WAITTIME, "time");
+            }
         }
 
         if ((style & WAIT) > 0) {

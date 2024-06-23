@@ -12,7 +12,8 @@ public class CharTile implements LInitializable {
 	public boolean persistent = false;
 	public boolean passable = false;
 	public boolean visible = true;
-	
+	public boolean active = true;
+
 	public int x = 1;
 	public int y = 1;
 	public int h = 1;

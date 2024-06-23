@@ -191,6 +191,11 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		btnPassable.setHoverText(Tooltip.instance.CHARPASSABLE);
 		addControl(btnPassable, "passable");
 
+		LCheckBox btnActive = new LCheckBox(compOptions);
+		btnActive.setText(Vocab.instance.ACTIVE);
+		btnActive.setHoverText(Tooltip.instance.CHARACTIVE);
+		addControl(btnActive, "active");
+
 		LCheckBox btnVisible = new LCheckBox(compOptions);
 		btnVisible.setText(Vocab.instance.VISIBLE);
 		btnVisible.setHoverText(Tooltip.instance.CHARVISIBLE);

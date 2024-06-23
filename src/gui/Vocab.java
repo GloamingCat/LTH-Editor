@@ -373,7 +373,8 @@ public class Vocab {
 	public String BLOCKPLAYER = "Block player";
 	public String CONDITION = "Condition";
 	public String REPEATCOLLISIONS = "Repeat collisions";
-	
+	public String ACTIVE = "Active";
+
 	// Effect
 	public String EFFECTS = "Effects";
 	public String BASICRESULT = "Basic Result";
@@ -464,8 +465,10 @@ public class Vocab {
 	public String POSITIONY = "Y";
 	public String POSITIONH = "H";
 	public String TILEREF = "To Object";
+	public String ORIGIN = "Origin";
 	public String PATHLIMIT = "Path Limit";
 	public String DISTANCE = "Distance";
+	public String TILE = "Tile";
 
 	// Transition
 	public String TRANSITIONS = "Transitions";
@@ -479,8 +482,8 @@ public class Vocab {
 	public String SKIPINTRO = "Skip Intro";
 	public String DISABLEESCAPE = "Disable Escape";
 	public String GAMEOVERCONDITION = "Game Over Condition";
-	public String LOSE = "All allies dead (lose)";
-	public String NOWIN = "Any enemy alive (lose or draw)";
+	public String LOSE = "Any enemy alive (lose)";
+	public String NOWIN = "All allies dead (lose or draw)";
 
 	//endregion
 	

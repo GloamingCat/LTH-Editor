@@ -495,6 +495,9 @@ public class Tooltip {
 		When empty, then a target selection screen will be opened if the skill is single-target.
 		If it's an area skill, all members are affected.""";
 
+	public String TILERESET = "Reset to original tile.";
+	public String PROPRESET = "Reset general properties to the original configuration of the character.";
+
 	//endregion
 	
 	//////////////////////////////////////////////////
@@ -661,6 +664,7 @@ public class Tooltip {
 	public String SPEED = "Movement speed, in pixels per second.";
 	public String CHARPERSISTENT = "When checked, the changed data will be saved in the field's save if the field is also persistent.";
 	public String CHARPASSABLE = "When checked, the player and other characters can overpass it.";
+	public String CHARACTIVE = "If unchecked, all scripts of on this character are ignored.";
 	public String CHARVISIBLE = "If unchecked, the character starts off as invisible.";
 	public String CHARDEACTIVATE = "When checked, the character's scripts are ignored.";
 	public String CHARPARTY = """
@@ -697,6 +701,8 @@ public class Tooltip {
 			If non-empty, the destination tile will the added to this object's tile.
 			Throws an error if no object/character with this key is found in the current field.
 			Set as "self" (no quotes) to refer to the current character.""";
+	public String ORIGIN = """
+			If true, the destination tile will the added to this object's original tile.""";
 	public String PATHLIMIT = """
 			If greater then zero, the path to the destination will be limited by this number of steps.
 			If -1, no path is computed, and the character walks straight to the destination.""";

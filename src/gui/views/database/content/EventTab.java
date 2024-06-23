@@ -146,7 +146,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					EventArgsDialog.SKIP);
 			new EventButton(flowEvents, "Skip Events", "skipEvents",
 					EventArgsDialog.SKIP | EventArgsDialog.LIMIT);
-			new EventButton(flowEvents, "Wait", "waitFrames",
+			new EventButton(flowEvents, "Wait", "wait",
 					EventArgsDialog.WAIT);
 
 			LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
@@ -155,12 +155,10 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			tabFolder.addTab(Vocab.instance.FIELDEVENTS, fieldScroll);
 			new EventButton(fieldEvents, "Set Field Variable", "setFieldVar",
 					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
-			new EventButton(fieldEvents, "Normal Field Transition", "moveToField",
+			new EventButton(fieldEvents, "Move to Field", "moveToField",
 					EventArgsDialog.FIELD | EventArgsDialog.POS);
-			new EventButton(fieldEvents, "Battle Field Transition", "startBattle",
+			new EventButton(fieldEvents, "Run Battle", "runBattle",
 					EventArgsDialog.FIELD);
-			new EventButton(fieldEvents, "Finish Battle", "finishBattle",
-					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
 			new EventButton(fieldEvents, "Field Image", "setupImage",
 					EventArgsDialog.NAME | EventArgsDialog.VISIBLE);
 
@@ -172,9 +170,13 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					EventArgsDialog.VAR | EventArgsDialog.LIMIT);
 			new EventButton(charEvents, "Delete Character", "deleteChar",
 					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE);
-			new EventButton(charEvents, "Set Properties", "setupChar",
-					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE | EventArgsDialog.VISIBLE);
-			new EventButton(charEvents, "Shadow Properties", "setupShadow",
+			new EventButton(charEvents, "Reset Character", "resetChar",
+					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE | EventArgsDialog.SPEED);
+			new EventButton(charEvents, "Set Properties", "setCharProperty",
+					EventArgsDialog.KEY | EventArgsDialog.DEACTIVATE | EventArgsDialog.LIMIT);
+			new EventButton(charEvents, "Character Visibility", "setCharVisibility",
+					EventArgsDialog.KEY | EventArgsDialog.VISIBLE);
+			new EventButton(charEvents, "Shadow Visibility", "setShadowVisibility",
 					EventArgsDialog.KEY | EventArgsDialog.VISIBLE);
 			new EventButton(charEvents, "Turn to Tile", "turnCharTile",
 					EventArgsDialog.KEY | EventArgsDialog.POS);
@@ -249,7 +251,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			LPanel soundEvents = new LPanel(soundScroll);
 			soundEvents.setSequentialLayout(true);
 			tabFolder.addTab(Vocab.instance.SOUNDEVENTS, soundScroll);
-			new EventButton(soundEvents, "Play SFX", "playBGM",
+			new EventButton(soundEvents, "Play SFX", "playSFX",
 					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.LIMIT | EventArgsDialog.SKILL);
 			new EventButton(soundEvents, "Play BGM", "playBGM",
 					EventArgsDialog.AUDIO | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
@@ -269,7 +271,7 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			new EventButton(screenEvents, "Focus On Tile", "focusTile",
 					EventArgsDialog.SPEED | EventArgsDialog.POS | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
 			new EventButton(screenEvents, "Fade in", "fadein",
-					EventArgsDialog.NAME | EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
+					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
 			new EventButton(screenEvents, "Fade out", "fadeout",
 					EventArgsDialog.WAIT | EventArgsDialog.LIMIT);
 			new EventButton(screenEvents, "Apply Shader", "shaderin",

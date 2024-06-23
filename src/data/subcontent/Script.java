@@ -13,7 +13,18 @@ public class Script extends Data {
 		onInteract = interact;
 		onCollide = collide;
 	}
-	
+
+	public Script(String name, boolean load, boolean interact, boolean collide) {
+		this(load, interact, collide);
+		this.name = name;
+	}
+
+	public Script(String name, boolean blockPlayer) {
+		this(name, true, false, false);
+		wait = true;
+		block = blockPlayer;
+	}
+
 	public boolean global = false;
 	public boolean block = true;
 	public boolean wait = true;

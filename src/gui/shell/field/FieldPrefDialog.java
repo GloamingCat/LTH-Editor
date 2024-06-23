@@ -1,5 +1,6 @@
 package gui.shell.field;
 
+import gui.shell.ScriptDialog;
 import gui.views.fieldTree.subcontent.TransitionEditor;
 import gui.widgets.CheckBoxPanel;
 import lui.container.LFrame;
@@ -101,7 +102,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		LText txtScript = new LText(grpGeneral, true);
 		txtScript.getCellData().setExpand(true, false);
 		txtScript.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton btnScript = new ScriptButton(grpGeneral, 1);
+		ScriptButton btnScript = new ScriptButton(grpGeneral, ScriptDialog.LOADONLY | ScriptDialog.OPTIONAL);
 		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "loadScript");
 

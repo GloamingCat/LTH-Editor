@@ -3,7 +3,9 @@ package gui.views.system;
 import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.shell.ScriptDialog;
 import gui.widgets.PositionButton;
+import gui.widgets.ScriptButton;
 import lui.container.LContainer;
 import lui.gson.GDefaultObjectEditor;
 import lui.widget.LLabel;
@@ -40,16 +42,22 @@ public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
 		addControl(spnDiagThreshold, "diagThreshold");
 
 		new LLabel(this, "%");
-		new LLabel(this, Vocab.instance.STARTPOS, Tooltip.instance.STARTPOS);
 
+		new LLabel(this, Vocab.instance.STARTPOS, Tooltip.instance.STARTPOS);
 		LText txtPos = new LText(this, true);
 		txtPos.getCellData().setExpand(true, false);
 		PositionButton btnStartPos = new PositionButton(this, -1);
 		btnStartPos.setTextWidget(txtPos);
 		addControl(btnStartPos, "startPos");
 
-		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
+		new LLabel(this, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
+		LText txtScript = new LText(this, true);
+		txtScript.getCellData().setExpand(true, false);
+		ScriptButton btnScript = new ScriptButton(this, ScriptDialog.LOADONLY);
+		btnScript.setPathWidget(txtScript);
+		addControl(btnScript, "loadScript");
 
+		new LLabel(this, 3, 1).getCellData().setExpand(false, true);
     }
 
     @Override
