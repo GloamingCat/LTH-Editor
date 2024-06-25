@@ -609,7 +609,8 @@ public class Tooltip {
 	public String FIELDMAXHEIGHT = """
 			The maximum height of a tile.
 			This limits the number of tile layers.""";
-	public String LOADSCRIPT = "The script that is automacilly executed when the field is loaded.";
+	public String LOADSCRIPT = "The script that is automatically executed when the field is loaded.";
+	public String EXITSCRIPT = "The script that is automatically executed when the field is unloaded.";
 	public String BGM = "The background music that is automatically played when the field is loaded.";
 	public String IMAGES = """
 			Foreground and background images.

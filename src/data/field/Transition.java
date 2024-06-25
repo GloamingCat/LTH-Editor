@@ -9,44 +9,26 @@ public class Transition implements Cloneable {
 	public Transition() { }
 
 	public Position destination = new Position();
-	public Position tl = null;
-	public Position br = null;
 	public Portal origin = new Portal();
-	public int fade = 30;
+	public String condition = "";
 	
 	public String toString() {
-		return destination.toString();
+		if (condition.isEmpty())
+			return destination.toString();
+		else
+			return destination.toString() + " if " + condition;
 	}
 	
 	public Transition clone() {
         try {
 			Transition t = (Transition) super.clone();
 			t.destination = destination.clone();
-			if (tl != null) {
-				t.tl = tl.clone();
-				t.br = br.clone();
-			}
 			t.origin = origin.clone();
+			t.condition = condition;
 			return t;
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-	}
-	
-	public void convert() {
-		System.out.println(tl.toString());
-		System.out.println(br.toString());
-		origin = new Portal();
-		for (int h = tl.h; h <= br.h; h++) {
-			for (int x = tl.x; x <= br.x; x++) {
-				for (int y = tl.y; y <= br.y; y++) {
-					System.out.println(x + " " + y + " " + h);
-					origin.add(new Tile(x, y, h));
-				}
-			}
-		}
-		tl = null;
-		br = null;
 	}
 	
 	public static class Portal extends LDataList<Tile> {

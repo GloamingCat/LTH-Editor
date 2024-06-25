@@ -32,10 +32,11 @@ public class Field {
 		public int defaultRegion = -1;
 		public int maxHeight = 4;
 		public AudioPlay bgm = new AudioPlay();
-		public Script loadScript = new Script("Load.lua", true);
+		public Script loadScript = new Script("Enter.lua", true);
+		public Script exitScript = new Script("Exit.lua", false);
 		public LDataList<FieldImage> images = new LDataList<>();
 		public LDataList<Transition> transitions = new LDataList<>(); 
-		
+
 	}
 	
 	public static class Layers {

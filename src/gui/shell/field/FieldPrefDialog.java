@@ -1,13 +1,14 @@
 package gui.shell.field;
 
 import gui.shell.ScriptDialog;
-import gui.views.fieldTree.subcontent.TransitionEditor;
-import gui.widgets.CheckBoxPanel;
+import gui.widgets.*;
+import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LImage;
 import lui.container.LPanel;
 import lui.dialog.LWindow;
 import lui.base.event.LEditEvent;
+import lui.gson.GDefaultObjectEditor;
 import lui.widget.LCheckBox;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
@@ -18,9 +19,6 @@ import gui.Vocab;
 import lui.gson.GObjectDialog;
 import gui.views.database.subcontent.TagList;
 import gui.views.fieldTree.subcontent.FieldImageList;
-import gui.widgets.AudioButton;
-import gui.widgets.ScriptButton;
-import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
 import lui.base.event.listener.LCollectionListener;
 
@@ -30,6 +28,8 @@ import data.field.FieldImage;
 import data.field.FieldNode;
 import data.field.Transition;
 import project.Project;
+
+import java.lang.reflect.Type;
 
 public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 
@@ -76,7 +76,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		addControl(txtName, "name");
 		
 		new LLabel(grpGeneral, Vocab.instance.DEFAULTREGION, Tooltip.instance.DEFAULTREGION);
-		LCombo cmbRegion = new LCombo(grpGeneral, LCombo.READONLY | LCombo.INCLUDEID);
+		LCombo cmbRegion = new LCombo(grpGeneral, LCombo.READONLY | LCombo.INCLUDEID | LCombo.OPTIONAL);
 		cmbRegion.getCellData().setSpread(2, 1);
 		cmbRegion.getCellData().setExpand(true, false);
 		cmbRegion.setItems(Project.current.regions.getData());
@@ -99,12 +99,20 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		addControl(btnBGM, "bgm");
 
 		new LLabel(grpGeneral, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
-		LText txtScript = new LText(grpGeneral, true);
-		txtScript.getCellData().setExpand(true, false);
-		txtScript.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton btnScript = new ScriptButton(grpGeneral, ScriptDialog.LOADONLY | ScriptDialog.OPTIONAL);
-		btnScript.setPathWidget(txtScript);
-		addControl(btnScript, "loadScript");
+		LText txtOnLoad = new LText(grpGeneral, true);
+		txtOnLoad.getCellData().setExpand(true, false);
+		txtOnLoad.getCellData().setAlignment(LFlags.MIDDLE);
+		ScriptButton btnOnLoad = new ScriptButton(grpGeneral, ScriptDialog.LOADONLY | ScriptDialog.OPTIONAL);
+		btnOnLoad.setPathWidget(txtOnLoad);
+		addControl(btnOnLoad, "loadScript");
+
+		new LLabel(grpGeneral, Vocab.instance.EXITSCRIPT, Tooltip.instance.EXITSCRIPT);
+		LText txtOnExit = new LText(grpGeneral, true);
+		txtOnExit.getCellData().setExpand(true, false);
+		txtOnExit.getCellData().setAlignment(LFlags.MIDDLE);
+		ScriptButton onExit = new ScriptButton(grpGeneral, ScriptDialog.LOADONLY | ScriptDialog.OPTIONAL);
+		onExit.setPathWidget(txtOnExit);
+		addControl(onExit, "exitScript");
 
 		LPanel check = new CheckBoxPanel(grpGeneral);
 		check.getCellData().setSpread(3, 1);
@@ -175,13 +183,48 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 			img.setImage((String) null);
 		}
 	}
-	
-	public void open(Field.Prefs initial) {
-		for (Transition t : initial.transitions) {
-			if (t.br != null)
-				t.convert();
+
+	public static class TransitionEditor extends GDefaultObjectEditor<Transition> {
+
+		public TransitionEditor(LContainer parent, int id) {
+			super(parent, id, false);
 		}
-		super.open(initial);
+
+		@Override
+		protected void createContent(int id) {
+			setGridLayout(3);
+
+			// Destination
+
+			new LLabel(this, Vocab.instance.DESTINATION, Tooltip.instance.DESTINATION);
+			LText txtDest = new LText(this, true);
+			txtDest.getCellData().setExpand(true, false);
+			PositionButton btnDest = new PositionButton(this, id);
+			btnDest.setTextWidget(txtDest);
+			addControl(btnDest, "destination");
+
+			// Origin Tiles
+
+			new LLabel(this, Vocab.instance.ORIGTILES, Tooltip.instance.ORIGTILES);
+			LText txtOrigin = new LText(this, true);
+			txtOrigin.getCellData().setExpand(true, false);
+			PortalButton btnOrigin = new PortalButton(this, id);
+			btnOrigin.setTextWidget(txtOrigin);
+			addControl(btnOrigin, "origin");
+
+			new LLabel(this, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
+			LText txtCondition = new LText(this, false);
+			txtCondition.getCellData().setExpand(true, false);
+			txtCondition.getCellData().setSpread(2, 1);
+			addControl(txtCondition, "condition");
+
+		}
+
+		@Override
+		public Type getType() {
+			return Transition.class;
+		}
+
 	}
 
 }

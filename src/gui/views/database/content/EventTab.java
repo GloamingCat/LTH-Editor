@@ -100,23 +100,20 @@ public class EventTab extends DatabaseTab<EventSheet> {
 			setGridLayout(2);
 			eventButtons = new HashMap<>();
 
-			LLabel lblCondition = new LLabel(this, Vocab.instance.CONDITION,
-					Tooltip.instance.CONDITION);
+			LLabel lblCondition = new LLabel(this, Vocab.instance.CONDITION, Tooltip.instance.CONDITION);
 			LText txtCondition = new LText(this);
 			txtCondition.getCellData().setExpand(true, false);
 			txtCondition.addMenu(lblCondition);
 			addControl(txtCondition, "condition");
 
-			LLabel lblCmd = new LLabel(this, LFlags.TOP, Vocab.instance.COMMAND,
-					Tooltip.instance.COMMAND);
+			LLabel lblCmd = new LLabel(this, LFlags.TOP, Vocab.instance.COMMAND, Tooltip.instance.COMMAND);
 			txtCommand = new LTextBox(this);
 			txtCommand.getCellData().setExpand(true, true);
 			txtCommand.addMenu(lblCmd);
 			txtCommand.addModifyListener(e -> refreshCurrentEventButton());
 			addControl(txtCommand, "name");
 
-			LLabel lblParam = new LLabel(this, LFlags.TOP, Vocab.instance.PARAM,
-					Tooltip.instance.PARAM);
+			LLabel lblParam = new LLabel(this, LFlags.TOP, Vocab.instance.PARAM, Tooltip.instance.PARAM);
 			lstParam = new TagList(this);
 			lstParam.getCellData().setExpand(true, true);
 			lstParam.addMenu(lblParam);

@@ -409,6 +409,7 @@ public class Vocab {
 	public String DEFAULTREGION = "Default Region";
 	public String FIELDMAXHEIGHT = "Max Height";
 	public String LOADSCRIPT = "Load Script";
+	public String EXITSCRIPT = "Exit Script";
 	public String BGM = "BGM";
 	public String IMAGES = "Images";
 	public String FOREGROUND = "Foreground";
