@@ -161,7 +161,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             } else {
                 // Field/Save
                 addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "menu",
-                    new String[] { Vocab.instance.FIELDMENU, Vocab.instance.SAVEMENU }, LCombo.READONLY );
+                    new String[] { Vocab.instance.FIELDMENU, Vocab.instance.SAVEMENU }, 0 );
             }
         } else if ((style & FORMATION) > 0) {
             if ((style & KEY) > 0) {
@@ -245,7 +245,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 addCheckBox(Vocab.instance.SKIPINTRO, Tooltip.instance.SKIPINTRO, "skipIntro");
                 addCheckBox(Vocab.instance.DISABLEESCAPE, Tooltip.instance.DISABLEESCAPE, "skipIntro");
                 addCombo(Vocab.instance.GAMEOVERCONDITION, Tooltip.instance.GAMEOVERCONDITION, "gameOverCondition",
-                       new String[] { Vocab.instance.NONE, Vocab.instance.LOSE, Vocab.instance.NOWIN }, LCombo.READONLY );
+                       new String[] { Vocab.instance.NONE, Vocab.instance.LOSE, Vocab.instance.NOWIN }, 0 );
             }
             addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
         } else if ((style & POS) > 0) {
@@ -277,6 +277,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             addSpinner(Vocab.instance.RED, Tooltip.instance.RED, "red", false);
             addSpinner(Vocab.instance.GREEN, Tooltip.instance.GREEN, "green", false);
             addSpinner(Vocab.instance.BLUE, Tooltip.instance.BLUE, "blue", false);
+        } else if ((style & SPEED) > 0) {
+            addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
         }
 
         if ((style & VISIBLE) > 0)
@@ -287,7 +289,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 // Props
                 addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "prop",
                     new String[] { Vocab.instance.PASSABLE, Vocab.instance.ACTIVE, Vocab.instance.SPEED,
-                    Vocab.instance.FIXANIM, Vocab.instance.FIXDIR }, LCombo.READONLY );
+                    Vocab.instance.FIXANIM, Vocab.instance.FIXDIR }, 0 );
                 addTextField(Vocab.instance.VALUE, Tooltip.instance.VALUE, "value");
             } else if ((style & ALL) > 0) {
                 // Log/Reset
@@ -438,7 +440,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
 
     private LCombo addCombo(String label, String tooltip, String key, String[] items, int opt) {
         new LLabel(contentEditor, label, tooltip);
-        LCombo cmb = new LCombo(contentEditor, opt);
+        LCombo cmb = new LCombo(contentEditor, LCombo.READONLY | opt);
         cmb.setItems(items);
         cmb.setValue(0);
         cmb.getCellData().setExpand(true, false);
