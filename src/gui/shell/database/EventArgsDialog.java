@@ -295,7 +295,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 // Log/Reset
                 addCheckBox(Vocab.instance.TILE, Tooltip.instance.TILERESET, "tile");
                 addCheckBox(Vocab.instance.PROPERTIES, Tooltip.instance.PROPRESET, "props");
-                addCheckBox(Vocab.instance.SCRIPTS, Tooltip.instance.SCRIPTS, "scripts");
+                addCheckBox(Vocab.instance.SCRIPTS, Tooltip.instance.SCRIPTRESET, "scripts");
+                addCheckBox(Vocab.instance.VARIABLES, Tooltip.instance.VARRESET, "vars");
             } else if ((style & (VISIBLE)) > 0) {
                 // Setup Shadow/Char/Image
                 addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
@@ -303,6 +304,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 // Delete Char
                 addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
                 addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
+                addCheckBox(Vocab.instance.RESET, Tooltip.instance.RESET, "reset");
                 addSpinner(Vocab.instance.TIME, Tooltip.instance.WAITTIME, "time", false);
             }
         }

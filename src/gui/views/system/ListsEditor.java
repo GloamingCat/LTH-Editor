@@ -66,7 +66,7 @@ public class ListsEditor extends LObjectEditor<Object> {
 		
 		LFrame grpVariables = new LFrame(bottom, Vocab.instance.LANGUAGES);
 		grpVariables.setFillLayout(true);
-		grpVariables.setHoverText(Tooltip.instance.VARIABLES);
+		grpVariables.setHoverText(Tooltip.instance.LANGUAGES);
 		lstLanguages = new DataList(grpVariables, Vocab.instance.LANGUAGES, false);
 		lstLanguages.setIncludeID(true);
 		addChild(lstLanguages, "languages");

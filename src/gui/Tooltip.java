@@ -46,7 +46,6 @@ public class Tooltip {
 	public String ATTRIBUTES = "List of all attributes in the game's system.";
 	public String EQUIPTYPES = "List of all types of equipment slots.";
 	public String PLUGINS = "List of installed plugins.";
-	public String VARIABLES = "List of variables to be used in text messages or formulas.";
 	public String LANGUAGES = "List of implemented languages in the game.";
 
 	// Sub-content
@@ -499,6 +498,8 @@ public class Tooltip {
 
 	public String TILERESET = "Reset to original tile.";
 	public String PROPRESET = "Reset general properties to the original configuration of the character.";
+	public String VARRESET = "Erase values of the character variables.";
+	public String SCRIPTRESET = "Erase state (including local variables) of all of the character's scripts.";
 
 	//endregion
 	
@@ -555,6 +556,7 @@ public class Tooltip {
 	public String ONLOAD = "Run this script on initialization.";
 	public String ONCOLLIDE = "Run this script on collision with player or another character.";
 	public String ONINTERACT = "Run this script when player interacts with this character.";
+	public String ONEXIT = "Run this script when the field is about to be exited.";
 	public String GLOBAL = """
 			When checked, the script is executed globally.
 			If unchecked, it stops running if the character is deleted or the field is unloaded.""";
@@ -572,6 +574,7 @@ public class Tooltip {
 	public String EVENTSKIP = """
 			Number of event commands to skip.""";
 	public String CHAROPTIONAL = "When unchecked, it will raise an error when the character with the specified key is not found.";
+	public String RESET = "Reset character position, properties and scripts before deleting.";
 	public String WAITTIME = """
 			Number of frame to wait until the next command is executed.""";
 

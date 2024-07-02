@@ -147,7 +147,7 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
         new EventButton(charEvents, "Shadow Visibility", "setShadowVisibility",
                 EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VISIBLE | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Delete Character", "deleteChar",
-                EventArgsDialog.KEY | EventArgsDialog.PROP);
+                EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Reset Character", "resetChar",
                 EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.ALL);
         new EventButton(charEvents, "Turn to Tile", "turnCharTile",
@@ -300,6 +300,8 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
     }
 
     public LColor getEventColor(Event event) {
+        if (event == null)
+            return null;
         EventButton eventButton = eventButtons.getOrDefault(event.name, null);
         if (eventButton == null)
             return defaultColor;

@@ -102,7 +102,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		LText txtOnLoad = new LText(grpGeneral, true);
 		txtOnLoad.getCellData().setExpand(true, false);
 		txtOnLoad.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton btnOnLoad = new ScriptButton(grpGeneral, ScriptDialog.LOADONLY | ScriptDialog.OPTIONAL);
+		ScriptButton btnOnLoad = new ScriptButton(grpGeneral, ScriptDialog.OPTIONAL);
 		btnOnLoad.setPathWidget(txtOnLoad);
 		addControl(btnOnLoad, "loadScript");
 
@@ -110,7 +110,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		LText txtOnExit = new LText(grpGeneral, true);
 		txtOnExit.getCellData().setExpand(true, false);
 		txtOnExit.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton onExit = new ScriptButton(grpGeneral, ScriptDialog.LOADONLY | ScriptDialog.OPTIONAL);
+		ScriptButton onExit = new ScriptButton(grpGeneral, ScriptDialog.OPTIONAL);
 		onExit.setPathWidget(txtOnExit);
 		addControl(onExit, "exitScript");
 

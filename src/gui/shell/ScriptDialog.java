@@ -4,10 +4,8 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.TagList;
 import gui.widgets.CheckBoxPanel;
-import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.container.LFrame;
-import lui.container.LPanel;
 import lui.container.LFlexPanel;
 import lui.container.LViewFolder;
 import lui.dialog.LWindow;
@@ -24,7 +22,7 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	private LNodeSelector<Object> selSheet;
 	
 	public static final int OPTIONAL = 1;
-	public static final int LOADONLY = 2;
+	public static final int TRIGGERS = 2;
 	
 	public ScriptDialog(LWindow parent, int style) {
 		super(parent, 750, 450, style, Vocab.instance.SCRIPTSHELL);
@@ -70,7 +68,7 @@ public class ScriptDialog extends GObjectDialog<Script> {
 		grpOpts.setGridLayout(2);
 		grpOpts.getCellData().setExpand(true, true);
 
-		if ((style & LOADONLY) == 0) {
+		if ((style & TRIGGERS) > 0) {
 			new LLabel(grpOpts, Vocab.instance.TRIGGER, Tooltip.instance.SCRIPTTRIGGER);
 			CheckBoxPanel trigger = new CheckBoxPanel(grpOpts);
 
@@ -88,6 +86,11 @@ public class ScriptDialog extends GObjectDialog<Script> {
 			btnInteract.setText(Vocab.instance.ONINTERACT);
 			btnInteract.setHoverText(Tooltip.instance.ONINTERACT);
 			addControl(btnInteract, "onInteract");
+
+			LCheckBox btnExit = new LCheckBox(trigger);
+			btnExit.setText(Vocab.instance.ONEXIT);
+			btnExit.setHoverText(Tooltip.instance.ONEXIT);
+			addControl(btnExit, "onExit");
 		}
 
 		LLabel lblParam = new LLabel(grpOpts, Vocab.instance.PARAM, Tooltip.instance.PARAM);

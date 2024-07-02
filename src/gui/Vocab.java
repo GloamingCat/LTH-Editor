@@ -377,6 +377,7 @@ public class Vocab {
 	public String ACTIVE = "Active";
 	public String REPLACESCRIPTS = "Replace List";
 	public String OPTIONAL = "Optional";
+	public String RESET = "Reset";
 
 	// Effect
 	public String EFFECTS = "Effects";
@@ -449,6 +450,7 @@ public class Vocab {
 	public String ONLOAD = "On Load";
 	public String ONCOLLIDE = "On Collide";
 	public String ONINTERACT = "On Interact";
+	public String ONEXIT = "On Exit";
 	public String SPEED = "Speed";
 	public String EVENTID = "Event ID";
 
