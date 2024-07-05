@@ -16,8 +16,10 @@ public class ScriptButton extends LObjectButton<Script> {
 	
 	private LText pathText;
 
-	public ScriptButton(LContainer parent, int style) {
+	public ScriptButton(LContainer parent, boolean optional, boolean onLoad) {
 		super(parent);
+		final int trigger = onLoad ? ScriptDialog.ONLOAD : ScriptDialog.ONEXIT;
+		final int style = optional ? trigger | ScriptDialog.OPTIONAL : trigger;
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Script> createWindow(LWindow parent) {

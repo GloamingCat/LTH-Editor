@@ -3,7 +3,6 @@ package gui.views.system;
 import data.config.Config;
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ScriptDialog;
 import gui.widgets.PositionButton;
 import gui.widgets.ScriptButton;
 import lui.container.LContainer;
@@ -53,7 +52,7 @@ public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
 		new LLabel(this, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
 		LText txtScript = new LText(this, true);
 		txtScript.getCellData().setExpand(true, false);
-		ScriptButton btnScript = new ScriptButton(this, 0);
+		ScriptButton btnScript = new ScriptButton(this, false, true);
 		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "loadScript");
 

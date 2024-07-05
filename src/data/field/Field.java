@@ -4,8 +4,9 @@ import data.Data;
 import data.subcontent.AudioPlay;
 import data.subcontent.Script;
 import lui.base.data.LDataList;
+import lui.base.data.LInitializable;
 
-public class Field {
+public class Field implements LInitializable {
 
 	public int id;
 	public int sizeX;
@@ -25,18 +26,39 @@ public class Field {
 		this.sizeY = sizeY;
 		layers.terrain.add(new Layer(sizeX, sizeY));
 	}
-	
-	public static class Prefs extends Data {
+
+	@Override
+	public void initialize() {
+		prefs.initialize();
+	}
+
+	public static class Prefs extends Data implements LInitializable {
 		
 		public boolean persistent = false;
 		public int defaultRegion = -1;
 		public int maxHeight = 4;
 		public AudioPlay bgm = new AudioPlay();
-		public Script loadScript = new Script("Enter.lua", true);
-		public Script exitScript = new Script("Exit.lua", false);
+		public Script loadScript;
+		public Script exitScript;
+		public LDataList<Script> scripts = new LDataList<>();
 		public LDataList<FieldImage> images = new LDataList<>();
-		public LDataList<Transition> transitions = new LDataList<>(); 
+		public LDataList<Transition> transitions = new LDataList<>();
 
+		@Override
+		public void initialize() {
+			if (loadScript != null && !loadScript.name.isEmpty()) {
+				loadScript.onLoad = true;
+				loadScript.onExit = false;
+				scripts.add(loadScript);
+				loadScript = null;
+			}
+			if (exitScript != null && !exitScript.name.isEmpty()) {
+				exitScript.onLoad = false;
+				exitScript.onExit = true;
+				scripts.add(exitScript);
+				exitScript = null;
+			}
+		}
 	}
 	
 	public static class Layers {

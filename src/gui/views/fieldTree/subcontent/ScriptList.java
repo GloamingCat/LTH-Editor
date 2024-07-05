@@ -11,14 +11,14 @@ import lui.dialog.LWindowFactory;
 
 public class ScriptList extends SimpleEditableList<Script> {
 	
-	public ScriptList(LContainer parent, int style) {
+	public ScriptList(LContainer parent, boolean allTriggers) {
 		super(parent);
 		type = Script.class;
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Script> createWindow(LWindow parent) {
-				return new ScriptDialog(parent, style);
+				return new ScriptDialog(parent, allTriggers ? 0 : ScriptDialog.ONLOAD | ScriptDialog.ONEXIT);
 			}
 		});
 	}

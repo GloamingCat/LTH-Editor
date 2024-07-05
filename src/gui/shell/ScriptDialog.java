@@ -22,7 +22,11 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	private LNodeSelector<Object> selSheet;
 	
 	public static final int OPTIONAL = 1;
-	public static final int TRIGGERS = 2;
+	public static final int ONLOAD = 2;
+	public static final int ONEXIT = 4;
+
+	private boolean onLoad = false;
+	private boolean onExit = false;
 	
 	public ScriptDialog(LWindow parent, int style) {
 		super(parent, 750, 450, style, Vocab.instance.SCRIPTSHELL);
@@ -68,7 +72,11 @@ public class ScriptDialog extends GObjectDialog<Script> {
 		grpOpts.setGridLayout(2);
 		grpOpts.getCellData().setExpand(true, true);
 
-		if ((style & TRIGGERS) > 0) {
+		// Triggers
+
+		onLoad = (style & ONLOAD) > 0;
+		onExit = (style & ONEXIT) > 0;
+		if (onLoad == onExit) {
 			new LLabel(grpOpts, Vocab.instance.TRIGGER, Tooltip.instance.SCRIPTTRIGGER);
 			CheckBoxPanel trigger = new CheckBoxPanel(grpOpts);
 
@@ -77,20 +85,29 @@ public class ScriptDialog extends GObjectDialog<Script> {
 			btnLoad.setHoverText(Tooltip.instance.ONLOAD);
 			addControl(btnLoad, "onLoad");
 
-			LCheckBox btnCollide = new LCheckBox(trigger);
-			btnCollide.setText(Vocab.instance.ONCOLLIDE);
-			btnCollide.setHoverText(Tooltip.instance.ONCOLLIDE);
-			addControl(btnCollide, "onCollide");
-
-			LCheckBox btnInteract = new LCheckBox(trigger);
-			btnInteract.setText(Vocab.instance.ONINTERACT);
-			btnInteract.setHoverText(Tooltip.instance.ONINTERACT);
-			addControl(btnInteract, "onInteract");
-
 			LCheckBox btnExit = new LCheckBox(trigger);
 			btnExit.setText(Vocab.instance.ONEXIT);
 			btnExit.setHoverText(Tooltip.instance.ONEXIT);
 			addControl(btnExit, "onExit");
+
+			if (!onLoad) {
+
+				LCheckBox btnCollide = new LCheckBox(trigger);
+				btnCollide.setText(Vocab.instance.ONCOLLIDE);
+				btnCollide.setHoverText(Tooltip.instance.ONCOLLIDE);
+				addControl(btnCollide, "onCollide");
+
+				LCheckBox btnInteract = new LCheckBox(trigger);
+				btnInteract.setText(Vocab.instance.ONINTERACT);
+				btnInteract.setHoverText(Tooltip.instance.ONINTERACT);
+				addControl(btnInteract, "onInteract");
+
+				LCheckBox btnDestroy = new LCheckBox(trigger);
+				btnDestroy.setText(Vocab.instance.ONDESTROY);
+				btnDestroy.setHoverText(Tooltip.instance.ONDESTROY);
+				addControl(btnDestroy, "onDestroy");
+
+			}
 		}
 
 		LLabel lblParam = new LLabel(grpOpts, Vocab.instance.PARAM, Tooltip.instance.PARAM);
@@ -147,6 +164,13 @@ public class ScriptDialog extends GObjectDialog<Script> {
 				script.name = "" + id;
 			else
 				script.name = "";
+		}
+		if (onLoad) {
+			script.onLoad = true;
+			script.onExit = onExit;
+		} else if (onExit) {
+			script.onLoad = false;
+			script.onExit = true;
 		}
 		return super.createResult(initial);
 	}

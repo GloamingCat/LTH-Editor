@@ -7,20 +7,23 @@ public class Script extends Data {
 	
 	public Script() { name = ""; }
 	
-	public Script(boolean load, boolean interact, boolean collide, boolean exit) {
+	public Script(boolean load, boolean interact, boolean collide, boolean exit, boolean destroy) {
 		name = "";
 		onLoad = load;
 		onInteract = interact;
 		onCollide = collide;
+		onExit = exit;
+		onDestroy = destroy;
 	}
 
-	public Script(String name, boolean load, boolean interact, boolean collide, boolean exit) {
-		this(load, interact, collide, exit);
+	public Script(String name, boolean load, boolean interact, boolean collide, boolean exit, boolean destroy) {
+		this(load, interact, collide, exit, destroy);
 		this.name = name;
 	}
 
-	public Script(String name, boolean blockPlayer) {
-		this(name, true, false, false, false);
+	// Load/Exit scripts
+	public Script(String name, boolean blockPlayer, boolean load) {
+		this(name, load, false, false, !load, false);
 		wait = true;
 		block = blockPlayer;
 	}
@@ -33,43 +36,35 @@ public class Script extends Data {
 	public boolean onInteract = false;
 	public boolean onCollide = false;
 	public boolean onExit = false;
+	public boolean onDestroy = false;
 
 	public String description = "";
+
+	protected final static String[] triggerNames = new String[] { "Load", "Collide", "Interact", "Exit", "Destroy" };
 
 	@Override
 	public String toString() {
 		if (name.isEmpty())
 			return "            ";
-		String s = "(";
-		if (onLoad) {
-			s += "Load";
-			if (onCollide)
-				s += ", Collide";
-			if (onInteract)
-				s += ", Interact";
-			if (onExit)
-				s += ", Exit";
-		} else if (onCollide) {
-			s += "Collide";
-			if (onInteract)
-				s += ", Interact";
-			if (onExit)
-				s += ", Exit";
-		} else if (onInteract) {
-			s += "Interact";
-			if (onExit)
-				s += ", Exit";
-		} else if (onExit)
-			s += "Exit";
+		String name = this.name;
 		if (description.isEmpty()) {
-			String name = this.name;
 			try {
 				int id = Integer.parseInt(name);
 				name = Project.current.events.getData().get(id).toString();
-			} catch (NumberFormatException ignored) {}
-			return name + " " + s + ")";
+			} catch (NumberFormatException | NullPointerException ignored) {}
 		} else
-			return description + " " + s + ")";
+			name = description;
+		StringBuilder s = new StringBuilder(name);
+		s.append(" (");
+		boolean[] triggers = new boolean[] { onLoad, onCollide, onInteract, onExit, onDestroy };
+		boolean first = true;
+		for (int i = 0; i < triggers.length; i++) {
+			if (triggers[i]) {
+				s.append(first ? triggerNames[i] : ", " + triggerNames[i]);
+				first = false;
+			}
+		}
+		return s.append(")").toString();
 	}
 	
 }

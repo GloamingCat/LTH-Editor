@@ -138,6 +138,9 @@ public class Tooltip {
             For vertically-linked hexagonal grid: if the vertical input is bigger than the horizontal input,
             the horizontal input should be at least two times the threshold for it to be considered diagonal.
             For rectangular/orthogonal grid: both conditions above are applied.""";
+
+	public String LOADSCRIPT = "The script that is automatically executed when the field is loaded.";
+	public String EXITSCRIPT = "The script that is automatically executed when the field is exited.";
 	
 	// Battle
 	public String BATTLE = "Battle settings.";
@@ -349,7 +352,7 @@ public class Tooltip {
             The time in frames until the character fades out and is removed from the field.
             To instantly remove it from the field after the character's 'KO' animation, set is as 0.
             To keep it in the field, set it as -1.""";
-	public String SCRIPTS = "The scripts that run when the character is initialized, collided with, or interacted with.";
+	public String CHARSCRIPTS = "The scripts that run when the character is initialized, destroyed, collided with, or interacted with.";
 	public String TILEX = "The displacement from the character's position, in tiles (coordinate x).";
 	public String TILEY = "The displacement from the character's position, in tiles (coordinate y).";
 	public String TILEH = "The height of this tile of the character, in tiles.";
@@ -497,6 +500,7 @@ public class Tooltip {
 		If it's an area skill, all members are affected.""";
 
 	public String TILERESET = "Reset to original tile.";
+	public String GRAPHICSRESET = "Reset animation, direction and transform.";
 	public String PROPRESET = "Reset general properties to the original configuration of the character.";
 	public String VARRESET = "Erase values of the character variables.";
 	public String SCRIPTRESET = "Erase state (including local variables) of all of the character's scripts.";
@@ -557,6 +561,7 @@ public class Tooltip {
 	public String ONCOLLIDE = "Run this script on collision with player or another character.";
 	public String ONINTERACT = "Run this script when player interacts with this character.";
 	public String ONEXIT = "Run this script when the field is about to be exited.";
+	public String ONDESTROY = "Run this script right before the character is destroyed.";
 	public String GLOBAL = """
 			When checked, the script is executed globally.
 			If unchecked, it stops running if the character is deleted or the field is unloaded.""";
@@ -612,8 +617,7 @@ public class Tooltip {
 	public String FIELDMAXHEIGHT = """
 			The maximum height of a tile.
 			This limits the number of tile layers.""";
-	public String LOADSCRIPT = "The script that is automatically executed when the field is loaded.";
-	public String EXITSCRIPT = "The script that is automatically executed when the field is unloaded.";
+	public String FIELDSCRIPTS = "The scripts that run when the field is loaded or exited.";
 	public String BGM = "The background music that is automatically played when the field is loaded.";
 	public String IMAGES = """
 			Foreground and background images.

@@ -294,6 +294,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             } else if ((style & ALL) > 0) {
                 // Log/Reset
                 addCheckBox(Vocab.instance.TILE, Tooltip.instance.TILERESET, "tile");
+                addCheckBox(Vocab.instance.GRAPHICS, Tooltip.instance.GRAPHICSRESET, "graphics");
                 addCheckBox(Vocab.instance.PROPERTIES, Tooltip.instance.PROPRESET, "props");
                 addCheckBox(Vocab.instance.SCRIPTS, Tooltip.instance.SCRIPTRESET, "scripts");
                 addCheckBox(Vocab.instance.VARIABLES, Tooltip.instance.VARRESET, "vars");

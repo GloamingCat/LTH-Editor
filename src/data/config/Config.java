@@ -34,7 +34,7 @@ public class Config {
 		public int dashSpeed = 200;
 		public int diagThreshold = 15;
 		public Position startPos = new Position();
-		public Script loadScript = new Script("LoadPlayer.lua", false);
+		public Script loadScript = new Script("LoadPlayer.lua", false, true);
 	}
 
 	public static class Battle {

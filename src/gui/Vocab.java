@@ -312,8 +312,7 @@ public class Vocab {
 	public String MENUEVENTS = "Menu";
 	public String FIELDMENU = "Field Menu";
 	public String SAVEMENU = "Save Menu";
-	public String SHOPMENU = "Shop Menu";
-	public String RECRUITMENU = "Recruit Menu";
+	public String EVENTID = "Event ID";
 	public String TEXT = "Text";
 	public String NAMEX = "Name X";
 	public String NAMEY = "Name Y";
@@ -373,6 +372,11 @@ public class Vocab {
 	public String GLOBAL = "Global";
 	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
+	public String ONLOAD = "On Load";
+	public String ONCOLLIDE = "On Collide";
+	public String ONINTERACT = "On Interact";
+	public String ONEXIT = "On Exit";
+	public String ONDESTROY = "On Destroy";
 	public String CONDITION = "Condition";
 	public String ACTIVE = "Active";
 	public String REPLACESCRIPTS = "Replace List";
@@ -447,12 +451,7 @@ public class Vocab {
 	public String CHARACTER = "Character";
 	public String ANIMATION = "Animation";
 	public String FRAME = "Frame";
-	public String ONLOAD = "On Load";
-	public String ONCOLLIDE = "On Collide";
-	public String ONINTERACT = "On Interact";
-	public String ONEXIT = "On Exit";
 	public String SPEED = "Speed";
-	public String EVENTID = "Event ID";
 
 	// Party
 	public String PLAYERPARTY = "Player Party";

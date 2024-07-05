@@ -2,7 +2,6 @@ package gui.views.database.content;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ScriptDialog;
 import gui.shell.database.CharTileDialog;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.NodeList;
@@ -132,19 +131,17 @@ public class CharacterTab extends DatabaseTab<GameCharacter> {
 
 		// Scripts
 
-		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS);
+		LFrame grpScripts = new LFrame(middle, Vocab.instance.SCRIPTS, Tooltip.instance.CHARSCRIPTS);
 		grpScripts.setFillLayout(true);
-		grpScripts.setHoverText(Tooltip.instance.SCRIPTS);
-		ScriptList lstScripts = new ScriptList(grpScripts, ScriptDialog.TRIGGERS);
+		ScriptList lstScripts = new ScriptList(grpScripts, true);
 		lstScripts.getCellData().setRequiredSize(0, 0);
 		lstScripts.addMenu(grpScripts);
 		addChild(lstScripts, "scripts");
 
 		// KO
 
-		LFrame grpKO = new LFrame(contentEditor.left, Vocab.instance.KOEFFECT);
+		LFrame grpKO = new LFrame(contentEditor.left, Vocab.instance.KOEFFECT, Tooltip.instance.KOEFFECT);
 		grpKO.setGridLayout(3);
-		grpKO.setHoverText(Tooltip.instance.KOEFFECT);
 		grpKO.getCellData().setExpand(true, false);
 		grpKO.getCellData().setAlignment(LFlags.FILL);
 

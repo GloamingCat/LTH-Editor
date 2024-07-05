@@ -1,6 +1,6 @@
 package gui.shell.field;
 
-import gui.shell.ScriptDialog;
+import gui.views.fieldTree.subcontent.ScriptList;
 import gui.widgets.*;
 import lui.container.LContainer;
 import lui.container.LFrame;
@@ -102,7 +102,7 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		LText txtOnLoad = new LText(grpGeneral, true);
 		txtOnLoad.getCellData().setExpand(true, false);
 		txtOnLoad.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton btnOnLoad = new ScriptButton(grpGeneral, ScriptDialog.OPTIONAL);
+		ScriptButton btnOnLoad = new ScriptButton(grpGeneral, true, true);
 		btnOnLoad.setPathWidget(txtOnLoad);
 		addControl(btnOnLoad, "loadScript");
 
@@ -110,9 +110,18 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		LText txtOnExit = new LText(grpGeneral, true);
 		txtOnExit.getCellData().setExpand(true, false);
 		txtOnExit.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton onExit = new ScriptButton(grpGeneral, ScriptDialog.OPTIONAL);
+		ScriptButton onExit = new ScriptButton(grpGeneral, true, false);
 		onExit.setPathWidget(txtOnExit);
 		addControl(onExit, "exitScript");
+
+		LFrame grpScripts = new LFrame(grpGeneral, Vocab.instance.SCRIPTS, Tooltip.instance.FIELDSCRIPTS);
+		grpScripts.setFillLayout(true);
+		grpScripts.getCellData().setSpread(3, 1);
+		grpScripts.getCellData().setExpand(true, true);
+		ScriptList lstScripts = new ScriptList(grpScripts, false);
+		lstScripts.getCellData().setRequiredSize(0, 0);
+		lstScripts.addMenu(grpScripts);
+		addChild(lstScripts, "scripts");
 
 		LPanel check = new CheckBoxPanel(grpGeneral);
 		check.getCellData().setSpread(3, 1);
@@ -182,6 +191,12 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		} else {
 			img.setImage((String) null);
 		}
+	}
+
+	@Override
+	public void open(Field.Prefs prefs) {
+		prefs.initialize();
+		super.open(prefs);
 	}
 
 	public static class TransitionEditor extends GDefaultObjectEditor<Transition> {

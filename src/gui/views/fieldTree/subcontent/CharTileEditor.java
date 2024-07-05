@@ -2,7 +2,6 @@ package gui.views.fieldTree.subcontent;
 
 import gui.Tooltip;
 import gui.Vocab;
-import gui.shell.ScriptDialog;
 import gui.widgets.CheckBoxPanel;
 import gui.widgets.DirectionCombo;
 import gui.widgets.IDButton;
@@ -205,7 +204,7 @@ public class CharTileEditor extends GDefaultObjectEditor<CharTile> {
 		grpScripts.getCellData().setSpread(3, 1);
 		grpScripts.getCellData().setExpand(true, true);
 
-		ScriptList lstScripts = new ScriptList(grpScripts, ScriptDialog.TRIGGERS);
+		ScriptList lstScripts = new ScriptList(grpScripts, true);
 		lstScripts.getCellData().setExpand(true, true);
 		addChild(lstScripts, "scripts");
 
