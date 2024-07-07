@@ -98,22 +98,6 @@ public class FieldPrefDialog extends GObjectDialog<Field.Prefs> {
 		btnBGM.setTextWidget(txtBGM);
 		addControl(btnBGM, "bgm");
 
-		new LLabel(grpGeneral, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
-		LText txtOnLoad = new LText(grpGeneral, true);
-		txtOnLoad.getCellData().setExpand(true, false);
-		txtOnLoad.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton btnOnLoad = new ScriptButton(grpGeneral, true, true);
-		btnOnLoad.setPathWidget(txtOnLoad);
-		addControl(btnOnLoad, "loadScript");
-
-		new LLabel(grpGeneral, Vocab.instance.EXITSCRIPT, Tooltip.instance.EXITSCRIPT);
-		LText txtOnExit = new LText(grpGeneral, true);
-		txtOnExit.getCellData().setExpand(true, false);
-		txtOnExit.getCellData().setAlignment(LFlags.MIDDLE);
-		ScriptButton onExit = new ScriptButton(grpGeneral, true, false);
-		onExit.setPathWidget(txtOnExit);
-		addControl(onExit, "exitScript");
-
 		LFrame grpScripts = new LFrame(grpGeneral, Vocab.instance.SCRIPTS, Tooltip.instance.FIELDSCRIPTS);
 		grpScripts.setFillLayout(true);
 		grpScripts.getCellData().setSpread(3, 1);

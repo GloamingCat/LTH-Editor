@@ -305,9 +305,10 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             }
             if ((style & VALUE) > 0) {
                 // Props
-                addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "prop",
+                addCombo(Vocab.instance.TYPE, Tooltip.instance.PROPTYPE, "prop",
                     new String[] { Vocab.instance.PASSABLE, Vocab.instance.ACTIVE, Vocab.instance.SPEED,
-                    Vocab.instance.FIXANIM, Vocab.instance.FIXDIR }, 0 );
+                            Vocab.instance.FIXANIM, Vocab.instance.FIXDIR,
+                            Vocab.instance.FACEFIRST, Vocab.instance.APPROACHFIRST }, 0 );
                 addTextField(Vocab.instance.VALUE, Tooltip.instance.VALUE, "value");
             } else if ((style & (VISIBLE)) > 0) {
                 // Setup Shadow/Char/Image

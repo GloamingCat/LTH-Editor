@@ -498,12 +498,12 @@ public class Tooltip {
 		The target of the skill. This should be the key of the unit in the specified troop.
 		When empty, then a target selection screen will be opened if the skill is single-target.
 		If it's an area skill, all members are affected.""";
-
 	public String TILERESET = "Reset to original tile.";
 	public String GRAPHICSRESET = "Reset animation, direction and transform.";
 	public String PROPRESET = "Reset general properties to the original configuration of the character.";
 	public String VARRESET = "Erase values of the character variables.";
 	public String SCRIPTRESET = "Erase state (including local variables) of all of the character's scripts.";
+	public String PROPTYPE = "The property to change.";
 
 	//endregion
 	
@@ -556,6 +556,11 @@ public class Tooltip {
             Like tags, the value of each parameters is interpreted as a JSON value.
             If the JSON code is not valid, it is interpreted as a raw string.""";
 	public String SCRIPTTRIGGER = "When the script will be executed.";
+	public String SCRIPTSCOPE = """
+			The script's executing is dependent on the existence of its scope.
+			Object scripts will stop when the object is deleted.
+			Field scripts will stop when the field is exited (for field scripts, same as object).
+			Global scripts will stop when the game is reset.""";
 	public String SCRIPTSYNC = "Options to synchronize the script with other game elements.";
 	public String ONLOAD = "Run this script on initialization.";
 	public String ONCOLLIDE = "Run this script on collision with player or another character.";

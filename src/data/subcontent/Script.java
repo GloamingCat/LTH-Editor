@@ -1,13 +1,14 @@
 package data.subcontent;
 
 import data.Data;
+import lui.base.data.LInitializable;
 import project.Project;
 
-public class Script extends Data {
+public class Script extends Data implements LInitializable {
 	
 	public Script() { name = ""; }
 	
-	public Script(boolean load, boolean interact, boolean collide, boolean exit, boolean destroy) {
+	public Script(int scope, boolean load, boolean interact, boolean collide, boolean exit, boolean destroy) {
 		name = "";
 		onLoad = load;
 		onInteract = interact;
@@ -16,19 +17,29 @@ public class Script extends Data {
 		onDestroy = destroy;
 	}
 
-	public Script(String name, boolean load, boolean interact, boolean collide, boolean exit, boolean destroy) {
-		this(load, interact, collide, exit, destroy);
+	public Script(String name, int scope, boolean load, boolean interact, boolean collide, boolean exit, boolean destroy) {
+		this(scope, load, interact, collide, exit, destroy);
 		this.name = name;
 	}
 
 	// Load/Exit scripts
-	public Script(String name, boolean blockPlayer, boolean load) {
-		this(name, load, false, false, !load, false);
+	public Script(String name, int scope, boolean blockPlayer, boolean load) {
+		this(name, scope, load, false, false, !load, false);
 		wait = true;
 		block = blockPlayer;
 	}
 
-	public boolean global = false;
+	public void initialize() {
+		if (global != null) {
+			if (global)
+				scope = 2;
+		}
+		global = null;
+	}
+
+	public Boolean global = false;
+	public int scope = 0;
+
 	public boolean block = true;
 	public boolean wait = true;
 	

@@ -65,7 +65,7 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		LFrame scaleType = new LFrame(this, Vocab.instance.SCALETYPE);
 		scaleType.setHoverText(Tooltip.instance.SCALETYPE);
 		scaleType.setGridLayout(2);
-		scaleType.getCellData().setExpand(true, true);
+		scaleType.getCellData().setExpand(true, false);
 		scaleType.getCellData().setSpread(3, 1);
 
 		String[] scaleTypes = new String[] {

@@ -20,8 +20,8 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	private LViewFolder viewFolder;
 	private LFileSelector selFile;
 	private LNodeSelector<Object> selSheet;
-	
-	public static final int OPTIONAL = 1;
+
+    public static final int OPTIONAL = 1;
 	public static final int ONLOAD = 2;
 	public static final int ONEXIT = 4;
 
@@ -77,6 +77,12 @@ public class ScriptDialog extends GObjectDialog<Script> {
 		onLoad = (style & ONLOAD) > 0;
 		onExit = (style & ONEXIT) > 0;
 		if (onLoad == onExit) {
+
+			new LLabel(grpOpts, Vocab.instance.SCOPE, Tooltip.instance.SCRIPTSCOPE);
+            LCombo cmbScope = new LCombo(grpOpts);
+			cmbScope.getCellData().setExpand(true, false);
+			cmbScope.setItems(new String[]{ Vocab.instance.OBJECT, Vocab.instance.FIELD, Vocab.instance.GLOBAL });
+
 			new LLabel(grpOpts, Vocab.instance.TRIGGER, Tooltip.instance.SCRIPTTRIGGER);
 			CheckBoxPanel trigger = new CheckBoxPanel(grpOpts);
 
@@ -119,11 +125,6 @@ public class ScriptDialog extends GObjectDialog<Script> {
 		new LLabel(grpOpts, Vocab.instance.SYNC, Tooltip.instance.SCRIPTSYNC);
 		CheckBoxPanel sync = new CheckBoxPanel(grpOpts);
 
-		LCheckBox btnGlobal = new LCheckBox(sync);
-		btnGlobal.setText(Vocab.instance.GLOBAL);
-		btnGlobal.setHoverText(Tooltip.instance.GLOBAL);
-		addControl(btnGlobal, "global");
-
 		LCheckBox btnWait = new LCheckBox(sync);
 		btnWait.setText(Vocab.instance.WAIT);
 		btnWait.setHoverText(Tooltip.instance.WAIT);
@@ -138,6 +139,7 @@ public class ScriptDialog extends GObjectDialog<Script> {
 	}
 	
 	public void open(Script initial) {
+		initial.initialize();
 		selSheet.setCollection(Project.current.events.getTree());
 		try {
 			int id = Integer.parseInt(initial.name);

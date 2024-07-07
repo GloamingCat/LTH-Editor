@@ -205,7 +205,7 @@ public class Vocab {
 	public String CONTEXT = "Context";
 	public String ALWAYS = "Always";
 	public String BATTLEONLY = "Battle Only";
-	public String FIELDONLY = "Field Only";
+	public String FIELDONLY = "Menu Only";
 	public String COSTS = "Costs";
 	public String COST = "Skill use cost";
 	public String USECONDITION = "Use Condition";
@@ -244,9 +244,11 @@ public class Vocab {
 	public String PORTRAITS = "Portraits";
 	public String KOEFFECT = "KO Effect";
 	public String APPLYTRANSFORM = "Apply transform";
-	public String FIXANIM = "Fixed Animation";
-	public String FIXDIR = "Fixed Direction";
-	
+	public String FIXANIM = "Fixed mnimation";
+	public String FIXDIR = "Fixed direction";
+	public String FACEFIRST = "Face to interact";
+	public String APPROACHFIRST = "Approach to interact";
+
 	// Job
 	public String ATTACKSKILL = "Attack";
 	public String BUILD = "Build";
@@ -369,7 +371,10 @@ public class Vocab {
 	public String PARAM = "Parameters";
 	public String SYNC = "Synchronization";
 	public String TRIGGER = "Triggers";
+	public String SCOPE = "Scope";
 	public String GLOBAL = "Global";
+	public String FIELD = "Field";
+	public String OBJECT = "Object";
 	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
 	public String ONLOAD = "On Load";

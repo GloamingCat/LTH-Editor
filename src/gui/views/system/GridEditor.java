@@ -43,7 +43,7 @@ public class GridEditor extends GDefaultObjectEditor<Config.Grid> {
 		tile.setHoverText(Tooltip.instance.TILESHAPE);
 		tile.setGridLayout(4);
 		tile.getCellData().setSpread(2, 1);
-		tile.getCellData().setExpand(true, true);
+		tile.getCellData().setExpand(true, false);
 
 		new LLabel(tile, Vocab.instance.TILEWIDTH, Tooltip.instance.TILEWIDTH).getCellData().setTargetSize(LPrefs.LABELWIDTH / 2, -1);
 		LSpinner spnTileW = new LSpinner(tile);
