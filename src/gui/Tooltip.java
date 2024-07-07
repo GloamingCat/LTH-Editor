@@ -714,13 +714,15 @@ public class Tooltip {
 			If true, the destination tile will the added to this object's original tile.""";
 	public String PATHLIMIT = """
 			If greater then zero, the path to the destination will be limited by this number of steps.
-			If -1, no path is computed, and the character walks straight to the destination.""";
+			If -1, there's no limit""";
 	public String DISTANCE = """
-			The number of tiles the character will walk in the given direction.""";
+			The number of tiles the character will walk towards the destination.""";
 	public String DIRREF = """
 			If non-empty, the angle will be incremented with this object's direction.
 			Throws an error if no object/character with this key is found in the current field.
 			Set as "self" (no quotes) to refer to the current character.""";
+	public String INCLUDEOBSTACLES = """
+			When unchecked, only passable tiles will be considered.""";
 
 	// Transition
 	public String TRANSITIONS = "List of transitions to other fields.";

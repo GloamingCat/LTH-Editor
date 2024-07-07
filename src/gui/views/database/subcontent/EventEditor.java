@@ -110,11 +110,7 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
                 EventArgsDialog.NAME);
         new EventButton(flowEvents, "Jump To Label", "jumpTo",
                 EventArgsDialog.SKIP | EventArgsDialog.NAME);
-        new EventButton(flowEvents, "Skip To Event", "setEvent",
-                EventArgsDialog.SKIP);
-        new EventButton(flowEvents, "Skip Events", "skipEvents",
-                EventArgsDialog.SKIP | EventArgsDialog.VALUE);
-        new EventButton(flowEvents, "Wait", "wait",
+        new EventButton(flowEvents, "Wait", "waitFrames",
                 EventArgsDialog.DURATION);
 
         LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
@@ -141,23 +137,27 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
         new EventButton(charEvents, "Set Property", "setCharProperty",
                 EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VALUE);
         new EventButton(charEvents, "Log Properties", "logProperties",
-                EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.ALL);
+                EventArgsDialog.KEY | EventArgsDialog.PROP);
         new EventButton(charEvents, "Character Visibility", "setCharVisibility",
                 EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VISIBLE | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Shadow Visibility", "setShadowVisibility",
                 EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.VISIBLE | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Delete Character", "deleteChar",
-                EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.WAIT);
-        new EventButton(charEvents, "Reset Character", "resetChar",
                 EventArgsDialog.KEY | EventArgsDialog.PROP | EventArgsDialog.ALL);
+        new EventButton(charEvents, "Reset Character", "resetChar",
+                EventArgsDialog.KEY | EventArgsDialog.PROP);
         new EventButton(charEvents, "Turn to Tile", "turnCharTile",
                 EventArgsDialog.KEY | EventArgsDialog.POS);
         new EventButton(charEvents, "Turn to Direction", "turnCharDir",
                 EventArgsDialog.KEY | EventArgsDialog.DIR);
         new EventButton(charEvents, "Move to Tile", "moveCharTile",
+                EventArgsDialog.KEY | EventArgsDialog.POS | EventArgsDialog.HEIGHT | EventArgsDialog.SPEED | EventArgsDialog.WAIT);
+        new EventButton(charEvents, "Move to Tile (Path)", "moveCharPath",
                 EventArgsDialog.KEY | EventArgsDialog.POS | EventArgsDialog.HEIGHT | EventArgsDialog.VALUE | EventArgsDialog.SPEED | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Move in Direction", "moveCharDir",
                 EventArgsDialog.KEY | EventArgsDialog.DIR | EventArgsDialog.VALUE | EventArgsDialog.SPEED | EventArgsDialog.WAIT);
+        new EventButton(charEvents, "Move Randomly", "moveCharRandom",
+                EventArgsDialog.KEY | EventArgsDialog.RANDOM | EventArgsDialog.SPEED | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Character Jump", "jumpChar",
                 EventArgsDialog.KEY | EventArgsDialog.HEIGHT | EventArgsDialog.SPEED | EventArgsDialog.DURATION | EventArgsDialog.WAIT);
         new EventButton(charEvents, "Play Animation", "playCharAnim",

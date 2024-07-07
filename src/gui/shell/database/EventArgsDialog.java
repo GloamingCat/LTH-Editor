@@ -46,8 +46,9 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int FORMATION = 1048576;
     public static final int VALUE = 2097152;
     public static final int HEIGHT = 4194304;
+    public static final int RANDOM = 8388608;
 
-    //public static final int FLAG = 8388608;
+    //public static final int FLAG = 16777216;
 
     //public static final int FLAG = 1073741824;
 
@@ -68,9 +69,9 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         if (style == NAME) {
             // Set label
             addTextField(Vocab.instance.NAME, Tooltip.instance.LABEL, "name");
-            LSpinner spn = addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", false);
-            spn.setMinimum(-1);
-            spn.setValue(-1);
+            //LSpinner spn = addSpinner(Vocab.instance.EVENTID, Tooltip.instance.EVENTID, "index", false);
+            //spn.setMinimum(-1);
+            //spn.setValue(-1);
         } else if (style == (VAR | VALUE)) {
             // Set Variable
             addTextField(Vocab.instance.KEY, Tooltip.instance.VARIABLE, "key");
@@ -256,8 +257,10 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 addSpinner(Vocab.instance.HEIGHT, Tooltip.instance.POSITIONH, "h", false);
             if ((style & KEY) > 0)
                 addTextField(Vocab.instance.OBJREF, Tooltip.instance.TILEREF, "other");
-            if ((style & VALUE) > 0)
-                addSpinner(Vocab.instance.PATHLIMIT, Tooltip.instance.PATHLIMIT, "limit", true);
+            if ((style & VALUE) > 0) {
+                addSpinner(Vocab.instance.VISION, Tooltip.instance.PATHLIMIT, "vision", true);
+                addSpinner(Vocab.instance.DISTANCE, Tooltip.instance.DISTANCE, "distance", true);
+            }
             if ((style & SPEED) > 0)
                 addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
         } else if ((style & DIR) > 0) {
@@ -267,6 +270,11 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                 addTextField(Vocab.instance.OBJREF, Tooltip.instance.DIRREF, "other");
             if ((style & VALUE) > 0)
                 addSpinner(Vocab.instance.DISTANCE, Tooltip.instance.DISTANCE, "distance", false);
+            if ((style & SPEED) > 0)
+                addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
+        } else if ((style & RANDOM) > 0) {
+             if ((style & KEY) > 0)
+                addCheckBox(Vocab.instance.OBSTACLES, Tooltip.instance.INCLUDEOBSTACLES, "blocked");
             if ((style & SPEED) > 0)
                 addSpinner(Vocab.instance.SPEED, Tooltip.instance.SPEED, "speed", true);
         } else if ((style & HEIGHT) > 0) {
@@ -285,28 +293,32 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             addCheckBox(Vocab.instance.VISIBLE, Tooltip.instance.VISIBLE, "visible");
 
         if ((style & PROP) > 0) {
+            if ((style & ALL) > 0) {
+                // Delete Char
+                addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
+                addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
+                addSpinner(Vocab.instance.TIME, Tooltip.instance.WAITTIME, "time", false);
+                addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
+                new LLabel(contentEditor, 1, 1);
+                LLabel lblReset = new LLabel(contentEditor, Vocab.instance.RESET, Tooltip.instance.RESET);
+                lblReset.getCellData().setSpread(2, 1);
+            }
             if ((style & VALUE) > 0) {
                 // Props
                 addCombo(Vocab.instance.TYPE, Tooltip.instance.KEY, "prop",
                     new String[] { Vocab.instance.PASSABLE, Vocab.instance.ACTIVE, Vocab.instance.SPEED,
                     Vocab.instance.FIXANIM, Vocab.instance.FIXDIR }, 0 );
                 addTextField(Vocab.instance.VALUE, Tooltip.instance.VALUE, "value");
-            } else if ((style & ALL) > 0) {
-                // Log/Reset
+            } else if ((style & (VISIBLE)) > 0) {
+                // Setup Shadow/Char/Image
+                addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
+            } else {
+                // Log/Reset/Delete
                 addCheckBox(Vocab.instance.TILE, Tooltip.instance.TILERESET, "tile");
                 addCheckBox(Vocab.instance.GRAPHICS, Tooltip.instance.GRAPHICSRESET, "graphics");
                 addCheckBox(Vocab.instance.PROPERTIES, Tooltip.instance.PROPRESET, "props");
                 addCheckBox(Vocab.instance.SCRIPTS, Tooltip.instance.SCRIPTRESET, "scripts");
                 addCheckBox(Vocab.instance.VARIABLES, Tooltip.instance.VARRESET, "vars");
-            } else if ((style & (VISIBLE)) > 0) {
-                // Setup Shadow/Char/Image
-                addSpinner(Vocab.instance.FADEOUT, Tooltip.instance.FADEOUT, "fade", false);
-            } else {
-                // Delete Char
-                addCheckBox(Vocab.instance.PERSISTENT, Tooltip.instance.CHARPERSISTENT, "permanent");
-                addCheckBox(Vocab.instance.OPTIONAL, Tooltip.instance.CHAROPTIONAL, "optional");
-                addCheckBox(Vocab.instance.RESET, Tooltip.instance.RESET, "reset");
-                addSpinner(Vocab.instance.TIME, Tooltip.instance.WAITTIME, "time", false);
             }
         }
 
@@ -338,12 +350,16 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         for (Tag p : initial) {
             if (controls.containsKey(p.key)) {
                 LControlWidget<?> cw = controls.get(p.key);
-                if (cw instanceof LText) {
-                    cw.setValue(p.value);
-                } else if (cw instanceof LCheckBox) {
-                    cw.setValue(Boolean.parseBoolean(p.value));
-                } else {
-                    cw.setValue(Integer.parseInt(p.value));
+                try {
+                    if (cw instanceof LText) {
+                        cw.setValue(p.value);
+                    } else if (cw instanceof LCheckBox) {
+                        cw.setValue(Boolean.parseBoolean(p.value));
+                    } else {
+                        cw.setValue(Integer.parseInt(p.value));
+                    }
+                } catch (IllegalArgumentException ignored) {
+                    cw.setEnabled(false);
                 }
             } else if (editors.containsKey(p.key)) {
                 LObjectEditor<?> oe = editors.get(p.key);
@@ -365,6 +381,8 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         LDataList<Tag> params = new LDataList<>();
         for (var entry : controls.entrySet()) {
             LControlWidget<?> cw = entry.getValue();
+            if (!cw.isEnabled())
+                continue;
             Object value = entry.getValue().getValue();
             if (value == null)
                 continue;

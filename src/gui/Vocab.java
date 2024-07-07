@@ -470,7 +470,7 @@ public class Vocab {
 	public String POSITIONH = "H";
 	public String OBJREF = "To Object";
 	public String ORIGIN = "Origin";
-	public String PATHLIMIT = "Path Limit";
+	public String VISION = "Vision";
 	public String DISTANCE = "Distance";
 	public String TILE = "Tile";
 
