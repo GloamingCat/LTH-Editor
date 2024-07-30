@@ -1,9 +1,11 @@
 package gui.shell.database;
 
+import data.subcontent.Script;
 import data.subcontent.Tag;
 import gson.GGlobals;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.views.ScriptEditor;
 import gui.views.database.subcontent.PropertyList;
 import gui.views.fieldTree.PositionEditor;
 import gui.widgets.AudioButton;
@@ -19,6 +21,7 @@ import lui.gson.GObjectDialog;
 import lui.widget.*;
 import project.Project;
 
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
@@ -34,7 +37,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int DIR = 256;
     public static final int WAIT = 512;
     public static final int PROP = 1024;
-    public static final int SKIP = 2048;
+    public static final int FLOW = 2048;
     public static final int SPEED = 4096;
     public static final int DURATION = 8192;
     public static final int VAR = 16384;
@@ -47,8 +50,9 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
     public static final int VALUE = 2097152;
     public static final int HEIGHT = 4194304;
     public static final int RANDOM = 8388608;
+    //public static final int SCRIPT = 16777216;
 
-    //public static final int FLAG = 16777216;
+    //public static final int FLAG = 33554432;
 
     //public static final int FLAG = 1073741824;
 
@@ -76,8 +80,15 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             // Set Variable
             addTextField(Vocab.instance.KEY, Tooltip.instance.VARIABLE, "key");
             addTextField(Vocab.instance.VALUE, Tooltip.instance.VARVALUE, "value");
-        } else if ((style & SKIP) > 0) {
-            if ((style & NAME) > 0)
+        } else if ((style & FLOW) > 0) {
+            if ((style & KEY) > 0) {
+                contentEditor.setFillLayout(true);
+                ScriptEditor script = new ScriptEditor(contentEditor, ScriptEditor.ONLOAD, false);
+                script.onVisible();
+                script.setObject(new Script());
+                editors.put("", script);
+                contentEditor.addChild((LView) script);
+            } else if ((style & NAME) > 0)
                 // Go to label
                 addTextField(Vocab.instance.NAME, Tooltip.instance.LABEL, "name");
             else if ((style & VALUE) > 0)
@@ -144,9 +155,6 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                         y = addSpinner(Vocab.instance.NAMEY, Tooltip.instance.NAMEPOS, "nameY", false);
                         x.setMinimum(Integer.MIN_VALUE);
                         y.setMinimum(Integer.MIN_VALUE);
-                    } else {
-                        // Title/message
-                        addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
                     }
                 }
             }
@@ -200,7 +208,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
                     addNodeSelector(Vocab.instance.EQUIPITEM, Tooltip.instance.EQUIPITEM, "id",
                         Project.current.items.getTree(), 0);
                 }
-                LSpinner spn = addSpinner(Vocab.instance.VALUE, Tooltip.instance.VALUE, "fade", false);
+                LSpinner spn = addSpinner(Vocab.instance.VALUE, Tooltip.instance.VALUE, "value", false);
                 spn.setMinimum(Integer.MIN_VALUE);
             } else if ((style & SKILL) > 0) {
                 // Use Skill
@@ -326,7 +334,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
         if ((style & DURATION) > 0)
             addSpinner(Vocab.instance.DURATION, Tooltip.instance.WAITTIME, "time", false);
         if ((style & WAIT) > 0)
-            addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait");
+            addCheckBox(Vocab.instance.WAIT, Tooltip.instance.WAIT, "wait").setValue(true);
 
     }
 
@@ -379,7 +387,7 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
 
     @Override
     public LDataList<Tag> createResult(LDataList<Tag> initial) {
-        LDataList<Tag> params = new LDataList<>();
+        HashMap<String, String> params = Tag.toMap(initial);
         for (var entry : controls.entrySet()) {
             LControlWidget<?> cw = entry.getValue();
             if (!cw.isEnabled())
@@ -388,36 +396,28 @@ public class EventArgsDialog extends GObjectDialog<LDataList<Tag>> {
             if (value == null)
                 continue;
             if (entry.getKey().isEmpty()) {
-                for (var field : LObjectEditor.getFieldValues(value).entrySet()) {
-                    Tag p = new Tag(field.getKey(), GGlobals.gson.toJson(field.getValue()));
-                    params.add(p);
-                }
+                for (var field : LObjectEditor.getFieldValues(value).entrySet())
+                    params.put(field.getKey(), GGlobals.gson.toJson(field.getValue()));
             } else {
-                Tag p = new Tag(entry.getKey(), "");
                 if (value instanceof String str)
-                    p.value = str;
+                    params.put(entry.getKey(), str);
                 else
-                    p.value = value.toString();
-                params.add(p);
+                    params.put(entry.getKey(), value.toString());
             }
         }
         for (var entry : editors.entrySet()) {
             LObjectEditor<?> oe = entry.getValue();
             oe.saveObjectValues();
             if (entry.getKey().isEmpty()) {
-                for (var field : oe.getFieldValues().entrySet()) {
-                    Tag p = new Tag(field.getKey(), GGlobals.gson.toJson(field.getValue()));
-                    params.add(p);
-                }
+                for (var field : oe.getFieldValues().entrySet())
+                    params.put(field.getKey(), GGlobals.gson.toJson(field.getValue()));
             } else {
                 String str = oe.encodeObject();
-                if (str != null) {
-                    Tag p = new Tag(entry.getKey(), oe.encodeObject());
-                    params.add(p);
-                }
+                if (str != null)
+                    params.put(entry.getKey(), oe.encodeObject());
             }
         }
-        return params;
+        return Tag.toTags(params);
     }
 
     //////////////////////////////////////////////////

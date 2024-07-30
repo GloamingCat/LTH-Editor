@@ -16,7 +16,7 @@ import lui.graphics.LColor;
 import lui.widget.*;
 
 import data.EventSheet;
-import data.EventSheet.Event;
+import data.EventSheet.Command;
 import project.Project;
 
 public class EventTab extends DatabaseTab<EventSheet> {
@@ -38,6 +38,8 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		contentEditor.left.getCellData().setAlignment(LFlags.FILL);
 		contentEditor.right.getCellData().setExpand(true, false);
 		contentEditor.right.getCellData().setAlignment(LFlags.FILL);
+		contentEditor.grpTags.setTitle(Vocab.instance.PARAM);
+		contentEditor.grpTags.setHoverText(Tooltip.instance.PARAM);
 
 		LLabel lblDesc = new LLabel(contentEditor.grpGeneral, LFlags.TOP, Vocab.instance.DESCRIPTION,
 				Tooltip.instance.DESCRIPTION);
@@ -75,11 +77,11 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		return Project.current.events;
 	}
 
-	private class EventList extends SimpleEditableList<Event> {
+	private class EventList extends SimpleEditableList<Command> {
 
 		public EventList(LContainer parent) {
 			super(parent);
-			type = Event.class;
+			type = Command.class;
 			setIncludeID(true);
 			getCollectionWidget().setEditEnabled(false);
 		}
@@ -88,34 +90,34 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		protected void createContent(int style) {
 			list = new LEditableList<>(this, style == 1) {
 				@Override
-				public LEditEvent<Event> edit(LPath path) {
+				public LEditEvent<Command> edit(LPath path) {
 					return onEditItem(path);
 				}
 				@Override
-				public Event toObject(LPath path) {
+				public Command toObject(LPath path) {
 					if (path == null || path.index == -1)
 						return null;
 					return EventList.this.getDataCollection().get(path.index);
 				}
 				@Override
-				public LDataTree<Event> emptyNode() {
+				public LDataTree<Command> emptyNode() {
 					return new LDataTree<>(createNewElement());
 				}
 				@Override
-				public LDataTree<Event> duplicateNode(LDataTree<Event> node) {
-					Event data = duplicateElement(node.data);
+				public LDataTree<Command> duplicateNode(LDataTree<Command> node) {
+					Command data = duplicateElement(node.data);
 					return new LDataTree<> (data);
 				}
 				@Override
-				public LDataTree<Event> toNode(LPath path) {
+				public LDataTree<Command> toNode(LPath path) {
 					return EventList.this.getDataCollection().toTree().getNode(path);
 				}
 				@Override
-				protected String encodeNode(LDataTree<Event> node) {
+				protected String encodeNode(LDataTree<Command> node) {
 					return EventList.this.encodeElement(node.data);
 				}
 				@Override
-				protected LDataTree<Event> decodeNode(String str) {
+				protected LDataTree<Command> decodeNode(String str) {
 					return new LDataTree<>(EventList.this.decodeElement(str));
 				}
 				@Override
@@ -123,11 +125,11 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					return true;
 				}
 				@Override
-				public boolean isDataChecked(Event data) {
+				public boolean isDataChecked(Command data) {
 					return EventList.this.isChecked(data);
 				}
 				@Override
-				public LColor dataColor(Event data) {
+				public LColor dataColor(Command data) {
 					return eventEditor.getEventColor(data);
 				}
 

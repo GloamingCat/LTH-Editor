@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 
 public class DatabaseContentEditor<T> extends GDefaultObjectEditor<T> {
     public LFrame grpGeneral;
-    protected LFrame grpTags;
+    public LFrame grpTags;
     protected LLabel lblID;
     protected LLabel lblKey;
     protected LText txtKey;

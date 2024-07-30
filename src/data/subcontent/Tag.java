@@ -1,5 +1,11 @@
 package data.subcontent;
 
+import lui.base.data.LDataList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Tag implements Cloneable {
 
 	public String key = "key";
@@ -40,4 +46,21 @@ public class Tag implements Cloneable {
             throw new AssertionError();
         }
     }
+
+	public static HashMap<String, String> toMap(ArrayList<Tag> tags) {
+		HashMap<String, String> map = new HashMap<>();
+		for (Tag tag : tags) {
+			map.put(tag.key, tag.value);
+		}
+		return map;
+	}
+
+	public static LDataList<Tag> toTags(HashMap<String, String> map) {
+		LDataList<Tag> tags = new LDataList<>();
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			tags.add(new Tag(entry.getKey(), entry.getValue()));
+		}
+		return tags;
+	}
+
 }

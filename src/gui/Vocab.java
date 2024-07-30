@@ -369,6 +369,7 @@ public class Vocab {
 
 	// Script / Rule
 	public String PARAM = "Parameters";
+	public String ARGUMENTS = "Arguments";
 	public String SYNC = "Synchronization";
 	public String TRIGGER = "Triggers";
 	public String SCOPE = "Scope";

@@ -1,11 +1,7 @@
 package gui.views.database.subcontent;
 
 import data.Data;
-import data.subcontent.Tag;
-import gui.Vocab;
 import gui.shell.DataDialog;
-import gui.shell.TagDialog;
-import gui.widgets.DirectionCombo;
 import gui.widgets.SimpleEditableList;
 import lui.container.LContainer;
 import lui.dialog.LObjectDialog;

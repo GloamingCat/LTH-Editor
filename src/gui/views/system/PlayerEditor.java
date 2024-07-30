@@ -52,7 +52,7 @@ public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
 		new LLabel(this, Vocab.instance.LOADSCRIPT, Tooltip.instance.LOADSCRIPT);
 		LText txtScript = new LText(this, true);
 		txtScript.getCellData().setExpand(true, false);
-		ScriptButton btnScript = new ScriptButton(this, false, true);
+		ScriptButton btnScript = new ScriptButton(this, false, true, false);
 		btnScript.setPathWidget(txtScript);
 		addControl(btnScript, "loadScript");
 

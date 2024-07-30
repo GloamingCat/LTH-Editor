@@ -1,6 +1,7 @@
 package gui.views.fieldTree.subcontent;
 
 import gui.shell.ScriptDialog;
+import gui.views.ScriptEditor;
 import gui.widgets.SimpleEditableList;
 
 import data.subcontent.Script;
@@ -17,10 +18,11 @@ public class ScriptList extends SimpleEditableList<Script> {
 		super(parent);
 		type = Script.class;
 		setIncludeID(false);
+		final int style = allTriggers ? 0 : ScriptEditor.ONLOAD | ScriptEditor.ONEXIT;
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Script> createWindow(LWindow parent) {
-				return new ScriptDialog(parent, allTriggers ? 0 : ScriptDialog.ONLOAD | ScriptDialog.ONEXIT);
+				return new ScriptDialog(parent, ScriptEditor.SCOPE | style);
 			}
 		});
 		getCollectionWidget().addInsertListener(new LCollectionListener<>() {

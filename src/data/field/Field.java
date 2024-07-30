@@ -34,7 +34,7 @@ public class Field implements LInitializable {
 
 	public static class Prefs extends Data implements LInitializable {
 		
-		public boolean persistent = false;
+		public boolean persistent = true;
 		public int defaultRegion = -1;
 		public int maxHeight = 4;
 		public AudioPlay bgm = new AudioPlay();

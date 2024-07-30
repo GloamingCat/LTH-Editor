@@ -1,6 +1,7 @@
 package gui.widgets;
 
 import gui.shell.ScriptDialog;
+import gui.views.ScriptEditor;
 import lui.container.LContainer;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
@@ -16,10 +17,12 @@ public class ScriptButton extends LObjectButton<Script> {
 	
 	private LText pathText;
 
-	public ScriptButton(LContainer parent, boolean optional, boolean onLoad) {
+	public ScriptButton(LContainer parent, boolean optional, boolean onLoad, boolean scope) {
 		super(parent);
-		final int trigger = onLoad ? ScriptDialog.ONLOAD : ScriptDialog.ONEXIT;
-		final int style = optional ? trigger | ScriptDialog.OPTIONAL : trigger;
+		int trigger = onLoad ? ScriptEditor.ONLOAD : ScriptEditor.ONEXIT;
+		if (scope)
+			trigger = trigger | ScriptEditor.SCOPE;
+		final int style = optional ? trigger | ScriptEditor.OPTIONAL : trigger;
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Script> createWindow(LWindow parent) {

@@ -555,12 +555,17 @@ public class Tooltip {
             Parameters to the script's execution.
             Like tags, the value of each parameters is interpreted as a JSON value.
             If the JSON code is not valid, it is interpreted as a raw string.""";
+	public String ARGUMENTS = """
+            Arguments passed to the command.
+            Like tags, the value of each parameters is interpreted as a JSON value.
+            If the JSON code is not valid, it is interpreted as a raw string.""";
 	public String SCRIPTTRIGGER = "When the script will be executed.";
 	public String SCRIPTSCOPE = """
 			The script's executing is dependent on the existence of its scope.
 			Object scripts will stop when the object is deleted.
 			Field scripts will stop when the field is exited (for field scripts, same as object).
-			Global scripts will stop when the game is reset.""";
+			Global scripts will stop when the game is reset.
+			Current is the scope of the current fiber.""";
 	public String SCRIPTSYNC = "Options to synchronize the script with other game elements.";
 	public String ONLOAD = "Run this script on initialization.";
 	public String ONCOLLIDE = "Run this script on collision with player or another character.";

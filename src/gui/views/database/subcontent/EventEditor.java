@@ -1,6 +1,6 @@
 package gui.views.database.subcontent;
 
-import data.EventSheet.Event;
+import data.EventSheet.Command;
 import data.subcontent.Tag;
 import gui.Tooltip;
 import gui.Vocab;
@@ -28,7 +28,7 @@ import lui.widget.LTextBox;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class EventEditor extends GDefaultObjectEditor<Event> {
+public class EventEditor extends GDefaultObjectEditor<Command> {
 
     private LTextBox txtCommand;
     private TagList lstParam;
@@ -78,7 +78,7 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
                 EventEditor.this.notifyListeners(null);
             }
         };
-        LLabel lblParam = new LLabel(this, LFlags.TOP, Vocab.instance.PARAM, Tooltip.instance.PARAM);
+        LLabel lblParam = new LLabel(this, LFlags.TOP, Vocab.instance.ARGUMENTS, Tooltip.instance.ARGUMENTS);
         lstParam = new TagList(this);
         lstParam.getCellData().setExpand(true, true);
         lstParam.addMenu(lblParam);
@@ -109,9 +109,11 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
         new EventButton(flowEvents, "Set Label", "setLabel",
                 EventArgsDialog.NAME);
         new EventButton(flowEvents, "Jump To Label", "jumpTo",
-                EventArgsDialog.SKIP | EventArgsDialog.NAME);
+                EventArgsDialog.FLOW | EventArgsDialog.NAME);
         new EventButton(flowEvents, "Wait", "waitFrames",
                 EventArgsDialog.DURATION);
+        new EventButton(flowEvents, "Run Script", "runScript",
+                EventArgsDialog.FLOW | EventArgsDialog.KEY);
 
         LScrollPanel fieldScroll = new LScrollPanel(tabFolder);
         LPanel fieldEvents = new LPanel(fieldScroll);
@@ -173,15 +175,15 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
         new EventButton(menuEvents, "Dialogue Window", "openDialogueWindow",
                 EventArgsDialog.WINDOW | EventArgsDialog.POS | EventArgsDialog.NAME | EventArgsDialog.WAIT);
         new EventButton(menuEvents, "Close Dialogue", "closeDialogueWindow",
-                EventArgsDialog.WINDOW);
+                EventArgsDialog.WINDOW | EventArgsDialog.WAIT);
         new EventButton(menuEvents, "Title Window", "openTitleWindow",
-                EventArgsDialog.WINDOW | EventArgsDialog.POS);
+                EventArgsDialog.WINDOW | EventArgsDialog.POS | EventArgsDialog.WAIT);
         new EventButton(menuEvents, "Close Title", "closeTitleWindow",
-                EventArgsDialog.WINDOW);
+                EventArgsDialog.WINDOW | EventArgsDialog.WAIT);
         new EventButton(menuEvents, "Message Window", "openMessageWindow",
                 EventArgsDialog.WINDOW | EventArgsDialog.POS | EventArgsDialog.WAIT);
         new EventButton(menuEvents, "Close Message", "closeMessageWindow",
-                EventArgsDialog.WINDOW);
+                EventArgsDialog.WINDOW | EventArgsDialog.WAIT);
         new EventButton(menuEvents, "Choice Window", "openChoiceWindow",
                 EventArgsDialog.WINDOW | EventArgsDialog.INPUT | EventArgsDialog.POS);
         new EventButton(menuEvents, "Input Window", "openStringWindow",
@@ -296,10 +298,10 @@ public class EventEditor extends GDefaultObjectEditor<Event> {
 
     @Override
     public Type getType() {
-        return Event.class;
+        return Command.class;
     }
 
-    public LColor getEventColor(Event event) {
+    public LColor getEventColor(Command event) {
         if (event == null)
             return null;
         EventButton eventButton = eventButtons.getOrDefault(event.name, null);
