@@ -36,9 +36,10 @@ public class AnimationSelector extends LFlexPanel {
     public void setAnimation(Integer id) {
         if (id == null) {
             tree.setValue(-1);
-            image.updateImage(-1);
+            image.updateImage(-1, null);
         } else {
-            image.updateImage(id);
+            tree.setValue(id);
+            image.updateImage(id, null);
         }
         scroll.setContentSize(image.getTargetSize());
         image.repaint();

@@ -244,7 +244,7 @@ public class Vocab {
 	public String PORTRAITS = "Portraits";
 	public String KOEFFECT = "KO Effect";
 	public String APPLYTRANSFORM = "Apply transform";
-	public String FIXANIM = "Fixed mnimation";
+	public String FIXANIM = "Fixed animation";
 	public String FIXDIR = "Fixed direction";
 	public String FACEFIRST = "Face to interact";
 	public String APPROACHFIRST = "Approach to interact";

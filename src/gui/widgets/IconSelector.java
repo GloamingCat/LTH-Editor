@@ -12,13 +12,16 @@ public class IconSelector extends AnimationSelector {
 
     public IconSelector(LContainer parent) {
         super(parent);
+        image.setAlignment(LFlags.LEFT | LFlags.TOP);
         image.addPainter(new LPainter() {
             public void paint() {
+                int x = (int) image.getImageX();
+				int y = (int) image.getImageY();
                 Animation anim = (Animation) tree.getSelectedObject();
                 if (anim != null && anim.cols > 0 && anim.rows > 0) {
                     int w = anim.quad.width / anim.cols;
                     int h = anim.quad.height / anim.rows;
-                    drawRect(anim.quad.x + w * col, anim.quad.y + h * row, w, h);
+                    drawRect(x + w * col, y + h * row, w, h);
                 }
             }
         });
@@ -26,8 +29,10 @@ public class IconSelector extends AnimationSelector {
             if (e.button == LFlags.LEFT && e.type == LFlags.PRESS) {
                 Animation anim = (Animation) tree.getSelectedObject();
                 if (anim != null) {
-                    col = (e.x - anim.quad.x) / (anim.quad.width / anim.cols);
-                    row = (e.y - anim.quad.y) / (anim.quad.height / anim.rows);
+                    int x = (int) image.getImageX();
+                    int y = (int) image.getImageY();
+                    col = (e.x - x) / (anim.quad.width / anim.cols);
+                    row = (e.y - y) / (anim.quad.height / anim.rows);
                     col = Math.max(0, Math.min(col, anim.cols - 1));
 					row = Math.max(0, Math.min(row, anim.rows - 1));
                     image.repaint();

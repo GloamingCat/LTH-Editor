@@ -10,9 +10,11 @@ import lui.container.LContainer;
 import lui.container.LImage;
 import lui.graphics.LColor;
 import lui.graphics.LPainter;
+import lui.graphics.LRect;
 import project.Project;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class TransformedImage extends LImage {
 
@@ -34,14 +36,17 @@ public class TransformedImage extends LImage {
     }
 
 	public void update(Icon icon, Transform transform, boolean colorOnly) {
-		update(icon == null ? -1 : icon.id, transform, colorOnly);
+		if (icon == null)
+			update(-1, null, transform, colorOnly);
+		else
+			update(icon.id, icon.getRectangle(), transform, colorOnly);
 	}
 
 	public void update(Node node, Transform transform, boolean colorOnly) {
-		update(node == null ? -1 : node.id, transform, colorOnly);
+		update(node == null ? -1 : node.id, null, transform, colorOnly);
 	}
 
-	public void update(int id, Transform transform, boolean colorOnly) {
+	public void update(int id, LRect rect, Transform transform, boolean colorOnly) {
 		Animation anim = (Animation) Project.current.animations.getTree().get(id);
 		if (anim != null) {
 			resetTransform();
@@ -55,7 +60,8 @@ public class TransformedImage extends LImage {
 			if (anim.quad.path.isEmpty())
 				setImage((String) null);
 			else
-				setImage(Project.current.imagePath() + anim.quad.path, anim.quad);
+                setImage(Project.current.imagePath() + anim.quad.path,
+						Objects.requireNonNullElseGet(rect, () -> anim.quad));
 		} else {
 			setImage((String) null);
 		}
@@ -63,14 +69,17 @@ public class TransformedImage extends LImage {
 	}
 
 	public void updateImage(Icon icon) {
-		updateImage(icon == null ? -1 : icon.id);
+		if (icon != null)
+			updateImage(icon.id, icon.getRectangle());
+		else
+			updateImage(-1, null);
 	}
 
 	public void updateImage(Node n) {
-		updateImage(n == null ? -1 : n.id);
+		updateImage(n == null ? -1 : n.id, null);
 	}
 
-	public void updateImage(int id) {
+	public void updateImage(int id, LRect rect) {
 		Animation anim = (Animation) Project.current.animations.getTree().get(id);
 		updateImage(anim == null ? null : anim.quad);
 	}
