@@ -1,5 +1,6 @@
 package project;
 
+import data.subcontent.Audio;
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 
@@ -46,7 +47,8 @@ public class Project implements LSerializer {
 	public GObjectListSerializer equipTypes;
 	public GObjectListSerializer plugins;
 	public GObjectListSerializer regions;
-	
+	public GObjectListSerializer sounds;
+
 	public FieldTreeSerializer fieldTree;
 	
 	private LSerializer[] allData;
@@ -86,13 +88,14 @@ public class Project implements LSerializer {
 		equipTypes = new GObjectListSerializer(systemPath() + "equipTypes", EquipType.class);
 		plugins = new GObjectListSerializer(systemPath() + "plugins", Plugin.class);
 		regions = new GObjectListSerializer(systemPath() + "regions", Region.class);
-		
+		sounds = new GObjectListSerializer(systemPath() + "sounds", Audio.class);
+
 		fieldTree = new FieldTreeSerializer(fieldPath());
 		
 		database = new GObjectTreeSerializer[] { animations, battlers, characters, 
 				events, jobs, items, obstacles, skills, status, terrains, troops };
 		
-		allData = new LSerializer[] { config, fieldTree, attributes, languages, elements, equipTypes, plugins, regions };
+		allData = new LSerializer[] { config, fieldTree, attributes, languages, elements, equipTypes, plugins, regions, sounds };
 		allData = Arrays.copyOf(allData, allData.length + database.length);
 		System.arraycopy(database, 0, allData, allData.length - database.length, database.length);
 	}

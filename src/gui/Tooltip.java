@@ -4,14 +4,8 @@ public class Tooltip {
 
 	public static Tooltip instance = new Tooltip();
 
-	// Groups
-	public String GENERAL = "General settings.";
-	public String GRAPHICS = "Graphics settings.";
-	public String TAGS = """
-			List of tags with their respective values.
-			The value of a tag is interpreted as JSON.""";
-	
-	// Common
+	//////////////////////////////////////////////////
+	//region  Common
 	public String ID = "Unique identification number.";
 	public String DISPLAYNAME = "Display name.";
 	public String KEY = "Unique identification text.";
@@ -27,13 +21,29 @@ public class Tooltip {
 	public String SCRIPT = """
 			Lua script containing the class.
 			Leave it empty to use the base class.""";
-	
+
+
+	// Groups
+	public String GENERAL = "General settings.";
+	public String GRAPHICS = "Graphics settings.";
+	public String TAGS = """
+			List of tags with their respective values.
+			The value of a tag is interpreted as JSON.""";
+
+	//endregion
+
 	//////////////////////////////////////////////////
 	//region Config
 	
 	// General
 	public String IDENTITY = "Game's identity and presentation.";
 	public String PROJECTNAME = "Game's title.";
+	public String PROJECTVER = "Project's version.";
+	public String SAVE = "Configuration of player's saves.";
+	public String PROJECTFOLDER = """
+		Name of the folder with the save files.
+		It's stored within user's AppData/Roaming/LOVE folder.""";
+	public String MAXSAVES = "The maximum number of saves files the player can have.";
 	public String EXECUTION = "Run Settings";
 	public String PLATFORM = "Target platform. It is independent from the platform in which the game is actually running.";
 	public String ANIMATIONS = "Keys of default system animations.";
@@ -80,6 +90,7 @@ public class Tooltip {
 	public String PIXELHEIGHT = "Number of pixels that represent one height unit in the grid.";
 	public String DEPTHHEIGHT = "The depth subtracted from a sprite each time it moves one height unit up.";
 	public String DEPTHY = "The depth of a sprite according to its pixel Y.";
+	public String GRAVITY = "Default gravity in pixels/second for when a character jumps or falls.";
 	public String ALLNEIGHBORS = "Considers all 8 neighbor tiles as passable from one to the other in a battle grid.";
 	public String OVERPASSALLIES = "Ally characters don't block the path.";
 	public String OVERPASSDEADS = "Dead character don't block the path.";
@@ -89,6 +100,8 @@ public class Tooltip {
 			If only base is zero, the grid hexagonal and vertically-linked.
 			If only side is zero, the grid hexagonal and horizontally-linked.
 			If base=width and side=height, the grid is rectangular/orthogonal.""";
+	public String GRIDDEPTH = """
+			Configuration related to the grid's third axis.""";
 
 	// Screen
 	public String SCREEN = "Screen settings.";
@@ -123,7 +136,8 @@ public class Tooltip {
             In this case, the frame rate drops if the rendering is slow.
             If unchecked, logical and rendering frames are computed independently and the frame rate is optimized,
             but some visual lag might occur.""";
-	
+	public String CAMERASPEED = "The default camera movement speed.";
+
 	// Player
 	public String PLAYER = "Player settings.";
 	public String STARTPOS = """
@@ -138,6 +152,15 @@ public class Tooltip {
             For vertically-linked hexagonal grid: if the vertical input is bigger than the horizontal input,
             the horizontal input should be at least two times the threshold for it to be considered diagonal.
             For rectangular/orthogonal grid: both conditions above are applied.""";
+	public String WALKDELAY = """
+		Number of frames the player has to hold movement keys to make the character walk.
+		If the keys are for less than this time, the character will only turn to the direction.
+		""";
+	public String STEPSOUND = "Configurations for the walking sound.";
+	public String STEPFREQ = "Number of pixels walked between each sound play.";
+	public String STEPVARFREQ = "Variance in the number of walked pixels (percentage).";
+	public String STEPVARPITCH = "Variance in the sound's pitch (percentage).";
+	public String STEPVARVOLUME = "Variance in the sound's volume (percentage).";
 
 	public String LOADSCRIPT = "The script that is automatically executed when the field is loaded.";
 	public String EXITSCRIPT = "The script that is automatically executed when the field is exited.";
@@ -145,6 +168,7 @@ public class Tooltip {
 	// Battle
 	public String BATTLE = "Battle settings.";
 	public String FINALLEVEL = "Maximum level a battler can reach.";
+	public String ATTCONFIG = "The keys for specific system attributes.";
 	public String ATTHP = "The key of the attribute that indicates the maximum HP of a character.";
 	public String ATTSP = "The key of the attribute that indicates the maximum SP of a character.";
 	public String ATTSTEP = "The key of the attribute that indicates the number of steps the character can take in a turn.";

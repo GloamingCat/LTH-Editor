@@ -1,6 +1,5 @@
 package data.config;
 
-import data.subcontent.Audio;
 import data.subcontent.Script;
 import lui.base.data.LDataList;
 import data.GameCharacter.Portrait;
@@ -11,11 +10,16 @@ public class Config {
 	
 	// General
 	public String name = "New Project";
-	public int fpsMax = 120;
-	public int fpsMin = 15;
+	public String version = "1.0";
 	public int coverID = -1;
 	public int logoID = -1;
+
+	public int fpsMax = 120;
+	public int fpsMin = 15;
 	public int platform = 0;
+
+	public String folder = "New Project";
+	public int maxSaves = 3;
 	
 	public Player player = new Player();
 	public Battle battle = new Battle();
@@ -25,16 +29,23 @@ public class Config {
 
 	public LDataList<Node> animations = new LDataList<>();
 	public LDataList<Portrait> icons = new LDataList<>();
-	public LDataList<Audio> sounds = new LDataList<>();
 	
 	// System
 	
 	public static class Player {
-		public int walkSpeed = 104;
-		public int dashSpeed = 200;
-		public int diagThreshold = 15;
 		public Position startPos = new Position();
 		public Script loadScript = new Script("LoadPlayer.lua", 2, false, true);
+		public int walkSpeed = 104;
+		public int dashSpeed = 200;
+		public int gravity = 30;
+		public int diagThreshold = 15;
+		public int pathLength = 12;
+		public int walkDelay = 6;
+		public int stepFreq = 16;
+		public int stepVarFreq = 10;
+		public int stepVarPitch = 10;
+		public int stepVarVolume = 20;
+
 	}
 
 	public static class Battle {
@@ -64,6 +75,7 @@ public class Config {
 		public int pixelsPerHeight = 8;
 		public int depthPerHeight = 18;
 		public int depthPerY = 11;
+		public int gravity = 30;
 		public boolean allNeighbors = false;
 		public boolean overpassAllies = false;
 		public boolean overpassDeads = true;
@@ -76,6 +88,7 @@ public class Config {
 		public int heightScale = 200;
 		public int scaleType = 1;
 		public int mobileScaleType = 2;
+		public int defaultSpeed = 75;
 		public boolean pixelPerfect = true;
 		public boolean vsync = false;
 	}

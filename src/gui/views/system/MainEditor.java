@@ -5,8 +5,10 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.ImageButton;
 import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
+import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
 import lui.widget.LCombo;
 import lui.widget.LLabel;
@@ -22,21 +24,25 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 
     @Override
     protected void createContent(int style) {
-        setGridLayout(2);
-		setEqualCells(true, false);
+        setFillLayout(true);
+		setSpacing(LPrefs.GRIDSPACING);
 
 		// Name
 
-		LFrame grpIdentity = new LFrame(this, Vocab.instance.IDENTITY);
+		LFrame grpIdentity = new LFrame(this, Vocab.instance.IDENTITY, Tooltip.instance.IDENTITY);
 		grpIdentity.setGridLayout(6);
-		grpIdentity.setHoverText(Tooltip.instance.IDENTITY);
-		grpIdentity.getCellData().setExpand(true, false);
 
-		new LLabel(grpIdentity, Vocab.instance.PROJECTNAME, Tooltip.instance.PROJECTNAME);
+		new LLabel(grpIdentity, Vocab.instance.TITLE, Tooltip.instance.PROJECTNAME);
 		LText txtName = new LText(grpIdentity);
-		txtName.getCellData().setSpread(5, 1);
+		txtName.getCellData().setSpread(2, 1);
 		txtName.getCellData().setExpand(true, false);
 		addControl(txtName, "name");
+
+		new LLabel(grpIdentity, Vocab.instance.VERSION, Tooltip.instance.PROJECTVER);
+		LText txtVersion = new LText(grpIdentity);
+		txtVersion.getCellData().setSpread(2, 1);
+		txtVersion.getCellData().setExpand(true, false);
+		addControl(txtVersion, "version");
 
 		// Cover
 
@@ -56,12 +62,15 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 		btnLogo.setNameWidget(txtLogo);
 		addControl(btnLogo, "logoID");
 
+		LPanel right = new LPanel(this);
+		right.setFillLayout(true);
+		right.setSpacing(LPrefs.GRIDSPACING);
+
 		// Platform
 
-		LFrame grpExecution = new LFrame(this, Vocab.instance.EXECUTION);
+		LFrame grpExecution = new LFrame(right, Vocab.instance.EXECUTION);
 		grpExecution.setGridLayout(4);
 		grpExecution.setHoverText(Tooltip.instance.EXECUTION);
-		grpExecution.getCellData().setExpand(true, false);
 
 		String[] platforms = new String[] {
 				Vocab.instance.DESKTOP,
@@ -75,7 +84,6 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 		cmbPlatform.getCellData().setExpand(true, false);
 		cmbPlatform.setItems(platforms);
 		addControl(cmbPlatform, "platform");
-		// TODO: export button
 
 		// FPS
 
@@ -93,6 +101,21 @@ public class MainEditor extends GDefaultObjectEditor<Config> {
 		spnFpsMax.getCellData().setExpand(true, false);
 		spnFpsMax.setMinimum(1);
 		addControl(spnFpsMax, "fpsMax");
+
+		LFrame grpSave = new LFrame(right, Vocab.instance.SAVE, Tooltip.instance.SAVE);
+		grpSave.setGridLayout(2);
+
+		new LLabel(grpSave, Vocab.instance.FOLDER, Tooltip.instance.PROJECTFOLDER);
+		LText txtFolder = new LText(grpSave);
+		txtFolder.getCellData().setExpand(true, false);
+		addControl(txtFolder, "folder");
+
+		new LLabel(grpSave, Vocab.instance.MAXSAVES, Tooltip.instance.MAXSAVES);
+		LSpinner spnMaxSaves = new LSpinner(grpSave);
+		spnMaxSaves.getCellData().setExpand(true, false);
+		spnMaxSaves.setMinimum(1);
+		addControl(spnMaxSaves, "maxSaves");
+
     }
 
     @Override

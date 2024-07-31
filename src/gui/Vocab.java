@@ -70,7 +70,11 @@ public class Vocab {
 	
 	// General
 	public String IDENTITY = "Identity";
-	public String PROJECTNAME = "Title";
+	public String TITLE = "Title";
+	public String VERSION = "Version";
+	public String SAVE = "Save Settings";
+	public String FOLDER = "Folder";
+	public String MAXSAVES = "Max Saves";
 	public String EXECUTION = "Run Settings";
 	public String PLATFORM = "Platform";
 	public String DESKTOP = "Desktop";
@@ -107,11 +111,13 @@ public class Vocab {
 	public String PIXELHEIGHT = "Pixels/Height";
 	public String DEPTHHEIGHT = "Depth/Height";
 	public String DEPTHY = "Depth/Y";
+	public String GRAVITY = "Gravity";
 	public String ALLNEIGHBORS = "8 neighbors";
 	public String OVERPASSALLIES = "Overpass Allies";
 	public String OVERPASSDEADS = "Overpass Dead";
 	public String TILESHAPE = "Tile Shape";
-	
+	public String GRIDDEPTH = "Depth and Height";
+
 	// Screen
 	public String COVER = "Cover";
 	public String LOGO = "Logo";
@@ -127,7 +133,8 @@ public class Vocab {
 	public String FREESCALE = "Fill screen";
 	public String PIXELPERFECT = "Pixel Perfect";
 	public String VSYNC = "V Sync";
-	
+	public String DEFAULTSPEED = "Default Speed";
+
 	// Player
 	public String STARTPOS = "Start Position";
 	public String PIXELMOV = "Pixel Movement";
@@ -135,13 +142,20 @@ public class Vocab {
 	public String WALKSPEED = "Base Speed";
 	public String DASHSPEED = "Dash Speed";
 	public String DIAGTHRESHOLD = "Diag Threshold";
-	
+	public String WALKDELAY = "Walk Input Delay";
+	public String PATHLIMIT = "Path Limit";
+	public String STEPSOUND = "Step Sound";
+	public String STEPFREQ = "Frequency";
+	public String VARFREQ = "Frequency Var.";
+	public String VARPITCH = "Pitch Var.";
+	public String VARVOLUME = "Volume Var.";
+
 	// Battle
 	public String FINALLEVEL = "Max Level";
-	public String ATTHP = "HP Attribute";
-	public String ATTSP = "SP Attribute";
-	public String ATTSTEP = "Step Attribute";
-	public String ATTJUMP = "Jump Attribute";
+	public String ATTHP = "HP";
+	public String ATTSP = "SP";
+	public String ATTSTEP = "Step";
+	public String ATTJUMP = "Jump";
 	public String BATTLEENDREVIVE = "Revive when battle ends";
 	public String KEEPPARTIES = "Keep chosen parties on Retry";
 	public String CHARSPEED = "Char Speed";

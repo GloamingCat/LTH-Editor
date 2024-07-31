@@ -5,6 +5,7 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.widgets.CheckBoxPanel;
 import lui.container.LContainer;
+import lui.container.LFrame;
 import lui.container.LPanel;
 import lui.gson.GDefaultObjectEditor;
 import lui.widget.LCheckBox;
@@ -30,41 +31,36 @@ public class BattleEditor extends GDefaultObjectEditor<Config.Battle> {
 		spnMaxLevel.getCellData().setSpread(2, 1);
 		addControl(spnMaxLevel, "maxLevel");
 
-		new LLabel(this, Vocab.instance.ATTHP, Tooltip.instance.ATTHP);
-
-		LText txtAttHP = new LText(this);
-		txtAttHP.getCellData().setExpand(true, false);
-		txtAttHP.getCellData().setSpread(2, 1);
-		addControl(txtAttHP, "attHP");
-
-		new LLabel(this, Vocab.instance.ATTSP, Tooltip.instance.ATTSP);
-
-		LText txtAttSP = new LText(this);
-		txtAttSP.getCellData().setExpand(true, false);
-		txtAttSP.getCellData().setSpread(2, 1);
-		addControl(txtAttSP, "attSP");
-
-		new LLabel(this, Vocab.instance.ATTSTEP, Tooltip.instance.ATTSTEP);
-
-		LText txtAttStep = new LText(this);
-		txtAttStep.getCellData().setExpand(true, false);
-		txtAttStep.getCellData().setSpread(2, 1);
-		addControl(txtAttStep, "attStep");
-
-		new LLabel(this, Vocab.instance.ATTJUMP, Tooltip.instance.ATTJUMP);
-
-		LText txtAttJump = new LText(this);
-		txtAttJump.getCellData().setExpand(true, false);
-		txtAttJump.getCellData().setSpread(2, 1);
-		addControl(txtAttJump, "attJump");
-
 		new LLabel(this, Vocab.instance.CHARSPEED, Tooltip.instance.CHARSPEED);
-
 		LSpinner spnCharSpeed = new LSpinner(this);
 		spnCharSpeed.getCellData().setExpand(true, false);
 		addControl(spnCharSpeed, "charSpeed");
-
 		new LLabel(this, "%");
+
+		LFrame grpAtt = new LFrame(this, Vocab.instance.ATTRIBUTES, Tooltip.instance.ATTCONFIG);
+		grpAtt.setGridLayout(4);
+		grpAtt.getCellData().setSpread(3, 1);
+		grpAtt.getCellData().setExpand(true, false);
+
+		new LLabel(grpAtt, Vocab.instance.ATTHP, Tooltip.instance.ATTHP);
+		LText txtAttHP = new LText(grpAtt);
+		txtAttHP.getCellData().setExpand(true, false);
+		addControl(txtAttHP, "attHP");
+
+		new LLabel(grpAtt, Vocab.instance.ATTSP, Tooltip.instance.ATTSP);
+		LText txtAttSP = new LText(grpAtt);
+		txtAttSP.getCellData().setExpand(true, false);
+		addControl(txtAttSP, "attSP");
+
+		new LLabel(grpAtt, Vocab.instance.ATTSTEP, Tooltip.instance.ATTSTEP);
+		LText txtAttStep = new LText(grpAtt);
+		txtAttStep.getCellData().setExpand(true, false);
+		addControl(txtAttStep, "attStep");
+
+		new LLabel(grpAtt, Vocab.instance.ATTJUMP, Tooltip.instance.ATTJUMP);
+		LText txtAttJump = new LText(grpAtt);
+		txtAttJump.getCellData().setExpand(true, false);
+		addControl(txtAttJump, "attJump");
 
 		LPanel checkBattle = new CheckBoxPanel(this);
 		checkBattle.getCellData().setSpread(2, 1);

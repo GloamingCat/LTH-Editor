@@ -60,8 +60,8 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 		cmbSound.getCellData().setExpand(true, false);
 		cmbSound.addModifyListener(event -> {
             selFile.setValue(-1);
-            ArrayList<Audio> list = Project.current.config.getData().sounds;
-            comboAudio = list.get(event.newValue);
+            ArrayList<Object> list = Project.current.sounds.getData();
+            comboAudio = (Audio) list.get(event.newValue);
         });
 		selFile.addModifyListener(event -> cmbSound.setValue(-1));
 
@@ -116,10 +116,10 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 	}
 	
 	public void open(AudioPlay initial) {
-		ArrayList<Audio> list = Project.current.config.getData().sounds;
+		ArrayList<Object> list = Project.current.sounds.getData();
 		cmbSound.setItems(list);
 		selFile.setSelectedFile(initial.name);
-		var item = list.stream().filter(a -> a.key.equals(initial.name)).findAny();
+		var item = list.stream().filter(a -> ((Audio)a).key.equals(initial.name)).findAny();
 		if (item.isPresent())
 			cmbSound.setValue(list.indexOf(item.get()));
 		else
@@ -135,7 +135,7 @@ public class AudioPlayDialog extends GObjectDialog<AudioPlay> {
 			audio.name = "";
 		int i = cmbSound.getValue();
 		if (i >= 0) {
-			Audio node = Project.current.config.getData().sounds.get(i);
+			Audio node = (Audio) Project.current.sounds.getData().get(i);
 			audio.name = node.key;
 		}
 		return super.createResult(initial);

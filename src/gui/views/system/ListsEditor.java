@@ -17,6 +17,7 @@ public class ListsEditor extends LObjectEditor<Object> {
 	private DataList lstLanguages;
 	private AttributeList lstAttributes;
 	private RegionList lstRegions;
+	private SoundList lstSounds;
 	private PluginList lstPlugins;
 
 	public ListsEditor(LContainer parent) {
@@ -36,9 +37,12 @@ public class ListsEditor extends LObjectEditor<Object> {
 		LPanel middle = new LPanel(this);
 		middle.setFillLayout(false);
 
+		LPanel middle2 = new LPanel(this);
+		middle2.setFillLayout(false);
+
 		LPanel right = new LPanel(this);
 		right.setFillLayout(false);
-		
+
 		// Elements
 		
 		LFrame grpElements = new LFrame(left, Vocab.instance.ELEMENTS);
@@ -81,6 +85,14 @@ public class ListsEditor extends LObjectEditor<Object> {
 		lstLanguages.setIncludeID(true);
 		addChild(lstLanguages, "languages");
 
+		// Sounds
+
+		LFrame grpSounds = new LFrame(middle2, Vocab.instance.SOUNDS);
+		grpSounds.setFillLayout(true);
+		grpSounds.setHoverText(Tooltip.instance.SOUNDS);
+		lstSounds = new SoundList(grpSounds);
+		addChild(lstSounds, "sounds");
+
 		// Plug-ins
 		
 		LFrame grpPlugins = new LFrame(right, Vocab.instance.PLUGINS);
@@ -98,6 +110,7 @@ public class ListsEditor extends LObjectEditor<Object> {
 		lstEquipTypes.setObject(Project.current.equipTypes.getList());
 		lstLanguages.setObject(Project.current.languages.getList());
 		lstRegions.setObject(Project.current.regions.getList());
+		lstSounds.setObject(Project.current.sounds.getList());
 		lstPlugins.setObject(Project.current.plugins.getList());
 	}
 

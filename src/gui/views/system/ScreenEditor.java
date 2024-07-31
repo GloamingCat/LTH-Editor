@@ -23,14 +23,12 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 
     @Override
     protected void createContent(int style) {
-        setGridLayout(3);
+        setGridLayout(2);
 
 		new LLabel(this, Vocab.instance.NATIVESIZE, Tooltip.instance.NATIVESIZE);
-
 		LPanel nativeSize = new LPanel(this);
 		nativeSize.setGridLayout(3);
 		nativeSize.getCellData().setExpand(true, false);
-		nativeSize.getCellData().setSpread(2, 1);
 
 		LSpinner spnNativeWidth = new LSpinner(nativeSize);
 		spnNativeWidth.getCellData().setExpand(true, false);
@@ -44,11 +42,9 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		addControl(spnNativeHeight, "nativeHeight");
 
 		new LLabel(this, Vocab.instance.SCALEFACTOR, Tooltip.instance.SCALEFACTOR);
-
 		LPanel scaleFactor = new LPanel(this);
 		scaleFactor.setGridLayout(3);
 		scaleFactor.getCellData().setExpand(true, false);
-		scaleFactor.getCellData().setSpread(2, 1);
 
 		LSpinner spnWidthScale = new LSpinner(scaleFactor);
 		spnWidthScale.getCellData().setExpand(true, false);
@@ -62,11 +58,17 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		spnHeightScale.setMinimum(1);
 		addControl(spnHeightScale, "heightScale");
 
+		new LLabel(this, Vocab.instance.DEFAULTSPEED, Tooltip.instance.CAMERASPEED);
+		LSpinner spnSpeed = new LSpinner(this);
+		spnSpeed.getCellData().setExpand(true, false);
+		spnSpeed.setMinimum(1);
+		addControl(spnSpeed, "defaultSpeed");
+
 		LFrame scaleType = new LFrame(this, Vocab.instance.SCALETYPE);
 		scaleType.setHoverText(Tooltip.instance.SCALETYPE);
 		scaleType.setGridLayout(2);
 		scaleType.getCellData().setExpand(true, false);
-		scaleType.getCellData().setSpread(3, 1);
+		scaleType.getCellData().setSpread(2, 1);
 
 		String[] scaleTypes = new String[] {
 			Vocab.instance.NOSCALE,
@@ -88,7 +90,7 @@ public class ScreenEditor extends GDefaultObjectEditor<Config.Screen> {
 		addControl(cmbScaleMobile, "mobileScaleType");
 
 		LPanel checkScreen = new CheckBoxPanel(this);
-		checkScreen.getCellData().setSpread(3, 1);
+		checkScreen.getCellData().setSpread(2, 1);
 		checkScreen.getCellData().setExpand(true, true);
 
 		LCheckBox btnPixelPerfect = new LCheckBox(checkScreen);

@@ -26,13 +26,13 @@ public class ConfigEditor extends LView {
 	 */
 	public ConfigEditor(LContainer parent) {
 		super(parent, true);
-		setGridLayout(4);
+		setGridLayout(3);
 		setEqualCells(true, false);
 
 		createMenuInterface();
 
 		editor = new MainEditor(this, false);
-		editor.getCellData().setSpread(4, 1);
+		editor.getCellData().setSpread(3, 1);
 		editor.getCellData().setExpand(true, false);
 		addChild(editor);
 
@@ -92,7 +92,7 @@ public class ConfigEditor extends LView {
 		
 		// Troop
 		
-		LFrame grpTroop = new LFrame(middle, Vocab.instance.TROOP);
+		LFrame grpTroop = new LFrame(left, Vocab.instance.TROOP);
 		grpTroop.setFillLayout(true);
 		grpTroop.setHoverText(Tooltip.instance.TROOP);
 		grpTroop.getCellData().setExpand(true, true);
@@ -116,15 +116,6 @@ public class ConfigEditor extends LView {
 		grpIcons.setHoverText(Tooltip.instance.ICONS);
 		PortraitList lstIcons = new PortraitList(grpIcons);
 		editor.addChild(lstIcons, "icons");
-		
-		// Sounds
-
-		LFrame grpSounds = new LFrame(this, Vocab.instance.SOUNDS);
-		grpSounds.setFillLayout(true);
-		grpSounds.setHoverText(Tooltip.instance.SOUNDS);
-		grpSounds.getCellData().setExpand(true, true);
-		SoundList lstSounds = new SoundList(grpSounds);
-		editor.addChild(lstSounds, "sounds");
 
 	}
 	
