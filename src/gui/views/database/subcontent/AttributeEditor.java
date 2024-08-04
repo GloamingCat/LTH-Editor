@@ -1,37 +1,56 @@
 package gui.views.database.subcontent;
 
 import data.config.Attribute;
+import lui.base.LPrefs;
+import lui.base.data.LPath;
 import project.Project;
 import lui.container.LContainer;
-import lui.gson.GGridForm;
+import lui.gson.GFormEditor;
 import lui.base.data.LDataList;
-import lui.widget.LControlWidget;
 import lui.widget.LSpinner;
 
-public class AttributeEditor extends GGridForm<Integer> {
+public class AttributeEditor extends GFormEditor<Integer, Integer, LSpinner> {
 	
 	public AttributeEditor(LContainer parent, int columns) {
-		super(parent, columns);
-		labelWidth = 20;
-		controlWidth = 60;
+		super(parent, 0);
+		getCollectionWidget().setLabelWidth(30);
+		getCollectionWidget().setColumns(columns);
 	}
 
-	protected Integer getDefaultValue() {
-		return 0;
+	@Override
+	protected LDataList<Integer> getDataCollection() {
+		return (LDataList<Integer>) currentObject;
 	}
-	
-	protected LDataList<Object> getList() {
-		return Project.current.attributes.getList();
+
+	@Override
+	protected Integer getEditableData(LPath path) {
+		return getDataCollection().get(path.index);
 	}
-	
-	protected LControlWidget<Integer> createControl(final int i, final Object obj) {
-		LSpinner spinner = new LSpinner(content);
+
+	@Override
+	protected void setEditableData(LPath path, Integer newData) {
+		getDataCollection().set(path.index, newData);
+	}
+
+	@Override
+	public void onVisible() {
+		setFormList(Project.current.attributes.getList());
+		super.onVisible();
+	}
+
+	@Override
+	protected LSpinner createControlWidget(LContainer parent) {
+		LSpinner spinner = new LSpinner(parent);
 		spinner.setMinimum(Integer.MIN_VALUE);
+		spinner.getCellData().setRequiredSize(60, LPrefs.WIDGETHEIGHT);
+        spinner.getCellData().setTargetSize(60, LPrefs.WIDGETHEIGHT);
+        spinner.getCellData().setExpand(true, false);
 		return spinner;
 	}
-	
-	protected String getLabelText(final int i, final Object obj) {
-		Attribute att = (Attribute) obj;
+
+	@Override
+	protected String getLabelText(final int i) {
+		Attribute att = (Attribute) Project.current.attributes.getData().get(i);
 		return att.shortName;
 	}
 

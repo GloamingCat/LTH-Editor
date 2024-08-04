@@ -10,6 +10,7 @@ import lui.base.event.listener.LCollectionListener;
 import lui.base.event.LDeleteEvent;
 import lui.base.event.LEditEvent;
 import lui.base.event.LInsertEvent;
+import lui.collection.LGrid;
 import lui.container.*;
 import lui.widget.*;
 import gui.Tooltip;
@@ -98,6 +99,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 		LFrame grpGrid = new LFrame(contentEditor.left, Vocab.instance.GRID);
 		grpGrid.setHoverText(Tooltip.instance.TROOPGRID);
 		grpGrid.getCellData().setExpand(true, true);
+		grpGrid.setFillLayout(true);
 		unitGrid = new UnitGrid(grpGrid);
 
 		// Items
@@ -198,13 +200,13 @@ public class TroopTab extends DatabaseTab<Troop> {
 
 	protected void refreshAllUnits() {
 		for (int i = 0; i < points.size(); i++) {
-			LImage img = unitGrid.getImage(i);
+			LGrid.LCell<LPoint> img = unitGrid.getControl(i);
 			refreshUnit(img);
 		}
 	}
 	
-	protected void refreshUnit(LImage img) {
-		LPoint p = (LPoint) img.getData();
+	protected void refreshUnit(LGrid.LCell<LPoint> img) {
+		LPoint p = img.getValue();
 		Troop troop = contentEditor.getObject();
 		int i = troop == null ? -1 : troop.find(p.x, p.y);
 		Unit u = i >= 0 ? troop.members.get(i) : null;
@@ -216,11 +218,11 @@ public class TroopTab extends DatabaseTab<Troop> {
 		if (u.x <= 0 || u.y <= 0 || u.x > conf.width || u.y > conf.height)
 			return;
 		int i = (u.y - 1) * conf.width + (u.x - 1);
-		LImage img = (LImage) unitGrid.getChild(i);
+		LGrid.LCell<LPoint> img = unitGrid.getControl(i);
 		refreshUnit(img, erase ? null : u);
 	}
 	
-	protected void refreshUnit(LImage img, Unit u) {
+	protected void refreshUnit(LGrid.LCell<LPoint> img, Unit u) {
 		if (u != null) {
 			GameCharacter c = (GameCharacter) Project.current.characters.getData().get(u.charID);
 			if (c != null) {
@@ -251,7 +253,7 @@ public class TroopTab extends DatabaseTab<Troop> {
 			setCellColor(LovelyTheme.LIGHT);
 		}
 		@Override
-		protected void setImage(LImage img, int i) {
+		protected void refreshImage(LCell<LPoint> img, LPoint p) {
 			refreshUnit(img);
 		}
 		@Override

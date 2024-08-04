@@ -41,6 +41,7 @@ public class Project implements LSerializer {
 	
 	// System
 	public GObjectSerializer<Config> config;
+	public GObjectSerializer<UIConfig> uiConfig;
 	public GObjectListSerializer attributes;
 	public GObjectListSerializer languages;
 	public GObjectListSerializer elements;
@@ -82,6 +83,7 @@ public class Project implements LSerializer {
 		
 		// System
 		config = new GObjectSerializer<>(systemPath() + "config", Config.class);
+		uiConfig = new GObjectSerializer<>(systemPath() + "uiconfig", UIConfig.class);
 		attributes = new GObjectListSerializer(systemPath() + "attributes", Attribute.class);
 		languages = new GObjectListSerializer(systemPath() + "languages", Data.class);
 		elements = new GObjectListSerializer(systemPath() + "elements", Element.class);
@@ -95,7 +97,7 @@ public class Project implements LSerializer {
 		database = new GObjectTreeSerializer[] { animations, battlers, characters, 
 				events, jobs, items, obstacles, skills, status, terrains, troops };
 		
-		allData = new LSerializer[] { config, fieldTree, attributes, languages, elements, equipTypes, plugins, regions, sounds };
+		allData = new LSerializer[] { config, uiConfig, fieldTree, attributes, languages, elements, equipTypes, plugins, regions, sounds };
 		allData = Arrays.copyOf(allData, allData.length + database.length);
 		System.arraycopy(database, 0, allData, allData.length - database.length, database.length);
 	}

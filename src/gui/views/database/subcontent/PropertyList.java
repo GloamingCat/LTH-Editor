@@ -11,7 +11,7 @@ import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.base.event.LEditEvent;
-import lui.widget.LEditableList;
+import lui.collection.LEditableList;
 
 public class PropertyList extends SimpleEditableList<Property> {
 

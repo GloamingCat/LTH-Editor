@@ -18,7 +18,10 @@ public class SystemEditor extends LViewFolder {
 
 		ListsEditor listsEditor = new ListsEditor(this);
 		addTab(Vocab.instance.LISTS, listsEditor);
-		
+
+		UIEditor uiEditor = new UIEditor(this);
+		addTab(Vocab.instance.UI, uiEditor);
+
 	}
 	
 }

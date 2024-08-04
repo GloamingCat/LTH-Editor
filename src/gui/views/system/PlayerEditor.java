@@ -90,8 +90,8 @@ public class PlayerEditor extends GDefaultObjectEditor<Config.Player> {
 		new LLabel(grpSound, Vocab.instance.STEPFREQ, Tooltip.instance.STEPFREQ);
 		LSpinner spnStepFreq = new LSpinner(grpSound);
 		spnStepFreq.getCellData().setExpand(true, false);
-		spnStepFreq.getCellData().setSpread(2, 1);
 		addControl(spnStepFreq, "stepFreq");
+		new LLabel(grpSound, 1, 1);
 
 		new LLabel(grpSound, Vocab.instance.VARFREQ, Tooltip.instance.STEPVARFREQ);
 		LSpinner spnStepVarFreq = new LSpinner(grpSound);

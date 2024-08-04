@@ -55,8 +55,12 @@ public class Tooltip {
 	public String REGIONS = "List of all regions.";
 	public String ATTRIBUTES = "List of all attributes in the game's system.";
 	public String EQUIPTYPES = "List of all types of equipment slots.";
-	public String PLUGINS = "List of installed plugins.";
 	public String LANGUAGES = "List of implemented languages in the game.";
+	public String PLUGINS = "List of installed plugins.";
+	public String BASECOLORS = "All colors used in the game's UI.";
+	public String BASEFONTS = "All fonts (and variations) used in the game's UI.";
+	public String COLORS = "Colors of each UI element.";
+	public String FONTS = "Fonts for each UI element.";
 
 	// Sub-content
 	public String LENGTH = "Size of file.";

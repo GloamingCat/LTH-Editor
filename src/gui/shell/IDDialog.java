@@ -7,7 +7,7 @@ import lui.widget.LNodeSelector;
 
 public abstract class IDDialog extends LObjectDialog<Integer> {
 	
-	protected LNodeSelector<Object> tree;
+	protected LNodeSelector<Object> node;
 	
 	public static final int OPTIONAL = 1;
 	
@@ -22,19 +22,19 @@ public abstract class IDDialog extends LObjectDialog<Integer> {
 	protected void createContent(int style) {
 		super.createContent(style);
 		content.setFillLayout(true);
-		tree = new LNodeSelector<>(content, style & LNodeSelector.OPTIONAL);
-		tree.setCollection(getTree());
+		node = new LNodeSelector<>(content, style & LNodeSelector.OPTIONAL);
+		node.setCollection(getTree());
 	}
 	
 	@Override
 	public void open(Integer initial) {
-		tree.setValue(initial);
+		node.setValue(initial);
 		super.open(initial);
 	}
 
 	@Override
 	protected Integer createResult(Integer initial) {
-		return tree.getValue();
+		return node.getValue();
 	}
 	
 	protected abstract LDataTree<Object> getTree();

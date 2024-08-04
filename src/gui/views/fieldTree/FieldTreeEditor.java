@@ -21,7 +21,7 @@ import lui.dialog.LWindowFactory;
 import lui.editor.LTreeEditor;
 import lui.base.event.LEditEvent;
 import lui.base.event.LInsertEvent;
-import lui.widget.LEditableTree;
+import lui.collection.LEditableTree;
 
 public class FieldTreeEditor extends LView {
 

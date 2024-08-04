@@ -43,8 +43,11 @@ public class Vocab {
 	public String LANGUAGES = "Languages";
 	public String ICONS = "Icons";
 	public String SOUNDS = "Sounds";
-	public String SCRIPTS = "Scripts";
-	
+	public String BASECOLORS = "Base Colors";
+	public String BASEFONTS = "Base Fonts";
+	public String COLORS = "Colors";
+	public String FONTS = "Fonts";
+
 	// Common
 	public String ID = "ID";
 	public String NAME = "Name";
@@ -62,6 +65,7 @@ public class Vocab {
 	public String SCRIPT = "Script";
 	public String LUAFILE = "Lua File";
 	public String EVENTSHEET = "Event Sheet";
+	public String SCRIPTS = "Scripts";
 
 	//endregion
 
@@ -82,7 +86,8 @@ public class Vocab {
 	public String BROWSER = "Web Browser";
 	public String MOBILEBROWSER = "Mobile Web Browser";
 	public String LISTS = "Lists";
-	
+	public String UI = "UI Customization";
+
 	// Sub-content
 	public String COLOR = "Color";
 	public String BATTLEFIELDS = "Battle Fields";
