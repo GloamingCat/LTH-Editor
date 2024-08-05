@@ -39,14 +39,9 @@ public class IDList extends SimpleEditableList<Integer> {
 			}
 			@Override
 			public Integer toObject(LPath path) {
-				if (path == null)
+				if (path == null || path.index == -1)
 					return null;
 				return IDList.this.getDataCollection().get(path.index);
-			}
-			@Override
-			public LDataTree<Integer> toNode(LPath path) {
-				Integer i = toObject(path);
-				return new LDataTree<> (i);
 			}
 			@Override
 			public LDataTree<Integer> emptyNode() {
@@ -57,12 +52,14 @@ public class IDList extends SimpleEditableList<Integer> {
 				return new LDataTree<>(node.data);
 			}
 			@Override
+			public LDataTree<Integer> toNode(LPath path) {
+				return IDList.this.getDataCollection().toTree().getNode(path);
+			}
+			@Override
 			protected String dataToString(Integer id) {
 				Object obj = IDList.this.getDataTree().get(id);
-				String str = includeID ? stringID(id) : "";
-				if (obj == null)
-					return str + "    ";
-				return str + obj;
+                String str = obj == null ? "NULL" : obj.toString();
+				return stringID(id) + str;
 			}
 			@Override
 			protected String encodeNode(LDataTree<Integer> node) {

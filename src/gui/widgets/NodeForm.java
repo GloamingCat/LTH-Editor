@@ -34,6 +34,7 @@ public class NodeForm extends GFormEditor<Node, String, NodeForm.NodeEditor> {
         };
         getCollectionWidget().setLabelWidth(100);
 		getCollectionWidget().setColumns(1);
+        getCollectionWidget().setEditEnabled(true);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class NodeForm extends GFormEditor<Node, String, NodeForm.NodeEditor> {
         editor.getCellData().setRequiredSize(controlWidth, LPrefs.WIDGETHEIGHT);
         editor.getCellData().setTargetSize(controlWidth, LPrefs.WIDGETHEIGHT);
         editor.getCellData().setExpand(true, false);
-        editor.setMenuInterface(getMenuInterface()); // Hack
+        editor.setMenuInterface(getMenuInterface()); // TODO Hack
         return editor;
     }
 

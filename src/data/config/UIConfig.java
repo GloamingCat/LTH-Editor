@@ -97,18 +97,19 @@ public class UIConfig implements LInitializable {
         return -1;
     }
 
-    public static class BaseColor extends LColor {
+    public static class BaseColor {
 
         public String name = "colorname";
+        public LColor color;
 
-        public BaseColor(){ super(); }
+        public BaseColor(){ color = new LColor(255, 255, 255, 255); }
         public BaseColor(String name, int red, int green, int blue, int alpha) {
-            super(red, green, blue, alpha);
             this.name = name;
+            color = new LColor(red, green, blue, alpha);
         }
         public BaseColor(String name, double red, double green, double blue, double alpha) {
-            super(red, green, blue, alpha);
             this.name = name;
+            color = new LColor(red, green, blue, alpha);
         }
         public BaseColor(String name, LColor color) {
             this(name, color.red, color.green, color.blue, color.alpha);

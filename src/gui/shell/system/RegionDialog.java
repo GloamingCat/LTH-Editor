@@ -7,9 +7,9 @@ import gui.widgets.IDList;
 import lui.base.LFlags;
 import lui.container.LFrame;
 import lui.container.LImage;
-import lui.container.LPanel;
 import lui.dialog.LWindow;
 import lui.graphics.LColor;
+import lui.widget.LColorButton;
 import lui.widget.LLabel;
 import lui.widget.LText;
 
@@ -26,38 +26,33 @@ public class RegionDialog extends GObjectDialog<Region> {
 	@Override
 	protected void createContent(int style) {
 		super.createContent(style);
-		
-		contentEditor.setGridLayout(2);
+		contentEditor.setGridLayout(3);
 		
 		new LLabel(contentEditor, Vocab.instance.NAME, Tooltip.instance.DISPLAYNAME);
-		
 		LText txtName = new LText(contentEditor);
 		txtName.getCellData().setExpand(true, false);
+		txtName.getCellData().setSpread(2, 1);
 		addControl(txtName, "name");
-		
+
 		new LLabel(contentEditor, Vocab.instance.COLOR, Tooltip.instance.COLOR);
-		
-		LPanel color = new LPanel(contentEditor);
-		color.setGridLayout(2);
-		color.getCellData().setAlignment(LFlags.CENTER);
-		LImage imgColor = new LImage(color);
+
+		LImage imgColor = new LImage(contentEditor);
 		imgColor.setBackground(new LColor(255, 255, 255));
 		imgColor.getCellData().setExpand(true, false);
-		imgColor.getCellData().setAlignment(LFlags.CENTER);
-		// TODO
-		//ColorButton btnColor = new ColorButton(color, SWT.NONE);
-		//btnColor.setColorWidget(imgColor);
-		//addControl(btnColor, "rgb");
+		imgColor.getCellData().setAlignment(LFlags.FILL);
+		LColorButton btnColor = new LColorButton(contentEditor);
+		btnColor.setImageWidget(imgColor);
+		addControl(btnColor, "color");
 
-		LFrame grpTroops = new LFrame(contentEditor, Vocab.instance.BATTLEFIELDS);
-		grpTroops.setFillLayout(true);
-		grpTroops.setHoverText(Tooltip.instance.BATTLEFIELDS);
-		grpTroops.getCellData().setSpread(2, 1);
-		grpTroops.getCellData().setExpand(true, true);
-		grpTroops.getCellData().setRequiredSize(150, 100);
-		IDList lstTroops = new IDList(grpTroops, Vocab.instance.TROOPSHELL);
-		lstTroops.dataTree = Project.current.fieldTree.getData().toObjectTree();
-		addChild(lstTroops, "troops");
+		LFrame grpFields = new LFrame(contentEditor, Vocab.instance.BATTLEFIELDS);
+		grpFields.setFillLayout(true);
+		grpFields.setHoverText(Tooltip.instance.BATTLEFIELDS);
+		grpFields.getCellData().setExpand(true, true);
+		grpFields.getCellData().setSpread(3, 1);
+		grpFields.getCellData().setRequiredSize(150, 100);
+		IDList lstFields = new IDList(grpFields, Vocab.instance.TROOPSHELL);
+		lstFields.dataTree = Project.current.fieldTree.getData().toObjectTree();
+		addChild(lstFields, "battleFields");
 	}
 
 }

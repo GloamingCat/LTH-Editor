@@ -3,10 +3,12 @@ package gui.views.system;
 import data.config.UIConfig.BaseColor;
 import gui.Tooltip;
 import gui.Vocab;
+import gui.shell.system.BaseColorDialog;
 import gui.widgets.NodeForm;
 import gui.widgets.SimpleEditableList;
 import lui.base.LPrefs;
 import lui.container.LContainer;
+import lui.container.LFlexPanel;
 import lui.container.LFrame;
 import lui.dialog.LObjectDialog;
 import lui.dialog.LWindow;
@@ -30,32 +32,42 @@ public class UIEditor extends LObjectEditor<Object> {
 
 		createMenuInterface();
 
+		LFlexPanel div = new LFlexPanel(this);
+		LFlexPanel colors = new LFlexPanel(div);
+		LFlexPanel fonts = new LFlexPanel(div);
+
 		// Color
 
-		LFrame grpBaseColors = new LFrame(this, Vocab.instance.BASECOLORS, Tooltip.instance.BASECOLORS);
+		LFrame grpBaseColors = new LFrame(colors, Vocab.instance.BASECOLORS, Tooltip.instance.BASECOLORS);
 		grpBaseColors.setFillLayout(false);
 		BaseColorList lstColors = new BaseColorList(grpBaseColors);
 		addChild(lstColors, "baseColors");
 
-		LFrame grpColors = new LFrame(this, Vocab.instance.COLORS, Tooltip.instance.COLORS);
+		LFrame grpColors = new LFrame(colors, Vocab.instance.COLORS, Tooltip.instance.COLORS);
 		grpColors.setFillLayout(false);
-		formColors = new NodeForm(grpColors, false);
-		formColors.getCollectionWidget().setLabelWidth(120);
+		formColors = new NodeForm(grpColors, true);
+		formColors.getCollectionWidget().setLabelWidth(100);
+		formColors.getCollectionWidget().setInsertNewEnabled(true);
+		formColors.getCollectionWidget().setDuplicateEnabled(true);
+		formColors.getCollectionWidget().setDeleteEnabled(true);
 		addChild(formColors, "colorMap");
 
 		// Fonts
 
-		LFrame grpBaseFonts = new LFrame(this, Vocab.instance.BASEFONTS, Tooltip.instance.BASEFONTS);
+		LFrame grpBaseFonts = new LFrame(fonts, Vocab.instance.BASEFONTS, Tooltip.instance.BASEFONTS);
 		grpBaseFonts.setFillLayout(false);
 		//BaseFontList lstFonts = new BaseFontList(grpBaseFonts);
 		//addChild(lstFonts, "baseFonts");
 
-		LFrame grpFonts = new LFrame(this, Vocab.instance.FONTS, Tooltip.instance.FONTS);
+		LFrame grpFonts = new LFrame(fonts, Vocab.instance.FONTS, Tooltip.instance.FONTS);
 		grpFonts.setFillLayout(false);
 		//formFonts = new NodeForm(grpFonts, false);
 		//formFonts.getCollectionWidget().setLabelWidth(120);
 		//addChild(formFonts, "fontMap");
 
+		colors.setWeights(1, 2);
+		fonts.setWeights(1, 2);
+		div.setWeights(1, 1);
 	}
 	
 	public void onVisible() {
@@ -93,8 +105,7 @@ public class UIEditor extends LObjectEditor<Object> {
 			setShellFactory(new LWindowFactory<>() {
 				@Override
 				public LObjectDialog<BaseColor> createWindow(LWindow parent) {
-					//return new BaseColorDialog(parent, BaseColorDialog.OPTIONAL);
-					return null;
+					return new BaseColorDialog(parent);
 				}
 			});
 		}

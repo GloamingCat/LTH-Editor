@@ -18,7 +18,7 @@ public class NodeList extends SimpleEditableList<Node> {
 		super(parent);
 		type = Node.class;
 		setIncludeID(true);
-		setShellFactory(new LWindowFactory<Node>() {
+		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Node> createWindow(LWindow parent) {
 				return new NodeDialog(parent, title) {

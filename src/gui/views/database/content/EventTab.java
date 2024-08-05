@@ -123,10 +123,6 @@ public class EventTab extends DatabaseTab<EventSheet> {
 					return new LDataTree<>(EventList.this.decodeElement(str));
 				}
 				@Override
-				public boolean canDecode(String str) {
-					return true;
-				}
-				@Override
 				public boolean isDataChecked(Command data) {
 					return EventList.this.isChecked(data);
 				}
