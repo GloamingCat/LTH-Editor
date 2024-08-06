@@ -49,7 +49,9 @@ public class Tooltip {
 	public String ANIMATIONS = "Keys of default system animations.";
 	public String ICONS = "Keys of default system icons.";
 	public String SOUNDS = "Keys of default system sounds.";
-	
+	public String KEYS = "Game keys, each one representing a virtual button.";
+	public String KEYMAPS = "Game key mappings that associate physical keys to virtual keys.";
+
 	// Lists
 	public String ELEMENTS = "List of elements in the game system.";
 	public String REGIONS = "List of all regions.";

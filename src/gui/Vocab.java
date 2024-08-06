@@ -28,6 +28,9 @@ public class Vocab {
 	// Groups
 	public String GENERAL = "General";
 	public String GRAPHICS = "Graphics";
+	public String INPUT = "Input";
+	public String KEYS = "Keys";
+	public String KEYMAPS = "Key Maps";
 	public String TAGS = "Tags";
 	public String BATTLE = "Battle";
 	public String GRID = "Grid";
@@ -92,9 +95,7 @@ public class Vocab {
 	public String COLOR = "Color";
 	public String BATTLEFIELDS = "Battle Fields";
 	public String LENGTH = "Size";
-	public String FORMAT = "Format";
 	public String SHORTNAME = "Short Name";
-	public String MUTABLE = "Mutable";
 	public String FORMULA = "Formula";
 	public String VISIBILITY = "Visibility";
 	public String PRIMARY = "Primary";

@@ -4,6 +4,8 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
+import lui.base.LFlags;
+import lui.base.LPrefs;
 import lui.container.LContainer;
 import lui.container.LFrame;
 import lui.container.LPanel;
@@ -11,6 +13,7 @@ import lui.container.LView;
 import lui.gson.GDefaultObjectEditor;
 
 import data.config.Config;
+import lui.widget.LLabel;
 import project.Project;
 
 public class ConfigEditor extends LView {
@@ -100,22 +103,28 @@ public class ConfigEditor extends LView {
 		troopEditor = new TroopEditor(grpTroop, true);
 		editor.addChild(troopEditor, "troop");
 
-		// Animations
+		// Animations / Icons
 		
-		LFrame grpAnimations = new LFrame(right, Vocab.instance.ANIMATIONS);
-		grpAnimations.setFillLayout(true);
-		grpAnimations.setHoverText(Tooltip.instance.ANIMATIONS);
-		lstAnimations = new NodeList(grpAnimations, Vocab.instance.ANIMSHELL);
+		LFrame grpGraphics = new LFrame(right, Vocab.instance.GRAPHICS, Tooltip.instance.GRAPHICS);
+		grpGraphics.setGridLayout(2);
+		grpGraphics.setSpacing(LPrefs.GRIDSPACING, 0);
+		new LLabel(grpGraphics, Vocab.instance.ANIMATIONS, Tooltip.instance.ANIMATIONS).setAlignment(LFlags.CENTER);
+		new LLabel(grpGraphics, Vocab.instance.ICONS, Tooltip.instance.ICONS).setAlignment(LFlags.CENTER);
+		lstAnimations = new NodeList(grpGraphics, Vocab.instance.ANIMSHELL);
 		lstAnimations.setIncludeID(false);
+		lstAnimations.getCellData().setExpand(true, true);
 		editor.addChild(lstAnimations, "animations");
-		
-		// Icons
-
-		LFrame grpIcons = new LFrame(right, Vocab.instance.ICONS);
-		grpIcons.setFillLayout(true);
-		grpIcons.setHoverText(Tooltip.instance.ICONS);
-		PortraitList lstIcons = new PortraitList(grpIcons);
+		PortraitList lstIcons = new PortraitList(grpGraphics);
+		lstIcons.getCellData().setExpand(true, true);
 		editor.addChild(lstIcons, "icons");
+
+		// Icon Config
+
+		LFrame grpInput = new LFrame(right, Vocab.instance.INPUT);
+		grpInput.setGridLayout(2);
+		grpInput.setSpacing(LPrefs.GRIDSPACING, 0);
+		//new LLabel(grpInput, Vocab.instance.KEYS, Tooltip.instance.KEYS).setAlignment(LFlags.CENTER);
+		//new LLabel(grpInput, Vocab.instance.KEYMAPS, Tooltip.instance.KEYMAPS).setAlignment(LFlags.CENTER);
 
 	}
 	
