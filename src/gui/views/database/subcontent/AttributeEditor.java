@@ -34,7 +34,7 @@ public class AttributeEditor extends GFormEditor<Integer, Integer, LSpinner> {
 
 	@Override
 	public void onVisible() {
-		setFormList(Project.current.attributes.getList());
+		getCollectionWidget().setControlCount(Project.current.attributes.getList().size());
 		super.onVisible();
 	}
 

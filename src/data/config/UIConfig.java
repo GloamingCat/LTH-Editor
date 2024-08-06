@@ -10,7 +10,7 @@ public class UIConfig implements LInitializable {
 
     public LDataList<BaseColor> baseColors = new LDataList<>();
     public LDataList<Node> colorMap = new LDataList<>();
-    public LDataList<FontData> baseFonts = new LDataList<>();
+    public LDataList<BaseFont> baseFonts = new LDataList<>();
     public LDataList<Node> fontMap = new LDataList<>();
 
     public UIConfig() {
@@ -87,11 +87,56 @@ public class UIConfig implements LInitializable {
         colorMap.add(new Node(getBaseColorIndex("red"), "element_strong"));
         colorMap.add(new Node(getBaseColorIndex("white"), "element_neutral"));
 
+        baseFonts.add(new BaseFont("huge_font", new FontData("Roboto", "ttf", 25)));
+        baseFonts.add(new BaseFont("big_font", new FontData("Roboto", "ttf", 20)));
+        baseFonts.add(new BaseFont("critical_font", new FontData("Roboto", "ttf", 17)));
+        baseFonts.add(new BaseFont("default_font", new FontData("Roboto", "ttf", 14)));
+        baseFonts.add(new BaseFont("medium_font", new FontData("Roboto", "ttf", 11)));
+        baseFonts.add(new BaseFont("small_font", new FontData("Roboto", "ttf", 9)));
+        baseFonts.add(new BaseFont("tiny_font", new FontData("Roboto", "ttf", 7.5f)));
+        baseFonts.add(new BaseFont("log_font", new FontData("Roboto", "ttf", 5)));
+
+        fontMap.add(new Node(getBaseFontIndex("huge_font"), "menu_title"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "menu_default"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "menu_button"));
+        fontMap.add(new Node(getBaseFontIndex("medium_font"), "menu_dialogue"));
+        fontMap.add(new Node(getBaseFontIndex("tiny_font"), "menu_tiny"));
+        fontMap.add(new Node(getBaseFontIndex("small_font"), "menu_small"));
+        fontMap.add(new Node(getBaseFontIndex("medium_font"), "menu_medium"));
+        fontMap.add(new Node(getBaseFontIndex("big_font"), "menu_big"));
+        fontMap.add(new Node(getBaseFontIndex("huge_font"), "menu_huge"));
+        fontMap.add(new Node(getBaseFontIndex("medium_font"), "menu_tooltip"));
+
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_dmghp"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_dmgsp"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_healhp"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_healsp"));
+        fontMap.add(new Node(getBaseFontIndex("critical_font"), "popup_dmghp_crit"));
+        fontMap.add(new Node(getBaseFontIndex("critical_font"), "popup_dmgsp_crit"));
+        fontMap.add(new Node(getBaseFontIndex("critical_font"), "popup_healhp_crit"));
+        fontMap.add(new Node(getBaseFontIndex("critical_font"), "popup_healsp_crit"));
+
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_miss"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_status_add"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_status_remove"));
+        fontMap.add(new Node(getBaseFontIndex("default_font"), "popup_levelup"));
+        fontMap.add(new Node(getBaseFontIndex("medium_font"), "popup_exp"));
+
+        fontMap.add(new Node(getBaseFontIndex("log_font"), "log"));
+        fontMap.add(new Node(getBaseFontIndex("medium_font"), "pause"));
     }
 
-    public int getBaseColorIndex(String baseColor) {
+    public int getBaseColorIndex(String name) {
         for (int i = 0; i < baseColors.size(); i++) {
-            if (baseColors.get(i).name.equals(baseColor))
+            if (baseColors.get(i).name.equals(name))
+                return i;
+        }
+        return -1;
+    }
+
+    public int getBaseFontIndex(String name) {
+        for (int i = 0; i < baseFonts.size(); i++) {
+            if (baseFonts.get(i).name.equals(name))
                 return i;
         }
         return -1;
@@ -120,5 +165,20 @@ public class UIConfig implements LInitializable {
 
     }
 
+    public static class BaseFont {
+
+        public String name = "fontname";
+        public FontData font;
+
+        public BaseFont(){ font = new FontData(); }
+        public BaseFont(String name, FontData font) {
+            this.name = name;
+            this.font = font;
+        }
+        public String toString() {
+            return name;
+        }
+
+    }
 
 }

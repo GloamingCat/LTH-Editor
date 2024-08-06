@@ -34,7 +34,7 @@ public class BuildEditor extends GFormEditor<String, String, LText> {
 
 	@Override
 	public void onVisible() {
-		setFormList(Project.current.attributes.getList());
+		getCollectionWidget().setControlCount(Project.current.attributes.getList().size());
 		super.onVisible();
 	}
 
