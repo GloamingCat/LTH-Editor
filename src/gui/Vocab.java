@@ -89,7 +89,7 @@ public class Vocab {
 	public String BROWSER = "Web Browser";
 	public String MOBILEBROWSER = "Mobile Web Browser";
 	public String LISTS = "Lists";
-	public String UI = "UI Customization";
+	public String UI = "UI Theme";
 
 	// Sub-content
 	public String COLOR = "Color";
@@ -110,10 +110,10 @@ public class Vocab {
 	public String INVISIBLE = "Invisible";
 	
 	// Grid
-	public String TILEWIDTH = "Width";
-	public String TILEHEIGHT = "Height";
-	public String TILEBASE = "Base";
-	public String TILESIDE = "Side";
+	public String TILEWIDTH = "Total Width";
+	public String TILEHEIGHT = "Total Height";
+	public String TILEBASE = "Base Length";
+	public String TILESIDE = "Side Length";
 	public String PIXELHEIGHT = "Pixels/Height";
 	public String DEPTHHEIGHT = "Depth/Height";
 	public String DEPTHY = "Depth/Y";
@@ -147,28 +147,29 @@ public class Vocab {
 	public String STOPCOLL = "Stop On Collision";
 	public String WALKSPEED = "Base Speed";
 	public String DASHSPEED = "Dash Speed";
-	public String DIAGTHRESHOLD = "Diag Threshold";
-	public String WALKDELAY = "Walk Input Delay";
+	public String DIAGTHRESHOLD = "Diag Input";
+	public String WALKDELAY = "Walk Delay";
 	public String PATHLIMIT = "Path Limit";
 	public String STEPSOUND = "Step Sound";
 	public String STEPFREQ = "Frequency";
-	public String VARFREQ = "Frequency Var.";
+	public String VARFREQ = "Freq. Var.";
 	public String VARPITCH = "Pitch Var.";
 	public String VARVOLUME = "Volume Var.";
 
 	// Battle
 	public String FINALLEVEL = "Max Level";
-	public String ATTHP = "HP";
-	public String ATTSP = "SP";
-	public String ATTSTEP = "Step";
-	public String ATTJUMP = "Jump";
+	public String EXPINCREASE = "EXP Increase";
+	public String ATTHP = "Max HP";
+	public String ATTSP = "Max SP";
+	public String ATTSTEP = "Steps/Turn";
+	public String ATTJUMP = "Jump Height";
 	public String BATTLEENDREVIVE = "Revive when battle ends";
 	public String KEEPPARTIES = "Keep chosen parties on Retry";
 	public String CHARSPEED = "Char Speed";
 	
 	// Troop
 	public String INITIALTROOP = "Initial Troop";
-	public String MAXMEMBERS = "Max Members";
+	public String MAXMEMBERS = "Max Units";
 	public String TROOPSIZE = "Grid Size";
 	public String WIDTH = "Width";
 	public String HEIGHT = "Height";
@@ -536,13 +537,14 @@ public class Vocab {
 
 	// System
 	public String ATTRIBUTESHELL = "Attribute Properties";
-	public String AUDIOFILESHELL = "Select Audio File";
 	public String EQUIPTYPESHELL = "Equipment Type Properties";
 	public String ELEMENTSHELL = "Element Properties";
-	public String FONTSHELL = "Select Font File";
-	public String PLUGINSHELL = "Select Plugin Lua File";
 	public String REGIONSHELL = "Region Properties";
-	
+	public String PLUGINSHELL = "Select Plugin Lua File";
+	public String FONTSHELL = "Select Font File";
+	public String AUDIOFILESHELL = "Select Audio File";
+	public String KEYMAPSHELL = "Edit Key Map";
+
 	// Database
 	public String BATTLERELEMENTSHELL = "Element Vulnerability";
 	public String BUFFSHELL = "Attribute Modifier";

@@ -2,6 +2,7 @@ package gui.views.system;
 
 import gui.Tooltip;
 import gui.Vocab;
+import gui.views.database.subcontent.DataList;
 import gui.views.database.subcontent.NodeList;
 import gui.views.database.subcontent.PortraitList;
 import lui.base.LFlags;
@@ -62,7 +63,17 @@ public class ConfigEditor extends LView {
 		
 		ScreenEditor screenEditor = new ScreenEditor(grpScreen, true);
 		editor.addChild(screenEditor, "screen");
-		
+
+		// Battle
+
+		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE);
+		grpBattle.setFillLayout(true);
+		grpBattle.setHoverText(Tooltip.instance.BATTLE);
+		grpBattle.getCellData().setExpand(true, true);
+
+		BattleEditor battleEditor = new BattleEditor(grpBattle, true);
+		editor.addChild(battleEditor, "battle");
+
 		// Player
 		
 		LFrame grpPlayer = new LFrame(middle, Vocab.instance.PLAYER);
@@ -72,27 +83,17 @@ public class ConfigEditor extends LView {
 
 		PlayerEditor playerEditor = new PlayerEditor(grpPlayer, true);
 		editor.addChild(playerEditor, "player");
-		
+
 		// Grid
-		
+
 		LFrame grpGrid = new LFrame(left, Vocab.instance.GRID);
 		grpGrid.setFillLayout(true);
 		grpGrid.setHoverText(Tooltip.instance.GRID);
 		grpGrid.getCellData().setExpand(true, true);
-		
+
 		GridEditor gridEditor = new GridEditor(grpGrid, true);
 		editor.addChild(gridEditor, "grid");
 
-		// Battle
-		
-		LFrame grpBattle = new LFrame(middle, Vocab.instance.BATTLE);		
-		grpBattle.setFillLayout(true);
-		grpBattle.setHoverText(Tooltip.instance.BATTLE);
-		grpBattle.getCellData().setExpand(true, true);
-		
-		BattleEditor battleEditor = new BattleEditor(grpBattle, true);
-		editor.addChild(battleEditor, "battle");
-		
 		// Troop
 		
 		LFrame grpTroop = new LFrame(left, Vocab.instance.TROOP);
@@ -118,13 +119,19 @@ public class ConfigEditor extends LView {
 		lstIcons.getCellData().setExpand(true, true);
 		editor.addChild(lstIcons, "icons");
 
-		// Icon Config
+		// Input Config
 
-		LFrame grpInput = new LFrame(right, Vocab.instance.INPUT);
-		grpInput.setGridLayout(2);
-		grpInput.setSpacing(LPrefs.GRIDSPACING, 0);
-		//new LLabel(grpInput, Vocab.instance.KEYS, Tooltip.instance.KEYS).setAlignment(LFlags.CENTER);
-		//new LLabel(grpInput, Vocab.instance.KEYMAPS, Tooltip.instance.KEYMAPS).setAlignment(LFlags.CENTER);
+		LPanel corner = new LPanel(right);
+		corner.setFillLayout(false);
+
+		LFrame grpInput = new LFrame(corner, Vocab.instance.KEYMAPS, Tooltip.instance.KEYMAPS);
+		grpInput.setFillLayout(true);
+		DataList lstKeys = new DataList(grpInput, Vocab.instance.KEYMAPSHELL, Vocab.instance.KEYS, false);
+		lstKeys.getCellData().setExpand(true, true);
+		editor.addChild(lstKeys, "keyMaps");
+
+		//LFrame grpOther = new LFrame(right, "");
+		LPanel other = new LPanel(corner);
 
 	}
 	

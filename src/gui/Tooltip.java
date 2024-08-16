@@ -174,6 +174,7 @@ public class Tooltip {
 	// Battle
 	public String BATTLE = "Battle settings.";
 	public String FINALLEVEL = "Maximum level a battler can reach.";
+	public String EXPINCREASE = "The increase (or decrease) in experience received for each level below (or above) the enemy's level.";
 	public String ATTCONFIG = "The keys for specific system attributes.";
 	public String ATTHP = "The key of the attribute that indicates the maximum HP of a character.";
 	public String ATTSP = "The key of the attribute that indicates the maximum SP of a character.";

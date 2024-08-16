@@ -10,14 +10,15 @@ import lui.dialog.LWindowFactory;
 
 public class DataList extends SimpleEditableList<Data> {
 
-	public DataList(LContainer parent, String title, boolean editTags) {
+	public DataList(LContainer parent, String title, String tagTitle, boolean editKey) {
 		super(parent);
 		type = Data.class;
 		setIncludeID(true);
+		int keyFlag = editKey ? DataDialog.KEY : 0;
 		setShellFactory(new LWindowFactory<>() {
 			@Override
 			public LObjectDialog<Data> createWindow(LWindow parent) {
-				return new DataDialog(parent, title, editTags ? DataDialog.EDITTAGS : 0);
+				return new DataDialog(parent, title, tagTitle, keyFlag | DataDialog.NAME);
 			}
 		});
 	}

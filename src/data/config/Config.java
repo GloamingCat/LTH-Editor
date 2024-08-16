@@ -1,6 +1,8 @@
 package data.config;
 
+import data.Data;
 import data.subcontent.Script;
+import data.subcontent.Tag;
 import lui.base.data.LDataList;
 import data.GameCharacter.Portrait;
 import data.subcontent.Node;
@@ -29,7 +31,42 @@ public class Config {
 
 	public LDataList<Node> animations = new LDataList<>();
 	public LDataList<Portrait> icons = new LDataList<>();
-	
+	public LDataList<Data> keyMaps = new LDataList<>();
+
+	public Config() {
+		Data main = new Data();
+		main.name = "main";
+		main.tags.add(new Tag("confirm", "z"));
+		main.tags.add(new Tag("cancel", "x"));
+		main.tags.add(new Tag("pause", "p"));
+		main.tags.add(new Tag("dash", "lshift"));
+		main.tags.add(new Tag("prev", "pagedown"));
+		main.tags.add(new Tag("next", "pageup"));
+
+		Data alt = new Data();
+		alt.name = "alt";
+		alt.tags.add(new Tag("confirm", "return"));
+		alt.tags.add(new Tag("cancel", "backspace"));
+		alt.tags.add(new Tag("pause", "escape"));
+		alt.tags.add(new Tag("dash", "rshift"));
+		alt.tags.add(new Tag("prev", "c"));
+		alt.tags.add(new Tag("next", "v"));
+
+		Data gamepad = new Data();
+		gamepad.name = "gamepad";
+		gamepad.tags.add(new Tag("confirm", "abutton"));
+		gamepad.tags.add(new Tag("cancel", "ybutton"));
+		gamepad.tags.add(new Tag("pause", "start"));
+		gamepad.tags.add(new Tag("dash", "bbutton"));
+		gamepad.tags.add(new Tag("prev", "leftshoulder"));
+		gamepad.tags.add(new Tag("next", "rightshoulder"));
+
+		keyMaps.add(main);
+		keyMaps.add(alt);
+		keyMaps.add(gamepad);
+
+	}
+
 	// System
 	
 	public static class Player {
@@ -50,14 +87,14 @@ public class Config {
 
 	public static class Battle {
 		public int maxLevel = 99;
+		public int expIncrease = 0;
 		public String attHP = "hp";
 		public String attSP = "sp";
 		public String attStep = "mov";
 		public String attJump = "jmp";
-		public int itemSkillID = 0;
+		public int charSpeed = 150;
 		public boolean battleEndRevive = true;
 		public boolean keepParties = true;
-		public int charSpeed = 150;
 	}
 	
 	public static class Troop {
@@ -65,6 +102,7 @@ public class Config {
 		public int maxMembers = 6;
 		public int width = 5;
 		public int height = 3;
+		public boolean backupExp = false;
 	}
 	
 	public static class Grid {
@@ -92,5 +130,5 @@ public class Config {
 		public boolean pixelPerfect = true;
 		public boolean vsync = false;
 	}
-	
+
 }

@@ -11,21 +11,28 @@ import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 
 public class TagList extends SimpleEditableList<Tag> {
+
+	private String shellTitle;
 	
 	public TagList(LContainer parent, String title) {
 		super(parent);
 		type = Tag.class;
+		shellTitle = title;
 		setIncludeID(false);
 		setShellFactory(new LWindowFactory<Tag>() {
 			@Override
 			public LObjectDialog<Tag> createWindow(LWindow parent) {
-				return new TagDialog(parent, title);
+				return new TagDialog(parent, shellTitle);
 			}
 		});
 	}
 
 	public TagList(LContainer parent) {
 		this(parent, Vocab.instance.TAGSHELL);
+	}
+
+	public void setTitle(String title) {
+		shellTitle = title;
 	}
 
 }
