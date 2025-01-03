@@ -495,13 +495,15 @@ public class Tooltip {
 			If this troop is defated by the player, the items are rewarded to the player at the end of the battle.""";
 	
 	// Event Sheet
-	public String EVENTS = "Events";
+	public String EVENTS = "List of event commands.";
 	public String COMMAND = """
             The command to be executed.
             It can be the name of an event function, is this case the function will be called with the given parameters.
             If no function with the given name is found, the text will be interpreted as Lua code inside a function.
             In this case, the 'script' argument can be used to refer to the script's data,
             which includes the character executing it (if any).""";
+	public String SKIPPABLE = "If true, the player can skip the commands in this event sheet until an unskippable command.";
+	public String UNSKIPPABLE = "If true, the player can't skip this command (in case the event sheet is skippable).";
 	public String VARIABLE = "Name of the variable that will store the value.";
 	public String VARVALUE = """
 			Value of the variable.

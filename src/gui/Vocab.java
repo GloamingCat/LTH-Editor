@@ -328,6 +328,8 @@ public class Vocab {
 	// Event Sheet
 	public String EVENTS = "Events";
 	public String COMMAND = "Command";
+	public String SKIPPABLE = "Skippable";
+	public String UNSKIPPABLE = "Unskippable";
 	public String DEFAULTCOMMANDS = "Default Commands";
 	public String FLOWEVENTS = "Flow";
 	public String FIELDEVENTS = "Field";
@@ -397,6 +399,8 @@ public class Vocab {
 	public String GLOBAL = "Global";
 	public String FIELD = "Field";
 	public String OBJECT = "Object";
+	public String LOCAL = "Current";
+	public String CHILD = "Current (Child)";
 	public String WAIT = "Wait";
 	public String BLOCKPLAYER = "Block player";
 	public String ONLOAD = "On Load";

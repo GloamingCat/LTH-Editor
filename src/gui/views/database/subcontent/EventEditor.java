@@ -5,6 +5,7 @@ import data.subcontent.Tag;
 import gui.Tooltip;
 import gui.Vocab;
 import gui.shell.database.EventArgsDialog;
+import gui.widgets.CheckBoxPanel;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.base.action.LAction;
@@ -20,10 +21,7 @@ import lui.dialog.LWindow;
 import lui.dialog.LWindowFactory;
 import lui.graphics.LColor;
 import lui.gson.GDefaultObjectEditor;
-import lui.widget.LLabel;
-import lui.widget.LObjectButton;
-import lui.widget.LText;
-import lui.widget.LTextBox;
+import lui.widget.*;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -265,6 +263,13 @@ public class EventEditor extends GDefaultObjectEditor<Command> {
 
         currentEventButton = new EventButton(grpCommands, "Edit Current", null, 0);
         currentEventButton.getCellData().setExpand(true, false);
+
+        CheckBoxPanel check = new CheckBoxPanel(this);
+		check.getCellData().setSpread(2, 1);
+		LCheckBox btnSkip = new LCheckBox(check);
+		btnSkip.setText(Vocab.instance.UNSKIPPABLE);
+		btnSkip.setHoverText(Tooltip.instance.UNSKIPPABLE);
+        addControl(btnSkip, "unskippable");
 
     }
 

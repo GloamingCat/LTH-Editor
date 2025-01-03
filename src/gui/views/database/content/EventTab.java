@@ -5,17 +5,17 @@ import gui.Tooltip;
 import gui.Vocab;
 import gui.views.database.DatabaseTab;
 import gui.views.database.subcontent.EventEditor;
+import gui.widgets.CheckBoxPanel;
 import gui.widgets.SimpleEditableList;
 import lui.base.LFlags;
 import lui.base.LPrefs;
 import lui.base.data.LDataTree;
 import lui.base.data.LPath;
 import lui.base.event.LEditEvent;
-import lui.widget.LLabel;
-import lui.widget.LTextBox;
 import lui.container.*;
 import lui.collection.LEditableList;
 import lui.graphics.LColor;
+import lui.widget.*;
 
 import data.EventSheet;
 import data.EventSheet.Command;
@@ -52,9 +52,15 @@ public class EventTab extends DatabaseTab<EventSheet> {
 		txtDescription.addMenu(lblDesc);
 		addControl(txtDescription, "description");
 
-		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS);
+		CheckBoxPanel check = new CheckBoxPanel(contentEditor.grpGeneral);
+		check.getCellData().setSpread(2, 1);
+		LCheckBox btnSkip = new LCheckBox(check);
+		btnSkip.setText(Vocab.instance.SKIPPABLE);
+		btnSkip.setHoverText(Tooltip.instance.SKIPPABLE);
+        addControl(btnSkip, "skippable");
+
+		LFrame grpEvents = new LFrame(contentEditor, Vocab.instance.EVENTS, Tooltip.instance.EVENTS);
 		grpEvents.setFillLayout(true);
-		grpEvents.setHoverText(Tooltip.instance.EVENTS);
 		grpEvents.getCellData().setExpand(true, true);
 		grpEvents.getCellData().setSpread(2, 1);
 		LFlexPanel events = new LFlexPanel(grpEvents);

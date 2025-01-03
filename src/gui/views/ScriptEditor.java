@@ -93,8 +93,10 @@ public class ScriptEditor extends GDefaultObjectEditor<Script> {
 					Vocab.instance.OBJECT,
 					Vocab.instance.FIELD,
 					Vocab.instance.GLOBAL,
-					Vocab.instance.CURRENT
+					Vocab.instance.LOCAL,
+					Vocab.instance.CHILD
 			});
+			addControl(cmbScope, "scope");
 		}
 
 		// Triggers

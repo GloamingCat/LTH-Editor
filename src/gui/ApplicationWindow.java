@@ -36,7 +36,6 @@ public class ApplicationWindow extends LApplicationWindow {
 		addView(fieldTreeEditor, Vocab.instance.FIELDEDITOR, "F2");
 		addView(databaseEditor, Vocab.instance.DATABASEEDITOR, "F3");
 		addView(systemEditor, Vocab.instance.SYSTEMEDITOR, "F4");
-
 		defaultView = fieldTreeEditor;
 	}
 
@@ -52,6 +51,8 @@ public class ApplicationWindow extends LApplicationWindow {
 
 	@Override
 	public LSerializer createProject(String path) {
+		if (path == null)
+			return null;
 		int i = path.lastIndexOf(".");
 		if (i >= 0)
 			path = path.substring(0, i);
