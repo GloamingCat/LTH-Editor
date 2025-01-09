@@ -1,10 +1,9 @@
 package data.field;
 
+import gui.ApplicationWindow;
 import lui.base.data.LDataTree;
 
 public class FieldTree extends LDataTree<FieldNode> {
-
-	public int lastField = -1;
 	
 	public int getFieldID(FieldNode node) {
 		LDataTree<FieldNode> child = findNode(node);
@@ -19,12 +18,15 @@ public class FieldTree extends LDataTree<FieldNode> {
 	public void setLastLayer(int fieldID, int layerID, int layerType) {
 		LDataTree<FieldNode> child = findNode(fieldID);
 		if (child != null)
-			child.data.lastLayers[layerType] = layerID;
+			ApplicationWindow.current.setPreference("field", "lastLayer" + fieldID + "_" + layerType, layerID);
 	}
 
 	public int getLastLayer(int fieldID, int layerType) {
 		LDataTree<FieldNode> child = findNode(fieldID);
-		return child == null ? 0 : child.data.lastLayers[layerType];
+		if (child == null)
+			return 0;
+		Integer i = ApplicationWindow.current.getPreference("field", "lastLayer" + fieldID + "_" + layerType, Integer.class);
+		return i == null ? 0 : i;
 	}
 	
 }

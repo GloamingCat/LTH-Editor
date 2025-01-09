@@ -1,8 +1,10 @@
 package gui.views.fieldTree;
 
+import gui.ApplicationWindow;
 import gui.helper.FieldHelper;
 import gui.helper.TilePainter;
 import gui.shell.field.FieldPrefDialog;
+import lui.LApplicationWindow;
 import lui.base.event.listener.LCollectionListener;
 import lui.dialog.LObjectDialog;
 import project.Project;
@@ -78,8 +80,8 @@ public class FieldTreeEditor extends LView {
 			if (getDataCollection() != null) {
 				LDataTree<FieldNode> tree = getDataCollection().toTree();
 				getCollectionWidget().setItems(tree);
-				int lastField = Project.current.fieldTree.getData().lastField;
-				LDataTree<FieldNode> lastNode = Project.current.fieldTree.getData().findNode(lastField);
+				Integer lastField = ApplicationWindow.current.getPreference("field", "latest", Integer.class);
+				LDataTree<FieldNode> lastNode = Project.current.fieldTree.getData().findNode(lastField == null ? -1 : lastField);
 				getCollectionWidget().forceSelection(lastNode == null ? null : lastNode.toPath());
 			} else {
 				getCollectionWidget().setItems(null);
@@ -131,7 +133,7 @@ public class FieldTreeEditor extends LView {
 		fieldEditor.addChild(sideEditor);
 
 		fieldTree.addSelectionListener(event -> {
-            Project.current.fieldTree.getData().lastField = event.id;
+			ApplicationWindow.current.setPreference("field", "latest", event.id);
             System.gc();
         });
 		fieldTree.addEditListener(new LCollectionListener<>() {
@@ -146,7 +148,7 @@ public class FieldTreeEditor extends LView {
 		fieldTree.addInsertListener(new LCollectionListener<>() {
 			@Override
 			public void onInsert(LInsertEvent<FieldNode> event) {
-				Project.current.fieldTree.getData().lastField = event.node.id;
+				ApplicationWindow.current.setPreference("field", "latest", event.node.id);
 				fieldTree.refreshAll(event.node);
 			}
 		});

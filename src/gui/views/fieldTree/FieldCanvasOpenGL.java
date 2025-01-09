@@ -57,7 +57,7 @@ public class FieldCanvasOpenGL extends FieldCanvas {
 			renderer.setBackgroundColor(bg.red, bg.green, bg.blue, 255);
 			renderer.setPencilSize(1);
 			try {
-				shader = new ShaderProgram("vertShader.glsl", "fragShader.glsl");
+				shader = new ShaderProgram("shaders/vertShader.glsl", "shaders/fragShader.glsl");
 			} catch (UncheckedIOException e) {
 				shader = new ShaderProgram();
 			}

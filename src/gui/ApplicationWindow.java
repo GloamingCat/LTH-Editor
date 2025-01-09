@@ -11,19 +11,21 @@ import lui.LApplicationWindow;
 
 public class ApplicationWindow extends LApplicationWindow {
 
+	public static ApplicationWindow current;
+
 	public static void main(String[] args) {
 		try {
 			ApplicationWindow.setTheme(new LovelyTheme());
-			ApplicationWindow shell = new ApplicationWindow(args);
-			shell.run();
+			current = new ApplicationWindow();
+			current.run(args);
 		} catch (Exception e) {
 			LFileManager.log(e);
 			e.printStackTrace();
 		}
 	}
 
-	public ApplicationWindow(String... args) {
-		super(800, 700, "img/icon.png", args);
+	public ApplicationWindow() {
+		super(800, 700, "img/icon.png");
 		setCurrentSize(1200, 800);
 		setContinuousLayout(false);
 	}

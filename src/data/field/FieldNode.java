@@ -7,14 +7,16 @@ public class FieldNode implements Cloneable {
 	public int[] lastLayers = new int[] {-1, -1, -1};
 	
 	public FieldNode clone() {
+		FieldNode copy;
         try {
-			FieldNode copy = (FieldNode) super.clone();
-			copy.lastLayers = lastLayers.clone();
-			copy.name = name;
+			copy = (FieldNode) super.clone();
 			return copy;
         } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
+            copy = new FieldNode();
         }
+		copy.lastLayers = lastLayers.clone();
+		copy.name = name;
+		return copy;
 	}
 	
 	public String toString() {
